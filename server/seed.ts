@@ -9,6 +9,9 @@ import {
   campaigns,
   portfolios,
   tasks,
+  integrations,
+  integrationSyncRuns,
+  dataQualityIssues,
 } from "@shared/schema";
 import { sql } from "drizzle-orm";
 
@@ -45,6 +48,9 @@ async function seed() {
   // Clear existing data (in reverse order of dependencies)
   console.log("🗑️  Clearing existing data...");
   await db.delete(tasks);
+  await db.delete(dataQualityIssues);
+  await db.delete(integrationSyncRuns);
+  await db.delete(integrations);
   await db.delete(portfolios);
   await db.delete(interactions);
   await db.delete(opportunities);
@@ -756,18 +762,42 @@ async function seed() {
   const personsList = await db
     .insert(persons)
     .values(
-      donorData.map((d) => ({
-        firstName: d.firstName,
-        lastName: d.lastName,
-        primaryEmail: d.email,
-        primaryPhone: d.phone,
-        householdId: d.householdId,
-        organizationName: d.org,
-        wealthBand: d.wealthBand,
-        capacityScore: d.capacity,
-        engagementScore: d.engagement,
-        affinityScore: d.affinity,
-      }))
+      donorData.map((d, index) => {
+        // Integration metadata: most from Salesforce, some stale data
+        const isStale = index % 8 === 0; // Every 8th donor has stale data
+        const syncedDaysAgo = isStale ? Math.floor(Math.random() * 90) + 30 : Math.floor(Math.random() * 7);
+        const syncedAt = new Date();
+        syncedAt.setDate(syncedAt.getDate() - syncedDaysAgo);
+        
+        // Data quality: based on completeness of fields
+        const hasEmail = !!d.email;
+        const hasPhone = !!d.phone;
+        const hasOrg = !!d.org;
+        const hasWealthBand = !!d.wealthBand;
+        let dataQuality = 60; // base score
+        if (hasEmail) dataQuality += 15;
+        if (hasPhone) dataQuality += 10;
+        if (hasOrg) dataQuality += 10;
+        if (hasWealthBand) dataQuality += 5;
+        
+        return {
+          firstName: d.firstName,
+          lastName: d.lastName,
+          primaryEmail: d.email,
+          primaryPhone: d.phone,
+          householdId: d.householdId,
+          organizationName: d.org,
+          wealthBand: d.wealthBand,
+          capacityScore: d.capacity,
+          engagementScore: d.engagement,
+          affinityScore: d.affinity,
+          // Integration metadata
+          sourceSystem: "Salesforce", // All donors from CRM
+          sourceRecordId: `SF-${String(index + 1000).padStart(6, '0')}`,
+          syncedAt: syncedAt,
+          dataQualityScore: dataQuality,
+        };
+      })
     )
     .returning();
   console.log(`✅ Created ${personsList.length} donors`);
@@ -891,6 +921,25 @@ async function seed() {
       ];
       const paymentWeights = [40, 25, 15, 5, 10, 5];
 
+      const paymentMethod = weightedRandom(paymentMethods, paymentWeights);
+      
+      // Integration metadata: determine source system based on payment method and campaign
+      let sourceSystem = "Salesforce"; // default CRM
+      if (paymentMethod === "Credit Card" && Math.random() > 0.5) {
+        sourceSystem = "Classy"; // Online giving platform
+      } else if (paymentMethod === "DAF") {
+        sourceSystem = "DAFGiving360";
+      }
+      
+      // Sync timestamp: recent gifts synced more recently
+      const daysSinceGift = Math.floor((new Date().getTime() - giftDates[i].getTime()) / (1000 * 60 * 60 * 24));
+      const syncDelay = Math.min(daysSinceGift, Math.floor(Math.random() * 5) + 1); // 1-5 days after gift, or gift date if older
+      const syncedAt = new Date(giftDates[i]);
+      syncedAt.setDate(syncedAt.getDate() + syncDelay);
+      
+      // Data quality: 90-100 for recent gifts, lower for older
+      const dataQuality = daysSinceGift < 30 ? 95 + Math.floor(Math.random() * 5) : 85 + Math.floor(Math.random() * 10);
+      
       giftsList.push({
         personId: person.id,
         amount: giftAmounts[i].toFixed(2),
@@ -901,7 +950,12 @@ async function seed() {
           ["General Fund", "Education Program", "Community Outreach", "Capital Fund"],
           [50, 25, 15, 10]
         ),
-        paymentMethod: weightedRandom(paymentMethods, paymentWeights),
+        paymentMethod: paymentMethod,
+        // Integration metadata
+        sourceSystem: sourceSystem,
+        sourceRecordId: `${sourceSystem === "Salesforce" ? "SF-G" : sourceSystem === "Classy" ? "CL-G" : "DAF-G"}-${Math.floor(Math.random() * 900000) + 100000}`,
+        syncedAt: syncedAt,
+        dataQualityScore: dataQuality,
       });
     }
   }
@@ -1003,6 +1057,15 @@ async function seed() {
 
       const owner = mgoUsers[Math.floor(Math.random() * mgoUsers.length)];
 
+      // Integration metadata: all opportunities from Salesforce CRM
+      const createdDaysAgo = Math.floor(Math.random() * 90); // Created in last 90 days
+      const syncedDaysAgo = Math.floor(Math.random() * 3); // Synced in last 3 days
+      const syncedAt = new Date();
+      syncedAt.setDate(syncedAt.getDate() - syncedDaysAgo);
+      
+      // Data quality: higher for more recent stages
+      const dataQuality = stage === "Ask" || stage === "Steward" ? 95 : stage === "Cultivation" ? 88 : 82;
+      
       opportunitiesList.push({
         personId: donor.id,
         stage: stage,
@@ -1011,6 +1074,11 @@ async function seed() {
         closeDate: closeDate,
         notes: `Major gift opportunity for ${donor.organizationName || "individual donor"} - ${donor.firstName} ${donor.lastName}`,
         ownerId: owner.id,
+        // Integration metadata
+        sourceSystem: "Salesforce",
+        sourceRecordId: `SF-OPP-${Math.floor(Math.random() * 900000) + 100000}`,
+        syncedAt: syncedAt,
+        dataQualityScore: dataQuality,
       });
     }
   }
@@ -1057,18 +1125,216 @@ async function seed() {
         description = "Follow-up note sent with personalized impact story";
       }
 
+      // Integration metadata: email interactions from Mailchimp, others from Salesforce
+      const sourceSystem = (type === "email_open" || type === "email_click") ? "Mailchimp" : "Salesforce";
+      
+      // Sync timestamp: email interactions sync faster (hourly), manual entries sync daily
+      const syncDelayHours = sourceSystem === "Mailchimp" ? Math.floor(Math.random() * 4) + 1 : Math.floor(Math.random() * 48) + 2;
+      const syncedAt = new Date(interactionDate);
+      syncedAt.setHours(syncedAt.getHours() + syncDelayHours);
+      
+      // Data quality: email tracking very reliable (95-98), manual entries more variable (80-92)
+      const dataQuality = sourceSystem === "Mailchimp" ? 95 + Math.floor(Math.random() * 3) : 80 + Math.floor(Math.random() * 12);
+      
       interactionsList.push({
         personId: donor.id,
         type: type,
         notes: description,
         occurredAt: interactionDate,
         ownerId: owner.id,
+        // Integration metadata
+        sourceSystem: sourceSystem,
+        sourceRecordId: `${sourceSystem === "Mailchimp" ? "MC-" : "SF-"}INT-${Math.floor(Math.random() * 900000) + 100000}`,
+        syncedAt: syncedAt,
+        dataQualityScore: dataQuality,
       });
     }
   }
 
   await db.insert(interactions).values(interactionsList);
   console.log(`✅ Created ${interactionsList.length} interactions`);
+
+  // ==================== INTEGRATIONS ====================
+  console.log("🔌 Creating integration connections...");
+  
+  const now = new Date();
+  const integrationsList = await db
+    .insert(integrations)
+    .values([
+      {
+        name: "Salesforce NPSP",
+        type: "CRM",
+        status: "connected",
+        lastSyncAt: new Date(now.getTime() - 2 * 60 * 60 * 1000), // 2 hours ago
+        lastSuccessfulSyncAt: new Date(now.getTime() - 2 * 60 * 60 * 1000),
+        recordCount: personsList.length + giftsList.filter(g => g.sourceSystem === "Salesforce").length + opportunitiesList.length,
+        errorMessage: null,
+        config: { instanceUrl: "https://fundrazor.my.salesforce.com", apiVersion: "v58.0" },
+      },
+      {
+        name: "Mailchimp",
+        type: "Email",
+        status: "connected",
+        lastSyncAt: new Date(now.getTime() - 30 * 60 * 1000), // 30 minutes ago
+        lastSuccessfulSyncAt: new Date(now.getTime() - 30 * 60 * 1000),
+        recordCount: interactionsList.filter(i => i.sourceSystem === "Mailchimp").length,
+        errorMessage: null,
+        config: { listId: "a1b2c3d4e5", audienceSize: 12450 },
+      },
+      {
+        name: "Classy Online Giving",
+        type: "Giving",
+        status: "connected",
+        lastSyncAt: new Date(now.getTime() - 4 * 60 * 60 * 1000), // 4 hours ago
+        lastSuccessfulSyncAt: new Date(now.getTime() - 4 * 60 * 60 * 1000),
+        recordCount: giftsList.filter(g => g.sourceSystem === "Classy").length,
+        errorMessage: null,
+        config: { campaignIds: ["12345", "12346", "12347"] },
+      },
+      {
+        name: "WealthEngine",
+        type: "WealthScreening",
+        status: "syncing",
+        lastSyncAt: new Date(now.getTime() - 15 * 60 * 1000), // 15 minutes ago (in progress)
+        lastSuccessfulSyncAt: new Date(now.getTime() - 24 * 60 * 60 * 1000), // 1 day ago
+        recordCount: Math.floor(personsList.length * 0.75), // 75% of donors have wealth data
+        errorMessage: null,
+        config: { batchSize: 100, autoRefresh: true },
+      },
+      {
+        name: "DAFGiving360",
+        type: "Giving",
+        status: "connected",
+        lastSyncAt: new Date(now.getTime() - 6 * 60 * 60 * 1000), // 6 hours ago
+        lastSuccessfulSyncAt: new Date(now.getTime() - 6 * 60 * 60 * 1000),
+        recordCount: giftsList.filter(g => g.sourceSystem === "DAFGiving360").length,
+        errorMessage: null,
+        config: { fundId: "FUND-98765" },
+      },
+    ])
+    .returning();
+  console.log(`✅ Created ${integrationsList.length} integration connections`);
+
+  // ==================== INTEGRATION SYNC RUNS ====================
+  console.log("📊 Creating integration sync history...");
+  
+  const syncRunsList: any[] = [];
+  
+  // Create 2-4 recent sync runs for each integration
+  for (const integration of integrationsList) {
+    const runCount = Math.floor(Math.random() * 3) + 2; // 2-4 runs
+    
+    for (let i = 0; i < runCount; i++) {
+      const hoursAgo = Math.floor(Math.random() * 72) + (i * 6); // Spread over 3 days
+      const startedAt = new Date(now.getTime() - hoursAgo * 60 * 60 * 1000);
+      const completedAt = new Date(startedAt.getTime() + Math.floor(Math.random() * 1800) * 1000); // 0-30 min duration
+      
+      const isSuccess = Math.random() > 0.15; // 85% success rate
+      const recordsProcessed = Math.floor(Math.random() * 200) + 50;
+      const recordsCreated = Math.floor(recordsProcessed * 0.1);
+      const recordsUpdated = Math.floor(recordsProcessed * 0.7);
+      const recordsSkipped = Math.floor(recordsProcessed * 0.15);
+      const errorCount = isSuccess ? 0 : Math.floor(Math.random() * 10) + 1;
+      
+      syncRunsList.push({
+        integrationId: integration.id,
+        status: isSuccess ? "success" : (errorCount < 5 ? "partial" : "error"),
+        recordsProcessed: recordsProcessed,
+        recordsCreated: recordsCreated,
+        recordsUpdated: recordsUpdated,
+        recordsSkipped: recordsSkipped,
+        errorCount: errorCount,
+        errorDetails: isSuccess ? null : {
+          errors: Array.from({ length: errorCount }, (_, idx) => ({
+            recordId: `REC-${Math.floor(Math.random() * 100000)}`,
+            message: idx % 2 === 0 ? "Missing required field: email" : "Duplicate record detected",
+          }))
+        },
+        startedAt: startedAt,
+        completedAt: completedAt,
+      });
+    }
+  }
+  
+  await db.insert(integrationSyncRuns).values(syncRunsList);
+  console.log(`✅ Created ${syncRunsList.length} sync run records`);
+
+  // ==================== DATA QUALITY ISSUES ====================
+  console.log("⚠️  Creating data quality issues...");
+  
+  const dataOpsUser = usersList.find(u => u.role === "DATA_OPS");
+  const qualityIssuesList: any[] = [];
+  
+  // Create 15-20 sample data quality issues
+  const issueCount = Math.floor(Math.random() * 6) + 15;
+  
+  for (let i = 0; i < issueCount; i++) {
+    const entityTypes = ["person", "gift", "interaction"];
+    const entityType = entityTypes[Math.floor(Math.random() * entityTypes.length)];
+    
+    let entityId: string;
+    let sourceSystem: string;
+    
+    if (entityType === "person") {
+      const randomPerson = personsList[Math.floor(Math.random() * personsList.length)];
+      entityId = randomPerson.id;
+      sourceSystem = randomPerson.sourceSystem || "Salesforce";
+    } else if (entityType === "gift") {
+      const randomGift = giftsList[Math.floor(Math.random() * giftsList.length)];
+      entityId = randomGift.personId; // Using personId as proxy
+      sourceSystem = randomGift.sourceSystem || "Salesforce";
+    } else {
+      const randomInteraction = interactionsList[Math.floor(Math.random() * interactionsList.length)];
+      entityId = randomInteraction.personId;
+      sourceSystem = randomInteraction.sourceSystem || "Salesforce";
+    }
+    
+    const issueTypes = ["missing_field", "stale_data", "duplicate", "invalid_format"];
+    const issueType = issueTypes[Math.floor(Math.random() * issueTypes.length)];
+    
+    const severities = ["low", "medium", "high", "critical"];
+    const severityWeights = [30, 40, 20, 10];
+    const severity = weightedRandom(severities, severityWeights);
+    
+    const isResolved = Math.random() > 0.6; // 40% resolved
+    
+    let description: string;
+    let fieldName: string | null = null;
+    
+    if (issueType === "missing_field") {
+      const fields = ["primaryEmail", "primaryPhone", "wealthBand", "householdId"];
+      fieldName = fields[Math.floor(Math.random() * fields.length)];
+      description = `Required field '${fieldName}' is missing or empty`;
+    } else if (issueType === "stale_data") {
+      description = `Record has not been updated in over 90 days`;
+      fieldName = "syncedAt";
+    } else if (issueType === "duplicate") {
+      description = `Potential duplicate record detected based on email/phone match`;
+    } else {
+      fieldName = Math.random() > 0.5 ? "primaryEmail" : "primaryPhone";
+      description = `Field '${fieldName}' contains invalid format`;
+    }
+    
+    const daysAgo = Math.floor(Math.random() * 60);
+    const createdAt = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
+    
+    qualityIssuesList.push({
+      entityType: entityType,
+      entityId: entityId,
+      sourceSystem: sourceSystem,
+      issueType: issueType,
+      severity: severity,
+      description: description,
+      fieldName: fieldName,
+      resolved: isResolved ? 1 : 0,
+      resolvedAt: isResolved ? new Date(createdAt.getTime() + Math.random() * 14 * 24 * 60 * 60 * 1000) : null,
+      resolvedBy: isResolved ? dataOpsUser?.id || null : null,
+      createdAt: createdAt,
+    });
+  }
+  
+  await db.insert(dataQualityIssues).values(qualityIssuesList);
+  console.log(`✅ Created ${qualityIssuesList.length} data quality issues`);
 
   // ==================== PORTFOLIOS ====================
   console.log("📋 Creating portfolios...");
