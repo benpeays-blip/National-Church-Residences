@@ -237,7 +237,7 @@ export default function DashboardDevDirector() {
         <Card className="p-6" data-testid="card-lybunt-metric">
           <div className="space-y-2">
             <p className="text-sm font-medium text-muted-foreground">
-              LYBUNT Donors
+              "Last Year But Unfortunately Not This" (LYBUNT) Donors
             </p>
             <p 
               className="text-4xl font-bold tabular-nums text-chart-4"
@@ -253,7 +253,7 @@ export default function DashboardDevDirector() {
         <Card className="p-6" data-testid="card-sybunt-metric">
           <div className="space-y-2">
             <p className="text-sm font-medium text-muted-foreground">
-              SYBUNT Donors
+              "Some Years But Unfortunately Not This" (SYBUNT) Donors
             </p>
             <p 
               className="text-4xl font-bold tabular-nums text-chart-3"
