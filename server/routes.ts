@@ -482,6 +482,96 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/data-health", isAuthenticated, async (req, res) => {
+    try {
+      const allPersons = await db.select().from(persons);
+      
+      const totalPersons = allPersons.length;
+      const missingEmails = allPersons.filter((p) => !p.primaryEmail || p.primaryEmail.trim() === "").length;
+      const missingPhones = allPersons.filter((p) => !p.mobilePhone && !p.homePhone && !p.workPhone).length;
+      const incompleteAddresses = allPersons.filter((p) => !p.mailingStreet || !p.mailingCity || !p.mailingState).length;
+      
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      
+      const recentInteractions = await db
+        .select()
+        .from(interactions)
+        .where(gte(interactions.occurredAt, thirtyDaysAgo));
+      
+      const dataFreshness = recentInteractions.length > 0 ? "Good" : "Needs Attention";
+      
+      const unassignedOpportunities = await db
+        .select()
+        .from(opportunities)
+        .where(sql`${opportunities.ownerId} IS NULL OR ${opportunities.ownerId} = ''`);
+      
+      const potentialDuplicates = await db.execute(sql`
+        SELECT COUNT(*) as count FROM (
+          SELECT LOWER(CONCAT(${persons.firstName}, ' ', ${persons.lastName})) as full_name, COUNT(*) as name_count
+          FROM ${persons}
+          GROUP BY LOWER(CONCAT(${persons.firstName}, ' ', ${persons.lastName}))
+          HAVING COUNT(*) > 1
+        ) dupes
+      `);
+      
+      const duplicateCount = Number(potentialDuplicates.rows[0]?.count || 0);
+      
+      const completeProfiles = allPersons.filter((p) => {
+        const hasEmail = p.primaryEmail && p.primaryEmail.trim() !== "";
+        const hasPhone = p.mobilePhone || p.homePhone || p.workPhone;
+        const hasAddress = p.mailingStreet && p.mailingCity && p.mailingState;
+        return hasEmail && hasPhone && hasAddress;
+      }).length;
+      
+      const profileCompleteness = totalPersons > 0 
+        ? Math.round((completeProfiles / totalPersons) * 100)
+        : 100;
+      
+      const emailStatus = missingEmails === 0 ? "Passing" : missingEmails < 5 ? "Warning" : "Failing";
+      const phoneStatus = missingPhones === 0 ? "Passing" : missingPhones < 10 ? "Warning" : "Failing";
+      const addressStatus = incompleteAddresses === 0 ? "Passing" : incompleteAddresses < 10 ? "Warning" : "Failing";
+      const duplicateStatus = duplicateCount === 0 ? "Passing" : duplicateCount < 3 ? "Warning" : "Failing";
+      
+      const overallHealth = Math.min(100, Math.max(0, 100 - missingEmails * 2 - missingPhones - incompleteAddresses - duplicateCount * 5));
+      
+      res.json({
+        metrics: {
+          overallHealth: Math.round(overallHealth),
+          profileCompleteness: Math.round(profileCompleteness),
+          missingEmails,
+          dataFreshness,
+        },
+        qualityChecks: {
+          emailValidation: emailStatus,
+          phoneFormatting: phoneStatus,
+          addressCompleteness: addressStatus,
+          duplicateDetection: duplicateStatus,
+        },
+        actionItems: [
+          ...(missingEmails > 0 ? [{
+            id: "missing-emails",
+            title: `${missingEmails} donors missing email addresses`,
+            description: "Update contact information to improve engagement",
+          }] : []),
+          ...(unassignedOpportunities.length > 0 ? [{
+            id: "unassigned-opps",
+            title: `${unassignedOpportunities.length} opportunities without owners`,
+            description: "Assign portfolio managers to track these prospects",
+          }] : []),
+          ...(Number(duplicateCount) > 0 ? [{
+            id: "duplicates",
+            title: `${duplicateCount} potential duplicate records detected`,
+            description: "Review and merge duplicate donor profiles",
+          }] : []),
+        ],
+      });
+    } catch (error) {
+      console.error("Error fetching data health:", error);
+      res.status(500).json({ message: "Failed to fetch data health metrics" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
