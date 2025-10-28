@@ -4,6 +4,7 @@ import {
   TrendingUp,
   DollarSign,
   Calendar,
+  FileText,
   Database,
   Plug,
   Settings,
@@ -40,6 +41,12 @@ const menuItems = [
     url: "/pipeline",
     icon: TrendingUp,
     roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
+  },
+  {
+    title: "Grants",
+    url: "/grants",
+    icon: FileText,
+    roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "DATA_OPS"],
   },
   {
     title: "Gifts",

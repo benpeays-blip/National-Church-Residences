@@ -12,6 +12,7 @@ import DashboardCEO from "@/pages/dashboard-ceo";
 import Donors from "@/pages/donors";
 import Donor360 from "@/pages/donor-360";
 import Pipeline from "@/pages/pipeline";
+import Grants from "@/pages/grants";
 import Gifts from "@/pages/gifts";
 import Campaigns from "@/pages/campaigns";
 import DataHealth from "@/pages/data-health";
@@ -33,6 +34,7 @@ function Router() {
       <Route path="/donors/:id" component={Donor360} />
       <Route path="/donors" component={Donors} />
       <Route path="/pipeline" component={Pipeline} />
+      <Route path="/grants" component={Grants} />
       <Route path="/gifts" component={Gifts} />
       <Route path="/campaigns" component={Campaigns} />
       <Route path="/data-health" component={DataHealth} />

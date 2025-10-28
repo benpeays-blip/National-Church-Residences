@@ -5,6 +5,7 @@ import {
   households,
   gifts,
   opportunities,
+  grants,
   interactions,
   campaigns,
   portfolios,
@@ -17,6 +18,8 @@ import {
   type InsertGift,
   type Opportunity,
   type InsertOpportunity,
+  type Grant,
+  type InsertGrant,
   type Interaction,
   type InsertInteraction,
   type Campaign,
@@ -43,6 +46,11 @@ export interface IStorage {
   getOpportunity(id: string): Promise<Opportunity | undefined>;
   createOpportunity(opportunity: InsertOpportunity): Promise<Opportunity>;
   updateOpportunity(id: string, opportunity: Partial<InsertOpportunity>): Promise<Opportunity | undefined>;
+  
+  getGrants(ownerId?: string, stage?: string): Promise<Grant[]>;
+  getGrant(id: string): Promise<Grant | undefined>;
+  createGrant(grant: InsertGrant): Promise<Grant>;
+  updateGrant(id: string, grant: Partial<InsertGrant>): Promise<Grant | undefined>;
   
   getInteractions(personId?: string): Promise<Interaction[]>;
   createInteraction(interaction: InsertInteraction): Promise<Interaction>;
@@ -156,6 +164,36 @@ export class DatabaseStorage implements IStorage {
       .update(opportunities)
       .set({ ...opportunity, updatedAt: new Date() })
       .where(eq(opportunities.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async getGrants(ownerId?: string, stage?: string): Promise<Grant[]> {
+    const conditions = [];
+    if (ownerId) conditions.push(eq(grants.ownerId, ownerId));
+    if (stage) conditions.push(eq(grants.stage, stage as any));
+    
+    if (conditions.length > 0) {
+      return db.select().from(grants).where(and(...conditions)).orderBy(grants.applicationDueDate);
+    }
+    return db.select().from(grants).orderBy(grants.applicationDueDate);
+  }
+
+  async getGrant(id: string): Promise<Grant | undefined> {
+    const result = await db.select().from(grants).where(eq(grants.id, id));
+    return result[0];
+  }
+
+  async createGrant(grant: InsertGrant): Promise<Grant> {
+    const result = await db.insert(grants).values(grant).returning();
+    return result[0];
+  }
+
+  async updateGrant(id: string, grant: Partial<InsertGrant>): Promise<Grant | undefined> {
+    const result = await db
+      .update(grants)
+      .set({ ...grant, updatedAt: new Date() })
+      .where(eq(grants.id, id))
       .returning();
     return result[0];
   }

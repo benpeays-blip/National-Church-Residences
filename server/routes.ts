@@ -149,6 +149,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/grants", async (req, res) => {
+    try {
+      const ownerId = req.query.ownerId as string | undefined;
+      const stage = req.query.stage as string | undefined;
+      const grantsList = await storage.getGrants(ownerId, stage);
+      res.json(grantsList);
+    } catch (error) {
+      console.error("Error fetching grants:", error);
+      res.status(500).json({ message: "Failed to fetch grants" });
+    }
+  });
+
+  app.post("/api/grants", isAuthenticated, async (req, res) => {
+    try {
+      const grant = await storage.createGrant(req.body);
+      res.json(grant);
+    } catch (error) {
+      console.error("Error creating grant:", error);
+      res.status(500).json({ message: "Failed to create grant" });
+    }
+  });
+
+  app.patch("/api/grants/:id", isAuthenticated, async (req, res) => {
+    try {
+      const grant = await storage.updateGrant(req.params.id, req.body);
+      if (!grant) {
+        return res.status(404).json({ message: "Grant not found" });
+      }
+      res.json(grant);
+    } catch (error) {
+      console.error("Error updating grant:", error);
+      res.status(500).json({ message: "Failed to update grant" });
+    }
+  });
+
   app.get("/api/interactions", isAuthenticated, async (req, res) => {
     try {
       const personId = req.query.personId as string | undefined;

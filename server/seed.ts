@@ -5,6 +5,7 @@ import {
   persons,
   gifts,
   opportunities,
+  grants,
   interactions,
   campaigns,
   portfolios,
@@ -53,6 +54,7 @@ async function seed() {
   await db.delete(integrations);
   await db.delete(portfolios);
   await db.delete(interactions);
+  await db.delete(grants);
   await db.delete(opportunities);
   await db.delete(gifts);
   await db.delete(campaigns);
@@ -1086,6 +1088,187 @@ async function seed() {
   await db.insert(opportunities).values(opportunitiesList);
   console.log(`✅ Created ${opportunitiesList.length} opportunities`);
 
+  // ==================== GRANTS ====================
+  console.log("📝 Creating grants...");
+
+  const devDirector = usersList.find((u) => u.role === "DEV_DIRECTOR");
+  const dataOpsUser = usersList.find((u) => u.role === "DATA_OPS");
+  
+  // Realistic foundation grants in various stages
+  const grantsList = await db.insert(grants).values([
+    // LOI Stage - Letter of Intent submitted, waiting for feedback
+    {
+      funderName: "Gates Foundation",
+      stage: "LOI",
+      purpose: "Education program expansion and curriculum development",
+      askAmount: "500000.00",
+      ownerId: devDirector?.id,
+      loiDueDate: new Date("2025-01-15"),
+      applicationDueDate: new Date("2025-03-15"),
+      decisionDate: new Date("2025-06-01"),
+      notes: "LOI submitted on time. Program officer expressed interest in our outcomes data.",
+      campaignId: campaignsList[5].id, // Capital Campaign
+      sourceSystem: "Salesforce",
+      sourceRecordId: "SF-GRANT-100234",
+      syncedAt: new Date(),
+      dataQualityScore: 92,
+    },
+    // Submitted - Full proposal submitted, in review
+    {
+      funderName: "Kresge Foundation",
+      stage: "Submitted",
+      purpose: "Capital improvements and facility upgrades",
+      askAmount: "250000.00",
+      ownerId: devDirector?.id,
+      loiDueDate: new Date("2024-10-01"),
+      applicationDueDate: new Date("2024-12-15"),
+      decisionDate: new Date("2025-02-28"),
+      notes: "Full application submitted Dec 12. Site visit scheduled for Feb 5.",
+      campaignId: campaignsList[5].id, // Capital Campaign
+      sourceSystem: "Salesforce",
+      sourceRecordId: "SF-GRANT-100567",
+      syncedAt: new Date(),
+      dataQualityScore: 95,
+    },
+    // Submitted - Another proposal in review
+    {
+      funderName: "Ford Foundation",
+      stage: "Submitted",
+      purpose: "Community outreach and engagement initiatives",
+      askAmount: "150000.00",
+      ownerId: devDirector?.id,
+      loiDueDate: new Date("2024-11-01"),
+      applicationDueDate: new Date("2025-01-10"),
+      decisionDate: new Date("2025-03-31"),
+      notes: "Application submitted Jan 8. Waiting on decision by end of March.",
+      campaignId: campaignsList[0].id, // Annual Fund
+      sourceSystem: "Salesforce",
+      sourceRecordId: "SF-GRANT-100789",
+      syncedAt: new Date(),
+      dataQualityScore: 93,
+    },
+    // Awarded - Grant won, report due
+    {
+      funderName: "MacArthur Foundation",
+      stage: "Awarded",
+      purpose: "Youth development and mentorship program",
+      askAmount: "300000.00",
+      awardedAmount: "300000.00",
+      ownerId: devDirector?.id,
+      loiDueDate: new Date("2024-03-01"),
+      applicationDueDate: new Date("2024-05-15"),
+      decisionDate: new Date("2024-08-01"),
+      reportDueDate: new Date("2025-08-01"),
+      notes: "Full award received! First payment deposited Sept 2024. Annual report due Aug 2025.",
+      campaignId: campaignsList[0].id, // Annual Fund
+      sourceSystem: "Salesforce",
+      sourceRecordId: "SF-GRANT-99834",
+      syncedAt: new Date(),
+      dataQualityScore: 98,
+    },
+    // Awarded - Another successful grant
+    {
+      funderName: "Walton Family Foundation",
+      stage: "Awarded",
+      purpose: "Scholarship fund and student support services",
+      askAmount: "200000.00",
+      awardedAmount: "175000.00",
+      ownerId: devDirector?.id,
+      loiDueDate: new Date("2024-02-01"),
+      applicationDueDate: new Date("2024-04-01"),
+      decisionDate: new Date("2024-07-15"),
+      reportDueDate: new Date("2025-07-15"),
+      notes: "Awarded $175k (asked $200k). Program running smoothly, mid-year report submitted.",
+      campaignId: campaignsList[0].id, // Annual Fund
+      sourceSystem: "Salesforce",
+      sourceRecordId: "SF-GRANT-99921",
+      syncedAt: new Date(),
+      dataQualityScore: 96,
+    },
+    // Research - Early stage grant prospect
+    {
+      funderName: "Robert Wood Johnson Foundation",
+      stage: "Research",
+      purpose: "Health and wellness program development",
+      askAmount: "400000.00",
+      ownerId: dataOpsUser?.id,
+      loiDueDate: new Date("2025-04-01"),
+      notes: "Researching alignment with foundation priorities. Initial outreach planned for Feb.",
+      sourceSystem: "Salesforce",
+      sourceRecordId: "SF-GRANT-101023",
+      syncedAt: new Date(),
+      dataQualityScore: 78,
+    },
+    // Research - Another early prospect
+    {
+      funderName: "Hewlett Foundation",
+      stage: "Research",
+      purpose: "Arts and culture programming expansion",
+      askAmount: "125000.00",
+      ownerId: devDirector?.id,
+      loiDueDate: new Date("2025-05-15"),
+      notes: "Good mission alignment. Reviewing past grantees and application guidelines.",
+      sourceSystem: "Salesforce",
+      sourceRecordId: "SF-GRANT-101145",
+      syncedAt: new Date(),
+      dataQualityScore: 75,
+    },
+    // Declined - Not funded this cycle
+    {
+      funderName: "Mellon Foundation",
+      stage: "Declined",
+      purpose: "Archives digitization project",
+      askAmount: "100000.00",
+      ownerId: devDirector?.id,
+      loiDueDate: new Date("2024-06-01"),
+      applicationDueDate: new Date("2024-08-01"),
+      decisionDate: new Date("2024-10-15"),
+      notes: "Declined Oct 2024. Feedback: Strong proposal but limited funding. Encouraged to reapply next cycle.",
+      sourceSystem: "Salesforce",
+      sourceRecordId: "SF-GRANT-99456",
+      syncedAt: new Date(),
+      dataQualityScore: 88,
+    },
+    // Report Due - Grant report deadline approaching
+    {
+      funderName: "Packard Foundation",
+      stage: "ReportDue",
+      purpose: "Environmental education and sustainability initiatives",
+      askAmount: "180000.00",
+      awardedAmount: "180000.00",
+      ownerId: devDirector?.id,
+      loiDueDate: new Date("2023-11-01"),
+      applicationDueDate: new Date("2024-01-15"),
+      decisionDate: new Date("2024-04-01"),
+      reportDueDate: new Date("2025-04-01"),
+      notes: "Final report due April 1, 2025. Gathering program outcomes and financials.",
+      campaignId: campaignsList[0].id, // Annual Fund
+      sourceSystem: "Salesforce",
+      sourceRecordId: "SF-GRANT-98567",
+      syncedAt: new Date(),
+      dataQualityScore: 94,
+    },
+    // Submitted - Healthcare grant
+    {
+      funderName: "Kaiser Permanente Foundation",
+      stage: "Submitted",
+      purpose: "Community health screening and wellness workshops",
+      askAmount: "75000.00",
+      ownerId: devDirector?.id,
+      loiDueDate: new Date("2024-12-01"),
+      applicationDueDate: new Date("2025-01-31"),
+      decisionDate: new Date("2025-04-15"),
+      notes: "Application submitted Jan 28. Strong community health outcomes data included.",
+      campaignId: campaignsList[0].id, // Annual Fund
+      sourceSystem: "Salesforce",
+      sourceRecordId: "SF-GRANT-100890",
+      syncedAt: new Date(),
+      dataQualityScore: 91,
+    },
+  ]).returning();
+  
+  console.log(`✅ Created ${grantsList.length} grants across all stages`);
+
   // ==================== INTERACTIONS ====================
   console.log("💬 Creating interactions...");
 
@@ -1262,7 +1445,6 @@ async function seed() {
   // ==================== DATA QUALITY ISSUES ====================
   console.log("⚠️  Creating data quality issues...");
   
-  const dataOpsUser = usersList.find(u => u.role === "DATA_OPS");
   const qualityIssuesList: any[] = [];
   
   // Create 15-20 sample data quality issues

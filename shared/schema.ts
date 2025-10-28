@@ -61,6 +61,15 @@ export const dataQualitySeverityEnum = pgEnum("data_quality_severity", [
   "critical",
 ]);
 
+export const grantStageEnum = pgEnum("grant_stage", [
+  "Research",
+  "LOI",
+  "Submitted",
+  "Awarded",
+  "Declined",
+  "ReportDue",
+]);
+
 // Session storage table (required for Replit Auth)
 export const sessions = pgTable(
   "sessions",
@@ -172,6 +181,31 @@ export const opportunities = pgTable("opportunities", {
   sourceRecordId: varchar("source_record_id"),
   syncedAt: timestamp("synced_at"),
   dataQualityScore: integer("data_quality_score"), // 0-100
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Grants
+export const grants = pgTable("grants", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  funderName: varchar("funder_name").notNull(),
+  funderContactId: varchar("funder_contact_id").references(() => persons.id), // Optional funder contact
+  stage: grantStageEnum("stage").notNull().default("Research"),
+  purpose: text("purpose"), // Grant purpose/designation
+  askAmount: decimal("ask_amount", { precision: 10, scale: 2 }),
+  awardedAmount: decimal("awarded_amount", { precision: 10, scale: 2 }),
+  campaignId: varchar("campaign_id").references(() => campaigns.id),
+  ownerId: varchar("owner_id").references(() => users.id), // Grant writer/manager
+  loiDueDate: timestamp("loi_due_date"),
+  applicationDueDate: timestamp("application_due_date"),
+  decisionDate: timestamp("decision_date"),
+  reportDueDate: timestamp("report_due_date"),
+  notes: text("notes"),
+  // Integration metadata
+  sourceSystem: varchar("source_system"),
+  sourceRecordId: varchar("source_record_id"),
+  syncedAt: timestamp("synced_at"),
+  dataQualityScore: integer("data_quality_score"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -311,6 +345,21 @@ export const opportunitiesRelations = relations(opportunities, ({ one }) => ({
   }),
 }));
 
+export const grantsRelations = relations(grants, ({ one }) => ({
+  funderContact: one(persons, {
+    fields: [grants.funderContactId],
+    references: [persons.id],
+  }),
+  campaign: one(campaigns, {
+    fields: [grants.campaignId],
+    references: [campaigns.id],
+  }),
+  owner: one(users, {
+    fields: [grants.ownerId],
+    references: [users.id],
+  }),
+}));
+
 export const interactionsRelations = relations(interactions, ({ one }) => ({
   person: one(persons, {
     fields: [interactions.personId],
@@ -433,6 +482,12 @@ export const insertDataQualityIssueSchema = createInsertSchema(dataQualityIssues
   resolvedAt: true,
 });
 
+export const insertGrantSchema = createInsertSchema(grants).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
@@ -456,3 +511,5 @@ export type InsertIntegrationSyncRun = z.infer<typeof insertIntegrationSyncRunSc
 export type IntegrationSyncRun = typeof integrationSyncRuns.$inferSelect;
 export type InsertDataQualityIssue = z.infer<typeof insertDataQualityIssueSchema>;
 export type DataQualityIssue = typeof dataQualityIssues.$inferSelect;
+export type InsertGrant = z.infer<typeof insertGrantSchema>;
+export type Grant = typeof grants.$inferSelect;
