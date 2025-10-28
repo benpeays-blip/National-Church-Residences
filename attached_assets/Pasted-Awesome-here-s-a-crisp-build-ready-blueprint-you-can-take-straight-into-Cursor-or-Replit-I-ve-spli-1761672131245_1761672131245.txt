@@ -1,0 +1,1492 @@
+Awesome—here’s a crisp, build-ready blueprint you can take straight into Cursor or Replit. I’ve split it into integrations, data model, scoring/insights, and the dashboard UI, then finished with a minimal monorepo scaffold, example schemas, and an MVP build plan.
+1) System Overview (Three Layers)
+Integration Layer
+
+
+OAuth/API and webhooks to CRMs (Raiser’s Edge NXT, Salesforce NPSP, Virtuous), wealth tools (WealthEngine/iWave/DonorSearch), email tools (Mailchimp/HubSpot), event tools, spreadsheets.
+
+
+ETL jobs normalize records into a canonical model (People, Orgs, Gifts, Interactions, Portfolios, Campaigns, Grants).
+
+
+Intelligence Layer
+
+
+Entity resolution (dedupe), enrichment, donor and portfolio scoring, pipeline forecasting, “Next Best Action” rules/ML, data quality monitors.
+
+
+Action Layer (UI)
+
+
+Role-based dashboards for MGOs, Dev Directors, CEOs.
+
+
+Daily task lists, pipeline Kanban, donor 360, org-level KPIs, data health.
+
+
+2) Integrations Architecture
+Connectors (per system)
+
+
+Auth: OAuth 2.0 (Salesforce, HubSpot); Vendor-specific tokens (Blackbaud); API keys (Wealth tools).
+
+
+Sync modes:
+
+
+Webhook-first when available (Salesforce Platform Events, HubSpot webhooks).
+
+
+Fallback polling by “updatedSince” windows (idempotent upserts).
+
+
+Rate-limit + retry: Exponential backoff; per-connector concurrency controls.
+
+
+Idempotency:
+
+
+Upsert by (external_system, external_id).
+
+
+Maintain sync_bookmarks (ISO datetime per connector and resource).
+
+
+Data contracts
+
+
+Map source fields to canonical schema via per-connector mapping tables.
+
+
+Preserve raw payloads in raw_ingest (JSONB) for audit/troubleshooting.
+
+
+Data hygiene
+
+
+Dedup: deterministic keys (email, phone, address, name+jaro_winkler), plus clerical merge queue.
+
+
+Validation: email syntax, phone E.164, address normalization where available.
+
+
+3) Canonical Data Model (Core Entities)
+Person
+
+
+id, first_name, last_name, preferred_name, emails[], phones[], addresses[], household_id, org_id (employer), wealth_capacity (range), affinity_tags[], privacy_flags.
+
+
+Organization
+
+
+id, name, type (Foundation, Corp, Faith Org), ein, hq_address, website, capacity_estimate.
+
+
+Household
+
+
+Grouping for spouses/children; rollups for household giving and capacity.
+
+
+DonorProfile
+
+
+Person/Household link to wealth/enrichment artifacts (net worth band, real estate flags, philanthropic history, DAF usage).
+
+
+Gift
+
+
+id, donor_id or household_id, amount, currency, date_received, campaign_id, designation, payment_method, soft_credit_to[].
+
+
+Pledge/Opportunity
+
+
+id, donor_id, stage (Prospect→Cultivation→Ask→Steward→Renewal), ask_amount, close_date, probability.
+
+
+Interaction (Moves)
+
+
+id, donor_id, type (email open, meeting, call, event), timestamp, owner_id, notes, source.
+
+
+Portfolio
+
+
+id, owner_id (MGO), name, prospect_ids[], capacity_mix, coverage_rate.
+
+
+Campaign/Event
+
+
+id, name, type (Annual, Year-End, Gala, P2P), start/end, targets, costs, ROI.
+
+
+Grant (Institutional)
+
+
+id, funder_org_id, program, status (LOI, Submitted, Awarded), amount, reporting_requirements[], deadlines.
+
+
+DataHealth
+
+
+Per entity data quality scores; missing fields; dedupe collisions.
+
+
+Notes:
+Use Postgres for relational truth; JSONB columns for flexible source payloads and enrichment blobs.
+
+
+Multi-tenancy: org_tenant_id prefix on every table row; row-level security (RLS) enabled.
+
+
+4) Scoring & Insights (Intelligence Layer)
+Donor Engagement Score (0–100)
+
+
+Inputs: last gift recency, frequency, total amount; recent interactions (opens/clicks/meetings), event attendance; role-based weighting.
+
+
+Example (normalize each input 0–1):
+
+
+Recency (25%), Frequency (20%), Monetary (25%), Recent Engagement (20%), Relationship Depth/MGO notes sentiment (10%).
+
+
+Capacity Score (0–100)
+
+
+From wealth providers (e.g., P2–P5 bands) mapped to numeric, blended with owned assets proxies and household indicators.
+
+
+Affinity Score (0–100)
+
+
+Topical tags matched to program designations; NLP classifier over notes + email content for cause affinity.
+
+
+Next Best Action
+
+
+Rules first (fast to ship), ML later.
+
+
+Rules examples:
+
+
+If Engagement ≥ 70 AND Recency > 180 days → “Schedule cultivation call.”
+
+
+If Event attended within 7 days AND capacity ≥ 60 → “Send tailored follow-up + soft ask.”
+
+
+If LYBUNT and open rate ≥ 40% → “Personalized renewal email from MGO.”
+
+
+Forecasting
+
+
+Opportunity weighted pipeline: Σ(amount * probability) by month/quarter.
+
+
+Cohort projections for annual fund and monthly donors.
+
+
+Data Health Signals
+
+
+% records missing email/phone, duplicate rate, bounce rates, webhook errors, connector latency.
+
+
+5) Role-Based Dashboards (Action Layer)
+Major Gift Officer
+
+
+“Today” box: Top 10 priorities with reasons.
+
+
+My Portfolio: Kanban by stage; time-in-stage; coverage %.
+
+
+Donor 360: gifts, interactions timeline, capacity, notes, “next action,” quick add interaction.
+
+
+Development Director
+
+
+Pipeline health by owner/stage.
+
+
+Coverage, velocity, forecast vs. goal, LYBUNT/SYBUNT.
+
+
+Team activity (calls, visits, proposals).
+
+
+Data health panel.
+
+
+CEO/Board
+
+
+YTD vs. goal; 90-day forecast; top campaigns/events.
+
+
+Top 25 prospects status.
+
+
+Acquisition/retention trend; monthly donor growth.
+
+
+Institutional/Grants
+
+
+Grant pipeline with deadlines.
+
+
+Award rate, report schedule, renewal calendar.
+
+
+6) Security, Privacy, Compliance
+AuthN: OIDC (Clerk/Auth0/Supabase Auth) with SSO.
+
+
+AuthZ: Org + role-based RBAC; row-level security by org_tenant_id.
+
+
+PII: Encryption at rest (Postgres TDE or column-level), field-level encryption for SSNs if ever needed (ideally avoid storing).
+
+
+Audit logs: Every read/write on sensitive tables; connector access logs.
+
+
+Secrets: Stored in platform vault; never in code.
+
+
+Data residency: S3/MinIO buckets per tenant if needed; export/delete workflows (GDPR-style).
+
+
+7) Tech Stack (Cursor/Replit Friendly)
+Frontend
+
+
+Next.js 14 (App Router) + TypeScript + Tailwind + shadcn/ui.
+
+
+React Query (TanStack) for data fetching.
+
+
+Charting: Recharts.
+
+
+Backend
+
+
+Fastify (TypeScript) or Next.js API routes.
+
+
+tRPC or REST (OpenAPI) for typed contracts.
+
+
+Prisma ORM on Postgres.
+
+
+BullMQ (Redis) for jobs (ETL, scoring, webhooks).
+
+
+Node workers (separate process) for connectors and scheduled sync.
+
+
+Storage
+
+
+Postgres (primary), Redis (queue/cache), S3/MinIO (raw payloads, exports).
+
+
+DevOps (simple to start)
+
+
+Docker Compose for local: postgres, redis, minio, web, worker.
+
+
+Migrations with Prisma.
+
+
+Seed scripts for demo data.
+
+
+8) Minimal Monorepo Structure
+/apps
+  /web            # Next.js app (UI + public routes)
+  /api            # Fastify (or Next API routes) + tRPC/REST
+  /worker         # BullMQ processors, ETL, scoring
+/packages
+  /core           # Types, domain models, scoring rules
+  /connectors     # CRM/Wealth/Email connectors
+  /ui             # Shared UI components (shadcn wrappers)
+  /db             # Prisma schema and client
+/infra
+  docker-compose.yml
+  env.example
+
+9) Example Prisma Schema (Core Slice)
+// packages/db/schema.prisma
+datasource db { provider = "postgresql"; url = env("DATABASE_URL") }
+generator client { provider = "prisma-client-js" }
+
+model Tenant {
+  id           String  @id @default(cuid())
+  name         String
+  createdAt    DateTime @default(now())
+  users        User[]
+  people       Person[]
+}
+
+model User {
+  id           String  @id @default(cuid())
+  tenantId     String
+  tenant       Tenant  @relation(fields: [tenantId], references: [id])
+  email        String  @unique
+  role         UserRole
+  createdAt    DateTime @default(now())
+}
+
+enum UserRole {
+  ADMIN
+  CEO
+  DEV_DIRECTOR
+  MGO
+  DATA_OPS
+}
+
+model Person {
+  id            String   @id @default(cuid())
+  tenantId      String
+  tenant        Tenant   @relation(fields: [tenantId], references: [id])
+  firstName     String
+  lastName      String
+  primaryEmail  String?
+  primaryPhone  String?
+  householdId   String?
+  wealthBand    String?  // e.g. WE P2-P5
+  capacityScore Int?     // 0-100
+  engagementScore Int?   // 0-100
+  affinityScore Int?     // 0-100
+  externalRefs  ExternalRef[]
+  gifts         Gift[]
+  interactions  Interaction[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model ExternalRef {
+  id         String  @id @default(cuid())
+  tenantId   String
+  personId   String?
+  person     Person? @relation(fields: [personId], references: [id])
+  system     String  // "salesforce", "blackbaud", "wealthengine", etc.
+  externalId String
+  raw        Json?
+  createdAt  DateTime @default(now())
+  @@index([tenantId, system, externalId], name: "ext_unique", type: Hash)
+}
+
+model Gift {
+  id         String   @id @default(cuid())
+  tenantId   String
+  personId   String?
+  amount     Decimal
+  currency   String   @default("USD")
+  receivedAt DateTime
+  campaignId String?
+  createdAt  DateTime @default(now())
+}
+
+model Interaction {
+  id         String   @id @default(cuid())
+  tenantId   String
+  personId   String
+  type       String   // "email_open","meeting","call","event"
+  occurredAt DateTime
+  ownerId    String?
+  notes      String?
+  source     String?
+  createdAt  DateTime @default(now())
+}
+
+model Opportunity {
+  id          String   @id @default(cuid())
+  tenantId    String
+  personId    String
+  stage       String   // Prospect,Cultivation,Ask,Steward,Renewal
+  askAmount   Decimal?
+  probability Int?     // 0-100
+  closeDate   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+10) Example APIs (REST or tRPC)
+GET /api/dashboard/mgo → top prospects, tasks, pipeline
+
+
+GET /api/person/:id → donor 360 (profile, gifts, interactions, score, next action)
+
+
+POST /api/interaction → log call/meeting; triggers score update
+
+
+GET /api/pipeline → grouped by stage/owner; forecast
+
+
+GET /api/health → connector status, data quality
+
+
+POST /api/connectors/:system/oauth/callback → finish auth
+
+
+POST /api/webhooks/:system → receive events; enqueue job
+
+
+11) Worker Jobs (BullMQ)
+connector.sync.salesforce.contacts (bookmark, paginate, upsert)
+
+
+connector.sync.blackbaud.gifts
+
+
+connector.sync.wealthengine.enrichment
+
+
+scoring.update.person (recompute E/C/A scores)
+
+
+nba.generate.tasks (daily next-best actions)
+
+
+health.scan (missing fields, duplicates)
+
+
+forecast.refresh (nightly)
+
+
+12) Next-Best-Action (Initial Rules Example)
+For each Person nightly:
+
+
+If engagementScore >= 70 AND lastGift > 180d → “Schedule cultivation call this week.”
+
+
+If opened_last_3_emails = true AND capacityScore >= 60 → “Send tailored update + invite to briefing.”
+
+
+If is_LYBUNT → “Personal renewal outreach; include impact stat from last gift.”
+
+
+If time_in_stage > 90d → “Advance stage or create meeting to unblock.”
+
+
+Store NBAs as Task records with reason, priority, dueDate, ownerId.
+13) UI Composition (Next.js + shadcn)
+Global
+
+
+Left nav: Dashboard, Portfolio, Donors, Pipeline, Grants, Health, Settings.
+
+
+Top bar: Tenant switcher, search, notifications.
+
+
+Components
+
+
+DonorCard (name, capacity band, badges, last gift, last touch, next action).
+
+
+KpiStat (value, delta, sparkline).
+
+
+PipelineKanban (drag stage, auto-log changes).
+
+
+InteractionTimeline (vertical timeline).
+
+
+ScoringBadges (Engagement/Capacity/Affinity pills with tooltips).
+
+
+HealthWidget (missing emails, dedup alerts, connector status).
+
+
+Key Screens
+
+
+MGO “Today”: tasks list, top 10 prospects (why), quick-add notes, one-click email templates.
+
+
+CEO: revenue YTD vs goal, forecast 90-day, top 25 prospects status, campaign ROI.
+
+
+14) MVP Scope (8–12 weeks, scrappy but strong)
+Must-Have
+
+
+Tenancy, Auth, RBAC
+
+
+Connector: Salesforce (contacts/opportunities) OR Raiser’s Edge (constituents/gifts)
+
+
+Connector: Mailchimp (basic engagement)
+
+
+Canonical model + dedupe light
+
+
+Scores (E/C/A) with rules
+
+
+MGO dashboard + Donor 360 + Pipeline Kanban
+
+
+CEO dashboard KPIs + forecast
+
+
+Data Health panel (basic)
+
+
+Nice-to-Have
+
+
+Wealth tool import (flat-file or API)
+
+
+Grant pipeline basics
+
+
+Slack/Teams notifications for NBAs
+
+
+15) Data Governance & Admin
+Field-level mapping UI per connector.
+
+
+Manual merge tool for duplicates.
+
+
+Export your data anytime (CSV/Parquet).
+
+
+SLA monitors: last successful sync, latency, error rate.
+
+
+16) How This Wins the Demo
+Show a single MGO logging in and seeing:
+
+
+“Top Ten” with human-readable reasons.
+
+
+Clicking a donor reveals 360 + a suggested email draft.
+
+
+Show CEO flipping to org view:
+
+
+YTD vs goal, 90-day forecast, bottlenecks by stage.
+
+
+One click into “data health” with concrete fixes.
+
+This is “fundraising architecture” that underpins nearly every successful nonprofit, whether it’s a global foundation or a small local charity. Below is the comprehensive, professional-grade framework — the 80% “core” model that nearly all nonprofits rely on (implicitly or explicitly) to raise money in 2025 and beyond.
+This framework organizes the entire fundraising ecosystem across audience segments, strategic tiers, methods, and supporting infrastructure — from $10/month grassroots gifts to multimillion-dollar institutional partnerships.
+
+I. The Comprehensive Nonprofit Fundraising Framework (2025)
+1. The Fundraising Pyramid (Donor Spectrum)
+At its core, fundraising is a pyramid or ladder of engagement. Each tier has distinct strategies, messaging, and ROI expectations.
+Tier
+Typical Gift Range
+Donor Type
+Primary Tactics
+Objective
+Base: Mass & Digital Giving
+$1–$999
+General public, small donors
+Email appeals, website giving forms, social media ads, crowdfunding, text-to-give, monthly giving programs
+Acquire broad base of recurring support
+Tier 2: Mid-Level Donors
+$1,000–$9,999
+Engaged individuals
+Personalized outreach, small events, direct mail, “insider updates,” semi-personal stewardship
+Cultivate long-term loyalty and identify upgrade potential
+Tier 3: Major Donors
+$10,000–$999,999
+Affluent individuals, families, foundations
+Dedicated major gift officers, personalized cultivation, in-person visits, customized proposals
+Deepen relationship and align with mission impact
+Tier 4: Principal & Transformational Gifts
+$1M+
+High-net-worth individuals, family offices
+Executive-level cultivation, bespoke investment-level giving strategies
+Drive transformational impact and legacy gifts
+Tier 5: Institutional & Planned Giving
+Varies
+Foundations, corporations, donor-advised funds, estate donors
+Grants, sponsorships, cause-marketing, bequests, endowments
+Sustain long-term organizational stability
+
+
+II. The Fundraising Lifecycle (Pipeline)
+Every professional fundraiser manages a version of this five-stage pipeline — whether for individuals, foundations, or corporations.
+Stage
+Description
+Key Tools / Tactics
+1. Prospecting
+Identify and qualify potential donors or grantors
+Wealth screening (WealthEngine, DonorSearch, iWave), CRM segmentation, LinkedIn research, internal referrals
+2. Cultivation
+Build relationship and align interests with mission
+Email updates, coffee meetings, tours, impact reports, small events
+3. Solicitation
+Present giving opportunity and secure commitment
+Personalized ask, proposal, campaign event, major gift conversation
+4. Stewardship
+Thank, report, and show tangible impact
+Donor reports, recognition, personalized thank-you notes, annual updates
+5. Renewal / Upgrade
+Invite deeper engagement or next-level giving
+Multi-year commitments, legacy gifts, matching campaigns, membership upgrades
+
+
+III. Core Fundraising Channels
+These are the operational “arms” of a healthy fundraising department. Virtually all nonprofits use some combination of these.
+1. Individual Giving
+Annual Fund / Mass Appeals – Email, direct mail, social, SMS, DRTV
+
+
+Monthly Recurring Program – “Join the Circle,” auto-billing donor clubs
+
+
+Peer-to-Peer Fundraising – Ambassadors raise funds via social or events
+
+
+Major Gifts Program – Relationship-driven, managed by Major Gift Officers
+
+
+Planned Giving – Bequests, charitable trusts, beneficiary designations
+
+
+2. Institutional Giving
+Foundation Grants – Research, LOIs, proposals, reports
+
+
+Corporate Partnerships – Sponsorships, employee giving, cause marketing
+
+
+Faith-Based / Government Grants – Programmatic or humanitarian funding
+
+
+Donor-Advised Funds (DAFs) – Fastest-growing giving vehicle among HNWIs
+
+
+3. Campaigns
+Capital Campaigns – Facility, endowment, or program expansion
+
+
+Matching Gift Campaigns – Leverage challenge gifts for momentum
+
+
+Digital Campaigns – #GivingTuesday, Year-End Giving, social activation
+
+
+Legacy Campaigns – Inspire estate planning and long-term commitments
+
+
+4. Events
+Signature Galas / Auctions
+
+
+Golf Tournaments / Runs / Walks
+
+
+Private Dinners / Briefings
+
+
+Virtual & Hybrid Events
+
+
+Mission Trips / Immersive Experiences (for faith or humanitarian orgs)
+
+
+5. Membership & Community Programs
+Tiered giving clubs, affinity groups (“Founder’s Circle,” “Partners in Hope”)
+
+
+Exclusive content, behind-the-scenes access, recognition events
+
+
+
+IV. Infrastructure & Enablement Systems
+1. CRM / Database of Record
+Common Tools: Blackbaud Raiser’s Edge, Salesforce NPSP, Virtuous, Neon, Kindful
+
+
+Tracks all donor data, giving history, and engagement activity
+
+
+2. Wealth Screening & Data Intelligence
+Common Tools: WealthEngine, iWave, DonorSearch, Windfall, Blackbaud Target Analytics
+
+
+Identify high-capacity prospects and estimate gift potential
+
+
+3. Marketing Automation & Content Systems
+Email automation (Mailchimp, HubSpot, Campaign Monitor)
+
+
+Personalized donor journeys
+
+
+Integration with CRM for trigger-based communication
+
+
+4. Prospect Research & Portfolio Management
+Donor qualification scoring
+
+
+Portfolio balancing (by capacity, affinity, engagement)
+
+
+Moves management dashboards
+
+
+5. Reporting & Analytics
+Key metrics: Retention rate, acquisition cost, ROI by channel, LYBUNT/SYBUNT analysis
+
+
+Dashboards for leadership, development, and board reporting
+
+
+
+V. Strategic Campaign Layer (Calendarized Execution)
+Quarter
+Primary Focus
+Key Campaigns
+Q1
+Donor retention & stewardship
+Annual reports, thank-you campaigns
+Q2
+Mid-year engagement & cultivation
+Spring appeal, small events
+Q3
+Major gift cultivation
+Dinners, tours, “quiet phase” of campaigns
+Q4
+Year-end giving & acquisition
+#GivingTuesday, holiday campaigns
+
+
+VI. Donor Experience & Communications
+Core Principles
+Mission Clarity: Every communication links back to impact and outcomes.
+
+
+Emotional Storytelling: People give to people, not institutions.
+
+
+Transparency & Trust: 100% accountability for how funds are used.
+
+
+Personalization: Tailored based on donor’s giving history and interests.
+
+
+Reporting Back: Show results early and often.
+
+
+Key Deliverables
+Impact newsletters
+
+
+Annual report or “Impact Book”
+
+
+Donor journey emails
+
+
+Thank-you videos from beneficiaries
+
+
+Recognition walls, naming opportunities
+
+
+
+VII. Organizational Roles
+Role
+Primary Responsibility
+Chief Development Officer
+Oversees strategy and revenue growth
+Major Gift Officers
+Manage 100–150 key relationships each
+Annual Fund Manager
+Mass giving programs and recurring donors
+Grant Writer / Institutional Officer
+Foundation and corporate proposals
+Prospect Researcher / Analyst
+Wealth screening and portfolio management
+Donor Relations Manager
+Stewardship, events, and communications
+Data Manager / CRM Admin
+Database integrity and reporting
+
+
+VIII. Modern Trends (2025 and Beyond)
+Data-Driven Personalization: AI-driven donor scoring and segmentation
+
+
+Digital Transformation: Seamless mobile giving, donor portals, text-to-donate
+
+
+Integrated Storytelling: Video, podcasts, social storytelling aligned with campaigns
+
+
+Subscription Mindset: Treat monthly donors like members with exclusive content
+
+
+Philanthropic Investing: Blending giving with impact investment models
+
+
+Donor Advised Funds (DAFs): Fastest growing source of major gifts
+
+
+Collaborative Giving Circles: Peer networks pooling gifts around causes
+
+
+AI & Predictive Analytics: Identify donor upgrade potential automatically
+
+
+Sustainability & Transparency: Donors want measurable, verifiable impact
+
+
+
+IX. Key Metrics of Fundraising Health
+Category
+Metric
+Target / Benchmark
+Donor Retention
+% of donors giving year over year
+45–55% (mass); 75%+ (major)
+Cost to Raise $1
+Efficiency ratio
+<$0.25 for major gifts; <$0.35 for digital
+Donor Lifetime Value (LTV)
+Average donor’s total giving
+Track by tier
+Pipeline Velocity
+Time from prospect to close
+6–18 months typical for major gifts
+Portfolio Coverage
+% of major prospects actively managed
+80%+
+
+
+X. The Unified Fundraising Engine
+Bringing it together, the modern nonprofit’s fundraising system is an integrated machine with these essential layers:
+Data & Intelligence Layer – CRM + Wealth + Analytics
+
+
+Engagement Layer – Campaigns + Content + Events
+
+
+Relationship Layer – Personal cultivation and stewardship
+
+
+Revenue Layer – Individual + Institutional + Planned gifts
+
+
+Optimization Layer – AI insights, automation, testing, and ROI tracking
+
+
+
+Would you like the next step to be:
+A visual “Fundraising Operating Model” (pyramid + pipeline + systems map) — like a blueprint,
+
+
+Or a diagnostic framework that measures how mature a given nonprofit is across each of these categories (so you can optimize or benchmark them)?
+
+
+
+
+
+
+Yes—Cursor for full dev, and you can absolutely port slices to Replit for demos. Let’s spin up the project in Cursor now with a clean, production-ready scaffold you can paste in.
+
+1) Create the monorepo
+Terminal (Cursor):
+# init workspace
+mkdir fundraising-intel && cd fundraising-intel
+git init
+
+# package manager
+npm i -g pnpm
+pnpm init
+
+# workspaces
+printf "packages:\n  - 'apps/*'\n  - 'packages/*'\n" > pnpm-workspace.yaml
+
+Root package.json
+{
+  "name": "fundraising-intel",
+  "private": true,
+  "packageManager": "pnpm@9.0.0",
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "format": "pnpm -r format",
+    "db:push": "pnpm -w prisma db push",
+    "db:migrate": "pnpm -w prisma migrate dev",
+    "db:seed": "pnpm -w tsx packages/db/seed.ts",
+    "docker:up": "docker compose up -d",
+    "docker:down": "docker compose down -v"
+  }
+}
+
+
+2) Infra & env
+/infra/docker-compose.yml
+version: "3.9"
+services:
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: fundraising
+    ports: ["5432:5432"]
+    volumes: [ "pgdata:/var/lib/postgresql/data" ]
+
+  redis:
+    image: redis:7
+    restart: unless-stopped
+    ports: ["6379:6379"]
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minio
+      MINIO_ROOT_PASSWORD: minio123
+    ports: ["9000:9000","9001:9001"]
+    volumes: [ "miniodata:/data" ]
+
+volumes:
+  pgdata:
+  miniodata:
+
+Root .env.example
+# Database
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/fundraising?schema=public"
+
+# Redis
+REDIS_URL="redis://localhost:6379"
+
+# S3/MinIO
+S3_ENDPOINT="http://localhost:9000"
+S3_ACCESS_KEY="minio"
+S3_SECRET_KEY="minio123"
+S3_BUCKET="raw-ingest"
+S3_REGION="us-east-1"
+
+# Auth (choose your provider later; placeholder)
+AUTH_SECRET="dev-secret"
+
+# Node
+NODE_ENV=development
+
+Copy to .env:
+cp .env.example .env
+
+Bring infra up:
+pnpm docker:up
+
+
+3) Shared DB & core packages
+mkdir -p packages/db packages/core packages/connectors packages/ui
+pnpm add -w -D typescript tsx @types/node
+pnpm dlx tsc --init
+
+packages/db/package.json
+{
+  "name": "@fi/db",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "prisma generate",
+    "migrate": "prisma migrate dev",
+    "seed": "tsx seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.19.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "prisma": "^5.19.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.6.3"
+  }
+}
+
+packages/db/schema.prisma
+datasource db { provider = "postgresql"; url = env("DATABASE_URL") }
+generator client { provider = "prisma-client-js" }
+
+model Tenant {
+  id        String  @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  people    Person[]
+  users     User[]
+}
+
+model User {
+  id        String  @id @default(cuid())
+  tenantId  String
+  tenant    Tenant @relation(fields: [tenantId], references: [id])
+  email     String @unique
+  role      UserRole
+  createdAt DateTime @default(now())
+}
+
+enum UserRole {
+  ADMIN
+  CEO
+  DEV_DIRECTOR
+  MGO
+  DATA_OPS
+}
+
+model Person {
+  id              String   @id @default(cuid())
+  tenantId        String
+  tenant          Tenant   @relation(fields: [tenantId], references: [id])
+  firstName       String
+  lastName        String
+  primaryEmail    String?
+  primaryPhone    String?
+  wealthBand      String?
+  capacityScore   Int?     // 0-100
+  engagementScore Int?
+  affinityScore   Int?
+  gifts           Gift[]
+  interactions    Interaction[]
+  opportunities   Opportunity[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Gift {
+  id         String   @id @default(cuid())
+  tenantId   String
+  personId   String?
+  person     Person?  @relation(fields: [personId], references: [id])
+  amount     Decimal
+  currency   String   @default("USD")
+  receivedAt DateTime
+  campaignId String?
+  createdAt  DateTime @default(now())
+}
+
+model Interaction {
+  id         String   @id @default(cuid())
+  tenantId   String
+  personId   String
+  person     Person   @relation(fields: [personId], references: [id])
+  type       String   // "email_open","meeting","call","event"
+  occurredAt DateTime
+  ownerId    String?
+  notes      String?
+  source     String?
+  createdAt  DateTime @default(now())
+}
+
+model Opportunity {
+  id          String   @id @default(cuid())
+  tenantId    String
+  personId    String
+  person      Person   @relation(fields: [personId], references: [id])
+  stage       String   // Prospect,Cultivation,Ask,Steward,Renewal
+  askAmount   Decimal?
+  probability Int?
+  closeDate   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+packages/db/seed.ts
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+
+async function main() {
+  const tenant = await prisma.tenant.upsert({
+    where: { id: "seed-tenant" },
+    update: {},
+    create: { id: "seed-tenant", name: "Demo Nonprofit" }
+  });
+
+  await prisma.user.createMany({
+    data: [
+      { tenantId: tenant.id, email: "ceo@example.org", role: "CEO" },
+      { tenantId: tenant.id, email: "director@example.org", role: "DEV_DIRECTOR" },
+      { tenantId: tenant.id, email: "mgo@example.org", role: "MGO" }
+    ]
+  });
+
+  const alice = await prisma.person.create({
+    data: {
+      tenantId: tenant.id, firstName: "Alice", lastName: "Grant",
+      primaryEmail: "alice@example.com",
+      wealthBand: "P4", capacityScore: 78, engagementScore: 65, affinityScore: 72
+    }
+  });
+
+  await prisma.gift.create({
+    data: {
+      tenantId: tenant.id, personId: alice.id,
+      amount: 2500, currency: "USD", receivedAt: new Date(Date.now() - 1000*60*60*24*40)
+    }
+  });
+
+  await prisma.interaction.createMany({
+    data: [
+      { tenantId: tenant.id, personId: alice.id, type: "email_open", occurredAt: new Date(Date.now()-1000*60*60*24*7) },
+      { tenantId: tenant.id, personId: alice.id, type: "meeting", occurredAt: new Date(Date.now()-1000*60*60*24*3), notes: "Lunch re: scholarship fund" }
+    ]
+  });
+
+  await prisma.opportunity.create({
+    data: {
+      tenantId: tenant.id, personId: alice.id,
+      stage: "Cultivation", askAmount: 25000, probability: 35, closeDate: new Date(Date.now()+1000*60*60*24*60)
+    }
+  });
+
+  console.log("Seed complete");
+}
+
+main().finally(() => prisma.$disconnect());
+
+Install & migrate:
+pnpm add -w @prisma/client zod
+pnpm -w add -D prisma tsx
+pnpm db:migrate
+pnpm db:seed
+
+packages/core/package.json
+{
+  "name": "@fi/core",
+  "private": true,
+  "type": "module",
+  "exports": "./index.ts",
+  "devDependencies": { "typescript": "^5.6.3" }
+}
+
+packages/core/index.ts (scoring + NBA rules starter)
+export type Scores = { engagement: number; capacity: number; affinity: number };
+
+export function clamp(n: number) { return Math.max(0, Math.min(100, Math.round(n))); }
+
+export function computeEngagementScore(params: {
+  daysSinceLastGift?: number; giftsLast365?: number; emailOpens30?: number; meetings90?: number;
+}) {
+  const r = params.daysSinceLastGift ?? 999;
+  const recency = r > 365 ? 0 : (1 - r/365) * 100;           // 0..100
+  const freq = Math.min((params.giftsLast365 ?? 0) * 20, 100);
+  const opens = Math.min((params.emailOpens30 ?? 0) * 10, 100);
+  const meets = Math.min((params.meetings90 ?? 0) * 25, 100);
+  const score = 0.35*recency + 0.25*freq + 0.25*opens + 0.15*meets;
+  return clamp(score);
+}
+
+export function nextBestActions(input: { scores: Scores; isLYBUNT?: boolean; recentEvent?: boolean; timeInStageDays?: number }) {
+  const tasks: { title: string; reason: string; priority: "HIGH"|"MEDIUM"|"LOW" }[] = [];
+  if (input.scores.engagement >= 70 && input.isLYBUNT) {
+    tasks.push({ title: "Schedule cultivation call", reason: "High engagement but lapsed last year", priority: "HIGH" });
+  }
+  if (input.recentEvent && input.scores.capacity >= 60) {
+    tasks.push({ title: "Send tailored follow-up + soft ask", reason: "Attended event; strong capacity", priority: "HIGH" });
+  }
+  if ((input.timeInStageDays ?? 0) > 90) {
+    tasks.push({ title: "Advance stage or book meeting", reason: "Stuck in stage > 90 days", priority: "MEDIUM" });
+  }
+  if (!tasks.length) tasks.push({ title: "Send impact update", reason: "Sustain engagement cadence", priority: "LOW" });
+  return tasks;
+}
+
+
+4) Apps: API, Worker, Web
+/apps/api (Fastify REST to keep it simple)
+mkdir -p apps/api/src
+pnpm add -w fastify fastify-cors fastify-type-provider-zod
+pnpm -F @fi/db add @prisma/client
+pnpm -F @fi/core add
+
+apps/api/package.json
+{
+  "name": "@fi/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "echo 'no build needed'"
+  },
+  "dependencies": {
+    "@fi/db": "*",
+    "@fi/core": "*",
+    "@prisma/client": "^5.19.0",
+    "fastify": "^4.27.2",
+    "fastify-cors": "^8.5.0",
+    "fastify-type-provider-zod": "^4.0.0",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": { "tsx": "^4.19.0", "typescript": "^5.6.3" }
+}
+
+apps/api/src/index.ts
+import Fastify from "fastify";
+import cors from "fastify-cors";
+import { PrismaClient } from "@prisma/client";
+import { nextBestActions } from "@fi/core";
+
+const prisma = new PrismaClient();
+const app = Fastify({ logger: true });
+app.register(cors, { origin: true });
+
+app.get("/health", async () => ({ ok: true }));
+
+// CEO KPIs
+app.get("/kpi", async () => {
+  const gifts = await prisma.gift.groupBy({
+    by: ["currency"],
+    _sum: { amount: true }
+  });
+  const opportunities = await prisma.opportunity.findMany({ where: { probability: { not: null } } });
+  const forecast = opportunities.reduce((acc, o) => acc + Number(o.askAmount ?? 0) * (o.probability ?? 0)/100, 0);
+  return { ytd: gifts, forecast90: forecast };
+});
+
+// MGO dashboard: top prospects
+app.get("/mgo/top", async () => {
+  const people = await prisma.person.findMany({ take: 10, orderBy: { engagementScore: "desc" } });
+  return people.map(p => ({
+    id: p.id,
+    name: `${p.firstName} ${p.lastName}`,
+    capacity: p.capacityScore ?? 0,
+    engagement: p.engagementScore ?? 0,
+    affinity: p.affinityScore ?? 0,
+    nextActions: nextBestActions({ scores: { capacity: p.capacityScore ?? 0, engagement: p.engagementScore ?? 0, affinity: p.affinityScore ?? 0 }, isLYBUNT: false })
+  }));
+});
+
+// Donor 360
+app.get("/person/:id", async (req: any) => {
+  const p = await prisma.person.findUnique({
+    where: { id: req.params.id },
+    include: { gifts: true, interactions: true, opportunities: true }
+  });
+  return p;
+});
+
+const port = Number(process.env.API_PORT || 4000);
+app.listen({ port, host: "0.0.0.0" });
+
+/apps/worker (BullMQ jobs placeholder)
+mkdir -p apps/worker/src
+pnpm add -w bullmq ioredis
+
+apps/worker/package.json
+{
+  "name": "@fi/worker",
+  "private": true,
+  "type": "module",
+  "scripts": { "dev": "tsx src/index.ts" },
+  "dependencies": { "bullmq": "^5.7.5", "ioredis": "^5.4.1" },
+  "devDependencies": { "tsx": "^4.19.0", "typescript": "^5.6.3" }
+}
+
+apps/worker/src/index.ts
+import { Queue, Worker } from "bullmq";
+import Redis from "ioredis";
+const connection = new Redis(process.env.REDIS_URL ?? "redis://localhost:6379");
+
+export const syncQueue = new Queue("sync", { connection });
+
+new Worker("sync", async job => {
+  console.log("Processing job", job.name, job.id);
+  // TODO: poll connector, upsert into DB
+}, { connection });
+
+console.log("Worker ready");
+
+/apps/web (Next.js 14 + Tailwind + shadcn)
+pnpm dlx create-next-app@latest apps/web --ts --eslint --src-dir --app --no-tailwind --no-experimental-app
+cd apps/web
+pnpm add @tanstack/react-query recharts
+pnpm add -D tailwindcss postcss autoprefixer
+pnpm dlx tailwindcss init -p
+
+apps/web/tailwind.config.js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: ["./src/**/*.{ts,tsx}"],
+  theme: { extend: {} },
+  plugins: []
+};
+
+apps/web/src/app/globals.css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+apps/web/src/app/layout.tsx
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en"><body className="min-h-screen bg-gray-50">{children}</body></html>
+  );
+}
+
+apps/web/src/lib/api.ts
+export const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+export async function api<T>(path: string): Promise<T> {
+  const res = await fetch(`${API_URL}${path}`, { cache: "no-store" });
+  if (!res.ok) throw new Error("API error");
+  return res.json();
+}
+
+apps/web/src/app/page.tsx (CEO dashboard sample)
+import { api } from "../lib/api";
+
+export default async function Page() {
+  const kpi = await api<{ ytd: any[]; forecast90: number }>("/kpi");
+  return (
+    <main className="p-8 space-y-6">
+      <h1 className="text-2xl font-semibold">CEO Dashboard</h1>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="rounded-xl bg-white p-4 shadow-sm">
+          <div className="text-sm text-gray-500">YTD (by currency)</div>
+          <pre className="text-sm mt-2">{JSON.stringify(kpi.ytd, null, 2)}</pre>
+        </div>
+        <div className="rounded-xl bg-white p-4 shadow-sm">
+          <div className="text-sm text-gray-500">Forecast (90d)</div>
+          <div className="text-3xl font-bold mt-2">${kpi.forecast90.toLocaleString()}</div>
+        </div>
+        <div className="rounded-xl bg-white p-4 shadow-sm">
+          <div className="text-sm text-gray-500">Connectors</div>
+          <div className="mt-2 text-gray-700">Salesforce, Blackbaud, Mailchimp (mock)</div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+apps/web/src/app/mgo/page.tsx (MGO “Top Ten”)
+import { api } from "../../lib/api";
+
+export default async function MGOPage() {
+  const top = await api<Array<{ id: string; name: string; capacity: number; engagement: number; affinity: number; nextActions: any[] }>>("/mgo/top");
+  return (
+    <main className="p-8 space-y-6">
+      <h1 className="text-2xl font-semibold">My Top Prospects</h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {top.map(p => (
+          <div key={p.id} className="rounded-xl bg-white p-4 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div className="font-medium">{p.name}</div>
+              <div className="text-xs text-gray-500">Cap {p.capacity} · Eng {p.engagement} · Aff {p.affinity}</div>
+            </div>
+            <div className="mt-3 text-sm">
+              <div className="font-semibold">Next Best Actions</div>
+              <ul className="list-disc ml-5 mt-1">
+                {p.nextActions.map((a, i) => <li key={i}><span className="font-medium">{a.title}</span> — {a.reason}</li>)}
+              </ul>
+            </div>
+          </div>
+        ))}
+      </div>
+    </main>
+  );
+}
+
+Wire the API URL for local dev:
+# apps/web/.env.local
+NEXT_PUBLIC_API_URL="http://localhost:4000"
+
+
+5) Run everything
+From the repo root:
+pnpm install
+pnpm docker:up
+pnpm db:migrate
+pnpm db:seed
+pnpm dev
+
+API: http://localhost:4000/health
+
+
+Web: http://localhost:3000/ (CEO view), http://localhost:3000/mgo (MGO view)
+
+
+Worker logs show it’s ready (no jobs yet).
+
+
+
+6) Porting slices to Replit (demo plan)
+Create a separate Replit with only /apps/web (copy that folder into a new repl).
+
+
+Replace API calls with:
+
+
+a small mock file (/src/lib/mock.ts) returning static JSON, or
+
+
+point to a hosted API (Render/Fly.io) and Neon Postgres.
+
+
+Keep it single-process; don’t bring worker/Redis/MinIO to Replit.
+
+
+Seeded, beautiful dashboards = instant board-friendly demo.
+
+
+
+7) Next increments (fastest value)
+Add /apps/web/src/app/donor/[id]/page.tsx for Donor 360 (fetch /person/:id).
+
+
+Add a Pipeline Kanban page with simple drag to change Opportunity.stage.
+
+
+Add a nightly job in worker to recompute engagement scores from interactions.
+
+
+Add a CSV importer connector (simulate Salesforce export) into /packages/connectors.
+
+
+
+That’s a full, runnable foundation tailored for Cursor. If you want, I can extend this with:
+a CSV “Salesforce” importer (so you can drag/drop a file and see real data instantly),
+
+
+a minimal dedupe tool UI,
+
+
+and a grants pipeline page.
+
+
+
