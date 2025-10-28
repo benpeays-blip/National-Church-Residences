@@ -121,9 +121,18 @@ See `design_guidelines.md` for comprehensive design specifications.
   - Coverage metrics (wealth screening, engagement, email data percentages)
   - Recent sync activity (last 20 runs with success/error tracking)
   - Data quality alerts (unresolved issues by severity)
+- ✅ Added data provenance indicators to donor and opportunity cards:
+  - Small info icons with tooltips showing data source and sync time
+  - 144 provenance indicators on donors page, 12 on pipeline
+  - Color-coded by source system (Salesforce=blue, WealthEngine=emerald, etc.)
+- ✅ Added Data Coverage metrics to Development Director dashboard:
+  - Wealth Screening Coverage (94%)
+  - Recent Engagement Coverage (73%)
+  - Email Data Coverage (100%)
+  - Pipeline Activity (12 opportunities synced in 90 days)
 - ✅ All data now traceable to source system with quality scores
 
-**Strategic Value**: FundRazor now demonstrates unified intelligence layer - consolidating disparate fundraising systems (CRM, wealth screening, email platforms) with full data provenance tracking. This is the "secret sauce" differentiator.
+**Strategic Value**: FundRazor now demonstrates unified intelligence layer - consolidating disparate fundraising systems (CRM, wealth screening, email platforms) with full data provenance tracking and transparency. This is the "secret sauce" differentiator.
 
 ### January 2025 - Demo Data & Authentication Updates
 

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency } from "@/lib/utils";
+import { Database, Mail, TrendingUp, AlertCircle } from "lucide-react";
 
 interface DevDirectorData {
   metrics: {
@@ -57,9 +58,22 @@ interface DevDirectorData {
   }[];
 }
 
+interface IntegrationCoverage {
+  totalDonors: number;
+  donorsWithWealthData: number;
+  donorsWithRecentInteraction: number;
+  donorsWithEmail: number;
+  opportunitiesWithRecentActivity: number;
+  giftsFromOnlinePlatforms: number;
+}
+
 export default function DashboardDevDirector() {
   const { data, isLoading } = useQuery<DevDirectorData>({
     queryKey: ["/api/dashboard/dev-director"],
+  });
+  
+  const { data: integrationData } = useQuery<{ coverageMetrics: IntegrationCoverage }>({
+    queryKey: ["/api/integrations"],
   });
 
   if (isLoading) {
@@ -117,6 +131,99 @@ export default function DashboardDevDirector() {
           change={5}
           trend="up"
         />
+      </div>
+
+      {/* Data Coverage & Quality Metrics */}
+      <div>
+        <h2 className="text-lg font-semibold mb-3 flex items-center gap-2">
+          <Database className="w-5 h-5 text-chart-1" />
+          Data Coverage & Integration Health
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card className="p-4" data-testid="card-wealth-coverage">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-sm font-medium text-muted-foreground">
+                Wealth Screening
+              </p>
+              <Database className="w-4 h-4 text-chart-2" />
+            </div>
+            <p className="text-3xl font-bold tabular-nums mb-1" data-testid="text-wealth-coverage">
+              {integrationData?.coverageMetrics && integrationData.coverageMetrics.totalDonors > 0
+                ? Math.round(
+                    (integrationData.coverageMetrics.donorsWithWealthData /
+                      integrationData.coverageMetrics.totalDonors) *
+                      100
+                  )
+                : 0}
+              %
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {integrationData?.coverageMetrics?.donorsWithWealthData || 0} of{" "}
+              {integrationData?.coverageMetrics?.totalDonors || 0} donors
+            </p>
+          </Card>
+
+          <Card className="p-4" data-testid="card-engagement-coverage">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-sm font-medium text-muted-foreground">
+                Recent Engagement
+              </p>
+              <TrendingUp className="w-4 h-4 text-chart-3" />
+            </div>
+            <p className="text-3xl font-bold tabular-nums mb-1" data-testid="text-engagement-coverage">
+              {integrationData?.coverageMetrics && integrationData.coverageMetrics.totalDonors > 0
+                ? Math.round(
+                    (integrationData.coverageMetrics.donorsWithRecentInteraction /
+                      integrationData.coverageMetrics.totalDonors) *
+                      100
+                  )
+                : 0}
+              %
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {integrationData?.coverageMetrics?.donorsWithRecentInteraction || 0}{" "}
+              interactions (90d)
+            </p>
+          </Card>
+
+          <Card className="p-4" data-testid="card-email-coverage">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-sm font-medium text-muted-foreground">
+                Email Data
+              </p>
+              <Mail className="w-4 h-4 text-chart-4" />
+            </div>
+            <p className="text-3xl font-bold tabular-nums mb-1" data-testid="text-email-coverage">
+              {integrationData?.coverageMetrics && integrationData.coverageMetrics.totalDonors > 0
+                ? Math.round(
+                    (integrationData.coverageMetrics.donorsWithEmail /
+                      integrationData.coverageMetrics.totalDonors) *
+                      100
+                  )
+                : 0}
+              %
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {integrationData?.coverageMetrics?.donorsWithEmail || 0} with valid
+              emails
+            </p>
+          </Card>
+
+          <Card className="p-4" data-testid="card-pipeline-activity">
+            <div className="flex items-center justify-between mb-2">
+              <p className="text-sm font-medium text-muted-foreground">
+                Pipeline Activity
+              </p>
+              <AlertCircle className="w-4 h-4 text-chart-1" />
+            </div>
+            <p className="text-3xl font-bold tabular-nums mb-1" data-testid="text-pipeline-activity">
+              {integrationData?.coverageMetrics?.opportunitiesWithRecentActivity || 0}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              opportunities synced (90d)
+            </p>
+          </Card>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
