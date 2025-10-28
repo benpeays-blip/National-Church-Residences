@@ -20,6 +20,8 @@ interface DevDirectorData {
     pipelineValue: number;
     forecast90Days: number;
     dataHealthScore: number;
+    lybuntCount: number;
+    sybuntCount: number;
   };
   pipelineByOwner: {
     ownerId: string;
@@ -34,6 +36,24 @@ interface DevDirectorData {
     description: string;
     timestamp: string;
     userName: string;
+  }[];
+  lybuntDonors: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    primaryEmail: string | null;
+    lastGiftAmount: string | null;
+    lastGiftDate: Date | null;
+    totalLifetimeGiving: string | null;
+  }[];
+  sybuntDonors: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    primaryEmail: string | null;
+    lastGiftAmount: string | null;
+    lastGiftDate: Date | null;
+    totalLifetimeGiving: string | null;
   }[];
 }
 
@@ -99,6 +119,41 @@ export default function DashboardDevDirector() {
         />
       </div>
 
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <Card className="p-6" data-testid="card-lybunt-metric">
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-muted-foreground">
+              LYBUNT Donors
+            </p>
+            <p 
+              className="text-4xl font-bold tabular-nums text-chart-4"
+              data-testid="text-lybunt-count"
+            >
+              {data?.metrics.lybuntCount ?? 0}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Gave last year but not this year - priority for reactivation
+            </p>
+          </div>
+        </Card>
+        <Card className="p-6" data-testid="card-sybunt-metric">
+          <div className="space-y-2">
+            <p className="text-sm font-medium text-muted-foreground">
+              SYBUNT Donors
+            </p>
+            <p 
+              className="text-4xl font-bold tabular-nums text-chart-3"
+              data-testid="text-sybunt-count"
+            >
+              {data?.metrics.sybuntCount ?? 0}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              Gave in prior years but not recently - long-term recovery needed
+            </p>
+          </div>
+        </Card>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-2 p-6">
           <h2 className="text-lg font-semibold mb-4">Pipeline by MGO</h2>
@@ -156,6 +211,116 @@ export default function DashboardDevDirector() {
           </div>
         </Card>
       </div>
+
+      {(data?.lybuntDonors && data.lybuntDonors.length > 0) && (
+        <Card className="p-6" data-testid="card-lybunt-recovery">
+          <h2 className="text-lg font-semibold mb-4" data-testid="text-lybunt-recovery-title">
+            LYBUNT Recovery - Priority Reactivation
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            These donors gave last year but haven't given this year. Reach out with personalized renewal campaigns.
+          </p>
+          <Table data-testid="table-lybunt-donors">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Donor</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Last Gift</TableHead>
+                <TableHead>Last Amount</TableHead>
+                <TableHead>Lifetime Giving</TableHead>
+                <TableHead>Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.lybuntDonors.map((donor) => (
+                <TableRow key={donor.id} data-testid={`row-lybunt-donor-${donor.id}`}>
+                  <TableCell className="font-medium" data-testid={`text-lybunt-donor-name-${donor.id}`}>
+                    {donor.firstName} {donor.lastName}
+                  </TableCell>
+                  <TableCell className="text-sm text-muted-foreground">
+                    {donor.primaryEmail || "No email"}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {donor.lastGiftDate
+                      ? new Date(donor.lastGiftDate).toLocaleDateString()
+                      : "N/A"}
+                  </TableCell>
+                  <TableCell>
+                    {donor.lastGiftAmount
+                      ? formatCurrency(donor.lastGiftAmount)
+                      : "N/A"}
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    {donor.totalLifetimeGiving
+                      ? formatCurrency(donor.totalLifetimeGiving)
+                      : "N/A"}
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className="text-xs" data-testid={`badge-lybunt-action-${donor.id}`}>
+                      Renewal Call
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
+      )}
+
+      {(data?.sybuntDonors && data.sybuntDonors.length > 0) && (
+        <Card className="p-6" data-testid="card-sybunt-recovery">
+          <h2 className="text-lg font-semibold mb-4" data-testid="text-sybunt-recovery-title">
+            SYBUNT Recovery - Long-Term Reactivation
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            These donors gave in prior years but not recently. Consider impact reports and re-engagement campaigns.
+          </p>
+          <Table data-testid="table-sybunt-donors">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Donor</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Last Gift</TableHead>
+                <TableHead>Last Amount</TableHead>
+                <TableHead>Lifetime Giving</TableHead>
+                <TableHead>Action</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.sybuntDonors.map((donor) => (
+                <TableRow key={donor.id} data-testid={`row-sybunt-donor-${donor.id}`}>
+                  <TableCell className="font-medium" data-testid={`text-sybunt-donor-name-${donor.id}`}>
+                    {donor.firstName} {donor.lastName}
+                  </TableCell>
+                  <TableCell className="text-sm text-muted-foreground">
+                    {donor.primaryEmail || "No email"}
+                  </TableCell>
+                  <TableCell className="text-sm">
+                    {donor.lastGiftDate
+                      ? new Date(donor.lastGiftDate).toLocaleDateString()
+                      : "N/A"}
+                  </TableCell>
+                  <TableCell>
+                    {donor.lastGiftAmount
+                      ? formatCurrency(donor.lastGiftAmount)
+                      : "N/A"}
+                  </TableCell>
+                  <TableCell className="font-medium">
+                    {donor.totalLifetimeGiving
+                      ? formatCurrency(donor.totalLifetimeGiving)
+                      : "N/A"}
+                  </TableCell>
+                  <TableCell>
+                    <Badge variant="outline" className="text-xs" data-testid={`badge-sybunt-action-${donor.id}`}>
+                      Impact Report
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
+      )}
     </div>
   );
 }

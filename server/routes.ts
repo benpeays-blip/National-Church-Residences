@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { db } from "./db";
 import { persons, opportunities, users, gifts, interactions } from "@shared/schema";
-import { eq, sql, desc, gte, and } from "drizzle-orm";
+import { eq, sql, desc, gte, and, inArray } from "drizzle-orm";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   await setupAuth(app);
@@ -371,6 +371,85 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userName: `${i.ownerFirstName || ""} ${i.ownerLastName || ""}`.trim(),
       }));
 
+      // LYBUNT/SYBUNT Calculations (optimized)
+      const allGifts = await db
+        .select({
+          personId: gifts.personId,
+          receivedAt: gifts.receivedAt,
+          amount: gifts.amount,
+        })
+        .from(gifts);
+
+      const currentYear = new Date().getFullYear();
+      const lastYear = currentYear - 1;
+
+      // Group gifts by person with year info
+      const giftsByPerson = allGifts.reduce((acc, gift) => {
+        const year = new Date(gift.receivedAt).getFullYear();
+        if (!acc[gift.personId]) {
+          acc[gift.personId] = {
+            years: new Set<number>(),
+            lastAmount: 0,
+            lastGiftDate: gift.receivedAt,
+          };
+        }
+        acc[gift.personId].years.add(year);
+        
+        // Track most recent gift
+        if (new Date(gift.receivedAt) > new Date(acc[gift.personId].lastGiftDate)) {
+          acc[gift.personId].lastAmount = parseFloat(gift.amount);
+          acc[gift.personId].lastGiftDate = gift.receivedAt;
+        }
+        
+        return acc;
+      }, {} as Record<string, { years: Set<number>; lastAmount: number; lastGiftDate: Date }>);
+
+      // LYBUNT: Gave last year but not this year
+      const lybuntPersonIds = Object.entries(giftsByPerson)
+        .filter(([_, data]) => data.years.has(lastYear) && !data.years.has(currentYear))
+        .map(([personId, _]) => personId);
+
+      // SYBUNT: Gave 2+ years ago but not in last 2 years
+      const sybuntPersonIds = Object.entries(giftsByPerson)
+        .filter(([_, data]) => {
+          const hasLastYear = data.years.has(lastYear);
+          const hasThisYear = data.years.has(currentYear);
+          const hasPriorYears = Array.from(data.years).some(y => y < lastYear);
+          return !hasLastYear && !hasThisYear && hasPriorYears;
+        })
+        .map(([personId, _]) => personId);
+
+      // Get full donor details for LYBUNT/SYBUNT (limit to top 10 each, ordered by last gift date)
+      const lybuntDonorDetails = lybuntPersonIds.length > 0 ? await db
+        .select({
+          id: persons.id,
+          firstName: persons.firstName,
+          lastName: persons.lastName,
+          primaryEmail: persons.primaryEmail,
+          lastGiftAmount: persons.lastGiftAmount,
+          lastGiftDate: persons.lastGiftDate,
+          totalLifetimeGiving: persons.totalLifetimeGiving,
+        })
+        .from(persons)
+        .where(inArray(persons.id, lybuntPersonIds))
+        .orderBy(desc(persons.lastGiftDate))
+        .limit(10) : [];
+
+      const sybuntDonorDetails = sybuntPersonIds.length > 0 ? await db
+        .select({
+          id: persons.id,
+          firstName: persons.firstName,
+          lastName: persons.lastName,
+          primaryEmail: persons.primaryEmail,
+          lastGiftAmount: persons.lastGiftAmount,
+          lastGiftDate: persons.lastGiftDate,
+          totalLifetimeGiving: persons.totalLifetimeGiving,
+        })
+        .from(persons)
+        .where(inArray(persons.id, sybuntPersonIds))
+        .orderBy(desc(persons.lastGiftDate))
+        .limit(10) : [];
+
       res.json({
         metrics: {
           ytdRaised,
@@ -378,9 +457,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           pipelineValue,
           forecast90Days,
           dataHealthScore,
+          lybuntCount: lybuntPersonIds.length,
+          sybuntCount: sybuntPersonIds.length,
         },
         pipelineByOwner: Object.values(pipelineByOwner),
         recentActivity,
+        lybuntDonors: lybuntDonorDetails,
+        sybuntDonors: sybuntDonorDetails,
       });
     } catch (error) {
       console.error("Error fetching Dev Director dashboard:", error);
@@ -488,8 +571,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const totalPersons = allPersons.length;
       const missingEmails = allPersons.filter((p) => !p.primaryEmail || p.primaryEmail.trim() === "").length;
-      const missingPhones = allPersons.filter((p) => !p.mobilePhone && !p.homePhone && !p.workPhone).length;
-      const incompleteAddresses = allPersons.filter((p) => !p.mailingStreet || !p.mailingCity || !p.mailingState).length;
+      const missingPhones = allPersons.filter((p) => !p.primaryPhone || p.primaryPhone.trim() === "").length;
+      const incompleteProfiles = allPersons.filter((p) => !p.organizationName && !p.wealthBand).length;
       
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -519,9 +602,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const completeProfiles = allPersons.filter((p) => {
         const hasEmail = p.primaryEmail && p.primaryEmail.trim() !== "";
-        const hasPhone = p.mobilePhone || p.homePhone || p.workPhone;
-        const hasAddress = p.mailingStreet && p.mailingCity && p.mailingState;
-        return hasEmail && hasPhone && hasAddress;
+        const hasPhone = p.primaryPhone && p.primaryPhone.trim() !== "";
+        const hasOrgOrWealth = p.organizationName || p.wealthBand;
+        return hasEmail && hasPhone && hasOrgOrWealth;
       }).length;
       
       const profileCompleteness = totalPersons > 0 
@@ -530,10 +613,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const emailStatus = missingEmails === 0 ? "Passing" : missingEmails < 5 ? "Warning" : "Failing";
       const phoneStatus = missingPhones === 0 ? "Passing" : missingPhones < 10 ? "Warning" : "Failing";
-      const addressStatus = incompleteAddresses === 0 ? "Passing" : incompleteAddresses < 10 ? "Warning" : "Failing";
+      const profileStatus = incompleteProfiles === 0 ? "Passing" : incompleteProfiles < 10 ? "Warning" : "Failing";
       const duplicateStatus = duplicateCount === 0 ? "Passing" : duplicateCount < 3 ? "Warning" : "Failing";
       
-      const overallHealth = Math.min(100, Math.max(0, 100 - missingEmails * 2 - missingPhones - incompleteAddresses - duplicateCount * 5));
+      const overallHealth = Math.min(100, Math.max(0, 100 - missingEmails * 2 - missingPhones - incompleteProfiles - duplicateCount * 5));
       
       res.json({
         metrics: {
@@ -545,7 +628,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         qualityChecks: {
           emailValidation: emailStatus,
           phoneFormatting: phoneStatus,
-          addressCompleteness: addressStatus,
+          addressCompleteness: profileStatus,
           duplicateDetection: duplicateStatus,
         },
         actionItems: [
