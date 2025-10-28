@@ -1,338 +1,376 @@
-import { useQuery } from "@tanstack/react-query";
+import { useEffect, useMemo, useState } from "react";
 import { Card } from "@/components/ui/card";
-import { MetricCard } from "@/components/metric-card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {
-  Database,
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import {
   Plug,
-  CheckCircle,
-  AlertCircle,
-  Activity,
-  TrendingUp,
-  RefreshCw,
+  Search,
+  CheckCircle2,
+  ExternalLink,
+  X,
+  Filter,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { formatDistanceToNow } from "date-fns";
 
 interface Integration {
-  id: string;
+  slug: string;
   name: string;
-  type: string;
-  status: "connected" | "syncing" | "error" | "disconnected";
-  lastSyncAt: string | null;
-  lastSuccessfulSyncAt: string | null;
-  recordCount: number;
-  errorMessage: string | null;
-}
-
-interface SyncRun {
-  id: string;
-  integrationId: string;
-  status: string;
-  recordsProcessed: number;
-  recordsCreated: number;
-  recordsUpdated: number;
-  recordsSkipped: number;
-  errorCount: number;
-  startedAt: string;
-  completedAt: string | null;
-}
-
-interface DataQualityIssue {
-  id: string;
-  entityType: string;
-  sourceSystem: string | null;
-  issueType: string;
-  severity: "low" | "medium" | "high" | "critical";
+  category: string;
+  logo: string;
   description: string;
-  resolved: number;
-  createdAt: string;
-}
-
-interface CoverageMetrics {
-  totalDonors: number;
-  donorsWithWealthData: number;
-  donorsWithRecentInteraction: number;
-  donorsWithEmail: number;
-  opportunitiesWithRecentActivity: number;
-  giftsFromOnlinePlatforms: number;
-}
-
-interface IntegrationsData {
-  integrations: Integration[];
-  recentSyncRuns: SyncRun[];
-  unresolvedIssues: DataQualityIssue[];
-  coverageMetrics: CoverageMetrics;
+  apiType: string;
+  modules: string[];
+  features: string[];
+  useCases: string[];
+  checklist: string[];
+  status: "connected" | "available";
 }
 
 export default function Integrations() {
-  const { data, isLoading, isError } = useQuery<IntegrationsData>({
-    queryKey: ["/api/integrations"],
-  });
+  const [integrations, setIntegrations] = useState<Integration[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedIntegration, setSelectedIntegration] = useState<Integration | null>(null);
 
-  if (isLoading) {
+  useEffect(() => {
+    fetch("/integrations-registry.json")
+      .then((r) => r.json())
+      .then((data) => {
+        setIntegrations(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to load integrations:", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const categories = useMemo(() => {
+    const cats = Array.from(new Set(integrations.map((i) => i.category)));
+    return ["All", ...cats.sort()];
+  }, [integrations]);
+
+  const filteredIntegrations = useMemo(() => {
+    return integrations.filter((integration) => {
+      const matchesCategory =
+        selectedCategory === "All" || integration.category === selectedCategory;
+      
+      if (!searchQuery) return matchesCategory;
+
+      const searchLower = searchQuery.toLowerCase();
+      const matchesSearch =
+        integration.name.toLowerCase().includes(searchLower) ||
+        integration.description.toLowerCase().includes(searchLower) ||
+        integration.category.toLowerCase().includes(searchLower) ||
+        integration.modules.some((m) => m.toLowerCase().includes(searchLower)) ||
+        integration.features.some((f) => f.toLowerCase().includes(searchLower));
+
+      return matchesCategory && matchesSearch;
+    });
+  }, [integrations, searchQuery, selectedCategory]);
+
+  const connectedCount = integrations.filter((i) => i.status === "connected").length;
+
+  if (loading) {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-semibold mb-2">Integrations & Data Health</h1>
+          <h1 className="text-3xl font-semibold mb-2">Integrations Gallery</h1>
           <p className="text-muted-foreground">
-            Monitor connected systems and data quality
+            Connect fundraising tools and data sources
           </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          {[1, 2, 3, 4].map((i) => (
-            <Skeleton key={i} className="h-32" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <Skeleton key={i} className="h-64" />
           ))}
         </div>
       </div>
     );
   }
 
-  if (isError || !data) {
-    return (
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">Integrations & Data Health</h1>
-          <p className="text-muted-foreground">
-            Monitor connected systems and data quality
-          </p>
-        </div>
-        <Card className="p-12">
-          <div className="text-center space-y-3">
-            <AlertCircle className="w-12 h-12 text-destructive mx-auto" />
-            <h3 className="text-lg font-semibold">Failed to load integration data</h3>
-            <p className="text-sm text-muted-foreground">
-              There was an error loading integration information. Please try again later.
-            </p>
-          </div>
-        </Card>
-      </div>
-    );
-  }
-
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case "connected":
-        return (
-          <Badge variant="default" className="bg-chart-2 hover:bg-chart-2" data-testid={`status-connected`}>
-            <CheckCircle className="w-3 h-3 mr-1" />
-            Connected
-          </Badge>
-        );
-      case "syncing":
-        return (
-          <Badge variant="default" className="bg-primary hover:bg-primary" data-testid={`status-syncing`}>
-            <RefreshCw className="w-3 h-3 mr-1 animate-spin" />
-            Syncing
-          </Badge>
-        );
-      case "error":
-        return (
-          <Badge variant="destructive" data-testid={`status-error`}>
-            <AlertCircle className="w-3 h-3 mr-1" />
-            Error
-          </Badge>
-        );
-      default:
-        return (
-          <Badge variant="secondary" data-testid={`status-disconnected`}>Disconnected</Badge>
-        );
-    }
-  };
-
-  const getSeverityBadge = (severity: string) => {
-    switch (severity) {
-      case "critical":
-        return <Badge variant="destructive" data-testid={`severity-critical`}>Critical</Badge>;
-      case "high":
-        return <Badge variant="destructive" className="bg-destructive/80" data-testid={`severity-high`}>High</Badge>;
-      case "medium":
-        return <Badge variant="default" className="bg-chart-4 hover:bg-chart-4" data-testid={`severity-medium`}>Medium</Badge>;
-      default:
-        return <Badge variant="secondary" data-testid={`severity-low`}>Low</Badge>;
-    }
-  };
-
-  const { coverageMetrics } = data;
-  const wealthCoverage = coverageMetrics.totalDonors > 0
-    ? Math.round((coverageMetrics.donorsWithWealthData / coverageMetrics.totalDonors) * 100)
-    : 0;
-  const interactionCoverage = coverageMetrics.totalDonors > 0
-    ? Math.round((coverageMetrics.donorsWithRecentInteraction / coverageMetrics.totalDonors) * 100)
-    : 0;
-  const emailCoverage = coverageMetrics.totalDonors > 0
-    ? Math.round((coverageMetrics.donorsWithEmail / coverageMetrics.totalDonors) * 100)
-    : 0;
-
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      {/* Header */}
+      <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-3xl font-semibold mb-2">Integrations & Data Health</h1>
+          <h1 className="text-3xl font-semibold mb-2">Integrations Gallery</h1>
           <p className="text-muted-foreground">
-            Monitor connected systems, sync status, and data quality
+            Browse and connect {integrations.length} fundraising platforms and data sources
           </p>
+          <div className="flex items-center gap-2 mt-3">
+            <Badge variant="default" className="bg-chart-2 hover:bg-chart-2" data-testid="badge-connected-count">
+              <CheckCircle2 className="w-3 h-3 mr-1" />
+              {connectedCount} Connected
+            </Badge>
+            <Badge variant="secondary" data-testid="badge-available-count">
+              {integrations.length - connectedCount} Available
+            </Badge>
+          </div>
         </div>
         <Plug className="w-8 h-8 text-muted-foreground" />
       </div>
 
-      {/* Coverage Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <MetricCard
-          label="Wealth Screening Coverage"
-          value={`${wealthCoverage}%`}
-          data-testid="metric-wealth-coverage"
-        />
-        <MetricCard
-          label="Recent Engagement Coverage"
-          value={`${interactionCoverage}%`}
-          data-testid="metric-engagement-coverage"
-        />
-        <MetricCard
-          label="Email Data Coverage"
-          value={`${emailCoverage}%`}
-          data-testid="metric-email-coverage"
-        />
-        <MetricCard
-          label="Data Quality Alerts"
-          value={data.unresolvedIssues.length}
-          data-testid="metric-quality-alerts"
-        />
+      {/* Search and Filters */}
+      <div className="flex flex-col md:flex-row gap-3">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            placeholder="Search integrations, modules, or features..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9"
+            data-testid="input-search-integrations"
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <Filter className="w-4 h-4 text-muted-foreground" />
+          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+            <SelectTrigger className="w-full md:w-60" data-testid="select-category-filter">
+              <SelectValue placeholder="All Categories" />
+            </SelectTrigger>
+            <SelectContent>
+              {categories.map((cat) => (
+                <SelectItem key={cat} value={cat} data-testid={`option-category-${cat.toLowerCase().replace(/\s+/g, '-')}`}>
+                  {cat} {cat !== "All" && `(${integrations.filter((i) => i.category === cat).length})`}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
-      {/* Connected Systems */}
-      <Card className="p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <Plug className="w-5 h-5 text-primary" />
-          <h2 className="text-lg font-semibold">Connected Systems</h2>
-        </div>
-        <div className="space-y-4">
-          {data.integrations.map((integration) => (
-            <div
-              key={integration.id}
-              className="flex items-center justify-between p-4 rounded-lg border"
-              data-testid={`integration-${integration.name.toLowerCase().replace(/\s+/g, '-')}`}
-            >
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <h3 className="font-semibold" data-testid={`integration-name-${integration.id}`}>{integration.name}</h3>
-                  {getStatusBadge(integration.status)}
-                  <Badge variant="outline" data-testid={`integration-type-${integration.id}`}>{integration.type}</Badge>
+      {/* Results count */}
+      <div className="text-sm text-muted-foreground" data-testid="text-results-count">
+        Showing {filteredIntegrations.length} of {integrations.length} integrations
+      </div>
+
+      {/* Integration Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {filteredIntegrations.map((integration) => (
+          <Card
+            key={integration.slug}
+            className="p-6 hover-elevate cursor-pointer"
+            onClick={() => setSelectedIntegration(integration)}
+            data-testid={`card-integration-${integration.slug}`}
+          >
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <img
+                  src={integration.logo}
+                  alt={`${integration.name} logo`}
+                  className="w-12 h-12 object-contain bg-white rounded p-1"
+                  data-testid={`img-integration-logo-${integration.slug}`}
+                />
+                <div className="flex-1">
+                  <h3 className="font-semibold" data-testid={`text-integration-name-${integration.slug}`}>
+                    {integration.name}
+                  </h3>
+                  <div className="flex items-center gap-2 mt-1">
+                    <Badge variant="outline" className="text-xs" data-testid={`badge-integration-category-${integration.slug}`}>
+                      {integration.category}
+                    </Badge>
+                  </div>
                 </div>
-                <div className="flex items-center gap-6 text-sm text-muted-foreground">
-                  <span data-testid={`integration-record-count-${integration.id}`}>
-                    <span className="font-medium text-foreground">{integration.recordCount.toLocaleString()}</span> records
-                  </span>
-                  {integration.lastSyncAt && (
-                    <span data-testid={`integration-last-sync-${integration.id}`}>
-                      Last sync: {formatDistanceToNow(new Date(integration.lastSyncAt), { addSuffix: true })}
-                    </span>
-                  )}
-                </div>
-                {integration.errorMessage && (
-                  <p className="text-sm text-destructive mt-2" data-testid={`integration-error-${integration.id}`}>
-                    {integration.errorMessage}
-                  </p>
+              </div>
+              {integration.status === "connected" && (
+                <Badge variant="default" className="bg-chart-2 hover:bg-chart-2" data-testid={`badge-status-connected-${integration.slug}`}>
+                  <CheckCircle2 className="w-3 h-3 mr-1" />
+                  Connected
+                </Badge>
+              )}
+            </div>
+
+            <p className="text-sm text-muted-foreground line-clamp-3 mb-4" data-testid={`text-integration-description-${integration.slug}`}>
+              {integration.description}
+            </p>
+
+            <div className="space-y-2">
+              <div className="text-xs text-muted-foreground">
+                API: {integration.apiType}
+              </div>
+              <div className="flex flex-wrap gap-1">
+                {integration.modules.slice(0, 3).map((module) => (
+                  <Badge key={module} variant="secondary" className="text-xs" data-testid={`badge-module-${module.toLowerCase()}-${integration.slug}`}>
+                    {module}
+                  </Badge>
+                ))}
+                {integration.modules.length > 3 && (
+                  <Badge variant="secondary" className="text-xs">
+                    +{integration.modules.length - 3} more
+                  </Badge>
                 )}
               </div>
             </div>
-          ))}
-        </div>
-      </Card>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Sync Activity */}
-        <Card className="p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <RefreshCw className="w-5 h-5 text-chart-1" />
-            <h2 className="text-lg font-semibold">Recent Sync Activity</h2>
-          </div>
-          <div className="space-y-3 max-h-[500px] overflow-y-auto">
-            {data.recentSyncRuns.map((run) => {
-              const integration = data.integrations.find((i) => i.id === run.integrationId);
-              return (
-                <div
-                  key={run.id}
-                  className="pb-3 border-b last:border-0"
-                  data-testid={`sync-run-${run.id}`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <p className="text-sm font-medium" data-testid={`sync-run-integration-${run.id}`}>
-                      {integration?.name || "Unknown"}
-                    </p>
-                    <Badge
-                      variant={run.status === "success" ? "default" : run.status === "partial" ? "secondary" : "destructive"}
-                      className={run.status === "success" ? "bg-chart-2 hover:bg-chart-2" : ""}
-                      data-testid={`sync-run-status-${run.id}`}
-                    >
-                      {run.status}
-                    </Badge>
-                  </div>
-                  <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                    <span data-testid={`sync-run-processed-${run.id}`}>{run.recordsProcessed} processed</span>
-                    <span data-testid={`sync-run-created-${run.id}`}>{run.recordsCreated} created</span>
-                    <span data-testid={`sync-run-updated-${run.id}`}>{run.recordsUpdated} updated</span>
-                    {run.errorCount > 0 && (
-                      <span className="text-destructive" data-testid={`sync-run-errors-${run.id}`}>
-                        {run.errorCount} errors
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-xs text-muted-foreground mt-1" data-testid={`sync-run-time-${run.id}`}>
-                    {formatDistanceToNow(new Date(run.startedAt), { addSuffix: true })}
-                  </p>
-                </div>
-              );
-            })}
-          </div>
-        </Card>
-
-        {/* Data Quality Issues */}
-        <Card className="p-6">
-          <div className="flex items-center gap-2 mb-4">
-            <AlertCircle className="w-5 h-5 text-chart-4" />
-            <h2 className="text-lg font-semibold">Data Quality Alerts</h2>
-          </div>
-          <div className="space-y-3 max-h-[500px] overflow-y-auto">
-            {data.unresolvedIssues.length > 0 ? (
-              data.unresolvedIssues.map((issue) => (
-                <div
-                  key={issue.id}
-                  className="pb-3 border-b last:border-0"
-                  data-testid={`quality-issue-${issue.id}`}
-                >
-                  <div className="flex items-center justify-between mb-1">
-                    <div className="flex items-center gap-2">
-                      {getSeverityBadge(issue.severity)}
-                      <span className="text-sm font-medium capitalize" data-testid={`issue-type-${issue.id}`}>
-                        {issue.issueType.replace(/_/g, " ")}
-                      </span>
-                    </div>
-                    {issue.sourceSystem && (
-                      <Badge variant="outline" data-testid={`issue-source-${issue.id}`}>
-                        {issue.sourceSystem}
-                      </Badge>
-                    )}
-                  </div>
-                  <p className="text-xs text-muted-foreground" data-testid={`issue-description-${issue.id}`}>
-                    {issue.description}
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-1" data-testid={`issue-time-${issue.id}`}>
-                    {formatDistanceToNow(new Date(issue.createdAt), { addSuffix: true })}
-                  </p>
-                </div>
-              ))
-            ) : (
-              <div className="text-center py-8">
-                <CheckCircle className="w-12 h-12 text-chart-2 mx-auto mb-3" />
-                <p className="text-sm text-muted-foreground">
-                  No data quality issues detected. All systems healthy!
-                </p>
-              </div>
-            )}
-          </div>
-        </Card>
+          </Card>
+        ))}
       </div>
+
+      {/* Empty State */}
+      {filteredIntegrations.length === 0 && (
+        <Card className="p-12">
+          <div className="text-center space-y-3">
+            <Search className="w-12 h-12 text-muted-foreground mx-auto" />
+            <h3 className="text-lg font-semibold">No integrations found</h3>
+            <p className="text-sm text-muted-foreground">
+              Try adjusting your search or filter criteria
+            </p>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setSearchQuery("");
+                setSelectedCategory("All");
+              }}
+              data-testid="button-clear-filters"
+            >
+              Clear Filters
+            </Button>
+          </div>
+        </Card>
+      )}
+
+      {/* Detail Drawer */}
+      <Sheet open={!!selectedIntegration} onOpenChange={() => setSelectedIntegration(null)}>
+        <SheetContent className="w-full sm:max-w-2xl overflow-y-auto" data-testid="drawer-integration-detail">
+          {selectedIntegration && (
+            <>
+              <SheetHeader>
+                <div className="flex items-start gap-4">
+                  <img
+                    src={selectedIntegration.logo}
+                    alt={`${selectedIntegration.name} logo`}
+                    className="w-16 h-16 object-contain bg-white rounded p-2"
+                    data-testid="img-detail-logo"
+                  />
+                  <div className="flex-1">
+                    <SheetTitle className="text-2xl" data-testid="text-detail-name">
+                      {selectedIntegration.name}
+                    </SheetTitle>
+                    <SheetDescription className="flex items-center gap-2 mt-2">
+                      <Badge variant="outline" data-testid="badge-detail-category">
+                        {selectedIntegration.category}
+                      </Badge>
+                      <Badge variant="outline" data-testid="badge-detail-api-type">
+                        {selectedIntegration.apiType}
+                      </Badge>
+                      {selectedIntegration.status === "connected" && (
+                        <Badge variant="default" className="bg-chart-2 hover:bg-chart-2" data-testid="badge-detail-status">
+                          <CheckCircle2 className="w-3 h-3 mr-1" />
+                          Connected
+                        </Badge>
+                      )}
+                    </SheetDescription>
+                  </div>
+                </div>
+              </SheetHeader>
+
+              <div className="mt-6 space-y-6">
+                {/* Description */}
+                <div>
+                  <h3 className="font-semibold mb-2">Overview</h3>
+                  <p className="text-sm text-muted-foreground" data-testid="text-detail-description">
+                    {selectedIntegration.description}
+                  </p>
+                </div>
+
+                {/* Supported Modules */}
+                <div>
+                  <h3 className="font-semibold mb-3">Supported Modules</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedIntegration.modules.map((module) => (
+                      <Badge key={module} variant="secondary" data-testid={`badge-detail-module-${module.toLowerCase()}`}>
+                        {module}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Features */}
+                <div>
+                  <h3 className="font-semibold mb-3">Key Features</h3>
+                  <ul className="space-y-2">
+                    {selectedIntegration.features.map((feature, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm" data-testid={`text-detail-feature-${idx}`}>
+                        <CheckCircle2 className="w-4 h-4 text-chart-2 mt-0.5 flex-shrink-0" />
+                        <span>{feature}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Use Cases */}
+                <div>
+                  <h3 className="font-semibold mb-3">Common Use Cases</h3>
+                  <ul className="space-y-2">
+                    {selectedIntegration.useCases.map((useCase, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`text-detail-usecase-${idx}`}>
+                        <span className="text-primary">•</span>
+                        <span>{useCase}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Readiness Checklist */}
+                <div className="rounded-lg border p-4 bg-muted/30">
+                  <h3 className="font-semibold mb-3 flex items-center gap-2">
+                    <CheckCircle2 className="w-5 h-5 text-primary" />
+                    Readiness Checklist
+                  </h3>
+                  <p className="text-xs text-muted-foreground mb-3">
+                    Complete these steps before connecting this integration
+                  </p>
+                  <ul className="space-y-2">
+                    {selectedIntegration.checklist.map((item, idx) => (
+                      <li key={idx} className="flex items-start gap-2 text-sm" data-testid={`text-detail-checklist-${idx}`}>
+                        <div className="w-4 h-4 rounded border border-input mt-0.5 flex-shrink-0" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Actions */}
+                <div className="flex gap-3 pt-4">
+                  {selectedIntegration.status === "connected" ? (
+                    <>
+                      <Button variant="default" className="flex-1" data-testid="button-detail-manage">
+                        <Plug className="w-4 h-4 mr-2" />
+                        Manage Connection
+                      </Button>
+                      <Button variant="outline" data-testid="button-detail-disconnect">
+                        <X className="w-4 h-4 mr-2" />
+                        Disconnect
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button variant="default" className="flex-1" data-testid="button-detail-connect">
+                        <Plug className="w-4 h-4 mr-2" />
+                        Connect Integration
+                      </Button>
+                      <Button variant="outline" data-testid="button-detail-docs">
+                        <ExternalLink className="w-4 h-4 mr-2" />
+                        Documentation
+                      </Button>
+                    </>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }
