@@ -110,6 +110,21 @@ See `design_guidelines.md` for comprehensive design specifications.
 
 ## Recent Changes
 
+### January 2025 - Demo Data & Authentication Updates
+
+**Completed**:
+- ✅ Removed login requirement - app accessible without authentication
+- ✅ Generated comprehensive dummy data (45 donors, 268 gifts, 18 opportunities, 215 interactions, 40 tasks)
+- ✅ Industry-standard realistic data across all features:
+  - Diverse donor profiles with realistic names, emails, wealth bands
+  - Gift patterns following log-normal distribution (small to transformational gifts)
+  - 10 LYBUNT donors (gave 2024, not 2025) for retention tracking
+  - 8 SYBUNT donors (gave 2022-2023, not recently) for reactivation
+  - 8 campaigns (Annual Fund, Gala, Giving Tuesday, Capital Campaign, etc.)
+  - Portfolio assignments for 3 MGOs with 25-30 donors each
+  - Weighted interaction patterns (emails, calls, meetings, events)
+- ✅ App now loads Development Director dashboard by default
+
 ### December 2024 - Initial Build
 
 **Completed (Task 1: Schema & Frontend)**:
@@ -138,8 +153,14 @@ See `design_guidelines.md` for comprehensive design specifications.
 
 ## Authentication
 
-FundRazor uses Replit Auth (OIDC) for authentication. Users are assigned roles:
+**Authentication has been disabled** - the app is accessible without login for demo purposes.
 
+The app loads the **Development Director dashboard** by default. Users can navigate between different dashboards via the sidebar:
+- **Development Director Dashboard**: `/` or `/dashboard/dev-director`
+- **MGO Dashboard**: `/dashboard/mgo`
+- **CEO Dashboard**: `/dashboard/ceo`
+
+Replit Auth integration remains available but is not enforced. Role-based functionality is preserved for future use:
 - **ADMIN**: Full system access
 - **CEO**: Executive dashboard, high-level metrics, top prospects
 - **DEV_DIRECTOR**: Team management, pipeline health, data quality
