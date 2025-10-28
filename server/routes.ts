@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { db } from "./db";
-import { persons, opportunities, users, gifts, interactions } from "@shared/schema";
+import { persons, opportunities, users, gifts, interactions, integrations, integrationSyncRuns, dataQualityIssues } from "@shared/schema";
 import { eq, sql, desc, gte, and, inArray } from "drizzle-orm";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -652,6 +652,90 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching data health:", error);
       res.status(500).json({ message: "Failed to fetch data health metrics" });
+    }
+  });
+
+  // Integrations & Data Health endpoint
+  app.get("/api/integrations", async (req, res) => {
+    try {
+      // Fetch all integrations
+      const integrationsList = await db.select().from(integrations).orderBy(integrations.name);
+      
+      // Fetch recent sync runs (last 20)
+      const recentSyncRuns = await db
+        .select()
+        .from(integrationSyncRuns)
+        .orderBy(desc(integrationSyncRuns.startedAt))
+        .limit(20);
+      
+      // Fetch unresolved data quality issues
+      const unresolvedIssues = await db
+        .select()
+        .from(dataQualityIssues)
+        .where(eq(dataQualityIssues.resolved, 0))
+        .orderBy(desc(dataQualityIssues.createdAt))
+        .limit(50);
+      
+      // Calculate coverage metrics
+      const [totalDonorsResult] = await db
+        .select({ count: sql<number>`count(*)` })
+        .from(persons);
+      const totalDonors = Number(totalDonorsResult.count) || 0;
+      
+      const [donorsWithWealthResult] = await db
+        .select({ count: sql<number>`count(*)` })
+        .from(persons)
+        .where(sql`${persons.wealthBand} IS NOT NULL AND ${persons.wealthBand} != ''`);
+      const donorsWithWealthData = Number(donorsWithWealthResult.count) || 0;
+      
+      // Recent interaction = last 90 days
+      const ninetyDaysAgo = new Date();
+      ninetyDaysAgo.setDate(ninetyDaysAgo.getDate() - 90);
+      const [donorsWithRecentInteractionResult] = await db
+        .select({ count: sql<number>`count(DISTINCT ${interactions.personId})` })
+        .from(interactions)
+        .where(gte(interactions.occurredAt, ninetyDaysAgo));
+      const donorsWithRecentInteraction = Number(donorsWithRecentInteractionResult.count) || 0;
+      
+      const [donorsWithEmailResult] = await db
+        .select({ count: sql<number>`count(*)` })
+        .from(persons)
+        .where(sql`${persons.primaryEmail} IS NOT NULL AND ${persons.primaryEmail} != ''`);
+      const donorsWithEmail = Number(donorsWithEmailResult.count) || 0;
+      
+      const [opportunitiesWithActivityResult] = await db
+        .select({ count: sql<number>`count(*)` })
+        .from(opportunities)
+        .where(
+          and(
+            sql`${opportunities.syncedAt} IS NOT NULL`,
+            gte(opportunities.syncedAt, ninetyDaysAgo)
+          )
+        );
+      const opportunitiesWithRecentActivity = Number(opportunitiesWithActivityResult.count) || 0;
+      
+      const [giftsFromOnlinePlatformsResult] = await db
+        .select({ count: sql<number>`count(*)` })
+        .from(gifts)
+        .where(sql`${gifts.sourceSystem} IN ('Classy', 'DAFGiving360')`);
+      const giftsFromOnlinePlatforms = Number(giftsFromOnlinePlatformsResult.count) || 0;
+      
+      res.json({
+        integrations: integrationsList,
+        recentSyncRuns: recentSyncRuns,
+        unresolvedIssues: unresolvedIssues,
+        coverageMetrics: {
+          totalDonors,
+          donorsWithWealthData,
+          donorsWithRecentInteraction,
+          donorsWithEmail,
+          opportunitiesWithRecentActivity,
+          giftsFromOnlinePlatforms,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching integrations data:", error);
+      res.status(500).json({ message: "Failed to fetch integrations data" });
     }
   });
 

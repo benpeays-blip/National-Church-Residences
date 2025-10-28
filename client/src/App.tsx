@@ -15,6 +15,7 @@ import Gifts from "@/pages/gifts";
 import Campaigns from "@/pages/campaigns";
 import DataHealth from "@/pages/data-health";
 import Settings from "@/pages/settings";
+import Integrations from "@/pages/integrations";
 
 function Dashboard() {
   // Default to Dev Director dashboard (can be changed via navigation)
@@ -33,6 +34,7 @@ function Router() {
       <Route path="/gifts" component={Gifts} />
       <Route path="/campaigns" component={Campaigns} />
       <Route path="/data-health" component={DataHealth} />
+      <Route path="/integrations" component={Integrations} />
       <Route path="/settings" component={Settings} />
       <Route component={NotFound} />
     </Switch>

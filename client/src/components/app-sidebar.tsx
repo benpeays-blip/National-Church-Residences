@@ -5,6 +5,7 @@ import {
   DollarSign,
   Calendar,
   Database,
+  Plug,
   Settings,
 } from "lucide-react";
 import {
@@ -56,6 +57,12 @@ const menuItems = [
     title: "Data Health",
     url: "/data-health",
     icon: Database,
+    roles: ["ADMIN", "DEV_DIRECTOR", "DATA_OPS"],
+  },
+  {
+    title: "Integrations",
+    url: "/integrations",
+    icon: Plug,
     roles: ["ADMIN", "DEV_DIRECTOR", "DATA_OPS"],
   },
   {
