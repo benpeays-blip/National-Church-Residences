@@ -1,0 +1,887 @@
+Here’s a clear, professional-grade framework most development leaders will recognize and agree with. It’s the 80% “core model” every nonprofit should be running in 2025+, from $10/month grassroots to seven-figure gifts and institutional funding.
+Fundraising Framework (2025+)
+1) Operating Principles
+Mission clarity → every touch connects dollars to outcomes.
+
+
+Portfolio discipline → right prospects, right stage, right owner, right next step.
+
+
+Data-first execution → one source of truth, repeatable workflows, visible KPIs.
+
+
+Stewardship drives renewal → report impact early and often.
+
+
+Test and learn → iterate messages, channels, and offers quarterly.
+
+
+2) Donor Spectrum (Fundraising Pyramid)
+Base: Mass/Digital Giving ($1–$999)
+
+
+Tactics: email, website, social, SMS, paid ads, peer-to-peer, text-to-give.
+
+
+Objectives: acquisition, monthly conversion, low-friction donation UX.
+
+
+Mid-Level ($1,000–$9,999)
+
+
+Tactics: segmented mail, small salons/briefings, insider updates, light 1:1.
+
+
+Objectives: loyalty, upgrade into major donor pipeline.
+
+
+Major Gifts ($10,000–$999,999)
+
+
+Tactics: assigned MGO portfolios, discovery → cultivation → proposal → close.
+
+
+Objectives: align passions with initiatives; multi-year commitments.
+
+
+Principal/Transformational ($1M+)
+
+
+Tactics: executive cultivation, bespoke proposals, naming/endowments.
+
+
+Objectives: step-change impact; legacy gifts.
+
+
+Institutional & Planned Giving (varies)
+
+
+Foundations/Corporations/DAFs: LOIs, proposals, sponsorships, partnerships.
+
+
+Planned: bequests, beneficiary designations, trusts, endowments.
+
+
+3) Pipelines (Lifecycle Stages)
+Individual Giving Pipeline (all tiers)
+
+
+Prospecting → Cultivation → Solicitation → Stewardship → Renewal/Upgrade.
+
+
+Gate criteria at each stage (qualification score, meeting held, proposal issued, thank/report delivered, renewal attempt logged).
+
+
+Grants/Institutional Pipeline
+
+
+Landscape scan → Fit/Qualification → LOI → Full Proposal → Decision → Award/Decline → Reporting/Renewal.
+
+
+4) Core Channels
+Individual Giving
+
+
+Annual Fund/Mass Appeals; Monthly/Recurring; Peer-to-Peer; Major Gifts; Planned Giving.
+
+
+Institutional
+
+
+Foundations; Corporations (sponsorships, cause marketing, employee giving); Government/Faith-based.
+
+
+Campaigns
+
+
+Capital/Endowment; Matching/Challenge; Year-End; Giving Days.
+
+
+Events
+
+
+Galas/Auctions; Golf/Walk/Run; Private briefings; Immersive trips; Virtual/hybrid.
+
+
+Membership/Affinity Programs
+
+
+Tiered clubs; insider content; recognition.
+
+
+5) Enablement Stack (Systems)
+CRM of Record (Raiser’s Edge NXT, Salesforce NPSP, Virtuous, etc.).
+
+
+Wealth/Prospect Intelligence (WealthEngine, iWave, DonorSearch, Windfall).
+
+
+Marketing Automation (Mailchimp, Campaign Monitor, HubSpot; journeys and triggers).
+
+
+Events/Registration/Ticketing; Payment processing with tokenized cards.
+
+
+Analytics/Dashboards (board/exec, directors, MGOs).
+
+
+Data Hygiene/ETL (dedupe, field validation, audit logs).
+
+
+Grant Management (deadlines, tasks, reporting calendar).
+
+
+6) Organizational Roles
+Chief Development Officer / VP Development: revenue strategy, portfolio governance.
+
+
+Major Gift Officers (MGO): 100–150 qualified prospects each; activity and stage goals.
+
+
+Annual Fund/Recurring Manager: acquisition, LTV, churn.
+
+
+Prospect Research/Analytics: screening, prioritization, portfolio balancing.
+
+
+Institutional Giving Lead/Grant Writer: pipeline, proposal quality, award rate.
+
+
+Donor Relations/Stewardship: reporting, recognition, events.
+
+
+Data/CRM Admin: integrity, integrations, reporting.
+
+
+Marketing/Content: storytelling, design, web, video.
+
+
+7) Management Cadence
+Weekly: MGO one-on-ones (top 10, stuck deals, next actions); grants stand-up (deadlines).
+
+
+Monthly: pipeline reviews by stage/owner; LYBUNT/SYBUNT actions; data health.
+
+
+Quarterly: strategy retrospectives, campaign tests, portfolio rebalance.
+
+
+Board/Exec: YTD vs goal, 90-day forecast, top prospects, acquisition/retention.
+
+
+8) KPIs and Benchmarks
+Donor Retention: mass 45–55%; major 75%+.
+
+
+New Donor Acquisition Cost and Payback: by channel.
+
+
+Monthly Donor Metrics: conversion %, churn %, LTV.
+
+
+Major Gifts: meetings per week; proposals issued; win rate; average gift; cycle time.
+
+
+Pipeline Coverage: 3–5× target; time-in-stage thresholds.
+
+
+Grants: award rate; dollars submitted vs awarded; on-time report rate.
+
+
+LYBUNT/SYBUNT Recovery: outreach completion; recovered revenue.
+
+
+Data Health: missing email/phone %, duplicate rate, bounce rate.
+
+
+Cost to Raise $1: by channel (target < $0.25 major; < $0.35 digital).
+
+
+9) Annual Calendar (Example)
+Q1: Stewardship and retention; annual impact report; MGO discovery push.
+
+
+Q2: Spring appeal; cultivation salons; mid-level upgrades; LOIs due for fall cycles.
+
+
+Q3: Quiet phase for major gifts; corporate sponsorships; proposal development.
+
+
+Q4: Year-end campaigns (Giving Tuesday → Dec 31); major closes; planned giving pushes.
+
+
+10) Standard Playbooks (Must-Have SOPs)
+Prospecting and Qualification
+
+
+Screens + signals (capacity, engagement, affinity); entry/exit rules for portfolios.
+
+
+Cultivation
+
+
+Meeting sequences, briefing materials, objection handling, alignment memos.
+
+
+Solicitation
+
+
+Proposal templates; offer design (project budgets, outcomes, recognition); closing plans.
+
+
+Stewardship
+
+
+Thank-you SLAs; impact reports; renewal sequencing; recognition tiers.
+
+
+Monthly Donors
+
+
+Onboarding series; card-updater; save-attempts; upgrade campaigns.
+
+
+LYBUNT Recovery
+
+
+Cadenced touches (personalized email → call → note → meeting ask).
+
+
+Grants
+
+
+Fit rubric; boilerplate narrative/evidence library; calendar; compliance checklist.
+
+
+Events
+
+
+P&L model; sponsorship ladder; run-of-show; post-event conversion.
+
+
+11) Data Model (Canonical, tool-agnostic)
+People/Households; Organizations; Gifts/Payments; Pledges/Opportunities; Interactions (meetings, calls, emails, events); Portfolios; Campaigns/Appeals; Grants; Tasks/Next Best Actions; DataHealth.
+
+
+Scoring
+
+
+Engagement (recency/frequency/monetary + interactions).
+
+
+Capacity (wealth bands, assets proxies).
+
+
+Affinity (program interests from tags/NLP).
+
+
+Governance
+
+
+Multi-tenancy where relevant; field standards; audit logs; consent/privacy.
+
+
+12) Optimization Layer (what to improve first)
+Next-Best-Action Rules
+
+
+High engagement + 180+ days since gift → cultivation call.
+
+
+Event attended + capacity ≥ 60 → tailored follow-up + soft ask.
+
+
+LYBUNT + open rate ≥ 40% → renewal outreach with impact proof.
+
+
+Testing Roadmap
+
+
+Offer framing, suggested amounts, subject lines, landing page UX, cadence.
+
+
+Portfolio Balancing
+
+
+Capacity mix, coverage %, time-in-stage limits, pull-forward candidates.
+
+
+Recurring Program
+
+
+Default monthly option; one-click upgrades; save-churn flows.
+
+
+Grant Hit-Rate
+
+
+Tighten fit rubric; strengthen evidence and outcomes; post-mortems on declines.
+
+
+
+One-Page Summary (Executive View)
+Strategy: diversified revenue across individual (mass → principal), institutional, campaigns, and events.
+
+
+Process: disciplined pipelines with stage gates, ownership, and standard playbooks.
+
+
+Systems: CRM of record + wealth + marketing automation + analytics; clean data.
+
+
+People: defined roles, realistic portfolios, weekly/monthly/quarterly cadences.
+
+
+KPIs: retention, LTV, pipeline health, win rates, grant awards, data quality.
+
+
+Calendar: Q1 retention, Q2 cultivation, Q3 proposals, Q4 year-end closes.
+
+
+Optimization: next-best actions, testing, portfolio rebalance, recurring growth, grant fit.
+
+
+
+Below are two deliverables that build on the framework:
+A visual “Fundraising Operating Model” (so you can explain the ecosystem at a glance).
+
+
+A “Fundraising Maturity Diagnostic” — the benchmark tool any nonprofit can use to score where they are and identify the next optimizations.
+
+
+
+1. The Fundraising Operating Model (Visual Blueprint)
+Think of this as a systems map showing how every healthy development department runs — from data to dollars.
+              ┌─────────────────────────────┐
+               │        STRATEGY LAYER       │
+               │ Mission • Vision • Case for │
+               │ Support • Impact Narrative   │
+               └──────────────┬───────────────┘
+                              │
+           ┌──────────────────┴──────────────────┐
+           │                                     │
+┌────────────────────────┐          ┌────────────────────────┐
+│  INDIVIDUAL GIVING     │          │ INSTITUTIONAL GIVING   │
+│ (Public → Major →       │          │ (Grants • Corporate •  │
+│  Transformational)      │          │  DAFs • Gov’t)         │
+└────────────────────────┘          └────────────────────────┘
+           │                                     │
+           └──────────────┬──────────────────────┘
+                          │
+                  ┌───────▼────────────────┐
+                  │   CAMPAIGNS & EVENTS   │
+                  │  (Annual • Capital •   │
+                  │   Digital • Galas)     │
+                  └─────────┬──────────────┘
+                            │
+                  ┌─────────▼─────────────┐
+                  │  DONOR EXPERIENCE &   │
+                  │     STEWARDSHIP       │
+                  │  Thank • Report •     │
+                  │  Renew • Upgrade      │
+                  └─────────┬─────────────┘
+                            │
+               ┌────────────▼──────────────┐
+               │   INFRASTRUCTURE LAYER    │
+               │ CRM • Wealth • Marketing  │
+               │ Automation • Analytics    │
+               └────────────┬──────────────┘
+                            │
+               ┌────────────▼──────────────┐
+               │   MANAGEMENT SYSTEMS      │
+               │ KPIs • Dashboards • Data  │
+               │ Health • Forecasts        │
+               └────────────┬──────────────┘
+                            │
+               ┌────────────▼──────────────┐
+               │   OPTIMIZATION ENGINE     │
+               │  Next Best Actions • AI   │
+               │  Insights • Testing       │
+               └───────────────────────────┘
+
+This diagram can easily become a slide or wall chart showing how strategy → channels → infrastructure → optimization all connect.
+
+2. Fundraising Maturity Diagnostic
+A self-assessment that rates an organization on a five-level scale (Emerging → Optimized) across nine dimensions.
+Dimension
+Definition
+Emerging
+Developing
+Established
+Advanced
+Optimized
+1. Strategy & Case
+Clear, donor-aligned mission and funding priorities
+Generic appeals
+Basic case for support
+Consistent messaging
+Differentiated cases per audience
+Fully integrated impact narrative across all channels
+2. Data Infrastructure
+CRM, data integrity, integration
+Manual spreadsheets
+Basic CRM; dirty data
+Standard CRM; regular reports
+Integrated tools; dedupe & hygiene
+Unified data layer; automated dashboards
+3. Donor Segmentation
+Audience definition & targeting
+One-size-fits-all
+Basic tiering
+RFM or wealth-based segments
+Multi-factor segmentation (capacity, engagement, affinity)
+Predictive & AI-driven scoring
+4. Individual Giving Program
+Mass, monthly, mid-level, major
+Occasional appeals
+Annual calendar
+Multi-tiered programs
+Integrated pipelines & recurring
+Full pyramid optimization; continuous testing
+5. Institutional Giving
+Foundation/Corp/DAF grants
+Ad-hoc submissions
+Annual grant plan
+Active pipeline tracking
+Dedicated research & reporting
+Strategic partnerships; renewal flywheel
+6. Stewardship & Donor Experience
+Thanking & reporting
+Receipts only
+Annual impact comms
+Segmented reporting
+Personalized updates per tier
+Automated + human hybrid stewardship; video, dashboards
+7. Campaign & Event Management
+Planning, ROI tracking
+One-offs
+Annual events
+Campaign playbooks
+Integrated ROI measurement
+Multichannel calendarized campaigns with real-time analytics
+8. Talent & Roles
+Defined fundraising roles
+Generalists
+Role clarity
+Dedicated MGOs & data staff
+Portfolio discipline
+Cross-functional, data-literate teams
+9. Performance & Culture
+KPIs, reviews, innovation
+No metrics
+Basic reporting
+Monthly pipeline review
+Predictive KPIs, data culture
+Continuous improvement; test-and-learn culture
+
+How to use
+Score each 1–5 → visualize in a radar chart.
+
+
+Benchmark against peers or internal departments.
+
+
+Prioritize top 3 dimensions for next-year investment (tech, people, process).
+
+
+
+3. Diagnostic Output Example
+Fundraising Readiness Scorecard (Sample):
+Category
+Score
+Focus Area
+Strategy & Case
+3.5
+Sharpen program-specific cases
+Data Infrastructure
+2.0
+Clean CRM data; integrate Mailchimp & wealth tools
+Donor Segmentation
+2.5
+Introduce E/C/A scoring
+Individual Giving
+3.0
+Build monthly donor upgrade path
+Institutional
+3.5
+Improve grant calendar discipline
+Stewardship
+4.0
+Add automated thank-you & impact emails
+Campaigns
+3.0
+Create annual fundraising calendar
+Talent
+4.0
+Add data analyst support
+Performance Culture
+2.5
+Move to weekly pipeline cadence
+
+→ Overall Maturity: Established (3.1/5)
+ → Next Focus: Data infrastructure + predictive analytics + recurring donor growth.
+
+4. Implementation Roadmap (Simplified)
+Foundation (0–6 months)
+
+
+Data cleanup, CRM audit, standard KPIs, consistent case for support.
+
+
+Integration (6–12 months)
+
+
+Connect wealth screening, marketing automation, dashboarding; build recurring program.
+
+
+Optimization (12–18 months)
+
+
+Introduce scoring (Engagement/Capacity/Affinity); next-best-action rules.
+
+
+Acceleration (18–24 months)
+
+
+Predictive forecasting, donor journey automation, grant success analytics.
+
+
+Transformation (24+ months)
+
+
+Unified “Fundraising Intelligence” platform; machine learning optimization.
+
+
+
+Would you like me to now turn this diagnostic into a 1–5 scoring tool (with categories, weights, and recommendations) — something you could embed in software or use as a consultant worksheet?
+You said:
+yes
+ChatGPT said:
+Excellent. Here’s the full scoring tool design — ready for use as either a consulting diagnostic worksheet or as a data model you can later embed in your Fundraising Intelligence Platform.
+
+FUNDRAISING MATURITY DIAGNOSTIC (5-Level Scoring Tool)
+Purpose
+A structured, standardized tool to evaluate a nonprofit’s fundraising maturity and prioritize optimization efforts.
+ This is the benchmark grid most Chief Development Officers, consultants, or boards will instantly understand.
+
+I. STRUCTURE OVERVIEW
+Section
+Description
+Dimensions (9 total)
+The key capability areas of fundraising effectiveness.
+Levels (1–5)
+Standardized maturity levels with consistent language.
+Weights (optional)
+Assign relative importance for composite scoring.
+Output
+Weighted total score (0–100), plus recommended actions.
+
+
+II. DIMENSIONS (THE 9 CORE CATEGORIES)
+Each dimension has a definition, scoring rubric (1–5), and recommended optimization actions.
+
+1. STRATEGY & CASE FOR SUPPORT
+Definition: Clarity of mission, vision, impact, and funding priorities that motivate donors.
+ Weight: 10%
+Level
+Description
+1 – Emerging
+Messaging is generic; no formal case for support.
+2 – Developing
+Case exists but not consistently used or audience-specific.
+3 – Established
+Case is aligned with programs; used in appeals and proposals.
+4 – Advanced
+Distinct cases for each audience (major, grants, digital).
+5 – Optimized
+Unified impact narrative drives all campaigns; data-backed outcomes.
+Key Next Steps: Build unified case library; link every program to measurable impact data.
+
+
+
+
+2. DATA INFRASTRUCTURE
+Definition: Systems, integrations, and data hygiene supporting accurate insight.
+ Weight: 15%
+Level
+Description
+1 – Emerging
+Data in spreadsheets; no CRM discipline.
+2 – Developing
+Basic CRM; inconsistent fields; duplicate records.
+3 – Established
+Reliable CRM; regular data entry; manual reports.
+4 – Advanced
+CRM integrated with email, wealth, and events; dashboard reports.
+5 – Optimized
+Unified data model; real-time dashboards; automated data health.
+Key Next Steps: Integrate CRM + wealth + marketing data; create hygiene and dedupe routines.
+
+
+
+
+3. DONOR SEGMENTATION & SCORING
+Definition: Ability to segment and prioritize donors by value, engagement, and interest.
+ Weight: 10%
+Level
+Description
+1 – Emerging
+No segmentation beyond donor vs. non-donor.
+2 – Developing
+Basic tiers (small/mid/major) with limited data.
+3 – Established
+RFM or wealth tiers; manual prioritization.
+4 – Advanced
+Engagement/Capacity/Affinity scoring.
+5 – Optimized
+Predictive modeling and automated “next best action” engine.
+Key Next Steps: Implement donor scoring model; automate portfolio reports.
+
+
+
+
+4. INDIVIDUAL GIVING PROGRAM
+Definition: Annual, monthly, and major donor strategies and pipelines.
+ Weight: 15%
+Level
+Description
+1 – Emerging
+Occasional appeals; no recurring giving.
+2 – Developing
+Annual appeal calendar; few repeat donors.
+3 – Established
+Defined tiers; recurring donor base; active major gift officers.
+4 – Advanced
+Portfolio discipline, stewardship cycles, upgrade paths.
+5 – Optimized
+Fully integrated pyramid; cross-tier automation; high retention.
+Key Next Steps: Build mid-level program; introduce monthly donor upgrade automation.
+
+
+
+
+5. INSTITUTIONAL & GRANTS FUNDRAISING
+Definition: Foundation, corporate, DAF, and government fundraising discipline.
+ Weight: 10%
+Level
+Description
+1 – Emerging
+Ad hoc grant submissions; no tracking.
+2 – Developing
+Basic grant calendar; low award rate.
+3 – Established
+Active grant pipeline with reporting calendar.
+4 – Advanced
+Dedicated research, templates, strong award/renewal rate.
+5 – Optimized
+Institutional partnerships; multi-year renewals; 60%+ award rate.
+Key Next Steps: Formalize grants calendar; build evidence library for proposals.
+
+
+
+
+6. STEWARDSHIP & DONOR EXPERIENCE
+Definition: Thanking, reporting, and renewal systems.
+ Weight: 10%
+Level
+Description
+1 – Emerging
+Gift receipts only.
+2 – Developing
+Occasional impact updates; inconsistent follow-up.
+3 – Established
+Segmented thank-you and annual impact report.
+4 – Advanced
+Personalized updates, donor reports, and renewal plans.
+5 – Optimized
+Hybrid automation + personal stewardship; proactive engagement.
+Key Next Steps: Create 12-month stewardship calendar per tier; automate thank-yous.
+
+
+
+
+7. CAMPAIGNS & EVENTS
+Definition: Execution and ROI tracking of annual, digital, and in-person campaigns.
+ Weight: 10%
+Level
+Description
+1 – Emerging
+Occasional campaigns; no measurement.
+2 – Developing
+Annual event; limited online strategy.
+3 – Established
+Multi-channel campaigns; manual ROI tracking.
+4 – Advanced
+Integrated digital + event calendar; ROI by channel.
+5 – Optimized
+Continuous, data-driven campaign cycle with testing insights.
+Key Next Steps: Add KPIs per campaign; implement testing and debrief routines.
+
+
+
+
+8. TALENT & ROLES
+Definition: Clarity of fundraising roles and professional development.
+ Weight: 10%
+Level
+Description
+1 – Emerging
+Generalists; unclear ownership.
+2 – Developing
+Role titles defined but blurred responsibilities.
+3 – Established
+Dedicated MGOs, annual fund, and grants staff.
+4 – Advanced
+Balanced portfolios; analyst/ops support.
+5 – Optimized
+Cross-functional, data-literate team culture.
+Key Next Steps: Define portfolio limits; create weekly accountability cadence.
+
+
+
+
+9. PERFORMANCE & CULTURE
+Definition: Data-driven decision-making and continuous improvement.
+ Weight: 10%
+Level
+Description
+1 – Emerging
+No formal metrics or reviews.
+2 – Developing
+Occasional reporting; reactive problem-solving.
+3 – Established
+Monthly KPI and pipeline reviews.
+4 – Advanced
+Predictive KPIs; dashboard-driven management.
+5 – Optimized
+Continuous test/learn culture; AI-driven insights.
+Key Next Steps: Institutionalize weekly MGO reviews; build forecast dashboard.
+
+
+
+
+III. SCORING LOGIC (for app or worksheet)
+Formula:
+TotalScore=∑(DimensionScore×Weight)Total Score = \sum (DimensionScore × Weight)TotalScore=∑(DimensionScore×Weight)
+Each dimension is scored 1–5, normalized to a 100-point total.
+Example:
+Dimension
+Score
+Weight
+Weighted
+Strategy
+3
+10%
+3.0
+Data
+2
+15%
+3.0
+Segmentation
+3
+10%
+3.0
+Individual Giving
+4
+15%
+6.0
+Institutional
+3
+10%
+3.0
+Stewardship
+4
+10%
+4.0
+Campaigns
+3
+10%
+3.0
+Talent
+4
+10%
+4.0
+Performance
+3
+10%
+3.0
+TOTAL
+—
+—
+32 / 100 → Level 3.2 (“Established”)
+
+
+IV. INTERPRETATION GUIDE
+Score
+Category
+Description
+0–1.9
+Emerging
+Basic fundraising infrastructure forming; foundational investments required.
+2.0–2.9
+Developing
+Systems and people in place but inconsistent execution; quick wins possible.
+3.0–3.9
+Established
+Mature operation with measurable results; ready for optimization.
+4.0–4.4
+Advanced
+Strategic integration and proactive management.
+4.5–5.0
+Optimized
+Fully data-driven, automated, continuously learning system.
+
+
+V. SOFTWARE / DATA MODEL (For Future Platform Build)
+Field
+Type
+Description
+org_id
+UUID
+Nonprofit ID
+dimension
+Enum
+One of 9 core categories
+score
+Float (1–5)
+Assigned value
+weight
+Float
+0–1
+notes
+Text
+Qualitative assessor notes
+recommendations
+Text
+Generated or manual
+total_score
+Float
+Weighted sum
+category
+Enum
+Emerging → Optimized
+updated_at
+DateTime
+Timestamp
+
+This model can power:
+Online assessment tools (self or consultant-led)
+
+
+Dashboard views (radar chart, weighted index)
+
+
+AI recommendations engine (e.g., “You’re a 2.5 in Data Infrastructure — integrate CRM and marketing automation next.”)
+
+
+
+VI. VISUAL OUTPUTS
+Radar Chart: 9-spoke chart showing scores visually.
+
+
+Heat Map: Color-coded table (red = low maturity, green = optimized).
+
+
+Priority Matrix: “High impact × low maturity” quadrant to drive next actions.
+
+
