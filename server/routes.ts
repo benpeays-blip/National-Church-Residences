@@ -20,7 +20,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/persons", isAuthenticated, async (req, res) => {
+  app.get("/api/persons", async (req, res) => {
     try {
       const search = req.query.search as string | undefined;
       const personsList = await storage.getPersons(search);
@@ -31,7 +31,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/persons/:id", isAuthenticated, async (req, res) => {
+  app.get("/api/persons/:id", async (req, res) => {
     try {
       const person = await storage.getPerson(req.params.id);
       if (!person) {
@@ -75,7 +75,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/opportunities", isAuthenticated, async (req, res) => {
+  app.get("/api/opportunities", async (req, res) => {
     try {
       const ownerId = req.query.ownerId as string | undefined;
       const opportunitiesList = await storage.getOpportunities(ownerId);
@@ -185,9 +185,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/dashboard/mgo", isAuthenticated, async (req: any, res) => {
+  app.get("/api/dashboard/mgo", async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      // Use first MGO user for demo (no auth required)
+      const [defaultUser] = await db.select().from(users).where(eq(users.role, "MGO")).limit(1);
+      const userId = defaultUser?.id || "mgo-1";
 
       const opportunitiesList = await db
         .select({
@@ -283,7 +285,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/dashboard/dev-director", isAuthenticated, async (req, res) => {
+  app.get("/api/dashboard/dev-director", async (req, res) => {
     try {
       const yearStart = new Date(new Date().getFullYear(), 0, 1);
       
@@ -471,7 +473,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/dashboard/ceo", isAuthenticated, async (req, res) => {
+  app.get("/api/dashboard/ceo", async (req, res) => {
     try {
       const yearStart = new Date(new Date().getFullYear(), 0, 1);
       const monthStart = new Date();

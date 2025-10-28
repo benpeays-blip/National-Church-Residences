@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Mail, Phone, FileText } from "lucide-react";
 import { formatCurrency, formatDateRelative, getInitials } from "@/lib/utils";
 import { ScoreIndicator } from "./score-indicator";
+import { DataProvenanceBadge } from "./data-provenance-badge";
 import type { Person } from "@shared/schema";
 
 interface DonorCardProps {
@@ -46,13 +47,27 @@ export function DonorCard({ donor, onSelect }: DonorCardProps) {
 
           <div className="grid grid-cols-3 gap-4 mb-3">
             <div>
-              <p className="text-xs text-muted-foreground mb-1">Capacity</p>
+              <div className="flex items-center gap-1 mb-1">
+                <p className="text-xs text-muted-foreground">Capacity</p>
+                <DataProvenanceBadge
+                  sourceSystem="WealthEngine"
+                  syncedAt={donor.syncedAt}
+                  variant="icon"
+                />
+              </div>
               <div className="flex items-center gap-2">
                 <ScoreIndicator score={donor.capacityScore} size="sm" />
               </div>
             </div>
             <div>
-              <p className="text-xs text-muted-foreground mb-1">Engagement</p>
+              <div className="flex items-center gap-1 mb-1">
+                <p className="text-xs text-muted-foreground">Engagement</p>
+                <DataProvenanceBadge
+                  sourceSystem={donor.sourceSystem}
+                  syncedAt={donor.syncedAt}
+                  variant="icon"
+                />
+              </div>
               <div className="flex items-center gap-2">
                 <ScoreIndicator score={donor.engagementScore} size="sm" />
               </div>
@@ -67,7 +82,14 @@ export function DonorCard({ donor, onSelect }: DonorCardProps) {
 
           <div className="flex items-center justify-between gap-2">
             <div className="flex flex-col min-w-0">
-              <span className="text-xs text-muted-foreground">Last Gift</span>
+              <div className="flex items-center gap-1">
+                <span className="text-xs text-muted-foreground">Last Gift</span>
+                <DataProvenanceBadge
+                  sourceSystem={donor.sourceSystem}
+                  syncedAt={donor.syncedAt}
+                  variant="icon"
+                />
+              </div>
               <span className="text-sm font-medium truncate">
                 {formatCurrency(donor.lastGiftAmount)} •{" "}
                 {formatDateRelative(donor.lastGiftDate)}

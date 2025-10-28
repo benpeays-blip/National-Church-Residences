@@ -170,9 +170,11 @@ See `design_guidelines.md` for comprehensive design specifications.
 
 **Authentication has been disabled** - the app is accessible without login for demo purposes.
 
+**⚠️ Security Note**: For demo purposes, authentication middleware has been removed from GET endpoints (`/api/persons`, `/api/opportunities`, `/api/dashboard/*`, `/api/integrations`). **This is intentional for demonstration only** and would need to be reinstated with proper session management for production deployment.
+
 The app loads the **Development Director dashboard** by default. Users can navigate between different dashboards via the sidebar:
 - **Development Director Dashboard**: `/` or `/dashboard/dev-director`
-- **MGO Dashboard**: `/dashboard/mgo`
+- **MGO Dashboard**: `/dashboard/mgo` (uses first MGO user from database)
 - **CEO Dashboard**: `/dashboard/ceo`
 
 Replit Auth integration remains available but is not enforced. Role-based functionality is preserved for future use:

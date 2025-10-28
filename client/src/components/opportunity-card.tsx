@@ -2,6 +2,7 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, getInitials } from "@/lib/utils";
+import { DataProvenanceBadge } from "./data-provenance-badge";
 import type { Opportunity } from "@shared/schema";
 
 interface OpportunityCardProps {
@@ -30,9 +31,16 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
       <div className="space-y-3">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
-            <h4 className="text-sm font-semibold truncate">
-              {opportunity.person?.firstName} {opportunity.person?.lastName}
-            </h4>
+            <div className="flex items-center gap-1">
+              <h4 className="text-sm font-semibold truncate">
+                {opportunity.person?.firstName} {opportunity.person?.lastName}
+              </h4>
+              <DataProvenanceBadge
+                sourceSystem={opportunity.sourceSystem}
+                syncedAt={opportunity.syncedAt}
+                variant="icon"
+              />
+            </div>
             <p className="text-xs text-muted-foreground mt-1">
               {formatCurrency(opportunity.askAmount)}
             </p>
