@@ -1,0 +1,460 @@
+1) System Overview (Three Layers)
+
+Integration Layer
+
+OAuth/API and webhooks to CRMs (Raiser’s Edge NXT, Salesforce NPSP, Virtuous), wealth tools (WealthEngine/iWave/DonorSearch), email tools (Mailchimp/HubSpot), event tools, spreadsheets.
+
+ETL jobs normalize records into a canonical model (People, Orgs, Gifts, Interactions, Portfolios, Campaigns, Grants).
+
+Intelligence Layer
+
+Entity resolution (dedupe), enrichment, donor and portfolio scoring, pipeline forecasting, “Next Best Action” rules/ML, data quality monitors.
+
+Action Layer (UI)
+
+Role-based dashboards for MGOs, Dev Directors, CEOs.
+
+Daily task lists, pipeline Kanban, donor 360, org-level KPIs, data health.
+
+2) Integrations Architecture
+
+Connectors (per system)
+
+Auth: OAuth 2.0 (Salesforce, HubSpot); Vendor-specific tokens (Blackbaud); API keys (Wealth tools).
+
+Sync modes:
+
+Webhook-first when available (Salesforce Platform Events, HubSpot webhooks).
+
+Fallback polling by “updatedSince” windows (idempotent upserts).
+
+Rate-limit + retry: Exponential backoff; per-connector concurrency controls.
+
+Idempotency:
+
+Upsert by (external_system, external_id).
+
+Maintain sync_bookmarks (ISO datetime per connector and resource).
+
+Data contracts
+
+Map source fields to canonical schema via per-connector mapping tables.
+
+Preserve raw payloads in raw_ingest (JSONB) for audit/troubleshooting.
+
+Data hygiene
+
+Dedup: deterministic keys (email, phone, address, name+jaro_winkler), plus clerical merge queue.
+
+Validation: email syntax, phone E.164, address normalization where available.
+
+3) Canonical Data Model (Core Entities)
+
+Person
+
+id, first_name, last_name, preferred_name, emails[], phones[], addresses[], household_id, org_id (employer), wealth_capacity (range), affinity_tags[], privacy_flags.
+
+Organization
+
+id, name, type (Foundation, Corp, Faith Org), ein, hq_address, website, capacity_estimate.
+
+Household
+
+Grouping for spouses/children; rollups for household giving and capacity.
+
+DonorProfile
+
+Person/Household link to wealth/enrichment artifacts (net worth band, real estate flags, philanthropic history, DAF usage).
+
+Gift
+
+id, donor_id or household_id, amount, currency, date_received, campaign_id, designation, payment_method, soft_credit_to[].
+
+Pledge/Opportunity
+
+id, donor_id, stage (Prospect→Cultivation→Ask→Steward→Renewal), ask_amount, close_date, probability.
+
+Interaction (Moves)
+
+id, donor_id, type (email open, meeting, call, event), timestamp, owner_id, notes, source.
+
+Portfolio
+
+id, owner_id (MGO), name, prospect_ids[], capacity_mix, coverage_rate.
+
+Campaign/Event
+
+id, name, type (Annual, Year-End, Gala, P2P), start/end, targets, costs, ROI.
+
+Grant (Institutional)
+
+id, funder_org_id, program, status (LOI, Submitted, Awarded), amount, reporting_requirements[], deadlines.
+
+DataHealth
+
+Per entity data quality scores; missing fields; dedupe collisions.
+
+Notes:
+
+Use Postgres for relational truth; JSONB columns for flexible source payloads and enrichment blobs.
+
+Multi-tenancy: org_tenant_id prefix on every table row; row-level security (RLS) enabled.
+
+4) Scoring & Insights (Intelligence Layer)
+
+Donor Engagement Score (0–100)
+
+Inputs: last gift recency, frequency, total amount; recent interactions (opens/clicks/meetings), event attendance; role-based weighting.
+
+Example (normalize each input 0–1):
+
+Recency (25%), Frequency (20%), Monetary (25%), Recent Engagement (20%), Relationship Depth/MGO notes sentiment (10%).
+
+Capacity Score (0–100)
+
+From wealth providers (e.g., P2–P5 bands) mapped to numeric, blended with owned assets proxies and household indicators.
+
+Affinity Score (0–100)
+
+Topical tags matched to program designations; NLP classifier over notes + email content for cause affinity.
+
+Next Best Action
+
+Rules first (fast to ship), ML later.
+
+Rules examples:
+
+If Engagement ≥ 70 AND Recency > 180 days → “Schedule cultivation call.”
+
+If Event attended within 7 days AND capacity ≥ 60 → “Send tailored follow-up + soft ask.”
+
+If LYBUNT and open rate ≥ 40% → “Personalized renewal email from MGO.”
+
+Forecasting
+
+Opportunity weighted pipeline: Σ(amount * probability) by month/quarter.
+
+Cohort projections for annual fund and monthly donors.
+
+Data Health Signals
+
+% records missing email/phone, duplicate rate, bounce rates, webhook errors, connector latency.
+
+5) Role-Based Dashboards (Action Layer)
+
+Major Gift Officer
+
+“Today” box: Top 10 priorities with reasons.
+
+My Portfolio: Kanban by stage; time-in-stage; coverage %.
+
+Donor 360: gifts, interactions timeline, capacity, notes, “next action,” quick add interaction.
+
+Development Director
+
+Pipeline health by owner/stage.
+
+Coverage, velocity, forecast vs. goal, LYBUNT/SYBUNT.
+
+Team activity (calls, visits, proposals).
+
+Data health panel.
+
+CEO/Board
+
+YTD vs. goal; 90-day forecast; top campaigns/events.
+
+Top 25 prospects status.
+
+Acquisition/retention trend; monthly donor growth.
+
+Institutional/Grants
+
+Grant pipeline with deadlines.
+
+Award rate, report schedule, renewal calendar.
+
+6) Security, Privacy, Compliance
+
+AuthN: OIDC (Clerk/Auth0/Supabase Auth) with SSO.
+
+AuthZ: Org + role-based RBAC; row-level security by org_tenant_id.
+
+PII: Encryption at rest (Postgres TDE or column-level), field-level encryption for SSNs if ever needed (ideally avoid storing).
+
+Audit logs: Every read/write on sensitive tables; connector access logs.
+
+Secrets: Stored in platform vault; never in code.
+
+Data residency: S3/MinIO buckets per tenant if needed; export/delete workflows (GDPR-style).
+
+7) Tech Stack (Cursor/Replit Friendly)
+
+Frontend
+
+Next.js 14 (App Router) + TypeScript + Tailwind + shadcn/ui.
+
+React Query (TanStack) for data fetching.
+
+Charting: Recharts.
+
+Backend
+
+Fastify (TypeScript) or Next.js API routes.
+
+tRPC or REST (OpenAPI) for typed contracts.
+
+Prisma ORM on Postgres.
+
+BullMQ (Redis) for jobs (ETL, scoring, webhooks).
+
+Node workers (separate process) for connectors and scheduled sync.
+
+Storage
+
+Postgres (primary), Redis (queue/cache), S3/MinIO (raw payloads, exports).
+
+DevOps (simple to start)
+
+Docker Compose for local: postgres, redis, minio, web, worker.
+
+Migrations with Prisma.
+
+Seed scripts for demo data.
+
+8) Minimal Monorepo Structure
+/apps
+  /web            # Next.js app (UI + public routes)
+  /api            # Fastify (or Next API routes) + tRPC/REST
+  /worker         # BullMQ processors, ETL, scoring
+/packages
+  /core           # Types, domain models, scoring rules
+  /connectors     # CRM/Wealth/Email connectors
+  /ui             # Shared UI components (shadcn wrappers)
+  /db             # Prisma schema and client
+/infra
+  docker-compose.yml
+  env.example
+
+9) Example Prisma Schema (Core Slice)
+// packages/db/schema.prisma
+datasource db { provider = "postgresql"; url = env("DATABASE_URL") }
+generator client { provider = "prisma-client-js" }
+
+model Tenant {
+  id           String  @id @default(cuid())
+  name         String
+  createdAt    DateTime @default(now())
+  users        User[]
+  people       Person[]
+}
+
+model User {
+  id           String  @id @default(cuid())
+  tenantId     String
+  tenant       Tenant  @relation(fields: [tenantId], references: [id])
+  email        String  @unique
+  role         UserRole
+  createdAt    DateTime @default(now())
+}
+
+enum UserRole {
+  ADMIN
+  CEO
+  DEV_DIRECTOR
+  MGO
+  DATA_OPS
+}
+
+model Person {
+  id            String   @id @default(cuid())
+  tenantId      String
+  tenant        Tenant   @relation(fields: [tenantId], references: [id])
+  firstName     String
+  lastName      String
+  primaryEmail  String?
+  primaryPhone  String?
+  householdId   String?
+  wealthBand    String?  // e.g. WE P2-P5
+  capacityScore Int?     // 0-100
+  engagementScore Int?   // 0-100
+  affinityScore Int?     // 0-100
+  externalRefs  ExternalRef[]
+  gifts         Gift[]
+  interactions  Interaction[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model ExternalRef {
+  id         String  @id @default(cuid())
+  tenantId   String
+  personId   String?
+  person     Person? @relation(fields: [personId], references: [id])
+  system     String  // "salesforce", "blackbaud", "wealthengine", etc.
+  externalId String
+  raw        Json?
+  createdAt  DateTime @default(now())
+  @@index([tenantId, system, externalId], name: "ext_unique", type: Hash)
+}
+
+model Gift {
+  id         String   @id @default(cuid())
+  tenantId   String
+  personId   String?
+  amount     Decimal
+  currency   String   @default("USD")
+  receivedAt DateTime
+  campaignId String?
+  createdAt  DateTime @default(now())
+}
+
+model Interaction {
+  id         String   @id @default(cuid())
+  tenantId   String
+  personId   String
+  type       String   // "email_open","meeting","call","event"
+  occurredAt DateTime
+  ownerId    String?
+  notes      String?
+  source     String?
+  createdAt  DateTime @default(now())
+}
+
+model Opportunity {
+  id          String   @id @default(cuid())
+  tenantId    String
+  personId    String
+  stage       String   // Prospect,Cultivation,Ask,Steward,Renewal
+  askAmount   Decimal?
+  probability Int?     // 0-100
+  closeDate   DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+10) Example APIs (REST or tRPC)
+
+GET /api/dashboard/mgo → top prospects, tasks, pipeline
+
+GET /api/person/:id → donor 360 (profile, gifts, interactions, score, next action)
+
+POST /api/interaction → log call/meeting; triggers score update
+
+GET /api/pipeline → grouped by stage/owner; forecast
+
+GET /api/health → connector status, data quality
+
+POST /api/connectors/:system/oauth/callback → finish auth
+
+POST /api/webhooks/:system → receive events; enqueue job
+
+11) Worker Jobs (BullMQ)
+
+connector.sync.salesforce.contacts (bookmark, paginate, upsert)
+
+connector.sync.blackbaud.gifts
+
+connector.sync.wealthengine.enrichment
+
+scoring.update.person (recompute E/C/A scores)
+
+nba.generate.tasks (daily next-best actions)
+
+health.scan (missing fields, duplicates)
+
+forecast.refresh (nightly)
+
+12) Next-Best-Action (Initial Rules Example)
+
+For each Person nightly:
+
+If engagementScore >= 70 AND lastGift > 180d → “Schedule cultivation call this week.”
+
+If opened_last_3_emails = true AND capacityScore >= 60 → “Send tailored update + invite to briefing.”
+
+If is_LYBUNT → “Personal renewal outreach; include impact stat from last gift.”
+
+If time_in_stage > 90d → “Advance stage or create meeting to unblock.”
+
+Store NBAs as Task records with reason, priority, dueDate, ownerId.
+
+13) UI Composition (Next.js + shadcn)
+
+Global
+
+Left nav: Dashboard, Portfolio, Donors, Pipeline, Grants, Health, Settings.
+
+Top bar: Tenant switcher, search, notifications.
+
+Components
+
+DonorCard (name, capacity band, badges, last gift, last touch, next action).
+
+KpiStat (value, delta, sparkline).
+
+PipelineKanban (drag stage, auto-log changes).
+
+InteractionTimeline (vertical timeline).
+
+ScoringBadges (Engagement/Capacity/Affinity pills with tooltips).
+
+HealthWidget (missing emails, dedup alerts, connector status).
+
+Key Screens
+
+MGO “Today”: tasks list, top 10 prospects (why), quick-add notes, one-click email templates.
+
+CEO: revenue YTD vs goal, forecast 90-day, top 25 prospects status, campaign ROI.
+
+14) MVP Scope (8–12 weeks, scrappy but strong)
+
+Must-Have
+
+Tenancy, Auth, RBAC
+
+Connector: Salesforce (contacts/opportunities) OR Raiser’s Edge (constituents/gifts)
+
+Connector: Mailchimp (basic engagement)
+
+Canonical model + dedupe light
+
+Scores (E/C/A) with rules
+
+MGO dashboard + Donor 360 + Pipeline Kanban
+
+CEO dashboard KPIs + forecast
+
+Data Health panel (basic)
+
+Nice-to-Have
+
+Wealth tool import (flat-file or API)
+
+Grant pipeline basics
+
+Slack/Teams notifications for NBAs
+
+15) Data Governance & Admin
+
+Field-level mapping UI per connector.
+
+Manual merge tool for duplicates.
+
+Export your data anytime (CSV/Parquet).
+
+SLA monitors: last successful sync, latency, error rate.
+
+16) How This Wins the Demo
+
+Show a single MGO logging in and seeing:
+
+“Top Ten” with human-readable reasons.
+
+Clicking a donor reveals 360 + a suggested email draft.
+
+Show CEO flipping to org view:
+
+YTD vs goal, 90-day forecast, bottlenecks by stage.
+
+One click into “data health” with concrete fixes.

@@ -47,6 +47,20 @@ export const taskPriorityEnum = pgEnum("task_priority", [
   "urgent",
 ]);
 
+export const integrationStatusEnum = pgEnum("integration_status", [
+  "connected",
+  "syncing",
+  "error",
+  "disconnected",
+]);
+
+export const dataQualitySeverityEnum = pgEnum("data_quality_severity", [
+  "low",
+  "medium",
+  "high",
+  "critical",
+]);
+
 // Session storage table (required for Replit Auth)
 export const sessions = pgTable(
   "sessions",
@@ -99,6 +113,11 @@ export const persons = pgTable("persons", {
     precision: 12,
     scale: 2,
   }),
+  // Integration metadata
+  sourceSystem: varchar("source_system"), // e.g., "Salesforce", "WealthEngine"
+  sourceRecordId: varchar("source_record_id"), // External system ID
+  syncedAt: timestamp("synced_at"), // Last sync timestamp
+  dataQualityScore: integer("data_quality_score"), // 0-100, overall data completeness/freshness
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -127,6 +146,11 @@ export const gifts = pgTable("gifts", {
   campaignId: varchar("campaign_id").references(() => campaigns.id),
   designation: varchar("designation"),
   paymentMethod: varchar("payment_method"),
+  // Integration metadata
+  sourceSystem: varchar("source_system"), // e.g., "Salesforce", "Classy"
+  sourceRecordId: varchar("source_record_id"),
+  syncedAt: timestamp("synced_at"),
+  dataQualityScore: integer("data_quality_score"), // 0-100
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -143,6 +167,11 @@ export const opportunities = pgTable("opportunities", {
   ownerId: varchar("owner_id").references(() => users.id),
   notes: text("notes"),
   daysInStage: integer("days_in_stage"),
+  // Integration metadata
+  sourceSystem: varchar("source_system"), // e.g., "Salesforce"
+  sourceRecordId: varchar("source_record_id"),
+  syncedAt: timestamp("synced_at"),
+  dataQualityScore: integer("data_quality_score"), // 0-100
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
 });
@@ -158,6 +187,11 @@ export const interactions = pgTable("interactions", {
   ownerId: varchar("owner_id").references(() => users.id),
   notes: text("notes"),
   source: varchar("source"),
+  // Integration metadata
+  sourceSystem: varchar("source_system"), // e.g., "Mailchimp", "Salesforce"
+  sourceRecordId: varchar("source_record_id"),
+  syncedAt: timestamp("synced_at"),
+  dataQualityScore: integer("data_quality_score"), // 0-100
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -187,6 +221,55 @@ export const tasks = pgTable("tasks", {
   dueDate: timestamp("due_date"),
   completed: integer("completed").notNull().default(0), // 0 or 1
   completedAt: timestamp("completed_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Integrations (External System Connections)
+export const integrations = pgTable("integrations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(), // e.g., "Salesforce", "WealthEngine"
+  type: varchar("type").notNull(), // e.g., "CRM", "WealthScreening", "Email", "Giving"
+  status: integrationStatusEnum("status").notNull().default("connected"),
+  lastSyncAt: timestamp("last_sync_at"),
+  lastSuccessfulSyncAt: timestamp("last_successful_sync_at"),
+  recordCount: integer("record_count").default(0),
+  errorMessage: text("error_message"),
+  config: jsonb("config"), // Connection config (non-sensitive)
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Integration Sync Runs (Sync History)
+export const integrationSyncRuns = pgTable("integration_sync_runs", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  integrationId: varchar("integration_id")
+    .references(() => integrations.id)
+    .notNull(),
+  status: varchar("status").notNull(), // "success", "error", "partial"
+  recordsProcessed: integer("records_processed").default(0),
+  recordsCreated: integer("records_created").default(0),
+  recordsUpdated: integer("records_updated").default(0),
+  recordsSkipped: integer("records_skipped").default(0),
+  errorCount: integer("error_count").default(0),
+  errorDetails: jsonb("error_details"),
+  startedAt: timestamp("started_at").notNull(),
+  completedAt: timestamp("completed_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Data Quality Issues
+export const dataQualityIssues = pgTable("data_quality_issues", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  entityType: varchar("entity_type").notNull(), // "person", "gift", etc.
+  entityId: varchar("entity_id").notNull(),
+  sourceSystem: varchar("source_system"),
+  issueType: varchar("issue_type").notNull(), // "missing_field", "duplicate", "stale_data"
+  severity: dataQualitySeverityEnum("severity").notNull().default("medium"),
+  description: text("description"),
+  fieldName: varchar("field_name"),
+  resolved: integer("resolved").notNull().default(0), // 0 or 1
+  resolvedAt: timestamp("resolved_at"),
+  resolvedBy: varchar("resolved_by").references(() => users.id),
   createdAt: timestamp("created_at").defaultNow(),
 });
 
@@ -268,6 +351,24 @@ export const portfoliosRelations = relations(portfolios, ({ one }) => ({
   }),
 }));
 
+export const integrationsRelations = relations(integrations, ({ many }) => ({
+  syncRuns: many(integrationSyncRuns),
+}));
+
+export const integrationSyncRunsRelations = relations(integrationSyncRuns, ({ one }) => ({
+  integration: one(integrations, {
+    fields: [integrationSyncRuns.integrationId],
+    references: [integrations.id],
+  }),
+}));
+
+export const dataQualityIssuesRelations = relations(dataQualityIssues, ({ one }) => ({
+  resolvedByUser: one(users, {
+    fields: [dataQualityIssues.resolvedBy],
+    references: [users.id],
+  }),
+}));
+
 // Insert Schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
@@ -315,6 +416,23 @@ export const insertTaskSchema = createInsertSchema(tasks).omit({
   completedAt: true,
 });
 
+export const insertIntegrationSchema = createInsertSchema(integrations).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertIntegrationSyncRunSchema = createInsertSchema(integrationSyncRuns).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertDataQualityIssueSchema = createInsertSchema(dataQualityIssues).omit({
+  id: true,
+  createdAt: true,
+  resolvedAt: true,
+});
+
 // Types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
@@ -332,3 +450,9 @@ export type InsertTask = z.infer<typeof insertTaskSchema>;
 export type Task = typeof tasks.$inferSelect;
 export type Household = typeof households.$inferSelect;
 export type Portfolio = typeof portfolios.$inferSelect;
+export type InsertIntegration = z.infer<typeof insertIntegrationSchema>;
+export type Integration = typeof integrations.$inferSelect;
+export type InsertIntegrationSyncRun = z.infer<typeof insertIntegrationSyncRunSchema>;
+export type IntegrationSyncRun = typeof integrationSyncRuns.$inferSelect;
+export type InsertDataQualityIssue = z.infer<typeof insertDataQualityIssueSchema>;
+export type DataQualityIssue = typeof dataQualityIssues.$inferSelect;
