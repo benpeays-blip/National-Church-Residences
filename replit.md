@@ -110,6 +110,37 @@ See `design_guidelines.md` for comprehensive design specifications.
 
 ## Recent Changes
 
+### October 2025 - Integrations Gallery & Grant Pipeline
+
+**Completed**:
+- ✅ **Integrations Gallery**: Comprehensive catalog of 20 nonprofit/fundraising integrations at `/integrations`:
+  - Browse integrations across 9 categories: CRM, Wealth Screening, Email Marketing, Payment Processing, Grant Research, Matching Gifts, Volunteer Management, Accounting, Analytics, Donor-Advised Funds
+  - Search functionality (filters by name, description, modules, features)
+  - Category filter dropdown
+  - Integration cards show logo, category, API type, modules, and connected status
+  - Detail drawer with:
+    - Full integration details (description, modules, features, use cases)
+    - Readiness checklist with setup steps
+    - Contextual action buttons (Connect vs Manage/Disconnect for connected integrations)
+  - 5 connected integrations: Salesforce, WealthEngine, Mailchimp, Classy, DAF Giving360
+  - 15 available integrations ready to connect
+  - Empty state with "Clear Filters" functionality
+  - All 20 integrations with proper SVG logos (no 404 errors)
+
+- ✅ **Grant Pipeline Management**: Complete grant tracking system at `/grants`:
+  - Extended database schema with `grants` table
+  - Grant stages: Research, LOI, Submitted, Awarded, Declined, ReportDue
+  - Multiple deadline fields: LOI due, application due, decision date, report due date
+  - 10 realistic seed grants across all stages
+  - Full CRUD API endpoints (GET /api/grants with stage/owner filters, POST, PATCH, DELETE)
+  - Grants page UI with:
+    - Stage summary dashboard (card grid showing counts per stage)
+    - Search by funder name or purpose
+    - Stage filter dropdown
+    - Grant cards displaying funder, purpose, ask/awarded amounts, next deadline
+    - Data provenance indicators (source system, sync time)
+  - Integration metadata tracking (sourceSystem, sourceRecordId, syncedAt)
+
 ### October 2025 - AI Intelligence Features
 
 **Completed**:
