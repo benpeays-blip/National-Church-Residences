@@ -110,6 +110,35 @@ See `design_guidelines.md` for comprehensive design specifications.
 
 ## Recent Changes
 
+### October 2025 - AI Intelligence Features
+
+**Completed**:
+- ✅ **Next Best Action (NBA) System**: Intelligent task generation engine with 5 rules:
+  - LYBUNT Detection: Identifies donors who gave last year but not this year
+  - High Engagement Cultivation: Flags donors with high engagement but no recent gifts
+  - Event Follow-up: Triggers tasks for high-capacity donors after event attendance
+  - Stuck Opportunity Advancement: Identifies opportunities stalled >90 days
+  - Email Engagement Prospecting: Finds high email engagement without active opportunities
+  - Idempotent generation: Multiple clicks don't create duplicates
+  - Tasks display with priority badges and AI-generated reasons explaining logic
+  - Generated via POST /api/tasks/generate-nba
+
+- ✅ **Enhanced Donor 360 View**: Comprehensive donor profile at /donors/:id with:
+  - Contact information card (email, phone, organization)
+  - All three donor scores (Engagement, Capacity, Affinity) with progress indicators
+  - Giving summary (lifetime total, # of gifts, avg gift, last gift)
+  - Activity timeline combining gifts, interactions, and opportunities chronologically
+  - Next Best Action prominently displayed (highest priority task)
+  - Active opportunities and all tasks
+  - Navigation from donors list, back button to return
+  - API endpoint: GET /api/persons/:id/profile returns complete profile data
+
+- ✅ **MGO Dashboard NBA Integration**: "Top 10 Priorities Today" section shows:
+  - AI-generated tasks with human-readable titles
+  - Priority badges (urgent/high/medium/low)
+  - Italic reasons explaining why each task was recommended
+  - "Generate Next Best Actions" button for manual NBA generation
+
 ### October 2025 - Data Integration & Provenance Tracking
 
 **Completed**:

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { DonorCard } from "@/components/donor-card";
 import { EmptyState } from "@/components/empty-state";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import type { Person } from "@shared/schema";
 
 export default function Donors() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [, setLocation] = useLocation();
   const { data: donors, isLoading } = useQuery<Person[]>({
     queryKey: ["/api/persons", searchQuery],
   });
@@ -51,7 +53,11 @@ export default function Donors() {
       ) : donors && donors.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {donors.map((donor) => (
-            <DonorCard key={donor.id} donor={donor} />
+            <DonorCard
+              key={donor.id}
+              donor={donor}
+              onSelect={(d) => setLocation(`/donors/${d.id}`)}
+            />
           ))}
         </div>
       ) : (

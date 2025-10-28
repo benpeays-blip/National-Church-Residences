@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { db } from "./db";
-import { persons, opportunities, users, gifts, interactions, integrations, integrationSyncRuns, dataQualityIssues } from "@shared/schema";
+import { persons, opportunities, users, gifts, interactions, integrations, integrationSyncRuns, dataQualityIssues, households, tasks } from "@shared/schema";
 import { eq, sql, desc, gte, and, inArray } from "drizzle-orm";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -41,6 +41,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching person:", error);
       res.status(500).json({ message: "Failed to fetch person" });
+    }
+  });
+
+  app.get("/api/persons/:id/profile", async (req, res) => {
+    try {
+      const personId = req.params.id;
+      const person = await storage.getPerson(personId);
+      if (!person) {
+        return res.status(404).json({ message: "Person not found" });
+      }
+
+      // Fetch all related data
+      const [giftsList, interactionsList, opportunitiesList, tasksList] = await Promise.all([
+        storage.getGifts(personId),
+        storage.getInteractions(personId),
+        db.select().from(opportunities).where(eq(opportunities.personId, personId)),
+        db.select().from(tasks).where(eq(tasks.personId, personId)),
+      ]);
+
+      // Get household info if applicable
+      let household = null;
+      if (person.householdId) {
+        const householdResult = await db
+          .select()
+          .from(households)
+          .where(eq(households.id, person.householdId));
+        household = householdResult[0] || null;
+      }
+
+      res.json({
+        person,
+        household,
+        gifts: giftsList,
+        interactions: interactionsList,
+        opportunities: opportunitiesList,
+        tasks: tasksList,
+      });
+    } catch (error) {
+      console.error("Error fetching person profile:", error);
+      res.status(500).json({ message: "Failed to fetch person profile" });
     }
   });
 
@@ -150,7 +190,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/tasks", isAuthenticated, async (req, res) => {
+  app.get("/api/tasks", async (req, res) => {
     try {
       const ownerId = req.query.ownerId as string | undefined;
       const completed = req.query.completed === "true" ? true : req.query.completed === "false" ? false : undefined;
@@ -182,6 +222,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error updating task:", error);
       res.status(500).json({ message: "Failed to update task" });
+    }
+  });
+
+  app.post("/api/tasks/generate-nba", async (req, res) => {
+    try {
+      const ownerId = req.body.ownerId as string | undefined;
+      const generatedTasks = await storage.generateNextBestActions(ownerId);
+      res.json(generatedTasks);
+    } catch (error) {
+      console.error("Error generating next best actions:", error);
+      res.status(500).json({ message: "Failed to generate next best actions" });
     }
   });
 

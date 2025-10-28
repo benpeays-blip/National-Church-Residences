@@ -1,12 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { MetricCard } from "@/components/metric-card";
 import { TaskItem } from "@/components/task-item";
 import { OpportunityCard } from "@/components/opportunity-card";
 import { EmptyState } from "@/components/empty-state";
-import { ListTodo, TrendingUp } from "lucide-react";
+import { ListTodo, TrendingUp, Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 import type { Task, Opportunity } from "@shared/schema";
 
 interface DashboardData {
@@ -26,8 +29,30 @@ interface DashboardData {
 }
 
 export default function DashboardMGO() {
+  const { toast } = useToast();
   const { data, isLoading } = useQuery<DashboardData>({
     queryKey: ["/api/dashboard/mgo"],
+  });
+
+  const generateNBA = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest("POST", "/api/tasks/generate-nba", {});
+      return await response.json();
+    },
+    onSuccess: (newTasks: any) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/dashboard/mgo"] });
+      toast({
+        title: "Tasks Generated",
+        description: `Generated ${newTasks?.length || 0} next best action tasks based on donor data.`,
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to generate next best actions",
+        variant: "destructive",
+      });
+    },
   });
 
   if (isLoading) {
@@ -88,23 +113,40 @@ export default function DashboardMGO() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-1 p-6">
+        <Card className="lg:col-span-1 p-6" data-testid="card-today-priorities">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Today's Priorities</h2>
-            <ListTodo className="w-5 h-5 text-muted-foreground" />
+            <div>
+              <h2 className="text-lg font-semibold">Top 10 Priorities Today</h2>
+              <p className="text-xs text-muted-foreground mt-0.5">
+                AI-generated next best actions
+              </p>
+            </div>
+            <Button
+              size="sm"
+              variant="outline"
+              onClick={() => generateNBA.mutate()}
+              disabled={generateNBA.isPending}
+              data-testid="button-generate-nba"
+              className="gap-1.5"
+            >
+              <Sparkles className="w-3.5 h-3.5" />
+              {generateNBA.isPending ? "Generating..." : "Generate"}
+            </Button>
           </div>
           <ScrollArea className="h-96">
             {data?.tasks && data.tasks.length > 0 ? (
-              <div className="space-y-1">
-                {data.tasks.map((task) => (
-                  <TaskItem key={task.id} task={task} />
+              <div className="space-y-2">
+                {data.tasks.slice(0, 10).map((task, index) => (
+                  <div key={task.id} data-testid={`task-item-${index}`}>
+                    <TaskItem task={task} />
+                  </div>
                 ))}
               </div>
             ) : (
               <EmptyState
                 icon={ListTodo}
-                title="No tasks"
-                description="All caught up! No pending tasks at the moment."
+                title="No tasks yet"
+                description="Click 'Generate' to create AI-powered next best action tasks based on donor data."
               />
             )}
           </ScrollArea>

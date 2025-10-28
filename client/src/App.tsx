@@ -10,6 +10,7 @@ import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
 import DashboardCEO from "@/pages/dashboard-ceo";
 import Donors from "@/pages/donors";
+import Donor360 from "@/pages/donor-360";
 import Pipeline from "@/pages/pipeline";
 import Gifts from "@/pages/gifts";
 import Campaigns from "@/pages/campaigns";
@@ -29,6 +30,7 @@ function Router() {
       <Route path="/dashboard/mgo" component={DashboardMGO} />
       <Route path="/dashboard/dev-director" component={DashboardDevDirector} />
       <Route path="/dashboard/ceo" component={DashboardCEO} />
+      <Route path="/donors/:id" component={Donor360} />
       <Route path="/donors" component={Donors} />
       <Route path="/pipeline" component={Pipeline} />
       <Route path="/gifts" component={Gifts} />

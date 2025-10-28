@@ -24,7 +24,7 @@ import {
   type Task,
   type InsertTask,
 } from "@shared/schema";
-import { eq, like, or, and, desc, sql } from "drizzle-orm";
+import { eq, like, or, and, desc, sql, ilike } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -53,6 +53,7 @@ export interface IStorage {
   getTasks(ownerId?: string, completed?: boolean): Promise<Task[]>;
   createTask(task: InsertTask): Promise<Task>;
   updateTask(id: string, task: Partial<InsertTask>): Promise<Task | undefined>;
+  generateNextBestActions(ownerId?: string): Promise<Task[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -273,6 +274,172 @@ export class DatabaseStorage implements IStorage {
       Math.max(0, 100 - ((new Date().getTime() - new Date(gifts[0].receivedAt).getTime()) / (1000 * 60 * 60 * 24 * 365)) * 20) : 0;
 
     return Math.round((avgScore + recency) / 2);
+  }
+
+  async generateNextBestActions(ownerId?: string): Promise<Task[]> {
+    const generatedTasks: Task[] = [];
+    const now = new Date();
+    const currentYear = now.getFullYear();
+    const lastYear = currentYear - 1;
+
+    // Get all persons with their data
+    const allPersons = await this.getPersons();
+    
+    // Get all MGO users to assign tasks
+    const mgoUsers = await db
+      .select()
+      .from(users)
+      .where(eq(users.role, "MGO"));
+    
+    const defaultOwner = ownerId || mgoUsers[0]?.id;
+    if (!defaultOwner) return [];
+
+    // Helper: Check if similar open task already exists for this person
+    const hasSimilarOpenTask = async (personId: string, titleKeyword: string): Promise<boolean> => {
+      const existingTasks = await db
+        .select()
+        .from(tasks)
+        .where(
+          and(
+            eq(tasks.personId, personId),
+            eq(tasks.completed, 0), // 0 = not completed, 1 = completed
+            ilike(tasks.title, `%${titleKeyword}%`)
+          )
+        )
+        .limit(1);
+      return existingTasks.length > 0;
+    };
+
+    for (const person of allPersons) {
+      const personGifts = await this.getGifts(person.id);
+      const personInteractions = await this.getInteractions(person.id);
+      const personOpportunities = await db
+        .select()
+        .from(opportunities)
+        .where(eq(opportunities.personId, person.id));
+
+      // Rule 1: LYBUNT Detection (gave last year but not this year)
+      const gave2024 = personGifts.some(g => 
+        new Date(g.receivedAt).getFullYear() === lastYear
+      );
+      const gave2025 = personGifts.some(g => 
+        new Date(g.receivedAt).getFullYear() === currentYear
+      );
+      
+      if (gave2024 && !gave2025) {
+        // Check if similar task already exists
+        const hasExisting = await hasSimilarOpenTask(person.id, "LYBUNT");
+        if (!hasExisting) {
+          const lastGift = personGifts.find(g => 
+            new Date(g.receivedAt).getFullYear() === lastYear
+          );
+          const task = await this.createTask({
+            personId: person.id,
+            ownerId: defaultOwner,
+            title: `LYBUNT: Re-engage ${person.firstName} ${person.lastName}`,
+            description: `Personal renewal outreach needed. ${person.firstName} gave ${lastGift ? `$${lastGift.amount}` : ''} in ${lastYear} but hasn't renewed yet.`,
+            reason: `Gave last year but not this year - high priority for retention`,
+            priority: "high",
+            dueDate: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000), // 7 days
+          });
+          generatedTasks.push(task);
+        }
+      }
+
+      // Rule 2: High Engagement + No Recent Gift → Cultivation Call
+      if (
+        (person.engagementScore ?? 0) >= 70 &&
+        person.lastGiftDate &&
+        (now.getTime() - new Date(person.lastGiftDate).getTime()) / (1000 * 60 * 60 * 24) > 180
+      ) {
+        // Check if similar task already exists
+        const hasExisting = await hasSimilarOpenTask(person.id, "cultivation call");
+        if (!hasExisting) {
+          const task = await this.createTask({
+            personId: person.id,
+            ownerId: defaultOwner,
+            title: `Schedule cultivation call with ${person.firstName} ${person.lastName}`,
+            description: `High engagement (${person.engagementScore}%) but last gift was ${Math.round((now.getTime() - new Date(person.lastGiftDate).getTime()) / (1000 * 60 * 60 * 24))} days ago. Time for a personal touch.`,
+            reason: `High engagement score with no recent giving - ready for cultivation`,
+            priority: "high",
+            dueDate: new Date(now.getTime() + 3 * 24 * 60 * 60 * 1000), // 3 days
+          });
+          generatedTasks.push(task);
+        }
+      }
+
+      // Rule 3: Recent Event Attendance + High Capacity → Follow-up
+      const recentEventInteraction = personInteractions.find(i => 
+        i.type === "event" &&
+        (now.getTime() - new Date(i.occurredAt).getTime()) / (1000 * 60 * 60 * 24) <= 7
+      );
+      
+      if (recentEventInteraction && (person.capacityScore ?? 0) >= 60) {
+        // Check if similar task already exists
+        const hasExisting = await hasSimilarOpenTask(person.id, "Follow up");
+        if (!hasExisting) {
+          const task = await this.createTask({
+            personId: person.id,
+            ownerId: defaultOwner,
+            title: `Follow up with ${person.firstName} ${person.lastName} after event`,
+            description: `${person.firstName} attended an event recently and has capacity score of ${person.capacityScore}%. Send personalized follow-up with soft ask.`,
+            reason: `Recent event attendance with high capacity - strike while iron is hot`,
+            priority: "urgent",
+            dueDate: new Date(now.getTime() + 2 * 24 * 60 * 60 * 1000), // 2 days
+          });
+          generatedTasks.push(task);
+        }
+      }
+
+      // Rule 4: Opportunity Stuck in Stage → Advance or Meeting
+      for (const opp of personOpportunities) {
+        if (opp.daysInStage && opp.daysInStage > 90) {
+          // Check if similar task already exists
+          const hasExisting = await hasSimilarOpenTask(person.id, "Advance opportunity");
+          if (!hasExisting) {
+            const task = await this.createTask({
+              personId: person.id,
+              ownerId: opp.ownerId || defaultOwner,
+              title: `Advance opportunity for ${person.firstName} ${person.lastName}`,
+              description: `Opportunity has been in "${opp.stage}" stage for ${opp.daysInStage} days. Schedule meeting to advance or close.`,
+              reason: `Opportunity stalled - needs action to prevent pipeline decay`,
+              priority: "medium",
+              dueDate: new Date(now.getTime() + 5 * 24 * 60 * 60 * 1000), // 5 days
+            });
+            generatedTasks.push(task);
+          }
+        }
+      }
+
+      // Rule 5: High Email Engagement + No Opportunity → Create Prospect
+      const recentEmailEngagement = personInteractions.filter(i => 
+        (i.type === "email_open" || i.type === "email_click") &&
+        (now.getTime() - new Date(i.occurredAt).getTime()) / (1000 * 60 * 60 * 24) <= 30
+      );
+      
+      if (
+        recentEmailEngagement.length >= 3 &&
+        (person.capacityScore ?? 0) >= 60 &&
+        personOpportunities.length === 0
+      ) {
+        // Check if similar task already exists
+        const hasExisting = await hasSimilarOpenTask(person.id, "Create opportunity");
+        if (!hasExisting) {
+          const task = await this.createTask({
+            personId: person.id,
+            ownerId: defaultOwner,
+            title: `Create opportunity for ${person.firstName} ${person.lastName}`,
+            description: `${person.firstName} has opened/clicked ${recentEmailEngagement.length} emails in the last 30 days and has capacity score of ${person.capacityScore}%. Consider adding to pipeline.`,
+            reason: `High email engagement with no active opportunity - prospect ready for cultivation`,
+            priority: "medium",
+            dueDate: new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000), // 7 days
+          });
+          generatedTasks.push(task);
+        }
+      }
+    }
+
+    return generatedTasks;
   }
 }
 
