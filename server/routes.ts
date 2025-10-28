@@ -503,6 +503,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .orderBy(desc(persons.lastGiftDate))
         .limit(10) : [];
 
+      // Pipeline Forecasting by Month
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Start of today (midnight)
+      const pipelineForecasting = allOpportunities
+        .filter((opp) => opp.closeDate && new Date(opp.closeDate) >= today)
+        .reduce((acc, opp) => {
+          const closeDate = new Date(opp.closeDate!);
+          const monthKey = `${closeDate.getFullYear()}-${String(closeDate.getMonth() + 1).padStart(2, '0')}`;
+          const monthName = closeDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+          
+          const amount = parseFloat(opp.askAmount || "0");
+          const probability = (opp.probability || 50) / 100;
+          const weightedValue = amount * probability;
+          
+          if (!acc[monthKey]) {
+            acc[monthKey] = {
+              month: monthName,
+              totalAskAmount: 0,
+              weightedValue: 0,
+              opportunityCount: 0,
+            };
+          }
+          
+          acc[monthKey].totalAskAmount += amount;
+          acc[monthKey].weightedValue += weightedValue;
+          acc[monthKey].opportunityCount += 1;
+          
+          return acc;
+        }, {} as Record<string, { month: string; totalAskAmount: number; weightedValue: number; opportunityCount: number }>);
+
+      // Convert to array and sort by month
+      const forecastingArray = Object.entries(pipelineForecasting)
+        .map(([monthKey, data]) => ({ monthKey, ...data }))
+        .sort((a, b) => a.monthKey.localeCompare(b.monthKey))
+        .slice(0, 12); // Next 12 months
+
       res.json({
         metrics: {
           ytdRaised,
@@ -514,6 +550,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           sybuntCount: sybuntPersonIds.length,
         },
         pipelineByOwner: Object.values(pipelineByOwner),
+        pipelineForecasting: forecastingArray,
         recentActivity,
         lybuntDonors: lybuntDonorDetails,
         sybuntDonors: sybuntDonorDetails,

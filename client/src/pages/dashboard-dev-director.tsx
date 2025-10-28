@@ -31,6 +31,13 @@ interface DevDirectorData {
     opportunityCount: number;
     stageDistribution: Record<string, number>;
   }[];
+  pipelineForecasting: {
+    monthKey: string;
+    month: string;
+    totalAskAmount: number;
+    weightedValue: number;
+    opportunityCount: number;
+  }[];
   recentActivity: {
     id: string;
     type: string;
@@ -318,6 +325,66 @@ export default function DashboardDevDirector() {
           </div>
         </Card>
       </div>
+
+      {/* Pipeline Forecasting */}
+      {(data?.pipelineForecasting && data.pipelineForecasting.length > 0) && (
+        <Card className="p-6" data-testid="card-pipeline-forecasting">
+          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-chart-1" />
+            Pipeline Forecasting (Next 12 Months)
+          </h2>
+          <p className="text-sm text-muted-foreground mb-4">
+            Weighted pipeline forecast calculated as Σ(amount × probability) by expected close month. Shows total ask amounts and weighted expected revenue.
+          </p>
+          <Table data-testid="table-pipeline-forecasting">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Month</TableHead>
+                <TableHead className="text-right">Opportunities</TableHead>
+                <TableHead className="text-right">Total Ask</TableHead>
+                <TableHead className="text-right">Weighted Value</TableHead>
+                <TableHead className="text-right">Close Rate</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {data.pipelineForecasting.map((forecast) => {
+                const closeRate = forecast.totalAskAmount > 0 
+                  ? (forecast.weightedValue / forecast.totalAskAmount) * 100 
+                  : 0;
+                return (
+                  <TableRow key={forecast.monthKey} data-testid={`row-forecast-${forecast.monthKey}`}>
+                    <TableCell className="font-medium">{forecast.month}</TableCell>
+                    <TableCell className="text-right tabular-nums">
+                      {forecast.opportunityCount}
+                    </TableCell>
+                    <TableCell className="text-right tabular-nums text-muted-foreground">
+                      {formatCurrency(forecast.totalAskAmount)}
+                    </TableCell>
+                    <TableCell className="text-right tabular-nums font-semibold text-chart-1">
+                      {formatCurrency(forecast.weightedValue)}
+                    </TableCell>
+                    <TableCell className="text-right tabular-nums">
+                      {closeRate.toFixed(0)}%
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+          <div className="mt-4 pt-4 border-t">
+            <div className="flex items-center justify-between">
+              <p className="text-sm font-medium text-muted-foreground">
+                Total Forecast (12 months)
+              </p>
+              <p className="text-2xl font-bold tabular-nums text-chart-1" data-testid="text-total-forecast">
+                {formatCurrency(
+                  data.pipelineForecasting.reduce((sum, f) => sum + f.weightedValue, 0)
+                )}
+              </p>
+            </div>
+          </div>
+        </Card>
+      )}
 
       {(data?.lybuntDonors && data.lybuntDonors.length > 0) && (
         <Card className="p-6" data-testid="card-lybunt-recovery">
