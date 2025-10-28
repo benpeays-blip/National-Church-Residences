@@ -3,8 +3,8 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { db } from "./db";
-import { persons, opportunities, users } from "@shared/schema";
-import { eq, sql, desc } from "drizzle-orm";
+import { persons, opportunities, users, gifts, interactions } from "@shared/schema";
+import { eq, sql, desc, gte, and } from "drizzle-orm";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   await setupAuth(app);
@@ -212,7 +212,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .leftJoin(users, eq(opportunities.ownerId, users.id))
         .where(eq(opportunities.ownerId, userId));
 
-      const tasksList = await storage.getTasks(userId, false);
+      const allTasksList = await storage.getTasks(userId);
+      const incompleteTasks = allTasksList.filter((t) => !t.completed);
 
       const portfolioPersons = await db
         .select()
@@ -226,14 +227,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
         0
       );
 
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const completedTasksToday = allTasksList.filter((t) => {
+        if (!t.completed || !t.completedAt) return false;
+        return new Date(t.completedAt) >= today;
+      }).length;
+
+      const upcomingInteractions = await db
+        .select()
+        .from(interactions)
+        .where(
+          and(
+            eq(interactions.ownerId, userId),
+            gte(interactions.occurredAt, new Date())
+          )
+        );
+
       res.json({
         metrics: {
           portfolioSize: portfolioPersons.length,
           pipelineValue,
-          completedTasks: tasksList.filter((t) => t.completed).length,
-          upcomingMeetings: 0,
+          completedTasks: completedTasksToday,
+          upcomingMeetings: upcomingInteractions.filter((i) => i.type === "meeting").length,
         },
-        tasks: tasksList.slice(0, 10).map((t) => ({
+        tasks: incompleteTasks.slice(0, 10).map((t) => ({
           ...t,
           person: portfolioPersons.find((p) => p.id === t.personId),
         })),
@@ -267,17 +285,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/dashboard/dev-director", isAuthenticated, async (req, res) => {
     try {
+      const yearStart = new Date(new Date().getFullYear(), 0, 1);
+      
       const allOpportunities = await db
         .select({
           id: opportunities.id,
           askAmount: opportunities.askAmount,
           stage: opportunities.stage,
           ownerId: opportunities.ownerId,
+          probability: opportunities.probability,
+          closeDate: opportunities.closeDate,
           ownerFirstName: users.firstName,
           ownerLastName: users.lastName,
         })
         .from(opportunities)
         .leftJoin(users, eq(opportunities.ownerId, users.id));
+
+      const ytdGifts = await db
+        .select({
+          amount: gifts.amount,
+        })
+        .from(gifts)
+        .where(gte(gifts.receivedAt, yearStart));
+
+      const ytdRaised = ytdGifts.reduce((sum, g) => sum + parseFloat(g.amount), 0);
 
       const pipelineByOwner = allOpportunities.reduce((acc, opp) => {
         const ownerId = opp.ownerId || "unassigned";
@@ -302,16 +333,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
         0
       );
 
+      const next90Days = new Date();
+      next90Days.setDate(next90Days.getDate() + 90);
+      const forecast90Days = allOpportunities
+        .filter((opp) => opp.closeDate && new Date(opp.closeDate) <= next90Days)
+        .reduce((sum, opp) => {
+          const amount = parseFloat(opp.askAmount || "0");
+          const prob = (opp.probability || 50) / 100;
+          return sum + amount * prob;
+        }, 0);
+
+      const allPersons = await db.select().from(persons);
+      const personsWithEmail = allPersons.filter((p) => p.primaryEmail).length;
+      const dataHealthScore = Math.round((personsWithEmail / Math.max(allPersons.length, 1)) * 100);
+
+      const recentInteractions = await db
+        .select({
+          id: interactions.id,
+          type: interactions.type,
+          occurredAt: interactions.occurredAt,
+          ownerFirstName: users.firstName,
+          ownerLastName: users.lastName,
+          personFirstName: persons.firstName,
+          personLastName: persons.lastName,
+        })
+        .from(interactions)
+        .leftJoin(users, eq(interactions.ownerId, users.id))
+        .leftJoin(persons, eq(interactions.personId, persons.id))
+        .orderBy(desc(interactions.occurredAt))
+        .limit(10);
+
+      const recentActivity = recentInteractions.map((i) => ({
+        id: i.id,
+        type: i.type,
+        description: `${i.type.replace("_", " ")} with ${i.personFirstName} ${i.personLastName}`,
+        timestamp: i.occurredAt.toISOString(),
+        userName: `${i.ownerFirstName || ""} ${i.ownerLastName || ""}`.trim(),
+      }));
+
       res.json({
         metrics: {
-          ytdRaised: 0,
+          ytdRaised,
           ytdGoal: 1000000,
           pipelineValue,
-          forecast90Days: pipelineValue * 0.3,
-          dataHealthScore: 85,
+          forecast90Days,
+          dataHealthScore,
         },
         pipelineByOwner: Object.values(pipelineByOwner),
-        recentActivity: [],
+        recentActivity,
       });
     } catch (error) {
       console.error("Error fetching Dev Director dashboard:", error);
@@ -321,6 +390,48 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.get("/api/dashboard/ceo", isAuthenticated, async (req, res) => {
     try {
+      const yearStart = new Date(new Date().getFullYear(), 0, 1);
+      const monthStart = new Date();
+      monthStart.setDate(1);
+      monthStart.setHours(0, 0, 0, 0);
+
+      const ytdGifts = await db
+        .select({
+          amount: gifts.amount,
+        })
+        .from(gifts)
+        .where(gte(gifts.receivedAt, yearStart));
+
+      const ytdRaised = ytdGifts.reduce((sum, g) => sum + parseFloat(g.amount), 0);
+      const avgGiftSize = ytdGifts.length > 0 ? ytdRaised / ytdGifts.length : 0;
+
+      const monthlyDonors = await db
+        .select({
+          personId: gifts.personId,
+        })
+        .from(gifts)
+        .where(gte(gifts.receivedAt, monthStart));
+
+      const uniqueMonthlyDonors = new Set(monthlyDonors.map((g) => g.personId)).size;
+
+      const allOpportunities = await db
+        .select({
+          askAmount: opportunities.askAmount,
+          probability: opportunities.probability,
+          closeDate: opportunities.closeDate,
+        })
+        .from(opportunities);
+
+      const next90Days = new Date();
+      next90Days.setDate(next90Days.getDate() + 90);
+      const forecast90Days = allOpportunities
+        .filter((opp) => opp.closeDate && new Date(opp.closeDate) <= next90Days)
+        .reduce((sum, opp) => {
+          const amount = parseFloat(opp.askAmount || "0");
+          const prob = (opp.probability || 50) / 100;
+          return sum + amount * prob;
+        }, 0);
+
       const topProspects = await db
         .select({
           id: persons.id,
@@ -344,10 +455,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json({
         metrics: {
-          ytdRaised: 0,
-          forecast90Days: 0,
-          activeMonthlyDonors: 0,
-          avgGiftSize: 0,
+          ytdRaised,
+          forecast90Days,
+          activeMonthlyDonors: uniqueMonthlyDonors,
+          avgGiftSize,
         },
         topProspects: topProspects.map((p) => ({
           id: p.id,
