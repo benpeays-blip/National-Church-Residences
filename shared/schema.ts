@@ -414,6 +414,10 @@ export const boardConnections = pgTable("board_connections", {
   prospectId: varchar("prospect_id").references(() => persons.id).notNull(),
   connectionStrength: integer("connection_strength"), // 1-3 (1st, 2nd, 3rd degree)
   relationshipType: varchar("relationship_type"), // "colleague", "friend", "family", etc.
+  organization: varchar("organization"), // Shared organization (e.g., "Google", "Stanford University")
+  position: varchar("position"), // Prospect's position at organization
+  yearStart: integer("year_start"), // When they started working together
+  yearEnd: integer("year_end"), // When they stopped (null if current)
   source: varchar("source"), // "LinkedIn", "Manual", etc.
   notes: text("notes"),
   introductionRequested: integer("introduction_requested").notNull().default(0),
