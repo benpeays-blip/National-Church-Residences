@@ -1180,6 +1180,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Gift Registries
+  app.get("/api/workflow/gift-registries", async (req, res) => {
+    try {
+      const registries = await db
+        .select({
+          registry: giftRegistries,
+          person: persons,
+        })
+        .from(giftRegistries)
+        .innerJoin(persons, eq(giftRegistries.personId, persons.id))
+        .orderBy(desc(giftRegistries.createdAt))
+        .limit(100);
+      
+      res.json(registries);
+    } catch (error) {
+      console.error("Error fetching gift registries:", error);
+      res.status(500).json({ message: "Failed to fetch gift registries" });
+    }
+  });
+
   // 🔗 Integration APIs
 
   // Gift Registries

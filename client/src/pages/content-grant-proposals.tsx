@@ -21,10 +21,10 @@ type GrantProposal = {
 
 type Grant = {
   id: string;
-  foundationName: string;
-  programTitle: string;
-  requestAmount: string;
-  proposalStatus: string;
+  funderName: string;
+  stage: string;
+  purpose: string;
+  askAmount: string;
 };
 
 type GrantProposalItem = {
@@ -109,10 +109,10 @@ export default function GrantProposals() {
                   <div>
                     <CardTitle className="text-lg flex items-center gap-2">
                       {getStatusIcon(item.proposal.status)}
-                      {item.grant.foundationName} - {item.grant.programTitle}
+                      {item.grant.funderName}
                     </CardTitle>
                     <div className="text-sm text-muted-foreground mt-1">
-                      Requested: ${parseFloat(item.grant.requestAmount).toLocaleString()} • Created {format(new Date(item.proposal.createdAt), "MMM d, yyyy")}
+                      Requested: ${parseFloat(item.grant.askAmount).toLocaleString()} • Created {format(new Date(item.proposal.createdAt), "MMM d, yyyy")}
                     </div>
                   </div>
                   <Badge variant={getStatusVariant(item.proposal.status)}>

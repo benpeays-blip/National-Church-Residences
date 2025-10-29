@@ -21,8 +21,26 @@ type StewardshipWorkflow = {
   createdAt: string;
 };
 
+type Person = {
+  id: string;
+  firstName: string;
+  lastName: string;
+};
+
+type Gift = {
+  id: string;
+  amount: string;
+  giftDate: string;
+};
+
+type StewardshipWorkflowItem = {
+  workflow: StewardshipWorkflow;
+  person: Person;
+  gift: Gift;
+};
+
 export default function Stewardship() {
-  const { data: workflows, isLoading, error, isError } = useQuery<StewardshipWorkflow[], Error>({
+  const { data: workflows, isLoading, error, isError } = useQuery<StewardshipWorkflowItem[], Error>({
     queryKey: ["/api/workflow/stewardship"],
   });
 
@@ -66,9 +84,9 @@ export default function Stewardship() {
     );
   }
 
-  const activeWorkflows = workflows?.filter((w) => !w.completedAt && w.paused === 0) || [];
-  const pausedWorkflows = workflows?.filter((w) => w.paused === 1) || [];
-  const completedWorkflows = workflows?.filter((w) => w.completedAt) || [];
+  const activeWorkflows = workflows?.filter((w) => !w.workflow.completedAt && w.workflow.paused === 0) || [];
+  const pausedWorkflows = workflows?.filter((w) => w.workflow.paused === 1) || [];
+  const completedWorkflows = workflows?.filter((w) => w.workflow.completedAt) || [];
 
   return (
     <div className="p-6 space-y-6">
@@ -89,21 +107,21 @@ export default function Stewardship() {
           </CardHeader>
           <CardContent className="space-y-4">
             {activeWorkflows.length > 0 ? (
-              activeWorkflows.map((workflow) => {
-                const steps = Array.isArray(workflow.steps) ? workflow.steps : [];
+              activeWorkflows.map((item) => {
+                const steps = Array.isArray(item.workflow.steps) ? item.workflow.steps : [];
                 const totalSteps = steps.length || 5;
-                const progress = (workflow.completedSteps / totalSteps) * 100;
+                const progress = (item.workflow.completedSteps / totalSteps) * 100;
                 
                 return (
-                  <div key={workflow.id} className="border rounded-lg p-4 space-y-3" data-testid={`card-workflow-${workflow.id}`}>
+                  <div key={item.workflow.id} className="border rounded-lg p-4 space-y-3" data-testid={`card-workflow-${item.workflow.id}`}>
                     <div className="flex items-start justify-between">
                       <div>
-                        <div className="font-semibold">{workflow.workflowName}</div>
+                        <div className="font-semibold">{item.workflow.workflowName}</div>
                         <div className="text-sm text-muted-foreground">
-                          Donor ID: {workflow.personId.slice(0, 8)}
+                          {item.person.firstName} {item.person.lastName} • ${parseFloat(item.gift.amount).toLocaleString()} gift
                         </div>
                       </div>
-                      <Badge variant="secondary">Step {workflow.currentStep}/{totalSteps}</Badge>
+                      <Badge variant="secondary">Step {item.workflow.currentStep}/{totalSteps}</Badge>
                     </div>
                     
                     <div className="space-y-2">
@@ -117,7 +135,7 @@ export default function Stewardship() {
                     <div className="flex items-center gap-2 text-sm">
                       <Clock className="w-4 h-4 text-orange-600" />
                       <span className="text-muted-foreground">
-                        Next: {workflow.nextActionType} on {format(new Date(workflow.nextActionDate), "MMM d, yyyy")}
+                        Next: {item.workflow.nextActionType} on {format(new Date(item.workflow.nextActionDate), "MMM d, yyyy")}
                       </span>
                     </div>
                   </div>
@@ -137,14 +155,17 @@ export default function Stewardship() {
               <CardTitle className="text-lg">Paused Workflows ({pausedWorkflows.length})</CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {pausedWorkflows.map((workflow) => (
-                <div key={workflow.id} className="border rounded-lg p-4 opacity-60">
+              {pausedWorkflows.map((item) => (
+                <div key={item.workflow.id} className="border rounded-lg p-4 opacity-60">
                   <div className="flex items-start justify-between">
                     <div>
-                      <div className="font-semibold">{workflow.workflowName}</div>
-                      {workflow.pausedReason && (
+                      <div className="font-semibold">{item.workflow.workflowName}</div>
+                      <div className="text-sm text-muted-foreground">
+                        {item.person.firstName} {item.person.lastName}
+                      </div>
+                      {item.workflow.pausedReason && (
                         <div className="text-sm text-muted-foreground mt-1">
-                          Reason: {workflow.pausedReason}
+                          Reason: {item.workflow.pausedReason}
                         </div>
                       )}
                     </div>
@@ -165,13 +186,13 @@ export default function Stewardship() {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
-              {completedWorkflows.slice(0, 5).map((workflow) => (
-                <div key={workflow.id} className="border rounded-lg p-4">
+              {completedWorkflows.slice(0, 5).map((item) => (
+                <div key={item.workflow.id} className="border rounded-lg p-4">
                   <div className="flex items-start justify-between">
                     <div>
-                      <div className="font-semibold">{workflow.workflowName}</div>
+                      <div className="font-semibold">{item.workflow.workflowName}</div>
                       <div className="text-sm text-muted-foreground">
-                        Completed {format(new Date(workflow.completedAt!), "MMM d, yyyy")}
+                        {item.person.firstName} {item.person.lastName} • Completed {format(new Date(item.workflow.completedAt!), "MMM d, yyyy")}
                       </div>
                     </div>
                     <Badge variant="outline" className="bg-green-50">Done</Badge>

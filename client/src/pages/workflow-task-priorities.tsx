@@ -24,11 +24,15 @@ type TaskPriorityScore = {
   finalPriority: number;
   reasoning: string;
   calculatedAt: string;
-  task?: Task;
+};
+
+type TaskPriorityItem = {
+  priorityScore: TaskPriorityScore;
+  task: Task;
 };
 
 export default function TaskPriorities() {
-  const { data: scoredTasks, isLoading, error, isError } = useQuery<TaskPriorityScore[], Error>({
+  const { data: scoredTasks, isLoading, error, isError } = useQuery<TaskPriorityItem[], Error>({
     queryKey: ["/api/workflow/task-priorities"],
   });
 
@@ -86,7 +90,7 @@ export default function TaskPriorities() {
   }
 
   // Sort by priority descending
-  const sortedTasks = scoredTasks?.sort((a, b) => b.finalPriority - a.finalPriority) || [];
+  const sortedTasks = scoredTasks?.sort((a, b) => b.priorityScore.finalPriority - a.priorityScore.finalPriority) || [];
 
   return (
     <div className="p-6 space-y-6">
@@ -99,8 +103,8 @@ export default function TaskPriorities() {
 
       {sortedTasks.length > 0 ? (
         <div className="grid gap-4">
-          {sortedTasks.map((scored, index) => (
-            <Card key={scored.id} data-testid={`card-task-${scored.taskId}`}>
+          {sortedTasks.map((item, index) => (
+            <Card key={item.priorityScore.id} data-testid={`card-task-${item.task.id}`}>
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-3">
@@ -109,17 +113,17 @@ export default function TaskPriorities() {
                     </div>
                     <div>
                       <CardTitle className="text-lg">
-                        {scored.task?.title || `Task ${scored.taskId.slice(0, 8)}`}
+                        {item.task.title}
                       </CardTitle>
-                      {scored.task?.description && (
+                      {item.task.description && (
                         <div className="text-sm text-muted-foreground mt-1">
-                          {scored.task.description}
+                          {item.task.description}
                         </div>
                       )}
                     </div>
                   </div>
-                  <Badge variant={getPriorityVariant(scored.finalPriority)}>
-                    {getPriorityLabel(scored.finalPriority)} - {scored.finalPriority}
+                  <Badge variant={getPriorityVariant(item.priorityScore.finalPriority)}>
+                    {getPriorityLabel(item.priorityScore.finalPriority)} - {item.priorityScore.finalPriority}
                   </Badge>
                 </div>
               </CardHeader>
@@ -128,36 +132,36 @@ export default function TaskPriorities() {
                   <div>
                     <div className="text-sm text-muted-foreground">Est. Revenue</div>
                     <div className="text-xl font-bold text-green-600">
-                      ${parseFloat(scored.estimatedRevenue).toLocaleString()}
+                      ${parseFloat(item.priorityScore.estimatedRevenue).toLocaleString()}
                     </div>
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Urgency</div>
                     <div className="text-xl font-semibold">
-                      {scored.urgencyScore}/100
+                      {item.priorityScore.urgencyScore}/100
                     </div>
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Impact</div>
                     <div className="text-xl font-semibold">
-                      {scored.impactScore}/100
+                      {item.priorityScore.impactScore}/100
                     </div>
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Effort</div>
                     <div className="text-xl font-semibold">
-                      {100 - scored.effortScore}/100
+                      {100 - item.priorityScore.effortScore}/100
                     </div>
                   </div>
                 </div>
 
-                {scored.reasoning && (
+                {item.priorityScore.reasoning && (
                   <div className="bg-muted/50 p-3 rounded-lg">
                     <div className="flex items-start gap-2">
                       <Zap className="w-4 h-4 text-primary mt-0.5" />
                       <div>
                         <div className="text-sm font-semibold mb-1">AI Reasoning</div>
-                        <div className="text-sm text-muted-foreground">{scored.reasoning}</div>
+                        <div className="text-sm text-muted-foreground">{item.priorityScore.reasoning}</div>
                       </div>
                     </div>
                   </div>
