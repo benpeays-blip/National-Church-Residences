@@ -1119,19 +1119,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // 🤖 Workflow Automation APIs
 
   // Calendar Events
-  app.get("/api/workflow/calendar-events", async (req, res) => {
+  app.get("/api/workflow/calendar", async (req, res) => {
     try {
-      const events = await db
-        .select({
-          event: calendarEvents,
-          person: persons,
-        })
+      const results = await db
+        .select()
         .from(calendarEvents)
-        .leftJoin(persons, eq(calendarEvents.personId, persons.id))
         .orderBy(desc(calendarEvents.scheduledAt))
         .limit(100);
       
-      res.json(events);
+      res.json(results);
     } catch (error) {
       console.error("Error fetching calendar events:", error);
       res.status(500).json({ message: "Failed to fetch calendar events" });
