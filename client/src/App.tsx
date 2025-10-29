@@ -20,6 +20,33 @@ import DataHealth from "@/pages/data-health";
 import Settings from "@/pages/settings";
 import Integrations from "@/pages/integrations";
 
+// AI Intelligence
+import AIPredictiveTiming from "@/pages/ai-predictive-timing";
+import AIWealthEvents from "@/pages/ai-wealth-events";
+import AIMeetingBriefs from "@/pages/ai-meeting-briefs";
+import AIVoiceNotes from "@/pages/ai-voice-notes";
+
+// Relationship Intelligence
+import BoardConnections from "@/pages/relationship-board-connections";
+import CorporatePartnerships from "@/pages/relationship-corporate-partnerships";
+import PeerDonors from "@/pages/relationship-peer-donors";
+
+// AI Content
+import OutreachGenerator from "@/pages/content-outreach";
+import GrantProposals from "@/pages/content-grant-proposals";
+import ImpactReports from "@/pages/content-impact-reports";
+
+// Analytics
+import PeerBenchmarks from "@/pages/analytics-peer-benchmarks";
+import SentimentAnalysis from "@/pages/analytics-sentiment";
+import PortfolioOptimization from "@/pages/analytics-portfolio-optimization";
+
+// Workflow Automation
+import SmartCalendar from "@/pages/workflow-calendar";
+import Stewardship from "@/pages/workflow-stewardship";
+import TaskPriorities from "@/pages/workflow-task-priorities";
+import GiftRegistries from "@/pages/workflow-gift-registries";
+
 function Dashboard() {
   // Default to Dev Director dashboard (can be changed via navigation)
   return <DashboardDevDirector />;
@@ -42,6 +69,34 @@ function Router() {
       <Route path="/data-health" component={DataHealth} />
       <Route path="/integrations" component={Integrations} />
       <Route path="/settings" component={Settings} />
+      
+      {/* AI Intelligence */}
+      <Route path="/ai/predictive-timing" component={AIPredictiveTiming} />
+      <Route path="/ai/wealth-events" component={AIWealthEvents} />
+      <Route path="/ai/meeting-briefs" component={AIMeetingBriefs} />
+      <Route path="/ai/voice-notes" component={AIVoiceNotes} />
+      
+      {/* Relationship Intelligence */}
+      <Route path="/relationship/board-connections" component={BoardConnections} />
+      <Route path="/relationship/corporate-partnerships" component={CorporatePartnerships} />
+      <Route path="/relationship/peer-donors" component={PeerDonors} />
+      
+      {/* AI Content */}
+      <Route path="/content/outreach" component={OutreachGenerator} />
+      <Route path="/content/grant-proposals" component={GrantProposals} />
+      <Route path="/content/impact-reports" component={ImpactReports} />
+      
+      {/* Analytics */}
+      <Route path="/analytics/peer-benchmarks" component={PeerBenchmarks} />
+      <Route path="/analytics/sentiment" component={SentimentAnalysis} />
+      <Route path="/analytics/portfolio-optimization" component={PortfolioOptimization} />
+      
+      {/* Workflow Automation */}
+      <Route path="/workflow/calendar" component={SmartCalendar} />
+      <Route path="/workflow/stewardship" component={Stewardship} />
+      <Route path="/workflow/task-priorities" component={TaskPriorities} />
+      <Route path="/workflow/gift-registries" component={GiftRegistries} />
+      
       <Route component={NotFound} />
     </Switch>
   );

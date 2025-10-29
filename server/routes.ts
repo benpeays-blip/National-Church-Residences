@@ -3,7 +3,12 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { db } from "./db";
-import { persons, opportunities, users, gifts, interactions, integrations, integrationSyncRuns, dataQualityIssues, households, tasks } from "@shared/schema";
+import { 
+  persons, opportunities, users, gifts, interactions, integrations, integrationSyncRuns, dataQualityIssues, households, tasks,
+  predictiveScores, wealthEvents, meetingBriefs, voiceNotes, boardConnections, corporatePartnerships, peerDonors,
+  outreachTemplates, grantProposals, impactReports, sentimentAnalysis, peerBenchmarks, portfolioOptimizations,
+  calendarEvents, stewardshipWorkflows, taskPriorityScores, giftRegistries, grants
+} from "@shared/schema";
 import { eq, sql, desc, gte, and, inArray } from "drizzle-orm";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -861,6 +866,339 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching integrations data:", error);
       res.status(500).json({ message: "Failed to fetch integrations data" });
+    }
+  });
+
+  // 🚀 AI Intelligence Layer APIs
+  
+  // Predictive Major Gift Timing
+  app.get("/api/ai/predictive-timing", async (req, res) => {
+    try {
+      const predictions = await db
+        .select({
+          score: predictiveScores,
+          person: persons,
+        })
+        .from(predictiveScores)
+        .innerJoin(persons, eq(predictiveScores.personId, persons.id))
+        .orderBy(desc(predictiveScores.givingProbability));
+      
+      res.json(predictions);
+    } catch (error) {
+      console.error("Error fetching predictive timing:", error);
+      res.status(500).json({ message: "Failed to fetch predictions" });
+    }
+  });
+
+  // Wealth Events Monitoring
+  app.get("/api/ai/wealth-events", async (req, res) => {
+    try {
+      const events = await db
+        .select({
+          event: wealthEvents,
+          person: persons,
+        })
+        .from(wealthEvents)
+        .innerJoin(persons, eq(wealthEvents.personId, persons.id))
+        .orderBy(desc(wealthEvents.eventDate))
+        .limit(100);
+      
+      res.json(events);
+    } catch (error) {
+      console.error("Error fetching wealth events:", error);
+      res.status(500).json({ message: "Failed to fetch wealth events" });
+    }
+  });
+
+  // Meeting Briefs
+  app.get("/api/ai/meeting-briefs", async (req, res) => {
+    try {
+      const briefs = await db
+        .select({
+          brief: meetingBriefs,
+          person: persons,
+        })
+        .from(meetingBriefs)
+        .innerJoin(persons, eq(meetingBriefs.personId, persons.id))
+        .orderBy(desc(meetingBriefs.createdAt))
+        .limit(50);
+      
+      res.json(briefs);
+    } catch (error) {
+      console.error("Error fetching meeting briefs:", error);
+      res.status(500).json({ message: "Failed to fetch meeting briefs" });
+    }
+  });
+
+  // Voice Notes
+  app.get("/api/ai/voice-notes", async (req, res) => {
+    try {
+      const notes = await db
+        .select()
+        .from(voiceNotes)
+        .orderBy(desc(voiceNotes.recordedAt))
+        .limit(50);
+      
+      res.json(notes);
+    } catch (error) {
+      console.error("Error fetching voice notes:", error);
+      res.status(500).json({ message: "Failed to fetch voice notes" });
+    }
+  });
+
+  // 🎯 Relationship Intelligence APIs
+
+  // Board Connections
+  app.get("/api/relationship/board-connections", async (req, res) => {
+    try {
+      const connections = await db
+        .select({
+          connection: boardConnections,
+          boardMember: persons,
+        })
+        .from(boardConnections)
+        .innerJoin(persons, eq(boardConnections.boardMemberId, persons.id))
+        .orderBy(desc(boardConnections.connectionStrength));
+      
+      res.json(connections);
+    } catch (error) {
+      console.error("Error fetching board connections:", error);
+      res.status(500).json({ message: "Failed to fetch board connections" });
+    }
+  });
+
+  // Corporate Partnerships
+  app.get("/api/relationship/corporate-partnerships", async (req, res) => {
+    try {
+      const partnerships = await db
+        .select()
+        .from(corporatePartnerships)
+        .orderBy(desc(corporatePartnerships.totalEmployeeGiving));
+      
+      res.json(partnerships);
+    } catch (error) {
+      console.error("Error fetching corporate partnerships:", error);
+      res.status(500).json({ message: "Failed to fetch corporate partnerships" });
+    }
+  });
+
+  // Peer Donors
+  app.get("/api/relationship/peer-donors/:personId", async (req, res) => {
+    try {
+      const { personId } = req.params;
+      const peers = await db
+        .select({
+          peerDonor: peerDonors,
+          peer: persons,
+        })
+        .from(peerDonors)
+        .innerJoin(persons, eq(peerDonors.peerPersonId, persons.id))
+        .where(eq(peerDonors.personId, personId))
+        .orderBy(desc(peerDonors.similarityScore));
+      
+      res.json(peers);
+    } catch (error) {
+      console.error("Error fetching peer donors:", error);
+      res.status(500).json({ message: "Failed to fetch peer donors" });
+    }
+  });
+
+  // ✍️ AI Content Generation APIs
+
+  // Outreach Templates
+  app.get("/api/content/outreach-templates", async (req, res) => {
+    try {
+      const templates = await db
+        .select({
+          template: outreachTemplates,
+          person: persons,
+        })
+        .from(outreachTemplates)
+        .innerJoin(persons, eq(outreachTemplates.personId, persons.id))
+        .orderBy(desc(outreachTemplates.createdAt))
+        .limit(50);
+      
+      res.json(templates);
+    } catch (error) {
+      console.error("Error fetching outreach templates:", error);
+      res.status(500).json({ message: "Failed to fetch outreach templates" });
+    }
+  });
+
+  // Grant Proposals
+  app.get("/api/content/grant-proposals", async (req, res) => {
+    try {
+      const proposals = await db
+        .select({
+          proposal: grantProposals,
+          grant: grants,
+        })
+        .from(grantProposals)
+        .innerJoin(grants, eq(grantProposals.grantId, grants.id))
+        .orderBy(desc(grantProposals.createdAt));
+      
+      res.json(proposals);
+    } catch (error) {
+      console.error("Error fetching grant proposals:", error);
+      res.status(500).json({ message: "Failed to fetch grant proposals" });
+    }
+  });
+
+  // Impact Reports
+  app.get("/api/content/impact-reports", async (req, res) => {
+    try {
+      const reports = await db
+        .select({
+          report: impactReports,
+          person: persons,
+        })
+        .from(impactReports)
+        .innerJoin(persons, eq(impactReports.personId, persons.id))
+        .orderBy(desc(impactReports.createdAt));
+      
+      res.json(reports);
+    } catch (error) {
+      console.error("Error fetching impact reports:", error);
+      res.status(500).json({ message: "Failed to fetch impact reports" });
+    }
+  });
+
+  // 📊 Analytics APIs
+
+  // Peer Benchmarks
+  app.get("/api/analytics/peer-benchmarks", async (req, res) => {
+    try {
+      const benchmarks = await db
+        .select()
+        .from(peerBenchmarks)
+        .orderBy(desc(peerBenchmarks.calculatedAt));
+      
+      res.json(benchmarks);
+    } catch (error) {
+      console.error("Error fetching peer benchmarks:", error);
+      res.status(500).json({ message: "Failed to fetch peer benchmarks" });
+    }
+  });
+
+  // Sentiment Analysis
+  app.get("/api/analytics/sentiment", async (req, res) => {
+    try {
+      const analysis = await db
+        .select({
+          sentiment: sentimentAnalysis,
+          person: persons,
+        })
+        .from(sentimentAnalysis)
+        .innerJoin(persons, eq(sentimentAnalysis.personId, persons.id))
+        .orderBy(desc(sentimentAnalysis.analysisDate))
+        .limit(100);
+      
+      res.json(analysis);
+    } catch (error) {
+      console.error("Error fetching sentiment analysis:", error);
+      res.status(500).json({ message: "Failed to fetch sentiment analysis" });
+    }
+  });
+
+  // Portfolio Optimization
+  app.get("/api/analytics/portfolio-optimization", async (req, res) => {
+    try {
+      const optimizations = await db
+        .select()
+        .from(portfolioOptimizations)
+        .orderBy(desc(portfolioOptimizations.runDate))
+        .limit(10);
+      
+      res.json(optimizations);
+    } catch (error) {
+      console.error("Error fetching portfolio optimizations:", error);
+      res.status(500).json({ message: "Failed to fetch portfolio optimizations" });
+    }
+  });
+
+  // 🤖 Workflow Automation APIs
+
+  // Calendar Events
+  app.get("/api/workflow/calendar-events", async (req, res) => {
+    try {
+      const events = await db
+        .select({
+          event: calendarEvents,
+          person: persons,
+        })
+        .from(calendarEvents)
+        .leftJoin(persons, eq(calendarEvents.personId, persons.id))
+        .orderBy(desc(calendarEvents.scheduledAt))
+        .limit(100);
+      
+      res.json(events);
+    } catch (error) {
+      console.error("Error fetching calendar events:", error);
+      res.status(500).json({ message: "Failed to fetch calendar events" });
+    }
+  });
+
+  // Stewardship Workflows
+  app.get("/api/workflow/stewardship", async (req, res) => {
+    try {
+      const workflows = await db
+        .select({
+          workflow: stewardshipWorkflows,
+          person: persons,
+          gift: gifts,
+        })
+        .from(stewardshipWorkflows)
+        .innerJoin(persons, eq(stewardshipWorkflows.personId, persons.id))
+        .innerJoin(gifts, eq(stewardshipWorkflows.giftId, gifts.id))
+        .orderBy(desc(stewardshipWorkflows.createdAt))
+        .limit(50);
+      
+      res.json(workflows);
+    } catch (error) {
+      console.error("Error fetching stewardship workflows:", error);
+      res.status(500).json({ message: "Failed to fetch stewardship workflows" });
+    }
+  });
+
+  // Task Priority Scores
+  app.get("/api/workflow/task-priorities", async (req, res) => {
+    try {
+      const priorities = await db
+        .select({
+          priorityScore: taskPriorityScores,
+          task: tasks,
+        })
+        .from(taskPriorityScores)
+        .innerJoin(tasks, eq(taskPriorityScores.taskId, tasks.id))
+        .orderBy(desc(taskPriorityScores.finalPriority))
+        .limit(100);
+      
+      res.json(priorities);
+    } catch (error) {
+      console.error("Error fetching task priorities:", error);
+      res.status(500).json({ message: "Failed to fetch task priorities" });
+    }
+  });
+
+  // 🔗 Integration APIs
+
+  // Gift Registries
+  app.get("/api/integrations/gift-registries", async (req, res) => {
+    try {
+      const registries = await db
+        .select({
+          registry: giftRegistries,
+          person: persons,
+        })
+        .from(giftRegistries)
+        .innerJoin(persons, eq(giftRegistries.personId, persons.id))
+        .where(eq(giftRegistries.active, 1))
+        .orderBy(desc(giftRegistries.createdAt));
+      
+      res.json(registries);
+    } catch (error) {
+      console.error("Error fetching gift registries:", error);
+      res.status(500).json({ message: "Failed to fetch gift registries" });
     }
   });
 
