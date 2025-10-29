@@ -690,7 +690,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/data-health", isAuthenticated, async (req, res) => {
+  app.get("/api/data-health", async (req, res) => {
     try {
       const allPersons = await db.select().from(persons);
       
