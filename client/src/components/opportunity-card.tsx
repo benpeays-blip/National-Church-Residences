@@ -2,7 +2,6 @@ import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { formatCurrency, getInitials } from "@/lib/utils";
-import { DataProvenanceBadge } from "./data-provenance-badge";
 import type { Opportunity } from "@shared/schema";
 
 interface OpportunityCardProps {
@@ -31,16 +30,9 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
       <div className="space-y-3">
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-1">
-              <h4 className="text-sm font-semibold truncate">
-                {opportunity.person?.firstName} {opportunity.person?.lastName}
-              </h4>
-              <DataProvenanceBadge
-                sourceSystem={opportunity.sourceSystem}
-                syncedAt={opportunity.syncedAt}
-                variant="icon"
-              />
-            </div>
+            <h4 className="text-sm font-semibold truncate">
+              {opportunity.person?.firstName} {opportunity.person?.lastName}
+            </h4>
             <p className="text-xs text-muted-foreground mt-1">
               {formatCurrency(opportunity.askAmount)}
             </p>
@@ -58,10 +50,10 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
           </p>
         )}
 
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center justify-between gap-2">
+          <div className="flex items-center gap-2 min-w-0">
             {opportunity.owner && (
-              <Avatar className="w-6 h-6">
+              <Avatar className="w-6 h-6 flex-shrink-0">
                 <AvatarFallback className="bg-primary/10 text-primary text-xs">
                   {getInitials(
                     opportunity.owner.firstName,
@@ -75,6 +67,13 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
                 ? `${opportunity.daysInStage} days`
                 : "New"}
             </span>
+          </div>
+          <div className="flex-shrink-0">
+            {opportunity.sourceSystem && (
+              <span className="text-xs text-muted-foreground" data-testid="opportunity-data-source">
+                Data Source: {opportunity.sourceSystem}
+              </span>
+            )}
           </div>
         </div>
       </div>
