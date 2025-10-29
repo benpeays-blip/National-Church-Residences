@@ -58,125 +58,121 @@ export default function BoardNetworkMapper() {
   };
 
   return (
-    <div className="h-full flex flex-col">
+    <div className="space-y-6">
       {/* Header */}
-      <div className="border-b bg-card p-6">
-        <div className="flex flex-col gap-4">
-          <div>
-            <h1 className="text-2xl font-semibold" data-testid="heading-page">
-              Board Network Mapper
-            </h1>
-            <p className="text-sm text-muted-foreground mt-1">
-              Visualize board overlaps across organizations and identify shared
-              connections
-            </p>
-          </div>
-
-          {/* Import Section */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Import Board Data</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-sm text-muted-foreground mb-3">
-                Upload a CSV with columns: person_name, person_email (optional),
-                org_name, role, start_year, end_year
-              </div>
-              <BoardCsvImport />
-            </CardContent>
-          </Card>
-
-          {/* Filters */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-base">Filters & View Options</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-                <div>
-                  <Label htmlFor="view-select" className="text-xs">
-                    Graph View
-                  </Label>
-                  <Select
-                    value={view}
-                    onValueChange={(v: "people" | "orgs") => setView(v)}
-                  >
-                    <SelectTrigger id="view-select" data-testid="select-view">
-                      <SelectValue />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="people">People Graph</SelectItem>
-                      <SelectItem value="orgs">Organization Graph</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <div>
-                  <Label htmlFor="search-input" className="text-xs">
-                    Search
-                  </Label>
-                  <Input
-                    id="search-input"
-                    placeholder="Person/Org name..."
-                    value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    data-testid="input-search"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="role-filter" className="text-xs">
-                    Role Filter
-                  </Label>
-                  <Input
-                    id="role-filter"
-                    placeholder="e.g., Director"
-                    value={roleFilter}
-                    onChange={(e) => setRoleFilter(e.target.value)}
-                    data-testid="input-role-filter"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="year-min" className="text-xs">
-                    Min Year
-                  </Label>
-                  <Input
-                    id="year-min"
-                    type="number"
-                    placeholder="2020"
-                    value={yearMin}
-                    onChange={(e) => setYearMin(e.target.value)}
-                    data-testid="input-year-min"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="year-max" className="text-xs">
-                    Max Year
-                  </Label>
-                  <Input
-                    id="year-max"
-                    type="number"
-                    placeholder="2025"
-                    value={yearMax}
-                    onChange={(e) => setYearMax(e.target.value)}
-                    data-testid="input-year-max"
-                  />
-                </div>
-              </div>
-              <div className="mt-4">
-                <Button
-                  onClick={applyFilters}
-                  size="sm"
-                  data-testid="button-apply-filters"
-                >
-                  Apply Filters
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+      <div>
+        <h1 className="text-2xl font-semibold" data-testid="heading-page">
+          Board Network Mapper
+        </h1>
+        <p className="text-sm text-muted-foreground mt-1">
+          Visualize board overlaps across organizations and identify shared
+          connections
+        </p>
       </div>
 
+      {/* Import Section */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Import Board Data</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="text-sm text-muted-foreground mb-3">
+            Upload a CSV with columns: person_name, person_email (optional),
+            org_name, role, start_year, end_year
+          </div>
+          <BoardCsvImport />
+        </CardContent>
+      </Card>
+
+      {/* Filters */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Filters & View Options</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+            <div>
+              <Label htmlFor="view-select" className="text-xs">
+                Graph View
+              </Label>
+              <Select
+                value={view}
+                onValueChange={(v: "people" | "orgs") => setView(v)}
+              >
+                <SelectTrigger id="view-select" data-testid="select-view">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="people">People Graph</SelectItem>
+                  <SelectItem value="orgs">Organization Graph</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label htmlFor="search-input" className="text-xs">
+                Search
+              </Label>
+              <Input
+                id="search-input"
+                placeholder="Person/Org name..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                data-testid="input-search"
+              />
+            </div>
+            <div>
+              <Label htmlFor="role-filter" className="text-xs">
+                Role Filter
+              </Label>
+              <Input
+                id="role-filter"
+                placeholder="e.g., Director"
+                value={roleFilter}
+                onChange={(e) => setRoleFilter(e.target.value)}
+                data-testid="input-role-filter"
+              />
+            </div>
+            <div>
+              <Label htmlFor="year-min" className="text-xs">
+                Min Year
+              </Label>
+              <Input
+                id="year-min"
+                type="number"
+                placeholder="2020"
+                value={yearMin}
+                onChange={(e) => setYearMin(e.target.value)}
+                data-testid="input-year-min"
+              />
+            </div>
+            <div>
+              <Label htmlFor="year-max" className="text-xs">
+                Max Year
+              </Label>
+              <Input
+                id="year-max"
+                type="number"
+                placeholder="2025"
+                value={yearMax}
+                onChange={(e) => setYearMax(e.target.value)}
+                data-testid="input-year-max"
+              />
+            </div>
+          </div>
+          <div className="mt-4">
+            <Button
+              onClick={applyFilters}
+              size="sm"
+              data-testid="button-apply-filters"
+            >
+              Apply Filters
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Main Content */}
-      <div className="flex-1 overflow-auto p-6">
+      <div>
         {isLoading ? (
           <div className="text-center py-12 text-muted-foreground">
             Loading board network data...
