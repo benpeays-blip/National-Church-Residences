@@ -70,6 +70,24 @@ export const grantStageEnum = pgEnum("grant_stage", [
   "ReportDue",
 ]);
 
+export const wealthEventTypeEnum = pgEnum("wealth_event_type", [
+  "stock_sale",
+  "ipo",
+  "property_sale",
+  "inheritance",
+  "promotion",
+  "business_sale",
+  "bonus",
+  "other",
+]);
+
+export const proposalStatusEnum = pgEnum("proposal_status", [
+  "draft",
+  "generated",
+  "reviewed",
+  "submitted",
+]);
+
 // Session storage table (required for Replit Auth)
 export const sessions = pgTable(
   "sessions",
@@ -307,6 +325,264 @@ export const dataQualityIssues = pgTable("data_quality_issues", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// 🚀 AI Intelligence Features
+
+// Wealth Events - Real-Time Wealth Event Monitoring
+export const wealthEvents = pgTable("wealth_events", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  personId: varchar("person_id").references(() => persons.id).notNull(),
+  eventType: wealthEventTypeEnum("event_type").notNull(),
+  estimatedValue: decimal("estimated_value", { precision: 12, scale: 2 }),
+  eventDate: timestamp("event_date").notNull(),
+  source: varchar("source"), // "SEC", "LinkedIn", "PropertyRecords", etc.
+  sourceUrl: text("source_url"),
+  description: text("description"),
+  verified: integer("verified").notNull().default(0), // 0 or 1
+  alertSent: integer("alert_sent").notNull().default(0), // 0 or 1
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Meeting Briefs - AI Meeting Prep Assistant
+export const meetingBriefs = pgTable("meeting_briefs", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  personId: varchar("person_id").references(() => persons.id).notNull(),
+  generatedForUserId: varchar("generated_for_user_id").references(() => users.id).notNull(),
+  meetingDate: timestamp("meeting_date"),
+  recentNews: jsonb("recent_news"), // Array of news items
+  conversationStarters: text("conversation_starters").array(),
+  optimalAskAmount: decimal("optimal_ask_amount", { precision: 10, scale: 2 }),
+  askConfidence: integer("ask_confidence"), // 0-100
+  talkingPoints: text("talking_points").array(),
+  riskFactors: text("risk_factors").array(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Voice Notes - Voice-to-CRM
+export const voiceNotes = pgTable("voice_notes", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  personId: varchar("person_id").references(() => persons.id),
+  audioUrl: text("audio_url"),
+  transcription: text("transcription"),
+  aiSummary: text("ai_summary"),
+  extractedActionItems: text("extracted_action_items").array(),
+  processedInteractionId: varchar("processed_interaction_id").references(() => interactions.id),
+  processedTaskIds: text("processed_task_ids").array(), // Array of task IDs created
+  recordedAt: timestamp("recorded_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Predictive Scores - Predictive Major Gift Timing
+export const predictiveScores = pgTable("predictive_scores", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  personId: varchar("person_id").references(() => persons.id).notNull(),
+  givingProbability: integer("giving_probability"), // 0-100
+  predictedAmount: decimal("predicted_amount", { precision: 10, scale: 2 }),
+  predictedTimeframe: integer("predicted_timeframe"), // Days until likely gift
+  confidence: integer("confidence"), // 0-100
+  keyFactors: text("key_factors").array(), // Why this prediction
+  calculatedAt: timestamp("calculated_at").defaultNow(),
+});
+
+// Board Connections - Board Member Network Mapping
+export const boardConnections = pgTable("board_connections", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  boardMemberId: varchar("board_member_id").references(() => persons.id).notNull(),
+  prospectId: varchar("prospect_id").references(() => persons.id).notNull(),
+  connectionStrength: integer("connection_strength"), // 1-3 (1st, 2nd, 3rd degree)
+  relationshipType: varchar("relationship_type"), // "colleague", "friend", "family", etc.
+  source: varchar("source"), // "LinkedIn", "Manual", etc.
+  notes: text("notes"),
+  introductionRequested: integer("introduction_requested").notNull().default(0),
+  introductionMade: integer("introduction_made").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Corporate Partnerships - Corporate Partnership Intelligence
+export const corporatePartnerships = pgTable("corporate_partnerships", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  companyName: varchar("company_name").notNull(),
+  employeeCount: integer("employee_count"), // Number of donors at this company
+  totalEmployeeGiving: decimal("total_employee_giving", { precision: 12, scale: 2 }),
+  hasMatchingProgram: integer("has_matching_program").notNull().default(0),
+  matchingRatio: varchar("matching_ratio"), // "1:1", "2:1", etc.
+  estimatedMatchingPotential: decimal("estimated_matching_potential", { precision: 12, scale: 2 }),
+  decisionMakers: text("decision_makers").array(), // Array of person IDs
+  foundationUrl: text("foundation_url"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Peer Donors - Automated Peer Discovery
+export const peerDonors = pgTable("peer_donors", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  personId: varchar("person_id").references(() => persons.id).notNull(),
+  peerPersonId: varchar("peer_person_id").references(() => persons.id).notNull(),
+  similarityScore: integer("similarity_score"), // 0-100
+  sharedCharacteristics: text("shared_characteristics").array(),
+  peerGaveToPrograms: text("peer_gave_to_programs").array(), // Campaign IDs
+  personNotYetAskedFor: text("person_not_yet_asked_for").array(), // Campaign IDs
+  calculatedAt: timestamp("calculated_at").defaultNow(),
+});
+
+// Outreach Templates - Personalized Outreach Generator
+export const outreachTemplates = pgTable("outreach_templates", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  personId: varchar("person_id").references(() => persons.id).notNull(),
+  generatedForUserId: varchar("generated_for_user_id").references(() => users.id).notNull(),
+  templateType: varchar("template_type"), // "email", "letter", "call_script"
+  subject: varchar("subject"),
+  content: text("content").notNull(),
+  tone: varchar("tone"), // "formal", "casual", "grateful", etc.
+  purpose: varchar("purpose"), // "thank_you", "ask", "update", "event_invite"
+  aiRationale: text("ai_rationale"), // Why AI chose this approach
+  used: integer("used").notNull().default(0),
+  sentAt: timestamp("sent_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Grant Proposals - Automated Grant Proposal Writing
+export const grantProposals = pgTable("grant_proposals", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  grantId: varchar("grant_id").references(() => grants.id).notNull(),
+  funderGuidelines: text("funder_guidelines"),
+  generatedNarrative: text("generated_narrative"),
+  generatedBudget: jsonb("generated_budget"),
+  generatedOutcomes: text("generated_outcomes").array(),
+  generatedEvaluationPlan: text("generated_evaluation_plan"),
+  status: proposalStatusEnum("status").notNull().default("draft"),
+  reviewedBy: varchar("reviewed_by").references(() => users.id),
+  edits: text("edits"), // Human edits made after AI generation
+  submittedAt: timestamp("submitted_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Impact Reports - Impact Report Personalization
+export const impactReports = pgTable("impact_reports", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  personId: varchar("person_id").references(() => persons.id).notNull(),
+  reportingPeriod: varchar("reporting_period"), // "2024-Q1", "2024", etc.
+  totalImpact: decimal("total_impact", { precision: 12, scale: 2 }),
+  programsSupported: text("programs_supported").array(),
+  beneficiariesHelped: integer("beneficiaries_helped"),
+  personalizedStories: jsonb("personalized_stories"), // Array of story objects
+  photosUrls: text("photos_urls").array(),
+  customMessage: text("custom_message"),
+  videoUrl: text("video_url"),
+  sentAt: timestamp("sent_at"),
+  opened: integer("opened").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Sentiment Analysis - Donor Sentiment Analysis
+export const sentimentAnalysis = pgTable("sentiment_analysis", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  personId: varchar("person_id").references(() => persons.id).notNull(),
+  analysisDate: timestamp("analysis_date").notNull(),
+  emailResponseTime: decimal("email_response_time", { precision: 10, scale: 2 }), // Hours
+  engagementTrend: varchar("engagement_trend"), // "increasing", "stable", "declining"
+  sentimentScore: integer("sentiment_score"), // 0-100
+  riskLevel: varchar("risk_level"), // "low", "medium", "high"
+  keySignals: text("key_signals").array(),
+  recommendedAction: text("recommended_action"),
+  alertGenerated: integer("alert_generated").notNull().default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Peer Benchmarks - Peer Benchmarking Dashboard
+export const peerBenchmarks = pgTable("peer_benchmarks", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  metricName: varchar("metric_name").notNull(),
+  ourValue: decimal("our_value", { precision: 12, scale: 2 }),
+  peerAverage: decimal("peer_average", { precision: 12, scale: 2 }),
+  peerMedian: decimal("peer_median", { precision: 12, scale: 2 }),
+  peerTop25: decimal("peer_top_25", { precision: 12, scale: 2 }),
+  percentileRank: integer("percentile_rank"), // 0-100
+  trend: varchar("trend"), // "improving", "stable", "declining"
+  aiRecommendation: text("ai_recommendation"),
+  calculatedAt: timestamp("calculated_at").defaultNow(),
+});
+
+// Portfolio Optimizations - Portfolio Optimization Engine
+export const portfolioOptimizations = pgTable("portfolio_optimizations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  runDate: timestamp("run_date").notNull(),
+  recommendations: jsonb("recommendations"), // Array of portfolio assignment recommendations
+  projectedImpact: decimal("projected_impact", { precision: 12, scale: 2 }),
+  optimizationCriteria: text("optimization_criteria").array(),
+  implemented: integer("implemented").notNull().default(0),
+  actualImpact: decimal("actual_impact", { precision: 12, scale: 2 }),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Calendar Events - Smart Calendar Integration
+export const calendarEvents = pgTable("calendar_events", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  personId: varchar("person_id").references(() => persons.id),
+  eventType: varchar("event_type"), // "donor_meeting", "cultivation_event", etc.
+  scheduledAt: timestamp("scheduled_at").notNull(),
+  duration: integer("duration"), // Minutes
+  aiSuggestedTime: timestamp("ai_suggested_time"),
+  priority: integer("priority"), // 0-100, AI-calculated
+  estimatedImpact: decimal("estimated_impact", { precision: 10, scale: 2 }),
+  meetingBriefId: varchar("meeting_brief_id").references(() => meetingBriefs.id),
+  completed: integer("completed").notNull().default(0),
+  outcome: text("outcome"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Stewardship Workflows - Automated Stewardship Workflows
+export const stewardshipWorkflows = pgTable("stewardship_workflows", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  giftId: varchar("gift_id").references(() => gifts.id).notNull(),
+  personId: varchar("person_id").references(() => persons.id).notNull(),
+  workflowName: varchar("workflow_name"), // "Major Gift Stewardship", "Annual Fund", etc.
+  steps: jsonb("steps"), // Array of step objects with timing and content
+  currentStep: integer("current_step").notNull().default(0),
+  completedSteps: integer("completed_steps").notNull().default(0),
+  nextActionDate: timestamp("next_action_date"),
+  nextActionType: varchar("next_action_type"),
+  paused: integer("paused").notNull().default(0),
+  pausedReason: text("paused_reason"),
+  completedAt: timestamp("completed_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Task Priority Scores - Smart Task Prioritization
+export const taskPriorityScores = pgTable("task_priority_scores", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  taskId: varchar("task_id").references(() => tasks.id).notNull(),
+  estimatedRevenue: decimal("estimated_revenue", { precision: 10, scale: 2 }),
+  urgencyScore: integer("urgency_score"), // 0-100
+  impactScore: integer("impact_score"), // 0-100
+  effortScore: integer("effort_score"), // 0-100 (lower = less effort)
+  finalPriority: integer("final_priority"), // 0-100, weighted combination
+  reasoning: text("reasoning"),
+  calculatedAt: timestamp("calculated_at").defaultNow(),
+});
+
+// Gift Registry - Charitable Gift Registry
+export const giftRegistries = pgTable("gift_registries", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  personId: varchar("person_id").references(() => persons.id).notNull(),
+  occasionType: varchar("occasion_type"), // "birthday", "wedding", "holiday", etc.
+  occasionDate: timestamp("occasion_date"),
+  goalAmount: decimal("goal_amount", { precision: 10, scale: 2 }),
+  amountRaised: decimal("amount_raised", { precision: 10, scale: 2 }).notNull().default('0'),
+  campaignId: varchar("campaign_id").references(() => campaigns.id),
+  personalMessage: text("personal_message"),
+  publicUrl: varchar("public_url").unique(),
+  active: integer("active").notNull().default(1),
+  closedAt: timestamp("closed_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Relations
 export const personsRelations = relations(persons, ({ one, many }) => ({
   household: one(households, {
@@ -488,6 +764,101 @@ export const insertGrantSchema = createInsertSchema(grants).omit({
   updatedAt: true,
 });
 
+export const insertWealthEventSchema = createInsertSchema(wealthEvents).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertMeetingBriefSchema = createInsertSchema(meetingBriefs).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertVoiceNoteSchema = createInsertSchema(voiceNotes).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertPredictiveScoreSchema = createInsertSchema(predictiveScores).omit({
+  id: true,
+  calculatedAt: true,
+});
+
+export const insertBoardConnectionSchema = createInsertSchema(boardConnections).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertCorporatePartnershipSchema = createInsertSchema(corporatePartnerships).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertPeerDonorSchema = createInsertSchema(peerDonors).omit({
+  id: true,
+  calculatedAt: true,
+});
+
+export const insertOutreachTemplateSchema = createInsertSchema(outreachTemplates).omit({
+  id: true,
+  createdAt: true,
+  sentAt: true,
+});
+
+export const insertGrantProposalSchema = createInsertSchema(grantProposals).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  submittedAt: true,
+});
+
+export const insertImpactReportSchema = createInsertSchema(impactReports).omit({
+  id: true,
+  createdAt: true,
+  sentAt: true,
+});
+
+export const insertSentimentAnalysisSchema = createInsertSchema(sentimentAnalysis).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertPeerBenchmarkSchema = createInsertSchema(peerBenchmarks).omit({
+  id: true,
+  calculatedAt: true,
+});
+
+export const insertPortfolioOptimizationSchema = createInsertSchema(portfolioOptimizations).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertCalendarEventSchema = createInsertSchema(calendarEvents).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertStewardshipWorkflowSchema = createInsertSchema(stewardshipWorkflows).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  completedAt: true,
+});
+
+export const insertTaskPriorityScoreSchema = createInsertSchema(taskPriorityScores).omit({
+  id: true,
+  calculatedAt: true,
+});
+
+export const insertGiftRegistrySchema = createInsertSchema(giftRegistries).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  closedAt: true,
+});
+
 // Types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
@@ -513,3 +884,37 @@ export type InsertDataQualityIssue = z.infer<typeof insertDataQualityIssueSchema
 export type DataQualityIssue = typeof dataQualityIssues.$inferSelect;
 export type InsertGrant = z.infer<typeof insertGrantSchema>;
 export type Grant = typeof grants.$inferSelect;
+export type InsertWealthEvent = z.infer<typeof insertWealthEventSchema>;
+export type WealthEvent = typeof wealthEvents.$inferSelect;
+export type InsertMeetingBrief = z.infer<typeof insertMeetingBriefSchema>;
+export type MeetingBrief = typeof meetingBriefs.$inferSelect;
+export type InsertVoiceNote = z.infer<typeof insertVoiceNoteSchema>;
+export type VoiceNote = typeof voiceNotes.$inferSelect;
+export type InsertPredictiveScore = z.infer<typeof insertPredictiveScoreSchema>;
+export type PredictiveScore = typeof predictiveScores.$inferSelect;
+export type InsertBoardConnection = z.infer<typeof insertBoardConnectionSchema>;
+export type BoardConnection = typeof boardConnections.$inferSelect;
+export type InsertCorporatePartnership = z.infer<typeof insertCorporatePartnershipSchema>;
+export type CorporatePartnership = typeof corporatePartnerships.$inferSelect;
+export type InsertPeerDonor = z.infer<typeof insertPeerDonorSchema>;
+export type PeerDonor = typeof peerDonors.$inferSelect;
+export type InsertOutreachTemplate = z.infer<typeof insertOutreachTemplateSchema>;
+export type OutreachTemplate = typeof outreachTemplates.$inferSelect;
+export type InsertGrantProposal = z.infer<typeof insertGrantProposalSchema>;
+export type GrantProposal = typeof grantProposals.$inferSelect;
+export type InsertImpactReport = z.infer<typeof insertImpactReportSchema>;
+export type ImpactReport = typeof impactReports.$inferSelect;
+export type InsertSentimentAnalysis = z.infer<typeof insertSentimentAnalysisSchema>;
+export type SentimentAnalysis = typeof sentimentAnalysis.$inferSelect;
+export type InsertPeerBenchmark = z.infer<typeof insertPeerBenchmarkSchema>;
+export type PeerBenchmark = typeof peerBenchmarks.$inferSelect;
+export type InsertPortfolioOptimization = z.infer<typeof insertPortfolioOptimizationSchema>;
+export type PortfolioOptimization = typeof portfolioOptimizations.$inferSelect;
+export type InsertCalendarEvent = z.infer<typeof insertCalendarEventSchema>;
+export type CalendarEvent = typeof calendarEvents.$inferSelect;
+export type InsertStewardshipWorkflow = z.infer<typeof insertStewardshipWorkflowSchema>;
+export type StewardshipWorkflow = typeof stewardshipWorkflows.$inferSelect;
+export type InsertTaskPriorityScore = z.infer<typeof insertTaskPriorityScoreSchema>;
+export type TaskPriorityScore = typeof taskPriorityScores.$inferSelect;
+export type InsertGiftRegistry = z.infer<typeof insertGiftRegistrySchema>;
+export type GiftRegistry = typeof giftRegistries.$inferSelect;
