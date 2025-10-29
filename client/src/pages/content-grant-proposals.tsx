@@ -19,8 +19,21 @@ type GrantProposal = {
   createdAt: string;
 };
 
+type Grant = {
+  id: string;
+  foundationName: string;
+  programTitle: string;
+  requestAmount: string;
+  proposalStatus: string;
+};
+
+type GrantProposalItem = {
+  proposal: GrantProposal;
+  grant: Grant;
+};
+
 export default function GrantProposals() {
-  const { data: proposals, isLoading, error, isError } = useQuery<GrantProposal[], Error>({
+  const { data: proposals, isLoading, error, isError } = useQuery<GrantProposalItem[], Error>({
     queryKey: ["/api/content/grant-proposals"],
   });
 
@@ -89,63 +102,63 @@ export default function GrantProposals() {
 
       {proposals && proposals.length > 0 ? (
         <div className="grid gap-4">
-          {proposals.map((proposal) => (
-            <Card key={proposal.id} data-testid={`card-proposal-${proposal.id}`}>
+          {proposals.map((item) => (
+            <Card key={item.proposal.id} data-testid={`card-proposal-${item.proposal.id}`}>
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
                     <CardTitle className="text-lg flex items-center gap-2">
-                      {getStatusIcon(proposal.status)}
-                      Grant Proposal {proposal.grantId.slice(0, 8)}
+                      {getStatusIcon(item.proposal.status)}
+                      {item.grant.foundationName} - {item.grant.programTitle}
                     </CardTitle>
                     <div className="text-sm text-muted-foreground mt-1">
-                      Created {format(new Date(proposal.createdAt), "MMM d, yyyy")}
+                      Requested: ${parseFloat(item.grant.requestAmount).toLocaleString()} • Created {format(new Date(item.proposal.createdAt), "MMM d, yyyy")}
                     </div>
                   </div>
-                  <Badge variant={getStatusVariant(proposal.status)}>
-                    {proposal.status.replace("_", " ")}
+                  <Badge variant={getStatusVariant(item.proposal.status)}>
+                    {item.proposal.status.replace("_", " ")}
                   </Badge>
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                {proposal.funderGuidelines && (
+                {item.proposal.funderGuidelines && (
                   <div>
                     <div className="text-sm font-semibold mb-1">Funder Guidelines</div>
                     <div className="text-sm text-muted-foreground bg-muted/50 p-3 rounded">
-                      {proposal.funderGuidelines.substring(0, 200)}...
+                      {item.proposal.funderGuidelines.substring(0, 200)}...
                     </div>
                   </div>
                 )}
 
-                {proposal.generatedNarrative && (
+                {item.proposal.generatedNarrative && (
                   <div>
                     <div className="text-sm font-semibold mb-1">AI-Generated Narrative</div>
                     <div className="text-sm text-muted-foreground bg-muted/50 p-3 rounded">
-                      {proposal.generatedNarrative.substring(0, 300)}...
+                      {item.proposal.generatedNarrative.substring(0, 300)}...
                     </div>
                   </div>
                 )}
 
-                {proposal.generatedOutcomes && proposal.generatedOutcomes.length > 0 && (
+                {item.proposal.generatedOutcomes && item.proposal.generatedOutcomes.length > 0 && (
                   <div>
                     <div className="text-sm font-semibold mb-2">Expected Outcomes</div>
                     <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
-                      {proposal.generatedOutcomes.slice(0, 3).map((outcome, idx) => (
+                      {item.proposal.generatedOutcomes.slice(0, 3).map((outcome, idx) => (
                         <li key={idx}>{outcome}</li>
                       ))}
                     </ul>
                   </div>
                 )}
 
-                {proposal.submittedAt && (
+                {item.proposal.submittedAt && (
                   <div className="text-sm text-green-600 font-semibold">
-                    ✓ Submitted {format(new Date(proposal.submittedAt), "MMM d, yyyy 'at' h:mm a")}
+                    ✓ Submitted {format(new Date(item.proposal.submittedAt), "MMM d, yyyy 'at' h:mm a")}
                   </div>
                 )}
 
-                {proposal.edits && (
+                {item.proposal.edits && (
                   <div className="text-sm text-muted-foreground">
-                    <span className="font-semibold">Human Edits:</span> {proposal.edits.substring(0, 100)}...
+                    <span className="font-semibold">Human Edits:</span> {item.proposal.edits.substring(0, 100)}...
                   </div>
                 )}
               </CardContent>

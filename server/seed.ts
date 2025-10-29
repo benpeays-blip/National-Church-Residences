@@ -1001,8 +1001,8 @@ async function seed() {
     await createGiftsForPerson(personsList[i], i);
   }
 
-  await db.insert(gifts).values(giftsList);
-  console.log(`✅ Created ${giftsList.length} gifts`);
+  const insertedGifts = await db.insert(gifts).values(giftsList).returning();
+  console.log(`✅ Created ${insertedGifts.length} gifts`);
 
   // ==================== UPDATE PERSON AGGREGATES ====================
   console.log("🔄 Updating donor aggregates (lastGiftDate, lastGiftAmount, totalLifetimeGiving)...");
@@ -1641,8 +1641,8 @@ async function seed() {
     }
   }
 
-  await db.insert(tasks).values(tasksList);
-  console.log(`✅ Created ${tasksList.length} tasks`);
+  const insertedTasks = await db.insert(tasks).values(tasksList).returning();
+  console.log(`✅ Created ${insertedTasks.length} tasks`);
 
   // ==================== 19 GAME-CHANGING FEATURES ====================
   console.log("\n🚀 Creating data for 19 game-changing features...");
@@ -2138,7 +2138,7 @@ async function seed() {
   console.log("✨ Creating stewardship workflows...");
   const stewardshipWorkflowsList: any[] = [];
   
-  const majorGifts = giftsList.filter(g => g && g.id && parseFloat(g.amount) >= 10000).slice(0, 25);
+  const majorGifts = insertedGifts.filter(g => g && g.id && parseFloat(g.amount) >= 10000).slice(0, 25);
   
   for (const gift of majorGifts) {
     if (!gift || !gift.id) continue; // Safety check
@@ -2178,7 +2178,7 @@ async function seed() {
   console.log("⚡ Creating task priority scores...");
   const taskPriorityScoresList: any[] = [];
   
-  for (const task of tasksList) {
+  for (const task of insertedTasks) {
     if (!task || !task.id) continue; // Safety check
     
     const urgencyScore = task.priority === "urgent" ? 95 : task.priority === "high" ? 75 : task.priority === "medium" ? 50 : 30;
@@ -2228,7 +2228,7 @@ async function seed() {
         : occasionType === "birthday"
         ? `For my birthday this year, I'm asking for donations to help fund scholarships instead of presents!`
         : `Help us celebrate by supporting a cause close to our hearts.`,
-      publicUrl: `https://give.fundrazor.org/registry/${donor.id}-${occasionType}`,
+      publicUrl: `https://give.fundrazor.org/registry/${donor.id}-${occasionType}-${i}`,
       active: daysOut > -30 ? 1 : 0,
       closedAt: daysOut < -30 ? new Date() : null,
     });

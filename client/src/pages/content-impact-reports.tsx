@@ -20,8 +20,19 @@ type ImpactReport = {
   createdAt: string;
 };
 
+type Person = {
+  id: string;
+  firstName: string | null;
+  lastName: string | null;
+};
+
+type ImpactReportItem = {
+  report: ImpactReport;
+  person: Person;
+};
+
 export default function ImpactReports() {
-  const { data: reports, isLoading, error, isError } = useQuery<ImpactReport[], Error>({
+  const { data: reports, isLoading, error, isError } = useQuery<ImpactReportItem[], Error>({
     queryKey: ["/api/content/impact-reports"],
   });
 
@@ -76,30 +87,30 @@ export default function ImpactReports() {
 
       {reports && reports.length > 0 ? (
         <div className="grid gap-4">
-          {reports.map((report) => (
-            <Card key={report.id} data-testid={`card-report-${report.id}`}>
+          {reports.map((item) => (
+            <Card key={item.report.id} data-testid={`card-report-${item.report.id}`}>
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
                     <CardTitle className="text-lg flex items-center gap-2">
                       <Heart className="w-5 h-5 text-pink-600" />
-                      Impact Report - {report.reportingPeriod}
+                      Impact Report - {item.report.reportingPeriod}
                     </CardTitle>
                     <div className="text-sm text-muted-foreground mt-1">
-                      Donor: {report.personId.slice(0, 8)}
+                      Donor: {item.person.firstName} {item.person.lastName}
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    {report.sentAt ? (
+                    {item.report.sentAt ? (
                       <>
                         <Badge variant="secondary">
                           <Mail className="w-3 h-3 mr-1" />
                           Sent
                         </Badge>
-                        {report.opened > 0 && (
+                        {item.report.opened > 0 && (
                           <Badge variant="outline">
                             <Eye className="w-3 h-3 mr-1" />
-                            Opened {report.opened}x
+                            Opened {item.report.opened}x
                           </Badge>
                         )}
                       </>
@@ -114,23 +125,23 @@ export default function ImpactReports() {
                   <div>
                     <div className="text-sm text-muted-foreground">Total Impact</div>
                     <div className="text-2xl font-bold text-green-600">
-                      ${parseFloat(report.totalImpact).toLocaleString()}
+                      ${parseFloat(item.report.totalImpact).toLocaleString()}
                     </div>
                   </div>
                   <div>
                     <div className="text-sm text-muted-foreground">Beneficiaries Helped</div>
                     <div className="text-2xl font-bold flex items-center gap-2">
                       <Users className="w-6 h-6 text-blue-600" />
-                      {report.beneficiariesHelped.toLocaleString()}
+                      {item.report.beneficiariesHelped.toLocaleString()}
                     </div>
                   </div>
                 </div>
 
-                {report.programsSupported && report.programsSupported.length > 0 && (
+                {item.report.programsSupported && item.report.programsSupported.length > 0 && (
                   <div>
                     <div className="text-sm font-semibold mb-2">Programs Supported</div>
                     <div className="flex flex-wrap gap-2">
-                      {report.programsSupported.map((program, idx) => (
+                      {item.report.programsSupported.map((program, idx) => (
                         <Badge key={idx} variant="secondary">
                           {program}
                         </Badge>
@@ -139,30 +150,30 @@ export default function ImpactReports() {
                   </div>
                 )}
 
-                {report.customMessage && (
+                {item.report.customMessage && (
                   <div>
                     <div className="text-sm font-semibold mb-1">Personal Message</div>
                     <div className="text-sm text-muted-foreground italic bg-muted/50 p-3 rounded">
-                      "{report.customMessage}"
+                      "{item.report.customMessage}"
                     </div>
                   </div>
                 )}
 
-                {report.photosUrls && report.photosUrls.length > 0 && (
+                {item.report.photosUrls && item.report.photosUrls.length > 0 && (
                   <div className="text-sm text-muted-foreground">
-                    📸 {report.photosUrls.length} photo(s) included
+                    📸 {item.report.photosUrls.length} photo(s) included
                   </div>
                 )}
 
-                {report.videoUrl && (
+                {item.report.videoUrl && (
                   <div className="text-sm text-muted-foreground">
-                    🎥 Video included: {report.videoUrl}
+                    🎥 Video included: {item.report.videoUrl}
                   </div>
                 )}
 
-                {report.sentAt && (
+                {item.report.sentAt && (
                   <div className="text-sm text-green-600">
-                    ✓ Sent {format(new Date(report.sentAt), "MMM d, yyyy 'at' h:mm a")}
+                    ✓ Sent {format(new Date(item.report.sentAt), "MMM d, yyyy 'at' h:mm a")}
                   </div>
                 )}
               </CardContent>
