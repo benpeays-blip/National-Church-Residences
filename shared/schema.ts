@@ -426,6 +426,7 @@ export const boardConnections = pgTable("board_connections", {
 export const corporatePartnerships = pgTable("corporate_partnerships", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   companyName: varchar("company_name").notNull(),
+  domain: varchar("domain"), // Company domain for logo API (e.g., "apple.com")
   employeeCount: integer("employee_count"), // Number of donors at this company
   totalEmployeeGiving: decimal("total_employee_giving", { precision: 12, scale: 2 }),
   hasMatchingProgram: integer("has_matching_program").notNull().default(0),
