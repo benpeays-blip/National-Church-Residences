@@ -196,7 +196,7 @@ export function AppSidebar() {
     if (items.length === 0) return null;
     return (
       <SidebarGroup className="border-b border-border pb-4">
-        <SidebarGroupLabel className="text-sm">{title}</SidebarGroupLabel>
+        <SidebarGroupLabel className="text-sm text-primary font-medium">{title}</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
             {items.map((item) => (
