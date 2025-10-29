@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Mail, FileText, Send } from "lucide-react";
+import { Mail, FileText, Send, Phone } from "lucide-react";
 import type { Person, OutreachTemplate } from "@shared/schema";
 
 interface OutreachTemplateData {
@@ -10,9 +12,57 @@ interface OutreachTemplateData {
   person: Person;
 }
 
+type FilterType = "all" | "email" | "letter" | "call_script";
+
+const getTypeColor = (type: string | null) => {
+  switch (type) {
+    case "email":
+      return "bg-blue-500 text-white hover:bg-blue-600";
+    case "letter":
+      return "bg-purple-500 text-white hover:bg-purple-600";
+    case "call_script":
+      return "bg-green-500 text-white hover:bg-green-600";
+    default:
+      return "bg-gray-500 text-white hover:bg-gray-600";
+  }
+};
+
+const getTypeIcon = (type: string | null) => {
+  switch (type) {
+    case "email":
+      return <Mail className="w-3 h-3" />;
+    case "letter":
+      return <FileText className="w-3 h-3" />;
+    case "call_script":
+      return <Phone className="w-3 h-3" />;
+    default:
+      return null;
+  }
+};
+
+const getTypeLabel = (type: string | null) => {
+  switch (type) {
+    case "email":
+      return "Email";
+    case "letter":
+      return "Letter";
+    case "call_script":
+      return "Call Script";
+    default:
+      return type;
+  }
+};
+
 export default function OutreachGenerator() {
+  const [filter, setFilter] = useState<FilterType>("all");
+  
   const { data: templates, isLoading } = useQuery<OutreachTemplateData[]>({
     queryKey: ["/api/content/outreach-templates"],
+  });
+
+  const filteredTemplates = templates?.filter((item) => {
+    if (filter === "all") return true;
+    return item.template.templateType === filter;
   });
 
   return (
@@ -24,24 +74,86 @@ export default function OutreachGenerator() {
         </p>
       </div>
 
+      {/* Filter Menu */}
+      <Card>
+        <CardContent className="pt-6">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-sm font-medium text-muted-foreground mr-2">Filter by Type:</span>
+            <Button
+              variant={filter === "all" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setFilter("all")}
+              data-testid="filter-all"
+            >
+              All Templates
+              <Badge variant="secondary" className="ml-2">
+                {templates?.length || 0}
+              </Badge>
+            </Button>
+            <Button
+              variant={filter === "email" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setFilter("email")}
+              className={filter === "email" ? "bg-blue-500 hover:bg-blue-600" : ""}
+              data-testid="filter-email"
+            >
+              <Mail className="w-4 h-4 mr-1" />
+              Emails
+              <Badge variant="secondary" className="ml-2">
+                {templates?.filter((t) => t.template.templateType === "email").length || 0}
+              </Badge>
+            </Button>
+            <Button
+              variant={filter === "letter" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setFilter("letter")}
+              className={filter === "letter" ? "bg-purple-500 hover:bg-purple-600" : ""}
+              data-testid="filter-letter"
+            >
+              <FileText className="w-4 h-4 mr-1" />
+              Letters
+              <Badge variant="secondary" className="ml-2">
+                {templates?.filter((t) => t.template.templateType === "letter").length || 0}
+              </Badge>
+            </Button>
+            <Button
+              variant={filter === "call_script" ? "default" : "outline"}
+              size="sm"
+              onClick={() => setFilter("call_script")}
+              className={filter === "call_script" ? "bg-green-500 hover:bg-green-600" : ""}
+              data-testid="filter-call-script"
+            >
+              <Phone className="w-4 h-4 mr-1" />
+              Call Scripts
+              <Badge variant="secondary" className="ml-2">
+                {templates?.filter((t) => t.template.templateType === "call_script").length || 0}
+              </Badge>
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Templates</CardTitle>
+            <CardTitle className="text-sm font-medium">Showing</CardTitle>
             <FileText className="w-4 h-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">{templates?.length || 0}</div>
+            <div className="text-2xl font-bold" data-testid="stat-showing">{filteredTemplates?.length || 0}</div>
+            <p className="text-xs text-muted-foreground">
+              of {templates?.length || 0} total
+            </p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Emails</CardTitle>
-            <Mail className="w-4 h-4 text-muted-foreground" />
+            <Mail className="w-4 h-4 text-blue-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
+            <div className="text-2xl font-bold text-blue-500" data-testid="stat-emails">
               {templates?.filter((t) => t.template.templateType === "email").length || 0}
             </div>
           </CardContent>
@@ -49,24 +161,24 @@ export default function OutreachGenerator() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Used</CardTitle>
-            <Send className="w-4 h-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Letters</CardTitle>
+            <FileText className="w-4 h-4 text-purple-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
-              {templates?.filter((t) => t.template.used === 1).length || 0}
+            <div className="text-2xl font-bold text-purple-500" data-testid="stat-letters">
+              {templates?.filter((t) => t.template.templateType === "letter").length || 0}
             </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Letters</CardTitle>
-            <FileText className="w-4 h-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Call Scripts</CardTitle>
+            <Phone className="w-4 h-4 text-green-500" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">
-              {templates?.filter((t) => t.template.templateType === "letter").length || 0}
+            <div className="text-2xl font-bold text-green-500" data-testid="stat-call-scripts">
+              {templates?.filter((t) => t.template.templateType === "call_script").length || 0}
             </div>
           </CardContent>
         </Card>
@@ -76,20 +188,26 @@ export default function OutreachGenerator() {
         <div className="space-y-4">
           {[1, 2, 3].map((i) => (<Skeleton key={i} className="h-64 w-full" />))}
         </div>
-      ) : templates && templates.length > 0 ? (
+      ) : filteredTemplates && filteredTemplates.length > 0 ? (
         <div className="grid grid-cols-1 gap-4">
-          {templates.map((item) => (
-            <Card key={item.template.id}>
+          {filteredTemplates.map((item) => (
+            <Card key={item.template.id} data-testid={`template-${item.template.id}`}>
               <CardHeader>
                 <div className="flex items-start justify-between">
-                  <div>
+                  <div className="flex-1">
                     <CardTitle className="text-lg">
                       {item.person.firstName} {item.person.lastName}
                     </CardTitle>
                     <CardDescription>{item.template.purpose}</CardDescription>
                   </div>
-                  <div className="flex gap-2">
-                    <Badge variant="outline">{item.template.templateType}</Badge>
+                  <div className="flex gap-2 flex-wrap">
+                    <Badge 
+                      className={`${getTypeColor(item.template.templateType)} flex items-center gap-1`}
+                      data-testid={`type-badge-${item.template.templateType}`}
+                    >
+                      {getTypeIcon(item.template.templateType)}
+                      {getTypeLabel(item.template.templateType)}
+                    </Badge>
                     <Badge variant="secondary">{item.template.tone}</Badge>
                     {item.template.used === 1 && <Badge variant="default">Sent</Badge>}
                   </div>
@@ -118,6 +236,16 @@ export default function OutreachGenerator() {
             </Card>
           ))}
         </div>
+      ) : filter !== "all" ? (
+        <Card>
+          <CardContent className="py-12 text-center">
+            <FileText className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
+            <h3 className="text-lg font-semibold mb-2">No {getTypeLabel(filter)} Templates</h3>
+            <p className="text-muted-foreground">
+              No templates of this type found. Try changing the filter.
+            </p>
+          </CardContent>
+        </Card>
       ) : (
         <Card>
           <CardContent className="py-12 text-center">
