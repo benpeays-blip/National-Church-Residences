@@ -8,6 +8,7 @@ import {
   Database,
   Plug,
   Settings,
+  Lightbulb,
 } from "lucide-react";
 import {
   Sidebar,
@@ -28,6 +29,12 @@ const menuItems = [
     title: "Dashboard",
     url: "/",
     icon: LayoutDashboard,
+    roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+  },
+  {
+    title: "Solutions",
+    url: "/solutions",
+    icon: Lightbulb,
     roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
   },
   {

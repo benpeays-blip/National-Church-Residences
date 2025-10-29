@@ -9,6 +9,7 @@ import NotFound from "@/pages/not-found";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
 import DashboardCEO from "@/pages/dashboard-ceo";
+import Solutions from "@/pages/solutions";
 import Donors from "@/pages/donors";
 import Donor360 from "@/pages/donor-360";
 import Pipeline from "@/pages/pipeline";
@@ -31,6 +32,7 @@ function Router() {
       <Route path="/dashboard/mgo" component={DashboardMGO} />
       <Route path="/dashboard/dev-director" component={DashboardDevDirector} />
       <Route path="/dashboard/ceo" component={DashboardCEO} />
+      <Route path="/solutions" component={Solutions} />
       <Route path="/donors/:id" component={Donor360} />
       <Route path="/donors" component={Donors} />
       <Route path="/pipeline" component={Pipeline} />
