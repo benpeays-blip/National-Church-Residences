@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
 import { Database, Mail, TrendingUp, AlertCircle } from "lucide-react";
 
@@ -430,9 +431,14 @@ export default function DashboardDevDirector() {
                       : "N/A"}
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline" className="text-xs" data-testid={`badge-lybunt-action-${donor.id}`}>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="h-7 text-xs hover:bg-primary hover:text-primary-foreground hover:border-primary" 
+                      data-testid={`badge-lybunt-action-${donor.id}`}
+                    >
                       Renewal Call
-                    </Badge>
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
@@ -485,9 +491,14 @@ export default function DashboardDevDirector() {
                       : "N/A"}
                   </TableCell>
                   <TableCell>
-                    <Badge variant="outline" className="text-xs" data-testid={`badge-sybunt-action-${donor.id}`}>
+                    <Button 
+                      variant="outline" 
+                      size="sm" 
+                      className="h-7 text-xs hover:bg-primary hover:text-primary-foreground hover:border-primary" 
+                      data-testid={`badge-sybunt-action-${donor.id}`}
+                    >
                       Impact Report
-                    </Badge>
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
