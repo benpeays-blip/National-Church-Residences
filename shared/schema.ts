@@ -10,6 +10,7 @@ import {
   integer,
   decimal,
   pgEnum,
+  boolean,
 } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
@@ -86,6 +87,28 @@ export const proposalStatusEnum = pgEnum("proposal_status", [
   "generated",
   "reviewed",
   "submitted",
+]);
+
+export const workflowStatusEnum = pgEnum("workflow_status", [
+  "draft",
+  "published",
+  "archived",
+]);
+
+export const blockTypeEnum = pgEnum("block_type", [
+  "system",
+  "human",
+  "data",
+  "action",
+  "organization",
+  "logic",
+  "annotation",
+]);
+
+export const connectionTypeEnum = pgEnum("connection_type", [
+  "dataFlow",
+  "handoff",
+  "dependency",
 ]);
 
 // Session storage table (required for Replit Auth)
@@ -583,6 +606,61 @@ export const giftRegistries = pgTable("gift_registries", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Workflows - Visual Workflow Builder
+export const workflows = pgTable("workflows", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  description: text("description"),
+  ownerId: varchar("owner_id").references(() => users.id),
+  status: workflowStatusEnum("status").notNull().default("draft"),
+  isTemplate: boolean("is_template").notNull().default(false),
+  tags: jsonb("tags"), // Array of tags for filtering
+  templateCategory: varchar("template_category"), // For templates: "fundraising", "operations", etc.
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Workflow Blocks - Nodes on the canvas
+export const workflowBlocks = pgTable("workflow_blocks", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  workflowId: varchar("workflow_id").references(() => workflows.id, { onDelete: 'cascade' }).notNull(),
+  type: blockTypeEnum("type").notNull(),
+  subtype: varchar("subtype").notNull(), // Specific tool or role (e.g., "Salesforce", "MGO", "Gift")
+  displayName: varchar("display_name").notNull(),
+  positionX: decimal("position_x", { precision: 10, scale: 2 }).notNull(),
+  positionY: decimal("position_y", { precision: 10, scale: 2 }).notNull(),
+  width: integer("width").default(200),
+  height: integer("height").default(80),
+  metadata: jsonb("metadata"), // Configuration, notes, links
+  colorToken: varchar("color_token"), // For visual styling
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Workflow Connections - Edges/arrows between blocks
+export const workflowConnections = pgTable("workflow_connections", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  workflowId: varchar("workflow_id").references(() => workflows.id, { onDelete: 'cascade' }).notNull(),
+  sourceBlockId: varchar("source_block_id").references(() => workflowBlocks.id, { onDelete: 'cascade' }).notNull(),
+  targetBlockId: varchar("target_block_id").references(() => workflowBlocks.id, { onDelete: 'cascade' }).notNull(),
+  label: varchar("label"), // Optional label on arrow
+  connectionType: connectionTypeEnum("connection_type").notNull().default("dataFlow"),
+  metadata: jsonb("metadata"), // Additional config
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Workflow Versions - Version history (optional for MVP)
+export const workflowVersions = pgTable("workflow_versions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  workflowId: varchar("workflow_id").references(() => workflows.id, { onDelete: 'cascade' }).notNull(),
+  versionNumber: integer("version_number").notNull(),
+  snapshot: jsonb("snapshot").notNull(), // Full workflow state
+  publishedAt: timestamp("published_at"),
+  authorId: varchar("author_id").references(() => users.id),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Relations
 export const personsRelations = relations(persons, ({ one, many }) => ({
   household: one(households, {
@@ -859,6 +937,29 @@ export const insertGiftRegistrySchema = createInsertSchema(giftRegistries).omit(
   closedAt: true,
 });
 
+export const insertWorkflowSchema = createInsertSchema(workflows).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertWorkflowBlockSchema = createInsertSchema(workflowBlocks).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertWorkflowConnectionSchema = createInsertSchema(workflowConnections).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertWorkflowVersionSchema = createInsertSchema(workflowVersions).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
@@ -918,3 +1019,11 @@ export type InsertTaskPriorityScore = z.infer<typeof insertTaskPriorityScoreSche
 export type TaskPriorityScore = typeof taskPriorityScores.$inferSelect;
 export type InsertGiftRegistry = z.infer<typeof insertGiftRegistrySchema>;
 export type GiftRegistry = typeof giftRegistries.$inferSelect;
+export type InsertWorkflow = z.infer<typeof insertWorkflowSchema>;
+export type Workflow = typeof workflows.$inferSelect;
+export type InsertWorkflowBlock = z.infer<typeof insertWorkflowBlockSchema>;
+export type WorkflowBlock = typeof workflowBlocks.$inferSelect;
+export type InsertWorkflowConnection = z.infer<typeof insertWorkflowConnectionSchema>;
+export type WorkflowConnection = typeof workflowConnections.$inferSelect;
+export type InsertWorkflowVersion = z.infer<typeof insertWorkflowVersionSchema>;
+export type WorkflowVersion = typeof workflowVersions.$inferSelect;

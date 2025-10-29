@@ -165,6 +165,19 @@ const workflowItems = [
   },
 ];
 
+const workflowBuilderItems = [
+  {
+    title: "Workflow Library",
+    url: "/workflows",
+    roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
+  },
+  {
+    title: "Templates",
+    url: "/workflows/templates",
+    roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
+  },
+];
+
 export function AppSidebar() {
   const { user } = useAuth();
 
@@ -177,6 +190,7 @@ export function AppSidebar() {
   const visibleContent = filterItems(aiContentItems);
   const visibleAnalytics = filterItems(analyticsItems);
   const visibleWorkflow = filterItems(workflowItems);
+  const visibleWorkflowBuilder = filterItems(workflowBuilderItems);
 
   const renderMenuGroup = (title: string, items: typeof coreMenuItems) => {
     if (items.length === 0) return null;
@@ -224,6 +238,7 @@ export function AppSidebar() {
         {renderMenuGroup("✍️ AI Content", visibleContent)}
         {renderMenuGroup("📊 Analytics", visibleAnalytics)}
         {renderMenuGroup("🤖 Workflows", visibleWorkflow)}
+        {renderMenuGroup("🔄 Workflow Builder", visibleWorkflowBuilder)}
       </SidebarContent>
     </Sidebar>
   );

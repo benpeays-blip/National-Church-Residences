@@ -1222,6 +1222,142 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // 🔄 Workflow APIs
+  
+  // List all workflows (with optional filters)
+  app.get("/api/workflows", async (req, res) => {
+    try {
+      const ownerId = req.query.ownerId as string | undefined;
+      const isTemplate = req.query.isTemplate === 'true' ? true : req.query.isTemplate === 'false' ? false : undefined;
+      
+      const workflows = await storage.getWorkflows(ownerId, isTemplate);
+      res.json(workflows);
+    } catch (error) {
+      console.error("Error fetching workflows:", error);
+      res.status(500).json({ message: "Failed to fetch workflows" });
+    }
+  });
+
+  // Get workflow with blocks and connections
+  app.get("/api/workflows/:id", async (req, res) => {
+    try {
+      const workflow = await storage.getWorkflow(req.params.id);
+      if (!workflow) {
+        return res.status(404).json({ message: "Workflow not found" });
+      }
+
+      const [blocks, connections] = await Promise.all([
+        storage.getWorkflowBlocks(req.params.id),
+        storage.getWorkflowConnections(req.params.id),
+      ]);
+
+      res.json({ workflow, blocks, connections });
+    } catch (error) {
+      console.error("Error fetching workflow:", error);
+      res.status(500).json({ message: "Failed to fetch workflow" });
+    }
+  });
+
+  // Create new workflow
+  app.post("/api/workflows", async (req, res) => {
+    try {
+      const workflow = await storage.createWorkflow(req.body);
+      res.json(workflow);
+    } catch (error) {
+      console.error("Error creating workflow:", error);
+      res.status(500).json({ message: "Failed to create workflow" });
+    }
+  });
+
+  // Update workflow
+  app.put("/api/workflows/:id", async (req, res) => {
+    try {
+      const workflow = await storage.updateWorkflow(req.params.id, req.body);
+      if (!workflow) {
+        return res.status(404).json({ message: "Workflow not found" });
+      }
+      res.json(workflow);
+    } catch (error) {
+      console.error("Error updating workflow:", error);
+      res.status(500).json({ message: "Failed to update workflow" });
+    }
+  });
+
+  // Delete workflow
+  app.delete("/api/workflows/:id", async (req, res) => {
+    try {
+      await storage.deleteWorkflow(req.params.id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting workflow:", error);
+      res.status(500).json({ message: "Failed to delete workflow" });
+    }
+  });
+
+  // Clone workflow
+  app.post("/api/workflows/:id/clone", async (req, res) => {
+    try {
+      const ownerId = req.body.ownerId as string | undefined;
+      const clonedWorkflow = await storage.cloneWorkflow(req.params.id, ownerId);
+      res.json(clonedWorkflow);
+    } catch (error) {
+      console.error("Error cloning workflow:", error);
+      res.status(500).json({ message: "Failed to clone workflow" });
+    }
+  });
+
+  // Workflow blocks
+  app.post("/api/workflows/:workflowId/blocks", async (req, res) => {
+    try {
+      const block = await storage.createWorkflowBlock({ ...req.body, workflowId: req.params.workflowId });
+      res.json(block);
+    } catch (error) {
+      console.error("Error creating block:", error);
+      res.status(500).json({ message: "Failed to create block" });
+    }
+  });
+
+  app.put("/api/workflows/:workflowId/blocks/:id", async (req, res) => {
+    try {
+      const block = await storage.updateWorkflowBlock(req.params.id, req.body);
+      res.json(block);
+    } catch (error) {
+      console.error("Error updating block:", error);
+      res.status(500).json({ message: "Failed to update block" });
+    }
+  });
+
+  app.delete("/api/workflows/:workflowId/blocks/:id", async (req, res) => {
+    try {
+      await storage.deleteWorkflowBlock(req.params.id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting block:", error);
+      res.status(500).json({ message: "Failed to delete block" });
+    }
+  });
+
+  // Workflow connections
+  app.post("/api/workflows/:workflowId/connections", async (req, res) => {
+    try {
+      const connection = await storage.createWorkflowConnection({ ...req.body, workflowId: req.params.workflowId });
+      res.json(connection);
+    } catch (error) {
+      console.error("Error creating connection:", error);
+      res.status(500).json({ message: "Failed to create connection" });
+    }
+  });
+
+  app.delete("/api/workflows/:workflowId/connections/:id", async (req, res) => {
+    try {
+      await storage.deleteWorkflowConnection(req.params.id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting connection:", error);
+      res.status(500).json({ message: "Failed to delete connection" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

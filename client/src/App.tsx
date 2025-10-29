@@ -47,6 +47,10 @@ import Stewardship from "@/pages/workflow-stewardship";
 import TaskPriorities from "@/pages/workflow-task-priorities";
 import GiftRegistries from "@/pages/workflow-gift-registries";
 
+// Workflow Builder
+import Workflows from "@/pages/workflows";
+import WorkflowTemplates from "@/pages/workflows-templates";
+
 function Dashboard() {
   // Default to Dev Director dashboard (can be changed via navigation)
   return <DashboardDevDirector />;
@@ -96,6 +100,10 @@ function Router() {
       <Route path="/workflow/stewardship" component={Stewardship} />
       <Route path="/workflow/task-priorities" component={TaskPriorities} />
       <Route path="/workflow/gift-registries" component={GiftRegistries} />
+      
+      {/* Workflow Builder */}
+      <Route path="/workflows" component={Workflows} />
+      <Route path="/workflows/templates" component={WorkflowTemplates} />
       
       <Route component={NotFound} />
     </Switch>

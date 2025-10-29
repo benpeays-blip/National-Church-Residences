@@ -10,6 +10,9 @@ import {
   campaigns,
   portfolios,
   tasks,
+  workflows,
+  workflowBlocks,
+  workflowConnections,
   type User,
   type UpsertUser,
   type Person,
@@ -26,6 +29,12 @@ import {
   type InsertCampaign,
   type Task,
   type InsertTask,
+  type Workflow,
+  type InsertWorkflow,
+  type WorkflowBlock,
+  type InsertWorkflowBlock,
+  type WorkflowConnection,
+  type InsertWorkflowConnection,
 } from "@shared/schema";
 import { eq, like, or, and, desc, sql, ilike } from "drizzle-orm";
 
@@ -62,6 +71,26 @@ export interface IStorage {
   createTask(task: InsertTask): Promise<Task>;
   updateTask(id: string, task: Partial<InsertTask>): Promise<Task | undefined>;
   generateNextBestActions(ownerId?: string): Promise<Task[]>;
+  
+  // Workflows
+  getWorkflows(ownerId?: string, isTemplate?: boolean): Promise<Workflow[]>;
+  getWorkflow(id: string): Promise<Workflow | undefined>;
+  createWorkflow(workflow: InsertWorkflow): Promise<Workflow>;
+  updateWorkflow(id: string, workflow: Partial<InsertWorkflow>): Promise<Workflow | undefined>;
+  deleteWorkflow(id: string): Promise<void>;
+  cloneWorkflow(id: string, ownerId?: string): Promise<Workflow>;
+  
+  // Workflow Blocks
+  getWorkflowBlocks(workflowId: string): Promise<WorkflowBlock[]>;
+  createWorkflowBlock(block: InsertWorkflowBlock): Promise<WorkflowBlock>;
+  updateWorkflowBlock(id: string, block: Partial<InsertWorkflowBlock>): Promise<WorkflowBlock | undefined>;
+  deleteWorkflowBlock(id: string): Promise<void>;
+  
+  // Workflow Connections
+  getWorkflowConnections(workflowId: string): Promise<WorkflowConnection[]>;
+  createWorkflowConnection(connection: InsertWorkflowConnection): Promise<WorkflowConnection>;
+  updateWorkflowConnection(id: string, connection: Partial<InsertWorkflowConnection>): Promise<WorkflowConnection | undefined>;
+  deleteWorkflowConnection(id: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -478,6 +507,142 @@ export class DatabaseStorage implements IStorage {
     }
 
     return generatedTasks;
+  }
+
+  // Workflow Methods
+  async getWorkflows(ownerId?: string, isTemplate?: boolean): Promise<Workflow[]> {
+    let query = db.select().from(workflows);
+    
+    if (ownerId !== undefined || isTemplate !== undefined) {
+      const conditions = [];
+      if (ownerId) conditions.push(eq(workflows.ownerId, ownerId));
+      if (isTemplate !== undefined) conditions.push(eq(workflows.isTemplate, isTemplate));
+      query = query.where(and(...conditions)) as any;
+    }
+    
+    return query.orderBy(desc(workflows.updatedAt));
+  }
+
+  async getWorkflow(id: string): Promise<Workflow | undefined> {
+    const result = await db.select().from(workflows).where(eq(workflows.id, id));
+    return result[0];
+  }
+
+  async createWorkflow(workflow: InsertWorkflow): Promise<Workflow> {
+    const result = await db.insert(workflows).values(workflow).returning();
+    return result[0];
+  }
+
+  async updateWorkflow(id: string, workflow: Partial<InsertWorkflow>): Promise<Workflow | undefined> {
+    const result = await db
+      .update(workflows)
+      .set({ ...workflow, updatedAt: new Date() })
+      .where(eq(workflows.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async deleteWorkflow(id: string): Promise<void> {
+    await db.delete(workflows).where(eq(workflows.id, id));
+  }
+
+  async cloneWorkflow(id: string, ownerId?: string): Promise<Workflow> {
+    // Get the original workflow
+    const original = await this.getWorkflow(id);
+    if (!original) throw new Error("Workflow not found");
+
+    // Get all blocks and connections
+    const blocks = await this.getWorkflowBlocks(id);
+    const connections = await this.getWorkflowConnections(id);
+
+    // Create new workflow
+    const newWorkflow = await this.createWorkflow({
+      name: `${original.name} (Copy)`,
+      description: original.description,
+      ownerId: ownerId || original.ownerId,
+      status: "draft",
+      isTemplate: false,
+      tags: original.tags,
+      templateCategory: original.templateCategory,
+    });
+
+    // Clone blocks with ID mapping
+    const blockIdMap = new Map<string, string>();
+    for (const block of blocks) {
+      const newBlock = await this.createWorkflowBlock({
+        workflowId: newWorkflow.id,
+        type: block.type,
+        subtype: block.subtype,
+        displayName: block.displayName,
+        positionX: block.positionX,
+        positionY: block.positionY,
+        width: block.width,
+        height: block.height,
+        metadata: block.metadata,
+        colorToken: block.colorToken,
+      });
+      blockIdMap.set(block.id, newBlock.id);
+    }
+
+    // Clone connections with updated block IDs
+    for (const connection of connections) {
+      await this.createWorkflowConnection({
+        workflowId: newWorkflow.id,
+        sourceBlockId: blockIdMap.get(connection.sourceBlockId)!,
+        targetBlockId: blockIdMap.get(connection.targetBlockId)!,
+        label: connection.label,
+        connectionType: connection.connectionType,
+        metadata: connection.metadata,
+      });
+    }
+
+    return newWorkflow;
+  }
+
+  // Workflow Blocks
+  async getWorkflowBlocks(workflowId: string): Promise<WorkflowBlock[]> {
+    return db.select().from(workflowBlocks).where(eq(workflowBlocks.workflowId, workflowId));
+  }
+
+  async createWorkflowBlock(block: InsertWorkflowBlock): Promise<WorkflowBlock> {
+    const result = await db.insert(workflowBlocks).values(block).returning();
+    return result[0];
+  }
+
+  async updateWorkflowBlock(id: string, block: Partial<InsertWorkflowBlock>): Promise<WorkflowBlock | undefined> {
+    const result = await db
+      .update(workflowBlocks)
+      .set({ ...block, updatedAt: new Date() })
+      .where(eq(workflowBlocks.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async deleteWorkflowBlock(id: string): Promise<void> {
+    await db.delete(workflowBlocks).where(eq(workflowBlocks.id, id));
+  }
+
+  // Workflow Connections
+  async getWorkflowConnections(workflowId: string): Promise<WorkflowConnection[]> {
+    return db.select().from(workflowConnections).where(eq(workflowConnections.workflowId, workflowId));
+  }
+
+  async createWorkflowConnection(connection: InsertWorkflowConnection): Promise<WorkflowConnection> {
+    const result = await db.insert(workflowConnections).values(connection).returning();
+    return result[0];
+  }
+
+  async updateWorkflowConnection(id: string, connection: Partial<InsertWorkflowConnection>): Promise<WorkflowConnection | undefined> {
+    const result = await db
+      .update(workflowConnections)
+      .set({ ...connection, updatedAt: new Date() })
+      .where(eq(workflowConnections.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async deleteWorkflowConnection(id: string): Promise<void> {
+    await db.delete(workflowConnections).where(eq(workflowConnections.id, id));
   }
 }
 
