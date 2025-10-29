@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useRoute, useLocation } from "wouter";
-import { ReactFlow, MiniMap, Controls, Background, Node, Edge, Connection, addEdge, useNodesState, useEdgesState, Panel } from "@xyflow/react";
+import { ReactFlow, MiniMap, Controls, Background, Node, Edge, Connection, addEdge, useNodesState, useEdgesState, Panel, Handle, Position } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -17,23 +17,31 @@ import { useCallback, useEffect, useState } from "react";
 
 // Custom node component for workflow blocks
 function WorkflowNodeComponent({ data }: { data: { label: string; type: string; subtype: string } }) {
-  const getCategoryColor = (type: string) => {
-    const colors = {
-      system: "bg-blue-500",
-      human: "bg-purple-500",
-      data: "bg-green-500",
-      action: "bg-orange-500",
-      organization: "bg-teal-500",
-      logic: "bg-pink-500",
+  const getCategoryInfo = (type: string) => {
+    const categories = {
+      system: { label: "System", color: "bg-blue-500", textColor: "text-blue-50" },
+      human: { label: "Person", color: "bg-purple-500", textColor: "text-purple-50" },
+      data: { label: "Data", color: "bg-green-500", textColor: "text-green-50" },
+      action: { label: "Action", color: "bg-orange-500", textColor: "text-orange-50" },
+      organization: { label: "Organization", color: "bg-teal-500", textColor: "text-teal-50" },
+      logic: { label: "Logic", color: "bg-pink-500", textColor: "text-pink-50" },
     };
-    return colors[type as keyof typeof colors] || "bg-gray-500";
+    return categories[type as keyof typeof categories] || { label: "Other", color: "bg-gray-500", textColor: "text-gray-50" };
   };
+
+  const categoryInfo = getCategoryInfo(data.type);
 
   return (
     <div className="px-4 py-3 rounded-lg border-2 bg-card shadow-md min-w-[180px]">
-      <div className={`w-3 h-3 rounded-full ${getCategoryColor(data.type)} mb-2`}></div>
+      <Handle type="target" position={Position.Left} className="w-3 h-3 !bg-primary" />
+      <div className="flex items-center justify-between mb-2">
+        <Badge className={`${categoryInfo.color} ${categoryInfo.textColor} text-xs px-2 py-0.5`}>
+          {categoryInfo.label}
+        </Badge>
+      </div>
       <div className="font-semibold text-sm">{data.label}</div>
       <div className="text-xs text-muted-foreground mt-1">{data.subtype}</div>
+      <Handle type="source" position={Position.Right} className="w-3 h-3 !bg-primary" />
     </div>
   );
 }
@@ -95,6 +103,16 @@ export default function WorkflowCanvas() {
         target: conn.targetBlockId,
         label: conn.label || undefined,
         animated: true,
+        type: 'smoothstep',
+        markerEnd: {
+          type: 'arrowclosed',
+          width: 20,
+          height: 20,
+        },
+        style: {
+          strokeWidth: 2,
+          stroke: 'hsl(var(--primary))',
+        },
       }));
       setEdges(flowEdges);
     }
