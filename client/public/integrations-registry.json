@@ -143,6 +143,19 @@
     "status": "available"
   },
   {
+    "slug": "grantmakers-io",
+    "name": "Grantmakers.io",
+    "category": "Grant Research",
+    "logo": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Crect fill='%236366f1' width='24' height='24' rx='4'/%3E%3Ctext x='12' y='16' font-family='Arial' font-size='10' font-weight='bold' fill='%23fff' text-anchor='middle'%3EGM%3C/text%3E%3C/svg%3E",
+    "description": "Free, open-source platform providing searchable access to IRS Form 990-PF data with 100,000+ foundation profiles and 3+ million grant records.",
+    "apiType": "Web Search (No API)",
+    "modules": ["Foundation Profiles", "Grant History", "990-PF Data", "Grantee Search"],
+    "features": ["Free access", "IRS 990-PF data", "Foundation search", "Grant amount tracking"],
+    "useCases": ["Foundation prospect research", "Grant history analysis", "Foundation giving patterns", "Free alternative to paid databases"],
+    "checklist": ["No account needed - free access", "Manual profile export via search", "Define foundation research workflow", "Consider data export for bulk analysis", "Note: No API - manual data collection"],
+    "status": "available"
+  },
+  {
     "slug": "doublethedonation",
     "name": "Double the Donation",
     "category": "Matching Gifts",
