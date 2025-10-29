@@ -2422,78 +2422,201 @@ async function seed() {
   // ==================== BOARD NETWORK MEMBERSHIPS ====================
   console.log("🔗 Creating board network memberships...");
   const boardMembershipsList: any[] = [
-    // Person 1: Sarah Chen - Super connector across 4 orgs
-    { personName: "Sarah Chen", personEmail: "sarah.chen@email.com", orgName: "Hope Foundation", role: "Chair", startYear: 2019, endYear: null },
-    { personName: "Sarah Chen", personEmail: "sarah.chen@email.com", orgName: "TechReach Initiative", role: "Director", startYear: 2020, endYear: null },
-    { personName: "Sarah Chen", personEmail: "sarah.chen@email.com", orgName: "Green Earth Coalition", role: "Director", startYear: 2021, endYear: null },
-    { personName: "Sarah Chen", personEmail: "sarah.chen@email.com", orgName: "Arts For All", role: "Treasurer", startYear: 2022, endYear: null },
+    // ===== CLEAN WATER SECTOR =====
+    // Clean Water Alliance
+    { personName: "Amanda Foster", personEmail: "amanda.foster@email.com", orgName: "Clean Water Alliance", orgSector: "Clean Water", role: "Chair", startYear: 2021, endYear: null },
+    { personName: "David Thompson", personEmail: "d.thompson@email.com", orgName: "Clean Water Alliance", orgSector: "Clean Water", role: "Director", startYear: 2022, endYear: null },
+    { personName: "Daniel Nguyen", personEmail: "daniel.n@email.com", orgName: "Clean Water Alliance", orgSector: "Clean Water", role: "Secretary", startYear: 2021, endYear: null },
+    { personName: "Patricia Hughes", personEmail: "p.hughes@email.com", orgName: "Clean Water Alliance", orgSector: "Clean Water", role: "Treasurer", startYear: 2020, endYear: null },
+    { personName: "Marcus Washington", orgName: "Clean Water Alliance", orgSector: "Clean Water", role: "Director", startYear: 2019, endYear: null },
     
-    // Person 2: Michael Rodriguez - on 3 org boards
-    { personName: "Michael Rodriguez", personEmail: "m.rodriguez@email.com", orgName: "Hope Foundation", role: "Director", startYear: 2020, endYear: null },
-    { personName: "Michael Rodriguez", personEmail: "m.rodriguez@email.com", orgName: "Water Now", role: "Vice Chair", startYear: 2018, endYear: null },
-    { personName: "Michael Rodriguez", personEmail: "m.rodriguez@email.com", orgName: "Community Health Network", role: "Director", startYear: 2021, endYear: null },
+    // Water Now Foundation
+    { personName: "Michael Rodriguez", personEmail: "m.rodriguez@email.com", orgName: "Water Now Foundation", orgSector: "Clean Water", role: "Vice Chair", startYear: 2018, endYear: null },
+    { personName: "Amanda Foster", personEmail: "amanda.foster@email.com", orgName: "Water Now Foundation", orgSector: "Clean Water", role: "Director", startYear: 2022, endYear: null },
+    { personName: "Daniel Nguyen", personEmail: "daniel.n@email.com", orgName: "Water Now Foundation", orgSector: "Clean Water", role: "Treasurer", startYear: 2020, endYear: null },
+    { personName: "Sophia Ramirez", orgName: "Water Now Foundation", orgSector: "Clean Water", role: "Chair", startYear: 2019, endYear: null },
+    { personName: "James Patterson", orgName: "Water Now Foundation", orgSector: "Clean Water", role: "Director", startYear: 2021, endYear: null },
     
-    // Person 3: Jennifer Park - Education focused, 3 orgs
-    { personName: "Jennifer Park", orgName: "Education First Alliance", role: "Chair", startYear: 2017, endYear: null },
-    { personName: "Jennifer Park", orgName: "Youth Leadership Institute", role: "Director", startYear: 2019, endYear: null },
-    { personName: "Jennifer Park", orgName: "TechReach Initiative", role: "Secretary", startYear: 2020, endYear: null },
+    // Global Water Initiative
+    { personName: "Patricia Hughes", personEmail: "p.hughes@email.com", orgName: "Global Water Initiative", orgSector: "Clean Water", role: "Chair", startYear: 2022, endYear: null },
+    { personName: "Marcus Washington", orgName: "Global Water Initiative", orgSector: "Clean Water", role: "Vice Chair", startYear: 2021, endYear: null },
+    { personName: "Elena Vasquez", orgName: "Global Water Initiative", orgSector: "Clean Water", role: "Director", startYear: 2020, endYear: null },
+    { personName: "Thomas Chen", orgName: "Global Water Initiative", orgSector: "Clean Water", role: "Treasurer", startYear: 2023, endYear: null },
     
-    // Person 4: David Thompson - connector between tech and environment
-    { personName: "David Thompson", personEmail: "d.thompson@email.com", orgName: "TechReach Initiative", role: "Director", startYear: 2019, endYear: null },
-    { personName: "David Thompson", personEmail: "d.thompson@email.com", orgName: "Green Earth Coalition", role: "Chair", startYear: 2020, endYear: null },
-    { personName: "David Thompson", personEmail: "d.thompson@email.com", orgName: "Clean Water Alliance", role: "Director", startYear: 2022, endYear: null },
+    // ===== EDUCATION SECTOR =====
+    // Education First Alliance
+    { personName: "Jennifer Park", personEmail: "j.park@email.com", orgName: "Education First Alliance", orgSector: "Education", role: "Chair", startYear: 2017, endYear: null },
+    { personName: "Lisa Martinez", personEmail: "lisa.m@email.com", orgName: "Education First Alliance", orgSector: "Education", role: "Treasurer", startYear: 2020, endYear: null },
+    { personName: "Christopher Davis", personEmail: "c.davis@email.com", orgName: "Education First Alliance", orgSector: "Education", role: "Director", startYear: 2019, endYear: null },
+    { personName: "Maria Gonzalez", personEmail: "maria.g@email.com", orgName: "Education First Alliance", orgSector: "Education", role: "Director", startYear: 2021, endYear: null },
+    { personName: "Robert Williams", orgName: "Education First Alliance", orgSector: "Education", role: "Secretary", startYear: 2018, endYear: null },
+    { personName: "Diana Foster", orgName: "Education First Alliance", orgSector: "Education", role: "Director", startYear: 2022, endYear: null },
     
-    // Person 5: Lisa Martinez - Healthcare + Education
-    { personName: "Lisa Martinez", orgName: "Community Health Network", role: "Chair", startYear: 2018, endYear: null },
-    { personName: "Lisa Martinez", orgName: "Education First Alliance", role: "Treasurer", startYear: 2020, endYear: null },
-    { personName: "Lisa Martinez", orgName: "Youth Leadership Institute", role: "Director", startYear: 2021, endYear: null },
+    // Youth Leadership Institute
+    { personName: "Maria Gonzalez", personEmail: "maria.g@email.com", orgName: "Youth Leadership Institute", orgSector: "Education", role: "Chair", startYear: 2020, endYear: null },
+    { personName: "Jennifer Park", personEmail: "j.park@email.com", orgName: "Youth Leadership Institute", orgSector: "Education", role: "Director", startYear: 2019, endYear: null },
+    { personName: "Lisa Martinez", personEmail: "lisa.m@email.com", orgName: "Youth Leadership Institute", orgSector: "Education", role: "Director", startYear: 2021, endYear: null },
+    { personName: "Ashley Johnson", personEmail: "ashley.j@email.com", orgName: "Youth Leadership Institute", orgSector: "Education", role: "Treasurer", startYear: 2022, endYear: null },
+    { personName: "Benjamin Torres", orgName: "Youth Leadership Institute", orgSector: "Education", role: "Secretary", startYear: 2021, endYear: null },
+    { personName: "Sandra Kim", orgName: "Youth Leadership Institute", orgSector: "Education", role: "Director", startYear: 2020, endYear: null },
     
-    // Person 6: James Wilson - Arts + Community
-    { personName: "James Wilson", personEmail: "james.w@email.com", orgName: "Arts For All", role: "Director", startYear: 2019, endYear: null },
-    { personName: "James Wilson", personEmail: "james.w@email.com", orgName: "Downtown Community Center", role: "Vice Chair", startYear: 2020, endYear: null },
+    // Scholars Foundation
+    { personName: "Robert Williams", orgName: "Scholars Foundation", orgSector: "Education", role: "Chair", startYear: 2019, endYear: null },
+    { personName: "Diana Foster", orgName: "Scholars Foundation", orgSector: "Education", role: "Vice Chair", startYear: 2021, endYear: null },
+    { personName: "Benjamin Torres", orgName: "Scholars Foundation", orgSector: "Education", role: "Director", startYear: 2022, endYear: null },
+    { personName: "Victoria Chang", orgName: "Scholars Foundation", orgSector: "Education", role: "Treasurer", startYear: 2020, endYear: null },
     
-    // Person 7: Amanda Foster - Environment focused
-    { personName: "Amanda Foster", orgName: "Green Earth Coalition", role: "Director", startYear: 2019, endYear: null },
-    { personName: "Amanda Foster", orgName: "Clean Water Alliance", role: "Chair", startYear: 2021, endYear: null },
-    { personName: "Amanda Foster", orgName: "Water Now", role: "Director", startYear: 2022, endYear: null },
+    // ===== HEALTHCARE SECTOR =====
+    // Community Health Network
+    { personName: "Lisa Martinez", personEmail: "lisa.m@email.com", orgName: "Community Health Network", orgSector: "Healthcare", role: "Chair", startYear: 2018, endYear: null },
+    { personName: "Michael Rodriguez", personEmail: "m.rodriguez@email.com", orgName: "Community Health Network", orgSector: "Healthcare", role: "Director", startYear: 2021, endYear: null },
+    { personName: "Robert Lee", personEmail: "robert.lee@email.com", orgName: "Community Health Network", orgSector: "Healthcare", role: "Director", startYear: 2018, endYear: null },
+    { personName: "Ashley Johnson", personEmail: "ashley.j@email.com", orgName: "Community Health Network", orgSector: "Healthcare", role: "Director", startYear: 2021, endYear: null },
+    { personName: "Dr. Michael Chang", orgName: "Community Health Network", orgSector: "Healthcare", role: "Vice Chair", startYear: 2019, endYear: null },
+    { personName: "Dr. Sarah Williams", orgName: "Community Health Network", orgSector: "Healthcare", role: "Treasurer", startYear: 2020, endYear: null },
     
-    // Person 8: Robert Lee - Past chair now advisor
-    { personName: "Robert Lee", orgName: "Hope Foundation", role: "Director", startYear: 2015, endYear: 2023 },
-    { personName: "Robert Lee", orgName: "Community Health Network", role: "Director", startYear: 2018, endYear: null },
+    // Mental Health Alliance
+    { personName: "Dr. Michael Chang", orgName: "Mental Health Alliance", orgSector: "Healthcare", role: "Chair", startYear: 2021, endYear: null },
+    { personName: "Dr. Sarah Williams", orgName: "Mental Health Alliance", orgSector: "Healthcare", role: "Director", startYear: 2022, endYear: null },
+    { personName: "Catherine Miller", orgName: "Mental Health Alliance", orgSector: "Healthcare", role: "Vice Chair", startYear: 2020, endYear: null },
+    { personName: "Timothy Brooks", orgName: "Mental Health Alliance", orgSector: "Healthcare", role: "Treasurer", startYear: 2021, endYear: null },
+    { personName: "Angela Rodriguez", orgName: "Mental Health Alliance", orgSector: "Healthcare", role: "Secretary", startYear: 2022, endYear: null },
     
-    // Person 9: Maria Gonzalez - Youth + Education
-    { personName: "Maria Gonzalez", personEmail: "maria.g@email.com", orgName: "Youth Leadership Institute", role: "Chair", startYear: 2020, endYear: null },
-    { personName: "Maria Gonzalez", personEmail: "maria.g@email.com", orgName: "Education First Alliance", role: "Director", startYear: 2021, endYear: null },
+    // ===== ENVIRONMENT SECTOR =====
+    // Green Earth Coalition
+    { personName: "David Thompson", personEmail: "d.thompson@email.com", orgName: "Green Earth Coalition", orgSector: "Environment", role: "Chair", startYear: 2020, endYear: null },
+    { personName: "Sarah Chen", personEmail: "sarah.chen@email.com", orgName: "Green Earth Coalition", orgSector: "Environment", role: "Director", startYear: 2021, endYear: null },
+    { personName: "Amanda Foster", personEmail: "amanda.foster@email.com", orgName: "Green Earth Coalition", orgSector: "Environment", role: "Director", startYear: 2019, endYear: null },
+    { personName: "Brian Taylor", personEmail: "b.taylor@email.com", orgName: "Green Earth Coalition", orgSector: "Environment", role: "Treasurer", startYear: 2020, endYear: null },
+    { personName: "Isabella Green", orgName: "Green Earth Coalition", orgSector: "Environment", role: "Secretary", startYear: 2021, endYear: null },
+    { personName: "Nathan Park", orgName: "Green Earth Coalition", orgSector: "Environment", role: "Director", startYear: 2022, endYear: null },
     
-    // Person 10: Kevin Patel - Tech + Social Impact
-    { personName: "Kevin Patel", orgName: "TechReach Initiative", role: "Chair", startYear: 2021, endYear: null },
-    { personName: "Kevin Patel", orgName: "Social Innovation Hub", role: "Founder & Director", startYear: 2019, endYear: null },
+    // Climate Action Now
+    { personName: "Brian Taylor", personEmail: "b.taylor@email.com", orgName: "Climate Action Now", orgSector: "Environment", role: "Chair", startYear: 2022, endYear: null },
+    { personName: "Isabella Green", orgName: "Climate Action Now", orgSector: "Environment", role: "Vice Chair", startYear: 2023, endYear: null },
+    { personName: "Nathan Park", orgName: "Climate Action Now", orgSector: "Environment", role: "Director", startYear: 2021, endYear: null },
+    { personName: "Olivia Martinez", orgName: "Climate Action Now", orgSector: "Environment", role: "Treasurer", startYear: 2022, endYear: null },
+    { personName: "Lucas Anderson", orgName: "Climate Action Now", orgSector: "Environment", role: "Director", startYear: 2023, endYear: null },
     
-    // Additional members for overlap
-    { personName: "Rachel Kim", orgName: "Arts For All", role: "Director", startYear: 2020, endYear: null },
-    { personName: "Rachel Kim", orgName: "Downtown Community Center", role: "Director", startYear: 2021, endYear: null },
+    // ===== TECHNOLOGY SECTOR =====
+    // TechReach Initiative
+    { personName: "Kevin Patel", personEmail: "kevin.p@email.com", orgName: "TechReach Initiative", orgSector: "Technology", role: "Chair", startYear: 2021, endYear: null },
+    { personName: "Sarah Chen", personEmail: "sarah.chen@email.com", orgName: "TechReach Initiative", orgSector: "Technology", role: "Director", startYear: 2020, endYear: null },
+    { personName: "David Thompson", personEmail: "d.thompson@email.com", orgName: "TechReach Initiative", orgSector: "Technology", role: "Director", startYear: 2019, endYear: null },
+    { personName: "Jennifer Park", personEmail: "j.park@email.com", orgName: "TechReach Initiative", orgSector: "Technology", role: "Secretary", startYear: 2020, endYear: null },
+    { personName: "Priya Sharma", orgName: "TechReach Initiative", orgSector: "Technology", role: "Treasurer", startYear: 2021, endYear: null },
+    { personName: "Alex Chen", orgName: "TechReach Initiative", orgSector: "Technology", role: "Director", startYear: 2022, endYear: null },
     
-    { personName: "Daniel Nguyen", orgName: "Water Now", role: "Treasurer", startYear: 2020, endYear: null },
-    { personName: "Daniel Nguyen", orgName: "Clean Water Alliance", role: "Secretary", startYear: 2021, endYear: null },
+    // Digital Equity Fund
+    { personName: "Priya Sharma", orgName: "Digital Equity Fund", orgSector: "Technology", role: "Chair", startYear: 2023, endYear: null },
+    { personName: "Alex Chen", orgName: "Digital Equity Fund", orgSector: "Technology", role: "Vice Chair", startYear: 2022, endYear: null },
+    { personName: "Maya Johnson", orgName: "Digital Equity Fund", orgSector: "Technology", role: "Director", startYear: 2023, endYear: null },
+    { personName: "Jordan Lee", orgName: "Digital Equity Fund", orgSector: "Technology", role: "Treasurer", startYear: 2022, endYear: null },
     
-    { personName: "Emily Brooks", orgName: "Hope Foundation", role: "Secretary", startYear: 2021, endYear: null },
-    { personName: "Emily Brooks", orgName: "Downtown Community Center", role: "Chair", startYear: 2022, endYear: null },
+    // ===== ARTS & CULTURE SECTOR =====
+    // Arts For All
+    { personName: "Sarah Chen", personEmail: "sarah.chen@email.com", orgName: "Arts For All", orgSector: "Arts & Culture", role: "Treasurer", startYear: 2022, endYear: null },
+    { personName: "James Wilson", personEmail: "james.w@email.com", orgName: "Arts For All", orgSector: "Arts & Culture", role: "Director", startYear: 2019, endYear: null },
+    { personName: "Rachel Kim", personEmail: "rachel.k@email.com", orgName: "Arts For All", orgSector: "Arts & Culture", role: "Director", startYear: 2020, endYear: null },
+    { personName: "Antonio Garcia", orgName: "Arts For All", orgSector: "Arts & Culture", role: "Chair", startYear: 2021, endYear: null },
+    { personName: "Samantha Liu", orgName: "Arts For All", orgSector: "Arts & Culture", role: "Vice Chair", startYear: 2022, endYear: null },
     
-    { personName: "Christopher Davis", orgName: "Education First Alliance", role: "Director", startYear: 2019, endYear: null },
-    { personName: "Christopher Davis", orgName: "Social Innovation Hub", role: "Director", startYear: 2020, endYear: null },
+    // Cultural Heritage Foundation
+    { personName: "Antonio Garcia", orgName: "Cultural Heritage Foundation", orgSector: "Arts & Culture", role: "Director", startYear: 2020, endYear: null },
+    { personName: "Samantha Liu", orgName: "Cultural Heritage Foundation", orgSector: "Arts & Culture", role: "Chair", startYear: 2021, endYear: null },
+    { personName: "Carlos Mendez", orgName: "Cultural Heritage Foundation", orgSector: "Arts & Culture", role: "Treasurer", startYear: 2022, endYear: null },
+    { personName: "Jasmine Wong", orgName: "Cultural Heritage Foundation", orgSector: "Arts & Culture", role: "Secretary", startYear: 2023, endYear: null },
     
-    { personName: "Ashley Johnson", orgName: "Community Health Network", role: "Director", startYear: 2021, endYear: null },
-    { personName: "Ashley Johnson", orgName: "Youth Leadership Institute", role: "Treasurer", startYear: 2022, endYear: null },
+    // ===== HOUSING & HOMELESSNESS SECTOR =====
+    // Homes For Hope
+    { personName: "Margaret Sullivan", orgName: "Homes For Hope", orgSector: "Housing", role: "Chair", startYear: 2020, endYear: null },
+    { personName: "Richard Brown", orgName: "Homes For Hope", orgSector: "Housing", role: "Vice Chair", startYear: 2021, endYear: null },
+    { personName: "Teresa Gonzales", orgName: "Homes For Hope", orgSector: "Housing", role: "Director", startYear: 2019, endYear: null },
+    { personName: "William Davis", orgName: "Homes For Hope", orgSector: "Housing", role: "Treasurer", startYear: 2022, endYear: null },
+    { personName: "Jennifer Scott", orgName: "Homes For Hope", orgSector: "Housing", role: "Secretary", startYear: 2021, endYear: null },
     
-    // Single-org board members (realistic mix)
-    { personName: "Brian Taylor", orgName: "Green Earth Coalition", role: "Treasurer", startYear: 2020, endYear: null },
-    { personName: "Nicole Anderson", orgName: "Clean Water Alliance", role: "Director", startYear: 2021, endYear: null },
-    { personName: "Steven White", orgName: "Social Innovation Hub", role: "Secretary", startYear: 2021, endYear: null },
-    { personName: "Karen Moore", orgName: "Downtown Community Center", role: "Treasurer", startYear: 2019, endYear: null },
+    // Shelter Alliance
+    { personName: "Richard Brown", orgName: "Shelter Alliance", orgSector: "Housing", role: "Chair", startYear: 2022, endYear: null },
+    { personName: "Teresa Gonzales", orgName: "Shelter Alliance", orgSector: "Housing", role: "Director", startYear: 2020, endYear: null },
+    { personName: "William Davis", orgName: "Shelter Alliance", orgSector: "Housing", role: "Director", startYear: 2023, endYear: null },
+    { personName: "Linda Martinez", orgName: "Shelter Alliance", orgSector: "Housing", role: "Vice Chair", startYear: 2021, endYear: null },
+    
+    // ===== FOOD SECURITY SECTOR =====
+    // Food Security Coalition
+    { personName: "Susan Anderson", orgName: "Food Security Coalition", orgSector: "Food Security", role: "Chair", startYear: 2019, endYear: null },
+    { personName: "Peter Thompson", orgName: "Food Security Coalition", orgSector: "Food Security", role: "Vice Chair", startYear: 2020, endYear: null },
+    { personName: "Maria Santos", orgName: "Food Security Coalition", orgSector: "Food Security", role: "Director", startYear: 2021, endYear: null },
+    { personName: "David Kim", orgName: "Food Security Coalition", orgSector: "Food Security", role: "Treasurer", startYear: 2022, endYear: null },
+    { personName: "Rebecca White", orgName: "Food Security Coalition", orgSector: "Food Security", role: "Secretary", startYear: 2020, endYear: null },
+    
+    // Hunger Relief Network
+    { personName: "Peter Thompson", orgName: "Hunger Relief Network", orgSector: "Food Security", role: "Chair", startYear: 2021, endYear: null },
+    { personName: "Maria Santos", orgName: "Hunger Relief Network", orgSector: "Food Security", role: "Vice Chair", startYear: 2022, endYear: null },
+    { personName: "David Kim", orgName: "Hunger Relief Network", orgSector: "Food Security", role: "Director", startYear: 2023, endYear: null },
+    { personName: "Emily Turner", orgName: "Hunger Relief Network", orgSector: "Food Security", role: "Treasurer", startYear: 2021, endYear: null },
+    
+    // ===== SOCIAL SERVICES SECTOR =====
+    // Social Innovation Hub
+    { personName: "Kevin Patel", personEmail: "kevin.p@email.com", orgName: "Social Innovation Hub", orgSector: "Social Services", role: "Founder & Director", startYear: 2019, endYear: null },
+    { personName: "Christopher Davis", personEmail: "c.davis@email.com", orgName: "Social Innovation Hub", orgSector: "Social Services", role: "Director", startYear: 2020, endYear: null },
+    { personName: "Steven White", personEmail: "s.white@email.com", orgName: "Social Innovation Hub", orgSector: "Social Services", role: "Secretary", startYear: 2021, endYear: null },
+    { personName: "Nicole Porter", orgName: "Social Innovation Hub", orgSector: "Social Services", role: "Treasurer", startYear: 2022, endYear: null },
+    { personName: "Gregory Mitchell", orgName: "Social Innovation Hub", orgSector: "Social Services", role: "Vice Chair", startYear: 2021, endYear: null },
+    
+    // Downtown Community Center
+    { personName: "Emily Brooks", personEmail: "e.brooks@email.com", orgName: "Downtown Community Center", orgSector: "Social Services", role: "Chair", startYear: 2022, endYear: null },
+    { personName: "James Wilson", personEmail: "james.w@email.com", orgName: "Downtown Community Center", orgSector: "Social Services", role: "Vice Chair", startYear: 2020, endYear: null },
+    { personName: "Rachel Kim", personEmail: "rachel.k@email.com", orgName: "Downtown Community Center", orgSector: "Social Services", role: "Director", startYear: 2021, endYear: null },
+    { personName: "Karen Moore", personEmail: "k.moore@email.com", orgName: "Downtown Community Center", orgSector: "Social Services", role: "Treasurer", startYear: 2019, endYear: null },
+    { personName: "Nicole Porter", orgName: "Downtown Community Center", orgSector: "Social Services", role: "Director", startYear: 2023, endYear: null },
+    
+    // ===== GENERAL PHILANTHROPY =====
+    // Hope Foundation
+    { personName: "Sarah Chen", personEmail: "sarah.chen@email.com", orgName: "Hope Foundation", orgSector: "Philanthropy", role: "Chair", startYear: 2019, endYear: null },
+    { personName: "Michael Rodriguez", personEmail: "m.rodriguez@email.com", orgName: "Hope Foundation", orgSector: "Philanthropy", role: "Director", startYear: 2020, endYear: null },
+    { personName: "Emily Brooks", personEmail: "e.brooks@email.com", orgName: "Hope Foundation", orgSector: "Philanthropy", role: "Secretary", startYear: 2021, endYear: null },
+    { personName: "Robert Lee", personEmail: "robert.lee@email.com", orgName: "Hope Foundation", orgSector: "Philanthropy", role: "Director", startYear: 2015, endYear: 2023 },
+    { personName: "Catherine Foster", orgName: "Hope Foundation", orgSector: "Philanthropy", role: "Treasurer", startYear: 2020, endYear: null },
+    { personName: "Jonathan Adams", orgName: "Hope Foundation", orgSector: "Philanthropy", role: "Vice Chair", startYear: 2021, endYear: null },
+    
+    // Community Impact Fund
+    { personName: "Catherine Foster", orgName: "Community Impact Fund", orgSector: "Philanthropy", role: "Chair", startYear: 2022, endYear: null },
+    { personName: "Jonathan Adams", orgName: "Community Impact Fund", orgSector: "Philanthropy", role: "Director", startYear: 2021, endYear: null },
+    { personName: "Gregory Mitchell", orgName: "Community Impact Fund", orgSector: "Philanthropy", role: "Director", startYear: 2023, endYear: null },
+    { personName: "Stephanie Bell", orgName: "Community Impact Fund", orgSector: "Philanthropy", role: "Treasurer", startYear: 2022, endYear: null },
+    
+    // ===== VETERANS SERVICES =====
+    // Veterans Support Network
+    { personName: "Colonel James Patterson", orgName: "Veterans Support Network", orgSector: "Veterans Services", role: "Chair", startYear: 2018, endYear: null },
+    { personName: "Major Sarah Thompson", orgName: "Veterans Support Network", orgSector: "Veterans Services", role: "Vice Chair", startYear: 2019, endYear: null },
+    { personName: "Michael Anderson", orgName: "Veterans Support Network", orgSector: "Veterans Services", role: "Director", startYear: 2020, endYear: null },
+    { personName: "Jessica Martinez", orgName: "Veterans Support Network", orgSector: "Veterans Services", role: "Treasurer", startYear: 2021, endYear: null },
+    
+    // ===== ANIMAL WELFARE =====
+    // Animal Rescue Alliance
+    { personName: "Dr. Jennifer Moore", orgName: "Animal Rescue Alliance", orgSector: "Animal Welfare", role: "Chair", startYear: 2020, endYear: null },
+    { personName: "Robert Jackson", orgName: "Animal Rescue Alliance", orgSector: "Animal Welfare", role: "Vice Chair", startYear: 2021, endYear: null },
+    { personName: "Michelle Chen", orgName: "Animal Rescue Alliance", orgSector: "Animal Welfare", role: "Director", startYear: 2022, endYear: null },
+    { personName: "Thomas Rivera", orgName: "Animal Rescue Alliance", orgSector: "Animal Welfare", role: "Treasurer", startYear: 2021, endYear: null },
+    
+    // ===== SENIOR SERVICES =====
+    // Senior Life Foundation
+    { personName: "Barbara Johnson", orgName: "Senior Life Foundation", orgSector: "Senior Services", role: "Chair", startYear: 2017, endYear: null },
+    { personName: "Henry Wilson", orgName: "Senior Life Foundation", orgSector: "Senior Services", role: "Vice Chair", startYear: 2019, endYear: null },
+    { personName: "Dorothy Miller", orgName: "Senior Life Foundation", orgSector: "Senior Services", role: "Director", startYear: 2020, endYear: null },
+    { personName: "George Taylor", orgName: "Senior Life Foundation", orgSector: "Senior Services", role: "Treasurer", startYear: 2021, endYear: null },
+    
+    // ===== WOMEN'S EMPOWERMENT =====
+    // Women's Empowerment Center
+    { personName: "Amanda Foster", personEmail: "amanda.foster@email.com", orgName: "Women's Empowerment Center", orgSector: "Women's Empowerment", role: "Director", startYear: 2023, endYear: null },
+    { personName: "Diana Foster", orgName: "Women's Empowerment Center", orgSector: "Women's Empowerment", role: "Chair", startYear: 2021, endYear: null },
+    { personName: "Samantha Liu", orgName: "Women's Empowerment Center", orgSector: "Women's Empowerment", role: "Vice Chair", startYear: 2022, endYear: null },
+    { personName: "Angela Rodriguez", orgName: "Women's Empowerment Center", orgSector: "Women's Empowerment", role: "Director", startYear: 2023, endYear: null },
+    { personName: "Victoria Chang", orgName: "Women's Empowerment Center", orgSector: "Women's Empowerment", role: "Treasurer", startYear: 2022, endYear: null },
   ];
 
   await db.insert(boardMemberships).values(boardMembershipsList);
-  console.log(`✅ Created ${boardMembershipsList.length} board memberships across 12 organizations`);
+  console.log(`✅ Created ${boardMembershipsList.length} board memberships across 25+ organizations`);
 
   console.log("\n🎉 All 20 game-changing features seeded successfully!");
 
