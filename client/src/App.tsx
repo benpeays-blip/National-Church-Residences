@@ -50,6 +50,7 @@ import GiftRegistries from "@/pages/workflow-gift-registries";
 // Workflow Builder
 import Workflows from "@/pages/workflows";
 import WorkflowTemplates from "@/pages/workflows-templates";
+import WorkflowCanvas from "@/pages/workflow-canvas";
 
 function Dashboard() {
   // Default to Dev Director dashboard (can be changed via navigation)
@@ -104,6 +105,7 @@ function Router() {
       {/* Workflow Builder */}
       <Route path="/workflows" component={Workflows} />
       <Route path="/workflows/templates" component={WorkflowTemplates} />
+      <Route path="/workflows/:id/canvas" component={WorkflowCanvas} />
       
       <Route component={NotFound} />
     </Switch>

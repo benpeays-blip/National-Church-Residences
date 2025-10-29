@@ -1307,6 +1307,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Workflow blocks
+  app.get("/api/workflows/:workflowId/blocks", async (req, res) => {
+    try {
+      const blocks = await storage.getWorkflowBlocks(req.params.workflowId);
+      res.json(blocks);
+    } catch (error) {
+      console.error("Error fetching blocks:", error);
+      res.status(500).json({ message: "Failed to fetch blocks" });
+    }
+  });
+
   app.post("/api/workflows/:workflowId/blocks", async (req, res) => {
     try {
       const block = await storage.createWorkflowBlock({ ...req.body, workflowId: req.params.workflowId });
@@ -1314,6 +1324,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error creating block:", error);
       res.status(500).json({ message: "Failed to create block" });
+    }
+  });
+
+  app.patch("/api/workflows/:workflowId/blocks/positions", async (req, res) => {
+    try {
+      const positions = req.body.positions as Array<{ id: string; positionX: number; positionY: number }>;
+      
+      // Update all positions
+      await Promise.all(
+        positions.map((pos) =>
+          storage.updateWorkflowBlock(pos.id, { positionX: pos.positionX, positionY: pos.positionY })
+        )
+      );
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error updating positions:", error);
+      res.status(500).json({ message: "Failed to update positions" });
     }
   });
 
@@ -1338,6 +1366,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Workflow connections
+  app.get("/api/workflows/:workflowId/connections", async (req, res) => {
+    try {
+      const connections = await storage.getWorkflowConnections(req.params.workflowId);
+      res.json(connections);
+    } catch (error) {
+      console.error("Error fetching connections:", error);
+      res.status(500).json({ message: "Failed to fetch connections" });
+    }
+  });
+
   app.post("/api/workflows/:workflowId/connections", async (req, res) => {
     try {
       const connection = await storage.createWorkflowConnection({ ...req.body, workflowId: req.params.workflowId });

@@ -1,8 +1,9 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Copy, Trash2 } from "lucide-react";
+import { Plus, Copy, Trash2, Edit, Eye } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { Workflow } from "@shared/schema";
@@ -10,6 +11,7 @@ import { format } from "date-fns";
 
 export default function WorkflowsPage() {
   const { toast } = useToast();
+  const [, navigate] = useLocation();
 
   const { data: workflows = [], isLoading } = useQuery<Workflow[]>({
     queryKey: ["/api/workflows"],
@@ -25,9 +27,10 @@ export default function WorkflowsPage() {
       });
       return res.json();
     },
-    onSuccess: () => {
+    onSuccess: (newWorkflow: Workflow) => {
       queryClient.invalidateQueries({ queryKey: ["/api/workflows"] });
-      toast({ title: "Workflow created successfully" });
+      toast({ title: "Workflow created successfully", description: "Opening canvas..." });
+      navigate(`/workflows/${newWorkflow.id}/canvas`);
     },
     onError: (error: Error) => {
       toast({ title: "Failed to create workflow", description: error.message, variant: "destructive" });
@@ -74,26 +77,20 @@ export default function WorkflowsPage() {
         </p>
       </div>
 
-      {/* Coming Soon Banner */}
-      <Card className="border-primary/50 bg-primary/5">
+      {/* Builder Ready Banner */}
+      <Card className="border-green-500/50 bg-green-500/5">
         <CardHeader>
-          <CardTitle className="text-lg">🚧 Visual Workflow Builder Coming Soon</CardTitle>
+          <CardTitle className="text-lg">✅ Visual Workflow Builder is Ready!</CardTitle>
           <CardDescription>
-            The full drag-and-drop visual workflow builder with React Flow integration is currently in development. 
-            You can create workflows here, and they will be ready for visual editing when the builder launches.
+            Build and visualize your fundraising workflows with our drag-and-drop canvas. Choose from 15 pre-built templates or create your own from scratch.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-2 text-sm">
-            <p className="font-semibold">Planned Features:</p>
-            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
-              <li>Drag-and-drop canvas with zoom and pan</li>
-              <li>100+ pre-defined blocks (Systems, People, Data, Actions, Logic)</li>
-              <li>15 fundraising workflow templates</li>
-              <li>Visual connection arrows showing data flow</li>
-              <li>Properties panel for block configuration</li>
-              <li>Auto-save and version history</li>
-            </ul>
+          <div className="flex gap-2">
+            <Button variant="outline" onClick={() => navigate("/workflows/templates")} data-testid="button-browse-templates">
+              <Eye className="w-4 h-4 mr-2" />
+              Browse Templates
+            </Button>
           </div>
         </CardContent>
       </Card>
@@ -143,6 +140,14 @@ export default function WorkflowsPage() {
                     )}
                   </div>
                   <div className="flex gap-2">
+                    <Button
+                      size="sm"
+                      onClick={() => navigate(`/workflows/${workflow.id}/canvas`)}
+                      data-testid={`button-edit-${workflow.id}`}
+                    >
+                      <Edit className="w-4 h-4 mr-1" />
+                      Edit
+                    </Button>
                     <Button
                       variant="outline"
                       size="sm"

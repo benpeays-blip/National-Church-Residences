@@ -91,6 +91,9 @@ export interface IStorage {
   createWorkflowConnection(connection: InsertWorkflowConnection): Promise<WorkflowConnection>;
   updateWorkflowConnection(id: string, connection: Partial<InsertWorkflowConnection>): Promise<WorkflowConnection | undefined>;
   deleteWorkflowConnection(id: string): Promise<void>;
+  
+  // Template Seeding
+  seedWorkflowTemplates(): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -643,6 +646,79 @@ export class DatabaseStorage implements IStorage {
 
   async deleteWorkflowConnection(id: string): Promise<void> {
     await db.delete(workflowConnections).where(eq(workflowConnections.id, id));
+  }
+
+  // Seed workflow templates
+  async seedWorkflowTemplates(): Promise<void> {
+    const { demoWorkflows } = await import('./demo-workflows');
+    const { randomUUID } = await import('crypto');
+    
+    // Check if templates already exist
+    const existingTemplates = await this.getWorkflows(undefined, true);
+    if (existingTemplates.length > 0) {
+      console.log('Templates already seeded, skipping...');
+      return;
+    }
+
+    console.log(`Seeding ${demoWorkflows.length} workflow templates...`);
+
+    for (const demoWorkflow of demoWorkflows) {
+      try {
+        // Create the workflow
+        const workflow = await this.createWorkflow({
+          name: demoWorkflow.name,
+          description: demoWorkflow.description,
+          ownerId: null, // Templates have no owner
+          status: 'published',
+          isTemplate: true,
+          tags: { categories: [demoWorkflow.templateCategory] },
+          templateCategory: demoWorkflow.templateCategory,
+        });
+
+        // Create blocks with ID mapping
+        const blockIdMap = new Map<string, string>();
+        
+        for (const demoBlock of demoWorkflow.blocks) {
+          const blockId = randomUUID();
+          blockIdMap.set(demoBlock.key, blockId);
+          
+          await this.createWorkflowBlock({
+            id: blockId,
+            workflowId: workflow.id,
+            type: demoBlock.type,
+            subtype: demoBlock.subtype,
+            displayName: demoBlock.label,
+            positionX: demoBlock.position.x,
+            positionY: demoBlock.position.y,
+            config: demoBlock.config || {},
+          });
+        }
+
+        // Create connections using mapped IDs
+        for (const demoConn of demoWorkflow.connections) {
+          const sourceId = blockIdMap.get(demoConn.sourceKey);
+          const targetId = blockIdMap.get(demoConn.targetKey);
+          
+          if (!sourceId || !targetId) {
+            console.warn(`Skipping connection: source or target not found`, demoConn);
+            continue;
+          }
+
+          await this.createWorkflowConnection({
+            workflowId: workflow.id,
+            sourceBlockId: sourceId,
+            targetBlockId: targetId,
+            label: demoConn.label,
+          });
+        }
+
+        console.log(`✓ Seeded template: ${workflow.name}`);
+      } catch (error) {
+        console.error(`Error seeding template ${demoWorkflow.name}:`, error);
+      }
+    }
+
+    console.log('Template seeding complete!');
   }
 }
 

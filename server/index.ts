@@ -49,6 +49,12 @@ app.use((req, res, next) => {
 (async () => {
   const server = await registerRoutes(app);
 
+  // Seed workflow templates on startup
+  const { storage } = await import('./storage');
+  await storage.seedWorkflowTemplates().catch(err => {
+    console.error('Error seeding workflow templates:', err);
+  });
+
   app.use((err: any, _req: Request, res: Response, _next: NextFunction) => {
     const status = err.status || err.statusCode || 500;
     const message = err.message || "Internal Server Error";

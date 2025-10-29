@@ -1,8 +1,9 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Copy } from "lucide-react";
+import { Copy, Eye } from "lucide-react";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import type { Workflow } from "@shared/schema";
@@ -28,6 +29,7 @@ const templateDescriptions: Record<string, string> = {
 
 export default function WorkflowTemplatesPage() {
   const { toast } = useToast();
+  const [, navigate] = useLocation();
 
   const { data: templates = [], isLoading } = useQuery<Workflow[]>({
     queryKey: ["/api/workflows?isTemplate=true"],
@@ -38,13 +40,15 @@ export default function WorkflowTemplatesPage() {
       const res = await apiRequest("POST", `/api/workflows/${id}/clone`, {});
       return res.json();
     },
-    onSuccess: () => {
+    onSuccess: (clonedWorkflow: Workflow) => {
       queryClient.invalidateQueries({ queryKey: ["/api/workflows"] });
       queryClient.invalidateQueries({ queryKey: ["/api/workflows?isTemplate=true"] });
       toast({
         title: "Template cloned successfully",
-        description: "View your new workflow in the Workflow Library",
+        description: "Opening workflow canvas...",
       });
+      // Navigate to canvas for the cloned workflow
+      navigate(`/workflows/${clonedWorkflow.id}/canvas`);
     },
     onError: (error: Error) => {
       toast({
@@ -64,29 +68,18 @@ export default function WorkflowTemplatesPage() {
         </p>
       </div>
 
-      {/* Coming Soon Notice */}
-      <Card className="border-orange/50 bg-orange/5">
-        <CardHeader>
-          <CardTitle className="text-lg">📋 Templates Coming Soon</CardTitle>
-          <CardDescription>
-            15 industry-standard fundraising workflow templates are being developed. 
-            These will include pre-configured blocks and connections for common fundraising processes.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2 text-sm">
-            <p className="font-semibold">Planned Templates:</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-muted-foreground">
-              {Object.entries(templateDescriptions).map(([name, desc]) => (
-                <div key={name} className="p-2 border rounded-md bg-background/50">
-                  <div className="font-medium text-foreground">{name}</div>
-                  <div className="text-xs">{desc}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      {/* Success Notice */}
+      {templates.length > 0 && (
+        <Card className="border-green-500/50 bg-green-500/5">
+          <CardHeader>
+            <CardTitle className="text-lg">✅ Templates Ready</CardTitle>
+            <CardDescription>
+              {templates.length} industry-standard fundraising workflow templates are available. 
+              Each includes pre-configured blocks and connections for common fundraising processes.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      )}
 
       {/* Templates List */}
       {isLoading ? (
@@ -112,15 +105,28 @@ export default function WorkflowTemplatesPage() {
                   {template.templateCategory && (
                     <Badge variant="outline">{template.templateCategory}</Badge>
                   )}
-                  <Button
-                    className="w-full"
-                    onClick={() => cloneTemplate.mutate(template.id)}
-                    disabled={cloneTemplate.isPending}
-                    data-testid={`button-clone-template-${template.id}`}
-                  >
-                    <Copy className="w-4 h-4 mr-2" />
-                    Use This Template
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => navigate(`/workflows/${template.id}/canvas`)}
+                      data-testid={`button-preview-template-${template.id}`}
+                    >
+                      <Eye className="w-4 h-4 mr-2" />
+                      Preview
+                    </Button>
+                    <Button
+                      size="sm"
+                      className="flex-1"
+                      onClick={() => cloneTemplate.mutate(template.id)}
+                      disabled={cloneTemplate.isPending}
+                      data-testid={`button-clone-template-${template.id}`}
+                    >
+                      <Copy className="w-4 h-4 mr-2" />
+                      Use
+                    </Button>
+                  </div>
                 </div>
               </CardContent>
             </Card>
