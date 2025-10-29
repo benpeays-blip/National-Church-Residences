@@ -951,16 +951,30 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Board Connections
   app.get("/api/relationship/board-connections", async (req, res) => {
     try {
-      const connections = await db
-        .select({
-          connection: boardConnections,
-          boardMember: persons,
-        })
+      const results = await db
+        .select()
         .from(boardConnections)
         .innerJoin(persons, eq(boardConnections.boardMemberId, persons.id))
         .orderBy(desc(boardConnections.connectionStrength));
       
-      res.json(connections);
+      // Also fetch prospect data
+      const connectionsWithProspects = await Promise.all(
+        results.map(async (row) => {
+          const prospect = await db
+            .select()
+            .from(persons)
+            .where(eq(persons.id, row.board_connections.prospectId))
+            .limit(1);
+          
+          return {
+            connection: row.board_connections,
+            boardMember: row.persons,
+            prospect: prospect[0] || null,
+          };
+        })
+      );
+      
+      res.json(connectionsWithProspects);
     } catch (error) {
       console.error("Error fetching board connections:", error);
       res.status(500).json({ message: "Failed to fetch board connections" });
