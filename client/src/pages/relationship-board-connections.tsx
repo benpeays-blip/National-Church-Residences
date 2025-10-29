@@ -125,7 +125,10 @@ export default function BoardConnections() {
 
                       {/* Organization Connection */}
                       {item.connection.organization && (
-                        <div className="bg-[#0A66C2]/5 border border-[#0A66C2]/10 rounded-lg p-3 space-y-2">
+                        <div 
+                          className="border border-[#0A66C2]/10 rounded-lg p-3 space-y-2"
+                          style={{ backgroundColor: 'rgba(10, 102, 194, 0.05)' }}
+                        >
                           <div className="flex items-center gap-2 text-sm">
                             <Building2 className="w-4 h-4 text-[#0A66C2]" />
                             <span className="font-medium text-[#0A66C2]">{item.connection.organization}</span>
