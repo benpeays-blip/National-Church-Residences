@@ -1862,24 +1862,40 @@ async function seed() {
   
   for (let i = 0; i < 35; i++) {
     const donor = personsList[i];
-    const templateType = ["email", "letter", "text"][Math.floor(Math.random() * 3)];
+    const templateType = ["email", "letter", "call_script"][Math.floor(Math.random() * 3)];
+    const purposes = ["thank_you", "ask", "update", "event_invite"];
+    const purpose = purposes[Math.floor(Math.random() * purposes.length)];
     
     const mgo = mgoUsers[Math.floor(Math.random() * mgoUsers.length)];
+    
+    // Generate content based on purpose
+    let content = "";
+    let subject = "";
+    
+    if (purpose === "thank_you") {
+      subject = `${donor.firstName}, thank you for your incredible support`;
+      content = `Dear ${donor.firstName},\n\nThank you for your generous gift of $${Math.floor(Math.random() * 50000) + 1000}. Your support is making a real difference in the lives of our students.\n\nBecause of donors like you, we were able to award 120 scholarships this year, helping first-generation college students achieve their dreams.\n\nWarm regards,\nJames Patterson\nDevelopment Director`;
+    } else if (purpose === "ask") {
+      subject = `${donor.firstName}, will you join us in expanding our impact?`;
+      content = `Dear ${donor.firstName},\n\nYour ${donor.engagementScore && donor.engagementScore > 70 ? 'continued' : 'valued'} support has been instrumental in our success. This year, we're expanding our scholarship program to serve an additional 75 students.\n\nWould you consider a gift of $${Math.floor(Math.random() * 10000) + 5000} to help us reach this goal? Your investment will directly support students from underrepresented communities.\n\nThank you for considering this opportunity.\n\nWarm regards,\nJames Patterson`;
+    } else if (purpose === "update") {
+      subject = `Your 2024 Impact: ${donor.firstName}, see what you made possible`;
+      content = `Dear ${donor.firstName},\n\nI wanted to share an update on the impact of your support this year. Thanks to donors like you:\n\n• 450 students received scholarships\n• 92% retention rate achieved\n• 88% graduation rate within 6 years\n\nYour generosity is changing lives. Thank you for being part of our community.\n\nBest regards,\nJames Patterson`;
+    } else {
+      subject = `${donor.firstName}, you're invited to our Annual Scholarship Celebration`;
+      content = `Dear ${donor.firstName},\n\nWe would be honored to have you join us for our Annual Scholarship Celebration on November 15th at 6:00 PM.\n\nThis special evening will feature:\n• Student success stories\n• Program updates\n• Networking with fellow supporters\n• Recognition of our donors\n\nPlease RSVP by November 1st. We hope to see you there!\n\nWarm regards,\nJames Patterson`;
+    }
     
     outreachTemplatesList.push({
       personId: donor.id,
       generatedForUserId: mgo.id,
       templateType,
-      subject: templateType !== "text" ? `${donor.firstName}, your impact this year has been extraordinary` : null,
-      bodyContent: `Dear ${donor.firstName},\n\nThank you for your ${donor.engagementScore && donor.engagementScore > 70 ? 'continued' : 'valued'} support. Your gift of $${Math.floor(Math.random() * 50000) + 1000} made possible [specific program impact].\n\nThis year, we're expanding our scholarship program, and we hope you'll consider a gift of $${Math.floor(Math.random() * 10000) + 5000} to help even more students achieve their dreams.\n\nWarm regards,\nJames Patterson\nDevelopment Director`,
-      tone: ["warm", "professional", "enthusiastic"][Math.floor(Math.random() * 3)],
-      personalizationPoints: [
-        `Referenced donor's past giving to ${["scholarship", "building", "program"][Math.floor(Math.random() * 3)]} fund`,
-        "Mentioned upcoming event they attended last year",
-        "Included specific impact numbers from their region"
-      ].slice(0, 2),
-      estimatedEngagementRate: Math.floor(Math.random() * 40) + 60,
-      sent: Math.random() > 0.6 ? 1 : 0,
+      subject: templateType !== "call_script" ? subject : null,
+      content,
+      tone: ["warm", "professional", "enthusiastic", "grateful"][Math.floor(Math.random() * 4)],
+      purpose,
+      aiRationale: `Generated ${purpose.replace('_', ' ')} message for ${donor.firstName} based on giving history (${donor.engagementScore || 50}/100 engagement), wealth band ${donor.wealthBand || 'P2'}, and preferred communication style. Emphasized ${purpose === 'ask' ? 'specific program impact and clear ask amount' : purpose === 'thank_you' ? 'gratitude and specific impact metrics' : purpose === 'update' ? 'concrete outcomes and student success' : 'exclusive event and community connection'}.`,
+      used: Math.random() > 0.6 ? 1 : 0,
       sentAt: Math.random() > 0.6 ? new Date() : null,
     });
   }
@@ -1893,7 +1909,7 @@ async function seed() {
   
   for (let i = 0; i < Math.min(20, existingGrants.length); i++) {
     const grant = existingGrants[i];
-    const status = ["draft", "in_review", "needs_revision", "submitted"][Math.floor(Math.random() * 4)];
+    const status = ["draft", "generated", "reviewed", "submitted"][Math.floor(Math.random() * 4)];
     
     grantProposalsList.push({
       grantId: grant.id,
@@ -1930,7 +1946,7 @@ async function seed() {
   for (let i = 0; i < 30; i++) {
     const donor = personsList[i];
     const totalGiving = giftsList
-      .filter(g => g.donorId === donor.id)
+      .filter(g => g.personId === donor.id)
       .reduce((sum, g) => sum + parseFloat(g.amount), 0);
     
     impactReportsList.push({
@@ -2037,24 +2053,50 @@ async function seed() {
   console.log("🎯 Creating portfolio optimizations...");
   const portfolioOptimizationsList: any[] = [];
   
-  for (let i = 0; i < 15; i++) {
-    const donor = personsList[Math.floor(Math.random() * 50)];
-    const currentMGO = mgoUsers[i % mgoUsers.length];
-    const recommendedMGO = mgoUsers[(i + 1) % mgoUsers.length];
+  for (let i = 0; i < 20; i++) {
+    const runDate = new Date();
+    runDate.setDate(runDate.getDate() - Math.floor(Math.random() * 30));
+    
+    // Generate optimization recommendations
+    const numRecommendations = Math.floor(Math.random() * 8) + 5; // 5-12 recommendations
+    const recommendations = [];
+    
+    for (let j = 0; j < numRecommendations; j++) {
+      const donor = personsList[Math.floor(Math.random() * personsList.length)];
+      const currentMGO = mgoUsers[j % mgoUsers.length];
+      const recommendedMGO = mgoUsers[(j + 1) % mgoUsers.length];
+      
+      recommendations.push({
+        donorId: donor.id,
+        donorName: `${donor.firstName} ${donor.lastName}`,
+        currentMGO: currentMGO.id,
+        currentMGOName: `${currentMGO.firstName} ${currentMGO.lastName}`,
+        recommendedMGO: recommendedMGO.id,
+        recommendedMGOName: `${recommendedMGO.firstName} ${recommendedMGO.lastName}`,
+        score: Math.floor(Math.random() * 40) + 60,
+        reasoning: [
+          `${recommendedMGO.firstName} has stronger track record with donors in ${donor.organizationName ? 'corporate sector' : 'this wealth band'}`,
+          "Geographic proximity: Lives in same region",
+          "Workload balance: Would improve capacity utilization by 15%",
+          "Shared professional background increases rapport potential"
+        ].slice(0, Math.floor(Math.random() * 2) + 2),
+        estimatedImpact: Math.floor(Math.random() * 50000) + 10000,
+      });
+    }
     
     portfolioOptimizationsList.push({
-      prospectId: donor.id,
-      currentAssignee: currentMGO.id,
-      recommendedAssignee: recommendedMGO.id,
-      optimizationScore: Math.floor(Math.random() * 40) + 60,
-      reasoning: [
-        `${recommendedMGO.firstName} has stronger track record with donors in ${donor.primaryOrganization ? 'tech sector' : 'this wealth band'}`,
-        "Geographic proximity: Lives in same region",
-        "Workload balance: Would improve capacity utilization by 15%",
-        "Shared professional background increases rapport potential"
-      ].slice(0, Math.floor(Math.random() * 2) + 2),
-      estimatedImpact: (Math.floor(Math.random() * 50000) + 10000).toString(),
-      implemented: Math.random() > 0.7 ? 1 : 0,
+      runDate,
+      recommendations,
+      projectedImpact: recommendations.reduce((sum, r) => sum + r.estimatedImpact, 0).toString(),
+      optimizationCriteria: [
+        "Geographic proximity",
+        "Donor capacity alignment", 
+        "MGO workload balance",
+        "Historical performance with similar donors",
+        "Relationship strength"
+      ],
+      implemented: Math.random() > 0.6 ? 1 : 0,
+      actualImpact: Math.random() > 0.6 ? (Math.floor(Math.random() * 200000) + 50000).toString() : null,
     });
   }
   await db.insert(portfolioOptimizations).values(portfolioOptimizationsList);
@@ -2065,7 +2107,7 @@ async function seed() {
   const calendarEventsList: any[] = [];
   
   for (let i = 0; i < 40; i++) {
-    const donor = personsList[Math.floor(Math.random() * 50)];
+    const donor = personsList[Math.floor(Math.random() * personsList.length)];
     const mgo = mgoUsers[Math.floor(Math.random() * mgoUsers.length)];
     const daysOut = Math.floor(Math.random() * 60) - 10;
     const scheduledDate = new Date();
@@ -2096,9 +2138,11 @@ async function seed() {
   console.log("✨ Creating stewardship workflows...");
   const stewardshipWorkflowsList: any[] = [];
   
-  const majorGifts = giftsList.filter(g => parseFloat(g.amount) >= 10000).slice(0, 25);
+  const majorGifts = giftsList.filter(g => g && g.id && parseFloat(g.amount) >= 10000).slice(0, 25);
   
   for (const gift of majorGifts) {
+    if (!gift || !gift.id) continue; // Safety check
+    
     const steps = [
       { day: 1, type: "thank_you_call", status: "completed" },
       { day: 3, type: "thank_you_letter", status: "completed" },
@@ -2113,7 +2157,7 @@ async function seed() {
     
     stewardshipWorkflowsList.push({
       giftId: gift.id,
-      personId: gift.donorId,
+      personId: gift.personId,
       workflowName: parseFloat(gift.amount) >= 25000 ? "Major Gift Stewardship" : "Leadership Donor Stewardship",
       steps: JSON.stringify(steps),
       currentStep,
@@ -2125,7 +2169,9 @@ async function seed() {
       completedAt: completedSteps === steps.length ? new Date() : null,
     });
   }
-  await db.insert(stewardshipWorkflows).values(stewardshipWorkflowsList);
+  if (stewardshipWorkflowsList.length > 0) {
+    await db.insert(stewardshipWorkflows).values(stewardshipWorkflowsList);
+  }
   console.log(`✅ Created ${stewardshipWorkflowsList.length} stewardship workflows`);
 
   // ==================== TASK PRIORITY SCORES ====================
@@ -2133,6 +2179,8 @@ async function seed() {
   const taskPriorityScoresList: any[] = [];
   
   for (const task of tasksList) {
+    if (!task || !task.id) continue; // Safety check
+    
     const urgencyScore = task.priority === "urgent" ? 95 : task.priority === "high" ? 75 : task.priority === "medium" ? 50 : 30;
     const impactScore = Math.floor(Math.random() * 40) + 50;
     const effortScore = Math.floor(Math.random() * 30) + 20;
@@ -2148,7 +2196,9 @@ async function seed() {
       reasoning: `High ${urgencyScore > 80 ? 'urgency' : 'impact'} task with ${effortScore < 40 ? 'low' : 'moderate'} effort required. Donor has ${impactScore > 70 ? 'strong' : 'moderate'} capacity and engagement. Recommended to prioritize ${finalPriority > 75 ? 'immediately' : 'within this week'}.`,
     });
   }
-  await db.insert(taskPriorityScores).values(taskPriorityScoresList);
+  if (taskPriorityScoresList.length > 0) {
+    await db.insert(taskPriorityScores).values(taskPriorityScoresList);
+  }
   console.log(`✅ Created ${taskPriorityScoresList.length} task priority scores`);
 
   // ==================== GIFT REGISTRIES ====================
@@ -2156,7 +2206,7 @@ async function seed() {
   const giftRegistriesList: any[] = [];
   
   for (let i = 0; i < 20; i++) {
-    const donor = personsList[Math.floor(Math.random() * 60)];
+    const donor = personsList[Math.floor(Math.random() * personsList.length)];
     const occasionTypes = ["wedding", "birthday", "anniversary", "graduation", "baby_shower"];
     const occasionType = occasionTypes[Math.floor(Math.random() * occasionTypes.length)];
     const daysOut = Math.floor(Math.random() * 180) - 30;
