@@ -196,14 +196,14 @@ export function AppSidebar() {
     if (items.length === 0) return null;
     return (
       <SidebarGroup className="border-b border-border pb-4">
-        <SidebarGroupLabel>{title}</SidebarGroupLabel>
+        <SidebarGroupLabel className="text-sm">{title}</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
             {items.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild data-testid={`nav-${item.title.toLowerCase().replace(/\s+/g, '-')}`}>
                   <a href={item.url}>
-                    <span className="text-sm">{item.title}</span>
+                    <span>{item.title}</span>
                   </a>
                 </SidebarMenuButton>
               </SidebarMenuItem>
