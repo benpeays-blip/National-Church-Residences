@@ -78,11 +78,24 @@ export default function CorporatePartnerships() {
           <CardContent>
             <div className="space-y-4">
               {partnerships.map((partnership) => (
-                <div key={partnership.id} className="border-b pb-4 last:border-0">
+                <div key={partnership.id} className="border-b pb-4 last:border-0" data-testid={`partnership-${partnership.id}`}>
                   <div className="flex items-start justify-between">
                     <div className="space-y-2 flex-1">
                       <div className="flex items-center gap-3">
-                        <Building2 className="w-5 h-5 text-muted-foreground" />
+                        {partnership.domain ? (
+                          <img 
+                            src={`https://img.brandfetch.io/${partnership.domain}/logo`}
+                            alt={`${partnership.companyName} logo`}
+                            className="w-8 h-8 object-contain"
+                            onError={(e) => {
+                              // Fallback to Building2 icon if logo fails to load
+                              e.currentTarget.style.display = 'none';
+                              e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                            }}
+                            data-testid={`logo-${partnership.companyName.toLowerCase()}`}
+                          />
+                        ) : null}
+                        <Building2 className={`w-5 h-5 text-muted-foreground ${partnership.domain ? 'hidden' : ''}`} />
                         <h4 className="font-semibold text-lg">{partnership.companyName}</h4>
                       </div>
                       <div className="grid grid-cols-2 gap-4 text-sm">
