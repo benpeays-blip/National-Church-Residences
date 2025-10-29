@@ -1868,24 +1868,37 @@ async function seed() {
   console.log("🏢 Creating corporate partnerships...");
   const corporatePartnershipsList: any[] = [];
   
-  const companies = ["Google", "Microsoft", "Amazon", "Salesforce", "Meta", "Apple", "Oracle", "Adobe", "Cisco", "Intel"];
+  const companies = ["Google", "Microsoft", "Amazon", "Salesforce", "Meta", "Apple", "Oracle", "Adobe", "Cisco", "Intel", "IBM", "Tesla", "Netflix", "Airbnb", "Uber"];
   
   for (let i = 0; i < 15; i++) {
-    const company = companies[i % companies.length];
-    const employeeDonors = personsList.filter(p => p.organizationName === company || Math.random() > 0.7).slice(0, Math.floor(Math.random() * 8) + 3);
+    const company = companies[i];
+    const hasMatching = Math.random() > 0.3;
+    const employeeCount = Math.floor(Math.random() * 45) + 5; // 5-50 employee donors per company
+    const avgGift = Math.floor(Math.random() * 3000) + 500; // $500-$3500 average gift
+    const totalEmployeeGiving = (employeeCount * avgGift).toString();
+    const matchingRatio = hasMatching ? ["1:1", "2:1", "1:2", "0.5:1"][Math.floor(Math.random() * 4)] : null;
+    
+    // Calculate matching potential
+    let estimatedMatchingPotential = null;
+    if (hasMatching && matchingRatio) {
+      const ratioMultiplier = matchingRatio === "2:1" ? 2 : matchingRatio === "1:1" ? 1 : matchingRatio === "1:2" ? 0.5 : 0.5;
+      estimatedMatchingPotential = (parseFloat(totalEmployeeGiving) * ratioMultiplier).toString();
+    }
+    
+    // Select some employees as decision makers
+    const potentialDecisionMakers = personsList.filter(p => p.organizationName && p.organizationName.includes(company.split(' ')[0]));
+    const decisionMakers = potentialDecisionMakers.slice(0, Math.min(2, potentialDecisionMakers.length)).map(p => p.id);
     
     corporatePartnershipsList.push({
       companyName: company,
-      industry: ["Technology", "Software", "Cloud Computing"][Math.floor(Math.random() * 3)],
-      employeeDonorIds: employeeDonors.map(d => d.id),
-      matchingGiftProgram: Math.random() > 0.3 ? 1 : 0,
-      matchingRatio: Math.random() > 0.3 ? ["1:1", "2:1", "1:2"][Math.floor(Math.random() * 3)] : null,
-      annualMatchingCap: Math.random() > 0.3 ? (Math.floor(Math.random() * 15000) + 5000).toString() : null,
-      corporateFoundation: Math.random() > 0.5 ? 1 : 0,
-      volunteerProgram: Math.random() > 0.6 ? 1 : 0,
-      lastContactDate: randomDate(new Date(2024, 0, 1), new Date()),
-      keyContactName: Math.random() > 0.5 ? `${["Sarah", "John", "Emily", "Michael"][Math.floor(Math.random() * 4)]} ${["Smith", "Johnson", "Williams", "Brown"][Math.floor(Math.random() * 4)]}` : null,
-      partnershipValue: (Math.floor(Math.random() * 500000) + 50000).toString(),
+      employeeCount,
+      totalEmployeeGiving,
+      hasMatchingProgram: hasMatching ? 1 : 0,
+      matchingRatio,
+      estimatedMatchingPotential,
+      decisionMakers: decisionMakers.length > 0 ? decisionMakers : null,
+      foundationUrl: hasMatching ? `https://${company.toLowerCase().replace(/\s/g, '')}.org/foundation` : null,
+      notes: hasMatching ? `Active matching gift program. ${employeeCount} employee donors contributing.` : `${employeeCount} employee donors. No formal matching program yet.`,
     });
   }
   await db.insert(corporatePartnerships).values(corporatePartnershipsList);

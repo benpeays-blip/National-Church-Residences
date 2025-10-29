@@ -1083,17 +1083,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Sentiment Analysis
   app.get("/api/analytics/sentiment", async (req, res) => {
     try {
-      const analysis = await db
-        .select({
-          sentiment: sentimentAnalysis,
-          person: persons,
-        })
+      const results = await db
+        .select()
         .from(sentimentAnalysis)
-        .innerJoin(persons, eq(sentimentAnalysis.personId, persons.id))
         .orderBy(desc(sentimentAnalysis.analysisDate))
         .limit(100);
       
-      res.json(analysis);
+      res.json(results);
     } catch (error) {
       console.error("Error fetching sentiment analysis:", error);
       res.status(500).json({ message: "Failed to fetch sentiment analysis" });

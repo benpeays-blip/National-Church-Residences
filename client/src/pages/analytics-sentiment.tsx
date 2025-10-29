@@ -98,7 +98,9 @@ export default function SentimentAnalysisPage() {
                   <div className="flex items-center gap-3">
                     {getSentimentIcon(analysis.sentimentScore)}
                     <div>
-                      <CardTitle className="text-lg">Donor ID: {analysis.personId.slice(0, 8)}</CardTitle>
+                      <CardTitle className="text-lg">
+                        Donor ID: {analysis.personId ? analysis.personId.slice(0, 8) : 'N/A'}
+                      </CardTitle>
                       <div className="text-sm text-muted-foreground">
                         Analyzed {new Date(analysis.analysisDate).toLocaleDateString()}
                       </div>
