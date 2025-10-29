@@ -1687,22 +1687,86 @@ async function seed() {
   console.log("🎯 Creating predictive scores...");
   const predictiveScoresList: any[] = [];
   
-  for (const donor of personsList.slice(0, 40)) {
+  const keyFactorsPool = [
+    "Consistent giving history over 5+ years",
+    "Recent engagement increase by 45%",
+    "Attended 3+ events in last 6 months",
+    "Life event detected: job promotion",
+    "Life event detected: inheritance",
+    "Wealth capacity verified via WealthEngine",
+    "Strong affinity score (92/100)",
+    "Close relationship with board member",
+    "Increased gift size by 300% recently",
+    "High engagement with email campaigns",
+    "Frequently opens annual reports",
+    "Donated to similar cause this quarter",
+    "Net worth increase detected",
+    "Stock portfolio value up 25%",
+    "Recently sold property",
+    "Regular monthly donor for 3+ years",
+    "Responded positively to last ask",
+    "Attended private donor briefing",
+    "Peer influence: friends are major donors",
+    "Tax planning window approaching",
+  ];
+  
+  for (let i = 0; i < personsList.length; i++) {
+    const donor = personsList[i];
+    
+    // Generate realistic probability (weighted toward lower scores)
+    const probabilityRoll = Math.random();
+    let givingProbability;
+    if (probabilityRoll < 0.15) {
+      givingProbability = Math.floor(Math.random() * 20) + 80; // 15% Very High (80-100)
+    } else if (probabilityRoll < 0.35) {
+      givingProbability = Math.floor(Math.random() * 20) + 60; // 20% High (60-80)
+    } else if (probabilityRoll < 0.65) {
+      givingProbability = Math.floor(Math.random() * 20) + 40; // 30% Medium (40-60)
+    } else {
+      givingProbability = Math.floor(Math.random() * 40) + 10; // 35% Low (10-50)
+    }
+    
+    // Predicted amount correlates with probability
+    let predictedAmount;
+    if (givingProbability >= 80) {
+      predictedAmount = (Math.floor(Math.random() * 75000) + 25000).toString(); // $25k-$100k
+    } else if (givingProbability >= 60) {
+      predictedAmount = (Math.floor(Math.random() * 40000) + 10000).toString(); // $10k-$50k
+    } else if (givingProbability >= 40) {
+      predictedAmount = (Math.floor(Math.random() * 15000) + 5000).toString(); // $5k-$20k
+    } else {
+      predictedAmount = (Math.floor(Math.random() * 4000) + 1000).toString(); // $1k-$5k
+    }
+    
+    // Timeframe (days until predicted gift)
+    const timeframeRoll = Math.random();
+    let predictedTimeframe;
+    if (timeframeRoll < 0.2) {
+      predictedTimeframe = Math.floor(Math.random() * 30) + 1; // 20% within 30 days
+    } else if (timeframeRoll < 0.4) {
+      predictedTimeframe = Math.floor(Math.random() * 30) + 31; // 20% 31-60 days
+    } else if (timeframeRoll < 0.65) {
+      predictedTimeframe = Math.floor(Math.random() * 30) + 61; // 25% 61-90 days
+    } else {
+      predictedTimeframe = Math.floor(Math.random() * 90) + 91; // 35% 91-180 days
+    }
+    
+    // Confidence level (higher probability = higher confidence)
+    const baseConfidence = Math.floor(givingProbability * 0.7); // Confidence correlates with probability
+    const confidence = Math.min(95, Math.max(40, baseConfidence + Math.floor(Math.random() * 20) - 10));
+    
+    // Select 2-4 random key factors
+    const numFactors = Math.floor(Math.random() * 3) + 2;
+    const shuffledFactors = [...keyFactorsPool].sort(() => Math.random() - 0.5);
+    const keyFactors = shuffledFactors.slice(0, numFactors);
+    
     predictiveScoresList.push({
       personId: donor.id,
-      askTiming: Math.floor(Math.random() * 40) + 60,
-      optimalAskAmount: (Math.floor(Math.random() * 50000) + 10000).toString(),
-      optimalAskDate: new Date(Date.now() + Math.random() * 180 * 24 * 60 * 60 * 1000),
-      churnRisk: Math.floor(Math.random() * 50),
-      upgradePotential: Math.floor(Math.random() * 100),
-      modelVersion: "v2.3.1",
-      confidenceLevel: Math.floor(Math.random() * 30) + 70,
-      keyFactors: [
-        "Consistent giving history",
-        "Recent engagement increase",
-        "Life event detected",
-        "Wealth capacity verified"
-      ].slice(0, Math.floor(Math.random() * 3) + 2),
+      givingProbability,
+      predictedAmount,
+      predictedTimeframe,
+      confidence,
+      keyFactors,
     });
   }
   await db.insert(predictiveScores).values(predictiveScoresList);
