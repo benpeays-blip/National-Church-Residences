@@ -1868,7 +1868,23 @@ async function seed() {
   console.log("🏢 Creating corporate partnerships...");
   const corporatePartnershipsList: any[] = [];
   
-  const companies = ["Google", "Microsoft", "Amazon", "Salesforce", "Meta", "Apple", "Oracle", "Adobe", "Cisco", "Intel", "IBM", "Tesla", "Netflix", "Airbnb", "Uber"];
+  const companies = [
+    { name: "Google", domain: "google.com" },
+    { name: "Microsoft", domain: "microsoft.com" },
+    { name: "Amazon", domain: "amazon.com" },
+    { name: "Salesforce", domain: "salesforce.com" },
+    { name: "Meta", domain: "meta.com" },
+    { name: "Apple", domain: "apple.com" },
+    { name: "Oracle", domain: "oracle.com" },
+    { name: "Adobe", domain: "adobe.com" },
+    { name: "Cisco", domain: "cisco.com" },
+    { name: "Intel", domain: "intel.com" },
+    { name: "IBM", domain: "ibm.com" },
+    { name: "Tesla", domain: "tesla.com" },
+    { name: "Netflix", domain: "netflix.com" },
+    { name: "Airbnb", domain: "airbnb.com" },
+    { name: "Uber", domain: "uber.com" },
+  ];
   
   for (let i = 0; i < 15; i++) {
     const company = companies[i];
@@ -1886,18 +1902,19 @@ async function seed() {
     }
     
     // Select some employees as decision makers
-    const potentialDecisionMakers = personsList.filter(p => p.organizationName && p.organizationName.includes(company.split(' ')[0]));
+    const potentialDecisionMakers = personsList.filter(p => p.organizationName && p.organizationName.includes(company.name.split(' ')[0]));
     const decisionMakers = potentialDecisionMakers.slice(0, Math.min(2, potentialDecisionMakers.length)).map(p => p.id);
     
     corporatePartnershipsList.push({
-      companyName: company,
+      companyName: company.name,
+      domain: company.domain,
       employeeCount,
       totalEmployeeGiving,
       hasMatchingProgram: hasMatching ? 1 : 0,
       matchingRatio,
       estimatedMatchingPotential,
       decisionMakers: decisionMakers.length > 0 ? decisionMakers : null,
-      foundationUrl: hasMatching ? `https://${company.toLowerCase().replace(/\s/g, '')}.org/foundation` : null,
+      foundationUrl: hasMatching ? `https://${company.name.toLowerCase().replace(/\s/g, '')}.org/foundation` : null,
       notes: hasMatching ? `Active matching gift program. ${employeeCount} employee donors contributing.` : `${employeeCount} employee donors. No formal matching program yet.`,
     });
   }
