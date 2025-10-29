@@ -18,7 +18,7 @@ type SentimentAnalysis = {
 };
 
 export default function SentimentAnalysisPage() {
-  const { data: analyses, isLoading } = useQuery<SentimentAnalysis[]>({
+  const { data: analyses, isLoading, error, isError } = useQuery<SentimentAnalysis[], Error>({
     queryKey: ["/api/analytics/sentiment"],
   });
 
@@ -61,6 +61,21 @@ export default function SentimentAnalysisPage() {
             </Card>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="p-6">
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-center text-muted-foreground">
+              <p className="font-semibold mb-2">Failed to load sentiment analysis</p>
+              <p className="text-sm">{error?.message || "An error occurred"}</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }

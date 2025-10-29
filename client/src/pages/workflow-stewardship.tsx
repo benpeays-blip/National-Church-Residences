@@ -22,7 +22,7 @@ type StewardshipWorkflow = {
 };
 
 export default function Stewardship() {
-  const { data: workflows, isLoading } = useQuery<StewardshipWorkflow[]>({
+  const { data: workflows, isLoading, error, isError } = useQuery<StewardshipWorkflow[], Error>({
     queryKey: ["/api/workflow/stewardship"],
   });
 
@@ -51,6 +51,21 @@ export default function Stewardship() {
     );
   }
 
+  if (isError) {
+    return (
+      <div className="p-6">
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-center text-muted-foreground">
+              <p className="font-semibold mb-2">Failed to load stewardship workflows</p>
+              <p className="text-sm">{error?.message || "An error occurred"}</p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
   const activeWorkflows = workflows?.filter((w) => !w.completedAt && w.paused === 0) || [];
   const pausedWorkflows = workflows?.filter((w) => w.paused === 1) || [];
   const completedWorkflows = workflows?.filter((w) => w.completedAt) || [];
@@ -75,7 +90,8 @@ export default function Stewardship() {
           <CardContent className="space-y-4">
             {activeWorkflows.length > 0 ? (
               activeWorkflows.map((workflow) => {
-                const totalSteps = workflow.steps ? JSON.parse(workflow.steps as any).length : 5;
+                const steps = Array.isArray(workflow.steps) ? workflow.steps : [];
+                const totalSteps = steps.length || 5;
                 const progress = (workflow.completedSteps / totalSteps) * 100;
                 
                 return (

@@ -16,7 +16,7 @@ type PeerBenchmark = {
 };
 
 export default function PeerBenchmarks() {
-  const { data: benchmarks, isLoading } = useQuery<PeerBenchmark[]>({
+  const { data: benchmarks, isLoading, error, isError } = useQuery<PeerBenchmark[], Error>({
     queryKey: ["/api/analytics/peer-benchmarks"],
   });
 
@@ -53,6 +53,21 @@ export default function PeerBenchmarks() {
             </Card>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="p-6">
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-center text-muted-foreground">
+              <p className="font-semibold mb-2">Failed to load peer benchmarks</p>
+              <p className="text-sm">{error?.message || "An error occurred"}</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }

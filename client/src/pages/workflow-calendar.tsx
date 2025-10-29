@@ -21,7 +21,7 @@ type CalendarEvent = {
 };
 
 export default function SmartCalendar() {
-  const { data: events, isLoading } = useQuery<CalendarEvent[]>({
+  const { data: events, isLoading, error, isError } = useQuery<CalendarEvent[], Error>({
     queryKey: ["/api/workflow/calendar"],
   });
 
@@ -52,6 +52,21 @@ export default function SmartCalendar() {
             </Card>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="p-6">
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-center text-muted-foreground">
+              <p className="font-semibold mb-2">Failed to load calendar events</p>
+              <p className="text-sm">{error?.message || "An error occurred"}</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }

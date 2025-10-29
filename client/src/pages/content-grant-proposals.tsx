@@ -20,7 +20,7 @@ type GrantProposal = {
 };
 
 export default function GrantProposals() {
-  const { data: proposals, isLoading } = useQuery<GrantProposal[]>({
+  const { data: proposals, isLoading, error, isError } = useQuery<GrantProposal[], Error>({
     queryKey: ["/api/content/grant-proposals"],
   });
 
@@ -59,6 +59,21 @@ export default function GrantProposals() {
             </Card>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="p-6">
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-center text-muted-foreground">
+              <p className="font-semibold mb-2">Failed to load grant proposals</p>
+              <p className="text-sm">{error?.message || "An error occurred"}</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }

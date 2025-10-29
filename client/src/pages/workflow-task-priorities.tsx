@@ -28,7 +28,7 @@ type TaskPriorityScore = {
 };
 
 export default function TaskPriorities() {
-  const { data: scoredTasks, isLoading } = useQuery<TaskPriorityScore[]>({
+  const { data: scoredTasks, isLoading, error, isError } = useQuery<TaskPriorityScore[], Error>({
     queryKey: ["/api/workflow/task-priorities"],
   });
 
@@ -66,6 +66,21 @@ export default function TaskPriorities() {
             </Card>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="p-6">
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-center text-muted-foreground">
+              <p className="font-semibold mb-2">Failed to load task priorities</p>
+              <p className="text-sm">{error?.message || "An error occurred"}</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }

@@ -21,7 +21,7 @@ type ImpactReport = {
 };
 
 export default function ImpactReports() {
-  const { data: reports, isLoading } = useQuery<ImpactReport[]>({
+  const { data: reports, isLoading, error, isError } = useQuery<ImpactReport[], Error>({
     queryKey: ["/api/content/impact-reports"],
   });
 
@@ -46,6 +46,21 @@ export default function ImpactReports() {
             </Card>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="p-6">
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-center text-muted-foreground">
+              <p className="font-semibold mb-2">Failed to load impact reports</p>
+              <p className="text-sm">{error?.message || "An error occurred"}</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }

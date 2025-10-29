@@ -21,7 +21,7 @@ type GiftRegistry = {
 };
 
 export default function GiftRegistries() {
-  const { data: registries, isLoading } = useQuery<GiftRegistry[]>({
+  const { data: registries, isLoading, error, isError } = useQuery<GiftRegistry[], Error>({
     queryKey: ["/api/workflow/gift-registries"],
   });
 
@@ -52,6 +52,21 @@ export default function GiftRegistries() {
             </Card>
           ))}
         </div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="p-6">
+        <Card>
+          <CardContent className="p-6">
+            <div className="text-center text-muted-foreground">
+              <p className="font-semibold mb-2">Failed to load gift registries</p>
+              <p className="text-sm">{error?.message || "An error occurred"}</p>
+            </div>
+          </CardContent>
+        </Card>
       </div>
     );
   }
