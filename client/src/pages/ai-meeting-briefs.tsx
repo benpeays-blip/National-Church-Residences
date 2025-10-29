@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MessageSquare, Target, TrendingUp, Lightbulb, AlertTriangle } from "lucide-react";
+import { MessageSquare, Target, TrendingUp, Lightbulb, AlertTriangle, CheckCircle2 } from "lucide-react";
 import type { Person, MeetingBrief } from "@shared/schema";
 
 interface MeetingBriefData {
@@ -97,12 +97,15 @@ export default function AIMeetingBriefs() {
                 {item.brief.conversationStarters && item.brief.conversationStarters.length > 0 && (
                   <div>
                     <h4 className="font-semibold flex items-center gap-2 mb-2">
-                      <Lightbulb className="w-4 h-4" />
+                      <Lightbulb className="w-4 h-4 text-yellow-500" />
                       Conversation Starters
                     </h4>
-                    <ul className="space-y-1">
+                    <ul className="space-y-2">
                       {item.brief.conversationStarters.map((starter, idx) => (
-                        <li key={idx} className="text-sm">\u2022 {starter}</li>
+                        <li key={idx} className="flex items-start gap-2 text-sm">
+                          <Lightbulb className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
+                          <span>{starter}</span>
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -111,12 +114,15 @@ export default function AIMeetingBriefs() {
                 {item.brief.talkingPoints && item.brief.talkingPoints.length > 0 && (
                   <div>
                     <h4 className="font-semibold flex items-center gap-2 mb-2">
-                      <MessageSquare className="w-4 h-4" />
+                      <MessageSquare className="w-4 h-4 text-blue-500" />
                       Talking Points
                     </h4>
-                    <ul className="space-y-1">
+                    <ul className="space-y-2">
                       {item.brief.talkingPoints.map((point, idx) => (
-                        <li key={idx} className="text-sm">\u2022 {point}</li>
+                        <li key={idx} className="flex items-start gap-2 text-sm">
+                          <CheckCircle2 className="w-4 h-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                          <span>{point}</span>
+                        </li>
                       ))}
                     </ul>
                   </div>
@@ -128,9 +134,12 @@ export default function AIMeetingBriefs() {
                       <AlertTriangle className="w-4 h-4 text-yellow-600" />
                       Risk Factors
                     </h4>
-                    <ul className="space-y-1">
+                    <ul className="space-y-2">
                       {item.brief.riskFactors.map((risk, idx) => (
-                        <li key={idx} className="text-sm text-yellow-600">\u2022 {risk}</li>
+                        <li key={idx} className="flex items-start gap-2 text-sm">
+                          <AlertTriangle className="w-4 h-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                          <span>{risk}</span>
+                        </li>
                       ))}
                     </ul>
                   </div>
