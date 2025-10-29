@@ -110,7 +110,7 @@ export default function BoardConnections() {
                       <div>
                         <h4 className="font-semibold text-lg flex items-center gap-2">
                           {item.prospect?.firstName} {item.prospect?.lastName}
-                          <Badge variant={item.connection.connectionStrength === 1 ? "default" : "secondary"} className="bg-[#0A66C2]">
+                          <Badge variant={item.connection.connectionStrength === 1 ? "default" : "secondary"} className="bg-[#0A66C2] text-white">
                             {item.connection.connectionStrength === 1 ? "1st" :
                              item.connection.connectionStrength === 2 ? "2nd" : "3rd"}
                           </Badge>
