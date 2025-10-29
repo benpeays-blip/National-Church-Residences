@@ -270,7 +270,7 @@ export default function DashboardDevDirector() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-2 p-6">
-          <h2 className="text-lg font-semibold mb-4">Pipeline by MGO</h2>
+          <h2 className="text-lg font-semibold mb-4">Pipeline by Major Gift Officer</h2>
           <Table>
             <TableHeader>
               <TableRow>
