@@ -233,12 +233,12 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         {renderMenuGroup("Core", visibleCore)}
-        {renderMenuGroup("🚀 AI Intelligence", visibleAI)}
-        {renderMenuGroup("🎯 Relationship Intel", visibleRelationship)}
-        {renderMenuGroup("✍️ AI Content", visibleContent)}
-        {renderMenuGroup("📊 Analytics", visibleAnalytics)}
-        {renderMenuGroup("🤖 Workflows", visibleWorkflow)}
-        {renderMenuGroup("🔄 Workflow Builder", visibleWorkflowBuilder)}
+        {renderMenuGroup("AI Intelligence", visibleAI)}
+        {renderMenuGroup("Relationship Intel", visibleRelationship)}
+        {renderMenuGroup("AI Content", visibleContent)}
+        {renderMenuGroup("Analytics", visibleAnalytics)}
+        {renderMenuGroup("Workflows", visibleWorkflow)}
+        {renderMenuGroup("Workflow Builder", visibleWorkflowBuilder)}
       </SidebarContent>
     </Sidebar>
   );
