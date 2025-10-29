@@ -1842,21 +1842,48 @@ async function seed() {
   
   const boardMembers = personsList.filter(p => p.capacityScore && p.capacityScore >= 85).slice(0, 8);
   
+  const organizations = [
+    "Google", "Microsoft", "Amazon", "Salesforce", "Meta", "Apple", "Oracle", "Adobe",
+    "McKinsey & Company", "Goldman Sachs", "JP Morgan", "Bain & Company",
+    "Stanford University", "Harvard Business School", "MIT", "UC Berkeley",
+    "Accenture", "Deloitte", "PwC", "KPMG"
+  ];
+  
+  const positions = [
+    "Senior Product Manager", "VP Engineering", "Director of Operations", "Chief Technology Officer",
+    "Senior Software Engineer", "VP Sales", "Head of Marketing", "VP Product",
+    "Managing Director", "Senior Consultant", "Partner", "Executive Director"
+  ];
+  
   for (const donor of personsList.slice(0, 50)) {
     const hasConnection = Math.random() > 0.6;
     if (hasConnection) {
       const boardMember = boardMembers[Math.floor(Math.random() * boardMembers.length)];
       const degrees = Math.random() > 0.5 ? 1 : 2;
+      const org = organizations[Math.floor(Math.random() * organizations.length)];
+      const position = positions[Math.floor(Math.random() * positions.length)];
+      const relationshipType = degrees === 1 
+        ? (Math.random() > 0.6 ? "colleague" : "classmate")
+        : "friend";
+      
+      const isCurrent = Math.random() > 0.3;
+      const yearStart = Math.floor(Math.random() * 10) + 2010; // 2010-2020
+      const yearEnd = isCurrent ? null : Math.floor(Math.random() * 4) + yearStart + 1; // 1-4 years later
       
       boardConnectionsList.push({
         prospectId: donor.id,
         boardMemberId: boardMember.id,
-        connectionDegrees: degrees,
-        pathDescription: degrees === 1 
-          ? `Direct LinkedIn connection - worked together at ${donor.organizationName || 'TechCorp'}`
-          : `Connected through mutual contact Sarah Johnson (Former colleague)`,
-        sharedExperiences: degrees === 1 ? ["Worked at same company 2018-2020", "Both attended Stanford GSB"] : null,
-        lastVerified: new Date(),
+        connectionStrength: degrees,
+        relationshipType,
+        organization: org,
+        position,
+        yearStart,
+        yearEnd,
+        source: "LinkedIn",
+        notes: degrees === 1 
+          ? `Worked together at ${org} from ${yearStart}${yearEnd ? ` to ${yearEnd}` : ' (current)'}. Direct LinkedIn connection.`
+          : `Both worked at ${org}. Connected through mutual colleague.`,
+        introductionRequested: Math.random() > 0.7 ? 1 : 0,
         introductionMade: Math.random() > 0.8 ? 1 : 0,
       });
     }
