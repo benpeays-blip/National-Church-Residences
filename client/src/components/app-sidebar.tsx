@@ -95,6 +95,11 @@ const relationshipItems = [
     roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
   },
   {
+    title: "Board Network Mapper",
+    url: "/relationship/board-network-mapper",
+    roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
+  },
+  {
     title: "Corporate Partnerships",
     url: "/relationship/corporate-partnerships",
     roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],

@@ -666,6 +666,24 @@ export const workflowVersions = pgTable("workflow_versions", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Board Memberships - Board Relationship Mapping (cross-org board network analysis)
+export const boardMemberships = pgTable("board_memberships", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  personName: varchar("person_name").notNull(), // Full name of board member
+  personEmail: varchar("person_email"), // Email for de-duplication
+  personId: varchar("person_id").references(() => persons.id), // Link to persons table if known
+  orgName: varchar("org_name").notNull(), // Organization name
+  orgSector: varchar("org_sector"), // Nonprofit sector (education, health, etc.)
+  orgCity: varchar("org_city"),
+  orgState: varchar("org_state"),
+  role: varchar("role"), // "Director", "Chair", "Treasurer", etc.
+  startYear: integer("start_year"),
+  endYear: integer("end_year"), // null if current
+  source: varchar("source").default("CSV Import"), // "CSV Import", "Manual", "LinkedIn"
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Relations
 export const personsRelations = relations(persons, ({ one, many }) => ({
   household: one(households, {
@@ -965,6 +983,12 @@ export const insertWorkflowVersionSchema = createInsertSchema(workflowVersions).
   createdAt: true,
 });
 
+export const insertBoardMembershipSchema = createInsertSchema(boardMemberships).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
@@ -1032,3 +1056,5 @@ export type InsertWorkflowConnection = z.infer<typeof insertWorkflowConnectionSc
 export type WorkflowConnection = typeof workflowConnections.$inferSelect;
 export type InsertWorkflowVersion = z.infer<typeof insertWorkflowVersionSchema>;
 export type WorkflowVersion = typeof workflowVersions.$inferSelect;
+export type InsertBoardMembership = z.infer<typeof insertBoardMembershipSchema>;
+export type BoardMembership = typeof boardMemberships.$inferSelect;

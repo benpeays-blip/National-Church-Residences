@@ -30,6 +30,7 @@ import AIVoiceNotes from "@/pages/ai-voice-notes";
 import BoardConnections from "@/pages/relationship-board-connections";
 import CorporatePartnerships from "@/pages/relationship-corporate-partnerships";
 import PeerDonors from "@/pages/relationship-peer-donors";
+import BoardNetworkMapper from "@/pages/board-network-mapper";
 
 // AI Content
 import OutreachGenerator from "@/pages/content-outreach";
@@ -83,6 +84,7 @@ function Router() {
       
       {/* Relationship Intelligence */}
       <Route path="/relationship/board-connections" component={BoardConnections} />
+      <Route path="/relationship/board-network-mapper" component={BoardNetworkMapper} />
       <Route path="/relationship/corporate-partnerships" component={CorporatePartnerships} />
       <Route path="/relationship/peer-donors" component={PeerDonors} />
       

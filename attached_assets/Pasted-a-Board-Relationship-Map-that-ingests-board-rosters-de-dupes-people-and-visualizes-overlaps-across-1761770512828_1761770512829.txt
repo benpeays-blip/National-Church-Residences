@@ -1,0 +1,582 @@
+a Board Relationship Map that ingests board rosters, de-dupes people, and visualizes overlaps across 100+ organizations. You’ll get (1) a force-graph network view, (2) an overlap matrix, and (3) person/org inspector panels—plus a CSV importer you can demo immediately.
+
+Below are install steps, minimal data schema, and copy-paste files.
+
+What you’ll ship in Replit
+
+CSV import: person_name, person_email?, org_name, role, start_year?, end_year?.
+
+Bipartite graph: People ↔ Organizations.
+
+Projections:
+
+Person–Person edges weighted by number of shared boards.
+
+Org–Org edges weighted by number of shared directors.
+
+Views:
+
+Network view (toggle People graph vs Org graph).
+
+Overlap matrix (fast visual of shared memberships).
+
+Inspector panel (clicked node shows full board list and co-members).
+
+Filters: by year range and role; search by person/org.
+
+Local persistence with localStorage so the demo “remembers” uploads.
+
+0) Install deps (Replit shell)
+npm i react-force-graph zustand papaparse classnames
+
+1) Data schema and builder
+
+Create src/lib/boardMapTypes.ts
+
+export type BoardRow = {
+  person_name: string;
+  person_email?: string;
+  org_name: string;
+  role?: string;
+  start_year?: number | null;
+  end_year?: number | null;
+};
+
+export type Person = {
+  id: string;
+  name: string;
+  email?: string;
+  aliases?: string[];
+};
+
+export type Org = {
+  id: string;
+  name: string;
+  sector?: string;
+  city?: string;
+  state?: string;
+};
+
+export type BoardRole = {
+  personId: string;
+  orgId: string;
+  role?: string;
+  start_year?: number | null;
+  end_year?: number | null;
+};
+
+export type Bipartite = {
+  people: Person[];
+  orgs: Org[];
+  roles: BoardRole[];
+};
+
+export type GraphNode = {
+  id: string;
+  label: string;
+  type: "person" | "org";
+  degree?: number;
+};
+
+export type GraphLink = {
+  source: string;
+  target: string;
+  weight: number;
+};
+
+export type ProjectedGraph = {
+  nodes: GraphNode[];
+  links: GraphLink[];
+};
+
+
+Create src/lib/boardMapBuild.ts
+
+import type { BoardRow, Bipartite, Person, Org, BoardRole, ProjectedGraph, GraphNode, GraphLink } from "./boardMapTypes";
+
+function slugify(s: string) {
+  return s.toLowerCase().replace(/\s+/g, " ").trim();
+}
+
+function idFromName(prefix: string, name: string) {
+  return `${prefix}:${slugify(name)}`;
+}
+
+export function buildBipartite(rows: BoardRow[]): Bipartite {
+  const peopleMap = new Map<string, Person>();
+  const orgMap = new Map<string, Org>();
+  const roles: BoardRole[] = [];
+
+  for (const r of rows) {
+    if (!r.person_name || !r.org_name) continue;
+    const pId = r.person_email
+      ? `person:${r.person_email.toLowerCase()}`
+      : idFromName("person", r.person_name);
+
+    if (!peopleMap.has(pId)) {
+      peopleMap.set(pId, { id: pId, name: r.person_name, email: r.person_email });
+    } else {
+      const p = peopleMap.get(pId)!;
+      // keep the most complete name/email
+      if (!p.email && r.person_email) p.email = r.person_email;
+      if (p.name.length < r.person_name.length) p.name = r.person_name;
+    }
+
+    const oId = idFromName("org", r.org_name);
+    if (!orgMap.has(oId)) orgMap.set(oId, { id: oId, name: r.org_name });
+
+    roles.push({
+      personId: pId,
+      orgId: oId,
+      role: r.role,
+      start_year: r.start_year ?? null,
+      end_year: r.end_year ?? null
+    });
+  }
+
+  return { people: [...peopleMap.values()], orgs: [...orgMap.values()], roles };
+}
+
+/**
+ * Project a bipartite graph onto people (shared orgs).
+ */
+export function projectPeopleGraph(bi: Bipartite, filter?: { yearMin?: number; yearMax?: number; role?: string }): ProjectedGraph {
+  const byOrg = new Map<string, string[]>();
+  for (const r of bi.roles) {
+    if (filter?.role && r.role !== filter.role) continue;
+    if (filter?.yearMin && r.start_year && r.start_year < filter.yearMin) continue;
+    if (filter?.yearMax && r.end_year && r.end_year > filter.yearMax) continue;
+    if (!byOrg.has(r.orgId)) byOrg.set(r.orgId, []);
+    byOrg.get(r.orgId)!.push(r.personId);
+  }
+
+  const weightMap = new Map<string, number>();
+  for (const [, personIds] of byOrg) {
+    for (let i = 0; i < personIds.length; i++) {
+      for (let j = i + 1; j < personIds.length; j++) {
+        const a = personIds[i], b = personIds[j];
+        const key = a < b ? `${a}||${b}` : `${b}||${a}`;
+        weightMap.set(key, (weightMap.get(key) ?? 0) + 1);
+      }
+    }
+  }
+
+  const nodes: GraphNode[] = bi.people.map(p => ({ id: p.id, label: p.name, type: "person" }));
+  const links: GraphLink[] = Array.from(weightMap.entries()).map(([k, w]) => {
+    const [a, b] = k.split("||");
+    return { source: a, target: b, weight: w };
+  });
+
+  // compute degree
+  const deg = new Map(nodes.map(n => [n.id, 0]));
+  links.forEach(l => {
+    deg.set(String(l.source), (deg.get(String(l.source)) ?? 0) + 1);
+    deg.set(String(l.target), (deg.get(String(l.target)) ?? 0) + 1);
+  });
+  nodes.forEach(n => (n.degree = deg.get(n.id) ?? 0));
+
+  return { nodes, links };
+}
+
+/**
+ * Project onto organizations (shared board members).
+ */
+export function projectOrgGraph(bi: Bipartite, filter?: { yearMin?: number; yearMax?: number; role?: string }): ProjectedGraph {
+  const byPerson = new Map<string, string[]>();
+  for (const r of bi.roles) {
+    if (filter?.role && r.role !== filter.role) continue;
+    if (filter?.yearMin && r.start_year && r.start_year < filter.yearMin) continue;
+    if (filter?.yearMax && r.end_year && r.end_year > filter.yearMax) continue;
+    if (!byPerson.has(r.personId)) byPerson.set(r.personId, []);
+    byPerson.get(r.personId)!.push(r.orgId);
+  }
+
+  const weightMap = new Map<string, number>();
+  for (const [, orgIds] of byPerson) {
+    for (let i = 0; i < orgIds.length; i++) {
+      for (let j = i + 1; j < orgIds.length; j++) {
+        const a = orgIds[i], b = orgIds[j];
+        const key = a < b ? `${a}||${b}` : `${b}||${a}`;
+        weightMap.set(key, (weightMap.get(key) ?? 0) + 1);
+      }
+    }
+  }
+
+  const nodes: GraphNode[] = bi.orgs.map(o => ({ id: o.id, label: o.name, type: "org" }));
+  const links: GraphLink[] = Array.from(weightMap.entries()).map(([k, w]) => {
+    const [a, b] = k.split("||");
+    return { source: a, target: b, weight: w };
+  });
+
+  const deg = new Map(nodes.map(n => [n.id, 0]));
+  links.forEach(l => {
+    deg.set(String(l.source), (deg.get(String(l.source)) ?? 0) + 1);
+    deg.set(String(l.target), (deg.get(String(l.target)) ?? 0) + 1);
+  });
+  nodes.forEach(n => (n.degree = deg.get(n.id) ?? 0));
+
+  return { nodes, links };
+}
+
+/**
+ * Build a simple overlap matrix for orgs: cell = shared directors count.
+ */
+export function buildOrgOverlapMatrix(bi: Bipartite) {
+  const idx = new Map(bi.orgs.map((o, i) => [o.id, i]));
+  const size = bi.orgs.length;
+  const mat = Array.from({ length: size }, () => new Array<number>(size).fill(0));
+
+  // map person -> their org set
+  const byPerson = new Map<string, Set<string>>();
+  for (const r of bi.roles) {
+    if (!byPerson.has(r.personId)) byPerson.set(r.personId, new Set());
+    byPerson.get(r.personId)!.add(r.orgId);
+  }
+
+  for (const [, orgs] of byPerson) {
+    const list = Array.from(orgs);
+    for (let i = 0; i < list.length; i++) {
+      for (let j = i + 1; j < list.length; j++) {
+        const a = idx.get(list[i])!, b = idx.get(list[j])!;
+        mat[a][b] += 1; mat[b][a] += 1;
+      }
+    }
+  }
+
+  return { matrix: mat, orgs: bi.orgs };
+}
+
+2) Store and CSV importer
+
+Create src/lib/boardMapStore.ts
+
+import { create } from "zustand";
+import type { Bipartite, BoardRow, ProjectedGraph } from "./boardMapTypes";
+import { buildBipartite, projectOrgGraph, projectPeopleGraph, buildOrgOverlapMatrix } from "./boardMapBuild";
+
+type ViewMode = "people" | "orgs";
+
+type State = {
+  rows: BoardRow[];
+  bi?: Bipartite;
+  graph?: ProjectedGraph;
+  view: ViewMode;
+  query: string;
+  roleFilter?: string;
+  yearMin?: number;
+  yearMax?: number;
+  setView: (v: ViewMode) => void;
+  setFilters: (p: Partial<Pick<State,"query"|"roleFilter"|"yearMin"|"yearMax">>) => void;
+  importRows: (rows: BoardRow[]) => void;
+  compute: () => void;
+};
+
+const KEY = "boardmap.rows.v1";
+
+export const useBoardMap = create<State>((set, get) => ({
+  rows: [],
+  view: "people",
+  query: "",
+  setView: (v) => set({ view: v }, false),
+  setFilters: (p) => set(p, false),
+  importRows: (rows) => {
+    set({ rows });
+    localStorage.setItem(KEY, JSON.stringify(rows));
+  },
+  compute: () => {
+    const { rows, view, roleFilter, yearMin, yearMax } = get();
+    const bi = buildBipartite(rows);
+    let graph: ProjectedGraph | undefined;
+    const f = { role: roleFilter, yearMin, yearMax };
+    graph = view === "people" ? projectPeopleGraph(bi, f) : projectOrgGraph(bi, f);
+    set({ bi, graph });
+  }
+}));
+
+// bootstrap from localStorage
+export function loadPersistedRows() {
+  try {
+    const s = localStorage.getItem("boardmap.rows.v1");
+    if (s) useBoardMap.getState().importRows(JSON.parse(s));
+  } catch {}
+}
+
+export { buildOrgOverlapMatrix };
+
+
+Create src/components/BoardCsvImport.tsx
+
+"use client";
+import Papa from "papaparse";
+import { useBoardMap } from "@/lib/boardMapStore";
+
+export default function BoardCsvImport() {
+  const importRows = useBoardMap(s => s.importRows);
+  const compute = useBoardMap(s => s.compute);
+
+  function onFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const f = e.target.files?.[0];
+    if (!f) return;
+    Papa.parse(f, {
+      header: true,
+      skipEmptyLines: true,
+      complete: (res) => {
+        const rows = (res.data as any[]).map((r) => ({
+          person_name: String(r.person_name || r.Person || r.person || "").trim(),
+          person_email: r.person_email ? String(r.person_email).trim() : undefined,
+          org_name: String(r.org_name || r.Organization || r.org || "").trim(),
+          role: r.role ? String(r.role).trim() : undefined,
+          start_year: r.start_year ? Number(r.start_year) : undefined,
+          end_year: r.end_year ? Number(r.end_year) : undefined
+        }));
+        importRows(rows);
+        compute();
+      }
+    });
+  }
+
+  return (
+    <div className="flex items-center gap-2">
+      <input type="file" accept=".csv" onChange={onFile} />
+      <a
+        href="data:text/csv;charset=utf-8,person_name,person_email,org_name,role,start_year,end_year%0AAlice Smith,alice@x.org,Hope Foundation,Director,2021,%0ABob Lee,,Hope Foundation,Treasurer,2020,%0AAlice Smith,alice@x.org,Water Now,Director,2022,%0AChris Young,,Water Now,Director,2022,%0ABob Lee,,TechReach,Director,2023,%0A"
+        download="sample_board_roles.csv"
+        className="text-indigo-700 text-sm"
+      >
+        Download sample CSV
+      </a>
+    </div>
+  );
+}
+
+3) Graph, matrix, and inspector UI
+
+Create src/components/BoardGraph.tsx
+
+"use client";
+import dynamic from "next/dynamic";
+import { useEffect, useMemo, useState } from "react";
+import { useBoardMap } from "@/lib/boardMapStore";
+import type { GraphNode, ProjectedGraph } from "@/lib/boardMapTypes";
+
+const ForceGraph2D = dynamic(() => import("react-force-graph").then(m => m.ForceGraph2D), { ssr: false });
+
+export default function BoardGraph() {
+  const graph = useBoardMap(s => s.graph);
+  const query = useBoardMap(s => s.query);
+  const view = useBoardMap(s => s.view);
+
+  const [sel, setSel] = useState<GraphNode | null>(null);
+
+  const data = useMemo(() => {
+    if (!graph) return { nodes: [], links: [] };
+    const nodes = graph.nodes.filter(n =>
+      !query ||
+      n.label.toLowerCase().includes(query.toLowerCase())
+    );
+    const ids = new Set(nodes.map(n => n.id));
+    const links = graph.links.filter(l => ids.has(String(l.source)) && ids.has(String(l.target)));
+    return { nodes, links };
+  }, [graph, query]);
+
+  useEffect(() => { setSel(null); }, [graph, query, view]);
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
+      <div className="lg:col-span-3 h-[70vh] border bg-white rounded">
+        <ForceGraph2D
+          graphData={data as unknown as ProjectedGraph}
+          nodeLabel={(n: any) => `${n.label}`}
+          nodeAutoColorBy={"type"}
+          linkDirectionalParticles={0}
+          linkColor={() => "rgba(80,80,80,0.3)"}
+          nodeCanvasObjectMode={() => "after"}
+          nodeCanvasObject={(node: any, ctx, scale) => {
+            const label = node.label;
+            const fontSize = 12 / scale;
+            ctx.font = `${fontSize}px sans-serif`;
+            ctx.textAlign = "center";
+            ctx.textBaseline = "top";
+            ctx.fillStyle = "#222";
+            ctx.fillText(label, node.x, node.y + 6);
+          }}
+          onNodeClick={(n: any) => setSel(n)}
+          cooldownTicks={100}
+        />
+      </div>
+      <div className="lg:col-span-1 bg-white border rounded p-3">
+        <div className="font-semibold mb-2">Inspector</div>
+        {!sel && <div className="text-sm text-gray-500">Click any {view === "people" ? "person" : "organization"} to inspect.</div>}
+        {sel && (
+          <div className="space-y-2 text-sm">
+            <div><span className="text-gray-500">Label:</span> {sel.label}</div>
+            <div><span className="text-gray-500">Type:</span> {sel.type}</div>
+            <div><span className="text-gray-500">Degree:</span> {sel.degree ?? 0}</div>
+            <div className="mt-2 text-gray-500">Neighbors:</div>
+            <Neighbors nodeId={sel.id} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function Neighbors({ nodeId }: { nodeId: string }) {
+  const graph = useBoardMap(s => s.graph);
+  if (!graph) return null;
+  const neighbors = new Map<string, number>();
+  for (const l of graph.links) {
+    const s = String(l.source), t = String(l.target);
+    if (s === nodeId) neighbors.set(t, (neighbors.get(t) ?? 0) + l.weight);
+    if (t === nodeId) neighbors.set(s, (neighbors.get(s) ?? 0) + l.weight);
+  }
+  const byWeight = [...neighbors.entries()].sort((a,b)=>b[1]-a[1]).slice(0, 20);
+  return (
+    <ul className="list-disc ml-4">
+      {byWeight.map(([id,w]) => {
+        const n = graph.nodes.find(nn => nn.id === id);
+        return <li key={id}>{n?.label} <span className="text-gray-400">({w})</span></li>;
+      })}
+      {byWeight.length === 0 && <li className="text-gray-400">None</li>}
+    </ul>
+  );
+}
+
+
+Create src/components/OverlapMatrix.tsx
+
+"use client";
+import { useMemo } from "react";
+import { useBoardMap, buildOrgOverlapMatrix } from "@/lib/boardMapStore";
+
+export default function OverlapMatrix() {
+  const bi = useBoardMap(s => s.bi);
+
+  const data = useMemo(() => {
+    if (!bi) return null;
+    return buildOrgOverlapMatrix(bi);
+  }, [bi]);
+
+  if (!data) return <div className="text-sm text-gray-500">No data loaded.</div>;
+
+  const { matrix, orgs } = data;
+  const max = Math.max(1, ...matrix.flat());
+
+  return (
+    <div className="overflow-auto">
+      <table className="text-xs border-collapse">
+        <thead>
+          <tr>
+            <th className="sticky left-0 bg-white p-1 text-left">Org</th>
+            {orgs.map(o => <th key={o.id} className="p-1 text-left">{o.name.slice(0,12)}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {orgs.map((o,i) => (
+            <tr key={o.id}>
+              <td className="sticky left-0 bg-white p-1">{o.name}</td>
+              {orgs.map((_,j) => {
+                const v = matrix[i][j];
+                const intensity = v === 0 ? 0 : Math.round((v/max)*255);
+                const bg = v === 0 ? "transparent" : `rgb(0,122,255, ${0.1 + 0.6*(v/max)})`;
+                return <td key={j} title={`${v}`} className="w-6 h-6 text-center" style={{ background: bg }}>{v>0? v: ""}</td>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+
+Create src/components/BoardToolbar.tsx
+
+"use client";
+import { useEffect } from "react";
+import { loadPersistedRows, useBoardMap } from "@/lib/boardMapStore";
+
+export default function BoardToolbar() {
+  const view = useBoardMap(s => s.view);
+  const setView = useBoardMap(s => s.setView);
+  const setFilters = useBoardMap(s => s.setFilters);
+  const compute = useBoardMap(s => s.compute);
+
+  useEffect(() => {
+    loadPersistedRows();
+    compute();
+  }, [compute]);
+
+  function onChange() { compute(); }
+
+  return (
+    <div className="border-b bg-white p-3 flex flex-wrap items-center gap-3">
+      <div className="font-semibold">Board Relationship Map</div>
+      <div className="flex items-center gap-1">
+        <label className="text-sm">View:</label>
+        <select className="border rounded p-1 text-sm" value={view} onChange={e => { setView(e.target.value as any); onChange(); }}>
+          <option value="people">People Graph</option>
+          <option value="orgs">Organization Graph</option>
+        </select>
+      </div>
+      <input placeholder="Search (person/org)" className="border rounded p-1 text-sm" onChange={e => { setFilters({ query: e.target.value }); onChange(); }} />
+      <input placeholder="Role filter (e.g., Director)" className="border rounded p-1 text-sm" onChange={e => { setFilters({ roleFilter: e.target.value || undefined }); onChange(); }} />
+      <input placeholder="Min year" type="number" className="border rounded p-1 text-sm w-24" onChange={e => { setFilters({ yearMin: e.target.value ? Number(e.target.value) : undefined }); onChange(); }} />
+      <input placeholder="Max year" type="number" className="border rounded p-1 text-sm w-24" onChange={e => { setFilters({ yearMax: e.target.value ? Number(e.target.value) : undefined }); onChange(); }} />
+      <button className="px-3 py-1 rounded bg-gray-100 border text-sm" onClick={compute}>Apply</button>
+    </div>
+  );
+}
+
+4) Page
+
+Create src/app/board-map/page.tsx
+
+import BoardCsvImport from "@/components/BoardCsvImport";
+import BoardToolbar from "@/components/BoardToolbar";
+import BoardGraph from "@/components/BoardGraph";
+import OverlapMatrix from "@/components/OverlapMatrix";
+
+export default function BoardMapPage() {
+  return (
+    <main className="min-h-screen bg-gray-50">
+      <BoardToolbar />
+      <div className="max-w-7xl mx-auto p-4 space-y-6">
+        <div className="bg-white border rounded p-3">
+          <div className="text-sm text-gray-700">
+            Upload a CSV with columns: person_name, person_email (optional), org_name, role, start_year, end_year.
+          </div>
+          <div className="mt-2"><BoardCsvImport /></div>
+        </div>
+
+        <section>
+          <h2 className="font-semibold mb-2">Network</h2>
+          <BoardGraph />
+        </section>
+
+        <section>
+          <h2 className="font-semibold mb-2">Organization Overlap Matrix</h2>
+          <div className="bg-white border rounded p-3">
+            <OverlapMatrix />
+          </div>
+        </section>
+      </div>
+    </main>
+  );
+}
+
+
+Add a simple link in your header (optional):
+
+// in src/app/layout.tsx header area
+// <a href="/board-map" className="text-gray-700 hover:text-black">Board Map</a>
+
+How this solves your use case
+
+Find shared board members instantly: switch to People Graph to see which people connect multiple orgs; click any person to see their neighbors and the weight (how many shared boards).
+
+Identify natural intros: switch to Org Graph to see which organizations share the most directors; use the matrix to spot high-overlap clusters.
+
+Enrichment-ready: person emails and aliases allow simple entity resolution; you can later plug in external sources or your CRM to autocomplete missing roles and tenures.
+
+Consulting layer: you can export a client’s CSV, upload, and in seconds show a CEO how their board overlaps with peers and where relationship mapping opens doors.

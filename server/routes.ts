@@ -7,7 +7,8 @@ import {
   persons, opportunities, users, gifts, interactions, integrations, integrationSyncRuns, dataQualityIssues, households, tasks,
   predictiveScores, wealthEvents, meetingBriefs, voiceNotes, boardConnections, corporatePartnerships, peerDonors,
   outreachTemplates, grantProposals, impactReports, sentimentAnalysis, peerBenchmarks, portfolioOptimizations,
-  calendarEvents, stewardshipWorkflows, taskPriorityScores, giftRegistries, grants
+  calendarEvents, stewardshipWorkflows, taskPriorityScores, giftRegistries, grants, boardMemberships,
+  insertBoardMembershipSchema
 } from "@shared/schema";
 import { eq, sql, desc, gte, and, inArray } from "drizzle-orm";
 
@@ -1014,6 +1015,77 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching peer donors:", error);
       res.status(500).json({ message: "Failed to fetch peer donors" });
+    }
+  });
+
+  // Board Network Mapper - Cross-org board relationship analysis
+  app.get("/api/board-network", async (req, res) => {
+    try {
+      const memberships = await db
+        .select()
+        .from(boardMemberships)
+        .orderBy(boardMemberships.orgName, boardMemberships.personName);
+      
+      res.json(memberships);
+    } catch (error) {
+      console.error("Error fetching board memberships:", error);
+      res.status(500).json({ message: "Failed to fetch board memberships" });
+    }
+  });
+
+  app.post("/api/board-network/import", isAuthenticated, async (req, res) => {
+    try {
+      const { memberships } = req.body;
+      
+      if (!Array.isArray(memberships) || memberships.length === 0) {
+        return res.status(400).json({ message: "Invalid data: expected array of memberships" });
+      }
+
+      // Validate each membership, collecting errors
+      const validatedMemberships: any[] = [];
+      const errors: any[] = [];
+
+      for (let i = 0; i < memberships.length; i++) {
+        try {
+          const validated = insertBoardMembershipSchema.parse(memberships[i]);
+          validatedMemberships.push(validated);
+        } catch (validationError: any) {
+          errors.push({
+            row: i + 1,
+            error: validationError.errors?.[0]?.message || validationError.message || "Validation failed",
+          });
+        }
+      }
+
+      // If all records failed validation, return 400
+      if (validatedMemberships.length === 0) {
+        return res.status(400).json({
+          message: "All records failed validation",
+          errors: errors.slice(0, 10), // Return first 10 errors
+        });
+      }
+
+      // Insert valid records
+      const inserted = await db
+        .insert(boardMemberships)
+        .values(validatedMemberships)
+        .returning();
+
+      // Return success with warnings if some records failed
+      const response: any = {
+        message: `Successfully imported ${inserted.length} board memberships`,
+        count: inserted.length,
+      };
+
+      if (errors.length > 0) {
+        response.warnings = `${errors.length} records skipped due to validation errors`;
+        response.errors = errors.slice(0, 10); // Include first 10 errors
+      }
+
+      res.json(response);
+    } catch (error) {
+      console.error("Error importing board memberships:", error);
+      res.status(500).json({ message: "Failed to import board memberships" });
     }
   });
 

@@ -18,6 +18,7 @@ import {
   voiceNotes,
   predictiveScores,
   boardConnections,
+  boardMemberships,
   corporatePartnerships,
   peerDonors,
   outreachTemplates,
@@ -79,6 +80,7 @@ async function seed() {
   await db.delete(peerDonors);
   await db.delete(corporatePartnerships);
   await db.delete(boardConnections);
+  await db.delete(boardMemberships);
   await db.delete(predictiveScores);
   await db.delete(voiceNotes);
   await db.delete(meetingBriefs);
@@ -2417,7 +2419,83 @@ async function seed() {
   await db.insert(giftRegistries).values(giftRegistriesList);
   console.log(`✅ Created ${giftRegistriesList.length} gift registries`);
 
-  console.log("\n🎉 All 19 game-changing features seeded successfully!");
+  // ==================== BOARD NETWORK MEMBERSHIPS ====================
+  console.log("🔗 Creating board network memberships...");
+  const boardMembershipsList: any[] = [
+    // Person 1: Sarah Chen - Super connector across 4 orgs
+    { personName: "Sarah Chen", personEmail: "sarah.chen@email.com", orgName: "Hope Foundation", role: "Chair", startYear: 2019, endYear: null },
+    { personName: "Sarah Chen", personEmail: "sarah.chen@email.com", orgName: "TechReach Initiative", role: "Director", startYear: 2020, endYear: null },
+    { personName: "Sarah Chen", personEmail: "sarah.chen@email.com", orgName: "Green Earth Coalition", role: "Director", startYear: 2021, endYear: null },
+    { personName: "Sarah Chen", personEmail: "sarah.chen@email.com", orgName: "Arts For All", role: "Treasurer", startYear: 2022, endYear: null },
+    
+    // Person 2: Michael Rodriguez - on 3 org boards
+    { personName: "Michael Rodriguez", personEmail: "m.rodriguez@email.com", orgName: "Hope Foundation", role: "Director", startYear: 2020, endYear: null },
+    { personName: "Michael Rodriguez", personEmail: "m.rodriguez@email.com", orgName: "Water Now", role: "Vice Chair", startYear: 2018, endYear: null },
+    { personName: "Michael Rodriguez", personEmail: "m.rodriguez@email.com", orgName: "Community Health Network", role: "Director", startYear: 2021, endYear: null },
+    
+    // Person 3: Jennifer Park - Education focused, 3 orgs
+    { personName: "Jennifer Park", orgName: "Education First Alliance", role: "Chair", startYear: 2017, endYear: null },
+    { personName: "Jennifer Park", orgName: "Youth Leadership Institute", role: "Director", startYear: 2019, endYear: null },
+    { personName: "Jennifer Park", orgName: "TechReach Initiative", role: "Secretary", startYear: 2020, endYear: null },
+    
+    // Person 4: David Thompson - connector between tech and environment
+    { personName: "David Thompson", personEmail: "d.thompson@email.com", orgName: "TechReach Initiative", role: "Director", startYear: 2019, endYear: null },
+    { personName: "David Thompson", personEmail: "d.thompson@email.com", orgName: "Green Earth Coalition", role: "Chair", startYear: 2020, endYear: null },
+    { personName: "David Thompson", personEmail: "d.thompson@email.com", orgName: "Clean Water Alliance", role: "Director", startYear: 2022, endYear: null },
+    
+    // Person 5: Lisa Martinez - Healthcare + Education
+    { personName: "Lisa Martinez", orgName: "Community Health Network", role: "Chair", startYear: 2018, endYear: null },
+    { personName: "Lisa Martinez", orgName: "Education First Alliance", role: "Treasurer", startYear: 2020, endYear: null },
+    { personName: "Lisa Martinez", orgName: "Youth Leadership Institute", role: "Director", startYear: 2021, endYear: null },
+    
+    // Person 6: James Wilson - Arts + Community
+    { personName: "James Wilson", personEmail: "james.w@email.com", orgName: "Arts For All", role: "Director", startYear: 2019, endYear: null },
+    { personName: "James Wilson", personEmail: "james.w@email.com", orgName: "Downtown Community Center", role: "Vice Chair", startYear: 2020, endYear: null },
+    
+    // Person 7: Amanda Foster - Environment focused
+    { personName: "Amanda Foster", orgName: "Green Earth Coalition", role: "Director", startYear: 2019, endYear: null },
+    { personName: "Amanda Foster", orgName: "Clean Water Alliance", role: "Chair", startYear: 2021, endYear: null },
+    { personName: "Amanda Foster", orgName: "Water Now", role: "Director", startYear: 2022, endYear: null },
+    
+    // Person 8: Robert Lee - Past chair now advisor
+    { personName: "Robert Lee", orgName: "Hope Foundation", role: "Director", startYear: 2015, endYear: 2023 },
+    { personName: "Robert Lee", orgName: "Community Health Network", role: "Director", startYear: 2018, endYear: null },
+    
+    // Person 9: Maria Gonzalez - Youth + Education
+    { personName: "Maria Gonzalez", personEmail: "maria.g@email.com", orgName: "Youth Leadership Institute", role: "Chair", startYear: 2020, endYear: null },
+    { personName: "Maria Gonzalez", personEmail: "maria.g@email.com", orgName: "Education First Alliance", role: "Director", startYear: 2021, endYear: null },
+    
+    // Person 10: Kevin Patel - Tech + Social Impact
+    { personName: "Kevin Patel", orgName: "TechReach Initiative", role: "Chair", startYear: 2021, endYear: null },
+    { personName: "Kevin Patel", orgName: "Social Innovation Hub", role: "Founder & Director", startYear: 2019, endYear: null },
+    
+    // Additional members for overlap
+    { personName: "Rachel Kim", orgName: "Arts For All", role: "Director", startYear: 2020, endYear: null },
+    { personName: "Rachel Kim", orgName: "Downtown Community Center", role: "Director", startYear: 2021, endYear: null },
+    
+    { personName: "Daniel Nguyen", orgName: "Water Now", role: "Treasurer", startYear: 2020, endYear: null },
+    { personName: "Daniel Nguyen", orgName: "Clean Water Alliance", role: "Secretary", startYear: 2021, endYear: null },
+    
+    { personName: "Emily Brooks", orgName: "Hope Foundation", role: "Secretary", startYear: 2021, endYear: null },
+    { personName: "Emily Brooks", orgName: "Downtown Community Center", role: "Chair", startYear: 2022, endYear: null },
+    
+    { personName: "Christopher Davis", orgName: "Education First Alliance", role: "Director", startYear: 2019, endYear: null },
+    { personName: "Christopher Davis", orgName: "Social Innovation Hub", role: "Director", startYear: 2020, endYear: null },
+    
+    { personName: "Ashley Johnson", orgName: "Community Health Network", role: "Director", startYear: 2021, endYear: null },
+    { personName: "Ashley Johnson", orgName: "Youth Leadership Institute", role: "Treasurer", startYear: 2022, endYear: null },
+    
+    // Single-org board members (realistic mix)
+    { personName: "Brian Taylor", orgName: "Green Earth Coalition", role: "Treasurer", startYear: 2020, endYear: null },
+    { personName: "Nicole Anderson", orgName: "Clean Water Alliance", role: "Director", startYear: 2021, endYear: null },
+    { personName: "Steven White", orgName: "Social Innovation Hub", role: "Secretary", startYear: 2021, endYear: null },
+    { personName: "Karen Moore", orgName: "Downtown Community Center", role: "Treasurer", startYear: 2019, endYear: null },
+  ];
+
+  await db.insert(boardMemberships).values(boardMembershipsList);
+  console.log(`✅ Created ${boardMembershipsList.length} board memberships across 12 organizations`);
+
+  console.log("\n🎉 All 20 game-changing features seeded successfully!");
 
   // ==================== SUMMARY ====================
   console.log("\n🎉 Database seeding completed successfully!");
