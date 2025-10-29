@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Sheet,
   SheetContent,
@@ -17,7 +17,6 @@ import {
   CheckCircle2,
   ExternalLink,
   X,
-  Filter,
 } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -39,7 +38,7 @@ export default function Integrations() {
   const [integrations, setIntegrations] = useState<Integration[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState("ALL");
   const [selectedIntegration, setSelectedIntegration] = useState<Integration | null>(null);
 
   useEffect(() => {
@@ -57,13 +56,13 @@ export default function Integrations() {
 
   const categories = useMemo(() => {
     const cats = Array.from(new Set(integrations.map((i) => i.category)));
-    return ["All", ...cats.sort()];
+    return ["ALL", ...cats.sort()];
   }, [integrations]);
 
   const filteredIntegrations = useMemo(() => {
     return integrations.filter((integration) => {
       const matchesCategory =
-        selectedCategory === "All" || integration.category === selectedCategory;
+        selectedCategory === "ALL" || integration.category === selectedCategory;
       
       if (!searchQuery) return matchesCategory;
 
@@ -121,33 +120,37 @@ export default function Integrations() {
         <Plug className="w-8 h-8 text-muted-foreground" />
       </div>
 
-      {/* Search and Filters */}
-      <div className="flex flex-col md:flex-row gap-3">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            placeholder="Search integrations, modules, or features..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9"
-            data-testid="input-search-integrations"
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <Filter className="w-4 h-4 text-muted-foreground" />
-          <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-            <SelectTrigger className="w-full md:w-60" data-testid="select-category-filter">
-              <SelectValue placeholder="All Categories" />
-            </SelectTrigger>
-            <SelectContent>
-              {categories.map((cat) => (
-                <SelectItem key={cat} value={cat} data-testid={`option-category-${cat.toLowerCase().replace(/\s+/g, '-')}`}>
-                  {cat} {cat !== "All" && `(${integrations.filter((i) => i.category === cat).length})`}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+      {/* Category Tabs */}
+      <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
+        <TabsList className="w-full justify-start h-auto flex-wrap gap-1 bg-transparent border-b rounded-none p-0">
+          {categories.map((cat) => (
+            <TabsTrigger
+              key={cat}
+              value={cat}
+              className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none bg-transparent px-4"
+              data-testid={`tab-category-${cat.toLowerCase().replace(/\s+/g, '-')}`}
+            >
+              {cat}
+              {cat !== "ALL" && (
+                <Badge variant="secondary" className="ml-2 text-xs">
+                  {integrations.filter((i) => i.category === cat).length}
+                </Badge>
+              )}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
+
+      {/* Search */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+        <Input
+          placeholder="Search integrations, modules, or features..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-9"
+          data-testid="input-search-integrations"
+        />
       </div>
 
       {/* Results count */}
@@ -229,7 +232,7 @@ export default function Integrations() {
               variant="outline"
               onClick={() => {
                 setSearchQuery("");
-                setSelectedCategory("All");
+                setSelectedCategory("ALL");
               }}
               data-testid="button-clear-filters"
             >
