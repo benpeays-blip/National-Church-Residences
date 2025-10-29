@@ -13,6 +13,23 @@ import {
   integrations,
   integrationSyncRuns,
   dataQualityIssues,
+  wealthEvents,
+  meetingBriefs,
+  voiceNotes,
+  predictiveScores,
+  boardConnections,
+  corporatePartnerships,
+  peerDonors,
+  outreachTemplates,
+  grantProposals,
+  impactReports,
+  sentimentAnalysis,
+  peerBenchmarks,
+  portfolioOptimizations,
+  calendarEvents,
+  stewardshipWorkflows,
+  taskPriorityScores,
+  giftRegistries,
 } from "@shared/schema";
 import { sql } from "drizzle-orm";
 
@@ -48,7 +65,24 @@ async function seed() {
 
   // Clear existing data (in reverse order of dependencies)
   console.log("🗑️  Clearing existing data...");
+  await db.delete(taskPriorityScores);
   await db.delete(tasks);
+  await db.delete(giftRegistries);
+  await db.delete(stewardshipWorkflows);
+  await db.delete(calendarEvents);
+  await db.delete(portfolioOptimizations);
+  await db.delete(peerBenchmarks);
+  await db.delete(sentimentAnalysis);
+  await db.delete(impactReports);
+  await db.delete(grantProposals);
+  await db.delete(outreachTemplates);
+  await db.delete(peerDonors);
+  await db.delete(corporatePartnerships);
+  await db.delete(boardConnections);
+  await db.delete(predictiveScores);
+  await db.delete(voiceNotes);
+  await db.delete(meetingBriefs);
+  await db.delete(wealthEvents);
   await db.delete(dataQualityIssues);
   await db.delete(integrationSyncRuns);
   await db.delete(integrations);
@@ -1609,6 +1643,550 @@ async function seed() {
 
   await db.insert(tasks).values(tasksList);
   console.log(`✅ Created ${tasksList.length} tasks`);
+
+  // ==================== 19 GAME-CHANGING FEATURES ====================
+  console.log("\n🚀 Creating data for 19 game-changing features...");
+
+  // ==================== WEALTH EVENTS ====================
+  console.log("💎 Creating wealth events...");
+  const wealthEventsList: any[] = [];
+  const topWealthDonors = personsList.filter(p => p.capacityScore && p.capacityScore >= 80).slice(0, 20);
+  
+  const eventTypes = ["ipo", "stock_sale", "property_sale", "inheritance", "promotion"];
+  const sources = ["SEC Filings", "LinkedIn", "Property Records", "Business News", "Social Media"];
+  
+  for (let i = 0; i < 25; i++) {
+    const donor = topWealthDonors[i % topWealthDonors.length];
+    const eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+    const source = sources[Math.floor(Math.random() * sources.length)];
+    const daysAgo = Math.floor(Math.random() * 90);
+    const eventDate = new Date();
+    eventDate.setDate(eventDate.getDate() - daysAgo);
+    
+    let estimatedValue = 0;
+    if (eventType === "ipo") estimatedValue = Math.floor(Math.random() * 10000000) + 5000000;
+    else if (eventType === "stock_sale") estimatedValue = Math.floor(Math.random() * 5000000) + 1000000;
+    else if (eventType === "property_sale") estimatedValue = Math.floor(Math.random() * 3000000) + 500000;
+    else if (eventType === "inheritance") estimatedValue = Math.floor(Math.random() * 2000000) + 500000;
+    else estimatedValue = Math.floor(Math.random() * 500000) + 100000;
+    
+    wealthEventsList.push({
+      personId: donor.id,
+      eventType,
+      eventDate,
+      estimatedValue: estimatedValue.toString(),
+      source,
+      verified: Math.random() > 0.3 ? 1 : 0,
+      alertSent: Math.random() > 0.5 ? 1 : 0,
+    });
+  }
+  await db.insert(wealthEvents).values(wealthEventsList);
+  console.log(`✅ Created ${wealthEventsList.length} wealth events`);
+
+  // ==================== PREDICTIVE SCORES ====================
+  console.log("🎯 Creating predictive scores...");
+  const predictiveScoresList: any[] = [];
+  
+  for (const donor of personsList.slice(0, 40)) {
+    predictiveScoresList.push({
+      personId: donor.id,
+      askTiming: Math.floor(Math.random() * 40) + 60,
+      optimalAskAmount: (Math.floor(Math.random() * 50000) + 10000).toString(),
+      optimalAskDate: new Date(Date.now() + Math.random() * 180 * 24 * 60 * 60 * 1000),
+      churnRisk: Math.floor(Math.random() * 50),
+      upgradePotential: Math.floor(Math.random() * 100),
+      modelVersion: "v2.3.1",
+      confidenceLevel: Math.floor(Math.random() * 30) + 70,
+      keyFactors: [
+        "Consistent giving history",
+        "Recent engagement increase",
+        "Life event detected",
+        "Wealth capacity verified"
+      ].slice(0, Math.floor(Math.random() * 3) + 2),
+    });
+  }
+  await db.insert(predictiveScores).values(predictiveScoresList);
+  console.log(`✅ Created ${predictiveScoresList.length} predictive scores`);
+
+  // ==================== MEETING BRIEFS ====================
+  console.log("📋 Creating AI meeting briefs...");
+  const meetingBriefsList: any[] = [];
+  
+  for (let i = 0; i < 30; i++) {
+    const donor = personsList[Math.floor(Math.random() * personsList.length)];
+    const mgo = mgoUsers[Math.floor(Math.random() * mgoUsers.length)];
+    
+    meetingBriefsList.push({
+      personId: donor.id,
+      generatedForUserId: mgo.id,
+      meetingDate: new Date(Date.now() + Math.random() * 30 * 24 * 60 * 60 * 1000),
+      recentNews: [
+        `${donor.firstName} ${donor.lastName} mentioned in industry publication`,
+        "Company announced Q4 earnings beat expectations",
+        "Promoted to VP of Operations"
+      ].slice(0, Math.floor(Math.random() * 2) + 1),
+      conversationStarters: [
+        `Ask about their recent promotion at ${donor.organizationName || 'their company'}`,
+        "Mention the new scholarship program in their area of interest",
+        "Thank them for attending the Fall Gala"
+      ].slice(0, 2),
+      optimalAskAmount: (Math.floor(Math.random() * 50000) + 5000).toString(),
+      askConfidence: Math.floor(Math.random() * 30) + 70,
+      riskFactors: Math.random() > 0.7 ? ["Gave to competing organization last month", "Email engagement declining"] : null,
+      talkingPoints: [
+        "Capital campaign progress update",
+        "New program impact stories",
+        "Board expansion opportunity"
+      ].slice(0, 2),
+    });
+  }
+  await db.insert(meetingBriefs).values(meetingBriefsList);
+  console.log(`✅ Created ${meetingBriefsList.length} meeting briefs`);
+
+  // ==================== VOICE NOTES ====================
+  console.log("🎙️  Creating voice notes...");
+  const voiceNotesList: any[] = [];
+  
+  for (let i = 0; i < 20; i++) {
+    const donor = personsList[Math.floor(Math.random() * personsList.length)];
+    const mgo = mgoUsers[Math.floor(Math.random() * mgoUsers.length)];
+    
+    const daysAgo = Math.floor(Math.random() * 14);
+    const recordedAt = new Date();
+    recordedAt.setDate(recordedAt.getDate() - daysAgo);
+    
+    voiceNotesList.push({
+      userId: mgo.id,
+      personId: donor.id,
+      audioUrl: `https://storage.fundrazor.org/voice-notes/${i + 1}.mp3`,
+      recordedAt,
+      transcription: `Had a great call with ${donor.firstName} ${donor.lastName}. They expressed interest in our new scholarship program and mentioned they might be able to contribute $25,000 this year. Need to follow up with a proposal by next week. They also asked about naming opportunities for the new building.`,
+      aiSummary: `${donor.firstName} is interested in scholarship program. Potential $25K gift. Follow up with proposal and naming opportunities info.`,
+      extractedActionItems: [
+        "Send scholarship program proposal",
+        "Share naming opportunities brochure",
+        "Schedule follow-up call next week"
+      ].slice(0, Math.floor(Math.random() * 2) + 1),
+    });
+  }
+  await db.insert(voiceNotes).values(voiceNotesList);
+  console.log(`✅ Created ${voiceNotesList.length} voice notes`);
+
+  // ==================== BOARD CONNECTIONS ====================
+  console.log("🤝 Creating board connections...");
+  const boardConnectionsList: any[] = [];
+  
+  const boardMembers = personsList.filter(p => p.capacityScore && p.capacityScore >= 85).slice(0, 8);
+  
+  for (const donor of personsList.slice(0, 50)) {
+    const hasConnection = Math.random() > 0.6;
+    if (hasConnection) {
+      const boardMember = boardMembers[Math.floor(Math.random() * boardMembers.length)];
+      const degrees = Math.random() > 0.5 ? 1 : 2;
+      
+      boardConnectionsList.push({
+        prospectId: donor.id,
+        boardMemberId: boardMember.id,
+        connectionDegrees: degrees,
+        pathDescription: degrees === 1 
+          ? `Direct LinkedIn connection - worked together at ${donor.organizationName || 'TechCorp'}`
+          : `Connected through mutual contact Sarah Johnson (Former colleague)`,
+        sharedExperiences: degrees === 1 ? ["Worked at same company 2018-2020", "Both attended Stanford GSB"] : null,
+        lastVerified: new Date(),
+        introductionMade: Math.random() > 0.8 ? 1 : 0,
+      });
+    }
+  }
+  await db.insert(boardConnections).values(boardConnectionsList);
+  console.log(`✅ Created ${boardConnectionsList.length} board connections`);
+
+  // ==================== CORPORATE PARTNERSHIPS ====================
+  console.log("🏢 Creating corporate partnerships...");
+  const corporatePartnershipsList: any[] = [];
+  
+  const companies = ["Google", "Microsoft", "Amazon", "Salesforce", "Meta", "Apple", "Oracle", "Adobe", "Cisco", "Intel"];
+  
+  for (let i = 0; i < 15; i++) {
+    const company = companies[i % companies.length];
+    const employeeDonors = personsList.filter(p => p.organizationName === company || Math.random() > 0.7).slice(0, Math.floor(Math.random() * 8) + 3);
+    
+    corporatePartnershipsList.push({
+      companyName: company,
+      industry: ["Technology", "Software", "Cloud Computing"][Math.floor(Math.random() * 3)],
+      employeeDonorIds: employeeDonors.map(d => d.id),
+      matchingGiftProgram: Math.random() > 0.3 ? 1 : 0,
+      matchingRatio: Math.random() > 0.3 ? ["1:1", "2:1", "1:2"][Math.floor(Math.random() * 3)] : null,
+      annualMatchingCap: Math.random() > 0.3 ? (Math.floor(Math.random() * 15000) + 5000).toString() : null,
+      corporateFoundation: Math.random() > 0.5 ? 1 : 0,
+      volunteerProgram: Math.random() > 0.6 ? 1 : 0,
+      lastContactDate: randomDate(new Date(2024, 0, 1), new Date()),
+      keyContactName: Math.random() > 0.5 ? `${["Sarah", "John", "Emily", "Michael"][Math.floor(Math.random() * 4)]} ${["Smith", "Johnson", "Williams", "Brown"][Math.floor(Math.random() * 4)]}` : null,
+      partnershipValue: (Math.floor(Math.random() * 500000) + 50000).toString(),
+    });
+  }
+  await db.insert(corporatePartnerships).values(corporatePartnershipsList);
+  console.log(`✅ Created ${corporatePartnershipsList.length} corporate partnerships`);
+
+  // ==================== PEER DONORS ====================
+  console.log("👥 Creating peer donor recommendations...");
+  const peerDonorsList: any[] = [];
+  
+  for (let i = 0; i < 40; i++) {
+    const donor = personsList[i];
+    const similarDonors = personsList.filter((p, idx) => idx !== i && Math.abs((p.capacityScore || 0) - (donor.capacityScore || 0)) < 15);
+    
+    if (similarDonors.length > 0) {
+      const similarDonor = similarDonors[Math.floor(Math.random() * Math.min(3, similarDonors.length))];
+      
+      peerDonorsList.push({
+        personId: donor.id,
+        peerPersonId: similarDonor.id,
+        similarityScore: Math.floor(Math.random() * 30) + 70,
+        sharedCharacteristics: [
+          "Similar wealth band",
+          "Both give to education",
+          "Annual giving pattern",
+          "Program-specific interests"
+        ].slice(0, Math.floor(Math.random() * 2) + 2),
+        peerGaveToPrograms: campaignsList.slice(0, Math.floor(Math.random() * 3) + 1).map(c => c.id),
+        personNotYetAskedFor: campaignsList.slice(2, Math.floor(Math.random() * 2) + 3).map(c => c.id),
+      });
+    }
+  }
+  await db.insert(peerDonors).values(peerDonorsList);
+  console.log(`✅ Created ${peerDonorsList.length} peer donor matches`);
+
+  // ==================== OUTREACH TEMPLATES ====================
+  console.log("✉️  Creating personalized outreach templates...");
+  const outreachTemplatesList: any[] = [];
+  
+  for (let i = 0; i < 35; i++) {
+    const donor = personsList[i];
+    const templateType = ["email", "letter", "text"][Math.floor(Math.random() * 3)];
+    
+    const mgo = mgoUsers[Math.floor(Math.random() * mgoUsers.length)];
+    
+    outreachTemplatesList.push({
+      personId: donor.id,
+      generatedForUserId: mgo.id,
+      templateType,
+      subject: templateType !== "text" ? `${donor.firstName}, your impact this year has been extraordinary` : null,
+      bodyContent: `Dear ${donor.firstName},\n\nThank you for your ${donor.engagementScore && donor.engagementScore > 70 ? 'continued' : 'valued'} support. Your gift of $${Math.floor(Math.random() * 50000) + 1000} made possible [specific program impact].\n\nThis year, we're expanding our scholarship program, and we hope you'll consider a gift of $${Math.floor(Math.random() * 10000) + 5000} to help even more students achieve their dreams.\n\nWarm regards,\nJames Patterson\nDevelopment Director`,
+      tone: ["warm", "professional", "enthusiastic"][Math.floor(Math.random() * 3)],
+      personalizationPoints: [
+        `Referenced donor's past giving to ${["scholarship", "building", "program"][Math.floor(Math.random() * 3)]} fund`,
+        "Mentioned upcoming event they attended last year",
+        "Included specific impact numbers from their region"
+      ].slice(0, 2),
+      estimatedEngagementRate: Math.floor(Math.random() * 40) + 60,
+      sent: Math.random() > 0.6 ? 1 : 0,
+      sentAt: Math.random() > 0.6 ? new Date() : null,
+    });
+  }
+  await db.insert(outreachTemplates).values(outreachTemplatesList);
+  console.log(`✅ Created ${outreachTemplatesList.length} outreach templates`);
+
+  // ==================== GRANT PROPOSALS ====================
+  console.log("📝 Creating grant proposals...");
+  const grantProposalsList: any[] = [];
+  const existingGrants = await db.select().from(grants);
+  
+  for (let i = 0; i < Math.min(20, existingGrants.length); i++) {
+    const grant = existingGrants[i];
+    const status = ["draft", "in_review", "needs_revision", "submitted"][Math.floor(Math.random() * 4)];
+    
+    grantProposalsList.push({
+      grantId: grant.id,
+      funderGuidelines: "Foundation seeks proposals for education programs serving underrepresented communities. Preference for programs with measurable outcomes, sustainability plans, and community partnerships. Maximum award: $100,000. Focus areas: STEM education, college access, workforce development.",
+      generatedNarrative: `Our scholarship program directly addresses the foundation's priorities by providing comprehensive support to first-generation college students from underrepresented backgrounds. Over the past three years, we have served 450 students with a 92% retention rate and 88% graduation rate—significantly exceeding national averages.\n\nThe proposed expansion will enable us to serve an additional 75 students annually, with enhanced mentoring, career development workshops, and emergency financial assistance. Our partnership with local community colleges and four-year institutions ensures smooth transitions and continued support throughout the student journey.`,
+      generatedBudget: {
+        personnel: 45000,
+        scholarships: 450000,
+        mentoring: 25000,
+        workshops: 15000,
+        administration: 15000,
+        total: 550000
+      },
+      generatedOutcomes: [
+        "Serve 75 additional students annually",
+        "Maintain 90%+ retention rate",
+        "Achieve 85%+ graduation rate within 6 years",
+        "100% of graduates employed or in graduate school within 6 months"
+      ],
+      generatedEvaluationPlan: "We will track student outcomes using a comprehensive database system, conduct quarterly surveys, and provide annual reports to the foundation. Independent evaluation will be conducted by the University Research Center.",
+      status,
+      reviewedBy: status !== "draft" ? mgoUsers[0].id : null,
+      edits: status === "needs_revision" ? "Strengthen evaluation methodology, add more specific outcome metrics, clarify sustainability plan beyond grant period" : null,
+      submittedAt: status === "submitted" ? new Date() : null,
+    });
+  }
+  await db.insert(grantProposals).values(grantProposalsList);
+  console.log(`✅ Created ${grantProposalsList.length} grant proposals`);
+
+  // ==================== IMPACT REPORTS ====================
+  console.log("❤️  Creating personalized impact reports...");
+  const impactReportsList: any[] = [];
+  
+  for (let i = 0; i < 30; i++) {
+    const donor = personsList[i];
+    const totalGiving = giftsList
+      .filter(g => g.donorId === donor.id)
+      .reduce((sum, g) => sum + parseFloat(g.amount), 0);
+    
+    impactReportsList.push({
+      personId: donor.id,
+      reportingPeriod: "2024",
+      totalImpact: totalGiving.toString(),
+      programsSupported: ["Scholarship Program", "Building Fund", "Annual Fund", "Emergency Relief"].slice(0, Math.floor(Math.random() * 3) + 1),
+      beneficiariesHelped: Math.floor(totalGiving / 100) + 10,
+      personalizedStories: {
+        stories: [
+          {
+            name: "Maria Rodriguez",
+            program: "Scholarship",
+            impact: "First in family to attend college, now studying engineering"
+          },
+          {
+            name: "James Chen",
+            program: "After-School Program",
+            impact: "Improved grades from C to A average, planning for college"
+          }
+        ]
+      },
+      photosUrls: ["https://images.fundrazor.org/impact/photo1.jpg", "https://images.fundrazor.org/impact/photo2.jpg"],
+      customMessage: `${donor.firstName}, your generosity made it possible for ${Math.floor(totalGiving / 100) + 10} students to access life-changing educational opportunities this year. Thank you for believing in our mission!`,
+      videoUrl: Math.random() > 0.7 ? "https://videos.fundrazor.org/2024-impact.mp4" : null,
+      sentAt: Math.random() > 0.5 ? new Date() : null,
+      opened: Math.random() > 0.5 ? Math.floor(Math.random() * 5) + 1 : 0,
+    });
+  }
+  await db.insert(impactReports).values(impactReportsList);
+  console.log(`✅ Created ${impactReportsList.length} impact reports`);
+
+  // ==================== SENTIMENT ANALYSIS ====================
+  console.log("😊 Creating sentiment analysis...");
+  const sentimentAnalysisList: any[] = [];
+  
+  for (let i = 0; i < 35; i++) {
+    const donor = personsList[i];
+    const sentimentScore = Math.floor(Math.random() * 60) + 40;
+    const trend = sentimentScore > 70 ? "increasing" : sentimentScore < 50 ? "declining" : "stable";
+    const riskLevel = sentimentScore > 70 ? "low" : sentimentScore > 50 ? "medium" : "high";
+    
+    sentimentAnalysisList.push({
+      personId: donor.id,
+      analysisDate: new Date(),
+      emailResponseTime: (Math.random() * 48 + 2).toFixed(2),
+      engagementTrend: trend,
+      sentimentScore,
+      riskLevel,
+      keySignals: trend === "declining" 
+        ? ["Email open rate decreased 40%", "No event attendance in 6 months", "Decreased gift amount"]
+        : trend === "increasing"
+        ? ["Responded to 4/5 recent emails", "Attended 2 events this quarter", "Increased gift amount"]
+        : ["Consistent engagement pattern", "Responds to major appeals"],
+      recommendedAction: riskLevel === "high"
+        ? "Schedule personal call within 2 weeks to address concerns and re-engage"
+        : riskLevel === "medium"
+        ? "Send personalized impact story and invitation to upcoming event"
+        : "Continue current cultivation strategy, consider upgrade ask",
+      alertGenerated: riskLevel === "high" ? 1 : 0,
+    });
+  }
+  await db.insert(sentimentAnalysis).values(sentimentAnalysisList);
+  console.log(`✅ Created ${sentimentAnalysisList.length} sentiment analyses`);
+
+  // ==================== PEER BENCHMARKS ====================
+  console.log("📊 Creating peer benchmarks...");
+  const peerBenchmarksList: any[] = [];
+  
+  const benchmarkMetrics = [
+    { name: "Average Gift Size", ourValue: 1842, peerAvg: 1650, peerMedian: 1580, peerTop25: 2100 },
+    { name: "Donor Retention Rate", ourValue: 68, peerAvg: 62, peerMedian: 60, peerTop25: 75 },
+    { name: "Major Gifts ($10K+) Count", ourValue: 42, peerAvg: 35, peerMedian: 32, peerTop25: 55 },
+    { name: "Monthly Recurring Donors", ourValue: 234, peerAvg: 210, peerMedian: 195, peerTop25: 280 },
+    { name: "Event Attendance Rate", ourValue: 45, peerAvg: 52, peerMedian: 50, peerTop25: 65 },
+    { name: "Email Open Rate (%)", ourValue: 28, peerAvg: 25, peerMedian: 24, peerTop25: 32 },
+    { name: "Planned Giving Inquiries", ourValue: 12, peerAvg: 15, peerMedian: 14, peerTop25: 22 },
+    { name: "Grant Success Rate (%)", ourValue: 42, peerAvg: 38, peerMedian: 36, peerTop25: 55 },
+  ];
+  
+  for (const metric of benchmarkMetrics) {
+    const percentile = ((metric.ourValue - metric.peerMedian) / (metric.peerTop25 - metric.peerMedian)) * 50 + 50;
+    const trend = Math.random() > 0.4 ? "improving" : Math.random() > 0.5 ? "stable" : "declining";
+    
+    peerBenchmarksList.push({
+      metricName: metric.name,
+      ourValue: metric.ourValue.toString(),
+      peerAverage: metric.peerAvg.toString(),
+      peerMedian: metric.peerMedian.toString(),
+      peerTop25: metric.peerTop25.toString(),
+      percentileRank: Math.max(10, Math.min(95, Math.round(percentile))),
+      trend,
+      aiRecommendation: percentile < 50
+        ? `You're below the peer median. Consider implementing best practices from top-performing organizations in this area.`
+        : percentile > 75
+        ? `Strong performance! You're in the top quartile. Share your strategies with peer organizations.`
+        : `Solid performance. Small improvements could move you into top quartile.`,
+    });
+  }
+  await db.insert(peerBenchmarks).values(peerBenchmarksList);
+  console.log(`✅ Created ${peerBenchmarksList.length} peer benchmarks`);
+
+  // ==================== PORTFOLIO OPTIMIZATIONS ====================
+  console.log("🎯 Creating portfolio optimizations...");
+  const portfolioOptimizationsList: any[] = [];
+  
+  for (let i = 0; i < 15; i++) {
+    const donor = personsList[Math.floor(Math.random() * 50)];
+    const currentMGO = mgoUsers[i % mgoUsers.length];
+    const recommendedMGO = mgoUsers[(i + 1) % mgoUsers.length];
+    
+    portfolioOptimizationsList.push({
+      prospectId: donor.id,
+      currentAssignee: currentMGO.id,
+      recommendedAssignee: recommendedMGO.id,
+      optimizationScore: Math.floor(Math.random() * 40) + 60,
+      reasoning: [
+        `${recommendedMGO.firstName} has stronger track record with donors in ${donor.primaryOrganization ? 'tech sector' : 'this wealth band'}`,
+        "Geographic proximity: Lives in same region",
+        "Workload balance: Would improve capacity utilization by 15%",
+        "Shared professional background increases rapport potential"
+      ].slice(0, Math.floor(Math.random() * 2) + 2),
+      estimatedImpact: (Math.floor(Math.random() * 50000) + 10000).toString(),
+      implemented: Math.random() > 0.7 ? 1 : 0,
+    });
+  }
+  await db.insert(portfolioOptimizations).values(portfolioOptimizationsList);
+  console.log(`✅ Created ${portfolioOptimizationsList.length} portfolio optimizations`);
+
+  // ==================== CALENDAR EVENTS ====================
+  console.log("📅 Creating smart calendar events...");
+  const calendarEventsList: any[] = [];
+  
+  for (let i = 0; i < 40; i++) {
+    const donor = personsList[Math.floor(Math.random() * 50)];
+    const mgo = mgoUsers[Math.floor(Math.random() * mgoUsers.length)];
+    const daysOut = Math.floor(Math.random() * 60) - 10;
+    const scheduledDate = new Date();
+    scheduledDate.setDate(scheduledDate.getDate() + daysOut);
+    
+    const eventTypes = ["donor_meeting", "cultivation_lunch", "site_visit", "proposal_presentation", "stewardship_call"];
+    const eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+    
+    calendarEventsList.push({
+      userId: mgo.id,
+      personId: donor.id,
+      eventType,
+      scheduledAt: scheduledDate,
+      duration: eventType === "donor_meeting" ? 60 : eventType === "cultivation_lunch" ? 90 : eventType === "site_visit" ? 120 : 45,
+      aiSuggestedTime: Math.random() > 0.5 ? new Date(scheduledDate.getTime() + 24 * 60 * 60 * 1000) : null,
+      priority: Math.floor(Math.random() * 60) + 40,
+      estimatedImpact: (Math.floor(Math.random() * 100000) + 5000).toString(),
+      completed: daysOut < 0 ? 1 : 0,
+      outcome: daysOut < 0 && Math.random() > 0.5 
+        ? `Great meeting! ${donor.firstName} expressed interest in $${Math.floor(Math.random() * 50000) + 10000} gift. Follow-up proposal needed.`
+        : null,
+    });
+  }
+  await db.insert(calendarEvents).values(calendarEventsList);
+  console.log(`✅ Created ${calendarEventsList.length} calendar events`);
+
+  // ==================== STEWARDSHIP WORKFLOWS ====================
+  console.log("✨ Creating stewardship workflows...");
+  const stewardshipWorkflowsList: any[] = [];
+  
+  const majorGifts = giftsList.filter(g => parseFloat(g.amount) >= 10000).slice(0, 25);
+  
+  for (const gift of majorGifts) {
+    const steps = [
+      { day: 1, type: "thank_you_call", status: "completed" },
+      { day: 3, type: "thank_you_letter", status: "completed" },
+      { day: 14, type: "impact_update", status: "completed" },
+      { day: 90, type: "quarterly_report", status: "pending" },
+      { day: 180, type: "event_invitation", status: "pending" },
+      { day: 365, type: "renewal_ask", status: "pending" }
+    ];
+    
+    const currentStep = Math.floor(Math.random() * steps.length);
+    const completedSteps = Math.min(currentStep, steps.length - 1);
+    
+    stewardshipWorkflowsList.push({
+      giftId: gift.id,
+      personId: gift.donorId,
+      workflowName: parseFloat(gift.amount) >= 25000 ? "Major Gift Stewardship" : "Leadership Donor Stewardship",
+      steps: JSON.stringify(steps),
+      currentStep,
+      completedSteps,
+      nextActionDate: new Date(Date.now() + (steps[currentStep]?.day || 7) * 24 * 60 * 60 * 1000),
+      nextActionType: steps[currentStep]?.type || "follow_up",
+      paused: Math.random() > 0.9 ? 1 : 0,
+      pausedReason: Math.random() > 0.9 ? "Donor requested pause on communications" : null,
+      completedAt: completedSteps === steps.length ? new Date() : null,
+    });
+  }
+  await db.insert(stewardshipWorkflows).values(stewardshipWorkflowsList);
+  console.log(`✅ Created ${stewardshipWorkflowsList.length} stewardship workflows`);
+
+  // ==================== TASK PRIORITY SCORES ====================
+  console.log("⚡ Creating task priority scores...");
+  const taskPriorityScoresList: any[] = [];
+  
+  for (const task of tasksList) {
+    const urgencyScore = task.priority === "urgent" ? 95 : task.priority === "high" ? 75 : task.priority === "medium" ? 50 : 30;
+    const impactScore = Math.floor(Math.random() * 40) + 50;
+    const effortScore = Math.floor(Math.random() * 30) + 20;
+    const finalPriority = Math.round((urgencyScore * 0.4 + impactScore * 0.4 + (100 - effortScore) * 0.2));
+    
+    taskPriorityScoresList.push({
+      taskId: task.id,
+      estimatedRevenue: (Math.floor(Math.random() * 50000) + 5000).toString(),
+      urgencyScore,
+      impactScore,
+      effortScore,
+      finalPriority,
+      reasoning: `High ${urgencyScore > 80 ? 'urgency' : 'impact'} task with ${effortScore < 40 ? 'low' : 'moderate'} effort required. Donor has ${impactScore > 70 ? 'strong' : 'moderate'} capacity and engagement. Recommended to prioritize ${finalPriority > 75 ? 'immediately' : 'within this week'}.`,
+    });
+  }
+  await db.insert(taskPriorityScores).values(taskPriorityScoresList);
+  console.log(`✅ Created ${taskPriorityScoresList.length} task priority scores`);
+
+  // ==================== GIFT REGISTRIES ====================
+  console.log("🎁 Creating gift registries...");
+  const giftRegistriesList: any[] = [];
+  
+  for (let i = 0; i < 20; i++) {
+    const donor = personsList[Math.floor(Math.random() * 60)];
+    const occasionTypes = ["wedding", "birthday", "anniversary", "graduation", "baby_shower"];
+    const occasionType = occasionTypes[Math.floor(Math.random() * occasionTypes.length)];
+    const daysOut = Math.floor(Math.random() * 180) - 30;
+    const occasionDate = new Date();
+    occasionDate.setDate(occasionDate.getDate() + daysOut);
+    
+    const goalAmount = Math.floor(Math.random() * 15000) + 2000;
+    const amountRaised = daysOut < 0 ? goalAmount * (0.6 + Math.random() * 0.4) : goalAmount * Math.random() * 0.8;
+    
+    giftRegistriesList.push({
+      personId: donor.id,
+      occasionType,
+      occasionDate,
+      goalAmount: goalAmount.toString(),
+      amountRaised: Math.round(amountRaised).toString(),
+      campaignId: campaignsList[0].id,
+      personalMessage: occasionType === "wedding"
+        ? `In lieu of traditional wedding gifts, we're asking friends and family to support our favorite cause: education for underprivileged youth.`
+        : occasionType === "birthday"
+        ? `For my birthday this year, I'm asking for donations to help fund scholarships instead of presents!`
+        : `Help us celebrate by supporting a cause close to our hearts.`,
+      publicUrl: `https://give.fundrazor.org/registry/${donor.id}-${occasionType}`,
+      active: daysOut > -30 ? 1 : 0,
+      closedAt: daysOut < -30 ? new Date() : null,
+    });
+  }
+  await db.insert(giftRegistries).values(giftRegistriesList);
+  console.log(`✅ Created ${giftRegistriesList.length} gift registries`);
+
+  console.log("\n🎉 All 19 game-changing features seeded successfully!");
 
   // ==================== SUMMARY ====================
   console.log("\n🎉 Database seeding completed successfully!");
