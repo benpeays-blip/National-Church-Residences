@@ -140,7 +140,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const totalGiving = giftsList.reduce((sum, g) => sum + parseFloat(g.amount), 0);
       const avgGiftSize = totalGifts > 0 ? totalGiving / totalGifts : 0;
       const firstGiftDate = giftsList.length > 0
-        ? new Date(Math.min(...giftsList.map((g) => new Date(g.giftDate).getTime())))
+        ? new Date(Math.min(...giftsList.map((g) => new Date(g.receivedAt).getTime())))
         : null;
       const daysSinceLastGift = person.lastGiftDate
         ? Math.floor((Date.now() - new Date(person.lastGiftDate).getTime()) / (1000 * 60 * 60 * 24))

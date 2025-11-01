@@ -63,7 +63,7 @@ type DonorDetail = {
   gifts: {
     id: string;
     amount: string;
-    giftDate: string;
+    receivedAt: string;
     campaignId: string | null;
     sourceSystem: string | null;
     campaign: {
@@ -87,7 +87,7 @@ type DonorDetail = {
     id: string;
     type: string;
     notes: string | null;
-    interactionDate: string;
+    occurredAt: string;
     userId: string | null;
     user: {
       firstName: string;
@@ -532,10 +532,10 @@ export default function DonorDetail() {
                     </TableHeader>
                     <TableBody>
                       {donor.gifts
-                        .sort((a, b) => new Date(b.giftDate).getTime() - new Date(a.giftDate).getTime())
+                        .sort((a, b) => new Date(b.receivedAt).getTime() - new Date(a.receivedAt).getTime())
                         .map((gift) => (
                           <TableRow key={gift.id}>
-                            <TableCell>{format(new Date(gift.giftDate), "MMM d, yyyy")}</TableCell>
+                            <TableCell>{format(new Date(gift.receivedAt), "MMM d, yyyy")}</TableCell>
                             <TableCell className="font-semibold">
                               {formatCurrency(parseFloat(gift.amount))}
                             </TableCell>
@@ -628,7 +628,7 @@ export default function DonorDetail() {
                   {donor.interactions.length > 0 ? (
                     <div className="space-y-4">
                       {donor.interactions
-                        .sort((a, b) => new Date(b.interactionDate).getTime() - new Date(a.interactionDate).getTime())
+                        .sort((a, b) => new Date(b.occurredAt).getTime() - new Date(a.occurredAt).getTime())
                         .map((interaction) => (
                           <div key={interaction.id} className="flex gap-4 pb-4 border-b last:border-0">
                             <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center shrink-0">
@@ -638,7 +638,7 @@ export default function DonorDetail() {
                               <div className="flex items-start justify-between gap-2 mb-1">
                                 <p className="font-medium text-sm">{interaction.type}</p>
                                 <span className="text-xs text-muted-foreground">
-                                  {format(new Date(interaction.interactionDate), "MMM d, yyyy")}
+                                  {format(new Date(interaction.occurredAt), "MMM d, yyyy")}
                                 </span>
                               </div>
                               {interaction.notes && (
