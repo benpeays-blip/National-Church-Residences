@@ -14,6 +14,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
 import { Database, Mail, TrendingUp, AlertCircle } from "lucide-react";
+import { Link } from "wouter";
 
 interface DevDirectorData {
   metrics: {
@@ -119,26 +120,42 @@ export default function DashboardDevDirector() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <MetricCard
-          label="YTD vs Goal"
-          value={`${ytdProgress.toFixed(0)}%`}
-          change={12}
-          trend="up"
-        />
-        <MetricCard
-          label="Pipeline Value"
-          value={formatCurrency(data?.metrics.pipelineValue)}
-        />
-        <MetricCard
-          label="90-Day Forecast"
-          value={formatCurrency(data?.metrics.forecast90Days)}
-        />
-        <MetricCard
-          label="Data Health"
-          value={`${data?.metrics.dataHealthScore ?? 0}%`}
-          change={5}
-          trend="up"
-        />
+        <Link href="/analytics/ytd-vs-goal">
+          <div className="hover-elevate active-elevate-2 cursor-pointer">
+            <MetricCard
+              label="YTD vs Goal"
+              value={`${ytdProgress.toFixed(0)}%`}
+              change={12}
+              trend="up"
+            />
+          </div>
+        </Link>
+        <Link href="/analytics/pipeline-value">
+          <div className="hover-elevate active-elevate-2 cursor-pointer">
+            <MetricCard
+              label="Pipeline Value"
+              value={formatCurrency(data?.metrics.pipelineValue)}
+            />
+          </div>
+        </Link>
+        <Link href="/analytics/forecast-90-days">
+          <div className="hover-elevate active-elevate-2 cursor-pointer">
+            <MetricCard
+              label="90-Day Forecast"
+              value={formatCurrency(data?.metrics.forecast90Days)}
+            />
+          </div>
+        </Link>
+        <Link href="/data-health">
+          <div className="hover-elevate active-elevate-2 cursor-pointer">
+            <MetricCard
+              label="Data Health"
+              value={`${data?.metrics.dataHealthScore ?? 0}%`}
+              change={5}
+              trend="up"
+            />
+          </div>
+        </Link>
       </div>
 
       {/* Data Coverage & Quality Metrics */}
@@ -235,38 +252,42 @@ export default function DashboardDevDirector() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Card className="p-6" data-testid="card-lybunt-metric">
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-muted-foreground">
-              "Last Year But Unfortunately Not This" (LYBUNT) Donors
-            </p>
-            <p 
-              className="text-4xl font-bold tabular-nums text-chart-4"
-              data-testid="text-lybunt-count"
-            >
-              {data?.metrics.lybuntCount ?? 0}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Gave last year but not this year - priority for reactivation
-            </p>
-          </div>
-        </Card>
-        <Card className="p-6" data-testid="card-sybunt-metric">
-          <div className="space-y-2">
-            <p className="text-sm font-medium text-muted-foreground">
-              "Some Years But Unfortunately Not This" (SYBUNT) Donors
-            </p>
-            <p 
-              className="text-4xl font-bold tabular-nums text-chart-3"
-              data-testid="text-sybunt-count"
-            >
-              {data?.metrics.sybuntCount ?? 0}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              Gave in prior years but not recently - long-term recovery needed
-            </p>
-          </div>
-        </Card>
+        <Link href="/analytics/lybunt-donors">
+          <Card className="p-6 hover-elevate active-elevate-2 cursor-pointer" data-testid="card-lybunt-metric">
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-muted-foreground">
+                "Last Year But Unfortunately Not This" (LYBUNT) Donors
+              </p>
+              <p 
+                className="text-4xl font-bold tabular-nums text-chart-4"
+                data-testid="text-lybunt-count"
+              >
+                {data?.metrics.lybuntCount ?? 0}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Gave last year but not this year - priority for reactivation
+              </p>
+            </div>
+          </Card>
+        </Link>
+        <Link href="/analytics/sybunt-donors">
+          <Card className="p-6 hover-elevate active-elevate-2 cursor-pointer" data-testid="card-sybunt-metric">
+            <div className="space-y-2">
+              <p className="text-sm font-medium text-muted-foreground">
+                "Some Years But Unfortunately Not This" (SYBUNT) Donors
+              </p>
+              <p 
+                className="text-4xl font-bold tabular-nums text-chart-3"
+                data-testid="text-sybunt-count"
+              >
+                {data?.metrics.sybuntCount ?? 0}
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Gave in prior years but not recently - long-term recovery needed
+              </p>
+            </div>
+          </Card>
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">

@@ -45,6 +45,11 @@ import ImpactReports from "@/pages/content-impact-reports";
 import PeerBenchmarks from "@/pages/analytics-peer-benchmarks";
 import SentimentAnalysis from "@/pages/analytics-sentiment";
 import PortfolioOptimization from "@/pages/analytics-portfolio-optimization";
+import PipelineValueDetail from "@/pages/analytics-pipeline-value";
+import Forecast90Days from "@/pages/analytics-forecast-90-days";
+import YTDvsGoal from "@/pages/analytics-ytd-vs-goal";
+import LYBUNTDonors from "@/pages/analytics-lybunt-donors";
+import SYBUNTDonors from "@/pages/analytics-sybunt-donors";
 
 // Workflow Automation
 import SmartCalendar from "@/pages/workflow-calendar";
@@ -108,6 +113,11 @@ function Router() {
       <Route path="/analytics/peer-benchmarks" component={PeerBenchmarks} />
       <Route path="/analytics/sentiment" component={SentimentAnalysis} />
       <Route path="/analytics/portfolio-optimization" component={PortfolioOptimization} />
+      <Route path="/analytics/pipeline-value" component={PipelineValueDetail} />
+      <Route path="/analytics/forecast-90-days" component={Forecast90Days} />
+      <Route path="/analytics/ytd-vs-goal" component={YTDvsGoal} />
+      <Route path="/analytics/lybunt-donors" component={LYBUNTDonors} />
+      <Route path="/analytics/sybunt-donors" component={SYBUNTDonors} />
       
       {/* Workflow Automation */}
       <Route path="/workflow/calendar" component={SmartCalendar} />
