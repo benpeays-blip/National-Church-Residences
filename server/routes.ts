@@ -4,7 +4,7 @@ import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { db } from "./db";
 import { 
-  persons, opportunities, users, gifts, interactions, integrations, integrationSyncRuns, dataQualityIssues, households, tasks,
+  persons, opportunities, users, gifts, campaigns, interactions, integrations, integrationSyncRuns, dataQualityIssues, households, tasks,
   predictiveScores, wealthEvents, meetingBriefs, voiceNotes, boardConnections, corporatePartnerships, peerDonors,
   outreachTemplates, grantProposals, impactReports, sentimentAnalysis, peerBenchmarks, portfolioOptimizations,
   calendarEvents, stewardshipWorkflows, taskPriorityScores, giftRegistries, grants, boardMemberships,
@@ -1447,7 +1447,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Update all positions
       await Promise.all(
         positions.map((pos) =>
-          storage.updateWorkflowBlock(pos.id, { positionX: pos.positionX, positionY: pos.positionY })
+          storage.updateWorkflowBlock(pos.id, { 
+            positionX: pos.positionX.toString(), 
+            positionY: pos.positionY.toString() 
+          })
         )
       );
       
