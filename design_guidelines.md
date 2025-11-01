@@ -17,23 +17,43 @@
 - **Body/Data:** Inter 400-500 weight  
 - **Numeric Data:** Inter 500 weight, tabular numbers enabled
 
-**Hierarchy:**
-- Page Titles: text-2xl to text-3xl, font-semibold
-- Section Headers: text-lg to text-xl, font-semibold
-- Card Titles: text-base, font-medium
-- Body Text: text-sm, font-normal
-- Data Labels: text-xs to text-sm, font-medium, uppercase tracking-wide for categories
-- Large Metrics: text-4xl to text-5xl, font-bold for dashboard KPIs
+**STRICT Typography Scale - USE EXACTLY THESE SIZES:**
+- **Display (32px):** `text-3xl font-bold` - Page titles ONLY. Only ONE per page.
+- **Section (20px):** `text-xl font-semibold` - Card headers, major section headings.
+- **Subsection (16px):** `text-base font-medium` - Card sub-sections, table headers.
+- **Body (14px):** `text-sm font-normal` - Main content, descriptions, table cells.
+- **Caption (12px):** `text-xs font-medium` - Metadata, labels, badges, timestamps.
+- **Large Metrics (48px):** `text-5xl font-bold` - Dashboard KPIs only.
+
+**Rules:**
+1. **Never use** `text-2xl`, `text-4xl`, `text-lg` - stick to the 5 defined sizes above
+2. **One Display per page** - Establishes clear hierarchy
+3. **Card headers are Section** - Not Display, not Subsection
+4. **No text-xl in cards** - Use Section (text-xl) for card headers, Subsection (text-base) for content within
+5. **Uppercase + tracking-wide** - Only for Caption size labels/categories
 
 ---
 
 ## Layout System
 
-**Spacing Primitives:** Use Tailwind units of **2, 3, 4, 6, 8, 12, 16**
-- Component padding: p-4, p-6
-- Section spacing: space-y-6, space-y-8
-- Card gaps: gap-4, gap-6
-- Page margins: px-6 to px-8, py-6
+**STRICT Spacing System - ENFORCE CONSISTENCY:**
+
+**Padding Standards:**
+- **Cards:** `p-6` (ALWAYS - no p-4, p-8, or other values)
+- **Table cells:** `px-4 py-3` (ALWAYS for consistent alignment)
+- **Page container:** `p-6` (ALWAYS - already applied in App.tsx main)
+- **Small components (badges, pills):** `px-2 py-1` or `px-3 py-1.5`
+
+**Gap Standards:**
+- **Between cards in grid:** `gap-6`
+- **Between sections:** `space-y-6` or `gap-6`
+- **Within cards (vertical):** `space-y-4` or `gap-4`
+- **Within cards (horizontal):** `gap-3`
+
+**Rules:**
+1. **Never mix padding** - All cards must be `p-6`, all tables `px-4 py-3`
+2. **No custom spacing** - Use only: 1, 1.5, 2, 3, 4, 6, 8, 12, 16
+3. **Remove `px-6 py-6` from pages** - Main container already has `p-6`
 
 **Grid Structure:**
 - Dashboard layouts: 12-column grid system
@@ -206,6 +226,40 @@
 - Consistent sizing: h-64 to h-80 for dashboard charts
 - Minimal gridlines, clear axis labels
 - Tooltips on hover with formatted values
+
+---
+
+## STRICT Color Usage Guidelines
+
+**Primary Accent Color:** Reserve for CTAs and key metrics ONLY
+
+**✅ CORRECT Uses of Primary:**
+- Call-to-action buttons (Save, Submit, Create)
+- Key metrics/KPIs that need emphasis
+- Active navigation states
+- Critical alerts
+
+**❌ INCORRECT Uses of Primary:**
+- Every card icon background
+- Decorative elements
+- Section headers that don't need emphasis
+- Multiple items on same page (dilutes focus)
+
+**Chart Colors (chart-1 through chart-5):**
+- Use ONLY in data visualizations (charts, graphs)
+- NOT for card backgrounds or decorative purposes
+- Keep consistent across application (chart-1 always same meaning)
+
+**Semantic Colors:**
+- Success (green): Positive metrics, completed states
+- Destructive (red): Errors, warnings, negative trends
+- Muted: Secondary information, disabled states
+- Foreground: Main text color
+
+**Rules:**
+1. **Maximum 1-2 primary accents per page** - Don't overuse
+2. **Chart colors stay in charts** - Not for UI decoration
+3. **Semantic meaning** - Color should convey information, not just prettiness
 
 **Progress Bars:**
 - Goal vs Actual: horizontal bars with percentage overlay

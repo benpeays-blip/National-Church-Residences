@@ -1,20 +1,14 @@
-import { Switch, Route, useLocation } from "wouter";
+import { Switch, Route } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { CommandPalette } from "@/components/command-palette";
 import { Button } from "@/components/ui/button";
-import { ChevronDown, Settings as SettingsIcon } from "lucide-react";
+import { Search, Settings as SettingsIcon, Bell, User } from "lucide-react";
 import NotFound from "@/pages/not-found";
-import logoUrl from "@assets/ChatGPT Image Nov 1, 2025, 09_08_53 AM_1762006163839.png";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
 import DashboardCEO from "@/pages/dashboard-ceo";
@@ -135,109 +129,6 @@ function Router() {
   );
 }
 
-const navSections = [
-  {
-    label: "Platform",
-    items: [
-      { title: "Dashboard", path: "/" },
-      { title: "Solutions", path: "/solutions" },
-      { title: "Donors", path: "/donors" },
-      { title: "Pipeline", path: "/pipeline" },
-      { title: "Grants", path: "/grants" },
-      { title: "Gifts", path: "/gifts" },
-      { title: "Campaigns", path: "/campaigns" },
-      { title: "Data Health", path: "/data-health" },
-      { title: "Integrations", path: "/integrations" },
-      { title: "Settings", path: "/settings" },
-    ],
-  },
-  {
-    label: "AI Intelligence",
-    items: [
-      { title: "Predictive Timing", path: "/ai/predictive-timing" },
-      { title: "Wealth Events", path: "/ai/wealth-events" },
-      { title: "Meeting Briefs", path: "/ai/meeting-briefs" },
-      { title: "Voice-to-CRM", path: "/ai/voice-notes" },
-    ],
-  },
-  {
-    label: "Relationship Intel",
-    items: [
-      { title: "Board Connections", path: "/relationship/board-connections" },
-      { title: "Board Network Mapper", path: "/relationship/board-network-mapper" },
-      { title: "Corporate Partnerships", path: "/relationship/corporate-partnerships" },
-      { title: "Peer Discovery", path: "/relationship/peer-donors" },
-    ],
-  },
-  {
-    label: "AI Content",
-    items: [
-      { title: "Outreach Generator", path: "/content/outreach" },
-      { title: "Grant Proposals", path: "/content/grant-proposals" },
-      { title: "Impact Reports", path: "/content/impact-reports" },
-    ],
-  },
-  {
-    label: "Analytics",
-    items: [
-      { title: "Peer Benchmarks", path: "/analytics/peer-benchmarks" },
-      { title: "Donor Sentiment", path: "/analytics/sentiment" },
-      { title: "Portfolio Optimization", path: "/analytics/portfolio-optimization" },
-    ],
-  },
-  {
-    label: "Workflows",
-    items: [
-      { title: "Smart Calendar", path: "/workflow/calendar" },
-      { title: "Stewardship", path: "/workflow/stewardship" },
-      { title: "Task Priorities", path: "/workflow/task-priorities" },
-      { title: "Gift Registries", path: "/workflow/gift-registries" },
-    ],
-  },
-  {
-    label: "Workflow Builder",
-    items: [
-      { title: "Workflow Library", path: "/workflows" },
-      { title: "Templates", path: "/workflows/templates" },
-    ],
-  },
-];
-
-function TopNavigation() {
-  return (
-    <div className="flex items-center gap-1">
-      {navSections.map((section) => {
-        return (
-          <DropdownMenu key={section.label}>
-            <DropdownMenuTrigger asChild>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-9 text-xs font-medium gap-1 text-muted-foreground hover:text-foreground data-[state=open]:bg-primary data-[state=open]:text-primary-foreground"
-                data-testid={`nav-tab-${section.label.toLowerCase().replace(/\s+/g, "-")}`}
-              >
-                {section.label}
-                <ChevronDown className="h-3 w-3" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-48">
-              {section.items.map((item) => (
-                <DropdownMenuItem
-                  key={item.path}
-                  asChild
-                  className="text-xs cursor-pointer"
-                  data-testid={`nav-item-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
-                >
-                  <a href={item.path}>{item.title}</a>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
-      })}
-    </div>
-  );
-}
 
 function App() {
   const style = {
@@ -249,27 +140,52 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <SidebarProvider style={style as React.CSSProperties}>
+          <CommandPalette />
           <div className="flex h-screen w-full">
             <AppSidebar />
             <div className="flex flex-col flex-1">
-              <header className="flex items-center gap-6 h-16 px-6 border-b shrink-0 relative">
+              <header className="flex items-center gap-4 h-16 px-6 border-b shrink-0">
                 <SidebarTrigger data-testid="button-sidebar-toggle" />
-                <TopNavigation />
+                
                 <div className="flex items-center gap-3 ml-auto">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    data-testid="button-global-search"
+                    aria-label="Global search (Cmd+K)"
+                  >
+                    <Search className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    data-testid="button-notifications"
+                    aria-label="Notifications"
+                  >
+                    <Bell className="h-5 w-5" />
+                  </Button>
                   <Button
                     variant="ghost"
                     size="icon"
                     asChild
                     data-testid="button-settings"
+                    aria-label="Settings"
                   >
                     <a href="/settings">
                       <SettingsIcon className="h-5 w-5" />
                     </a>
                   </Button>
-                  <img src={logoUrl} alt="FundRazor" className="h-8" />
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    data-testid="button-account"
+                    aria-label="Account menu"
+                  >
+                    <User className="h-5 w-5" />
+                  </Button>
                 </div>
               </header>
-              <main className="flex-1 overflow-auto px-6 py-6">
+              <main className="flex-1 overflow-auto p-6">
                 <Router />
               </main>
             </div>
