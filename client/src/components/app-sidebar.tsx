@@ -237,12 +237,15 @@ export function AppSidebar() {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        {workflowMenuItems.map((group) => {
+        {workflowMenuItems.map((group, index) => {
           const visibleItems = filterItems(group.items);
           if (visibleItems.length === 0) return null;
           
           return (
-            <SidebarGroup key={group.groupLabel}>
+            <SidebarGroup 
+              key={group.groupLabel}
+              className={index < workflowMenuItems.length - 1 ? "border-b pb-4" : ""}
+            >
               <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
                 {group.groupLabel}
               </SidebarGroupLabel>
