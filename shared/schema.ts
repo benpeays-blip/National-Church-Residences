@@ -177,7 +177,14 @@ export const campaigns = pgTable("campaigns", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: varchar("name").notNull(),
   type: varchar("type").notNull(), // Annual, Year-End, Gala, P2P, etc.
+  description: text("description"),
+  status: varchar("status").notNull().default("planning"), // planning, active, completed, paused
   goal: decimal("goal", { precision: 12, scale: 2 }),
+  raised: decimal("raised", { precision: 12, scale: 2 }).default("0.00"),
+  donorCount: integer("donor_count").default(0),
+  avgGiftSize: decimal("avg_gift_size", { precision: 12, scale: 2 }),
+  totalGifts: integer("total_gifts").default(0),
+  ownerId: varchar("owner_id").references(() => users.id),
   startDate: timestamp("start_date"),
   endDate: timestamp("end_date"),
   createdAt: timestamp("created_at").defaultNow(),
