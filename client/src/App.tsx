@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import NotFound from "@/pages/not-found";
+import logoUrl from "@assets/ChatGPT Image Nov 1, 2025, 09_08_53 AM_1762006163839.png";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
 import DashboardCEO from "@/pages/dashboard-ceo";
@@ -129,8 +130,8 @@ function App() {
             <div className="flex flex-col flex-1 overflow-hidden">
               <header className="flex items-center justify-between h-16 px-6 border-b shrink-0">
                 <SidebarTrigger data-testid="button-sidebar-toggle" />
-                <div className="flex items-center gap-4">
-                  <span className="text-sm text-muted-foreground">FundRazor</span>
+                <div className="flex items-center gap-2">
+                  <img src={logoUrl} alt="FundRazor" className="h-8" />
                 </div>
               </header>
               <main className="flex-1 overflow-auto px-6 py-6">
