@@ -26,6 +26,19 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - ✅ Interactive tooltips show full source name and sync timestamp on hover
 - ✅ E2E tested: Badges render correctly with proper colors, tooltips work, positioning is accurate
 
+**Interactive Dashboard Metrics with Drill-Down Analytics - NEW**: Transformed static dashboard metrics into clickable navigation points:
+- ✅ **Clickable Metrics**: All 6 key metrics on Dev Director dashboard now link to dedicated analytics pages
+- ✅ **5 Comprehensive Drill-Down Pages**:
+  - **Pipeline Value Analysis** (`/analytics/pipeline-value`): Stage breakdown with visual progress bars, dual filtering (stage + owner), weighted value calculations, full opportunities table
+  - **90-Day Forecast** (`/analytics/forecast-90-days`): Time-based forecast with monthly grouping, probability-weighted projections, confidence metrics, close date sorting
+  - **YTD vs Goal** (`/analytics/ytd-vs-goal`): Year-to-date progress tracking, monthly trend analysis, campaign breakdown, pace indicators (ahead/behind timeline)
+  - **LYBUNT Donor Recovery** (`/analytics/lybunt-donors`): Priority segmentation (High/Medium/Low), reactivation strategy recommendations, revenue at-risk metrics, contact rate analysis
+  - **SYBUNT Donor Recovery** (`/analytics/sybunt-donors`): Long-term recovery strategy, historical lifetime value analysis, recovery stage segmentation, lapsed donor insights
+- ✅ **UX Features**: Back navigation to dashboard, contextual filters, data tables with donor/campaign links, strategic action recommendations
+- ✅ **Option 3 Design Compliance**: Consistent spacing (space-y-6, p-6 cards), 5xl metrics, minimal borders, left-aligned headers
+- ✅ **Null Safety**: Graceful handling of missing person/owner data (shows "Unknown Donor" / "Unassigned")
+- ✅ **E2E Tested**: All navigation flows verified, no runtime errors, filters working correctly
+
 ## User Preferences
 
 - **Design Philosophy**: Enterprise-grade, data-dense UI inspired by Linear and Salesforce NPSP
