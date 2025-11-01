@@ -300,9 +300,9 @@ export default function Solutions() {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       {/* Hero Design Preview Banner */}
-      <Card className="p-4 bg-primary/5 border-primary/20">
+      <Card className="p-6 bg-primary/5 border-primary/20">
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Palette className="w-5 h-5 text-primary" />
@@ -324,7 +324,7 @@ export default function Solutions() {
 
       {/* Executive Summary - Option 3: Clean & Modern Left-Aligned Cards */}
       <div className="space-y-6">
-        <div className="space-y-3">
+        <div className="space-y-1">
           <h1 className="text-3xl font-bold">
             FundRazor: Cutting Edge AI-Powered Fundraising Intelligence Platform
           </h1>
@@ -521,7 +521,7 @@ export default function Solutions() {
       </div>
 
       {/* CTA Footer */}
-      <Card className="p-8 bg-primary/5 border-primary/20">
+      <Card className="p-6 bg-primary/5 border-primary/20">
         <div className="space-y-4">
           <div>
             <h3 className="text-xl font-semibold mb-2">

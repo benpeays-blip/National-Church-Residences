@@ -35,9 +35,9 @@ export default function DashboardCEO() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">Executive Dashboard</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Executive Dashboard</h1>
+          <p className="text-sm text-muted-foreground">
             High-level metrics and top prospects
           </p>
         </div>
@@ -52,7 +52,7 @@ export default function DashboardCEO() {
 
   return (
     <div className="space-y-6">
-      <div className="space-y-3">
+      <div className="space-y-1">
         <h1 className="text-3xl font-bold">Executive Dashboard</h1>
         <p className="text-sm text-muted-foreground">
           High-level metrics and top prospects

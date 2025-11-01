@@ -17,7 +17,12 @@ export default function Pipeline() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-semibold">Pipeline</h1>
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Pipeline</h1>
+          <p className="text-sm text-muted-foreground">
+            Manage opportunities through the fundraising lifecycle
+          </p>
+        </div>
         <Skeleton className="h-96" />
       </div>
     );

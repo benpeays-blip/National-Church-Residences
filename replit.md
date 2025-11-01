@@ -4,6 +4,17 @@
 
 FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprofit development teams. It provides role-based dashboards, a comprehensive donor scoring system (Engagement, Capacity, Affinity), Kanban-style opportunity pipeline management, AI-generated "Next Best Action" recommendations, and a visual workflow builder. The platform aims to centralize fundraising intelligence, streamline donor management, and enhance data-driven decision-making, unifying disparate fundraising systems with full data provenance tracking and transparency.
 
+## Recent Design Updates (Nov 2024)
+
+**Option 3 Design Unification**: Applied "Clean & Modern Left-Aligned Cards" design pattern to all 40+ pages:
+- ✅ Removed all `p-6` from page wrappers - pages use `space-y-6` only for consistent rhythm
+- ✅ Standardized all page headers: `space-y-1` wrapper with `text-3xl font-bold` h1 and `text-sm text-muted-foreground` description
+- ✅ Large 48px metrics (text-5xl) in MetricCards with three-tier layout (metric → label → description)
+- ✅ Minimal bordered cards, left-aligned headers, accent colors reserved for CTAs and key metrics only
+- ✅ Consistent spacing: gap-6 between cards, p-6 card padding, gap-4 within cards, space-y-6 for page layouts
+- ✅ Typography scale enforced: Display 32px (h1), Section 20px (h2), Subsection 16px (h3), Body 14px, Caption 12px
+- ✅ Applied to all dashboards (CEO, Dev Director, MGO), core pages (Donors, Pipeline, Grants), AI features, Analytics, Workflows, Settings
+
 ## User Preferences
 
 - **Design Philosophy**: Enterprise-grade, data-dense UI inspired by Linear and Salesforce NPSP

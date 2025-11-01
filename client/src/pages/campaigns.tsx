@@ -13,7 +13,12 @@ export default function Campaigns() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-semibold">Campaigns</h1>
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Campaigns</h1>
+          <p className="text-sm text-muted-foreground">
+            Manage fundraising campaigns and initiatives
+          </p>
+        </div>
         <Skeleton className="h-96" />
       </div>
     );

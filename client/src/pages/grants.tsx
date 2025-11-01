@@ -110,31 +110,31 @@ export default function Grants() {
 
       {stageSummary && (
         <div className="grid grid-cols-2 md:grid-cols-6 gap-4">
-          <Card className="p-4">
+          <Card className="p-6 border">
             <div className="text-sm text-muted-foreground mb-1">Research</div>
             <div className="text-2xl font-semibold tabular-nums">{stageSummary.Research}</div>
           </Card>
-          <Card className="p-4">
+          <Card className="p-6 border">
             <div className="text-sm text-muted-foreground mb-1">LOI</div>
             <div className="text-2xl font-semibold tabular-nums">{stageSummary.LOI}</div>
           </Card>
-          <Card className="p-4">
+          <Card className="p-6 border">
             <div className="text-sm text-muted-foreground mb-1">Submitted</div>
             <div className="text-2xl font-semibold tabular-nums">{stageSummary.Submitted}</div>
           </Card>
-          <Card className="p-4">
+          <Card className="p-6 border">
             <div className="text-sm text-muted-foreground mb-1">Awarded</div>
             <div className="text-2xl font-semibold tabular-nums text-chart-1">
               {stageSummary.Awarded}
             </div>
           </Card>
-          <Card className="p-4">
+          <Card className="p-6 border">
             <div className="text-sm text-muted-foreground mb-1">Report Due</div>
             <div className="text-2xl font-semibold tabular-nums text-chart-3">
               {stageSummary.ReportDue}
             </div>
           </Card>
-          <Card className="p-4">
+          <Card className="p-6 border">
             <div className="text-sm text-muted-foreground mb-1">Declined</div>
             <div className="text-2xl font-semibold tabular-nums">{stageSummary.Declined}</div>
           </Card>

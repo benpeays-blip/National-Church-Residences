@@ -21,7 +21,12 @@ export default function Gifts() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-semibold">Gifts</h1>
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Gifts</h1>
+          <p className="text-sm text-muted-foreground">
+            Track all donations and contributions
+          </p>
+        </div>
         <Skeleton className="h-96" />
       </div>
     );

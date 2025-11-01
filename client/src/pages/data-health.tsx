@@ -32,9 +32,9 @@ export default function DataHealth() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">Data Health</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Data Health</h1>
+          <p className="text-sm text-muted-foreground">
             Monitor data quality and system health
           </p>
         </div>
@@ -50,9 +50,9 @@ export default function DataHealth() {
   if (isError || !data) {
     return (
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">Data Health</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Data Health</h1>
+          <p className="text-sm text-muted-foreground">
             Monitor data quality and system health
           </p>
         </div>

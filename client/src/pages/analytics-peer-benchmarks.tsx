@@ -59,7 +59,13 @@ export default function PeerBenchmarks() {
 
   if (isError) {
     return (
-      <div className="p-6">
+      <div className="space-y-6">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Peer Benchmarking</h1>
+          <p className="text-sm text-muted-foreground">
+            Compare your performance to similar nonprofits
+          </p>
+        </div>
         <Card>
           <CardContent className="p-6">
             <div className="text-center text-muted-foreground">
@@ -73,10 +79,10 @@ export default function PeerBenchmarks() {
   }
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Peer Benchmarking</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold">Peer Benchmarking</h1>
+        <p className="text-sm text-muted-foreground">
           Compare your performance to similar nonprofits in your sector and budget size
         </p>
       </div>

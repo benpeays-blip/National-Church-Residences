@@ -87,11 +87,11 @@ export default function DashboardDevDirector() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">
             Development Director Dashboard
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-sm text-muted-foreground">
             Team performance and pipeline health
           </p>
         </div>
@@ -109,7 +109,7 @@ export default function DashboardDevDirector() {
 
   return (
     <div className="space-y-6">
-      <div className="space-y-3">
+      <div className="space-y-1">
         <h1 className="text-3xl font-bold">
           Development Director Dashboard
         </h1>
@@ -148,7 +148,7 @@ export default function DashboardDevDirector() {
           Data Coverage & Integration Health
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-          <Card className="p-4" data-testid="card-wealth-coverage">
+          <Card className="p-6 border" data-testid="card-wealth-coverage">
             <div className="flex items-center justify-between mb-2">
               <p className="text-sm font-medium text-muted-foreground">
                 Wealth Screening
@@ -171,7 +171,7 @@ export default function DashboardDevDirector() {
             </p>
           </Card>
 
-          <Card className="p-4" data-testid="card-engagement-coverage">
+          <Card className="p-6 border" data-testid="card-engagement-coverage">
             <div className="flex items-center justify-between mb-2">
               <p className="text-sm font-medium text-muted-foreground">
                 Recent Engagement
@@ -194,7 +194,7 @@ export default function DashboardDevDirector() {
             </p>
           </Card>
 
-          <Card className="p-4" data-testid="card-email-coverage">
+          <Card className="p-6 border" data-testid="card-email-coverage">
             <div className="flex items-center justify-between mb-2">
               <p className="text-sm font-medium text-muted-foreground">
                 Email Data
@@ -217,7 +217,7 @@ export default function DashboardDevDirector() {
             </p>
           </Card>
 
-          <Card className="p-4" data-testid="card-pipeline-activity">
+          <Card className="p-6 border" data-testid="card-pipeline-activity">
             <div className="flex items-center justify-between mb-2">
               <p className="text-sm font-medium text-muted-foreground">
                 Pipeline Activity

@@ -83,9 +83,9 @@ export default function Integrations() {
   if (loading) {
     return (
       <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">Integrations Gallery</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Integrations Gallery</h1>
+          <p className="text-sm text-muted-foreground">
             Connect fundraising tools and data sources
           </p>
         </div>
@@ -102,7 +102,7 @@ export default function Integrations() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-start justify-between">
-        <div className="space-y-2">
+        <div className="space-y-1">
           <h1 className="text-3xl font-bold">Integrations Gallery</h1>
           <p className="text-sm text-muted-foreground">
             Browse and connect {integrations.length} fundraising platforms and data sources
