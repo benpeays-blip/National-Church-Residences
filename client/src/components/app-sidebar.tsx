@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
+import fundRazorLogo from "@assets/fundrazor-logo.png";
 
 const coreMenuItems = [
   {
@@ -98,18 +99,13 @@ export function AppSidebar() {
   return (
     <Sidebar data-testid="sidebar-main">
       <SidebarHeader className="h-16 flex items-center px-4 border-b">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">FR</span>
-          </div>
-          <div className="flex flex-col">
-            <span className="text-sm font-semibold">FundRazor</span>
-            {user?.role && (
-              <Badge variant="secondary" className="text-xs w-fit">
-                {user.role.replace("_", " ")}
-              </Badge>
-            )}
-          </div>
+        <div className="flex flex-col gap-2 w-full">
+          <img src={fundRazorLogo} alt="FundRazor" className="h-7 w-auto" />
+          {user?.role && (
+            <Badge variant="secondary" className="text-xs w-fit">
+              {user.role.replace("_", " ")}
+            </Badge>
+          )}
         </div>
       </SidebarHeader>
       <SidebarContent>
