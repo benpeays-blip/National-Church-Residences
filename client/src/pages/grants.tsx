@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EmptyState } from "@/components/empty-state";
 import { Skeleton } from "@/components/ui/skeleton";
+import { DataProvenanceBadge } from "@/components/data-provenance-badge";
 import {
   Select,
   SelectContent,
@@ -13,15 +14,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { FileText, Plus, Search, Calendar, DollarSign, Info } from "lucide-react";
+import { FileText, Plus, Search, Calendar, DollarSign } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { Grant } from "@shared/schema";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 
 export default function Grants() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -235,26 +230,13 @@ export default function Grants() {
                     )}
                   </div>
 
-                  {grant.sourceSystem && (
-                    <TooltipProvider>
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <Info className="w-3 h-3" />
-                            <span>Source: {grant.sourceSystem}</span>
-                          </div>
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          <p className="text-xs">Synced from {grant.sourceSystem}</p>
-                          {grant.syncedAt && (
-                            <p className="text-xs text-muted-foreground">
-                              Last sync: {formatDate(grant.syncedAt)}
-                            </p>
-                          )}
-                        </TooltipContent>
-                      </Tooltip>
-                    </TooltipProvider>
-                  )}
+                  <div className="pt-2 border-t">
+                    <DataProvenanceBadge 
+                      sourceSystem={grant.sourceSystem}
+                      syncedAt={grant.syncedAt ? new Date(grant.syncedAt) : null}
+                      variant="default"
+                    />
+                  </div>
                 </div>
               </Card>
             );

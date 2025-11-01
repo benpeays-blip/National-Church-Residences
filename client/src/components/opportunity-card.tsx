@@ -1,6 +1,7 @@
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { DataProvenanceBadge } from "@/components/data-provenance-badge";
 import { formatCurrency, getInitials } from "@/lib/utils";
 import type { Opportunity } from "@shared/schema";
 
@@ -69,11 +70,11 @@ export function OpportunityCard({ opportunity }: OpportunityCardProps) {
             </span>
           </div>
           <div className="flex-shrink-0">
-            {opportunity.sourceSystem && (
-              <span className="text-xs text-muted-foreground" data-testid="opportunity-data-source">
-                Data Source: {opportunity.sourceSystem}
-              </span>
-            )}
+            <DataProvenanceBadge 
+              sourceSystem={opportunity.sourceSystem}
+              syncedAt={opportunity.syncedAt ? new Date(opportunity.syncedAt) : null}
+              variant="compact"
+            />
           </div>
         </div>
       </div>

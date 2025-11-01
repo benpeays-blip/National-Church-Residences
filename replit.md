@@ -17,6 +17,15 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - ✅ Applied to ALL pages: dashboards (CEO, Dev Director, MGO), core pages (Donors, Pipeline, Grants, Gifts, Campaigns), AI features, Analytics, Workflows, Settings, Solutions
 - ✅ Architect-verified: Platform-wide design compliance confirmed with no regressions
 
+**Branded Data Source Badges - NEW**: Implemented visual data provenance system with company logos:
+- ✅ Replaced text-based "Data Source: Salesforce" with branded logo badges
+- ✅ Company logo icons: Salesforce, Mailchimp, LinkedIn (via react-icons/si), fallback Database icon for WealthEngine, iWave, Classy, DAFGiving360
+- ✅ Brand-appropriate colors: Each source system has custom tinted backgrounds and borders (Salesforce blue, Mailchimp orange, LinkedIn blue-600, etc.)
+- ✅ Four badge variants: compact (logo only), default (logo + text), inline (minimal), icon (info only)
+- ✅ Applied to Pipeline (compact badges in opportunity cards) and Grants (default badges with logo + text)
+- ✅ Interactive tooltips show full source name and sync timestamp on hover
+- ✅ E2E tested: Badges render correctly with proper colors, tooltips work, positioning is accurate
+
 ## User Preferences
 
 - **Design Philosophy**: Enterprise-grade, data-dense UI inspired by Linear and Salesforce NPSP
