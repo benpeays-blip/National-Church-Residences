@@ -13,8 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
-import { Database, Mail, TrendingUp, AlertCircle, Palette } from "lucide-react";
-import { useLocation } from "wouter";
+import { Database, Mail, TrendingUp, AlertCircle } from "lucide-react";
 
 interface DevDirectorData {
   metrics: {
@@ -77,8 +76,6 @@ interface IntegrationCoverage {
 }
 
 export default function DashboardDevDirector() {
-  const [, setLocation] = useLocation();
-  
   const { data, isLoading } = useQuery<DevDirectorData>({
     queryKey: ["/api/dashboard/dev-director"],
   });
@@ -120,27 +117,6 @@ export default function DashboardDevDirector() {
           Team performance and pipeline health
         </p>
       </div>
-
-      {/* Temporary Logo Preview Banner */}
-      <Card className="p-4 bg-primary/5 border-primary/20">
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <Palette className="w-5 h-5 text-primary" />
-            <div>
-              <p className="font-medium">New Logo Options Available</p>
-              <p className="text-sm text-muted-foreground">
-                View 4 elegant logo designs and choose your favorite
-              </p>
-            </div>
-          </div>
-          <Button 
-            onClick={() => setLocation("/logo-preview")}
-            data-testid="button-view-logos"
-          >
-            View Logo Options
-          </Button>
-        </div>
-      </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <MetricCard
