@@ -5,16 +5,16 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { Button } from "@/components/ui/button";
+import { ChevronDown } from "lucide-react";
 import NotFound from "@/pages/not-found";
 import logoUrl from "@assets/ChatGPT Image Nov 1, 2025, 09_08_53 AM_1762006163839.png";
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
 import DashboardCEO from "@/pages/dashboard-ceo";
@@ -213,44 +213,42 @@ function TopNavigation() {
   const activeSection = getActiveSection();
 
   return (
-    <NavigationMenu className="relative">
-      <NavigationMenuList className="gap-1">
-        {navSections.map((section) => {
-          const isActive = activeSection === section.label;
-          return (
-            <NavigationMenuItem key={section.label}>
-              <NavigationMenuTrigger
-                className={`h-9 text-xs font-medium ${
+    <div className="flex items-center gap-1">
+      {navSections.map((section) => {
+        const isActive = activeSection === section.label;
+        return (
+          <DropdownMenu key={section.label}>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="sm"
+                className={`h-9 text-xs font-medium gap-1 ${
                   isActive
-                    ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground data-[state=open]:bg-primary data-[state=open]:text-primary-foreground"
+                    ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
                 data-testid={`nav-tab-${section.label.toLowerCase().replace(/\s+/g, "-")}`}
               >
                 {section.label}
-              </NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <ul className="grid w-48 gap-1 p-2">
-                  {section.items.map((item) => (
-                    <li key={item.path}>
-                      <NavigationMenuLink asChild>
-                        <a
-                          href={item.path}
-                          className="block select-none rounded-md p-2 text-xs leading-none hover-elevate active-elevate-2 transition-colors"
-                          data-testid={`nav-item-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
-                        >
-                          <div className="font-medium">{item.title}</div>
-                        </a>
-                      </NavigationMenuLink>
-                    </li>
-                  ))}
-                </ul>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-          );
-        })}
-      </NavigationMenuList>
-    </NavigationMenu>
+                <ChevronDown className="h-3 w-3" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="start" className="w-48">
+              {section.items.map((item) => (
+                <DropdownMenuItem
+                  key={item.path}
+                  asChild
+                  className="text-xs cursor-pointer"
+                  data-testid={`nav-item-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
+                >
+                  <a href={item.path}>{item.title}</a>
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      })}
+    </div>
   );
 }
 
@@ -266,8 +264,8 @@ function App() {
         <SidebarProvider style={style as React.CSSProperties}>
           <div className="flex h-screen w-full">
             <AppSidebar />
-            <div className="flex flex-col flex-1 overflow-hidden">
-              <header className="flex items-center gap-6 h-16 px-6 border-b shrink-0">
+            <div className="flex flex-col flex-1">
+              <header className="flex items-center gap-6 h-16 px-6 border-b shrink-0 relative">
                 <SidebarTrigger data-testid="button-sidebar-toggle" />
                 <TopNavigation />
                 <div className="flex items-center gap-2 ml-auto">
