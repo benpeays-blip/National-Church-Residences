@@ -192,41 +192,16 @@ const navSections = [
 ];
 
 function TopNavigation() {
-  const [location, setLocation] = useLocation();
-
-  const getActiveSection = () => {
-    if (location === "/" || location.startsWith("/dashboard") || location.startsWith("/donors") || 
-        location.startsWith("/pipeline") || location.startsWith("/grants") || location.startsWith("/gifts") || 
-        location.startsWith("/campaigns") || location.startsWith("/data-health") || 
-        location.startsWith("/integrations") || location.startsWith("/settings") || location.startsWith("/solutions")) {
-      return "Core";
-    }
-    if (location.startsWith("/ai/")) return "AI Intelligence";
-    if (location.startsWith("/relationship/")) return "Relationship Intel";
-    if (location.startsWith("/content/")) return "AI Content";
-    if (location.startsWith("/analytics/")) return "Analytics";
-    if (location.startsWith("/workflow/")) return "Workflows";
-    if (location.startsWith("/workflows")) return "Workflow Builder";
-    return "Core";
-  };
-
-  const activeSection = getActiveSection();
-
   return (
     <div className="flex items-center gap-1">
       {navSections.map((section) => {
-        const isActive = activeSection === section.label;
         return (
           <DropdownMenu key={section.label}>
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
                 size="sm"
-                className={`h-9 text-xs font-medium gap-1 data-[state=open]:bg-primary data-[state=open]:text-primary-foreground ${
-                  isActive
-                    ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                className="h-9 text-xs font-medium gap-1 text-muted-foreground hover:text-foreground data-[state=open]:bg-primary data-[state=open]:text-primary-foreground"
                 data-testid={`nav-tab-${section.label.toLowerCase().replace(/\s+/g, "-")}`}
               >
                 {section.label}
