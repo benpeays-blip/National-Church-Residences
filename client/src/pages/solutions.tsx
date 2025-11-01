@@ -306,7 +306,7 @@ export default function Solutions() {
           <div className="flex-1 space-y-4">
             <div>
               <h1 className="text-3xl font-bold mb-2">
-                FundRazor: Your AI-Powered Fundraising Intelligence Platform
+                FundRazor: Cutting Edge AI-Powered Fundraising Intelligence Platform
               </h1>
               <p className="text-lg text-muted-foreground">
                 Addressing The Foundation's 5 AI Integration Priorities
