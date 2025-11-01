@@ -18,26 +18,20 @@ export function MetricCard({
   className,
 }: MetricCardProps) {
   return (
-    <Card className={cn("p-6", className)} data-testid={`metric-${label.toLowerCase().replace(/\s+/g, "-")}`}>
+    <Card className={cn("p-6 border", className)} data-testid={`metric-${label.toLowerCase().replace(/\s+/g, "-")}`}>
       <div className="space-y-2">
-        <p className="text-sm font-medium text-muted-foreground">{label}</p>
-        <p className="text-3xl font-bold tabular-nums">{value}</p>
+        <p className="text-5xl font-bold tabular-nums text-primary">{value}</p>
+        <p className="text-sm font-medium">{label}</p>
         {change !== undefined && trend && (
-          <div className="flex items-center gap-1 text-xs">
+          <div className="flex items-center gap-1 text-xs text-muted-foreground">
             {trend === "up" ? (
-              <ArrowUp className="w-3 h-3 text-chart-2" />
+              <ArrowUp className="w-3 h-3" />
             ) : (
-              <ArrowDown className="w-3 h-3 text-destructive" />
+              <ArrowDown className="w-3 h-3" />
             )}
-            <span
-              className={cn(
-                "font-medium",
-                trend === "up" ? "text-chart-2" : "text-destructive"
-              )}
-            >
-              {change}%
+            <span className="font-medium">
+              {change}% vs last period
             </span>
-            <span className="text-muted-foreground">vs last period</span>
           </div>
         )}
       </div>

@@ -86,9 +86,9 @@ export default function DashboardMGO() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-semibold mb-2">My Dashboard</h1>
-        <p className="text-muted-foreground">
+      <div className="space-y-3">
+        <h1 className="text-3xl font-bold">My Dashboard</h1>
+        <p className="text-sm text-muted-foreground">
           Manage your portfolio and track progress
         </p>
       </div>

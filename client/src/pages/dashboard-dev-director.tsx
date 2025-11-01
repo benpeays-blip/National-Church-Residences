@@ -109,11 +109,11 @@ export default function DashboardDevDirector() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-semibold mb-2">
+      <div className="space-y-3">
+        <h1 className="text-3xl font-bold">
           Development Director Dashboard
         </h1>
-        <p className="text-muted-foreground">
+        <p className="text-sm text-muted-foreground">
           Team performance and pipeline health
         </p>
       </div>
