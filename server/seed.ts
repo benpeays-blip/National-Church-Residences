@@ -1166,7 +1166,7 @@ async function seed() {
     if (Math.random() > 0.4) {
       const stage = weightedRandom(
         ["Prospect", "Cultivation", "Ask", "Steward", "Renewal"],
-        [35, 30, 20, 10, 5]
+        [25, 30, 20, 15, 10]
       );
 
       const probability =
@@ -1239,6 +1239,56 @@ async function seed() {
 
   await db.insert(opportunities).values(opportunitiesList);
   console.log(`✅ Created ${opportunitiesList.length} opportunities`);
+
+  // Ensure all 5 stages have at least 1 opportunity
+  const missingStages = ["Prospect", "Cultivation", "Ask", "Steward", "Renewal"].filter(
+    stage => !opportunitiesList.some(opp => opp.stage === stage)
+  );
+
+  if (missingStages.length > 0) {
+    console.log(`📝 Adding missing opportunity stages: ${missingStages.join(", ")}`);
+    const extraOpportunities = [];
+    
+    for (const stage of missingStages) {
+      const donor = topDonors[Math.floor(Math.random() * Math.min(topDonors.length, 10))];
+      const owner = mgoUsers[Math.floor(Math.random() * mgoUsers.length)];
+      
+      const probability = stage === "Prospect" ? 15 : stage === "Cultivation" ? 35 : 
+                         stage === "Ask" ? 60 : stage === "Steward" ? 85 : 25;
+      
+      const capacityScore = donor.capacityScore || 50;
+      let askAmount: number;
+      if (capacityScore >= 90) askAmount = Math.random() * 200000 + 50000;
+      else if (capacityScore >= 75) askAmount = Math.random() * 75000 + 25000;
+      else if (capacityScore >= 60) askAmount = Math.random() * 20000 + 5000;
+      else askAmount = Math.random() * 4000 + 1000;
+      
+      const daysOut = stage === "Prospect" ? 180 : stage === "Cultivation" ? 120 : 
+                     stage === "Ask" ? 60 : stage === "Steward" ? 30 : 90;
+      const closeDate = new Date();
+      closeDate.setDate(closeDate.getDate() + daysOut + Math.random() * 60);
+      
+      const syncedAt = new Date();
+      syncedAt.setDate(syncedAt.getDate() - Math.floor(Math.random() * 3));
+      
+      extraOpportunities.push({
+        personId: donor.id,
+        stage: stage as "Prospect" | "Cultivation" | "Ask" | "Steward" | "Renewal",
+        askAmount: askAmount.toFixed(2),
+        probability: probability,
+        closeDate: closeDate,
+        notes: `${stage} opportunity for ${donor.firstName} ${donor.lastName}`,
+        ownerId: owner.id,
+        sourceSystem: "Salesforce",
+        sourceRecordId: `SF-OPP-${Math.floor(Math.random() * 900000) + 100000}`,
+        syncedAt: syncedAt,
+        dataQualityScore: 85,
+      });
+    }
+    
+    await db.insert(opportunities).values(extraOpportunities);
+    console.log(`✅ Added ${extraOpportunities.length} opportunities to ensure all stages are populated`);
+  }
 
   // ==================== GRANTS ====================
   console.log("📝 Creating grants...");
@@ -1770,10 +1820,10 @@ async function seed() {
   const wealthEventsList: any[] = [];
   const topWealthDonors = personsList.filter(p => p.capacityScore && p.capacityScore >= 80).slice(0, 20);
   
-  const eventTypes = ["ipo", "stock_sale", "property_sale", "inheritance", "promotion"];
+  const eventTypes = ["ipo", "stock_sale", "property_sale", "inheritance", "promotion", "business_sale", "bonus", "other"];
   const sources = ["SEC Filings", "LinkedIn", "Property Records", "Business News", "Social Media"];
   
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 30; i++) {
     const donor = topWealthDonors[i % topWealthDonors.length];
     const eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
     const source = sources[Math.floor(Math.random() * sources.length)];
@@ -1786,6 +1836,9 @@ async function seed() {
     else if (eventType === "stock_sale") estimatedValue = Math.floor(Math.random() * 5000000) + 1000000;
     else if (eventType === "property_sale") estimatedValue = Math.floor(Math.random() * 3000000) + 500000;
     else if (eventType === "inheritance") estimatedValue = Math.floor(Math.random() * 2000000) + 500000;
+    else if (eventType === "business_sale") estimatedValue = Math.floor(Math.random() * 8000000) + 2000000;
+    else if (eventType === "bonus") estimatedValue = Math.floor(Math.random() * 1000000) + 200000;
+    else if (eventType === "other") estimatedValue = Math.floor(Math.random() * 1500000) + 300000;
     else estimatedValue = Math.floor(Math.random() * 500000) + 100000;
     
     wealthEventsList.push({
