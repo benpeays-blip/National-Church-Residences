@@ -65,6 +65,9 @@ import WorkflowCanvas from "@/pages/workflow-canvas";
 // Logo Preview
 import LogoPreview from "@/pages/logo-preview";
 
+// Hero Preview
+import HeroPreview from "@/pages/hero-preview";
+
 function Dashboard() {
   // Default to Dev Director dashboard (can be changed via navigation)
   return <DashboardDevDirector />;
@@ -123,6 +126,9 @@ function Router() {
       
       {/* Logo Preview */}
       <Route path="/logo-preview" component={LogoPreview} />
+      
+      {/* Hero Preview */}
+      <Route path="/hero-preview" component={HeroPreview} />
       
       <Route component={NotFound} />
     </Switch>
