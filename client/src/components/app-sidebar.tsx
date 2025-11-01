@@ -65,124 +65,6 @@ const coreMenuItems = [
   },
 ];
 
-const aiIntelligenceItems = [
-  {
-    title: "Predictive Timing",
-    url: "/ai/predictive-timing",
-    roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
-  },
-  {
-    title: "Wealth Events",
-    url: "/ai/wealth-events",
-    roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
-  },
-  {
-    title: "Meeting Briefs",
-    url: "/ai/meeting-briefs",
-    roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
-  },
-  {
-    title: "Voice-to-CRM",
-    url: "/ai/voice-notes",
-    roles: ["ADMIN", "DEV_DIRECTOR", "MGO"],
-  },
-];
-
-const relationshipItems = [
-  {
-    title: "Board Connections",
-    url: "/relationship/board-connections",
-    roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
-  },
-  {
-    title: "Board Network Mapper",
-    url: "/relationship/board-network-mapper",
-    roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
-  },
-  {
-    title: "Corporate Partnerships",
-    url: "/relationship/corporate-partnerships",
-    roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
-  },
-  {
-    title: "Peer Discovery",
-    url: "/relationship/peer-donors",
-    roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
-  },
-];
-
-const aiContentItems = [
-  {
-    title: "Outreach Generator",
-    url: "/content/outreach",
-    roles: ["ADMIN", "DEV_DIRECTOR", "MGO"],
-  },
-  {
-    title: "Grant Proposals",
-    url: "/content/grant-proposals",
-    roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
-  },
-  {
-    title: "Impact Reports",
-    url: "/content/impact-reports",
-    roles: ["ADMIN", "DEV_DIRECTOR"],
-  },
-];
-
-const analyticsItems = [
-  {
-    title: "Peer Benchmarks",
-    url: "/analytics/peer-benchmarks",
-    roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
-  },
-  {
-    title: "Donor Sentiment",
-    url: "/analytics/sentiment",
-    roles: ["ADMIN", "DEV_DIRECTOR", "MGO"],
-  },
-  {
-    title: "Portfolio Optimization",
-    url: "/analytics/portfolio-optimization",
-    roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
-  },
-];
-
-const workflowItems = [
-  {
-    title: "Smart Calendar",
-    url: "/workflow/calendar",
-    roles: ["ADMIN", "DEV_DIRECTOR", "MGO"],
-  },
-  {
-    title: "Stewardship",
-    url: "/workflow/stewardship",
-    roles: ["ADMIN", "DEV_DIRECTOR"],
-  },
-  {
-    title: "Task Priorities",
-    url: "/workflow/task-priorities",
-    roles: ["ADMIN", "DEV_DIRECTOR", "MGO"],
-  },
-  {
-    title: "Gift Registries",
-    url: "/workflow/gift-registries",
-    roles: ["ADMIN", "DEV_DIRECTOR"],
-  },
-];
-
-const workflowBuilderItems = [
-  {
-    title: "Workflow Library",
-    url: "/workflows",
-    roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
-  },
-  {
-    title: "Templates",
-    url: "/workflows/templates",
-    roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
-  },
-];
-
 export function AppSidebar() {
   const { user } = useAuth();
 
@@ -190,12 +72,6 @@ export function AppSidebar() {
     items.filter((item) => !user?.role || item.roles.includes(user.role));
 
   const visibleCore = filterItems(coreMenuItems);
-  const visibleAI = filterItems(aiIntelligenceItems);
-  const visibleRelationship = filterItems(relationshipItems);
-  const visibleContent = filterItems(aiContentItems);
-  const visibleAnalytics = filterItems(analyticsItems);
-  const visibleWorkflow = filterItems(workflowItems);
-  const visibleWorkflowBuilder = filterItems(workflowBuilderItems);
 
   const renderMenuGroup = (title: string, items: typeof coreMenuItems) => {
     if (items.length === 0) return null;
@@ -238,12 +114,6 @@ export function AppSidebar() {
       </SidebarHeader>
       <SidebarContent>
         {renderMenuGroup("Core", visibleCore)}
-        {renderMenuGroup("AI Intelligence", visibleAI)}
-        {renderMenuGroup("Relationship Intel", visibleRelationship)}
-        {renderMenuGroup("AI Content", visibleContent)}
-        {renderMenuGroup("Analytics", visibleAnalytics)}
-        {renderMenuGroup("Workflows", visibleWorkflow)}
-        {renderMenuGroup("Workflow Builder", visibleWorkflowBuilder)}
       </SidebarContent>
     </Sidebar>
   );
