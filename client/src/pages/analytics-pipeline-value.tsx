@@ -97,7 +97,7 @@ export default function PipelineValueDetail() {
     new Set(opportunities?.map((o) => o.ownerId).filter(Boolean))
   ).map((id) => {
     const opp = opportunities?.find((o) => o.ownerId === id);
-    return { id, name: `${opp?.owner.firstName} ${opp?.owner.lastName}` };
+    return { id, name: `${opp?.owner?.firstName || ''} ${opp?.owner?.lastName || ''}`.trim() || 'Unknown' };
   });
 
   return (
@@ -276,15 +276,19 @@ export default function PipelineValueDetail() {
               {filteredOpps.map((opp) => (
                 <TableRow key={opp.id} data-testid={`row-opportunity-${opp.id}`}>
                   <TableCell className="font-medium">
-                    <Link href={`/donors/${opp.personId}`} className="hover:underline">
-                      {opp.person.firstName} {opp.person.lastName}
-                    </Link>
+                    {opp.person ? (
+                      <Link href={`/donors/${opp.personId}`} className="hover:underline">
+                        {opp.person.firstName} {opp.person.lastName}
+                      </Link>
+                    ) : (
+                      <span className="text-muted-foreground">Unknown Donor</span>
+                    )}
                   </TableCell>
                   <TableCell>
                     <Badge variant="secondary">{opp.stage}</Badge>
                   </TableCell>
                   <TableCell className="text-sm text-muted-foreground">
-                    {opp.owner.firstName} {opp.owner.lastName}
+                    {opp.owner ? `${opp.owner.firstName} ${opp.owner.lastName}` : 'Unassigned'}
                   </TableCell>
                   <TableCell className="text-right font-semibold">
                     {formatCurrency(parseFloat(opp.askAmount || "0"))}

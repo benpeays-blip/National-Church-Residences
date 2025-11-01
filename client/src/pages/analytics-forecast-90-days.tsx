@@ -240,15 +240,19 @@ export default function Forecast90Days() {
                 .map((opp) => (
                   <TableRow key={opp.id} data-testid={`row-opportunity-${opp.id}`}>
                     <TableCell className="font-medium">
-                      <Link href={`/donors/${opp.personId}`} className="hover:underline">
-                        {opp.person.firstName} {opp.person.lastName}
-                      </Link>
+                      {opp.person ? (
+                        <Link href={`/donors/${opp.personId}`} className="hover:underline">
+                          {opp.person.firstName} {opp.person.lastName}
+                        </Link>
+                      ) : (
+                        <span className="text-muted-foreground">Unknown Donor</span>
+                      )}
                     </TableCell>
                     <TableCell>
                       <Badge variant="secondary">{opp.stage}</Badge>
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">
-                      {opp.owner.firstName} {opp.owner.lastName}
+                      {opp.owner ? `${opp.owner.firstName} ${opp.owner.lastName}` : 'Unassigned'}
                     </TableCell>
                     <TableCell className="font-medium">
                       {format(new Date(opp.closeDate!), "MMM d, yyyy")}
