@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -7,6 +7,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import NotFound from "@/pages/not-found";
 import logoUrl from "@assets/ChatGPT Image Nov 1, 2025, 09_08_53 AM_1762006163839.png";
+import { Button } from "@/components/ui/button";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
 import DashboardCEO from "@/pages/dashboard-ceo";
@@ -115,6 +116,62 @@ function Router() {
   );
 }
 
+const navTabs = [
+  { label: "Core", path: "/" },
+  { label: "AI Intelligence", path: "/ai/predictive-timing" },
+  { label: "Relationship Intel", path: "/relationship/board-network-mapper" },
+  { label: "AI Content", path: "/content/outreach" },
+  { label: "Analytics", path: "/analytics/peer-benchmarks" },
+  { label: "Workflows", path: "/workflow/calendar" },
+  { label: "Workflow Builder", path: "/workflows" },
+];
+
+function TopNavigation() {
+  const [location, setLocation] = useLocation();
+
+  const getActiveSection = () => {
+    if (location === "/" || location.startsWith("/dashboard") || location.startsWith("/donors") || 
+        location.startsWith("/pipeline") || location.startsWith("/grants") || location.startsWith("/gifts") || 
+        location.startsWith("/campaigns") || location.startsWith("/data-health") || 
+        location.startsWith("/integrations") || location.startsWith("/settings") || location.startsWith("/solutions")) {
+      return "Core";
+    }
+    if (location.startsWith("/ai/")) return "AI Intelligence";
+    if (location.startsWith("/relationship/")) return "Relationship Intel";
+    if (location.startsWith("/content/")) return "AI Content";
+    if (location.startsWith("/analytics/")) return "Analytics";
+    if (location.startsWith("/workflow/")) return "Workflows";
+    if (location.startsWith("/workflows")) return "Workflow Builder";
+    return "Core";
+  };
+
+  const activeSection = getActiveSection();
+
+  return (
+    <div className="flex items-center gap-1">
+      {navTabs.map((tab) => {
+        const isActive = activeSection === tab.label;
+        return (
+          <Button
+            key={tab.label}
+            variant="ghost"
+            size="sm"
+            onClick={() => setLocation(tab.path)}
+            className={`h-9 text-xs font-medium rounded-md transition-colors ${
+              isActive
+                ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground"
+                : "text-muted-foreground hover:text-foreground"
+            }`}
+            data-testid={`nav-tab-${tab.label.toLowerCase().replace(/\s+/g, "-")}`}
+          >
+            {tab.label}
+          </Button>
+        );
+      })}
+    </div>
+  );
+}
+
 function App() {
   const style = {
     "--sidebar-width": "15rem",
@@ -128,9 +185,10 @@ function App() {
           <div className="flex h-screen w-full">
             <AppSidebar />
             <div className="flex flex-col flex-1 overflow-hidden">
-              <header className="flex items-center justify-between h-16 px-6 border-b shrink-0">
+              <header className="flex items-center gap-6 h-16 px-6 border-b shrink-0">
                 <SidebarTrigger data-testid="button-sidebar-toggle" />
-                <div className="flex items-center gap-2">
+                <TopNavigation />
+                <div className="flex items-center gap-2 ml-auto">
                   <img src={logoUrl} alt="FundRazor" className="h-8" />
                 </div>
               </header>
