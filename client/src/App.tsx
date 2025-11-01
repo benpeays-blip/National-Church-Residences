@@ -125,7 +125,7 @@ function Router() {
 
 const navSections = [
   {
-    label: "Core",
+    label: "Platform",
     items: [
       { title: "Dashboard", path: "/" },
       { title: "Solutions", path: "/solutions" },

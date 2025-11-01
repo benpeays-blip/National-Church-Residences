@@ -113,7 +113,7 @@ export function AppSidebar() {
         </div>
       </SidebarHeader>
       <SidebarContent>
-        {renderMenuGroup("Core", visibleCore)}
+        {renderMenuGroup("Platform", visibleCore)}
       </SidebarContent>
     </Sidebar>
   );
