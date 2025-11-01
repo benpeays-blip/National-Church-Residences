@@ -6,6 +6,7 @@ import { TrendingUp, Calendar, DollarSign, Target, AlertTriangle, CheckCircle2 }
 import type { Person, PredictiveScore } from "@shared/schema";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
+import { Link } from "wouter";
 
 interface PredictiveTimingData {
   person: Person;
@@ -168,16 +169,18 @@ export default function AIPredictiveTiming() {
                       return (
                         <TableRow key={prediction.score.id} data-testid={`row-prediction-${prediction.person.id}`}>
                           <TableCell className="font-medium">
-                            <div>
-                              <div data-testid={`text-donor-name-${prediction.person.id}`}>
-                                {prediction.person.firstName} {prediction.person.lastName}
-                              </div>
-                              {prediction.person.organizationName && (
-                                <div className="text-sm text-muted-foreground">
-                                  {prediction.person.organizationName}
+                            <Link href={`/donors/${prediction.person.id}`}>
+                              <div className="hover:underline cursor-pointer">
+                                <div data-testid={`text-donor-name-${prediction.person.id}`}>
+                                  {prediction.person.firstName} {prediction.person.lastName}
                                 </div>
-                              )}
-                            </div>
+                                {prediction.person.organizationName && (
+                                  <div className="text-sm text-muted-foreground">
+                                    {prediction.person.organizationName}
+                                  </div>
+                                )}
+                              </div>
+                            </Link>
                           </TableCell>
                           <TableCell>
                             <div className="flex flex-col gap-2">

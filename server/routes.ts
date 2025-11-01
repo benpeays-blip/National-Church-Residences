@@ -100,6 +100,147 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/donors/:id", async (req, res) => {
+    try {
+      const personId = req.params.id;
+      const person = await storage.getPerson(personId);
+      if (!person) {
+        return res.status(404).json({ message: "Person not found" });
+      }
+
+      // Fetch all related data in parallel
+      const [giftsList, interactionsList, opportunitiesList, nextBestActions] = await Promise.all([
+        db
+          .select({
+            id: gifts.id,
+            amount: gifts.amount,
+            giftDate: gifts.giftDate,
+            campaignId: gifts.campaignId,
+            sourceSystem: gifts.sourceSystem,
+            campaign: {
+              name: campaigns.name,
+            },
+          })
+          .from(gifts)
+          .leftJoin(campaigns, eq(gifts.campaignId, campaigns.id))
+          .where(eq(gifts.personId, personId)),
+        db
+          .select({
+            id: interactions.id,
+            type: interactions.type,
+            notes: interactions.notes,
+            interactionDate: interactions.interactionDate,
+            userId: interactions.userId,
+            user: {
+              firstName: users.firstName,
+              lastName: users.lastName,
+            },
+          })
+          .from(interactions)
+          .leftJoin(users, eq(interactions.userId, users.id))
+          .where(eq(interactions.personId, personId)),
+        db
+          .select({
+            id: opportunities.id,
+            stage: opportunities.stage,
+            askAmount: opportunities.askAmount,
+            probability: opportunities.probability,
+            closeDate: opportunities.closeDate,
+            ownerId: opportunities.ownerId,
+            notes: opportunities.notes,
+            owner: {
+              firstName: users.firstName,
+              lastName: users.lastName,
+            },
+          })
+          .from(opportunities)
+          .leftJoin(users, eq(opportunities.ownerId, users.id))
+          .where(eq(opportunities.personId, personId)),
+        db
+          .select()
+          .from(tasks)
+          .where(and(eq(tasks.personId, personId), eq(tasks.status, "pending")))
+          .orderBy(desc(tasks.createdAt))
+          .limit(5),
+      ]);
+
+      // Get household info if applicable
+      let household = null;
+      if (person.householdId) {
+        const householdResults = await db
+          .select({
+            id: households.id,
+            name: households.name,
+            totalMembers: sql<number>`(SELECT COUNT(*) FROM ${persons} WHERE ${persons.householdId} = ${households.id})`,
+          })
+          .from(households)
+          .where(eq(households.id, person.householdId));
+        household = householdResults[0] || null;
+      }
+
+      // Calculate stats
+      const totalGifts = giftsList.length;
+      const totalGiving = giftsList.reduce((sum, g) => sum + parseFloat(g.amount), 0);
+      const avgGiftSize = totalGifts > 0 ? totalGiving / totalGifts : 0;
+      const firstGiftDate = giftsList.length > 0
+        ? new Date(Math.min(...giftsList.map((g) => new Date(g.giftDate).getTime())))
+        : null;
+      const daysSinceLastGift = person.lastGiftDate
+        ? Math.floor((Date.now() - new Date(person.lastGiftDate).getTime()) / (1000 * 60 * 60 * 24))
+        : null;
+
+      // Calculate giving frequency
+      let giftFrequency = "Never given";
+      if (totalGifts > 0) {
+        if (totalGifts === 1) {
+          giftFrequency = "One-time donor";
+        } else if (firstGiftDate) {
+          const daysSinceFirst = Math.floor((Date.now() - firstGiftDate.getTime()) / (1000 * 60 * 60 * 24));
+          const yearsActive = daysSinceFirst / 365;
+          if (yearsActive < 1) {
+            giftFrequency = `${totalGifts} gifts in first year`;
+          } else {
+            const giftsPerYear = totalGifts / yearsActive;
+            if (giftsPerYear >= 12) {
+              giftFrequency = "Monthly donor";
+            } else if (giftsPerYear >= 4) {
+              giftFrequency = "Quarterly donor";
+            } else if (giftsPerYear >= 2) {
+              giftFrequency = "Semi-annual donor";
+            } else {
+              giftFrequency = "Annual donor";
+            }
+          }
+        }
+      }
+
+      res.json({
+        person,
+        household,
+        gifts: giftsList,
+        opportunities: opportunitiesList,
+        interactions: interactionsList,
+        nextBestActions: nextBestActions.map((task) => ({
+          id: task.id,
+          priority: task.priority || "Medium",
+          reason: task.description || "Follow up with donor",
+          suggestedAction: task.title,
+          createdAt: task.createdAt,
+        })),
+        stats: {
+          totalGifts,
+          avgGiftSize,
+          firstGiftDate,
+          daysSinceLastGift,
+          giftFrequency,
+        },
+      });
+    } catch (error) {
+      console.error("Error fetching donor details:", error);
+      res.status(500).json({ message: "Failed to fetch donor details" });
+    }
+  });
+
   app.get("/api/gifts", isAuthenticated, async (req, res) => {
     try {
       const personId = req.query.personId as string | undefined;

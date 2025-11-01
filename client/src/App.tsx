@@ -15,6 +15,7 @@ import DashboardCEO from "@/pages/dashboard-ceo";
 import Solutions from "@/pages/solutions";
 import Donors from "@/pages/donors";
 import Donor360 from "@/pages/donor-360";
+import DonorDetail from "@/pages/donor-detail";
 import Pipeline from "@/pages/pipeline";
 import Grants from "@/pages/grants";
 import Gifts from "@/pages/gifts";
@@ -81,7 +82,7 @@ function Router() {
       <Route path="/dashboard/dev-director" component={DashboardDevDirector} />
       <Route path="/dashboard/ceo" component={DashboardCEO} />
       <Route path="/solutions" component={Solutions} />
-      <Route path="/donors/:id" component={Donor360} />
+      <Route path="/donors/:id" component={DonorDetail} />
       <Route path="/donors" component={Donors} />
       <Route path="/pipeline" component={Pipeline} />
       <Route path="/grants" component={Grants} />
