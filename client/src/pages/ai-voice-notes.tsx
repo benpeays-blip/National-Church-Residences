@@ -11,10 +11,10 @@ export default function AIVoiceNotes() {
   });
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Voice-to-CRM</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold">Voice-to-CRM</h1>
+        <p className="text-sm text-muted-foreground">
           Record voice notes that automatically transcribe, create interactions, and generate follow-up tasks
         </p>
       </div>

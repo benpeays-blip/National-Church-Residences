@@ -60,10 +60,10 @@ export default function WorkflowTemplatesPage() {
   });
 
   return (
-    <div className="p-8 space-y-8">
-      <div>
+    <div className="space-y-6">
+      <div className="space-y-1">
         <h1 className="text-3xl font-bold">Workflow Templates</h1>
-        <p className="text-muted-foreground mt-2">
+        <p className="text-sm text-muted-foreground">
           Pre-built fundraising workflow templates - clone to customize for your organization
         </p>
       </div>

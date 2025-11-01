@@ -33,10 +33,10 @@ export default function SmartCalendar() {
 
   if (isLoading) {
     return (
-      <div className="p-6 space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">AI Smart Calendar</h1>
-          <p className="text-muted-foreground">
+      <div className="space-y-6">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold ">AI Smart Calendar</h1>
+          <p className="text-sm text-muted-foreground">
             Optimal meeting scheduling based on donor preferences and MGO availability
           </p>
         </div>
@@ -62,7 +62,7 @@ export default function SmartCalendar() {
         <Card>
           <CardContent className="p-6">
             <div className="text-center text-muted-foreground">
-              <p className="font-semibold mb-2">Failed to load calendar events</p>
+              <p className="font-semibold ">Failed to load calendar events</p>
               <p className="text-sm">{error?.message || "An error occurred"}</p>
             </div>
           </CardContent>
@@ -75,10 +75,10 @@ export default function SmartCalendar() {
   const completedEvents = events?.filter((e) => e.completed === 1) || [];
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">AI Smart Calendar</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold ">AI Smart Calendar</h1>
+        <p className="text-sm text-muted-foreground">
           Optimized donor meeting schedule based on preferences, proximity, and impact
         </p>
       </div>
@@ -97,7 +97,7 @@ export default function SmartCalendar() {
                   data-testid={`card-event-${event.id}`}
                 >
                   <div className="flex items-start justify-between">
-                    <div>
+                    <div className="space-y-1">
                       <div className="font-semibold">{event.eventType}</div>
                       <div className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
                         <Calendar className="w-4 h-4" />
@@ -140,7 +140,7 @@ export default function SmartCalendar() {
                   className="border rounded-lg p-4 space-y-2 opacity-75"
                 >
                   <div className="flex items-start justify-between">
-                    <div>
+                    <div className="space-y-1">
                       <div className="font-semibold">{event.eventType}</div>
                       <div className="text-sm text-muted-foreground">
                         {format(new Date(event.scheduledAt), "MMM d, yyyy")}

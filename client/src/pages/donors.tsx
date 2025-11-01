@@ -19,9 +19,9 @@ export default function Donors() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">Donors</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Donors</h1>
+          <p className="text-sm text-muted-foreground">
             Manage your donor relationships and data
           </p>
         </div>

@@ -22,9 +22,9 @@ export default function Campaigns() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">Campaigns</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Campaigns</h1>
+          <p className="text-sm text-muted-foreground">
             Manage fundraising campaigns and initiatives
           </p>
         </div>
@@ -33,10 +33,10 @@ export default function Campaigns() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {campaigns?.map((campaign) => (
-          <Card key={campaign.id} className="p-6">
+          <Card key={campaign.id} className="p-6 border">
             <div className="space-y-4">
               <div>
-                <h3 className="text-lg font-semibold mb-1">{campaign.name}</h3>
+                <h3 className="text-xl font-semibold mb-1">{campaign.name}</h3>
                 <p className="text-sm text-muted-foreground">{campaign.type}</p>
               </div>
 

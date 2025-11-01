@@ -19,15 +19,15 @@ export default function BoardConnections() {
   });
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       {/* LinkedIn-branded header */}
       <div className="flex items-center gap-3">
         <div className="flex items-center justify-center w-12 h-12 rounded bg-[#0A66C2]">
           <SiLinkedin className="w-7 h-7 text-white" />
         </div>
-        <div>
-          <h1 className="text-3xl font-bold mb-1">Board Member Network Mapping</h1>
-          <p className="text-muted-foreground flex items-center gap-2">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Board Member Network Mapping</h1>
+          <p className="text-sm text-muted-foreground flex items-center gap-2">
             <SiLinkedin className="w-4 h-4 text-[#0A66C2]" />
             Powered by LinkedIn connections - identify warm introduction paths
           </p>

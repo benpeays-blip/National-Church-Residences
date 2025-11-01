@@ -51,10 +51,10 @@ export default function TaskPriorities() {
 
   if (isLoading) {
     return (
-      <div className="p-6 space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">AI Task Prioritization</h1>
-          <p className="text-muted-foreground">
+      <div className="space-y-6">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold ">AI Task Prioritization</h1>
+          <p className="text-sm text-muted-foreground">
             Every task gets an AI priority score based on urgency, impact, and capacity
           </p>
         </div>
@@ -80,7 +80,7 @@ export default function TaskPriorities() {
         <Card>
           <CardContent className="p-6">
             <div className="text-center text-muted-foreground">
-              <p className="font-semibold mb-2">Failed to load task priorities</p>
+              <p className="font-semibold ">Failed to load task priorities</p>
               <p className="text-sm">{error?.message || "An error occurred"}</p>
             </div>
           </CardContent>
@@ -93,10 +93,10 @@ export default function TaskPriorities() {
   const sortedTasks = scoredTasks?.sort((a, b) => b.priorityScore.finalPriority - a.priorityScore.finalPriority) || [];
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">AI Task Prioritization</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold ">AI Task Prioritization</h1>
+        <p className="text-sm text-muted-foreground">
           AI ranks every fundraising task by urgency, revenue impact, and donor capacity
         </p>
       </div>
@@ -111,7 +111,7 @@ export default function TaskPriorities() {
                     <div className="text-2xl font-bold text-muted-foreground">
                       #{index + 1}
                     </div>
-                    <div>
+                    <div className="space-y-1">
                       <CardTitle className="text-lg">
                         {item.task.title}
                       </CardTitle>
@@ -129,25 +129,25 @@ export default function TaskPriorities() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                  <div>
+                  <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">Est. Revenue</div>
                     <div className="text-xl font-bold text-green-600">
                       ${parseFloat(item.priorityScore.estimatedRevenue).toLocaleString()}
                     </div>
                   </div>
-                  <div>
+                  <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">Urgency</div>
                     <div className="text-xl font-semibold">
                       {item.priorityScore.urgencyScore}/100
                     </div>
                   </div>
-                  <div>
+                  <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">Impact</div>
                     <div className="text-xl font-semibold">
                       {item.priorityScore.impactScore}/100
                     </div>
                   </div>
-                  <div>
+                  <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">Effort</div>
                     <div className="text-xl font-semibold">
                       {100 - item.priorityScore.effortScore}/100
@@ -159,7 +159,7 @@ export default function TaskPriorities() {
                   <div className="bg-muted/50 p-3 rounded-lg">
                     <div className="flex items-start gap-2">
                       <Zap className="w-4 h-4 text-primary mt-0.5" />
-                      <div>
+                      <div className="space-y-1">
                         <div className="text-sm font-semibold mb-1">AI Reasoning</div>
                         <div className="text-sm text-muted-foreground">{item.priorityScore.reasoning}</div>
                       </div>
@@ -174,8 +174,8 @@ export default function TaskPriorities() {
         <Card>
           <CardContent className="py-12 text-center">
             <ListChecks className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No Prioritized Tasks Yet</h3>
-            <p className="text-muted-foreground">
+            <h3 className="text-lg font-semibold ">No Prioritized Tasks Yet</h3>
+            <p className="text-sm text-muted-foreground">
               Task priority scores will appear here once tasks are analyzed
             </p>
           </CardContent>

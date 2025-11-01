@@ -42,10 +42,10 @@ export default function SentimentAnalysisPage() {
 
   if (isLoading) {
     return (
-      <div className="p-6 space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">Donor Sentiment Analysis</h1>
-          <p className="text-muted-foreground">
+      <div className="space-y-6">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold ">Donor Sentiment Analysis</h1>
+          <p className="text-sm text-muted-foreground">
             AI reads email responses and engagement patterns to gauge donor satisfaction
           </p>
         </div>
@@ -71,7 +71,7 @@ export default function SentimentAnalysisPage() {
         <Card>
           <CardContent className="p-6">
             <div className="text-center text-muted-foreground">
-              <p className="font-semibold mb-2">Failed to load sentiment analysis</p>
+              <p className="font-semibold ">Failed to load sentiment analysis</p>
               <p className="text-sm">{error?.message || "An error occurred"}</p>
             </div>
           </CardContent>
@@ -81,10 +81,10 @@ export default function SentimentAnalysisPage() {
   }
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Donor Sentiment Analysis</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold ">Donor Sentiment Analysis</h1>
+        <p className="text-sm text-muted-foreground">
           AI analyzes donor communications to detect sentiment and engagement trends
         </p>
       </div>
@@ -97,7 +97,7 @@ export default function SentimentAnalysisPage() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     {getSentimentIcon(analysis.sentimentScore)}
-                    <div>
+                    <div className="space-y-1">
                       <CardTitle className="text-lg">
                         Donor ID: {analysis.personId ? analysis.personId.slice(0, 8) : 'N/A'}
                       </CardTitle>
@@ -118,19 +118,19 @@ export default function SentimentAnalysisPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-3 gap-4">
-                  <div>
+                  <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">Sentiment Score</div>
                     <div className="text-2xl font-bold" data-testid={`text-sentiment-${analysis.id}`}>
                       {analysis.sentimentScore}/100
                     </div>
                   </div>
-                  <div>
+                  <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">Engagement Trend</div>
                     <div className={`text-lg font-semibold ${getTrendColor(analysis.engagementTrend)}`}>
                       {analysis.engagementTrend}
                     </div>
                   </div>
-                  <div>
+                  <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">Avg Response Time</div>
                     <div className="text-lg font-semibold">
                       {parseFloat(analysis.emailResponseTime).toFixed(1)}h
@@ -139,8 +139,8 @@ export default function SentimentAnalysisPage() {
                 </div>
 
                 {analysis.keySignals && analysis.keySignals.length > 0 && (
-                  <div>
-                    <div className="text-sm font-semibold mb-2">Key Signals</div>
+                  <div className="space-y-1">
+                    <div className="text-sm font-semibold ">Key Signals</div>
                     <div className="flex flex-wrap gap-2">
                       {analysis.keySignals.map((signal, idx) => (
                         <Badge key={idx} variant="outline" className="text-xs">
@@ -165,8 +165,8 @@ export default function SentimentAnalysisPage() {
         <Card>
           <CardContent className="py-12 text-center">
             <Smile className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No Sentiment Data Yet</h3>
-            <p className="text-muted-foreground">
+            <h3 className="text-lg font-semibold ">No Sentiment Data Yet</h3>
+            <p className="text-sm text-muted-foreground">
               Sentiment analyses will appear here once communications are analyzed
             </p>
           </CardContent>

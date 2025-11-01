@@ -32,19 +32,19 @@ export default function Gifts() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">Gifts</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Gifts</h1>
+          <p className="text-sm text-muted-foreground">
             Track all donations and contributions
           </p>
         </div>
         <DollarSign className="w-8 h-8 text-muted-foreground" />
       </div>
 
-      <Card className="p-6">
+      <Card className="p-6 border">
         <div className="space-y-2 mb-6">
-          <p className="text-sm font-medium text-muted-foreground">Total Raised</p>
-          <p className="text-4xl font-bold">{formatCurrency(totalRaised)}</p>
+          <p className="text-5xl font-bold text-primary tabular-nums">{formatCurrency(totalRaised)}</p>
+          <p className="text-sm font-medium">Total Raised</p>
         </div>
 
         <Table>

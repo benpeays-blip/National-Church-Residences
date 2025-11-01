@@ -3,10 +3,10 @@ import { UserCog } from "lucide-react";
 
 export default function PortfolioOptimization() {
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Portfolio Optimization Engine</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold">Portfolio Optimization Engine</h1>
+        <p className="text-sm text-muted-foreground">
           AI suggests which MGO should own which donor based on capacity, relationships, territory
         </p>
       </div>

@@ -46,10 +46,10 @@ export default function Stewardship() {
 
   if (isLoading) {
     return (
-      <div className="p-6 space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">Automated Stewardship Workflows</h1>
-          <p className="text-muted-foreground">
+      <div className="space-y-6">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold ">Automated Stewardship Workflows</h1>
+          <p className="text-sm text-muted-foreground">
             Triggered sequences based on gift thresholds and donor milestones
           </p>
         </div>
@@ -75,7 +75,7 @@ export default function Stewardship() {
         <Card>
           <CardContent className="p-6">
             <div className="text-center text-muted-foreground">
-              <p className="font-semibold mb-2">Failed to load stewardship workflows</p>
+              <p className="font-semibold ">Failed to load stewardship workflows</p>
               <p className="text-sm">{error?.message || "An error occurred"}</p>
             </div>
           </CardContent>
@@ -89,10 +89,10 @@ export default function Stewardship() {
   const completedWorkflows = workflows?.filter((w) => w.workflow.completedAt) || [];
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Automated Stewardship Workflows</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold ">Automated Stewardship Workflows</h1>
+        <p className="text-sm text-muted-foreground">
           Multi-step stewardship sequences triggered by gift amounts and donor milestones
         </p>
       </div>
@@ -115,7 +115,7 @@ export default function Stewardship() {
                 return (
                   <div key={item.workflow.id} className="border rounded-lg p-4 space-y-3" data-testid={`card-workflow-${item.workflow.id}`}>
                     <div className="flex items-start justify-between">
-                      <div>
+                      <div className="space-y-1">
                         <div className="font-semibold">{item.workflow.workflowName}</div>
                         <div className="text-sm text-muted-foreground">
                           {item.person.firstName} {item.person.lastName} • ${parseFloat(item.gift.amount).toLocaleString()} gift
@@ -158,7 +158,7 @@ export default function Stewardship() {
               {pausedWorkflows.map((item) => (
                 <div key={item.workflow.id} className="border rounded-lg p-4 opacity-60">
                   <div className="flex items-start justify-between">
-                    <div>
+                    <div className="space-y-1">
                       <div className="font-semibold">{item.workflow.workflowName}</div>
                       <div className="text-sm text-muted-foreground">
                         {item.person.firstName} {item.person.lastName}
@@ -189,7 +189,7 @@ export default function Stewardship() {
               {completedWorkflows.slice(0, 5).map((item) => (
                 <div key={item.workflow.id} className="border rounded-lg p-4">
                   <div className="flex items-start justify-between">
-                    <div>
+                    <div className="space-y-1">
                       <div className="font-semibold">{item.workflow.workflowName}</div>
                       <div className="text-sm text-muted-foreground">
                         {item.person.firstName} {item.person.lastName} • Completed {format(new Date(item.workflow.completedAt!), "MMM d, yyyy")}

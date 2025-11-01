@@ -102,12 +102,12 @@ export default function Integrations() {
     <div className="space-y-6">
       {/* Header */}
       <div className="flex items-start justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">Integrations Gallery</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold">Integrations Gallery</h1>
+          <p className="text-sm text-muted-foreground">
             Browse and connect {integrations.length} fundraising platforms and data sources
           </p>
-          <div className="flex items-center gap-2 mt-3">
+          <div className="flex items-center gap-2">
             <Badge variant="default" className="bg-chart-2 hover:bg-chart-2" data-testid="badge-connected-count">
               <CheckCircle2 className="w-3 h-3 mr-1" />
               {connectedCount} Connected

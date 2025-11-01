@@ -11,10 +11,10 @@ export default function CorporatePartnerships() {
   });
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Corporate Partnership Intelligence</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold ">Corporate Partnership Intelligence</h1>
+        <p className="text-sm text-muted-foreground">
           Track employee donors, matching gift programs, and corporate foundation opportunities
         </p>
       </div>
@@ -99,24 +99,24 @@ export default function CorporatePartnerships() {
                         <h4 className="font-semibold text-lg">{partnership.companyName}</h4>
                       </div>
                       <div className="grid grid-cols-2 gap-4 text-sm">
-                        <div>
+                        <div className="space-y-1">
                           <span className="text-muted-foreground">Employee Donors:</span>
                           <span className="ml-2 font-medium">{partnership.employeeCount || 0}</span>
                         </div>
-                        <div>
+                        <div className="space-y-1">
                           <span className="text-muted-foreground">Employee Giving:</span>
                           <span className="ml-2 font-medium">
                             ${Number(partnership.totalEmployeeGiving || 0).toLocaleString()}
                           </span>
                         </div>
                         {partnership.matchingRatio && (
-                          <div>
+                          <div className="space-y-1">
                             <span className="text-muted-foreground">Match Ratio:</span>
                             <span className="ml-2 font-medium">{partnership.matchingRatio}</span>
                           </div>
                         )}
                         {partnership.estimatedMatchingPotential && (
-                          <div>
+                          <div className="space-y-1">
                             <span className="text-muted-foreground">Match Potential:</span>
                             <span className="ml-2 font-medium text-green-600">
                               ${Number(partnership.estimatedMatchingPotential).toLocaleString()}
@@ -143,8 +143,8 @@ export default function CorporatePartnerships() {
         <Card>
           <CardContent className="py-12 text-center">
             <Building2 className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No Corporate Partnerships</h3>
-            <p className="text-muted-foreground">Employee donor data will appear here once analyzed</p>
+            <h3 className="text-lg font-semibold ">No Corporate Partnerships</h3>
+            <p className="text-sm text-muted-foreground">Employee donor data will appear here once analyzed</p>
           </CardContent>
         </Card>
       )}

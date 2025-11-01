@@ -41,11 +41,11 @@ export default function AIPredictiveTiming() {
   };
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="space-y-6">
       {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Predictive Major Gift Timing</h1>
-        <p className="text-muted-foreground">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold">Predictive Major Gift Timing</h1>
+        <p className="text-sm text-muted-foreground">
           AI-powered predictions showing which donors are most likely to make major gifts and when
         </p>
       </div>

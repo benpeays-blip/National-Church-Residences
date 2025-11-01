@@ -69,10 +69,10 @@ export default function WorkflowsPage() {
   const userWorkflows = workflows.filter(w => !w.isTemplate);
 
   return (
-    <div className="p-8 space-y-8">
-      <div>
+    <div className="space-y-6">
+      <div className="space-y-1">
         <h1 className="text-3xl font-bold">Workflow Library</h1>
-        <p className="text-muted-foreground mt-2">
+        <p className="text-sm text-muted-foreground">
           Visual workflow builder for mapping tech stacks and fundraising processes
         </p>
       </div>

@@ -33,9 +33,9 @@ export default function Pipeline() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">Pipeline</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Pipeline</h1>
+          <p className="text-sm text-muted-foreground">
             Manage opportunities through the fundraising lifecycle
           </p>
         </div>
@@ -45,10 +45,10 @@ export default function Pipeline() {
       <div className="overflow-x-auto">
         <div className="flex gap-4 min-w-max pb-2">
           {stages.map((stage) => (
-            <Card key={stage} className="w-80 shrink-0 p-4">
-              <div className="mb-3">
+            <Card key={stage} className="w-80 shrink-0 p-6 border">
+              <div className="mb-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-semibold">{stage}</h3>
+                  <h3 className="text-base font-medium">{stage}</h3>
                   <span className="text-xs text-muted-foreground">
                     {grouped?.[stage]?.length ?? 0}
                   </span>

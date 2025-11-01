@@ -9,17 +9,17 @@ export default function Settings() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">Settings</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Settings</h1>
+          <p className="text-sm text-muted-foreground">
             Manage your account and application preferences
           </p>
         </div>
         <SettingsIcon className="w-8 h-8 text-muted-foreground" />
       </div>
 
-      <Card className="p-6">
-        <h2 className="text-lg font-semibold mb-4">Account Information</h2>
+      <Card className="p-6 border">
+        <h2 className="text-xl font-semibold mb-4">Account Information</h2>
         <div className="space-y-4">
           <div>
             <label className="text-sm font-medium text-muted-foreground">
@@ -44,8 +44,8 @@ export default function Settings() {
         </div>
       </Card>
 
-      <Card className="p-6">
-        <h2 className="text-lg font-semibold mb-4">Actions</h2>
+      <Card className="p-6 border">
+        <h2 className="text-xl font-semibold mb-4">Actions</h2>
         <Button
           variant="outline"
           onClick={() => (window.location.href = "/api/logout")}

@@ -29,10 +29,10 @@ export default function AIWealthEvents() {
   };
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Real-Time Wealth Event Monitoring</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold">Real-Time Wealth Event Monitoring</h1>
+        <p className="text-sm text-muted-foreground">
           Automated alerts when donors have liquidity events - IPOs, stock sales, real estate transactions
         </p>
       </div>

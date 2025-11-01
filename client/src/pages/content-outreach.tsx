@@ -66,10 +66,10 @@ export default function OutreachGenerator() {
   });
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Personalized Outreach Generator</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold ">Personalized Outreach Generator</h1>
+        <p className="text-sm text-muted-foreground">
           AI-written emails and letters customized for each donor's history and interests
         </p>
       </div>
@@ -215,19 +215,19 @@ export default function OutreachGenerator() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {item.template.subject && (
-                  <div>
+                  <div className="space-y-1">
                     <h4 className="font-semibold text-sm mb-1">Subject</h4>
                     <p className="text-sm">{item.template.subject}</p>
                   </div>
                 )}
-                <div>
+                <div className="space-y-1">
                   <h4 className="font-semibold text-sm mb-1">Content</h4>
                   <div className="bg-muted p-4 rounded-md text-sm whitespace-pre-wrap">
                     {item.template.content}
                   </div>
                 </div>
                 {item.template.aiRationale && (
-                  <div>
+                  <div className="space-y-1">
                     <h4 className="font-semibold text-sm mb-1">AI Rationale</h4>
                     <p className="text-sm text-muted-foreground">{item.template.aiRationale}</p>
                   </div>
@@ -240,8 +240,8 @@ export default function OutreachGenerator() {
         <Card>
           <CardContent className="py-12 text-center">
             <FileText className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No {getTypeLabel(filter)} Templates</h3>
-            <p className="text-muted-foreground">
+            <h3 className="text-lg font-semibold ">No {getTypeLabel(filter)} Templates</h3>
+            <p className="text-sm text-muted-foreground">
               No templates of this type found. Try changing the filter.
             </p>
           </CardContent>
@@ -250,8 +250,8 @@ export default function OutreachGenerator() {
         <Card>
           <CardContent className="py-12 text-center">
             <Mail className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No Outreach Templates Generated</h3>
-            <p className="text-muted-foreground">AI-generated personalized outreach will appear here</p>
+            <h3 className="text-lg font-semibold ">No Outreach Templates Generated</h3>
+            <p className="text-sm text-muted-foreground">AI-generated personalized outreach will appear here</p>
           </CardContent>
         </Card>
       )}

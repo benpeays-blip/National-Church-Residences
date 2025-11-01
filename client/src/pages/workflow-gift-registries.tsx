@@ -33,10 +33,10 @@ export default function GiftRegistries() {
 
   if (isLoading) {
     return (
-      <div className="p-6 space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">Charitable Gift Registries</h1>
-          <p className="text-muted-foreground">
+      <div className="space-y-6">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold ">Charitable Gift Registries</h1>
+          <p className="text-sm text-muted-foreground">
             Track life event fundraisers - weddings, birthdays, celebrations
           </p>
         </div>
@@ -62,7 +62,7 @@ export default function GiftRegistries() {
         <Card>
           <CardContent className="p-6">
             <div className="text-center text-muted-foreground">
-              <p className="font-semibold mb-2">Failed to load gift registries</p>
+              <p className="font-semibold ">Failed to load gift registries</p>
               <p className="text-sm">{error?.message || "An error occurred"}</p>
             </div>
           </CardContent>
@@ -75,10 +75,10 @@ export default function GiftRegistries() {
   const closedRegistries = registries?.filter((r) => r.active === 0) || [];
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Charitable Gift Registries</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold ">Charitable Gift Registries</h1>
+        <p className="text-sm text-muted-foreground">
           Monitor wedding and celebration gift registries to identify charitable giving opportunities
         </p>
       </div>
@@ -100,7 +100,7 @@ export default function GiftRegistries() {
                     <div className="flex items-start justify-between">
                       <div className="flex items-start gap-3">
                         {getOccasionIcon(registry.occasionType)}
-                        <div>
+                        <div className="space-y-1">
                           <div className="font-semibold capitalize">{registry.occasionType}</div>
                           <div className="text-sm text-muted-foreground">
                             {format(new Date(registry.occasionDate), "MMMM d, yyyy")}
@@ -163,7 +163,7 @@ export default function GiftRegistries() {
                     <div className="flex items-start justify-between">
                       <div className="flex items-start gap-3">
                         {getOccasionIcon(registry.occasionType)}
-                        <div>
+                        <div className="space-y-1">
                           <div className="font-semibold capitalize">{registry.occasionType}</div>
                           <div className="text-sm text-muted-foreground">
                             Raised ${raised.toLocaleString()} of ${goal.toLocaleString()}

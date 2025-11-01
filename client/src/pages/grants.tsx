@@ -96,9 +96,9 @@ export default function Grants() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-semibold mb-2">Grant Pipeline</h1>
-          <p className="text-muted-foreground">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Grant Pipeline</h1>
+          <p className="text-sm text-muted-foreground">
             Manage foundation grants and track submissions
           </p>
         </div>

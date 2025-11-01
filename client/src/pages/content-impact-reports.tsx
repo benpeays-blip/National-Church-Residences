@@ -38,10 +38,10 @@ export default function ImpactReports() {
 
   if (isLoading) {
     return (
-      <div className="p-6 space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">Impact Report Personalization</h1>
-          <p className="text-muted-foreground">
+      <div className="space-y-6">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold ">Impact Report Personalization</h1>
+          <p className="text-sm text-muted-foreground">
             Customized donor reports showing specific programs they funded and outcomes achieved
           </p>
         </div>
@@ -67,7 +67,7 @@ export default function ImpactReports() {
         <Card>
           <CardContent className="p-6">
             <div className="text-center text-muted-foreground">
-              <p className="font-semibold mb-2">Failed to load impact reports</p>
+              <p className="font-semibold ">Failed to load impact reports</p>
               <p className="text-sm">{error?.message || "An error occurred"}</p>
             </div>
           </CardContent>
@@ -77,10 +77,10 @@ export default function ImpactReports() {
   }
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Impact Report Personalization</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold ">Impact Report Personalization</h1>
+        <p className="text-sm text-muted-foreground">
           AI generates custom impact reports for each donor showing programs funded and outcomes
         </p>
       </div>
@@ -91,7 +91,7 @@ export default function ImpactReports() {
             <Card key={item.report.id} data-testid={`card-report-${item.report.id}`}>
               <CardHeader>
                 <div className="flex items-start justify-between">
-                  <div>
+                  <div className="space-y-1">
                     <CardTitle className="text-lg flex items-center gap-2">
                       <Heart className="w-5 h-5 text-pink-600" />
                       Impact Report - {item.report.reportingPeriod}
@@ -122,13 +122,13 @@ export default function ImpactReports() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
+                  <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">Total Impact</div>
                     <div className="text-2xl font-bold text-green-600">
                       ${parseFloat(item.report.totalImpact).toLocaleString()}
                     </div>
                   </div>
-                  <div>
+                  <div className="space-y-1">
                     <div className="text-sm text-muted-foreground">Beneficiaries Helped</div>
                     <div className="text-2xl font-bold flex items-center gap-2">
                       <Users className="w-6 h-6 text-blue-600" />
@@ -138,8 +138,8 @@ export default function ImpactReports() {
                 </div>
 
                 {item.report.programsSupported && item.report.programsSupported.length > 0 && (
-                  <div>
-                    <div className="text-sm font-semibold mb-2">Programs Supported</div>
+                  <div className="space-y-1">
+                    <div className="text-sm font-semibold ">Programs Supported</div>
                     <div className="flex flex-wrap gap-2">
                       {item.report.programsSupported.map((program, idx) => (
                         <Badge key={idx} variant="secondary">
@@ -151,7 +151,7 @@ export default function ImpactReports() {
                 )}
 
                 {item.report.customMessage && (
-                  <div>
+                  <div className="space-y-1">
                     <div className="text-sm font-semibold mb-1">Personal Message</div>
                     <div className="text-sm text-muted-foreground italic bg-muted/50 p-3 rounded">
                       "{item.report.customMessage}"
@@ -184,8 +184,8 @@ export default function ImpactReports() {
         <Card>
           <CardContent className="py-12 text-center">
             <Heart className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No Impact Reports Yet</h3>
-            <p className="text-muted-foreground">
+            <h3 className="text-lg font-semibold ">No Impact Reports Yet</h3>
+            <p className="text-sm text-muted-foreground">
               Personalized impact reports will appear here once donor data is analyzed
             </p>
           </CardContent>

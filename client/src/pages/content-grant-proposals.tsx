@@ -53,10 +53,10 @@ export default function GrantProposals() {
 
   if (isLoading) {
     return (
-      <div className="p-6 space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold mb-2">Automated Grant Writing Assistant</h1>
-          <p className="text-muted-foreground">
+      <div className="space-y-6">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold ">Automated Grant Writing Assistant</h1>
+          <p className="text-sm text-muted-foreground">
             AI drafts tailored proposals from foundation guidelines and your program data
           </p>
         </div>
@@ -82,7 +82,7 @@ export default function GrantProposals() {
         <Card>
           <CardContent className="p-6">
             <div className="text-center text-muted-foreground">
-              <p className="font-semibold mb-2">Failed to load grant proposals</p>
+              <p className="font-semibold ">Failed to load grant proposals</p>
               <p className="text-sm">{error?.message || "An error occurred"}</p>
             </div>
           </CardContent>
@@ -92,10 +92,10 @@ export default function GrantProposals() {
   }
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold mb-2">Automated Grant Writing Assistant</h1>
-        <p className="text-muted-foreground">
+    <div className="space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold ">Automated Grant Writing Assistant</h1>
+        <p className="text-sm text-muted-foreground">
           AI analyzes foundation guidelines and generates customized grant proposals
         </p>
       </div>
@@ -106,7 +106,7 @@ export default function GrantProposals() {
             <Card key={item.proposal.id} data-testid={`card-proposal-${item.proposal.id}`}>
               <CardHeader>
                 <div className="flex items-start justify-between">
-                  <div>
+                  <div className="space-y-1">
                     <CardTitle className="text-lg flex items-center gap-2">
                       {getStatusIcon(item.proposal.status)}
                       {item.grant.funderName}
@@ -122,7 +122,7 @@ export default function GrantProposals() {
               </CardHeader>
               <CardContent className="space-y-4">
                 {item.proposal.funderGuidelines && (
-                  <div>
+                  <div className="space-y-1">
                     <div className="text-sm font-semibold mb-1">Funder Guidelines</div>
                     <div className="text-sm text-muted-foreground bg-muted/50 p-3 rounded">
                       {item.proposal.funderGuidelines.substring(0, 200)}...
@@ -131,7 +131,7 @@ export default function GrantProposals() {
                 )}
 
                 {item.proposal.generatedNarrative && (
-                  <div>
+                  <div className="space-y-1">
                     <div className="text-sm font-semibold mb-1">AI-Generated Narrative</div>
                     <div className="text-sm text-muted-foreground bg-muted/50 p-3 rounded">
                       {item.proposal.generatedNarrative.substring(0, 300)}...
@@ -140,8 +140,8 @@ export default function GrantProposals() {
                 )}
 
                 {item.proposal.generatedOutcomes && item.proposal.generatedOutcomes.length > 0 && (
-                  <div>
-                    <div className="text-sm font-semibold mb-2">Expected Outcomes</div>
+                  <div className="space-y-1">
+                    <div className="text-sm font-semibold ">Expected Outcomes</div>
                     <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
                       {item.proposal.generatedOutcomes.slice(0, 3).map((outcome, idx) => (
                         <li key={idx}>{outcome}</li>
@@ -169,8 +169,8 @@ export default function GrantProposals() {
         <Card>
           <CardContent className="py-12 text-center">
             <FileEdit className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No Grant Proposals Yet</h3>
-            <p className="text-muted-foreground">
+            <h3 className="text-lg font-semibold ">No Grant Proposals Yet</h3>
+            <p className="text-sm text-muted-foreground">
               AI-generated grant proposals will appear here once foundation guidelines are analyzed
             </p>
           </CardContent>
