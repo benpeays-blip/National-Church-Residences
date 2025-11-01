@@ -6,7 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Button } from "@/components/ui/button";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Settings as SettingsIcon } from "lucide-react";
 import NotFound from "@/pages/not-found";
 import logoUrl from "@assets/ChatGPT Image Nov 1, 2025, 09_08_53 AM_1762006163839.png";
 import {
@@ -243,7 +243,17 @@ function App() {
               <header className="flex items-center gap-6 h-16 px-6 border-b shrink-0 relative">
                 <SidebarTrigger data-testid="button-sidebar-toggle" />
                 <TopNavigation />
-                <div className="flex items-center gap-2 ml-auto">
+                <div className="flex items-center gap-3 ml-auto">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    asChild
+                    data-testid="button-settings"
+                  >
+                    <a href="/settings">
+                      <SettingsIcon className="h-5 w-5" />
+                    </a>
+                  </Button>
                   <img src={logoUrl} alt="FundRazor" className="h-8" />
                 </div>
               </header>
