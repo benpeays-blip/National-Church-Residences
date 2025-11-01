@@ -7,7 +7,14 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import NotFound from "@/pages/not-found";
 import logoUrl from "@assets/ChatGPT Image Nov 1, 2025, 09_08_53 AM_1762006163839.png";
-import { Button } from "@/components/ui/button";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
 import DashboardCEO from "@/pages/dashboard-ceo";
@@ -116,14 +123,72 @@ function Router() {
   );
 }
 
-const navTabs = [
-  { label: "Core", path: "/" },
-  { label: "AI Intelligence", path: "/ai/predictive-timing" },
-  { label: "Relationship Intel", path: "/relationship/board-network-mapper" },
-  { label: "AI Content", path: "/content/outreach" },
-  { label: "Analytics", path: "/analytics/peer-benchmarks" },
-  { label: "Workflows", path: "/workflow/calendar" },
-  { label: "Workflow Builder", path: "/workflows" },
+const navSections = [
+  {
+    label: "Core",
+    items: [
+      { title: "Dashboard", path: "/" },
+      { title: "Solutions", path: "/solutions" },
+      { title: "Donors", path: "/donors" },
+      { title: "Pipeline", path: "/pipeline" },
+      { title: "Grants", path: "/grants" },
+      { title: "Gifts", path: "/gifts" },
+      { title: "Campaigns", path: "/campaigns" },
+      { title: "Data Health", path: "/data-health" },
+      { title: "Integrations", path: "/integrations" },
+      { title: "Settings", path: "/settings" },
+    ],
+  },
+  {
+    label: "AI Intelligence",
+    items: [
+      { title: "Predictive Timing", path: "/ai/predictive-timing" },
+      { title: "Wealth Events", path: "/ai/wealth-events" },
+      { title: "Meeting Briefs", path: "/ai/meeting-briefs" },
+      { title: "Voice-to-CRM", path: "/ai/voice-notes" },
+    ],
+  },
+  {
+    label: "Relationship Intel",
+    items: [
+      { title: "Board Connections", path: "/relationship/board-connections" },
+      { title: "Board Network Mapper", path: "/relationship/board-network-mapper" },
+      { title: "Corporate Partnerships", path: "/relationship/corporate-partnerships" },
+      { title: "Peer Discovery", path: "/relationship/peer-donors" },
+    ],
+  },
+  {
+    label: "AI Content",
+    items: [
+      { title: "Outreach Generator", path: "/content/outreach" },
+      { title: "Grant Proposals", path: "/content/grant-proposals" },
+      { title: "Impact Reports", path: "/content/impact-reports" },
+    ],
+  },
+  {
+    label: "Analytics",
+    items: [
+      { title: "Peer Benchmarks", path: "/analytics/peer-benchmarks" },
+      { title: "Donor Sentiment", path: "/analytics/sentiment" },
+      { title: "Portfolio Optimization", path: "/analytics/portfolio-optimization" },
+    ],
+  },
+  {
+    label: "Workflows",
+    items: [
+      { title: "Smart Calendar", path: "/workflow/calendar" },
+      { title: "Stewardship", path: "/workflow/stewardship" },
+      { title: "Task Priorities", path: "/workflow/task-priorities" },
+      { title: "Gift Registries", path: "/workflow/gift-registries" },
+    ],
+  },
+  {
+    label: "Workflow Builder",
+    items: [
+      { title: "Workflow Library", path: "/workflows" },
+      { title: "Templates", path: "/workflows/templates" },
+    ],
+  },
 ];
 
 function TopNavigation() {
@@ -148,27 +213,44 @@ function TopNavigation() {
   const activeSection = getActiveSection();
 
   return (
-    <div className="flex items-center gap-1">
-      {navTabs.map((tab) => {
-        const isActive = activeSection === tab.label;
-        return (
-          <Button
-            key={tab.label}
-            variant="ghost"
-            size="sm"
-            onClick={() => setLocation(tab.path)}
-            className={`h-9 text-xs font-medium rounded-md transition-colors ${
-              isActive
-                ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-            data-testid={`nav-tab-${tab.label.toLowerCase().replace(/\s+/g, "-")}`}
-          >
-            {tab.label}
-          </Button>
-        );
-      })}
-    </div>
+    <NavigationMenu>
+      <NavigationMenuList className="gap-1">
+        {navSections.map((section) => {
+          const isActive = activeSection === section.label;
+          return (
+            <NavigationMenuItem key={section.label}>
+              <NavigationMenuTrigger
+                className={`h-9 text-xs font-medium ${
+                  isActive
+                    ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground data-[state=open]:bg-primary data-[state=open]:text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+                data-testid={`nav-tab-${section.label.toLowerCase().replace(/\s+/g, "-")}`}
+              >
+                {section.label}
+              </NavigationMenuTrigger>
+              <NavigationMenuContent>
+                <ul className="grid w-48 gap-1 p-2">
+                  {section.items.map((item) => (
+                    <li key={item.path}>
+                      <NavigationMenuLink asChild>
+                        <a
+                          href={item.path}
+                          className="block select-none rounded-md p-2 text-sm leading-none hover-elevate active-elevate-2 transition-colors"
+                          data-testid={`nav-item-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
+                        >
+                          <div className="font-medium">{item.title}</div>
+                        </a>
+                      </NavigationMenuLink>
+                    </li>
+                  ))}
+                </ul>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          );
+        })}
+      </NavigationMenuList>
+    </NavigationMenu>
   );
 }
 
