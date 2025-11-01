@@ -213,7 +213,7 @@ function TopNavigation() {
   const activeSection = getActiveSection();
 
   return (
-    <NavigationMenu>
+    <NavigationMenu className="relative">
       <NavigationMenuList className="gap-1">
         {navSections.map((section) => {
           const isActive = activeSection === section.label;
@@ -236,7 +236,7 @@ function TopNavigation() {
                       <NavigationMenuLink asChild>
                         <a
                           href={item.path}
-                          className="block select-none rounded-md p-2 text-sm leading-none hover-elevate active-elevate-2 transition-colors"
+                          className="block select-none rounded-md p-2 text-xs leading-none hover-elevate active-elevate-2 transition-colors"
                           data-testid={`nav-item-${item.title.toLowerCase().replace(/\s+/g, "-")}`}
                         >
                           <div className="font-medium">{item.title}</div>
