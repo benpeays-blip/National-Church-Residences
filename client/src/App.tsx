@@ -222,7 +222,7 @@ function TopNavigation() {
               <Button
                 variant="ghost"
                 size="sm"
-                className={`h-9 text-xs font-medium gap-1 ${
+                className={`h-9 text-xs font-medium gap-1 data-[state=open]:bg-primary data-[state=open]:text-primary-foreground ${
                   isActive
                     ? "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground"
