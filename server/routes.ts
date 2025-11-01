@@ -221,6 +221,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/campaigns/:id", isAuthenticated, async (req, res) => {
+    try {
+      const { id } = req.params;
+      const [campaign] = await db
+        .select({
+          id: campaigns.id,
+          name: campaigns.name,
+          type: campaigns.type,
+          description: campaigns.description,
+          status: campaigns.status,
+          goal: campaigns.goal,
+          raised: campaigns.raised,
+          donorCount: campaigns.donorCount,
+          avgGiftSize: campaigns.avgGiftSize,
+          totalGifts: campaigns.totalGifts,
+          ownerId: campaigns.ownerId,
+          startDate: campaigns.startDate,
+          endDate: campaigns.endDate,
+          ownerName: sql<string>`CONCAT(${users.firstName}, ' ', ${users.lastName})`,
+        })
+        .from(campaigns)
+        .leftJoin(users, eq(campaigns.ownerId, users.id))
+        .where(eq(campaigns.id, id));
+
+      if (!campaign) {
+        return res.status(404).json({ message: "Campaign not found" });
+      }
+
+      res.json(campaign);
+    } catch (error) {
+      console.error("Error fetching campaign:", error);
+      res.status(500).json({ message: "Failed to fetch campaign" });
+    }
+  });
+
   app.post("/api/campaigns", isAuthenticated, async (req, res) => {
     try {
       const campaign = await storage.createCampaign(req.body);
