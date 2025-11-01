@@ -108,58 +108,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(404).json({ message: "Person not found" });
       }
 
-      // Fetch all related data in parallel
-      const [giftsList, interactionsList, opportunitiesList, nextBestActions] = await Promise.all([
-        db
-          .select({
-            id: gifts.id,
-            amount: gifts.amount,
-            giftDate: gifts.giftDate,
-            campaignId: gifts.campaignId,
-            sourceSystem: gifts.sourceSystem,
-            campaign: {
-              name: campaigns.name,
-            },
-          })
-          .from(gifts)
-          .leftJoin(campaigns, eq(gifts.campaignId, campaigns.id))
-          .where(eq(gifts.personId, personId)),
-        db
-          .select({
-            id: interactions.id,
-            type: interactions.type,
-            notes: interactions.notes,
-            interactionDate: interactions.interactionDate,
-            userId: interactions.userId,
-            user: {
-              firstName: users.firstName,
-              lastName: users.lastName,
-            },
-          })
-          .from(interactions)
-          .leftJoin(users, eq(interactions.userId, users.id))
-          .where(eq(interactions.personId, personId)),
-        db
-          .select({
-            id: opportunities.id,
-            stage: opportunities.stage,
-            askAmount: opportunities.askAmount,
-            probability: opportunities.probability,
-            closeDate: opportunities.closeDate,
-            ownerId: opportunities.ownerId,
-            notes: opportunities.notes,
-            owner: {
-              firstName: users.firstName,
-              lastName: users.lastName,
-            },
-          })
-          .from(opportunities)
-          .leftJoin(users, eq(opportunities.ownerId, users.id))
-          .where(eq(opportunities.personId, personId)),
+      // Fetch all related data using storage methods
+      const [giftsList, interactionsList, opportunitiesList, tasksList] = await Promise.all([
+        storage.getGifts(personId),
+        storage.getInteractions(personId),
+        db.select().from(opportunities).where(eq(opportunities.personId, personId)),
         db
           .select()
           .from(tasks)
-          .where(and(eq(tasks.personId, personId), eq(tasks.status, "pending")))
+          .where(eq(tasks.personId, personId))
           .orderBy(desc(tasks.createdAt))
           .limit(5),
       ]);
@@ -220,7 +177,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         gifts: giftsList,
         opportunities: opportunitiesList,
         interactions: interactionsList,
-        nextBestActions: nextBestActions.map((task) => ({
+        nextBestActions: tasksList.map((task) => ({
           id: task.id,
           priority: task.priority || "Medium",
           reason: task.description || "Follow up with donor",
