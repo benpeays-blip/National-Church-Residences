@@ -62,6 +62,9 @@ import Workflows from "@/pages/workflows";
 import WorkflowTemplates from "@/pages/workflows-templates";
 import WorkflowCanvas from "@/pages/workflow-canvas";
 
+// Logo Preview
+import LogoPreview from "@/pages/logo-preview";
+
 function Dashboard() {
   // Default to Dev Director dashboard (can be changed via navigation)
   return <DashboardDevDirector />;
@@ -117,6 +120,9 @@ function Router() {
       <Route path="/workflows" component={Workflows} />
       <Route path="/workflows/templates" component={WorkflowTemplates} />
       <Route path="/workflows/:id/canvas" component={WorkflowCanvas} />
+      
+      {/* Logo Preview */}
+      <Route path="/logo-preview" component={LogoPreview} />
       
       <Route component={NotFound} />
     </Switch>
