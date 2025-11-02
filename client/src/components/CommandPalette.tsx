@@ -28,6 +28,8 @@ import {
   ClipboardList,
   Layers,
   LayoutGrid,
+  Search,
+  DollarSign,
   Award,
   Activity,
   UserCheck,
@@ -38,7 +40,7 @@ import {
   Bell,
 } from "lucide-react";
 
-interface NavItem {
+interface CommandItem {
   id: string;
   label: string;
   description?: string;
@@ -48,7 +50,7 @@ interface NavItem {
   keywords?: string[];
 }
 
-const navItems: NavItem[] = [
+const commandItems: CommandItem[] = [
   // Dashboards
   {
     id: "dashboard-dev",
@@ -123,6 +125,15 @@ const navItems: NavItem[] = [
     path: "/campaigns",
     group: "Core",
     keywords: ["appeals", "initiatives"],
+  },
+  {
+    id: "events",
+    label: "Events",
+    description: "Event planning and attendance",
+    icon: Calendar,
+    path: "/events",
+    group: "Core",
+    keywords: ["gatherings", "galas", "meetings"],
   },
 
   // AI Intelligence
@@ -217,6 +228,15 @@ const navItems: NavItem[] = [
     keywords: ["reporting", "outcomes"],
   },
   {
+    id: "benchmarking",
+    label: "Peer Benchmarking",
+    description: "Compare with similar orgs",
+    icon: TrendingUp,
+    path: "/benchmarking",
+    group: "AI Intelligence",
+    keywords: ["comparison", "metrics"],
+  },
+  {
     id: "sentiment",
     label: "Donor Sentiment Analysis",
     description: "Analyze donor engagement",
@@ -233,6 +253,44 @@ const navItems: NavItem[] = [
     path: "/portfolio-optimization",
     group: "AI Intelligence",
     keywords: ["allocation", "assignments"],
+  },
+
+  // Automation
+  {
+    id: "smart-calendar",
+    label: "AI Smart Calendar",
+    description: "Intelligent scheduling",
+    icon: Calendar,
+    path: "/smart-calendar",
+    group: "Automation",
+    keywords: ["scheduling", "appointments"],
+  },
+  {
+    id: "stewardship",
+    label: "Automated Stewardship",
+    description: "Stewardship workflows",
+    icon: Shield,
+    path: "/stewardship",
+    group: "Automation",
+    keywords: ["thank you", "acknowledgment"],
+  },
+  {
+    id: "task-prioritization",
+    label: "AI Task Prioritization",
+    description: "Smart task management",
+    icon: Zap,
+    path: "/task-prioritization",
+    group: "Automation",
+    keywords: ["todos", "priorities"],
+  },
+  {
+    id: "gift-registry",
+    label: "Charitable Gift Registries",
+    description: "Lifecycle event giving",
+    icon: Gift,
+    path: "/gift-registry",
+    group: "Automation",
+    keywords: ["weddings", "events", "celebrations"],
   },
 
   // Analytics
@@ -390,13 +448,13 @@ export function CommandPalette() {
   };
 
   // Group items by category
-  const groupedItems = navItems.reduce((acc, item) => {
+  const groupedItems = commandItems.reduce((acc, item) => {
     if (!acc[item.group]) {
       acc[item.group] = [];
     }
     acc[item.group].push(item);
     return acc;
-  }, {} as Record<string, NavItem[]>);
+  }, {} as Record<string, CommandItem[]>);
 
   return (
     <CommandDialog open={open} onOpenChange={setOpen}>
