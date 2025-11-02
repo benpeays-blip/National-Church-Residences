@@ -30,6 +30,7 @@ import {
   FileText,
   ClipboardList,
   Layers,
+  LayoutGrid,
 } from "lucide-react";
 
 const workflowMenuItems = [
@@ -58,6 +59,12 @@ const workflowMenuItems = [
         title: "Tech Stack Mapper",
         url: "/tech-stack-mapper",
         icon: Layers,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+      {
+        title: "Navigation Preview",
+        url: "/navigation-preview",
+        icon: LayoutGrid,
         roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
       },
     ],
