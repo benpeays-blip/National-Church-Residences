@@ -14,15 +14,16 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - ✅ **Integration**: Replaced PNG logo in sidebar with responsive SVG component
 - ✅ **E2E Tested**: Logo renders correctly in both light and dark modes
 
-**Tech Stack Mapper Page - NEW (Nov 2, 2024)**:
+**Tech Stack Mapper Page - ENHANCED (Nov 2, 2024)**:
 - ✅ Added "Tech Stack Mapper" page accessible from sidebar (beneath Proposals in Overview section)
 - ✅ **10 Technology Categories**: CRM, Wealth Screening, Marketing, Events, Grants, Financial, Analytics, Collaboration, Digital Fundraising, HR/Operations
-- ✅ **34 Common Platforms**: Industry-standard tools like Salesforce NPSP, Raiser's Edge NXT, Mailchimp, WealthEngine, etc.
+- ✅ **36 Common Platforms**: Industry-standard tools like Salesforce NPSP, Raiser's Edge NXT, Mailchimp, WealthEngine, Microsoft Outlook, Monday.com, etc.
+- ✅ **System Architecture Overview**: Visual grid diagram showing all 36 platforms grouped by category with logos/initials and interactive badges
 - ✅ **Interactive Features**: Real-time search filtering, expandable accordions, integration priority badges
 - ✅ **Comprehensive Data**: Each category includes platforms, pain points, and integration requirements
-- ✅ **Metric Cards**: Total Categories (10), Common Platforms (34), Critical Integrations (4)
+- ✅ **Metric Cards**: Total Categories (10), Common Platforms (36), Critical Integrations (4)
 - ✅ **Navigation**: Layers icon in sidebar, accessible at /tech-stack-mapper route
-- ✅ **E2E Tested**: All categories render, search filtering works, accordions expand/collapse correctly
+- ✅ **E2E Tested**: All categories render, System Architecture visualization displays correctly, search filtering works, accordions expand/collapse correctly
 
 **Engagement Timeline Proposal Page - UPDATED (Nov 2, 2024)**:
 - ✅ Added dedicated "Proposals" page accessible from sidebar (beneath Solutions in Overview section)
