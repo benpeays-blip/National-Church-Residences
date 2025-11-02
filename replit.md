@@ -24,21 +24,24 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - ✅ **Navigation**: Layers icon in sidebar, accessible at /tech-stack-mapper route
 - ✅ **E2E Tested**: All categories render, search filtering works, accordions expand/collapse correctly
 
-**Engagement Timeline Proposal Page - NEW (Nov 2, 2024)**:
+**Engagement Timeline Proposal Page - UPDATED (Nov 2, 2024)**:
 - ✅ Added dedicated "Proposals" page accessible from sidebar (beneath Solutions in Overview section)
-- ✅ **6-Phase Visual Timeline**: Discovery & Data Foundation → System Integration → AI Prospect Intelligence → Workflow Automation → Smart Events → Optimization & Training
-- ✅ **Interactive Accordion UI**: Each phase expandable to show Key Activities, Deliverables (as badges), and Wins sections
-- ✅ **Visual Design**: Color-coded phase icons (Search, Database, Brain, FileText, Users, Sparkles) with unique backgrounds for each phase
-- ✅ **Content Structure**: Purpose statement, timeline badges (Months 1-2, 3-4, etc.), detailed activities list, and outcome-focused wins sections
-- ✅ **5 Areas of Focus**: Comprehensive business analysis sections covering:
-  - AI-Powered Prospect Discovery & Prioritization
-  - Advanced Relationship Mapping & Network Intelligence
-  - Data-Driven Pipeline Management & Segmentation
-  - AI-Enhanced Grant Proposal Crafting
-  - Smart Event Planning & Donor Engagement
-  - Each area includes: Goals, Current Pain Points, Tech Stack/Process, Solution, and Results
+- ✅ **Page Structure** (Areas of Focus appears FIRST, Implementation Roadmap appears SECOND):
+  1. **Areas of Focus Card** (5 comprehensive business analysis sections):
+     - AI-Powered Prospect Discovery & Prioritization
+     - Advanced Relationship Mapping & Network Intelligence
+     - Data-Driven Pipeline Management & Segmentation
+     - AI-Enhanced Grant Proposal Crafting
+     - Smart Event Planning & Donor Engagement
+     - Each area includes: Goals, Current Pain Points, Tech Stack/Process, Solution, and Results
+  2. **Implementation Roadmap Card** (6-phase visual timeline):
+     - Discovery & Data Foundation → System Integration → AI Prospect Intelligence → Workflow Automation → Smart Events → Optimization & Training
+     - Each phase: Key Activities, Deliverables (as badges), and Wins sections
+     - **NO month/timing badges** - phases present strategic sequence without specific timelines
+- ✅ **Interactive Accordion UI**: Both cards use accordion components for expandable content sections
+- ✅ **Visual Design**: Color-coded icons (Search, Database, Brain, FileText, Users, Sparkles, Target, Network, etc.) with unique backgrounds
 - ✅ **Navigation**: ClipboardList icon in sidebar, accessible at /proposals route
-- ✅ **E2E Tested**: All 6 phases render correctly, accordions expand/collapse properly, visual consistency verified, sidebar navigation working
+- ✅ **E2E Tested**: Page structure verified (Areas of Focus first, Implementation Roadmap second), all accordions functional, no month badges present
 
 **Comprehensive Data Population - COMPLETE (Nov 1, 2024)**:
 - ✅ Enhanced seed.ts to ensure ALL stages and categories always have data across the entire platform
