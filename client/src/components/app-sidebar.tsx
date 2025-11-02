@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
-import fundRazorLogo from "@assets/fundrazor-logo.png";
+import { FundRazorLogo } from "@/components/FundRazorLogo";
 import {
   LayoutDashboard,
   Users,
@@ -29,6 +29,7 @@ import {
   Settings as SettingsIcon,
   FileText,
   ClipboardList,
+  Layers,
 } from "lucide-react";
 
 const workflowMenuItems = [
@@ -51,6 +52,12 @@ const workflowMenuItems = [
         title: "Proposals",
         url: "/proposals",
         icon: ClipboardList,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+      {
+        title: "Tech Stack Mapper",
+        url: "/tech-stack-mapper",
+        icon: Layers,
         roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
       },
     ],
@@ -235,7 +242,7 @@ export function AppSidebar() {
     <Sidebar data-testid="sidebar-main">
       <SidebarHeader className="h-16 flex items-center px-4 border-b">
         <div className="flex flex-col gap-2 w-full">
-          <img src={fundRazorLogo} alt="FundRazor" className="h-7 w-auto" />
+          <FundRazorLogo width={160} height={46} />
           {user?.role && (
             <Badge variant="secondary" className="text-xs w-fit">
               {user.role.replace("_", " ")}
