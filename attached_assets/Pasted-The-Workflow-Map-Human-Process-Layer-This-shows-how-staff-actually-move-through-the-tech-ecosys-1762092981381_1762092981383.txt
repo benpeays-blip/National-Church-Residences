@@ -1,0 +1,160 @@
+The Workflow Map (Human + Process Layer)
+
+This shows how staff actually move through the tech ecosystem during the donor cycle.
+It highlights who does what, in what sequence, and where data flows back.
+
+You can create 4–6 swim lanes:
+
+Development Officer / Gift Officer
+
+Prospect Researcher
+
+Marketing / Communications
+
+Grants Team
+
+Finance
+
+Executive Leadership / Reporting
+
+Typical Fundraising Workflow (Example Sequence)
+Stage 1 – Prospect Identification
+
+Prospect Researcher logs into Salesforce → pulls donor data.
+
+Cross-references names in WealthEngine/iWave → exports wealth scores.
+
+Adds capacity ratings and notes back into Salesforce.
+
+Alerts Development Officer to high-value prospects via email or Teams.
+
+Stage 2 – Outreach & Cultivation
+
+Development Officer reviews prospect record in Salesforce.
+
+Sends personalized email through Outlook/Mailchimp using CRM data.
+
+Schedules introductory meeting; logs activity in Salesforce.
+
+After meeting, updates notes and stage (“Cultivation” → “Solicitation”).
+
+Stage 3 – Proposal or Ask
+
+Officer collaborates with Grants Team or Program Staff to draft proposal in Word/SharePoint.
+
+Uses previous funder data and impact metrics from Power BI.
+
+Final proposal sent; record updated in Salesforce with expected ask amount.
+
+Stage 4 – Gift Processing
+
+Donor commits gift → info entered into Salesforce, synced with Financial Edge.
+
+Finance Team reconciles transaction and issues acknowledgment.
+
+Marketing/Comms triggers automated thank-you email via Mailchimp.
+
+Stage 5 – Stewardship
+
+Program Staff upload impact stories and photos to SharePoint.
+
+Development Officer pulls updates for personalized follow-up letter or event invitation.
+
+Power BI Dashboard aggregates donor engagement and gift trends for quarterly reporting.
+
+🧠 C. Typical Workflow Variations by Team
+1. Major Gifts Team
+
+Works mainly in Salesforce and WealthEngine.
+
+Relies on Executive Assistant or Database Manager for record updates.
+
+Uses Outlook for personal communications, rarely logs full correspondence.
+
+Often double-enters contact notes → opportunity for automation.
+
+2. Grants Team
+
+Works in Word/Excel, Foundant, and SharePoint.
+
+Tracks deadlines manually; reporting is time-consuming.
+
+Limited integration with donor CRM → no unified funder profile.
+
+3. Marketing / Communications
+
+Runs Mailchimp campaigns with outdated segmentation lists exported from Salesforce.
+
+Measures success only via open/click rates, not donor conversions.
+
+Event invitation and post-event follow-up disconnected from CRM.
+
+4. Finance / Accounting
+
+Receives batch reports from Salesforce for reconciliation.
+
+Enters data manually into Financial Edge.
+
+Gift coding errors cause periodic reporting mismatches.
+
+5. Executive Leadership
+
+Gets quarterly reports from Power BI or manually assembled Excel summaries.
+
+Lacks real-time visibility into pipeline, proposals, and campaign performance.
+
+🚀 D. What to Include in Your Visual Tech + Workflow Map
+
+When you build this in Google Slides, aim for two connected diagrams:
+
+1. Tech Ecosystem Map (Static System View)
+
+3–4 tiers of systems by function (as above).
+
+Each product represented by its logo.
+
+Arrows showing data movement (manual vs automated flows).
+
+Label color code:
+
+Blue = Core CRM
+
+Gray = Operations
+
+Green = Engagement
+
+Gold = Intelligence / AI Integration (Your layer)
+
+2. Workflow Map (Dynamic Human Process View)
+
+Use swim lanes or flow chart style.
+
+Each box = step in donor lifecycle (Prospect → Cultivate → Solicit → Steward).
+
+Each icon = the software used at that step.
+
+Add small labels for who owns each step (Officer, Research, Marketing, etc.).
+
+Highlight pain points with ⚠️ icons (manual steps, disconnected data).
+
+End with “AI Opportunity” callouts (automation, integration, insight).
+
+🧭 E. Example Headings for Each Workflow Stage
+
+Prospect Research → Discovery
+(WealthEngine, Salesforce)
+
+Initial Contact → Cultivation
+(Outlook, Mailchimp, Salesforce)
+
+Proposal → Solicitation
+(Foundant, Word, SharePoint)
+
+Gift → Processing
+(Salesforce → Financial Edge → Mailchimp)
+
+Follow-Up → Stewardship
+(SharePoint, Power BI, Events, Mailchimp)
+
+Reporting → Leadership Insight
+(Power BI, Excel, Board Reports)
