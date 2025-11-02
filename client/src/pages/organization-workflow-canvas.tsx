@@ -267,15 +267,15 @@ export default function OrganizationWorkflowCanvas() {
                     <span className="text-muted-foreground">Feedback Loop</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded bg-blue-500/20 border-2 border-blue-500/50" />
+                    <div className="w-3 h-3 rounded bg-sky-500/20 border-2 border-sky-500/50" />
                     <span className="text-muted-foreground">Stage</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded bg-green-500/20 border-2 border-green-500/50" />
+                    <div className="w-3 h-3 rounded bg-cyan-500/20 border-2 border-cyan-500/50" />
                     <span className="text-muted-foreground">Role</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-3 h-3 rounded bg-orange-500/20 border-2 border-orange-500/50" />
+                    <div className="w-3 h-3 rounded bg-slate-500/20 border-2 border-slate-500/50" />
                     <span className="text-muted-foreground">Software</span>
                   </div>
                 </div>

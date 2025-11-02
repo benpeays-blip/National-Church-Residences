@@ -35,26 +35,27 @@ export interface ArtifactDefinition {
 }
 
 // Color tokens for different artifact types
+// Palette based on Sky Blue (#0284C7) and Ice Blue (#7DD3FC) accents
 export const colorTokens = {
-  // Stages - Blue gradient
-  stageProspect: "bg-blue-500/10 border-blue-500/50 text-blue-700 dark:text-blue-300",
-  stageCultivation: "bg-sky-500/10 border-sky-500/50 text-sky-700 dark:text-sky-300",
-  stageSolicitation: "bg-indigo-500/10 border-indigo-500/50 text-indigo-700 dark:text-indigo-300",
-  stageProcessing: "bg-violet-500/10 border-violet-500/50 text-violet-700 dark:text-violet-300",
-  stageStewardship: "bg-purple-500/10 border-purple-500/50 text-purple-700 dark:text-purple-300",
-  stageLeadership: "bg-fuchsia-500/10 border-fuchsia-500/50 text-fuchsia-700 dark:text-fuchsia-300",
+  // Stages - Sky Blue to Deep Blue gradient (primary color family)
+  stageProspect: "bg-sky-500/10 border-sky-500/50 text-sky-700 dark:text-sky-300",
+  stageCultivation: "bg-sky-600/10 border-sky-600/50 text-sky-800 dark:text-sky-200",
+  stageSolicitation: "bg-blue-600/10 border-blue-600/50 text-blue-800 dark:text-blue-200",
+  stageProcessing: "bg-blue-700/10 border-blue-700/50 text-blue-900 dark:text-blue-100",
+  stageStewardship: "bg-indigo-600/10 border-indigo-600/50 text-indigo-800 dark:text-indigo-200",
+  stageLeadership: "bg-indigo-700/10 border-indigo-700/50 text-indigo-900 dark:text-indigo-100",
   
-  // Roles - Green gradient
-  roleDevOfficer: "bg-green-500/10 border-green-500/50 text-green-700 dark:text-green-300",
-  roleResearcher: "bg-emerald-500/10 border-emerald-500/50 text-emerald-700 dark:text-emerald-300",
+  // Roles - Cyan to Teal gradient (complementary cool tones)
+  roleDevOfficer: "bg-cyan-500/10 border-cyan-500/50 text-cyan-700 dark:text-cyan-300",
+  roleResearcher: "bg-cyan-600/10 border-cyan-600/50 text-cyan-800 dark:text-cyan-200",
   roleMarketing: "bg-teal-500/10 border-teal-500/50 text-teal-700 dark:text-teal-300",
-  roleGrants: "bg-cyan-500/10 border-cyan-500/50 text-cyan-700 dark:text-cyan-300",
-  roleFinance: "bg-lime-500/10 border-lime-500/50 text-lime-700 dark:text-lime-300",
-  roleExecutive: "bg-yellow-500/10 border-yellow-500/50 text-yellow-700 dark:text-yellow-300",
+  roleGrants: "bg-teal-600/10 border-teal-600/50 text-teal-800 dark:text-teal-200",
+  roleFinance: "bg-sky-700/10 border-sky-700/50 text-sky-900 dark:text-sky-100",
+  roleExecutive: "bg-blue-500/10 border-blue-500/50 text-blue-700 dark:text-blue-300",
   
-  // Software - Orange/Red gradient
-  software: "bg-orange-500/10 border-orange-500/50 text-orange-700 dark:text-orange-300",
-  softwareAlt: "bg-red-500/10 border-red-500/50 text-red-700 dark:text-red-300",
+  // Software - Slate to Purple gradient (sophisticated neutral to accent)
+  software: "bg-slate-500/10 border-slate-500/50 text-slate-700 dark:text-slate-300",
+  softwareAlt: "bg-violet-600/10 border-violet-600/50 text-violet-800 dark:text-violet-200",
 };
 
 // Fundraising Workflow Stages
