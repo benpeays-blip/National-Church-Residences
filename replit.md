@@ -31,7 +31,14 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - ✅ Zero-record guarantee: Added validation logic to ensure missing stages are auto-populated during seeding
 - ✅ Database verified: 25 distinct categories across 4 major sections, all with realistic data distribution
 
-## Design System Updates (Oct 2024)
+## Design System Updates (Nov 2024)
+
+**Updated Color Palette - NEW (Nov 2, 2024)**:
+- ✅ **Light Mode**: Primary text #0F172A (dark slate), Sky Blue accent #0284C7, white backgrounds
+- ✅ **Dark Mode**: White text #FFFFFF, Ice Blue accent #7DD3FC, deep blue backgrounds (#0A1628-#1A3A5C)
+- ✅ Applied throughout entire application with HSL CSS variables for proper theming
+- ✅ Updated design_guidelines.md with complete color specifications
+- ✅ Primary accent colors now properly differentiated: Sky Blue (light) vs Ice Blue (dark)
 
 **Option 3 Design Unification - COMPLETE**: Applied "Clean & Modern Left-Aligned Cards" design pattern to all 40+ pages:
 - ✅ Removed all `p-6` from page wrappers - pages use `space-y-6` only for consistent rhythm

@@ -229,6 +229,30 @@
 
 ---
 
+## Color Palette
+
+**Light Mode Colors:**
+- **Primary Text:** #0F172A (Dark Slate)
+- **Accent (Sky Blue):** #0284C7
+- **Background:** #FFFFFF (White)
+- **Card Backgrounds:** Subtle off-white (#FAFAFA-#F8F9FA)
+
+**Dark Mode Colors:**
+- **Primary Text:** #FFFFFF (White)
+- **Accent (Ice Blue):** #7DD3FC
+- **Background:** #0A1628 (Deep Blue)
+- **Card Backgrounds:** #1A3A5C (Medium Blue)
+
+**CSS Variables (HSL format):**
+- Light Primary: `199 98% 39%` (Sky Blue)
+- Dark Primary: `199 93% 74%` (Ice Blue)
+- Light Foreground: `222 47% 11%` (Dark Slate)
+- Dark Foreground: `0 0% 100%` (White)
+- Dark Background: `210 63% 10%` (Deep Blue)
+- Dark Card: `210 54% 23%` (Medium Blue)
+
+---
+
 ## STRICT Color Usage Guidelines
 
 **Primary Accent Color:** Reserve for CTAs and key metrics ONLY
