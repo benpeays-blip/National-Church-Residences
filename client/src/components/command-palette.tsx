@@ -367,6 +367,15 @@ const navItems: NavItem[] = [
     keywords: ["integrations", "platforms"],
   },
   {
+    id: "organization-mapper",
+    label: "Organization Mapper",
+    description: "Workflow and role visualization",
+    icon: Users,
+    path: "/organization-mapper",
+    group: "System",
+    keywords: ["teams", "workflow", "roles", "process"],
+  },
+  {
     id: "navigation-preview",
     label: "Navigation Preview",
     description: "Navigation design patterns",

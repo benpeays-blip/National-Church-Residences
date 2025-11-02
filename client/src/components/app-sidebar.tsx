@@ -62,6 +62,12 @@ const workflowMenuItems = [
         roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
       },
       {
+        title: "Organization Mapper",
+        url: "/organization-mapper",
+        icon: Users,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+      {
         title: "Navigation Preview",
         url: "/navigation-preview",
         icon: LayoutGrid,

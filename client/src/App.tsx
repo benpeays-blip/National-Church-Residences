@@ -15,6 +15,7 @@ import DashboardCEO from "@/pages/dashboard-ceo";
 import Solutions from "@/pages/solutions";
 import Proposals from "@/pages/proposals";
 import TechStackMapper from "@/pages/tech-stack-mapper";
+import OrganizationMapper from "@/pages/organization-mapper";
 import NavigationPreview from "@/pages/navigation-preview";
 import Donors from "@/pages/donors";
 import Donor360 from "@/pages/donor-360";
@@ -88,6 +89,7 @@ function Router() {
       <Route path="/solutions" component={Solutions} />
       <Route path="/proposals" component={Proposals} />
       <Route path="/tech-stack-mapper" component={TechStackMapper} />
+      <Route path="/organization-mapper" component={OrganizationMapper} />
       <Route path="/navigation-preview" component={NavigationPreview} />
       <Route path="/donors/card-showcase" component={DonorCardShowcase} />
       <Route path="/donors/:id" component={DonorDetail} />
