@@ -165,6 +165,13 @@ const techStackData: TechCategory[] = [
         logoColor: "#FFE01B"
       },
       { 
+        name: "Microsoft Outlook", 
+        description: "Email and calendar management", 
+        popularity: "high",
+        fallbackInitials: "OL",
+        logoColor: "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
+      },
+      { 
         name: "Constant Contact", 
         description: "Email marketing for nonprofits", 
         popularity: "medium",
@@ -354,11 +361,18 @@ const techStackData: TechCategory[] = [
         logoColor: "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
       },
       { 
-        name: "Asana / Monday.com", 
+        name: "Asana", 
         description: "Project tracking and collaboration", 
         popularity: "medium",
         logo: SiAsana,
         logoColor: "#F06A6A"
+      },
+      { 
+        name: "Monday.com", 
+        description: "Work management and team collaboration", 
+        popularity: "growing",
+        fallbackInitials: "M",
+        logoColor: "bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300"
       },
       { 
         name: "Google Workspace", 
@@ -489,8 +503,8 @@ export default function TechStackMapper() {
         {/* Logo */}
         <div className="shrink-0">
           {Logo ? (
-            <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center p-2">
-              <Logo size={24} style={{ color: platform.logoColor }} />
+            <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center p-2" style={platform.logoColor && platform.logoColor.startsWith('#') ? { color: platform.logoColor } : undefined}>
+              <Logo size={24} className="shrink-0" />
             </div>
           ) : (
             <LogoFallback 
@@ -542,7 +556,7 @@ export default function TechStackMapper() {
           <CardContent className="p-6">
             <div className="space-y-1">
               <p className="text-sm text-muted-foreground">Common Platforms</p>
-              <p className="text-5xl font-bold" data-testid="metric-common-platforms">34</p>
+              <p className="text-5xl font-bold" data-testid="metric-common-platforms">36</p>
               <p className="text-xs text-muted-foreground">Industry-standard tools</p>
             </div>
           </CardContent>
@@ -558,6 +572,58 @@ export default function TechStackMapper() {
           </CardContent>
         </Card>
       </div>
+
+      {/* System Architecture Visualization */}
+      <Card>
+        <CardHeader>
+          <CardTitle>System Architecture Overview</CardTitle>
+          <CardDescription>
+            Visual map of all platforms grouped by functional category
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {techStackData.map((category) => (
+              <div 
+                key={category.id}
+                className="p-4 rounded-lg border bg-card/50 space-y-3"
+              >
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                    <category.icon className="w-4 h-4" />
+                  </div>
+                  <h4 className="font-semibold text-sm">{category.title.replace(' & ', ' ')}</h4>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {category.platforms.map((platform) => {
+                    const Logo = platform.logo;
+                    return (
+                      <div
+                        key={platform.name}
+                        className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-muted/50 hover-elevate transition-all"
+                        title={platform.name}
+                      >
+                        {Logo ? (
+                          <div style={platform.logoColor && platform.logoColor.startsWith('#') ? { color: platform.logoColor } : undefined}>
+                            <Logo size={14} className="shrink-0" />
+                          </div>
+                        ) : (
+                          <div className={`w-4 h-4 rounded text-[8px] font-bold flex items-center justify-center ${platform.logoColor || 'bg-muted text-muted-foreground'}`}>
+                            {platform.fallbackInitials || platform.name.substring(0, 1)}
+                          </div>
+                        )}
+                        <span className="text-xs font-medium truncate max-w-[120px]">
+                          {platform.name.split(' / ')[0].split(' ')[0]}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Search */}
       <Card>
