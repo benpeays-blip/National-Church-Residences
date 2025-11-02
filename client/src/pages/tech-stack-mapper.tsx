@@ -22,7 +22,6 @@ import {
   SiHubspot,
   SiStripe,
   SiQuickbooks,
-  SiMicrosoft,
   SiGoogle,
   SiAsana,
   SiTableau,
@@ -316,8 +315,8 @@ const techStackData: TechCategory[] = [
         name: "Microsoft Power BI", 
         description: "Highly adopted for dashboarding", 
         popularity: "high",
-        logo: SiMicrosoft,
-        logoColor: "#5E5E5E"
+        fallbackInitials: "PBI",
+        logoColor: "bg-yellow-100 dark:bg-yellow-950 text-yellow-700 dark:text-yellow-300"
       },
       { 
         name: "Tableau", 
@@ -351,8 +350,8 @@ const techStackData: TechCategory[] = [
         name: "Microsoft Teams / SharePoint", 
         description: "Communication and document storage", 
         popularity: "high",
-        logo: SiMicrosoft,
-        logoColor: "#5E5E5E"
+        fallbackInitials: "MS",
+        logoColor: "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
       },
       { 
         name: "Asana / Monday.com", 
