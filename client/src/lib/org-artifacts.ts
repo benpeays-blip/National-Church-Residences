@@ -1,0 +1,274 @@
+import {
+  Target,
+  Users,
+  Handshake,
+  DollarSign,
+  Heart,
+  BarChart3,
+  User,
+  Search,
+  Megaphone,
+  FileText,
+  Calculator,
+  Briefcase,
+  Settings,
+  Mail,
+  TrendingUp,
+  Database,
+  Globe,
+  Calendar,
+  Phone,
+  FileBarChart,
+  type LucideIcon,
+} from "lucide-react";
+
+// Artifact type definition
+export interface ArtifactDefinition {
+  id: string;
+  type: "stage" | "role" | "software" | "document" | "metric" | "process";
+  subtype: string;
+  displayName: string;
+  description: string;
+  icon: LucideIcon;
+  colorToken: string; // Color identifier for branding
+  metadata?: Record<string, any>;
+}
+
+// Color tokens for different artifact types
+export const colorTokens = {
+  // Stages - Blue gradient
+  stageProspect: "bg-blue-500/10 border-blue-500/50 text-blue-700 dark:text-blue-300",
+  stageCultivation: "bg-sky-500/10 border-sky-500/50 text-sky-700 dark:text-sky-300",
+  stageSolicitation: "bg-indigo-500/10 border-indigo-500/50 text-indigo-700 dark:text-indigo-300",
+  stageProcessing: "bg-violet-500/10 border-violet-500/50 text-violet-700 dark:text-violet-300",
+  stageStewardship: "bg-purple-500/10 border-purple-500/50 text-purple-700 dark:text-purple-300",
+  stageLeadership: "bg-fuchsia-500/10 border-fuchsia-500/50 text-fuchsia-700 dark:text-fuchsia-300",
+  
+  // Roles - Green gradient
+  roleDevOfficer: "bg-green-500/10 border-green-500/50 text-green-700 dark:text-green-300",
+  roleResearcher: "bg-emerald-500/10 border-emerald-500/50 text-emerald-700 dark:text-emerald-300",
+  roleMarketing: "bg-teal-500/10 border-teal-500/50 text-teal-700 dark:text-teal-300",
+  roleGrants: "bg-cyan-500/10 border-cyan-500/50 text-cyan-700 dark:text-cyan-300",
+  roleFinance: "bg-lime-500/10 border-lime-500/50 text-lime-700 dark:text-lime-300",
+  roleExecutive: "bg-yellow-500/10 border-yellow-500/50 text-yellow-700 dark:text-yellow-300",
+  
+  // Software - Orange/Red gradient
+  software: "bg-orange-500/10 border-orange-500/50 text-orange-700 dark:text-orange-300",
+  softwareAlt: "bg-red-500/10 border-red-500/50 text-red-700 dark:text-red-300",
+};
+
+// Fundraising Workflow Stages
+export const stageArtifacts: ArtifactDefinition[] = [
+  {
+    id: "stage-prospect",
+    type: "stage",
+    subtype: "Prospect Research",
+    displayName: "Prospect Research",
+    description: "Identify and qualify potential major donors",
+    icon: Search,
+    colorToken: colorTokens.stageProspect,
+    metadata: { order: 1, category: "Discovery" },
+  },
+  {
+    id: "stage-cultivation",
+    type: "stage",
+    subtype: "Cultivation",
+    displayName: "Cultivation",
+    description: "Build relationships and assess interest",
+    icon: Users,
+    colorToken: colorTokens.stageCultivation,
+    metadata: { order: 2, category: "Engagement" },
+  },
+  {
+    id: "stage-solicitation",
+    type: "stage",
+    subtype: "Solicitation",
+    displayName: "Solicitation",
+    description: "Make the ask and negotiate commitment",
+    icon: Handshake,
+    colorToken: colorTokens.stageSolicitation,
+    metadata: { order: 3, category: "Ask" },
+  },
+  {
+    id: "stage-processing",
+    type: "stage",
+    subtype: "Processing",
+    displayName: "Processing",
+    description: "Record gift and generate acknowledgment",
+    icon: DollarSign,
+    colorToken: colorTokens.stageProcessing,
+    metadata: { order: 4, category: "Transaction" },
+  },
+  {
+    id: "stage-stewardship",
+    type: "stage",
+    subtype: "Stewardship",
+    displayName: "Stewardship",
+    description: "Thank donors and report impact",
+    icon: Heart,
+    colorToken: colorTokens.stageStewardship,
+    metadata: { order: 5, category: "Retention" },
+  },
+  {
+    id: "stage-leadership",
+    type: "stage",
+    subtype: "Leadership Insight",
+    displayName: "Leadership Insight",
+    description: "Strategic reporting and forecasting",
+    icon: BarChart3,
+    colorToken: colorTokens.stageLeadership,
+    metadata: { order: 6, category: "Analytics" },
+  },
+];
+
+// Organizational Roles
+export const roleArtifacts: ArtifactDefinition[] = [
+  {
+    id: "role-dev-officer",
+    type: "role",
+    subtype: "Development Officer",
+    displayName: "Development Officer",
+    description: "Major gift officer (MGO)",
+    icon: User,
+    colorToken: colorTokens.roleDevOfficer,
+  },
+  {
+    id: "role-researcher",
+    type: "role",
+    subtype: "Prospect Researcher",
+    displayName: "Prospect Researcher",
+    description: "Wealth screening & research",
+    icon: Search,
+    colorToken: colorTokens.roleResearcher,
+  },
+  {
+    id: "role-marketing",
+    type: "role",
+    subtype: "Marketing/Communications",
+    displayName: "Marketing/Communications",
+    description: "Campaign & donor comms",
+    icon: Megaphone,
+    colorToken: colorTokens.roleMarketing,
+  },
+  {
+    id: "role-grants",
+    type: "role",
+    subtype: "Grants Team",
+    displayName: "Grants Team",
+    description: "Foundation & grant proposals",
+    icon: FileText,
+    colorToken: colorTokens.roleGrants,
+  },
+  {
+    id: "role-finance",
+    type: "role",
+    subtype: "Finance/Accounting",
+    displayName: "Finance/Accounting",
+    description: "Gift processing & reporting",
+    icon: Calculator,
+    colorToken: colorTokens.roleFinance,
+  },
+  {
+    id: "role-executive",
+    type: "role",
+    subtype: "Executive Leadership",
+    displayName: "Executive Leadership",
+    description: "CEO, Board, VP Development",
+    icon: Briefcase,
+    colorToken: colorTokens.roleExecutive,
+  },
+];
+
+// Software Tools (36 platforms from Tech Stack Mapper)
+export const softwareArtifacts: ArtifactDefinition[] = [
+  // CRM & Donor Management
+  { id: "soft-salesforce", type: "software", subtype: "Salesforce", displayName: "Salesforce", description: "CRM platform", icon: Database, colorToken: colorTokens.software },
+  { id: "soft-blackbaud", type: "software", subtype: "Blackbaud Raiser's Edge", displayName: "Blackbaud Raiser's Edge", description: "Fundraising CRM", icon: Database, colorToken: colorTokens.software },
+  { id: "soft-bloomerang", type: "software", subtype: "Bloomerang", displayName: "Bloomerang", description: "Donor management", icon: Database, colorToken: colorTokens.software },
+  { id: "soft-donorperfect", type: "software", subtype: "DonorPerfect", displayName: "DonorPerfect", description: "Fundraising software", icon: Database, colorToken: colorTokens.software },
+  
+  // Email Marketing
+  { id: "soft-mailchimp", type: "software", subtype: "Mailchimp", displayName: "Mailchimp", description: "Email marketing", icon: Mail, colorToken: colorTokens.software },
+  { id: "soft-constant-contact", type: "software", subtype: "Constant Contact", displayName: "Constant Contact", description: "Email campaigns", icon: Mail, colorToken: colorTokens.software },
+  { id: "soft-emma", type: "software", subtype: "Emma", displayName: "Emma", description: "Email platform", icon: Mail, colorToken: colorTokens.software },
+  
+  // Wealth Screening
+  { id: "soft-wealthengine", type: "software", subtype: "WealthEngine", displayName: "WealthEngine", description: "Wealth screening", icon: TrendingUp, colorToken: colorTokens.software },
+  { id: "soft-iwave", type: "software", subtype: "iWave", displayName: "iWave", description: "Prospect research", icon: Search, colorToken: colorTokens.software },
+  { id: "soft-donorsearch", type: "software", subtype: "DonorSearch", displayName: "DonorSearch", description: "Donor intelligence", icon: Search, colorToken: colorTokens.software },
+  
+  // Payment Processing
+  { id: "soft-classy", type: "software", subtype: "Classy", displayName: "Classy", description: "Online fundraising", icon: DollarSign, colorToken: colorTokens.software },
+  { id: "soft-givebutter", type: "software", subtype: "Givebutter", displayName: "Givebutter", description: "Fundraising platform", icon: DollarSign, colorToken: colorTokens.software },
+  { id: "soft-donorbox", type: "software", subtype: "Donorbox", displayName: "Donorbox", description: "Donation platform", icon: DollarSign, colorToken: colorTokens.software },
+  { id: "soft-stripe", type: "software", subtype: "Stripe", displayName: "Stripe", description: "Payment processing", icon: DollarSign, colorToken: colorTokens.software },
+  
+  // Event Management
+  { id: "soft-eventbrite", type: "software", subtype: "Eventbrite", displayName: "Eventbrite", description: "Event ticketing", icon: Calendar, colorToken: colorTokens.software },
+  { id: "soft-givesmart", type: "software", subtype: "GiveSmart", displayName: "GiveSmart", description: "Event fundraising", icon: Calendar, colorToken: colorTokens.software },
+  { id: "soft-greater-giving", type: "software", subtype: "Greater Giving", displayName: "Greater Giving", description: "Auction software", icon: Calendar, colorToken: colorTokens.software },
+  
+  // Grant Management
+  { id: "soft-foundant", type: "software", subtype: "Foundant", displayName: "Foundant", description: "Grant management", icon: FileText, colorToken: colorTokens.software },
+  { id: "soft-fluxx", type: "software", subtype: "Fluxx", displayName: "Fluxx", description: "Grantmaking platform", icon: FileText, colorToken: colorTokens.software },
+  { id: "soft-candid", type: "software", subtype: "Candid", displayName: "Candid (Foundation Directory)", description: "Foundation research", icon: FileText, colorToken: colorTokens.software },
+  
+  // DAF Integration
+  { id: "soft-daf-giving360", type: "software", subtype: "DAF Giving360", displayName: "DAF Giving360", description: "DAF integration", icon: DollarSign, colorToken: colorTokens.software },
+  { id: "soft-freewill", type: "software", subtype: "FreeWill", displayName: "FreeWill", description: "Planned giving", icon: FileText, colorToken: colorTokens.software },
+  
+  // Communications
+  { id: "soft-microsoft-outlook", type: "software", subtype: "Microsoft Outlook", displayName: "Microsoft Outlook", description: "Email client", icon: Mail, colorToken: colorTokens.software },
+  { id: "soft-gmail", type: "software", subtype: "Gmail", displayName: "Gmail", description: "Email service", icon: Mail, colorToken: colorTokens.software },
+  
+  // Social Media
+  { id: "soft-linkedin", type: "software", subtype: "LinkedIn", displayName: "LinkedIn", description: "Professional network", icon: Globe, colorToken: colorTokens.software },
+  { id: "soft-facebook", type: "software", subtype: "Facebook", displayName: "Facebook", description: "Social media", icon: Globe, colorToken: colorTokens.software },
+  { id: "soft-twitter", type: "software", subtype: "Twitter/X", displayName: "Twitter/X", description: "Social platform", icon: Globe, colorToken: colorTokens.software },
+  
+  // Analytics & BI
+  { id: "soft-tableau", type: "software", subtype: "Tableau", displayName: "Tableau", description: "Data visualization", icon: BarChart3, colorToken: colorTokens.software },
+  { id: "soft-power-bi", type: "software", subtype: "Power BI", displayName: "Power BI", description: "Business intelligence", icon: BarChart3, colorToken: colorTokens.software },
+  { id: "soft-google-analytics", type: "software", subtype: "Google Analytics", displayName: "Google Analytics", description: "Web analytics", icon: BarChart3, colorToken: colorTokens.software },
+  
+  // Workflow & Project Management
+  { id: "soft-asana", type: "software", subtype: "Asana", displayName: "Asana", description: "Project management", icon: Settings, colorToken: colorTokens.software },
+  { id: "soft-monday", type: "software", subtype: "Monday.com", displayName: "Monday.com", description: "Work OS", icon: Settings, colorToken: colorTokens.software },
+  { id: "soft-trello", type: "software", subtype: "Trello", displayName: "Trello", description: "Task boards", icon: Settings, colorToken: colorTokens.software },
+  
+  // Calling & Video
+  { id: "soft-zoom", type: "software", subtype: "Zoom", displayName: "Zoom", description: "Video conferencing", icon: Phone, colorToken: colorTokens.software },
+  { id: "soft-teams", type: "software", subtype: "Microsoft Teams", displayName: "Microsoft Teams", description: "Collaboration platform", icon: Phone, colorToken: colorTokens.software },
+  
+  // Accounting
+  { id: "soft-quickbooks", type: "software", subtype: "QuickBooks", displayName: "QuickBooks", description: "Accounting software", icon: Calculator, colorToken: colorTokens.software },
+];
+
+// All artifacts combined
+export const allArtifacts: ArtifactDefinition[] = [
+  ...stageArtifacts,
+  ...roleArtifacts,
+  ...softwareArtifacts,
+];
+
+// Helper function to get artifact by ID
+export function getArtifactById(id: string): ArtifactDefinition | undefined {
+  return allArtifacts.find(a => a.id === id);
+}
+
+// Helper function to get artifacts by type
+export function getArtifactsByType(type: string): ArtifactDefinition[] {
+  return allArtifacts.filter(a => a.type === type);
+}
+
+// Workflow stage connections (for initial canvas setup)
+export const defaultStageConnections = [
+  { source: "stage-prospect", target: "stage-cultivation", label: "Qualified prospects", animated: true },
+  { source: "stage-cultivation", target: "stage-solicitation", label: "Ready for ask", animated: true },
+  { source: "stage-solicitation", target: "stage-processing", label: "Committed gifts", animated: true },
+  { source: "stage-processing", target: "stage-stewardship", label: "Processed gifts", animated: true },
+  { source: "stage-stewardship", target: "stage-leadership", label: "Impact metrics", animated: true },
+  // Feedback loops
+  { source: "stage-stewardship", target: "stage-cultivation", label: "Upgrade prospects", animated: true, style: "dashed" },
+  { source: "stage-leadership", target: "stage-prospect", label: "Strategy insights", animated: true, style: "dashed" },
+];

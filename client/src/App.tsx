@@ -16,6 +16,7 @@ import Solutions from "@/pages/solutions";
 import Proposals from "@/pages/proposals";
 import TechStackMapper from "@/pages/tech-stack-mapper";
 import OrganizationMapper from "@/pages/organization-mapper";
+import OrganizationWorkflowCanvas from "@/pages/organization-workflow-canvas";
 import NavigationPreview from "@/pages/navigation-preview";
 import NavigationMockups from "@/pages/navigation-mockups";
 import Donors from "@/pages/donors";
@@ -91,6 +92,7 @@ function Router() {
       <Route path="/proposals" component={Proposals} />
       <Route path="/tech-stack-mapper" component={TechStackMapper} />
       <Route path="/organization-mapper" component={OrganizationMapper} />
+      <Route path="/organization-workflow-canvas" component={OrganizationWorkflowCanvas} />
       <Route path="/navigation-preview" component={NavigationPreview} />
       <Route path="/navigation-mockups" component={NavigationMockups} />
       <Route path="/donors/card-showcase" component={DonorCardShowcase} />

@@ -111,6 +111,15 @@ export const connectionTypeEnum = pgEnum("connection_type", [
   "dependency",
 ]);
 
+export const orgArtifactTypeEnum = pgEnum("org_artifact_type", [
+  "stage",
+  "role",
+  "software",
+  "document",
+  "metric",
+  "process",
+]);
+
 // Session storage table (required for Replit Auth)
 export const sessions = pgTable(
   "sessions",
@@ -673,6 +682,33 @@ export const workflowVersions = pgTable("workflow_versions", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Organization Canvases - Visual Workflow Canvas persistence
+export const organizationCanvases = pgTable("organization_canvases", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  description: text("description"),
+  ownerId: varchar("owner_id").references(() => users.id),
+  isDefault: boolean("is_default").notNull().default(false), // The default canvas for org mapping
+  canvasData: jsonb("canvas_data").notNull(), // Nodes, edges, viewport state
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Organization Artifacts - Artifact definitions for the canvas
+export const organizationArtifacts = pgTable("organization_artifacts", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  type: orgArtifactTypeEnum("type").notNull(),
+  subtype: varchar("subtype").notNull(), // e.g., "Prospect Research" for stage, "Salesforce" for software
+  displayName: varchar("display_name").notNull(),
+  description: text("description"),
+  iconName: varchar("icon_name"), // Lucide icon name
+  logoUrl: varchar("logo_url"), // For software tools with logos
+  colorToken: varchar("color_token"), // Color scheme identifier
+  metadata: jsonb("metadata"), // Additional properties
+  isBuiltIn: boolean("is_built_in").notNull().default(false), // System-provided vs user-created
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Board Memberships - Board Relationship Mapping (cross-org board network analysis)
 export const boardMemberships = pgTable("board_memberships", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -996,6 +1032,17 @@ export const insertBoardMembershipSchema = createInsertSchema(boardMemberships).
   updatedAt: true,
 });
 
+export const insertOrganizationCanvasSchema = createInsertSchema(organizationCanvases).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export const insertOrganizationArtifactSchema = createInsertSchema(organizationArtifacts).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
@@ -1065,3 +1112,7 @@ export type InsertWorkflowVersion = z.infer<typeof insertWorkflowVersionSchema>;
 export type WorkflowVersion = typeof workflowVersions.$inferSelect;
 export type InsertBoardMembership = z.infer<typeof insertBoardMembershipSchema>;
 export type BoardMembership = typeof boardMemberships.$inferSelect;
+export type InsertOrganizationCanvas = z.infer<typeof insertOrganizationCanvasSchema>;
+export type OrganizationCanvas = typeof organizationCanvases.$inferSelect;
+export type InsertOrganizationArtifact = z.infer<typeof insertOrganizationArtifactSchema>;
+export type OrganizationArtifact = typeof organizationArtifacts.$inferSelect;
