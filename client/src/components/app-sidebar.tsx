@@ -73,6 +73,12 @@ const workflowMenuItems = [
         icon: LayoutGrid,
         roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
       },
+      {
+        title: "Navigation Mockups",
+        url: "/navigation-mockups",
+        icon: Sparkles,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
     ],
   },
   {
