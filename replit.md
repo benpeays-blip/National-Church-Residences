@@ -6,13 +6,31 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 
 ## Recent Updates (Nov 2024)
 
+**FundRazor Logo Component - NEW (Nov 2, 2024)**:
+- ✅ Created production-ready SVG logo component with automatic dark/light mode support
+- ✅ **Design**: "Fund" in foreground color, "Razor" + upward slash (↗) in primary accent color
+- ✅ **Colors**: Sky Blue (#0284C7) in light mode, Ice Blue (#7DD3FC) in dark mode
+- ✅ **Implementation**: Uses CSS classes (fill-foreground, fill-primary, stroke-primary) for theme adaptation
+- ✅ **Integration**: Replaced PNG logo in sidebar with responsive SVG component
+- ✅ **E2E Tested**: Logo renders correctly in both light and dark modes
+
+**Tech Stack Mapper Page - NEW (Nov 2, 2024)**:
+- ✅ Added "Tech Stack Mapper" page accessible from sidebar (beneath Proposals in Overview section)
+- ✅ **10 Technology Categories**: CRM, Wealth Screening, Marketing, Events, Grants, Financial, Analytics, Collaboration, Digital Fundraising, HR/Operations
+- ✅ **34 Common Platforms**: Industry-standard tools like Salesforce NPSP, Raiser's Edge NXT, Mailchimp, WealthEngine, etc.
+- ✅ **Interactive Features**: Real-time search filtering, expandable accordions, integration priority badges
+- ✅ **Comprehensive Data**: Each category includes platforms, pain points, and integration requirements
+- ✅ **Metric Cards**: Total Categories (10), Common Platforms (34), Critical Integrations (4)
+- ✅ **Navigation**: Layers icon in sidebar, accessible at /tech-stack-mapper route
+- ✅ **E2E Tested**: All categories render, search filtering works, accordions expand/collapse correctly
+
 **Engagement Timeline Proposal Page - NEW (Nov 2, 2024)**:
 - ✅ Added dedicated "Proposals" page accessible from sidebar (beneath Solutions in Overview section)
 - ✅ **6-Phase Visual Timeline**: Discovery & Data Foundation → System Integration → AI Prospect Intelligence → Workflow Automation → Smart Events → Optimization & Training
 - ✅ **Interactive Accordion UI**: Each phase expandable to show Key Activities, Deliverables (as badges), and Wins sections
 - ✅ **Visual Design**: Color-coded phase icons (Search, Database, Brain, FileText, Users, Sparkles) with unique backgrounds for each phase
 - ✅ **Content Structure**: Purpose statement, timeline badges (Months 1-2, 3-4, etc.), detailed activities list, and outcome-focused wins sections
-- ✅ **5 Areas of Focus** (NEW): Comprehensive business analysis sections covering:
+- ✅ **5 Areas of Focus**: Comprehensive business analysis sections covering:
   - AI-Powered Prospect Discovery & Prioritization
   - Advanced Relationship Mapping & Network Intelligence
   - Data-Driven Pipeline Management & Segmentation
