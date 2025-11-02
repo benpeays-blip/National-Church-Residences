@@ -28,6 +28,7 @@ import {
   Plug,
   Settings as SettingsIcon,
   FileText,
+  ClipboardList,
 } from "lucide-react";
 
 const workflowMenuItems = [
@@ -44,6 +45,12 @@ const workflowMenuItems = [
         title: "Solutions",
         url: "/solutions",
         icon: Sparkles,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+      {
+        title: "Proposals",
+        url: "/proposals",
+        icon: ClipboardList,
         roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
       },
     ],
