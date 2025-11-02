@@ -20,7 +20,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArtifactGallery } from "@/components/artifact-gallery";
 import { OrgCanvasNode } from "@/components/org-canvas-node";
 import { type ArtifactDefinition, defaultStageConnections } from "@/lib/org-artifacts";
-import { Save, Download, ZoomIn, ZoomOut, Maximize2 } from "lucide-react";
+import { Save, Download, ZoomIn, ZoomOut, Maximize2, ChevronDown, ChevronUp } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 const nodeTypes = {
@@ -50,6 +50,7 @@ export default function OrganizationWorkflowCanvas() {
   const [draggedArtifact, setDraggedArtifact] = useState<ArtifactDefinition | null>(null);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
   const [reactFlowInstance, setReactFlowInstance] = useState<any>(null);
+  const [quickStartCollapsed, setQuickStartCollapsed] = useState(false);
   const { toast } = useToast();
 
   // Callback to delete nodes
@@ -284,13 +285,30 @@ export default function OrganizationWorkflowCanvas() {
             {/* Instructions Panel */}
             <Panel position="top-left" className="space-y-2">
               <Card className="p-3 max-w-xs">
-                <div className="text-xs font-semibold mb-2">Quick Start</div>
-                <ul className="space-y-1 text-xs text-muted-foreground">
-                  <li>• Drag artifacts from the left panel onto the canvas</li>
-                  <li>• Connect nodes by dragging from one handle to another</li>
-                  <li>• Delete nodes by hovering and clicking the × button</li>
-                  <li>• Use scroll to zoom, drag to pan</li>
-                </ul>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-xs font-semibold">Quick Start</div>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    onClick={() => setQuickStartCollapsed(!quickStartCollapsed)}
+                    className="h-5 w-5"
+                    data-testid="button-toggle-quickstart"
+                  >
+                    {quickStartCollapsed ? (
+                      <ChevronDown className="w-3 h-3" />
+                    ) : (
+                      <ChevronUp className="w-3 h-3" />
+                    )}
+                  </Button>
+                </div>
+                {!quickStartCollapsed && (
+                  <ul className="space-y-1 text-xs text-muted-foreground">
+                    <li>• Drag artifacts from the left panel onto the canvas</li>
+                    <li>• Connect nodes by dragging from one handle to another</li>
+                    <li>• Delete nodes by hovering and clicking the × button</li>
+                    <li>• Use scroll to zoom, drag to pan</li>
+                  </ul>
+                )}
               </Card>
             </Panel>
           </ReactFlow>
