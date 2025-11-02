@@ -41,6 +41,7 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - **Visual Workflow Builder System**: "Lucidchart + Palantir Foundry for fundraising" visual builder with drag-and-drop canvas using React Flow (`@xyflow/react`). Includes 15 pre-built templates and comprehensive API routes for CRUD operations on workflows, blocks, and connections.
 - **Tech Stack Mapper Page**: Displays 10 technology categories and 36 common platforms with a visual grid, interactive search, accordions, and integration priority badges.
 - **Organization Mapper Page**: Visualizes 6 organizational roles across 6 workflow stages, detailing responsibilities, primary systems, workflow activities, common pain points, and automation opportunities.
+- **Navigation Mockups Page**: Visual comparison of 5 navigation patterns (Focus Hubs, Command Surface, Progressive Masthead, Adaptive Matrix, Dual-Mode Ribbon) applied to the home screen, with mini screenshot-style mockups showing how each pattern would look in practice, key feature lists, and a Quick Decision Guide to help stakeholders choose the right approach.
 - **FundRazor Logo Component**: Production-ready SVG logo with automatic dark/light mode support, using CSS classes for theme adaptation.
 - **Comprehensive Data Population**: Seed data ensures all stages and categories are populated across opportunities, grants, wealth events, and interactions with intelligent fallback logic and zero-record guarantees.
 
