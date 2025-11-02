@@ -1,0 +1,190 @@
+Typical Tech Stack for Large Nonprofits
+1. Constituent Relationship Management (CRM)
+
+This is the nonprofit’s core donor database — it tracks gifts, pledges, events, moves management, and communications history.
+
+Most Common Platforms:
+
+Blackbaud Raiser’s Edge NXT – industry standard for large nonprofits and faith-based foundations.
+
+Salesforce Nonprofit Success Pack (NPSP) – flexible, cloud-based CRM for integrated donor + volunteer + grant tracking.
+
+Virtuous CRM – growing in popularity for mid-to-large orgs seeking donor personalization and automation.
+
+EveryAction / Bonterra – often used by advocacy or membership-based nonprofits.
+
+Pain Points:
+
+Limited integration with other tools.
+
+Manual data entry for events or grants.
+
+Reporting requires exports to Excel or Power BI.
+
+2. Wealth Screening & Prospect Research Tools
+
+Used to identify, score, and prioritize high-capacity donors and institutions.
+
+Common Tools:
+
+WealthEngine – wealth and lifestyle indicators.
+
+iWave – combines wealth, philanthropic, and corporate data.
+
+DonorSearch – major gift indicators and giving history across databases.
+
+Windfall – real estate and household income data updated weekly.
+
+Typical Use Case:
+
+Quarterly or annual screenings uploaded into CRM for gift officer follow-up.
+
+Pain Points:
+
+Static data quickly becomes outdated.
+
+Systems often siloed from CRM (manual import/export).
+
+3. Marketing & Donor Communication Platforms
+
+These tools manage email, newsletters, text campaigns, and donor journeys.
+
+Common Platforms:
+
+Mailchimp or Constant Contact – traditional email marketing.
+
+HubSpot for Nonprofits – integrated marketing automation and donor nurturing.
+
+Classy or Funraise – donation pages, crowdfunding, and event management.
+
+Bloomerang + HubSpot – common pairing for donor engagement automation.
+
+Pain Points:
+
+Disconnected from CRM, so donor segmentation and personalization are limited.
+
+No unified record of donor communications across channels.
+
+4. Event Management Tools
+
+Used for galas, luncheons, golf tournaments, or donor visits.
+
+Common Platforms:
+
+Eventbrite, Greater Giving, GiveSmart, or OneCause – registration, ticketing, and auction management.
+
+Cvent – used for large national conferences or hybrid events.
+
+Pain Points:
+
+Event data (attendees, sponsors, engagement) often not synced back to CRM.
+
+Limited insights on event ROI or attendee-to-donor conversion.
+
+5. Grant Management Systems (GMS)
+
+Tracks proposals, deadlines, submissions, and reporting for institutional funders.
+
+Common Tools:
+
+Fluxx – large foundations and government grantors.
+
+Foundant GLM – common in mid-sized nonprofits managing multiple grants.
+
+SmartSimple or Submittable – used for multi-funder coordination and workflow automation.
+
+Pain Points:
+
+Operates separately from donor CRM.
+
+No centralized view of funder engagement, proposals, and outcomes.
+
+6. Financial & Accounting Systems
+
+Used for accounting, reconciliation, and integration with the fundraising database.
+
+Common Tools:
+
+Blackbaud Financial Edge NXT – integrates tightly with Raiser’s Edge.
+
+QuickBooks Enterprise / Online Advanced – still common for nonprofits under $50M.
+
+Sage Intacct – modern cloud-based accounting and budgeting platform.
+
+Pain Points:
+
+Manual reconciliation between accounting and development systems.
+
+Revenue coding and fund designations can be inconsistent.
+
+7. Data Analytics & Reporting Tools
+
+Visualize performance, donor trends, and campaign results.
+
+Common Tools:
+
+Microsoft Power BI – highly adopted for dashboarding.
+
+Tableau – popular for visual analytics and executive reporting.
+
+Google Data Studio / Looker – for lightweight integrations.
+
+Pain Points:
+
+Requires manual data exports and cleaning.
+
+Inconsistent data definitions across departments.
+
+8. Collaboration & Project Management Tools
+
+Used for internal communication, workflow tracking, and coordination across teams.
+
+Common Tools:
+
+Microsoft Teams / SharePoint – widely used for communication and document storage.
+
+Asana / Monday.com / ClickUp – project tracking and collaboration.
+
+Google Workspace – email, Drive, Docs, Sheets for shared collaboration.
+
+Pain Points:
+
+Fragmented communication between departments.
+
+Files and data stored inconsistently (multiple versions, lack of control).
+
+9. Digital Fundraising & Payment Processing
+
+Used for online giving, recurring donations, and integrations with CRMs.
+
+Common Platforms:
+
+Classy, Funraise, or Givebutter – modern online giving solutions.
+
+Stripe, Authorize.net, or PayPal Giving Fund – payment processing layers.
+
+Double the Donation / 360MatchPro – employer matching integration.
+
+Pain Points:
+
+Donation data not always linked cleanly to CRM.
+
+Limited donor journey tracking post-gift.
+
+10. HR, Volunteer & Operations Systems
+
+Manage HR, volunteers, and internal staff operations.
+
+Common Tools:
+
+Paylocity / ADP / Paycor – payroll and HR.
+
+VolunteerHub / Galaxy Digital / Better Impact – volunteer tracking.
+
+Smartsheet – used for operational planning and reporting.
+
+Pain Points:
+
+Volunteer and HR systems typically isolated from donor and grant systems.
+
+Hard to connect operational impact to fundraising messaging.
