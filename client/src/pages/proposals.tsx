@@ -46,8 +46,8 @@ export default function Proposals() {
             <AccordionItem value="focus-1" className="border rounded-lg px-6 py-2" data-testid="accordion-focus-1">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-4 text-left">
-                  <div className="w-12 h-12 rounded-full bg-indigo-100 dark:bg-indigo-950 flex items-center justify-center shrink-0">
-                    <Target className="w-6 h-6 text-indigo-600 dark:text-indigo-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <Target className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-base" data-testid="text-focus-1-title">AI-Powered Prospect Discovery & Prioritization</h3>
@@ -72,7 +72,7 @@ export default function Proposals() {
                   </div>
                   <div>
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-orange-600" />
+                      <AlertTriangle className="w-4 h-4" />
                       Current Pain Points
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -99,7 +99,7 @@ export default function Proposals() {
                   </div>
                   <div>
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <Lightbulb className="w-4 h-4 text-yellow-600" />
+                      <Lightbulb className="w-4 h-4" />
                       Solution
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -109,8 +109,8 @@ export default function Proposals() {
                       <li>• Create real-time dashboards highlighting the top 10% of prospects by readiness to give and affinity</li>
                     </ul>
                   </div>
-                  <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4">
-                    <h4 className="font-medium text-sm mb-2 flex items-center gap-2 text-green-700 dark:text-green-400">
+                  <div className="rounded-lg p-4">
+                    <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
                       Result
                     </h4>
@@ -129,8 +129,8 @@ export default function Proposals() {
             <AccordionItem value="focus-2" className="border rounded-lg px-6 py-2" data-testid="accordion-focus-2">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-4 text-left">
-                  <div className="w-12 h-12 rounded-full bg-cyan-100 dark:bg-cyan-950 flex items-center justify-center shrink-0">
-                    <Network className="w-6 h-6 text-cyan-600 dark:text-cyan-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <Network className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-base" data-testid="text-focus-2-title">Advanced Relationship Mapping & Network Intelligence</h3>
@@ -155,7 +155,7 @@ export default function Proposals() {
                   </div>
                   <div>
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-orange-600" />
+                      <AlertTriangle className="w-4 h-4" />
                       Current Pain Points
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -182,7 +182,7 @@ export default function Proposals() {
                   </div>
                   <div>
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <Lightbulb className="w-4 h-4 text-yellow-600" />
+                      <Lightbulb className="w-4 h-4" />
                       Solution
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -192,8 +192,8 @@ export default function Proposals() {
                       <li>• Generate visual "relationship maps" and suggest key introducers for each major donor</li>
                     </ul>
                   </div>
-                  <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4">
-                    <h4 className="font-medium text-sm mb-2 flex items-center gap-2 text-green-700 dark:text-green-400">
+                  <div className="rounded-lg p-4">
+                    <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
                       Result
                     </h4>
@@ -212,8 +212,8 @@ export default function Proposals() {
             <AccordionItem value="focus-3" className="border rounded-lg px-6 py-2" data-testid="accordion-focus-3">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-4 text-left">
-                  <div className="w-12 h-12 rounded-full bg-violet-100 dark:bg-violet-950 flex items-center justify-center shrink-0">
-                    <GitBranch className="w-6 h-6 text-violet-600 dark:text-violet-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <GitBranch className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-base" data-testid="text-focus-3-title">Data-Driven Pipeline Management & Segmentation</h3>
@@ -238,7 +238,7 @@ export default function Proposals() {
                   </div>
                   <div>
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-orange-600" />
+                      <AlertTriangle className="w-4 h-4" />
                       Current Pain Points
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -265,7 +265,7 @@ export default function Proposals() {
                   </div>
                   <div>
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <Lightbulb className="w-4 h-4 text-yellow-600" />
+                      <Lightbulb className="w-4 h-4" />
                       Solution
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -275,8 +275,8 @@ export default function Proposals() {
                       <li>• Standardize move management workflows across the team with AI-driven prioritization</li>
                     </ul>
                   </div>
-                  <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4">
-                    <h4 className="font-medium text-sm mb-2 flex items-center gap-2 text-green-700 dark:text-green-400">
+                  <div className="rounded-lg p-4">
+                    <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
                       Result
                     </h4>
@@ -295,8 +295,8 @@ export default function Proposals() {
             <AccordionItem value="focus-4" className="border rounded-lg px-6 py-2" data-testid="accordion-focus-4">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-4 text-left">
-                  <div className="w-12 h-12 rounded-full bg-rose-100 dark:bg-rose-950 flex items-center justify-center shrink-0">
-                    <FileText className="w-6 h-6 text-rose-600 dark:text-rose-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <FileText className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-base" data-testid="text-focus-4-title">AI-Enhanced Grant Proposal Crafting</h3>
@@ -321,7 +321,7 @@ export default function Proposals() {
                   </div>
                   <div>
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-orange-600" />
+                      <AlertTriangle className="w-4 h-4" />
                       Current Pain Points
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -348,7 +348,7 @@ export default function Proposals() {
                   </div>
                   <div>
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <Lightbulb className="w-4 h-4 text-yellow-600" />
+                      <Lightbulb className="w-4 h-4" />
                       Solution
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -358,8 +358,8 @@ export default function Proposals() {
                       <li>• Implement feedback loops that identify language patterns correlated with wins</li>
                     </ul>
                   </div>
-                  <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4">
-                    <h4 className="font-medium text-sm mb-2 flex items-center gap-2 text-green-700 dark:text-green-400">
+                  <div className="rounded-lg p-4">
+                    <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
                       Result
                     </h4>
@@ -378,8 +378,8 @@ export default function Proposals() {
             <AccordionItem value="focus-5" className="border rounded-lg px-6 py-2" data-testid="accordion-focus-5">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-4 text-left">
-                  <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center shrink-0">
-                    <Calendar className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <Calendar className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-base" data-testid="text-focus-5-title">Smart Event Planning & Donor Engagement</h3>
@@ -404,7 +404,7 @@ export default function Proposals() {
                   </div>
                   <div>
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <AlertTriangle className="w-4 h-4 text-orange-600" />
+                      <AlertTriangle className="w-4 h-4" />
                       Current Pain Points
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -431,7 +431,7 @@ export default function Proposals() {
                   </div>
                   <div>
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <Lightbulb className="w-4 h-4 text-yellow-600" />
+                      <Lightbulb className="w-4 h-4" />
                       Solution
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -441,8 +441,8 @@ export default function Proposals() {
                       <li>• Use AI to design seating arrangements that optimize networking and connection-building</li>
                     </ul>
                   </div>
-                  <div className="bg-green-50 dark:bg-green-950/20 rounded-lg p-4">
-                    <h4 className="font-medium text-sm mb-2 flex items-center gap-2 text-green-700 dark:text-green-400">
+                  <div className="rounded-lg p-4">
+                    <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
                       <CheckCircle className="w-4 h-4" />
                       Result
                     </h4>
@@ -470,8 +470,8 @@ export default function Proposals() {
             <AccordionItem value="phase-1" className="border rounded-lg px-6 py-2" data-testid="accordion-phase-1">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-4 text-left">
-                  <div className="w-12 h-12 rounded-full bg-blue-100 dark:bg-blue-950 flex items-center justify-center shrink-0">
-                    <Search className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <Search className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-base mb-1" data-testid="text-phase-1-title">Phase 1 – Discovery & Data Foundation</h3>
@@ -519,7 +519,7 @@ export default function Proposals() {
                   </div>
                   <div className="bg-muted/50 rounded-lg p-4">
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <CheckCircle className="w-4 h-4" />
                       Short-Term Wins
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -536,8 +536,8 @@ export default function Proposals() {
             <AccordionItem value="phase-2" className="border rounded-lg px-6 py-2" data-testid="accordion-phase-2">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-4 text-left">
-                  <div className="w-12 h-12 rounded-full bg-purple-100 dark:bg-purple-950 flex items-center justify-center shrink-0">
-                    <Database className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <Database className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-base mb-1" data-testid="text-phase-2-title">Phase 2 – System Integration & Data Unification</h3>
@@ -580,7 +580,7 @@ export default function Proposals() {
                   </div>
                   <div className="bg-muted/50 rounded-lg p-4">
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <CheckCircle className="w-4 h-4" />
                       Short-Term Wins
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -597,8 +597,8 @@ export default function Proposals() {
             <AccordionItem value="phase-3" className="border rounded-lg px-6 py-2" data-testid="accordion-phase-3">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-4 text-left">
-                  <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-950 flex items-center justify-center shrink-0">
-                    <Brain className="w-6 h-6 text-green-600 dark:text-green-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <Brain className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-base mb-1" data-testid="text-phase-3-title">Phase 3 – AI Prospect & Relationship Intelligence</h3>
@@ -641,7 +641,7 @@ export default function Proposals() {
                   </div>
                   <div className="bg-muted/50 rounded-lg p-4">
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <CheckCircle className="w-4 h-4" />
                       Short-Term Wins
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -658,8 +658,8 @@ export default function Proposals() {
             <AccordionItem value="phase-4" className="border rounded-lg px-6 py-2" data-testid="accordion-phase-4">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-4 text-left">
-                  <div className="w-12 h-12 rounded-full bg-orange-100 dark:bg-orange-950 flex items-center justify-center shrink-0">
-                    <FileText className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <FileText className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-base mb-1" data-testid="text-phase-4-title">Phase 4 – Workflow Automation & AI-Assisted Grant Writing</h3>
@@ -702,7 +702,7 @@ export default function Proposals() {
                   </div>
                   <div className="bg-muted/50 rounded-lg p-4">
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <CheckCircle className="w-4 h-4" />
                       Short-Term Wins
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -719,8 +719,8 @@ export default function Proposals() {
             <AccordionItem value="phase-5" className="border rounded-lg px-6 py-2" data-testid="accordion-phase-5">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-4 text-left">
-                  <div className="w-12 h-12 rounded-full bg-pink-100 dark:bg-pink-950 flex items-center justify-center shrink-0">
-                    <Users className="w-6 h-6 text-pink-600 dark:text-pink-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <Users className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-base mb-1" data-testid="text-phase-5-title">Phase 5 – Smart Events & Dynamic Pipeline Management</h3>
@@ -763,7 +763,7 @@ export default function Proposals() {
                   </div>
                   <div className="bg-muted/50 rounded-lg p-4">
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-600" />
+                      <CheckCircle className="w-4 h-4" />
                       Short-Term Wins
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
@@ -780,8 +780,8 @@ export default function Proposals() {
             <AccordionItem value="phase-6" className="border rounded-lg px-6 py-2" data-testid="accordion-phase-6">
               <AccordionTrigger className="hover:no-underline">
                 <div className="flex items-center gap-4 text-left">
-                  <div className="w-12 h-12 rounded-full bg-amber-100 dark:bg-amber-950 flex items-center justify-center shrink-0">
-                    <Sparkles className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                    <Sparkles className="w-6 h-6 text-primary" />
                   </div>
                   <div className="flex-1">
                     <h3 className="font-semibold text-base mb-1" data-testid="text-phase-6-title">Phase 6 – Optimization & Training</h3>
@@ -824,7 +824,7 @@ export default function Proposals() {
                   </div>
                   <div className="bg-muted/50 rounded-lg p-4">
                     <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                      <Award className="w-4 h-4 text-amber-600" />
+                      <Award className="w-4 h-4" />
                       Long-Term Wins
                     </h4>
                     <ul className="space-y-1 text-sm text-muted-foreground">
