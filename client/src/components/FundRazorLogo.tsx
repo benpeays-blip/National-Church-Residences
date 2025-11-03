@@ -1,14 +1,45 @@
+/**
+ * FundRazor Logo Component
+ * 
+ * A clean, production-ready React component for the FundRazor logo.
+ * Features ice blue accent color with upward slash direction.
+ * 
+ * Usage:
+ * import { FundRazorLogo } from '@/components/FundRazorLogo';
+ * 
+ * <FundRazorLogo />
+ * <FundRazorLogo width={400} />
+ * <FundRazorLogo variant="light" />
+ */
+
 interface FundRazorLogoProps {
   width?: number;
   height?: number;
+  variant?: "dark" | "light" | "auto";
   className?: string;
 }
 
 export function FundRazorLogo({ 
-  width = 200, 
-  height = 57,
+  width = 280, 
+  height = 80,
+  variant = "auto",
   className = ""
 }: FundRazorLogoProps) {
+  
+  // Auto variant uses CSS classes for automatic dark/light mode
+  // Dark/Light variants use explicit colors from the style guide
+  const colors = variant === "auto" 
+    ? null
+    : variant === "dark" 
+      ? {
+          primary: "#ffffff",
+          accent: "#7dd3fc"
+        }
+      : {
+          primary: "#0f172a",
+          accent: "#0284c7"
+        };
+
   return (
     <svg 
       width={width} 
@@ -25,10 +56,14 @@ export function FundRazorLogo({
         fontFamily="system-ui, -apple-system, sans-serif"
         fontSize="32"
         fontWeight="700"
-        className="fill-foreground"
+        fill={colors?.primary}
+        className={!colors ? "fill-foreground" : undefined}
         letterSpacing="-0.02em"
       >
-        Fund<tspan className="fill-primary">Razor</tspan>
+        Fund<tspan 
+          fill={colors?.accent}
+          className={!colors ? "fill-primary" : undefined}
+        >Razor</tspan>
       </text>
       
       {/* Slash accent (upward direction) */}
@@ -37,7 +72,8 @@ export function FundRazorLogo({
         y1="62" 
         x2="150" 
         y2="18" 
-        className="stroke-primary"
+        stroke={colors?.accent}
+        className={!colors ? "stroke-primary" : undefined}
         strokeWidth="3"
         strokeLinecap="round"
       />
@@ -46,7 +82,8 @@ export function FundRazorLogo({
         y1="62" 
         x2="152" 
         y2="18" 
-        className="stroke-primary"
+        stroke={colors?.accent}
+        className={!colors ? "stroke-primary" : undefined}
         strokeWidth="1"
         strokeLinecap="round"
         opacity="0.5"

@@ -15,6 +15,7 @@ import {
   CheckCircle2
 } from "lucide-react";
 import { Link } from "wouter";
+import { FundRazorLogo } from "@/components/FundRazorLogo";
 
 export default function Welcome() {
   return (
@@ -23,6 +24,11 @@ export default function Welcome() {
       <section className="relative overflow-hidden bg-gradient-to-br from-primary/5 via-background to-primary/5 border-b">
         <div className="max-w-6xl mx-auto px-6 py-20">
           <div className="text-center space-y-6">
+            {/* Logo */}
+            <div className="flex justify-center mb-8">
+              <FundRazorLogo className="w-64" data-testid="logo-fundrazor" />
+            </div>
+            
             <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
               AI-Powered Fundraising Intelligence
             </Badge>
