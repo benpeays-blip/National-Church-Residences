@@ -88,6 +88,9 @@ import LogoPreview from "@/pages/logo-preview";
 // Hero Preview
 import HeroPreview from "@/pages/hero-preview";
 
+// Icon Style Guide
+import IconStyleGuide from "@/pages/icon-style-guide";
+
 function Router() {
   return (
     <Switch>
@@ -107,6 +110,7 @@ function Router() {
       <Route path="/navigation-preview" component={NavigationPreview} />
       <Route path="/navigation-mockups" component={NavigationMockups} />
       <Route path="/navigation-hybrid-mockup" component={NavigationHybridMockup} />
+      <Route path="/icon-style-guide" component={IconStyleGuide} />
       <Route path="/donors/card-showcase" component={DonorCardShowcase} />
       <Route path="/donors/major-gifts" component={DonorsWithTabs} />
       <Route path="/donors/lybunt" component={DonorsWithTabs} />

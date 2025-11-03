@@ -102,6 +102,12 @@ const workflowMenuItems = [
         icon: Sparkles,
         roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
       },
+      {
+        title: "Icon Style Guide",
+        url: "/icon-style-guide",
+        icon: Sparkles,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
     ],
   },
   {
@@ -277,7 +283,7 @@ const workflowMenuItems = [
 export function AppSidebar() {
   const { user } = useAuth();
   
-  // Track which sections are open (default all open, persist in localStorage)
+  // Track which sections are open (default all collapsed, persist in localStorage)
   const [openSections, setOpenSections] = useState<Record<string, boolean>>(() => {
     // Try to load from localStorage
     const stored = localStorage.getItem('sidebar-sections-state');
@@ -289,10 +295,10 @@ export function AppSidebar() {
       }
     }
     
-    // Default: all sections open
+    // Default: all sections collapsed
     const initial: Record<string, boolean> = {};
     workflowMenuItems.forEach((group) => {
-      initial[group.groupLabel] = true;
+      initial[group.groupLabel] = false;
     });
     return initial;
   });
@@ -329,8 +335,8 @@ export function AppSidebar() {
           const visibleItems = filterItems(group.items);
           if (visibleItems.length === 0) return null;
           
-          // Default to true if undefined (new sections open by default)
-          const isOpen = openSections[group.groupLabel] ?? true;
+          // Default to false if undefined (new sections collapsed by default)
+          const isOpen = openSections[group.groupLabel] ?? false;
           
           return (
             <Collapsible.Root
