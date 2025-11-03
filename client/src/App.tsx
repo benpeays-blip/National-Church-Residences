@@ -9,6 +9,7 @@ import { CommandPalette } from "@/components/command-palette";
 import { Button } from "@/components/ui/button";
 import { Search, Settings as SettingsIcon, Bell, User } from "lucide-react";
 import NotFound from "@/pages/not-found";
+import Dashboard from "@/pages/dashboard";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
 import DashboardCEO from "@/pages/dashboard-ceo";
@@ -24,13 +25,16 @@ import NavigationHybridMockup from "@/pages/navigation-hybrid-mockup";
 import CardDesignPreview from "@/pages/card-design-preview";
 import CardDesignModern from "@/pages/card-design-modern";
 import Donors from "@/pages/donors";
+import DonorsWithTabs from "@/pages/donors-with-tabs";
 import Donor360 from "@/pages/donor-360";
 import DonorDetail from "@/pages/donor-detail";
 import DonorCardShowcase from "@/pages/donor-card-showcase";
 import Pipeline from "@/pages/pipeline";
+import PipelineWithTabs from "@/pages/pipeline-with-tabs";
 import Grants from "@/pages/grants";
 import Gifts from "@/pages/gifts";
 import Campaigns from "@/pages/campaigns";
+import CampaignsWithTabs from "@/pages/campaigns-with-tabs";
 import CampaignDetail from "@/pages/campaign-detail";
 import DataHealth from "@/pages/data-health";
 import Settings from "@/pages/settings";
@@ -41,6 +45,7 @@ import AIPredictiveTiming from "@/pages/ai-predictive-timing";
 import AIWealthEvents from "@/pages/ai-wealth-events";
 import AIMeetingBriefs from "@/pages/ai-meeting-briefs";
 import AIVoiceNotes from "@/pages/ai-voice-notes";
+import AIWithTabs from "@/pages/ai-with-tabs";
 
 // Relationship Intelligence
 import BoardConnections from "@/pages/relationship-board-connections";
@@ -62,6 +67,7 @@ import Forecast90Days from "@/pages/analytics-forecast-90-days";
 import YTDvsGoal from "@/pages/analytics-ytd-vs-goal";
 import LYBUNTDonors from "@/pages/analytics-lybunt-donors";
 import SYBUNTDonors from "@/pages/analytics-sybunt-donors";
+import AnalyticsWithTabs from "@/pages/analytics-with-tabs";
 
 // Workflow Automation
 import SmartCalendar from "@/pages/workflow-calendar";
@@ -79,11 +85,6 @@ import LogoPreview from "@/pages/logo-preview";
 
 // Hero Preview
 import HeroPreview from "@/pages/hero-preview";
-
-function Dashboard() {
-  // Default to Dev Director dashboard (can be changed via navigation)
-  return <DashboardDevDirector />;
-}
 
 function Router() {
   return (
@@ -104,22 +105,32 @@ function Router() {
       <Route path="/navigation-mockups" component={NavigationMockups} />
       <Route path="/navigation-hybrid-mockup" component={NavigationHybridMockup} />
       <Route path="/donors/card-showcase" component={DonorCardShowcase} />
+      <Route path="/donors/major-gifts" component={DonorsWithTabs} />
+      <Route path="/donors/lybunt" component={DonorsWithTabs} />
+      <Route path="/donors/sybunt" component={DonorsWithTabs} />
+      <Route path="/donors/prospects" component={DonorsWithTabs} />
       <Route path="/donors/:id" component={DonorDetail} />
-      <Route path="/donors" component={Donors} />
-      <Route path="/pipeline" component={Pipeline} />
+      <Route path="/donors" component={DonorsWithTabs} />
+      <Route path="/pipeline/value" component={PipelineWithTabs} />
+      <Route path="/pipeline/forecast" component={PipelineWithTabs} />
+      <Route path="/pipeline/analytics" component={PipelineWithTabs} />
+      <Route path="/pipeline" component={PipelineWithTabs} />
       <Route path="/grants" component={Grants} />
       <Route path="/gifts" component={Gifts} />
       <Route path="/campaigns/:id" component={CampaignDetail} />
-      <Route path="/campaigns" component={Campaigns} />
+      <Route path="/campaigns/performance" component={CampaignsWithTabs} />
+      <Route path="/campaigns/goals" component={CampaignsWithTabs} />
+      <Route path="/campaigns/trends" component={CampaignsWithTabs} />
+      <Route path="/campaigns" component={CampaignsWithTabs} />
       <Route path="/data-health" component={DataHealth} />
       <Route path="/integrations" component={Integrations} />
       <Route path="/settings" component={Settings} />
       
       {/* AI Intelligence */}
-      <Route path="/ai/predictive-timing" component={AIPredictiveTiming} />
-      <Route path="/ai/wealth-events" component={AIWealthEvents} />
-      <Route path="/ai/meeting-briefs" component={AIMeetingBriefs} />
-      <Route path="/ai/voice-notes" component={AIVoiceNotes} />
+      <Route path="/ai/predictive-timing" component={AIWithTabs} />
+      <Route path="/ai/wealth-events" component={AIWithTabs} />
+      <Route path="/ai/meeting-briefs" component={AIWithTabs} />
+      <Route path="/ai/voice-notes" component={AIWithTabs} />
       
       {/* Relationship Intelligence */}
       <Route path="/relationship/board-connections" component={BoardConnections} />
@@ -133,12 +144,12 @@ function Router() {
       <Route path="/content/impact-reports" component={ImpactReports} />
       
       {/* Analytics */}
-      <Route path="/analytics/peer-benchmarks" component={PeerBenchmarks} />
-      <Route path="/analytics/sentiment" component={SentimentAnalysis} />
-      <Route path="/analytics/portfolio-optimization" component={PortfolioOptimization} />
+      <Route path="/analytics/peer-benchmarks" component={AnalyticsWithTabs} />
+      <Route path="/analytics/sentiment" component={AnalyticsWithTabs} />
+      <Route path="/analytics/portfolio-optimization" component={AnalyticsWithTabs} />
+      <Route path="/analytics/ytd-vs-goal" component={AnalyticsWithTabs} />
       <Route path="/analytics/pipeline-value" component={PipelineValueDetail} />
       <Route path="/analytics/forecast-90-days" component={Forecast90Days} />
-      <Route path="/analytics/ytd-vs-goal" component={YTDvsGoal} />
       <Route path="/analytics/lybunt-donors" component={LYBUNTDonors} />
       <Route path="/analytics/sybunt-donors" component={SYBUNTDonors} />
       
