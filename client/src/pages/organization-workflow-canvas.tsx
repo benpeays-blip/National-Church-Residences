@@ -242,6 +242,8 @@ export default function OrganizationWorkflowCanvas() {
             nodeTypes={nodeTypes}
             fitView
             attributionPosition="bottom-left"
+            minZoom={0.01}
+            maxZoom={4}
           >
             <Background />
             <Controls />
