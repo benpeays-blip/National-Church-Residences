@@ -19,6 +19,7 @@ import OrganizationMapper from "@/pages/organization-mapper";
 import OrganizationWorkflowCanvas from "@/pages/organization-workflow-canvas";
 import NavigationPreview from "@/pages/navigation-preview";
 import NavigationMockups from "@/pages/navigation-mockups";
+import NavigationHybridMockup from "@/pages/navigation-hybrid-mockup";
 import CardDesignPreview from "@/pages/card-design-preview";
 import Donors from "@/pages/donors";
 import Donor360 from "@/pages/donor-360";
@@ -97,6 +98,7 @@ function Router() {
       <Route path="/organization-workflow-canvas" component={OrganizationWorkflowCanvas} />
       <Route path="/navigation-preview" component={NavigationPreview} />
       <Route path="/navigation-mockups" component={NavigationMockups} />
+      <Route path="/navigation-hybrid-mockup" component={NavigationHybridMockup} />
       <Route path="/donors/card-showcase" component={DonorCardShowcase} />
       <Route path="/donors/:id" component={DonorDetail} />
       <Route path="/donors" component={Donors} />
