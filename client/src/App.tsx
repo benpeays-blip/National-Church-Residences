@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { CommandPalette } from "@/components/command-palette";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import { Search, Settings as SettingsIcon, Bell, User } from "lucide-react";
 import NotFound from "@/pages/not-found";
@@ -188,6 +189,7 @@ function App() {
             <div className="flex flex-col flex-1">
               <header className="flex items-center gap-4 h-16 px-6 border-b shrink-0">
                 <SidebarTrigger data-testid="button-sidebar-toggle" />
+                <Breadcrumbs />
                 
                 <div className="flex items-center gap-3 ml-auto">
                   <Button
