@@ -403,48 +403,218 @@ export default function OrganizationMapper() {
         </Card>
       </div>
 
-      {/* Workflow Stages Overview */}
+      {/* Typical Fundraising Workflow - Detailed Sequence */}
       <Card>
         <CardHeader>
-          <CardTitle>Fundraising Workflow Stages</CardTitle>
+          <CardTitle>Typical Fundraising Workflow</CardTitle>
           <CardDescription>
-            The complete donor lifecycle from prospect identification to stewardship
+            Example sequence showing how teams move through the tech ecosystem
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {workflowStages.map((stage, index) => {
-              const StageIcon = stage.icon;
-              return (
-                <div 
-                  key={stage.id}
-                  className="relative p-4 rounded-lg border bg-card hover-elevate transition-all"
-                  data-testid={`card-stage-${stage.id}`}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${stage.color}`}>
-                      <StageIcon className="w-5 h-5" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Badge variant="outline" className="text-xs">
-                          Stage {index + 1}
-                        </Badge>
-                      </div>
-                      <h4 className="font-semibold text-sm mb-1">{stage.title}</h4>
-                      <p className="text-xs text-muted-foreground leading-relaxed">
-                        {stage.description}
-                      </p>
-                    </div>
+          <div className="grid grid-cols-1 gap-4">
+            {/* Stage 1 - Prospect Identification */}
+            <Card className="border-2 border-sky-200 dark:border-sky-900">
+              <CardHeader 
+                className="pb-4"
+                style={{
+                  background: "linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%)",
+                  borderRadius: "0.5rem 0.5rem 0 0"
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-sky-500/20 border-2 border-sky-500/50 flex items-center justify-center">
+                    <Search className="w-5 h-5 text-sky-300" />
                   </div>
-                  {index < workflowStages.length - 1 && (
-                    <div className="hidden lg:block absolute -right-2 top-1/2 -translate-y-1/2 z-10">
-                      <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Badge className="bg-white/10 text-white border-white/20 text-xs">Stage 1</Badge>
                     </div>
-                  )}
+                    <CardTitle className="text-white text-lg">Prospect Identification</CardTitle>
+                  </div>
                 </div>
-              );
-            })}
+              </CardHeader>
+              <CardContent className="pt-4">
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Prospect Researcher logs into Salesforce → pulls donor data</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Cross-references names in WealthEngine/iWave → exports wealth scores</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Adds capacity ratings and notes back into Salesforce</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Alerts Development Officer to high-value prospects via email or Teams</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Stage 2 - Outreach & Cultivation */}
+            <Card className="border-2 border-cyan-200 dark:border-cyan-900">
+              <CardHeader 
+                className="pb-4"
+                style={{
+                  background: "linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%)",
+                  borderRadius: "0.5rem 0.5rem 0 0"
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-cyan-500/20 border-2 border-cyan-500/50 flex items-center justify-center">
+                    <Mail className="w-5 h-5 text-cyan-300" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Badge className="bg-white/10 text-white border-white/20 text-xs">Stage 2</Badge>
+                    </div>
+                    <CardTitle className="text-white text-lg">Outreach & Cultivation</CardTitle>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Development Officer reviews prospect record in Salesforce</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Sends personalized email through Outlook/Mailchimp using CRM data</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Schedules introductory meeting; logs activity in Salesforce</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>After meeting, updates notes and stage ("Cultivation" → "Solicitation")</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Stage 3 - Proposal or Ask */}
+            <Card className="border-2 border-blue-200 dark:border-blue-900">
+              <CardHeader 
+                className="pb-4"
+                style={{
+                  background: "linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%)",
+                  borderRadius: "0.5rem 0.5rem 0 0"
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-blue-500/20 border-2 border-blue-500/50 flex items-center justify-center">
+                    <FileText className="w-5 h-5 text-blue-300" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Badge className="bg-white/10 text-white border-white/20 text-xs">Stage 3</Badge>
+                    </div>
+                    <CardTitle className="text-white text-lg">Proposal or Ask</CardTitle>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Officer collaborates with Grants Team or Program Staff to draft proposal in Word/SharePoint</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Uses previous funder data and impact metrics from Power BI</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Final proposal sent; record updated in Salesforce with expected ask amount</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Stage 4 - Gift Processing */}
+            <Card className="border-2 border-indigo-200 dark:border-indigo-900">
+              <CardHeader 
+                className="pb-4"
+                style={{
+                  background: "linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%)",
+                  borderRadius: "0.5rem 0.5rem 0 0"
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-indigo-500/20 border-2 border-indigo-500/50 flex items-center justify-center">
+                    <DollarSign className="w-5 h-5 text-indigo-300" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Badge className="bg-white/10 text-white border-white/20 text-xs">Stage 4</Badge>
+                    </div>
+                    <CardTitle className="text-white text-lg">Gift Processing</CardTitle>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Donor commits gift → info entered into Salesforce, synced with Financial Edge</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Finance Team reconciles transaction and issues acknowledgment</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Marketing/Comms triggers automated thank-you email via Mailchimp</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Stage 5 - Stewardship */}
+            <Card className="border-2 border-sky-200 dark:border-sky-900">
+              <CardHeader 
+                className="pb-4"
+                style={{
+                  background: "linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%)",
+                  borderRadius: "0.5rem 0.5rem 0 0"
+                }}
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-sky-500/20 border-2 border-sky-500/50 flex items-center justify-center">
+                    <Heart className="w-5 h-5 text-sky-300" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Badge className="bg-white/10 text-white border-white/20 text-xs">Stage 5</Badge>
+                    </div>
+                    <CardTitle className="text-white text-lg">Stewardship</CardTitle>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="pt-4">
+                <ul className="space-y-2">
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Program Staff upload impact stories and photos to SharePoint</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Development Officer pulls updates for personalized follow-up letter or event invitation</span>
+                  </li>
+                  <li className="flex items-start gap-2 text-sm">
+                    <span className="text-primary mt-0.5">•</span>
+                    <span>Power BI Dashboard aggregates donor engagement and gift trends for quarterly reporting</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
           </div>
         </CardContent>
       </Card>
