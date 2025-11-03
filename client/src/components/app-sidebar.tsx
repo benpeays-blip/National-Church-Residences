@@ -32,7 +32,10 @@ import {
   Layers,
   LayoutGrid,
   Home,
+  ChevronDown,
 } from "lucide-react";
+import * as Collapsible from "@radix-ui/react-collapsible";
+import { useState } from "react";
 
 const workflowMenuItems = [
   {
@@ -266,6 +269,38 @@ const workflowMenuItems = [
 
 export function AppSidebar() {
   const { user } = useAuth();
+  
+  // Track which sections are open (default all open, persist in localStorage)
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>(() => {
+    // Try to load from localStorage
+    const stored = localStorage.getItem('sidebar-sections-state');
+    if (stored) {
+      try {
+        return JSON.parse(stored);
+      } catch {
+        // If parsing fails, use default
+      }
+    }
+    
+    // Default: all sections open
+    const initial: Record<string, boolean> = {};
+    workflowMenuItems.forEach((group) => {
+      initial[group.groupLabel] = true;
+    });
+    return initial;
+  });
+
+  const toggleSection = (label: string, isOpen: boolean) => {
+    setOpenSections((prev) => {
+      const newState = {
+        ...prev,
+        [label]: isOpen,
+      };
+      // Persist to localStorage
+      localStorage.setItem('sidebar-sections-state', JSON.stringify(newState));
+      return newState;
+    });
+  };
 
   const filterItems = (items: typeof workflowMenuItems[0]["items"]) =>
     items.filter((item) => !user?.role || item.roles.includes(user.role));
@@ -287,35 +322,57 @@ export function AppSidebar() {
           const visibleItems = filterItems(group.items);
           if (visibleItems.length === 0) return null;
           
+          // Default to true if undefined (new sections open by default)
+          const isOpen = openSections[group.groupLabel] ?? true;
+          
           return (
-            <SidebarGroup 
+            <Collapsible.Root
               key={group.groupLabel}
-              className={index < workflowMenuItems.length - 1 ? "border-b pb-4" : ""}
+              open={isOpen}
+              onOpenChange={(open) => toggleSection(group.groupLabel, open)}
             >
-              <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                {group.groupLabel}
-              </SidebarGroupLabel>
-              <SidebarGroupContent>
-                <SidebarMenu>
-                  {visibleItems.map((item) => {
-                    const Icon = item.icon;
-                    return (
-                      <SidebarMenuItem key={item.title}>
-                        <SidebarMenuButton 
-                          asChild 
-                          data-testid={`nav-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
-                        >
-                          <a href={item.url}>
-                            <Icon className="w-4 h-4" />
-                            <span>{item.title}</span>
-                          </a>
-                        </SidebarMenuButton>
-                      </SidebarMenuItem>
-                    );
-                  })}
-                </SidebarMenu>
-              </SidebarGroupContent>
-            </SidebarGroup>
+              <SidebarGroup 
+                className={index < workflowMenuItems.length - 1 ? "border-b pb-4" : ""}
+              >
+                <Collapsible.Trigger asChild>
+                  <button 
+                    className="flex w-full items-center justify-between px-4 py-2 hover:bg-sidebar-accent rounded-md transition-colors cursor-pointer"
+                    data-testid={`sidebar-toggle-${group.groupLabel.toLowerCase()}`}
+                  >
+                    <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-wide text-muted-foreground cursor-pointer">
+                      {group.groupLabel}
+                    </SidebarGroupLabel>
+                    <ChevronDown 
+                      className={`w-4 h-4 text-muted-foreground transition-transform ${
+                        isOpen ? "transform rotate-0" : "transform -rotate-90"
+                      }`}
+                    />
+                  </button>
+                </Collapsible.Trigger>
+                <Collapsible.Content>
+                  <SidebarGroupContent>
+                    <SidebarMenu>
+                      {visibleItems.map((item) => {
+                        const Icon = item.icon;
+                        return (
+                          <SidebarMenuItem key={item.title}>
+                            <SidebarMenuButton 
+                              asChild 
+                              data-testid={`nav-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                            >
+                              <a href={item.url}>
+                                <Icon className="w-4 h-4" />
+                                <span>{item.title}</span>
+                              </a>
+                            </SidebarMenuButton>
+                          </SidebarMenuItem>
+                        );
+                      })}
+                    </SidebarMenu>
+                  </SidebarGroupContent>
+                </Collapsible.Content>
+              </SidebarGroup>
+            </Collapsible.Root>
           );
         })}
       </SidebarContent>
