@@ -53,7 +53,10 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
     - Analytics tabs: Peer Benchmarks, Sentiment Analysis, Portfolio Optimization, YTD vs Goal
     - Campaigns tabs: Active Campaigns, Performance, Goals & Targets, Trends
     - AI tabs: Predictive Timing, Wealth Events, Meeting Briefs, Voice Notes
-  - **Technical Architecture**: Reusable `SectionTabs` component in `client/src/components/section-tabs.tsx` with icon support, smooth transitions, and wouter integration
+  - **Technical Architecture**: 
+    - Reusable `SectionTabs` component in `client/src/components/section-tabs.tsx` with icon support, smooth transitions, and wouter integration
+    - **Routing Architecture**: All tab-specific URLs resolve to wrapper components (Dashboard, DonorsWithTabs, PipelineWithTabs, CampaignsWithTabs, AnalyticsWithTabs, AIWithTabs) which maintain tab visibility and determine child component rendering based on current path
+    - **Dashboard Links**: Metric cards on Dev Director dashboard link to correct tab routes (/pipeline/value, /pipeline/forecast, /donors/lybunt, /donors/sybunt, /analytics/ytd-vs-goal)
 - **Welcome Marketing Page**: Full marketing landing page at `/welcome` featuring hero section, feature highlights grid (6 key features), benefits section, stats showcase, and multiple CTAs. Positioned in sidebar above Solutions for easy first-time user onboarding.
 - **FundRazor Logo Component**: Production-ready SVG logo with automatic dark/light mode support, using CSS classes for theme adaptation.
 - **Comprehensive Data Population**: Seed data ensures all stages and categories are populated across opportunities, grants, wealth events, and interactions with intelligent fallback logic and zero-record guarantees.
