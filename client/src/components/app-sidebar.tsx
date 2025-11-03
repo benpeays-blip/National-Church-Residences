@@ -313,7 +313,7 @@ export function AppSidebar() {
     items.filter((item) => !user?.role || item.roles.includes(user.role));
 
   return (
-    <Sidebar data-testid="sidebar-main">
+    <Sidebar collapsible="icon" data-testid="sidebar-main">
       <SidebarHeader className="h-16 flex items-center px-4 border-b">
         <div className="flex flex-col gap-2 w-full">
           <FundRazorLogo width={160} height={46} />
