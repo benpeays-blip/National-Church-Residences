@@ -34,6 +34,43 @@
 
 ---
 
+## Icon & Feature Card System
+
+**Standard Icon Container Pattern:**
+All feature cards, capability cards, and icon containers across the site MUST use this exact pattern for visual consistency:
+
+**Container:**
+```tsx
+<div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+  <IconComponent className="w-6 h-6 text-primary" />
+</div>
+```
+
+**Rules:**
+1. **Fixed size:** Always `w-12 h-12` (48px × 48px)
+2. **Shape:** Always `rounded-lg` (NOT rounded-full or other radii)
+3. **Background:** Always `bg-primary/10` (10% opacity primary color)
+4. **Icon size:** Always `w-6 h-6` (24px × 24px)
+5. **Icon color:** Always `text-primary`
+6. **Centered:** Always include `flex items-center justify-center`
+7. **Margin:** Always `mb-4` for spacing below
+
+**DO NOT:**
+- ❌ Use circular containers (`rounded-full`)
+- ❌ Use chart colors (`bg-chart-1/10`, `text-chart-2`)
+- ❌ Use different sizes (`w-16`, `w-10`, etc.)
+- ❌ Use different opacity levels (`bg-primary/15`, `bg-primary/20`)
+
+**Branded Exceptions:**
+For branded pages (e.g., National Church Residences), use the brand color instead of primary:
+```tsx
+<div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${brandColor}10` }}>
+  <IconComponent className="w-6 h-6" style={{ color: brandColor }} />
+</div>
+```
+
+---
+
 ## Layout System
 
 **STRICT Spacing System - ENFORCE CONSISTENCY:**
@@ -73,7 +110,7 @@
 
 **Sidebar (Fixed, ~240px desktop):**
 - Logo/Org name at top (h-16)
-- Primary navigation items with icons (Heroicons) 
+- Primary navigation items with icons (Lucide React) 
 - Role indicator badge
 - Collapsible on tablet/mobile to icon-only or hamburger
 - Subtle dividers between nav sections

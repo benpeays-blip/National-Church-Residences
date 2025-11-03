@@ -295,7 +295,7 @@ export default function NationalChurchResidences() {
               data-testid="card-donor-intelligence"
             >
               <CardContent className="p-6">
-                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${ncrOrange}15` }}>
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${ncrOrange}10` }}>
                   <Users className="w-6 h-6" style={{ color: ncrOrange }} />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">360° Donor Profiles</h3>
@@ -318,7 +318,7 @@ export default function NationalChurchResidences() {
               data-testid="card-predictive-ai"
             >
               <CardContent className="p-6">
-                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${ncrOrange}15` }}>
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${ncrOrange}10` }}>
                   <Brain className="w-6 h-6" style={{ color: ncrOrange }} />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Predictive AI Insights</h3>
@@ -341,7 +341,7 @@ export default function NationalChurchResidences() {
               data-testid="card-pipeline-management"
             >
               <CardContent className="p-6">
-                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${ncrOrange}15` }}>
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${ncrOrange}10` }}>
                   <Target className="w-6 h-6" style={{ color: ncrOrange }} />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Pipeline Management</h3>
@@ -364,7 +364,7 @@ export default function NationalChurchResidences() {
               data-testid="card-wealth-monitoring"
             >
               <CardContent className="p-6">
-                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${ncrOrange}15` }}>
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${ncrOrange}10` }}>
                   <TrendingUp className="w-6 h-6" style={{ color: ncrOrange }} />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Wealth Event Monitoring</h3>
@@ -387,7 +387,7 @@ export default function NationalChurchResidences() {
               data-testid="card-analytics"
             >
               <CardContent className="p-6">
-                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${ncrOrange}15` }}>
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${ncrOrange}10` }}>
                   <BarChart3 className="w-6 h-6" style={{ color: ncrOrange }} />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Advanced Analytics</h3>
@@ -410,7 +410,7 @@ export default function NationalChurchResidences() {
               data-testid="card-campaign-tracking"
             >
               <CardContent className="p-6">
-                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${ncrOrange}15` }}>
+                <div className="w-12 h-12 rounded-lg flex items-center justify-center mb-4" style={{ backgroundColor: `${ncrOrange}10` }}>
                   <Sparkles className="w-6 h-6" style={{ color: ncrOrange }} />
                 </div>
                 <h3 className="font-semibold text-lg mb-2">Campaign Tracking</h3>

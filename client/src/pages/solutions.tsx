@@ -381,8 +381,8 @@ export default function Solutions() {
             >
               {/* Solution Header */}
               <div className="flex items-start gap-4 mb-6">
-                <div className={`p-3 rounded-lg ${solution.bgColor}`}>
-                  <IconComponent className={`w-6 h-6 ${solution.color}`} />
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <IconComponent className="w-6 h-6 text-primary" />
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
