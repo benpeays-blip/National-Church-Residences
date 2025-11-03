@@ -13,6 +13,8 @@ import {
   stageArtifacts,
   roleArtifacts,
   softwareArtifacts,
+  getSoftwareByCategory,
+  softwareCategories,
   type ArtifactDefinition,
 } from "@/lib/org-artifacts";
 
@@ -62,6 +64,17 @@ export function ArtifactGallery({ onArtifactDragStart }: ArtifactGalleryProps) {
   const filteredStages = filterArtifacts(stageArtifacts);
   const filteredRoles = filterArtifacts(roleArtifacts);
   const filteredSoftware = filterArtifacts(softwareArtifacts);
+  
+  // Group software by category
+  const softwareByCategory = getSoftwareByCategory();
+  const filteredSoftwareByCategory: Record<string, ArtifactDefinition[]> = {};
+  softwareCategories.forEach(category => {
+    const artifacts = softwareByCategory[category] || [];
+    const filtered = filterArtifacts(artifacts);
+    if (filtered.length > 0) {
+      filteredSoftwareByCategory[category] = filtered;
+    }
+  });
 
   return (
     <Card className="h-full flex flex-col">
@@ -79,7 +92,7 @@ export function ArtifactGallery({ onArtifactDragStart }: ArtifactGalleryProps) {
         </div>
       </CardHeader>
       <CardContent className="flex-1 overflow-y-auto p-4 pt-0">
-        <Accordion type="multiple" defaultValue={["stages", "roles", "software"]} className="space-y-2">
+        <Accordion type="multiple" defaultValue={["stages", "roles", "CRM", "Email Marketing"]} className="space-y-2">
           {/* Stages */}
           <AccordionItem value="stages" className="border rounded-lg px-3">
             <AccordionTrigger className="text-sm font-semibold hover:no-underline">
@@ -124,27 +137,24 @@ export function ArtifactGallery({ onArtifactDragStart }: ArtifactGalleryProps) {
             </AccordionContent>
           </AccordionItem>
 
-          {/* Software Tools */}
-          <AccordionItem value="software" className="border rounded-lg px-3">
-            <AccordionTrigger className="text-sm font-semibold hover:no-underline">
-              <div className="flex items-center gap-2">
-                <span>Software Tools</span>
-                <Badge variant="secondary" className="text-xs">
-                  {filteredSoftware.length}
-                </Badge>
-              </div>
-            </AccordionTrigger>
-            <AccordionContent className="space-y-2 pt-2">
-              {filteredSoftware.map((artifact) => (
-                <ArtifactItem key={artifact.id} artifact={artifact} />
-              ))}
-              {filteredSoftware.length === 0 && (
-                <div className="text-xs text-muted-foreground text-center py-4">
-                  No software found
+          {/* Software Tools - Organized by Category */}
+          {Object.entries(filteredSoftwareByCategory).map(([category, artifacts]) => (
+            <AccordionItem key={category} value={category} className="border rounded-lg px-3">
+              <AccordionTrigger className="text-sm font-semibold hover:no-underline">
+                <div className="flex items-center gap-2">
+                  <span>{category}</span>
+                  <Badge variant="secondary" className="text-xs">
+                    {artifacts.length}
+                  </Badge>
                 </div>
-              )}
-            </AccordionContent>
-          </AccordionItem>
+              </AccordionTrigger>
+              <AccordionContent className="space-y-2 pt-2">
+                {artifacts.map((artifact) => (
+                  <ArtifactItem key={artifact.id} artifact={artifact} />
+                ))}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
         </Accordion>
       </CardContent>
     </Card>

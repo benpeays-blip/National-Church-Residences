@@ -269,15 +269,15 @@ export default function OrganizationWorkflowCanvas() {
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded bg-sky-500/20 border-2 border-sky-500/50" />
-                    <span className="text-muted-foreground">Stage</span>
+                    <span className="text-muted-foreground">Workflow Stage</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded bg-cyan-500/20 border-2 border-cyan-500/50" />
-                    <span className="text-muted-foreground">Role</span>
+                    <span className="text-muted-foreground">Org Role</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 rounded bg-slate-500/20 border-2 border-slate-500/50" />
-                    <span className="text-muted-foreground">Software</span>
+                    <span className="text-muted-foreground">Software (by type)</span>
                   </div>
                 </div>
               </Card>

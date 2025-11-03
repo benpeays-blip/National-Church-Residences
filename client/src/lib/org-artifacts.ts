@@ -31,6 +31,7 @@ export interface ArtifactDefinition {
   description: string;
   icon: LucideIcon;
   colorToken: string; // Color identifier for branding
+  category?: string; // Software category (CRM, Email Marketing, etc.)
   metadata?: Record<string, any>;
 }
 
@@ -180,69 +181,69 @@ export const roleArtifacts: ArtifactDefinition[] = [
   },
 ];
 
-// Software Tools (36 platforms from Tech Stack Mapper)
+// Software Tools (36 platforms from Tech Stack Mapper) - Organized by category
 export const softwareArtifacts: ArtifactDefinition[] = [
   // CRM & Donor Management
-  { id: "soft-salesforce", type: "software", subtype: "Salesforce", displayName: "Salesforce", description: "CRM platform", icon: Database, colorToken: colorTokens.software },
-  { id: "soft-blackbaud", type: "software", subtype: "Blackbaud Raiser's Edge", displayName: "Blackbaud Raiser's Edge", description: "Fundraising CRM", icon: Database, colorToken: colorTokens.software },
-  { id: "soft-bloomerang", type: "software", subtype: "Bloomerang", displayName: "Bloomerang", description: "Donor management", icon: Database, colorToken: colorTokens.software },
-  { id: "soft-donorperfect", type: "software", subtype: "DonorPerfect", displayName: "DonorPerfect", description: "Fundraising software", icon: Database, colorToken: colorTokens.software },
+  { id: "soft-salesforce", type: "software", subtype: "Salesforce", displayName: "Salesforce", description: "CRM platform", icon: Database, colorToken: colorTokens.software, category: "CRM" },
+  { id: "soft-blackbaud", type: "software", subtype: "Blackbaud Raiser's Edge", displayName: "Blackbaud Raiser's Edge", description: "Fundraising CRM", icon: Database, colorToken: colorTokens.software, category: "CRM" },
+  { id: "soft-bloomerang", type: "software", subtype: "Bloomerang", displayName: "Bloomerang", description: "Donor management", icon: Database, colorToken: colorTokens.software, category: "CRM" },
+  { id: "soft-donorperfect", type: "software", subtype: "DonorPerfect", displayName: "DonorPerfect", description: "Fundraising software", icon: Database, colorToken: colorTokens.software, category: "CRM" },
   
   // Email Marketing
-  { id: "soft-mailchimp", type: "software", subtype: "Mailchimp", displayName: "Mailchimp", description: "Email marketing", icon: Mail, colorToken: colorTokens.software },
-  { id: "soft-constant-contact", type: "software", subtype: "Constant Contact", displayName: "Constant Contact", description: "Email campaigns", icon: Mail, colorToken: colorTokens.software },
-  { id: "soft-emma", type: "software", subtype: "Emma", displayName: "Emma", description: "Email platform", icon: Mail, colorToken: colorTokens.software },
+  { id: "soft-mailchimp", type: "software", subtype: "Mailchimp", displayName: "Mailchimp", description: "Email marketing", icon: Mail, colorToken: colorTokens.software, category: "Email Marketing" },
+  { id: "soft-constant-contact", type: "software", subtype: "Constant Contact", displayName: "Constant Contact", description: "Email campaigns", icon: Mail, colorToken: colorTokens.software, category: "Email Marketing" },
+  { id: "soft-emma", type: "software", subtype: "Emma", displayName: "Emma", description: "Email platform", icon: Mail, colorToken: colorTokens.software, category: "Email Marketing" },
   
   // Wealth Screening
-  { id: "soft-wealthengine", type: "software", subtype: "WealthEngine", displayName: "WealthEngine", description: "Wealth screening", icon: TrendingUp, colorToken: colorTokens.software },
-  { id: "soft-iwave", type: "software", subtype: "iWave", displayName: "iWave", description: "Prospect research", icon: Search, colorToken: colorTokens.software },
-  { id: "soft-donorsearch", type: "software", subtype: "DonorSearch", displayName: "DonorSearch", description: "Donor intelligence", icon: Search, colorToken: colorTokens.software },
+  { id: "soft-wealthengine", type: "software", subtype: "WealthEngine", displayName: "WealthEngine", description: "Wealth screening", icon: TrendingUp, colorToken: colorTokens.software, category: "Wealth Screening" },
+  { id: "soft-iwave", type: "software", subtype: "iWave", displayName: "iWave", description: "Prospect research", icon: Search, colorToken: colorTokens.software, category: "Wealth Screening" },
+  { id: "soft-donorsearch", type: "software", subtype: "DonorSearch", displayName: "DonorSearch", description: "Donor intelligence", icon: Search, colorToken: colorTokens.software, category: "Wealth Screening" },
   
   // Payment Processing
-  { id: "soft-classy", type: "software", subtype: "Classy", displayName: "Classy", description: "Online fundraising", icon: DollarSign, colorToken: colorTokens.software },
-  { id: "soft-givebutter", type: "software", subtype: "Givebutter", displayName: "Givebutter", description: "Fundraising platform", icon: DollarSign, colorToken: colorTokens.software },
-  { id: "soft-donorbox", type: "software", subtype: "Donorbox", displayName: "Donorbox", description: "Donation platform", icon: DollarSign, colorToken: colorTokens.software },
-  { id: "soft-stripe", type: "software", subtype: "Stripe", displayName: "Stripe", description: "Payment processing", icon: DollarSign, colorToken: colorTokens.software },
+  { id: "soft-classy", type: "software", subtype: "Classy", displayName: "Classy", description: "Online fundraising", icon: DollarSign, colorToken: colorTokens.software, category: "Payment Processing" },
+  { id: "soft-givebutter", type: "software", subtype: "Givebutter", displayName: "Givebutter", description: "Fundraising platform", icon: DollarSign, colorToken: colorTokens.software, category: "Payment Processing" },
+  { id: "soft-donorbox", type: "software", subtype: "Donorbox", displayName: "Donorbox", description: "Donation platform", icon: DollarSign, colorToken: colorTokens.software, category: "Payment Processing" },
+  { id: "soft-stripe", type: "software", subtype: "Stripe", displayName: "Stripe", description: "Payment processing", icon: DollarSign, colorToken: colorTokens.software, category: "Payment Processing" },
   
   // Event Management
-  { id: "soft-eventbrite", type: "software", subtype: "Eventbrite", displayName: "Eventbrite", description: "Event ticketing", icon: Calendar, colorToken: colorTokens.software },
-  { id: "soft-givesmart", type: "software", subtype: "GiveSmart", displayName: "GiveSmart", description: "Event fundraising", icon: Calendar, colorToken: colorTokens.software },
-  { id: "soft-greater-giving", type: "software", subtype: "Greater Giving", displayName: "Greater Giving", description: "Auction software", icon: Calendar, colorToken: colorTokens.software },
+  { id: "soft-eventbrite", type: "software", subtype: "Eventbrite", displayName: "Eventbrite", description: "Event ticketing", icon: Calendar, colorToken: colorTokens.software, category: "Event Management" },
+  { id: "soft-givesmart", type: "software", subtype: "GiveSmart", displayName: "GiveSmart", description: "Event fundraising", icon: Calendar, colorToken: colorTokens.software, category: "Event Management" },
+  { id: "soft-greater-giving", type: "software", subtype: "Greater Giving", displayName: "Greater Giving", description: "Auction software", icon: Calendar, colorToken: colorTokens.software, category: "Event Management" },
   
   // Grant Management
-  { id: "soft-foundant", type: "software", subtype: "Foundant", displayName: "Foundant", description: "Grant management", icon: FileText, colorToken: colorTokens.software },
-  { id: "soft-fluxx", type: "software", subtype: "Fluxx", displayName: "Fluxx", description: "Grantmaking platform", icon: FileText, colorToken: colorTokens.software },
-  { id: "soft-candid", type: "software", subtype: "Candid", displayName: "Candid (Foundation Directory)", description: "Foundation research", icon: FileText, colorToken: colorTokens.software },
+  { id: "soft-foundant", type: "software", subtype: "Foundant", displayName: "Foundant", description: "Grant management", icon: FileText, colorToken: colorTokens.software, category: "Grant Management" },
+  { id: "soft-fluxx", type: "software", subtype: "Fluxx", displayName: "Fluxx", description: "Grantmaking platform", icon: FileText, colorToken: colorTokens.software, category: "Grant Management" },
+  { id: "soft-candid", type: "software", subtype: "Candid", displayName: "Candid (Foundation Directory)", description: "Foundation research", icon: FileText, colorToken: colorTokens.software, category: "Grant Management" },
   
   // DAF Integration
-  { id: "soft-daf-giving360", type: "software", subtype: "DAF Giving360", displayName: "DAF Giving360", description: "DAF integration", icon: DollarSign, colorToken: colorTokens.software },
-  { id: "soft-freewill", type: "software", subtype: "FreeWill", displayName: "FreeWill", description: "Planned giving", icon: FileText, colorToken: colorTokens.software },
+  { id: "soft-daf-giving360", type: "software", subtype: "DAF Giving360", displayName: "DAF Giving360", description: "DAF integration", icon: DollarSign, colorToken: colorTokens.software, category: "Planned Giving" },
+  { id: "soft-freewill", type: "software", subtype: "FreeWill", displayName: "FreeWill", description: "Planned giving", icon: FileText, colorToken: colorTokens.software, category: "Planned Giving" },
   
   // Communications
-  { id: "soft-microsoft-outlook", type: "software", subtype: "Microsoft Outlook", displayName: "Microsoft Outlook", description: "Email client", icon: Mail, colorToken: colorTokens.software },
-  { id: "soft-gmail", type: "software", subtype: "Gmail", displayName: "Gmail", description: "Email service", icon: Mail, colorToken: colorTokens.software },
+  { id: "soft-microsoft-outlook", type: "software", subtype: "Microsoft Outlook", displayName: "Microsoft Outlook", description: "Email client", icon: Mail, colorToken: colorTokens.software, category: "Communications" },
+  { id: "soft-gmail", type: "software", subtype: "Gmail", displayName: "Gmail", description: "Email service", icon: Mail, colorToken: colorTokens.software, category: "Communications" },
   
   // Social Media
-  { id: "soft-linkedin", type: "software", subtype: "LinkedIn", displayName: "LinkedIn", description: "Professional network", icon: Globe, colorToken: colorTokens.software },
-  { id: "soft-facebook", type: "software", subtype: "Facebook", displayName: "Facebook", description: "Social media", icon: Globe, colorToken: colorTokens.software },
-  { id: "soft-twitter", type: "software", subtype: "Twitter/X", displayName: "Twitter/X", description: "Social platform", icon: Globe, colorToken: colorTokens.software },
+  { id: "soft-linkedin", type: "software", subtype: "LinkedIn", displayName: "LinkedIn", description: "Professional network", icon: Globe, colorToken: colorTokens.software, category: "Social Media" },
+  { id: "soft-facebook", type: "software", subtype: "Facebook", displayName: "Facebook", description: "Social media", icon: Globe, colorToken: colorTokens.software, category: "Social Media" },
+  { id: "soft-twitter", type: "software", subtype: "Twitter/X", displayName: "Twitter/X", description: "Social platform", icon: Globe, colorToken: colorTokens.software, category: "Social Media" },
   
   // Analytics & BI
-  { id: "soft-tableau", type: "software", subtype: "Tableau", displayName: "Tableau", description: "Data visualization", icon: BarChart3, colorToken: colorTokens.software },
-  { id: "soft-power-bi", type: "software", subtype: "Power BI", displayName: "Power BI", description: "Business intelligence", icon: BarChart3, colorToken: colorTokens.software },
-  { id: "soft-google-analytics", type: "software", subtype: "Google Analytics", displayName: "Google Analytics", description: "Web analytics", icon: BarChart3, colorToken: colorTokens.software },
+  { id: "soft-tableau", type: "software", subtype: "Tableau", displayName: "Tableau", description: "Data visualization", icon: BarChart3, colorToken: colorTokens.software, category: "Analytics" },
+  { id: "soft-power-bi", type: "software", subtype: "Power BI", displayName: "Power BI", description: "Business intelligence", icon: BarChart3, colorToken: colorTokens.software, category: "Analytics" },
+  { id: "soft-google-analytics", type: "software", subtype: "Google Analytics", displayName: "Google Analytics", description: "Web analytics", icon: BarChart3, colorToken: colorTokens.software, category: "Analytics" },
   
   // Workflow & Project Management
-  { id: "soft-asana", type: "software", subtype: "Asana", displayName: "Asana", description: "Project management", icon: Settings, colorToken: colorTokens.software },
-  { id: "soft-monday", type: "software", subtype: "Monday.com", displayName: "Monday.com", description: "Work OS", icon: Settings, colorToken: colorTokens.software },
-  { id: "soft-trello", type: "software", subtype: "Trello", displayName: "Trello", description: "Task boards", icon: Settings, colorToken: colorTokens.software },
+  { id: "soft-asana", type: "software", subtype: "Asana", displayName: "Asana", description: "Project management", icon: Settings, colorToken: colorTokens.software, category: "Project Management" },
+  { id: "soft-monday", type: "software", subtype: "Monday.com", displayName: "Monday.com", description: "Work OS", icon: Settings, colorToken: colorTokens.software, category: "Project Management" },
+  { id: "soft-trello", type: "software", subtype: "Trello", displayName: "Trello", description: "Task boards", icon: Settings, colorToken: colorTokens.software, category: "Project Management" },
   
   // Calling & Video
-  { id: "soft-zoom", type: "software", subtype: "Zoom", displayName: "Zoom", description: "Video conferencing", icon: Phone, colorToken: colorTokens.software },
-  { id: "soft-teams", type: "software", subtype: "Microsoft Teams", displayName: "Microsoft Teams", description: "Collaboration platform", icon: Phone, colorToken: colorTokens.software },
+  { id: "soft-zoom", type: "software", subtype: "Zoom", displayName: "Zoom", description: "Video conferencing", icon: Phone, colorToken: colorTokens.software, category: "Video/Calling" },
+  { id: "soft-teams", type: "software", subtype: "Microsoft Teams", displayName: "Microsoft Teams", description: "Collaboration platform", icon: Phone, colorToken: colorTokens.software, category: "Video/Calling" },
   
   // Accounting
-  { id: "soft-quickbooks", type: "software", subtype: "QuickBooks", displayName: "QuickBooks", description: "Accounting software", icon: Calculator, colorToken: colorTokens.software },
+  { id: "soft-quickbooks", type: "software", subtype: "QuickBooks", displayName: "QuickBooks", description: "Accounting software", icon: Calculator, colorToken: colorTokens.software, category: "Accounting" },
 ];
 
 // All artifacts combined
@@ -261,6 +262,38 @@ export function getArtifactById(id: string): ArtifactDefinition | undefined {
 export function getArtifactsByType(type: string): ArtifactDefinition[] {
   return allArtifacts.filter(a => a.type === type);
 }
+
+// Helper function to group software artifacts by category
+export function getSoftwareByCategory(): Record<string, ArtifactDefinition[]> {
+  const grouped: Record<string, ArtifactDefinition[]> = {};
+  
+  softwareArtifacts.forEach(artifact => {
+    const category = artifact.category || "Other";
+    if (!grouped[category]) {
+      grouped[category] = [];
+    }
+    grouped[category].push(artifact);
+  });
+  
+  return grouped;
+}
+
+// Get all unique software categories in order
+export const softwareCategories = [
+  "CRM",
+  "Email Marketing",
+  "Wealth Screening",
+  "Payment Processing",
+  "Event Management",
+  "Grant Management",
+  "Planned Giving",
+  "Communications",
+  "Social Media",
+  "Analytics",
+  "Project Management",
+  "Video/Calling",
+  "Accounting",
+];
 
 // Workflow stage connections (for initial canvas setup)
 export const defaultStageConnections = [
