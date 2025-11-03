@@ -17,6 +17,7 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - **Styling**: Tailwind CSS, shadcn/ui components
 - **Routing**: wouter
 - **State Management**: TanStack Query v5
+- **Navigation**: Hybrid navigation pattern combining persistent sidebar (global navigation) with contextual top tabs (section-specific navigation). Implemented via reusable `SectionTabs` component.
 - **UI/UX Decisions**: Enterprise data platform aesthetic, Inter font family, primary blue color palette with specific chart and semantic colors, Tailwind spacing system, standardized component guidelines (padding, font sizes for KPIs, dense tables, two-column forms, fixed-width sidebar).
 - **Design Unification**: "Clean & Modern Left-Aligned Cards" pattern applied across 40+ pages with consistent headers, loading/error states, metric card layouts, spacing, and typography.
 - **Branded Data Source Badges**: Visual data provenance system using company logos (Salesforce, Mailchimp, LinkedIn) with custom tinted backgrounds and borders, including compact, default, inline, and icon variants with interactive tooltips.
@@ -43,6 +44,17 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - **Organization Mapper Page**: Visualizes 6 organizational roles across 6 workflow stages, detailing responsibilities, primary systems, workflow activities, common pain points, and automation opportunities.
 - **Organization Workflow Canvas**: Interactive visual workflow builder using React Flow with drag-and-drop artifact gallery. Features 6 fundraising workflow stages (Prospect Research, Initial Contact, Cultivation, Solicitation, Processing, Stewardship) as visual nodes with animated connections and feedback loops. Supports dragging organizational roles and software platforms from gallery onto canvas, connecting nodes to visualize information flow, and deleting artifacts with hover controls. Includes minimap, zoom/pan controls, legend panel, search filtering, and artifact/connection count badges. Color palette derived from Sky Blue (#0284C7) and Ice Blue (#7DD3FC) accents: stages use sky-to-indigo gradient, roles use complementary cyan-to-teal tones, software uses neutral slate with purple accent. Schema extended with organizationCanvases and organizationArtifacts tables for future persistence (currently client-side state).
 - **Navigation Mockups Page**: Visual comparison of 5 navigation patterns (Focus Hubs, Command Surface, Progressive Masthead, Adaptive Matrix, Dual-Mode Ribbon) applied to the home screen, with mini screenshot-style mockups showing how each pattern would look in practice, key feature lists, and a Quick Decision Guide to help stakeholders choose the right approach.
+- **Hybrid Navigation Implementation**: Production hybrid navigation pattern deployed site-wide with:
+  - **Sidebar Navigation**: Persistent global navigation for main sections (Dashboard, Welcome, Solutions, Donors, Pipeline, Campaigns, Analytics, AI Intelligence, etc.)
+  - **Contextual Tabs**: Section-specific navigation within major areas:
+    - Dashboard tabs: Dev Director, MGO, CEO
+    - Donors tabs: All Donors, Major Gifts, LYBUNT, SYBUNT, Prospects
+    - Pipeline tabs: Opportunities, Pipeline Value, 90-Day Forecast, Analytics
+    - Analytics tabs: Peer Benchmarks, Sentiment Analysis, Portfolio Optimization, YTD vs Goal
+    - Campaigns tabs: Active Campaigns, Performance, Goals & Targets, Trends
+    - AI tabs: Predictive Timing, Wealth Events, Meeting Briefs, Voice Notes
+  - **Technical Architecture**: Reusable `SectionTabs` component in `client/src/components/section-tabs.tsx` with icon support, smooth transitions, and wouter integration
+- **Welcome Marketing Page**: Full marketing landing page at `/welcome` featuring hero section, feature highlights grid (6 key features), benefits section, stats showcase, and multiple CTAs. Positioned in sidebar above Solutions for easy first-time user onboarding.
 - **FundRazor Logo Component**: Production-ready SVG logo with automatic dark/light mode support, using CSS classes for theme adaptation.
 - **Comprehensive Data Population**: Seed data ensures all stages and categories are populated across opportunities, grants, wealth events, and interactions with intelligent fallback logic and zero-record guarantees.
 

@@ -130,7 +130,7 @@ export default function DashboardDevDirector() {
             />
           </div>
         </Link>
-        <Link href="/analytics/pipeline-value">
+        <Link href="/pipeline/value">
           <div className="hover-elevate active-elevate-2 cursor-pointer">
             <MetricCard
               label="Pipeline Value"
@@ -138,7 +138,7 @@ export default function DashboardDevDirector() {
             />
           </div>
         </Link>
-        <Link href="/analytics/forecast-90-days">
+        <Link href="/pipeline/forecast">
           <div className="hover-elevate active-elevate-2 cursor-pointer">
             <MetricCard
               label="90-Day Forecast"
@@ -252,7 +252,7 @@ export default function DashboardDevDirector() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <Link href="/analytics/lybunt-donors">
+        <Link href="/donors/lybunt">
           <Card className="p-6 hover-elevate active-elevate-2 cursor-pointer" data-testid="card-lybunt-metric">
             <div className="space-y-2">
               <p className="text-sm font-medium text-muted-foreground">
@@ -270,7 +270,7 @@ export default function DashboardDevDirector() {
             </div>
           </Card>
         </Link>
-        <Link href="/analytics/sybunt-donors">
+        <Link href="/donors/sybunt">
           <Card className="p-6 hover-elevate active-elevate-2 cursor-pointer" data-testid="card-sybunt-metric">
             <div className="space-y-2">
               <p className="text-sm font-medium text-muted-foreground">

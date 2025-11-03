@@ -91,9 +91,9 @@ function Router() {
     <Switch>
       <Route path="/" component={Dashboard} />
       <Route path="/welcome" component={Welcome} />
-      <Route path="/dashboard/mgo" component={DashboardMGO} />
-      <Route path="/dashboard/dev-director" component={DashboardDevDirector} />
-      <Route path="/dashboard/ceo" component={DashboardCEO} />
+      <Route path="/dashboard/mgo" component={Dashboard} />
+      <Route path="/dashboard/dev-director" component={Dashboard} />
+      <Route path="/dashboard/ceo" component={Dashboard} />
       <Route path="/solutions" component={Solutions} />
       <Route path="/proposals" component={Proposals} />
       <Route path="/tech-stack-mapper" component={TechStackMapper} />
@@ -148,10 +148,6 @@ function Router() {
       <Route path="/analytics/sentiment" component={AnalyticsWithTabs} />
       <Route path="/analytics/portfolio-optimization" component={AnalyticsWithTabs} />
       <Route path="/analytics/ytd-vs-goal" component={AnalyticsWithTabs} />
-      <Route path="/analytics/pipeline-value" component={PipelineValueDetail} />
-      <Route path="/analytics/forecast-90-days" component={Forecast90Days} />
-      <Route path="/analytics/lybunt-donors" component={LYBUNTDonors} />
-      <Route path="/analytics/sybunt-donors" component={SYBUNTDonors} />
       
       {/* Workflow Automation */}
       <Route path="/workflow/calendar" component={SmartCalendar} />
