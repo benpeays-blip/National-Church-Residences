@@ -21,6 +21,7 @@ import NavigationPreview from "@/pages/navigation-preview";
 import NavigationMockups from "@/pages/navigation-mockups";
 import NavigationHybridMockup from "@/pages/navigation-hybrid-mockup";
 import CardDesignPreview from "@/pages/card-design-preview";
+import CardDesignModern from "@/pages/card-design-modern";
 import Donors from "@/pages/donors";
 import Donor360 from "@/pages/donor-360";
 import DonorDetail from "@/pages/donor-detail";
@@ -94,6 +95,7 @@ function Router() {
       <Route path="/proposals" component={Proposals} />
       <Route path="/tech-stack-mapper" component={TechStackMapper} />
       <Route path="/card-design-preview" component={CardDesignPreview} />
+      <Route path="/card-design-modern" component={CardDesignModern} />
       <Route path="/organization-mapper" component={OrganizationMapper} />
       <Route path="/organization-workflow-canvas" component={OrganizationWorkflowCanvas} />
       <Route path="/navigation-preview" component={NavigationPreview} />
