@@ -1,7 +1,6 @@
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { useLocation } from "wouter";
 import {
   Target,
   Network,
@@ -15,12 +14,9 @@ import {
   BarChart3,
   Sparkles,
   Clock,
-  Palette,
 } from "lucide-react";
 
 export default function Solutions() {
-  const [, setLocation] = useLocation();
-  
   const solutions = [
     {
       id: 1,
@@ -301,27 +297,6 @@ export default function Solutions() {
 
   return (
     <div className="space-y-6">
-      {/* Hero Design Preview Banner */}
-      <Card className="p-6 bg-primary/5 border-primary/20">
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <Palette className="w-5 h-5 text-primary" />
-            <div>
-              <p className="font-medium">New Hero Section Design Options</p>
-              <p className="text-sm text-muted-foreground">
-                View 5 elegant design variations for this section
-              </p>
-            </div>
-          </div>
-          <Button 
-            onClick={() => setLocation("/hero-preview")}
-            data-testid="button-view-hero-designs"
-          >
-            View Design Options
-          </Button>
-        </div>
-      </Card>
-
       {/* Executive Summary - Option 3: Clean & Modern Left-Aligned Cards */}
       <div className="space-y-6">
         <div className="space-y-1">
