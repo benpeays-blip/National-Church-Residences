@@ -39,6 +39,8 @@ interface TimelineEvent {
   description: string;
   amount?: string;
   icon: any;
+  color: string;
+  bgColor: string;
 }
 
 export default function Donor360() {
@@ -70,7 +72,7 @@ export default function Donor360() {
 
   const { person, household, gifts, interactions, opportunities, tasks } = data;
 
-  // Build timeline from all activities
+  // Build timeline from all activities with enhanced styling
   const timeline: TimelineEvent[] = [
     ...gifts.map((g) => ({
       id: g.id,
@@ -80,6 +82,8 @@ export default function Donor360() {
       description: `${formatCurrency(parseFloat(g.amount))}`,
       amount: g.amount,
       icon: Gift,
+      color: "text-chart-1",
+      bgColor: "bg-chart-1/10",
     })),
     ...interactions.map((i) => ({
       id: i.id,
@@ -88,6 +92,8 @@ export default function Donor360() {
       title: i.type.replace(/_/g, " ").replace(/\b\w/g, (l) => l.toUpperCase()),
       description: i.notes || "",
       icon: i.type === "event" ? Calendar : MessageSquare,
+      color: i.type === "event" ? "text-chart-3" : "text-chart-2",
+      bgColor: i.type === "event" ? "bg-chart-3/10" : "bg-chart-2/10",
     })),
     ...opportunities.map((o) => ({
       id: o.id,
@@ -96,6 +102,8 @@ export default function Donor360() {
       title: `Opportunity: ${o.stage}`,
       description: o.askAmount ? formatCurrency(parseFloat(o.askAmount)) : "",
       icon: TrendingUp,
+      color: "text-chart-4",
+      bgColor: "bg-chart-4/10",
     })),
   ].sort((a, b) => b.date.getTime() - a.date.getTime());
 
@@ -303,8 +311,8 @@ export default function Donor360() {
                       data-testid={`timeline-event-${index}`}
                     >
                       <div className="flex flex-col items-center">
-                        <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                          <Icon className="w-4 h-4 text-primary" />
+                        <div className={`w-8 h-8 rounded-full ${event.bgColor} flex items-center justify-center shrink-0`}>
+                          <Icon className={`w-4 h-4 ${event.color}`} />
                         </div>
                         {index < timeline.length - 1 && (
                           <div className="w-px h-full bg-border mt-1" />
