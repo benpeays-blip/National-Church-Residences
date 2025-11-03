@@ -33,6 +33,7 @@ import {
   LayoutGrid,
   Home,
   ChevronDown,
+  Building2,
 } from "lucide-react";
 import * as Collapsible from "@radix-ui/react-collapsible";
 import { useState } from "react";
@@ -51,6 +52,12 @@ const workflowMenuItems = [
         title: "Welcome",
         url: "/welcome",
         icon: Home,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+      {
+        title: "National Church Residences",
+        url: "/national-church-residences",
+        icon: Building2,
         roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
       },
       {

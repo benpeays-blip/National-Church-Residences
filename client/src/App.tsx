@@ -15,6 +15,7 @@ import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
 import DashboardCEO from "@/pages/dashboard-ceo";
 import Welcome from "@/pages/welcome";
+import NationalChurchResidences from "@/pages/national-church-residences";
 import Solutions from "@/pages/solutions";
 import Proposals from "@/pages/proposals";
 import TechStackMapper from "@/pages/tech-stack-mapper";
@@ -92,6 +93,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Dashboard} />
       <Route path="/welcome" component={Welcome} />
+      <Route path="/national-church-residences" component={NationalChurchResidences} />
       <Route path="/dashboard/mgo" component={Dashboard} />
       <Route path="/dashboard/dev-director" component={Dashboard} />
       <Route path="/dashboard/ceo" component={Dashboard} />
