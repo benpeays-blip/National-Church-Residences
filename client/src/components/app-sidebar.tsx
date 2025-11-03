@@ -31,6 +31,7 @@ import {
   ClipboardList,
   Layers,
   LayoutGrid,
+  Home,
 } from "lucide-react";
 
 const workflowMenuItems = [
@@ -41,6 +42,12 @@ const workflowMenuItems = [
         title: "Dashboard",
         url: "/",
         icon: LayoutDashboard,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+      {
+        title: "Welcome",
+        url: "/welcome",
+        icon: Home,
         roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
       },
       {

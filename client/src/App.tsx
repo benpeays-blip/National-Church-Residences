@@ -12,6 +12,7 @@ import NotFound from "@/pages/not-found";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
 import DashboardCEO from "@/pages/dashboard-ceo";
+import Welcome from "@/pages/welcome";
 import Solutions from "@/pages/solutions";
 import Proposals from "@/pages/proposals";
 import TechStackMapper from "@/pages/tech-stack-mapper";
@@ -88,6 +89,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={Dashboard} />
+      <Route path="/welcome" component={Welcome} />
       <Route path="/dashboard/mgo" component={DashboardMGO} />
       <Route path="/dashboard/dev-director" component={DashboardDevDirector} />
       <Route path="/dashboard/ceo" component={DashboardCEO} />
