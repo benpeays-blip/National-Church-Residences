@@ -1,6 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { 
   ArrowRight, 
   Users, 
@@ -11,7 +17,11 @@ import {
   Heart,
   Home as HomeIcon,
   Sparkles,
-  CheckCircle2
+  CheckCircle2,
+  ChevronDown,
+  Award,
+  Calendar,
+  PieChart
 } from "lucide-react";
 import { Link } from "wouter";
 import ncrLogo from "@assets/image_1762185084577.png";
@@ -23,6 +33,165 @@ export default function NationalChurchResidences() {
   
   return (
     <div className="min-h-screen">
+      {/* Custom Top Navigation */}
+      <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <Link href="/national-church-residences">
+              <div className="flex items-center gap-3 cursor-pointer hover-elevate">
+                <img 
+                  src={ncrLogo} 
+                  alt="National Church Residences" 
+                  className="h-8 w-auto"
+                  data-testid="img-nav-logo"
+                />
+              </div>
+            </Link>
+
+            {/* Navigation Dropdowns */}
+            <div className="flex items-center gap-2">
+              {/* Grants Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="gap-1.5"
+                    style={{ color: ncrOrange }}
+                    data-testid="dropdown-grants"
+                  >
+                    <Award className="w-4 h-4" />
+                    Grants
+                    <ChevronDown className="w-3 h-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem asChild>
+                    <Link href="/grants">
+                      <span className="cursor-pointer w-full" data-testid="link-all-grants">All Grants</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/grants/active">
+                      <span className="cursor-pointer w-full" data-testid="link-active-grants">Active Grants</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/grants/pending">
+                      <span className="cursor-pointer w-full" data-testid="link-pending-grants">Pending Applications</span>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Events Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="gap-1.5"
+                    style={{ color: ncrOrange }}
+                    data-testid="dropdown-events"
+                  >
+                    <Calendar className="w-4 h-4" />
+                    Events
+                    <ChevronDown className="w-3 h-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem asChild>
+                    <Link href="/events">
+                      <span className="cursor-pointer w-full" data-testid="link-upcoming-events">Upcoming Events</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/events/calendar">
+                      <span className="cursor-pointer w-full" data-testid="link-event-calendar">Event Calendar</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/events/past">
+                      <span className="cursor-pointer w-full" data-testid="link-past-events">Past Events</span>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Donors Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="gap-1.5"
+                    style={{ color: ncrOrange }}
+                    data-testid="dropdown-donors"
+                  >
+                    <Users className="w-4 h-4" />
+                    Donors
+                    <ChevronDown className="w-3 h-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem asChild>
+                    <Link href="/donors">
+                      <span className="cursor-pointer w-full" data-testid="link-all-donors">All Donors</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/donors/major-gifts">
+                      <span className="cursor-pointer w-full" data-testid="link-major-gifts">Major Gifts</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/donors/lybunt">
+                      <span className="cursor-pointer w-full" data-testid="link-lybunt">LYBUNT Donors</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/donors/sybunt">
+                      <span className="cursor-pointer w-full" data-testid="link-sybunt">SYBUNT Donors</span>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Pipelines Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="gap-1.5"
+                    style={{ color: ncrOrange }}
+                    data-testid="dropdown-pipelines"
+                  >
+                    <PieChart className="w-4 h-4" />
+                    Pipelines
+                    <ChevronDown className="w-3 h-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  <DropdownMenuItem asChild>
+                    <Link href="/pipeline">
+                      <span className="cursor-pointer w-full" data-testid="link-opportunities">Opportunities</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/pipeline/value">
+                      <span className="cursor-pointer w-full" data-testid="link-pipeline-value">Pipeline Value</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/pipeline/forecast">
+                      <span className="cursor-pointer w-full" data-testid="link-90-day-forecast">90-Day Forecast</span>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          </div>
+        </div>
+      </nav>
+
       {/* Hero Section with NCR Branding */}
       <section 
         className="relative overflow-hidden border-b"
