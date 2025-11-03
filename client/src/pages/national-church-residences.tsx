@@ -64,7 +64,7 @@ export default function NationalChurchResidences() {
             </div>
 
             {/* Stats Specific to NCR Context */}
-            <div className="grid grid-cols-3 gap-8 pt-12 max-w-3xl mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 pt-12 max-w-3xl mx-auto">
               <div>
                 <div className="text-3xl font-bold text-primary" data-testid="text-stat-donors">10K+</div>
                 <div className="text-sm text-muted-foreground">Active Donors</div>
@@ -105,7 +105,7 @@ export default function NationalChurchResidences() {
                   to identify major gift prospects supporting senior care initiatives
                 </p>
                 <Link href="/donors">
-                  <Button variant="ghost" className="p-0 h-auto hover:bg-transparent" data-testid="link-donor-profiles">
+                  <Button variant="ghost" size="sm" data-testid="link-donor-profiles">
                     View donors <ArrowRight className="w-3 h-3 ml-1" />
                   </Button>
                 </Link>
@@ -124,7 +124,7 @@ export default function NationalChurchResidences() {
                   next best actions to maximize fundraising effectiveness
                 </p>
                 <Link href="/ai/predictive-timing">
-                  <Button variant="ghost" className="p-0 h-auto hover:bg-transparent" data-testid="link-ai-insights">
+                  <Button variant="ghost" size="sm" data-testid="link-ai-insights">
                     Explore AI tools <ArrowRight className="w-3 h-3 ml-1" />
                   </Button>
                 </Link>
@@ -143,7 +143,7 @@ export default function NationalChurchResidences() {
                   helping prioritize major gifts and capital campaign prospects
                 </p>
                 <Link href="/pipeline">
-                  <Button variant="ghost" className="p-0 h-auto hover:bg-transparent" data-testid="link-pipeline">
+                  <Button variant="ghost" size="sm" data-testid="link-pipeline">
                     View pipeline <ArrowRight className="w-3 h-3 ml-1" />
                   </Button>
                 </Link>
@@ -162,7 +162,7 @@ export default function NationalChurchResidences() {
                   changes that signal major gift opportunities
                 </p>
                 <Link href="/ai/wealth-events">
-                  <Button variant="ghost" className="p-0 h-auto hover:bg-transparent" data-testid="link-wealth-events">
+                  <Button variant="ghost" size="sm" data-testid="link-wealth-events">
                     Track wealth events <ArrowRight className="w-3 h-3 ml-1" />
                   </Button>
                 </Link>
@@ -181,7 +181,7 @@ export default function NationalChurchResidences() {
                   to drive data-driven fundraising decisions
                 </p>
                 <Link href="/analytics">
-                  <Button variant="ghost" className="p-0 h-auto hover:bg-transparent" data-testid="link-analytics">
+                  <Button variant="ghost" size="sm" data-testid="link-analytics">
                     View analytics <ArrowRight className="w-3 h-3 ml-1" />
                   </Button>
                 </Link>
@@ -200,7 +200,7 @@ export default function NationalChurchResidences() {
                   initiatives with real-time progress monitoring
                 </p>
                 <Link href="/campaigns">
-                  <Button variant="ghost" className="p-0 h-auto hover:bg-transparent" data-testid="link-campaigns">
+                  <Button variant="ghost" size="sm" data-testid="link-campaigns">
                     Manage campaigns <ArrowRight className="w-3 h-3 ml-1" />
                   </Button>
                 </Link>
