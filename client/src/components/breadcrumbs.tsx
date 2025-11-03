@@ -69,7 +69,11 @@ const canonicalRoutes: Record<string, string> = {
   "workflow": "/workflow/calendar", // Workflow section defaults to first page
 };
 
-export function Breadcrumbs() {
+interface BreadcrumbsProps {
+  className?: string;
+}
+
+export function Breadcrumbs({ className = "" }: BreadcrumbsProps) {
   const [location] = useLocation();
   
   // Skip breadcrumbs on home page
@@ -101,10 +105,10 @@ export function Breadcrumbs() {
   }
 
   return (
-    <nav className="flex items-center gap-2 text-sm" aria-label="Breadcrumb" data-testid="breadcrumbs">
+    <nav className={`flex items-center gap-2 text-sm ${className}`} aria-label="Breadcrumb" data-testid="breadcrumbs">
       <Link 
         href="/" 
-        className="flex items-center gap-1 text-muted-foreground hover:text-foreground transition-colors" 
+        className="flex items-center gap-1 hover:text-white/100 transition-colors" 
         data-testid="breadcrumb-home"
         aria-label="Home"
       >
@@ -114,15 +118,15 @@ export function Breadcrumbs() {
       
       {breadcrumbs.map((crumb, index) => (
         <div key={crumb.path} className="flex items-center gap-2">
-          <ChevronRight className="w-4 h-4 text-muted-foreground" aria-hidden="true" />
+          <ChevronRight className="w-4 h-4 opacity-60" aria-hidden="true" />
           {crumb.isLast ? (
-            <span className="font-medium text-foreground" aria-current="page" data-testid={`breadcrumb-current`}>
+            <span className="font-medium text-white" aria-current="page" data-testid={`breadcrumb-current`}>
               {crumb.label}
             </span>
           ) : (
             <Link 
               href={crumb.path} 
-              className="text-muted-foreground hover:text-foreground transition-colors" 
+              className="hover:text-white/100 transition-colors" 
               data-testid={`breadcrumb-${index}`}
             >
               {crumb.label}

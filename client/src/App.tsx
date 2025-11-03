@@ -193,9 +193,15 @@ function App() {
           <div className="flex h-screen w-full">
             <AppSidebar />
             <div className="flex flex-col flex-1">
-              <header className="flex items-center gap-4 h-16 px-6 border-b shrink-0">
-                <SidebarTrigger data-testid="button-sidebar-toggle" />
-                <Breadcrumbs />
+              <header 
+                className="flex items-center gap-4 h-16 px-6 border-b shrink-0"
+                style={{
+                  background: "linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%)",
+                  borderColor: "#1A3A5C40"
+                }}
+              >
+                <SidebarTrigger data-testid="button-sidebar-toggle" className="text-white hover:bg-white/10" />
+                <Breadcrumbs className="text-white/90" />
                 
                 <div className="flex items-center gap-3 ml-auto">
                   <Button
@@ -203,6 +209,7 @@ function App() {
                     size="icon"
                     data-testid="button-global-search"
                     aria-label="Global search (Cmd+K)"
+                    className="text-white hover:bg-white/10 hover:text-white"
                   >
                     <Search className="h-5 w-5" />
                   </Button>
@@ -211,6 +218,7 @@ function App() {
                     size="icon"
                     data-testid="button-notifications"
                     aria-label="Notifications"
+                    className="text-white hover:bg-white/10 hover:text-white"
                   >
                     <Bell className="h-5 w-5" />
                   </Button>
@@ -220,6 +228,7 @@ function App() {
                     asChild
                     data-testid="button-settings"
                     aria-label="Settings"
+                    className="text-white hover:bg-white/10 hover:text-white"
                   >
                     <a href="/settings">
                       <SettingsIcon className="h-5 w-5" />
@@ -230,6 +239,7 @@ function App() {
                     size="icon"
                     data-testid="button-account"
                     aria-label="Account menu"
+                    className="text-white hover:bg-white/10 hover:text-white"
                   >
                     <User className="h-5 w-5" />
                   </Button>
