@@ -48,7 +48,8 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - **Navigation Mockups Page**: Visual comparison of 5 navigation patterns (Focus Hubs, Command Surface, Progressive Masthead, Adaptive Matrix, Dual-Mode Ribbon) applied to the home screen, with mini screenshot-style mockups showing how each pattern would look in practice, key feature lists, and a Quick Decision Guide to help stakeholders choose the right approach.
 - **Hybrid Navigation Implementation**: Production hybrid navigation pattern deployed site-wide with:
   - **Sidebar Navigation**: Persistent global navigation for main sections (Dashboard, Welcome, Solutions, Donors, Pipeline, Campaigns, Analytics, AI Intelligence, etc.). Features:
-    - **Collapsible Sections**: Using Radix UI Collapsible with localStorage persistence, allowing users to collapse/expand sections (Overview, Intelligence, Operations, Network, AI Tools, Analytics, System) with state maintained across navigation and page reloads
+    - **Collapsible Sections**: Using Radix UI Collapsible with localStorage persistence, allowing users to collapse/expand sections (Overview, Design Ideas, Intelligence, Operations, Network, AI Tools, Analytics, System) with state maintained across navigation and page reloads
+    - **Design Ideas Section**: New sidebar section containing Icon Style Guide, Navigation Mockups, and Navigation Preview pages for design system documentation and navigation pattern exploration
     - **Full Sidebar Collapse**: Icon-only collapse mode (`collapsible="icon"`) accessible via toggle button in header or Cmd/Ctrl+B keyboard shortcut. Reduces sidebar from 15rem to 3rem width, shows tooltips on icon hover, persists state via cookies
   - **Contextual Tabs**: Section-specific navigation within major areas:
     - Dashboard tabs: Dev Director, Major Gifts Officer, CEO
