@@ -19,6 +19,7 @@ import OrganizationMapper from "@/pages/organization-mapper";
 import OrganizationWorkflowCanvas from "@/pages/organization-workflow-canvas";
 import NavigationPreview from "@/pages/navigation-preview";
 import NavigationMockups from "@/pages/navigation-mockups";
+import CardDesignPreview from "@/pages/card-design-preview";
 import Donors from "@/pages/donors";
 import Donor360 from "@/pages/donor-360";
 import DonorDetail from "@/pages/donor-detail";
@@ -91,6 +92,7 @@ function Router() {
       <Route path="/solutions" component={Solutions} />
       <Route path="/proposals" component={Proposals} />
       <Route path="/tech-stack-mapper" component={TechStackMapper} />
+      <Route path="/card-design-preview" component={CardDesignPreview} />
       <Route path="/organization-mapper" component={OrganizationMapper} />
       <Route path="/organization-workflow-canvas" component={OrganizationWorkflowCanvas} />
       <Route path="/navigation-preview" component={NavigationPreview} />
