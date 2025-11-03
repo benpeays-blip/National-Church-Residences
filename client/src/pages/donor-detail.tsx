@@ -512,7 +512,7 @@ export default function DonorDetail() {
                             )}
                             {opp.owner && (
                               <span>
-                                MGO: {opp.owner.firstName} {opp.owner.lastName}
+                                Major Gifts Officer: {opp.owner.firstName} {opp.owner.lastName}
                               </span>
                             )}
                           </div>

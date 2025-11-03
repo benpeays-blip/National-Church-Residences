@@ -5,7 +5,7 @@ import { Link, useLocation } from "wouter";
 const pathLabels: Record<string, string> = {
   "dashboard": "Dashboard",
   "dev-director": "Dev Director",
-  "mgo": "MGO",
+  "mgo": "Major Gifts Officer",
   "ceo": "CEO",
   "welcome": "Welcome",
   "solutions": "Solutions",

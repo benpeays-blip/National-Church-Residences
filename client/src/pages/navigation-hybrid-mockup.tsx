@@ -34,7 +34,7 @@ const mockSections: MockSection[] = [
     id: "dashboard",
     name: "Dashboard",
     icon: LayoutDashboard,
-    tabs: ["Overview", "Dev Director", "MGO", "CEO"],
+    tabs: ["Overview", "Dev Director", "Major Gifts Officer", "CEO"],
     description: "Role-specific dashboards with key metrics"
   },
   {

@@ -13,7 +13,7 @@ const dashboardTabs: SectionTab[] = [
     path: "/",
   },
   {
-    label: "MGO",
+    label: "Major Gifts Officer",
     value: "mgo",
     icon: Briefcase,
     path: "/dashboard/mgo",

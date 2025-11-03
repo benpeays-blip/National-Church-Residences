@@ -156,7 +156,7 @@ export default function Solutions() {
             "Automatic identification of 'Last Year But Unfortunately Not This' and 'Some Years But Unfortunately Not This' donors for retention campaigns",
         },
         {
-          name: "Portfolio Management by MGO",
+          name: "Portfolio Management by Major Gifts Officer",
           detail:
             "Each gift officer has dedicated dashboard showing their assigned donors, pipeline, tasks, and top 10 priorities",
         },

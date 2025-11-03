@@ -227,7 +227,7 @@ export default function Forecast90Days() {
               <TableRow>
                 <TableHead>Donor</TableHead>
                 <TableHead>Stage</TableHead>
-                <TableHead>MGO</TableHead>
+                <TableHead>Major Gifts Officer</TableHead>
                 <TableHead>Close Date</TableHead>
                 <TableHead className="text-right">Ask Amount</TableHead>
                 <TableHead className="text-right">Probability</TableHead>

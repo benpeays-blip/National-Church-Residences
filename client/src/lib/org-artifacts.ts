@@ -130,7 +130,7 @@ export const roleArtifacts: ArtifactDefinition[] = [
     type: "role",
     subtype: "Development Officer",
     displayName: "Development Officer",
-    description: "Major gift officer (MGO)",
+    description: "Major gift officer",
     icon: User,
     colorToken: colorTokens.roleDevOfficer,
   },

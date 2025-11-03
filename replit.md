@@ -29,7 +29,7 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - **Technology**: Express.js, Node.js 20
 - **Database**: PostgreSQL (Neon)
 - **ORM**: Drizzle ORM
-- **Authentication**: Replit Auth (OIDC) with role-based access (ADMIN, CEO, DEV_DIRECTOR, MGO, DATA_OPS).
+- **Authentication**: Replit Auth (OIDC) with role-based access (ADMIN, CEO, DEV_DIRECTOR, MAJOR_GIFTS_OFFICER, DATA_OPS).
 
 ### Core Features & Technical Implementations
 - **Role-Based Dashboards**: Customized views for different user roles.
@@ -51,7 +51,7 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
     - **Collapsible Sections**: Using Radix UI Collapsible with localStorage persistence, allowing users to collapse/expand sections (Overview, Intelligence, Operations, Network, AI Tools, Analytics, System) with state maintained across navigation and page reloads
     - **Full Sidebar Collapse**: Icon-only collapse mode (`collapsible="icon"`) accessible via toggle button in header or Cmd/Ctrl+B keyboard shortcut. Reduces sidebar from 15rem to 3rem width, shows tooltips on icon hover, persists state via cookies
   - **Contextual Tabs**: Section-specific navigation within major areas:
-    - Dashboard tabs: Dev Director, MGO, CEO
+    - Dashboard tabs: Dev Director, Major Gifts Officer, CEO
     - Donors tabs: All Donors, Major Gifts, LYBUNT, SYBUNT, Prospects
     - Pipeline tabs: Opportunities, Pipeline Value, 90-Day Forecast, Analytics
     - Analytics tabs: Peer Benchmarks, Sentiment Analysis, Portfolio Optimization, YTD vs Goal

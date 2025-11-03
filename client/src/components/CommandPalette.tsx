@@ -72,7 +72,7 @@ const commandItems: CommandItem[] = [
   },
   {
     id: "dashboard-mgo",
-    label: "MGO Dashboard",
+    label: "Major Gifts Officer Dashboard",
     description: "Major gift officer portfolio",
     icon: Target,
     path: "/dashboard/mgo",

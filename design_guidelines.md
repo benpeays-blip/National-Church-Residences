@@ -200,7 +200,7 @@
 
 ## Dashboard-Specific Layouts
 
-### MGO Dashboard
+### Major Gifts Officer Dashboard
 - Top section: "Today's Priorities" (max-h-96, overflow-scroll, task list)
 - Middle: Portfolio summary metrics (4-col grid)
 - Bottom: Split view - Pipeline Kanban (left 2/3) + Upcoming interactions calendar (right 1/3)

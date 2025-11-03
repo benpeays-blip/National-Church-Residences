@@ -296,7 +296,7 @@ export default function DashboardDevDirector() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>MGO</TableHead>
+                <TableHead>Major Gifts Officer</TableHead>
                 <TableHead>Opportunities</TableHead>
                 <TableHead>Pipeline Value</TableHead>
                 <TableHead>Stage Distribution</TableHead>

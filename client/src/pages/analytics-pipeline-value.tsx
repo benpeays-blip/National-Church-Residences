@@ -265,7 +265,7 @@ export default function PipelineValueDetail() {
               <TableRow>
                 <TableHead>Donor</TableHead>
                 <TableHead>Stage</TableHead>
-                <TableHead>MGO</TableHead>
+                <TableHead>Major Gifts Officer</TableHead>
                 <TableHead className="text-right">Ask Amount</TableHead>
                 <TableHead className="text-right">Probability</TableHead>
                 <TableHead className="text-right">Weighted Value</TableHead>
