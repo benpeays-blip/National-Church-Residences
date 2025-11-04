@@ -81,7 +81,8 @@ export default function OrganizationWorkflowCanvas() {
   // Create canvas mutation
   const createCanvasMutation = useMutation({
     mutationFn: async (data: { name: string; description?: string; canvasData: any }) => {
-      return await apiRequest("/api/organization-canvases", "POST", data);
+      const response = await apiRequest("POST", "/api/organization-canvases", data);
+      return await response.json();
     },
     onSuccess: (newCanvas: OrganizationCanvas) => {
       queryClient.invalidateQueries({ queryKey: ["/api/organization-canvases"] });
@@ -106,7 +107,8 @@ export default function OrganizationWorkflowCanvas() {
   // Delete canvas mutation
   const deleteCanvasMutation = useMutation({
     mutationFn: async (id: string) => {
-      return await apiRequest(`/api/organization-canvases/${id}`, "DELETE");
+      const response = await apiRequest("DELETE", `/api/organization-canvases/${id}`);
+      return await response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/organization-canvases"] });
@@ -399,7 +401,8 @@ function CanvasEditor({
   // Update canvas mutation
   const updateCanvasMutation = useMutation({
     mutationFn: async (data: { canvasData: any }) => {
-      return await apiRequest(`/api/organization-canvases/${canvas?.id}`, "PUT", data);
+      const response = await apiRequest("PUT", `/api/organization-canvases/${canvas?.id}`, data);
+      return await response.json();
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/organization-canvases"] });

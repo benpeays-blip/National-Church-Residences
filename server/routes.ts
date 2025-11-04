@@ -8,7 +8,7 @@ import {
   predictiveScores, wealthEvents, meetingBriefs, voiceNotes, boardConnections, corporatePartnerships, peerDonors,
   outreachTemplates, grantProposals, impactReports, sentimentAnalysis, peerBenchmarks, portfolioOptimizations,
   calendarEvents, stewardshipWorkflows, taskPriorityScores, giftRegistries, grants, boardMemberships,
-  insertBoardMembershipSchema
+  insertBoardMembershipSchema, insertOrganizationCanvasSchema
 } from "@shared/schema";
 import { eq, sql, desc, gte, and, inArray } from "drizzle-orm";
 
@@ -1637,11 +1637,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/organization-canvases", async (req, res) => {
     try {
-      const canvas = await storage.createOrganizationCanvas(req.body);
+      console.log("Creating organization canvas with data:", JSON.stringify(req.body, null, 2));
+      const validated = insertOrganizationCanvasSchema.parse(req.body);
+      console.log("Validated data:", JSON.stringify(validated, null, 2));
+      const canvas = await storage.createOrganizationCanvas(validated);
+      console.log("Canvas created successfully:", canvas.id);
       res.json(canvas);
     } catch (error) {
       console.error("Error creating organization canvas:", error);
-      res.status(500).json({ message: "Failed to create organization canvas" });
+      if (error instanceof Error) {
+        console.error("Error message:", error.message);
+        console.error("Error stack:", error.stack);
+      }
+      res.status(500).json({ message: "Failed to create organization canvas", error: error instanceof Error ? error.message : String(error) });
     }
   });
 
