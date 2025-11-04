@@ -279,20 +279,6 @@ export default function NationalChurchResidences() {
               />
             </div>
             
-            <Badge 
-              className="mb-4 text-white border-0" 
-              style={{ backgroundColor: ncrOrange }}
-              data-testid="badge-partnership"
-            >
-              Powered by FundRazor
-            </Badge>
-            
-            <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
-              Let's Thrive
-              <br />
-              <span style={{ color: ncrOrange }}>Together</span>
-            </h1>
-            
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               We build thriving communities and provide compassionate care services for seniors. 
               FundRazor empowers National Church Residences with AI-powered donor intelligence 
