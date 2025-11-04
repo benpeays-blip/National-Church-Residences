@@ -61,18 +61,6 @@ const workflowMenuItems = [
         roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
       },
       {
-        title: "Solutions",
-        url: "/solutions",
-        icon: Sparkles,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
-        title: "Proposals",
-        url: "/proposals",
-        icon: ClipboardList,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
         title: "Tech Stack Mapper",
         url: "/tech-stack-mapper",
         icon: Layers,
