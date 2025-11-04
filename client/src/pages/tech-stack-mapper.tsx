@@ -586,38 +586,46 @@ export default function TechStackMapper() {
             {techStackData.map((category) => (
               <div 
                 key={category.id}
-                className="p-4 rounded-lg border bg-card/50 space-y-3"
+                className="rounded-lg border overflow-hidden"
               >
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                    <category.icon className="w-4 h-4" />
+                {/* Solid Blue Header */}
+                <div 
+                  className="flex items-center gap-3 p-4"
+                  style={{ backgroundColor: '#0A1628' }}
+                >
+                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                    <category.icon className="w-5 h-5 text-white" />
                   </div>
-                  <h4 className="font-semibold text-sm">{category.title.replace(' & ', ' ')}</h4>
+                  <h4 className="font-semibold text-sm text-white">{category.title.replace(' & ', ' ')}</h4>
                 </div>
-                <div className="flex flex-wrap gap-2">
-                  {category.platforms.map((platform) => {
-                    const Logo = platform.logo;
-                    return (
-                      <div
-                        key={platform.name}
-                        className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-muted/50 hover-elevate transition-all"
-                        title={platform.name}
-                      >
-                        {Logo ? (
-                          <div style={platform.logoColor && platform.logoColor.startsWith('#') ? { color: platform.logoColor } : undefined}>
-                            <Logo size={14} className="shrink-0" />
-                          </div>
-                        ) : (
-                          <div className={`w-4 h-4 rounded text-[8px] font-bold flex items-center justify-center ${platform.logoColor || 'bg-muted text-muted-foreground'}`}>
-                            {platform.fallbackInitials || platform.name.substring(0, 1)}
-                          </div>
-                        )}
-                        <span className="text-xs font-medium truncate max-w-[120px]">
-                          {platform.name.split(' / ')[0].split(' ')[0]}
-                        </span>
-                      </div>
-                    );
-                  })}
+                
+                {/* Content Area */}
+                <div className="p-4 bg-card">
+                  <div className="flex flex-wrap gap-2">
+                    {category.platforms.map((platform) => {
+                      const Logo = platform.logo;
+                      return (
+                        <div
+                          key={platform.name}
+                          className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-muted/50 hover-elevate transition-all"
+                          title={platform.name}
+                        >
+                          {Logo ? (
+                            <div style={platform.logoColor && platform.logoColor.startsWith('#') ? { color: platform.logoColor } : undefined}>
+                              <Logo size={14} className="shrink-0" />
+                            </div>
+                          ) : (
+                            <div className={`w-4 h-4 rounded text-[8px] font-bold flex items-center justify-center ${platform.logoColor || 'bg-muted text-muted-foreground'}`}>
+                              {platform.fallbackInitials || platform.name.substring(0, 1)}
+                            </div>
+                          )}
+                          <span className="text-xs font-medium truncate max-w-[120px]">
+                            {platform.name.split(' / ')[0].split(' ')[0]}
+                          </span>
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             ))}
