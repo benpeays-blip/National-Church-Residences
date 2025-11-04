@@ -588,12 +588,12 @@ export default function TechStackMapper() {
                 key={category.id}
                 className="rounded-lg border overflow-hidden"
               >
-                {/* Solid Blue Header */}
+                {/* Sky Blue Header */}
                 <div 
                   className="flex items-center gap-3 p-4"
-                  style={{ backgroundColor: '#0A1628' }}
+                  style={{ backgroundColor: '#0284C7' }}
                 >
-                  <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                  <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
                     <category.icon className="w-5 h-5 text-white" />
                   </div>
                   <h4 className="font-semibold text-sm text-white">{category.title.replace(' & ', ' ')}</h4>
