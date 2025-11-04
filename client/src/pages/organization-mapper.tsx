@@ -657,8 +657,8 @@ export default function OrganizationMapper() {
                 >
                   <AccordionTrigger className="hover:no-underline">
                     <div className="flex items-center gap-4 text-left w-full">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center shrink-0 ${role.color}`}>
-                        <RoleIcon className="w-5 h-5" />
+                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                        <RoleIcon className="w-6 h-6 text-primary" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-base mb-1" data-testid={`text-role-title-${role.id}`}>
