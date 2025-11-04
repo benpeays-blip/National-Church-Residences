@@ -1,4 +1,4 @@
-import { useState, useCallback, useRef, DragEvent } from "react";
+import { useState, useCallback, useRef, useEffect, DragEvent } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import {
@@ -61,21 +61,27 @@ export default function OrganizationWorkflowCanvas() {
   });
 
   // Fetch selected canvas
-  const { data: selectedCanvas } = useQuery<OrganizationCanvas>({
+  const { data: selectedCanvas, isError: selectedCanvasError } = useQuery<OrganizationCanvas>({
     queryKey: ["/api/organization-canvases", selectedCanvasId],
     enabled: !!selectedCanvasId,
   });
 
+  // If selected canvas fails to load (deleted or missing), return to landing
+  useEffect(() => {
+    if (selectedCanvasId && selectedCanvasError) {
+      setSelectedCanvasId(null);
+      toast({
+        title: "Canvas not found",
+        description: "The selected canvas may have been deleted or is no longer available.",
+        variant: "destructive",
+      });
+    }
+  }, [selectedCanvasId, selectedCanvasError, toast]);
+
   // Create canvas mutation
   const createCanvasMutation = useMutation({
     mutationFn: async (data: { name: string; description?: string; canvasData: any }) => {
-      const response = await fetch("/api/organization-canvases", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" },
-      });
-      if (!response.ok) throw new Error("Failed to create canvas");
-      return response.json();
+      return await apiRequest("/api/organization-canvases", "POST", data);
     },
     onSuccess: (newCanvas: OrganizationCanvas) => {
       queryClient.invalidateQueries({ queryKey: ["/api/organization-canvases"] });
@@ -100,11 +106,7 @@ export default function OrganizationWorkflowCanvas() {
   // Delete canvas mutation
   const deleteCanvasMutation = useMutation({
     mutationFn: async (id: string) => {
-      const response = await fetch(`/api/organization-canvases/${id}`, {
-        method: "DELETE",
-      });
-      if (!response.ok) throw new Error("Failed to delete canvas");
-      return response.json();
+      return await apiRequest(`/api/organization-canvases/${id}`, "DELETE");
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/organization-canvases"] });
@@ -397,13 +399,7 @@ function CanvasEditor({
   // Update canvas mutation
   const updateCanvasMutation = useMutation({
     mutationFn: async (data: { canvasData: any }) => {
-      const response = await fetch(`/api/organization-canvases/${canvas?.id}`, {
-        method: "PUT",
-        body: JSON.stringify(data),
-        headers: { "Content-Type": "application/json" },
-      });
-      if (!response.ok) throw new Error("Failed to update canvas");
-      return response.json();
+      return await apiRequest(`/api/organization-canvases/${canvas?.id}`, "PUT", data);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/organization-canvases"] });
