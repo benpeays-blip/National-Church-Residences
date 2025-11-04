@@ -196,7 +196,7 @@ function App() {
               <header 
                 className="flex items-center gap-4 h-16 px-6 border-b shrink-0"
                 style={{
-                  background: "linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%)",
+                  background: "#0A1628",
                   borderColor: "#1A3A5C40"
                 }}
               >
