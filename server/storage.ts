@@ -13,6 +13,7 @@ import {
   workflows,
   workflowBlocks,
   workflowConnections,
+  organizationCanvases,
   type User,
   type UpsertUser,
   type Person,
@@ -35,6 +36,8 @@ import {
   type InsertWorkflowBlock,
   type WorkflowConnection,
   type InsertWorkflowConnection,
+  type OrganizationCanvas,
+  type InsertOrganizationCanvas,
 } from "@shared/schema";
 import { eq, like, or, and, desc, sql, ilike } from "drizzle-orm";
 
@@ -94,6 +97,13 @@ export interface IStorage {
   
   // Template Seeding
   seedWorkflowTemplates(): Promise<void>;
+  
+  // Organization Canvases
+  getOrganizationCanvases(ownerId?: string): Promise<OrganizationCanvas[]>;
+  getOrganizationCanvas(id: string): Promise<OrganizationCanvas | undefined>;
+  createOrganizationCanvas(canvas: InsertOrganizationCanvas): Promise<OrganizationCanvas>;
+  updateOrganizationCanvas(id: string, canvas: Partial<InsertOrganizationCanvas>): Promise<OrganizationCanvas | undefined>;
+  deleteOrganizationCanvas(id: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -719,6 +729,41 @@ export class DatabaseStorage implements IStorage {
     }
 
     console.log('Template seeding complete!');
+  }
+
+  // Organization Canvases
+  async getOrganizationCanvases(ownerId?: string): Promise<OrganizationCanvas[]> {
+    if (ownerId) {
+      return await db
+        .select()
+        .from(organizationCanvases)
+        .where(eq(organizationCanvases.ownerId, ownerId))
+        .orderBy(desc(organizationCanvases.updatedAt));
+    }
+    return await db.select().from(organizationCanvases).orderBy(desc(organizationCanvases.updatedAt));
+  }
+
+  async getOrganizationCanvas(id: string): Promise<OrganizationCanvas | undefined> {
+    const result = await db.select().from(organizationCanvases).where(eq(organizationCanvases.id, id));
+    return result[0];
+  }
+
+  async createOrganizationCanvas(canvas: InsertOrganizationCanvas): Promise<OrganizationCanvas> {
+    const result = await db.insert(organizationCanvases).values(canvas).returning();
+    return result[0];
+  }
+
+  async updateOrganizationCanvas(id: string, canvas: Partial<InsertOrganizationCanvas>): Promise<OrganizationCanvas | undefined> {
+    const result = await db
+      .update(organizationCanvases)
+      .set({ ...canvas, updatedAt: new Date() })
+      .where(eq(organizationCanvases.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async deleteOrganizationCanvas(id: string): Promise<void> {
+    await db.delete(organizationCanvases).where(eq(organizationCanvases.id, id));
   }
 }
 

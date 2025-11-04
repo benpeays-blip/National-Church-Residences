@@ -1610,6 +1610,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Organization Canvases
+  app.get("/api/organization-canvases", async (req, res) => {
+    try {
+      const ownerId = req.query.ownerId as string | undefined;
+      const canvases = await storage.getOrganizationCanvases(ownerId);
+      res.json(canvases);
+    } catch (error) {
+      console.error("Error fetching organization canvases:", error);
+      res.status(500).json({ message: "Failed to fetch organization canvases" });
+    }
+  });
+
+  app.get("/api/organization-canvases/:id", async (req, res) => {
+    try {
+      const canvas = await storage.getOrganizationCanvas(req.params.id);
+      if (!canvas) {
+        return res.status(404).json({ message: "Organization canvas not found" });
+      }
+      res.json(canvas);
+    } catch (error) {
+      console.error("Error fetching organization canvas:", error);
+      res.status(500).json({ message: "Failed to fetch organization canvas" });
+    }
+  });
+
+  app.post("/api/organization-canvases", async (req, res) => {
+    try {
+      const canvas = await storage.createOrganizationCanvas(req.body);
+      res.json(canvas);
+    } catch (error) {
+      console.error("Error creating organization canvas:", error);
+      res.status(500).json({ message: "Failed to create organization canvas" });
+    }
+  });
+
+  app.put("/api/organization-canvases/:id", async (req, res) => {
+    try {
+      const canvas = await storage.updateOrganizationCanvas(req.params.id, req.body);
+      if (!canvas) {
+        return res.status(404).json({ message: "Organization canvas not found" });
+      }
+      res.json(canvas);
+    } catch (error) {
+      console.error("Error updating organization canvas:", error);
+      res.status(500).json({ message: "Failed to update organization canvas" });
+    }
+  });
+
+  app.delete("/api/organization-canvases/:id", async (req, res) => {
+    try {
+      await storage.deleteOrganizationCanvas(req.params.id);
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error deleting organization canvas:", error);
+      res.status(500).json({ message: "Failed to delete organization canvas" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
