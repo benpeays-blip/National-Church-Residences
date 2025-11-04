@@ -97,18 +97,22 @@ export default function DashboardMGO() {
         <MetricCard
           label="Portfolio Size"
           value={data?.metrics.portfolioSize ?? 0}
+          href="/mgo/portfolio"
         />
         <MetricCard
           label="Pipeline Value"
           value={`$${((data?.metrics.pipelineValue ?? 0) / 1000).toFixed(0)}K`}
+          href="/mgo/pipeline"
         />
         <MetricCard
           label="Tasks This Week"
           value={data?.metrics.completedTasks ?? 0}
+          href="/mgo/tasks"
         />
         <MetricCard
           label="Upcoming Meetings"
           value={data?.metrics.upcomingMeetings ?? 0}
+          href="/mgo/meetings"
         />
       </div>
 

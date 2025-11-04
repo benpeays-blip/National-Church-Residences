@@ -91,6 +91,12 @@ import HeroPreview from "@/pages/hero-preview";
 // Icon Style Guide
 import IconStyleGuide from "@/pages/icon-style-guide";
 
+// MGO Detail Pages
+import MGOPortfolioDetail from "@/pages/mgo-portfolio-detail";
+import MGOPipelineDetail from "@/pages/mgo-pipeline-detail";
+import MGOTasksDetail from "@/pages/mgo-tasks-detail";
+import MGOMeetingsDetail from "@/pages/mgo-meetings-detail";
+
 function Router() {
   return (
     <Switch>
@@ -100,6 +106,10 @@ function Router() {
       <Route path="/dashboard/mgo" component={Dashboard} />
       <Route path="/dashboard/dev-director" component={Dashboard} />
       <Route path="/dashboard/ceo" component={Dashboard} />
+      <Route path="/mgo/portfolio" component={MGOPortfolioDetail} />
+      <Route path="/mgo/pipeline" component={MGOPipelineDetail} />
+      <Route path="/mgo/tasks" component={MGOTasksDetail} />
+      <Route path="/mgo/meetings" component={MGOMeetingsDetail} />
       <Route path="/solutions" component={Solutions} />
       <Route path="/proposals" component={Proposals} />
       <Route path="/tech-stack-mapper" component={TechStackMapper} />
