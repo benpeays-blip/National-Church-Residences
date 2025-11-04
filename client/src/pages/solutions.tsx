@@ -297,50 +297,6 @@ export default function Solutions() {
 
   return (
     <div className="space-y-6">
-      {/* Executive Summary - Option 3: Clean & Modern Left-Aligned Cards */}
-      <div className="space-y-6">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-bold">
-            FundRazor: Cutting Edge AI-Powered Fundraising Intelligence Platform
-          </h1>
-          <p className="text-sm text-muted-foreground max-w-3xl">
-            Addressing The Foundation's 5 AI Integration Priorities with intelligent automation, 
-            relationship mapping, and data-driven insights
-          </p>
-        </div>
-        
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Card className="p-6 border">
-            <div className="space-y-2">
-              <p className="text-5xl font-bold text-primary">5</p>
-              <p className="text-sm font-medium">Priority Solutions</p>
-              <p className="text-xs text-muted-foreground">Comprehensive AI-powered modules</p>
-            </div>
-          </Card>
-          <Card className="p-6 border">
-            <div className="space-y-2">
-              <p className="text-5xl font-bold text-primary">20+</p>
-              <p className="text-sm font-medium">AI Features Available</p>
-              <p className="text-xs text-muted-foreground">From predictive timing to content generation</p>
-            </div>
-          </Card>
-          <Card className="p-6 border">
-            <div className="space-y-2">
-              <p className="text-5xl font-bold text-primary">60%</p>
-              <p className="text-sm font-medium">Time Savings</p>
-              <p className="text-xs text-muted-foreground">Automated research and intelligent workflows</p>
-            </div>
-          </Card>
-        </div>
-        
-        <div className="text-sm leading-relaxed text-muted-foreground max-w-4xl">
-          This page maps each of your AI integration priorities to FundRazor's current capabilities and roadmap.
-          Features marked <Badge variant="secondary" className="mx-1 text-xs"><CheckCircle2 className="w-3 h-3 inline mr-1" />Available Now</Badge> 
-          are live and ready to demo. Features marked <Badge variant="outline" className="mx-1 text-xs"><Clock className="w-3 h-3 inline mr-1" />Coming Soon</Badge> 
-          are on our development roadmap.
-        </div>
-      </div>
-
       {/* Quick Navigation */}
       <Card className="p-6">
         <h3 className="text-sm font-semibold mb-3 text-muted-foreground uppercase tracking-wide">
