@@ -21,7 +21,9 @@ import {
   ChevronDown,
   Award,
   Calendar,
-  PieChart
+  PieChart,
+  ClipboardList,
+  FileText
 } from "lucide-react";
 import { Link } from "wouter";
 import ncrLogo from "@assets/image_1762185084577.png";
@@ -51,6 +53,72 @@ export default function NationalChurchResidences() {
 
             {/* Navigation Dropdowns */}
             <div className="flex items-center gap-2">
+              {/* Proposals Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="gap-1.5"
+                    style={{ color: ncrOrange }}
+                    data-testid="dropdown-proposals"
+                  >
+                    <ClipboardList className="w-4 h-4" />
+                    Proposals
+                    <ChevronDown className="w-3 h-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48 bg-background">
+                  <DropdownMenuItem asChild>
+                    <Link href="/proposals">
+                      <span className="cursor-pointer w-full" data-testid="link-all-proposals">All Proposals</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/content/grant-proposals">
+                      <span className="cursor-pointer w-full" data-testid="link-grant-proposals">Grant Proposals</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/content/impact-reports">
+                      <span className="cursor-pointer w-full" data-testid="link-impact-reports">Impact Reports</span>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              {/* Solutions Dropdown */}
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button 
+                    variant="ghost" 
+                    className="gap-1.5"
+                    style={{ color: ncrOrange }}
+                    data-testid="dropdown-solutions"
+                  >
+                    <Sparkles className="w-4 h-4" />
+                    Solutions
+                    <ChevronDown className="w-3 h-3" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48 bg-background">
+                  <DropdownMenuItem asChild>
+                    <Link href="/solutions">
+                      <span className="cursor-pointer w-full" data-testid="link-solutions-overview">Solutions Overview</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/ai">
+                      <span className="cursor-pointer w-full" data-testid="link-ai-tools">AI Tools</span>
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href="/integrations">
+                      <span className="cursor-pointer w-full" data-testid="link-integrations">Integrations</span>
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
               {/* Grants Dropdown */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -65,7 +133,7 @@ export default function NationalChurchResidences() {
                     <ChevronDown className="w-3 h-3" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuContent align="end" className="w-48 bg-background">
                   <DropdownMenuItem asChild>
                     <Link href="/grants">
                       <span className="cursor-pointer w-full" data-testid="link-all-grants">All Grants</span>
@@ -98,7 +166,7 @@ export default function NationalChurchResidences() {
                     <ChevronDown className="w-3 h-3" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuContent align="end" className="w-48 bg-background">
                   <DropdownMenuItem asChild>
                     <Link href="/events">
                       <span className="cursor-pointer w-full" data-testid="link-upcoming-events">Upcoming Events</span>
@@ -131,7 +199,7 @@ export default function NationalChurchResidences() {
                     <ChevronDown className="w-3 h-3" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuContent align="end" className="w-48 bg-background">
                   <DropdownMenuItem asChild>
                     <Link href="/donors">
                       <span className="cursor-pointer w-full" data-testid="link-all-donors">All Donors</span>
@@ -169,7 +237,7 @@ export default function NationalChurchResidences() {
                     <ChevronDown className="w-3 h-3" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuContent align="end" className="w-48 bg-background">
                   <DropdownMenuItem asChild>
                     <Link href="/pipeline">
                       <span className="cursor-pointer w-full" data-testid="link-opportunities">Opportunities</span>
