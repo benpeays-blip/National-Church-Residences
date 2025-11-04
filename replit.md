@@ -23,7 +23,11 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - **UI/UX Decisions**: Enterprise data platform aesthetic, Inter font family, primary blue color palette with specific chart and semantic colors, Tailwind spacing system, standardized component guidelines (padding, font sizes for KPIs, dense tables, two-column forms, fixed-width sidebar).
 - **Design Unification**: "Clean & Modern Left-Aligned Cards" pattern applied across 40+ pages with consistent headers, loading/error states, metric card layouts, spacing, and typography.
 - **Branded Data Source Badges**: Visual data provenance system using company logos (Salesforce, Mailchimp, LinkedIn) with custom tinted backgrounds and borders, including compact, default, inline, and icon variants with interactive tooltips.
-- **Interactive Dashboard Metrics**: All 6 key metrics on the Dev Director dashboard link to dedicated drill-down analytics pages for Pipeline Value Analysis, 90-Day Forecast, YTD vs Goal, LYBUNT Donor Recovery, and SYBUNT Donor Recovery.
+- **Interactive Dashboard Metrics**: All 6 key metrics on the Dev Director dashboard link to dedicated drill-down analytics pages for Pipeline Value Analysis, 90-Day Forecast, YTD vs Goal, LYBUNT Donor Recovery, and SYBUNT Donor Recovery. Major Gifts Officer dashboard features 4 clickable metric cards linking to dedicated detail pages:
+  - **Portfolio Detail** (/mgo/portfolio): Comprehensive donor portfolio management with 12 donors across segments (Principal, Major Donor, Mid-Level), filtering by segment and status, donor scoring breakdown, and total giving analytics
+  - **Pipeline Detail** (/mgo/pipeline): Opportunity pipeline visualization with 10 active opportunities, stage-by-stage breakdown (Prospect, Cultivation, Ask, Steward), weighted value calculations, 4-month forecast (pessimistic/expected/optimistic scenarios), and stalled opportunity alerts
+  - **Tasks Detail** (/mgo/tasks): Task management system with 12 active tasks, priority filtering (Critical, High, Medium, Low), category breakdown (Ask, Cultivation, Stewardship, Prospect), completion tracking, overdue alerts, and recently completed task history
+  - **Meetings Detail** (/mgo/meetings): Meeting calendar and analytics with 8 upcoming meetings, meeting type distribution (In-Person, Virtual, Phone), purpose categorization (Cultivation, Ask, Stewardship, Discovery), past meeting outcomes with ratings, and comprehensive meeting notes
 
 ### Backend
 - **Technology**: Express.js, Node.js 20
