@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Database, 
   DollarSign, 
@@ -532,16 +533,24 @@ export default function TechStackMapper() {
 
   return (
     <div className="space-y-6">
-      {/* System Architecture Visualization */}
-      <Card>
-        <CardHeader>
-          <CardTitle>System Architecture Overview</CardTitle>
-          <CardDescription>
-            Visual map of all platforms grouped by functional category
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <Tabs defaultValue="architecture" className="w-full">
+        <TabsList className="grid w-full grid-cols-3" data-testid="tabs-tech-stack">
+          <TabsTrigger value="architecture" data-testid="tab-architecture">System Architecture Overview</TabsTrigger>
+          <TabsTrigger value="layers" data-testid="tab-layers">Tech Stack Layers</TabsTrigger>
+          <TabsTrigger value="categories" data-testid="tab-categories">Technology Categories</TabsTrigger>
+        </TabsList>
+
+        {/* Tab 1: System Architecture Overview */}
+        <TabsContent value="architecture" className="space-y-6">
+          <Card>
+            <CardHeader>
+              <CardTitle>System Architecture Overview</CardTitle>
+              <CardDescription>
+                Visual map of all platforms grouped by functional category
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="p-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {techStackData.map((category) => (
               <div 
                 key={category.id}
@@ -593,9 +602,11 @@ export default function TechStackMapper() {
           </div>
         </CardContent>
       </Card>
+        </TabsContent>
 
-      {/* ERP, CRM, and Digital Engagement Platforms Explanation */}
-      <Card>
+        {/* Tab 2: Tech Stack Layers */}
+        <TabsContent value="layers" className="space-y-6">
+          <Card>
         <CardHeader>
           <CardTitle>Understanding the Technology Stack Layers</CardTitle>
           <CardDescription>
@@ -759,26 +770,29 @@ export default function TechStackMapper() {
           </div>
         </CardContent>
       </Card>
+        </TabsContent>
 
-      {/* Search */}
-      <Card>
-        <CardContent className="p-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search categories, platforms, or keywords..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10"
-              data-testid="input-search"
-            />
-          </div>
-        </CardContent>
-      </Card>
+        {/* Tab 3: Technology Categories */}
+        <TabsContent value="categories" className="space-y-6">
+          {/* Search */}
+          <Card>
+            <CardContent className="p-6">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  type="text"
+                  placeholder="Search categories, platforms, or keywords..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                  data-testid="input-search"
+                />
+              </div>
+            </CardContent>
+          </Card>
 
-      {/* Categories */}
-      <Card>
+          {/* Categories */}
+          <Card>
         <CardHeader>
           <CardTitle>Technology Categories</CardTitle>
           <CardDescription>
@@ -862,13 +876,15 @@ export default function TechStackMapper() {
             ))}
           </Accordion>
 
-          {filteredData.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground">No categories found matching "{searchQuery}"</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+            {filteredData.length === 0 && (
+              <div className="text-center py-12">
+                <p className="text-muted-foreground">No categories found matching "{searchQuery}"</p>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
