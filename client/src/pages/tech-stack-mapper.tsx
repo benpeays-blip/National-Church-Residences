@@ -810,8 +810,8 @@ export default function TechStackMapper() {
               >
                 <AccordionTrigger className="hover:no-underline">
                   <div className="flex items-center gap-4 text-left w-full">
-                    <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center shrink-0">
-                      <category.icon className="w-5 h-5" />
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <category.icon className="w-5 h-5 text-primary" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
@@ -836,7 +836,7 @@ export default function TechStackMapper() {
                     {/* Most Common Platforms */}
                     <div>
                       <h4 className="font-medium text-sm mb-3 flex items-center gap-2">
-                        <Building2 className="w-4 h-4" />
+                        <Building2 className="w-4 h-4 text-primary" />
                         Most Common Platforms
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -847,13 +847,13 @@ export default function TechStackMapper() {
                     {/* Pain Points */}
                     <div>
                       <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                        <AlertCircle className="w-4 h-4 text-orange-600" />
+                        <AlertCircle className="w-4 h-4 text-primary" />
                         Common Pain Points
                       </h4>
                       <ul className="space-y-1 text-sm text-muted-foreground">
                         {category.painPoints.map((point, idx) => (
                           <li key={idx} className="flex items-start gap-2">
-                            <span className="text-orange-600 mt-0.5">•</span>
+                            <span className="text-primary mt-0.5">•</span>
                             <span>{point}</span>
                           </li>
                         ))}
@@ -863,7 +863,7 @@ export default function TechStackMapper() {
                     {/* Integration Requirement */}
                     <div className={`rounded-lg p-4 ${getIntegrationColor(category.integrationNeed)}`}>
                       <h4 className="font-medium text-sm mb-1 flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4" />
+                        <CheckCircle2 className="w-4 h-4 text-primary" />
                         Integration Requirement
                       </h4>
                       <p className="text-sm">
