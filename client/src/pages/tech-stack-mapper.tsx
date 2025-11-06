@@ -532,47 +532,6 @@ export default function TechStackMapper() {
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="space-y-1">
-        <h1 className="text-3xl font-bold" data-testid="text-page-title">Tech Stack Mapper</h1>
-        <p className="text-sm text-muted-foreground">
-          Comprehensive overview of common nonprofit technology platforms and integration requirements
-        </p>
-      </div>
-
-      {/* Metrics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card>
-          <CardContent className="p-6">
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Total Categories</p>
-              <p className="text-5xl font-bold" data-testid="metric-total-categories">10</p>
-              <p className="text-xs text-muted-foreground">Technology verticals</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Common Platforms</p>
-              <p className="text-5xl font-bold" data-testid="metric-common-platforms">36</p>
-              <p className="text-xs text-muted-foreground">Industry-standard tools</p>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardContent className="p-6">
-            <div className="space-y-1">
-              <p className="text-sm text-muted-foreground">Critical Integrations</p>
-              <p className="text-5xl font-bold" data-testid="metric-critical-integrations">4</p>
-              <p className="text-xs text-muted-foreground">High-priority connections</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
       {/* System Architecture Visualization */}
       <Card>
         <CardHeader>
@@ -582,37 +541,39 @@ export default function TechStackMapper() {
           </CardDescription>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {techStackData.map((category) => (
               <div 
                 key={category.id}
-                className="rounded-lg border overflow-hidden"
+                className="rounded-lg border overflow-hidden hover-elevate transition-all"
               >
-                {/* Sky Blue Header */}
+                {/* Sky Blue Header with Large Icon */}
                 <div 
-                  className="flex items-center gap-3 p-4"
+                  className="flex flex-col items-center justify-center gap-4 p-8"
                   style={{ backgroundColor: '#0284C7' }}
                 >
-                  <div className="w-10 h-10 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
-                    <category.icon className="w-5 h-5 text-white" />
+                  <div className="w-20 h-20 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
+                    <category.icon className="w-10 h-10 text-white" />
                   </div>
-                  <h4 className="font-semibold text-sm text-white">{category.title.replace(' & ', ' ')}</h4>
+                  <h4 className="font-semibold text-base text-white text-center leading-tight">
+                    {category.title.replace(' & ', ' ')}
+                  </h4>
                 </div>
                 
                 {/* Content Area */}
-                <div className="p-4 bg-card">
+                <div className="p-5 bg-card">
                   <div className="flex flex-wrap gap-2">
                     {category.platforms.map((platform) => {
                       const Logo = platform.logo;
                       return (
                         <div
                           key={platform.name}
-                          className="flex items-center gap-1.5 px-2 py-1 rounded-md bg-muted/50 hover-elevate transition-all"
+                          className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-muted/50 hover-elevate transition-all"
                           title={platform.name}
                         >
                           {Logo ? (
                             <div style={platform.logoColor && platform.logoColor.startsWith('#') ? { color: platform.logoColor } : undefined}>
-                              <Logo size={14} className="shrink-0" />
+                              <Logo size={16} className="shrink-0" />
                             </div>
                           ) : (
                             <div className={`w-4 h-4 rounded text-[8px] font-bold flex items-center justify-center ${platform.logoColor || 'bg-muted text-muted-foreground'}`}>
