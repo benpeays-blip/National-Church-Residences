@@ -547,15 +547,15 @@ export default function TechStackMapper() {
                 key={category.id}
                 className="rounded-lg border overflow-hidden hover-elevate transition-all"
               >
-                {/* Sky Blue Header with Large Icon */}
+                {/* Thin Sky Blue Header */}
                 <div 
-                  className="flex flex-col items-center justify-center gap-4 p-8"
+                  className="flex items-center gap-3 px-4 py-3"
                   style={{ backgroundColor: '#0284C7' }}
                 >
-                  <div className="w-20 h-20 rounded-xl bg-white/20 flex items-center justify-center shrink-0">
-                    <category.icon className="w-10 h-10 text-white" />
+                  <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
+                    <category.icon className="w-4 h-4 text-white" />
                   </div>
-                  <h4 className="font-semibold text-base text-white text-center leading-tight">
+                  <h4 className="font-semibold text-sm text-white leading-tight">
                     {category.title.replace(' & ', ' ')}
                   </h4>
                 </div>
@@ -590,6 +590,172 @@ export default function TechStackMapper() {
                 </div>
               </div>
             ))}
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* ERP, CRM, and Digital Engagement Platforms Explanation */}
+      <Card>
+        <CardHeader>
+          <CardTitle>Understanding the Technology Stack Layers</CardTitle>
+          <CardDescription>
+            How ERP, CRM, and Digital Engagement Platforms work together to create a unified system
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-6">
+          {/* Three Layer Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Digital Engagement Platform */}
+            <div className="rounded-lg border overflow-hidden">
+              <div className="px-4 py-3" style={{ backgroundColor: '#0284C7' }}>
+                <h4 className="font-semibold text-sm text-white">Digital Engagement Platforms</h4>
+              </div>
+              <div className="p-5 space-y-3">
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">PURPOSE</p>
+                  <p className="text-sm">The "voice and face" of the organization — connecting digital channels to data systems for personalized communication</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">KEY FEATURES</p>
+                  <ul className="text-sm space-y-1 text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Website & content management</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Email & SMS marketing automation</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Social media management</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Event & community tools</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">EXAMPLES</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    <Badge variant="secondary" className="text-xs">Adobe Experience Cloud</Badge>
+                    <Badge variant="secondary" className="text-xs">Salesforce Marketing Cloud</Badge>
+                    <Badge variant="secondary" className="text-xs">HubSpot Marketing Hub</Badge>
+                    <Badge variant="secondary" className="text-xs">Luminate Online</Badge>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">PRIMARY USERS</p>
+                  <p className="text-sm">Marketing, Communications</p>
+                </div>
+              </div>
+            </div>
+
+            {/* CRM */}
+            <div className="rounded-lg border overflow-hidden">
+              <div className="px-4 py-3" style={{ backgroundColor: '#0284C7' }}>
+                <h4 className="font-semibold text-sm text-white">CRM — Customer Relationship Management</h4>
+              </div>
+              <div className="p-5 space-y-3">
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">PURPOSE</p>
+                  <p className="text-sm">The "front office" system — enabling teams to nurture relationships and increase revenue or engagement</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">KEY FEATURES</p>
+                  <ul className="text-sm space-y-1 text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Contact & donor management</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Sales pipeline tracking</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Marketing automation & campaigns</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Customer service & case tracking</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">EXAMPLES</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    <Badge variant="secondary" className="text-xs">Salesforce</Badge>
+                    <Badge variant="secondary" className="text-xs">HubSpot</Badge>
+                    <Badge variant="secondary" className="text-xs">Zoho CRM</Badge>
+                    <Badge variant="secondary" className="text-xs">Dynamics 365 Sales</Badge>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">PRIMARY USERS</p>
+                  <p className="text-sm">Sales, Fundraising, Service</p>
+                </div>
+              </div>
+            </div>
+
+            {/* ERP */}
+            <div className="rounded-lg border overflow-hidden">
+              <div className="px-4 py-3" style={{ backgroundColor: '#0284C7' }}>
+                <h4 className="font-semibold text-sm text-white">ERP — Enterprise Resource Planning</h4>
+              </div>
+              <div className="p-5 space-y-3">
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">PURPOSE</p>
+                  <p className="text-sm">The "internal nervous system" — helping leaders manage resources, control costs, and maintain compliance</p>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">KEY FEATURES</p>
+                  <ul className="text-sm space-y-1 text-muted-foreground">
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Financial management & accounting</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Supply chain & procurement</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Human resources & payroll</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-primary mt-0.5">•</span>
+                      <span>Reporting & analytics dashboards</span>
+                    </li>
+                  </ul>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">EXAMPLES</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    <Badge variant="secondary" className="text-xs">SAP S/4HANA</Badge>
+                    <Badge variant="secondary" className="text-xs">Oracle ERP Cloud</Badge>
+                    <Badge variant="secondary" className="text-xs">NetSuite</Badge>
+                    <Badge variant="secondary" className="text-xs">Dynamics 365 F&O</Badge>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <p className="text-xs font-medium text-muted-foreground">PRIMARY USERS</p>
+                  <p className="text-sm">Finance, HR, Operations</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Integration Flow Example */}
+          <div className="rounded-lg border p-5 bg-muted/30">
+            <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
+              <Globe className="w-4 h-4 text-primary" />
+              Integration Flow Example
+            </h4>
+            <p className="text-sm text-muted-foreground leading-relaxed">
+              A donor gives online through a <strong>digital engagement platform</strong>, which records the gift and contact info into the <strong>CRM</strong>. The financial record and reconciliation then sync into the <strong>ERP</strong> for accounting and reporting. This seamless data flow ensures all systems stay synchronized while serving their specialized functions.
+            </p>
           </div>
         </CardContent>
       </Card>
