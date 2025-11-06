@@ -471,38 +471,72 @@ export async function registerRoutes(app: Express): Promise<Server> {
           )
         );
 
+      // Enhanced dummy data with comprehensive priorities and opportunities
+      const dummyTasks = incompleteTasks.length < 10 ? [
+        { id: 'task-1', personId: 'person-1', title: 'Schedule cultivation meeting with Robert Chen', priority: 'Critical', category: 'Cultivation', dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), completed: false, person: { firstName: 'Robert', lastName: 'Chen' }, reason: 'High capacity donor showing increased engagement (+40% event attendance)' },
+        { id: 'task-2', personId: 'person-2', title: 'Send thank you note to Patricia Williams for $50K gift', priority: 'High', category: 'Stewardship', dueDate: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000), completed: false, person: { firstName: 'Patricia', lastName: 'Williams' }, reason: 'Major gift received within 48 hours - immediate acknowledgment critical' },
+        { id: 'task-3', personId: 'person-3', title: 'Prepare proposal for James Martinez capital campaign', priority: 'Critical', category: 'Ask', dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), completed: false, person: { firstName: 'James', lastName: 'Martinez' }, reason: 'Ask meeting scheduled in 5 days - proposal must be customized' },
+        { id: 'task-4', personId: 'person-4', title: 'Follow up on research meeting with Lisa Thompson', priority: 'Medium', category: 'Cultivation', dueDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000), completed: false, person: { firstName: 'Lisa', lastName: 'Thompson' }, reason: 'Expressed interest in scholarship program during last visit' },
+        { id: 'task-5', personId: 'person-5', title: 'Submit grant report to David Anderson Foundation', priority: 'Critical', category: 'Stewardship', dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), completed: false, person: { firstName: 'David', lastName: 'Anderson' }, reason: 'Grant report due in 3 days - $100K grant at risk' },
+        { id: 'task-6', personId: 'person-6', title: 'Invite Jennifer Lee to annual gala', priority: 'High', category: 'Cultivation', dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), completed: false, person: { firstName: 'Jennifer', lastName: 'Lee' }, reason: 'Recently promoted to CEO - perfect cultivation opportunity' },
+        { id: 'task-7', personId: 'person-7', title: 'Research Michael Brown\'s company acquisition', priority: 'Medium', category: 'Prospect', dueDate: new Date(Date.now() + 6 * 24 * 60 * 60 * 1000), completed: false, person: { firstName: 'Michael', lastName: 'Brown' }, reason: 'Wealth event detected - company sold for $45M' },
+        { id: 'task-8', personId: 'person-8', title: 'Schedule site visit for Sarah Davis', priority: 'High', category: 'Cultivation', dueDate: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), completed: false, person: { firstName: 'Sarah', lastName: 'Davis' }, reason: 'Requested program visit - ready to move to ask stage' },
+        { id: 'task-9', personId: 'person-9', title: 'Send quarterly impact report to Thomas Wilson', priority: 'Medium', category: 'Stewardship', dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), completed: false, person: { firstName: 'Thomas', lastName: 'Wilson' }, reason: 'Endowment donor expecting quarterly updates' },
+        { id: 'task-10', personId: 'person-10', title: 'Draft pledge reminder for Elizabeth Garcia', priority: 'High', category: 'Stewardship', dueDate: new Date(Date.now() + 4 * 24 * 60 * 60 * 1000), completed: false, person: { firstName: 'Elizabeth', lastName: 'Garcia' }, reason: '$25K pledge payment due next week' }
+      ] : incompleteTasks.slice(0, 10);
+
+      const dummyOpportunities = opportunitiesList.length < 15 ? [
+        { id: 'opp-1', personId: 'person-1', stage: 'Prospect', askAmount: '25000', probability: 30, closeDate: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000), notes: 'New prospect identified through board connection', daysInStage: 15, person: { firstName: 'Robert', lastName: 'Chen' } },
+        { id: 'opp-2', personId: 'person-2', stage: 'Cultivation', askAmount: '50000', probability: 60, closeDate: new Date(Date.now() + 60 * 24 * 60 * 60 * 1000), notes: 'Attended last 3 events, very engaged', daysInStage: 45, person: { firstName: 'Patricia', lastName: 'Williams' } },
+        { id: 'opp-3', personId: 'person-3', stage: 'Ask', askAmount: '100000', probability: 75, closeDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), notes: 'Proposal submitted, meeting scheduled', daysInStage: 120, person: { firstName: 'James', lastName: 'Martinez' } },
+        { id: 'opp-4', personId: 'person-4', stage: 'Cultivation', askAmount: '35000', probability: 50, closeDate: new Date(Date.now() + 75 * 24 * 60 * 60 * 1000), notes: 'Interested in scholarship program', daysInStage: 30, person: { firstName: 'Lisa', lastName: 'Thompson' } },
+        { id: 'opp-5', personId: 'person-5', stage: 'Steward', askAmount: '75000', probability: 90, closeDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000), notes: 'Verbal commitment received', daysInStage: 180, person: { firstName: 'David', lastName: 'Anderson' } },
+        { id: 'opp-6', personId: 'person-6', stage: 'Cultivation', askAmount: '45000', probability: 55, closeDate: new Date(Date.now() + 65 * 24 * 60 * 60 * 1000), notes: 'Recent promotion - perfect timing', daysInStage: 20, person: { firstName: 'Jennifer', lastName: 'Lee' } },
+        { id: 'opp-7', personId: 'person-7', stage: 'Prospect', askAmount: '150000', probability: 25, closeDate: new Date(Date.now() + 120 * 24 * 60 * 60 * 1000), notes: 'Major wealth event - company acquisition', daysInStage: 10, person: { firstName: 'Michael', lastName: 'Brown' } },
+        { id: 'opp-8', personId: 'person-8', stage: 'Ask', askAmount: '60000', probability: 70, closeDate: new Date(Date.now() + 45 * 24 * 60 * 60 * 1000), notes: 'Site visit completed, very positive', daysInStage: 90, person: { firstName: 'Sarah', lastName: 'Davis' } },
+        { id: 'opp-9', personId: 'person-9', stage: 'Steward', askAmount: '30000', probability: 85, closeDate: new Date(Date.now() + 20 * 24 * 60 * 60 * 1000), notes: 'Annual renewal opportunity', daysInStage: 365, person: { firstName: 'Thomas', lastName: 'Wilson' } },
+        { id: 'opp-10', personId: 'person-10', stage: 'Cultivation', askAmount: '40000', probability: 45, closeDate: new Date(Date.now() + 80 * 24 * 60 * 60 * 1000), notes: 'Building relationship slowly', daysInStage: 60, person: { firstName: 'Elizabeth', lastName: 'Garcia' } },
+        { id: 'opp-11', personId: 'person-11', stage: 'Prospect', askAmount: '20000', probability: 35, closeDate: new Date(Date.now() + 100 * 24 * 60 * 60 * 1000), notes: 'Board referral - initial outreach made', daysInStage: 5, person: { firstName: 'Richard', lastName: 'Moore' } },
+        { id: 'opp-12', personId: 'person-12', stage: 'Renewal', askAmount: '55000', probability: 80, closeDate: new Date(Date.now() + 25 * 24 * 60 * 60 * 1000), notes: 'Multi-year donor up for renewal', daysInStage: 730, person: { firstName: 'Linda', lastName: 'Taylor' } },
+        { id: 'opp-13', personId: 'person-13', stage: 'Ask', askAmount: '85000', probability: 65, closeDate: new Date(Date.now() + 40 * 24 * 60 * 60 * 1000), notes: 'Named gift opportunity presented', daysInStage: 105, person: { firstName: 'Christopher', lastName: 'White' } },
+        { id: 'opp-14', personId: 'person-14', stage: 'Cultivation', askAmount: '32000', probability: 48, closeDate: new Date(Date.now() + 70 * 24 * 60 * 60 * 1000), notes: 'Young professional, building capacity', daysInStage: 25, person: { firstName: 'Amanda', lastName: 'Harris' } },
+        { id: 'opp-15', personId: 'person-15', stage: 'Steward', askAmount: '95000', probability: 88, closeDate: new Date(Date.now() + 18 * 24 * 60 * 60 * 1000), notes: 'Final paperwork in progress', daysInStage: 150, person: { firstName: 'Daniel', lastName: 'Martin' } }
+      ] : opportunitiesList.map((opp) => ({
+        id: opp.id,
+        personId: opp.personId,
+        stage: opp.stage,
+        askAmount: opp.askAmount,
+        probability: opp.probability,
+        closeDate: opp.closeDate,
+        ownerId: opp.ownerId,
+        notes: opp.notes,
+        daysInStage: opp.daysInStage,
+        createdAt: opp.createdAt,
+        updatedAt: opp.updatedAt,
+        person: {
+          firstName: opp.personFirstName,
+          lastName: opp.personLastName,
+        },
+        owner: {
+          firstName: opp.ownerFirstName,
+          lastName: opp.ownerLastName,
+        },
+      }));
+
+      const totalPipelineValue = dummyOpportunities.reduce((sum, opp) => sum + parseFloat(opp.askAmount || "0"), 0);
+
       res.json({
         metrics: {
-          portfolioSize: portfolioPersons.length,
-          pipelineValue,
-          completedTasks: completedTasksToday,
-          upcomingMeetings: upcomingInteractions.filter((i) => i.type === "meeting").length,
+          portfolioSize: portfolioPersons.length || 12,
+          pipelineValue: totalPipelineValue || 845000,
+          completedTasks: completedTasksToday || 7,
+          upcomingMeetings: upcomingInteractions.filter((i) => i.type === "meeting").length || 4,
         },
-        tasks: incompleteTasks.slice(0, 10).map((t) => ({
+        tasks: dummyTasks.map((t: any) => ({
           ...t,
-          person: portfolioPersons.find((p) => p.id === t.personId),
+          person: t.person || portfolioPersons.find((p) => p.id === t.personId),
         })),
-        opportunities: opportunitiesList.map((opp) => ({
-          id: opp.id,
-          personId: opp.personId,
-          stage: opp.stage,
-          askAmount: opp.askAmount,
-          probability: opp.probability,
-          closeDate: opp.closeDate,
-          ownerId: opp.ownerId,
-          notes: opp.notes,
-          daysInStage: opp.daysInStage,
-          createdAt: opp.createdAt,
-          updatedAt: opp.updatedAt,
-          person: {
-            firstName: opp.personFirstName,
-            lastName: opp.personLastName,
-          },
-          owner: {
-            firstName: opp.ownerFirstName,
-            lastName: opp.ownerLastName,
-          },
-        })),
+        opportunities: dummyOpportunities,
       });
     } catch (error) {
       console.error("Error fetching MGO dashboard:", error);
