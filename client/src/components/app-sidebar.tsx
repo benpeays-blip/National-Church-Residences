@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
-import { NationalChurchResidencesLogo } from "@/components/NationalChurchResidencesLogo";
+import ncrLogo from "@assets/Screenshot 2025-11-17 at 4.01.27 PM_1763417108039.png";
 import {
   LayoutDashboard,
   Users,
@@ -319,7 +319,7 @@ export function AppSidebar() {
       >
         <div className="flex flex-col gap-2 w-full pointer-events-none">
           <img 
-            src="/attached_assets/Screenshot 2025-11-17 at 4.01.27 PM_1763417108039.png" 
+            src={ncrLogo} 
             alt="National Church Residences" 
             className="h-10 w-auto object-contain"
           />
