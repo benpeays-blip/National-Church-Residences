@@ -258,14 +258,19 @@ export default function DonorQuadrantMapper() {
                             <Calendar className="w-4 h-4 text-muted-foreground" />
                             <span>Donor for <strong>{donor.yearsAsDonor}</strong> year{donor.yearsAsDonor !== 1 ? 's' : ''}</span>
                           </div>
-                          {donor.badges.map((badge, idx) => (
-                            <div key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
-                              {badge === 'Major Donor' && <Heart className="w-4 h-4 text-purple-500" fill="currentColor" />}
-                              {badge === 'Monthly Donor' && <Heart className="w-4 h-4 text-blue-500" />}
-                              {badge === 'Volunteer' && <Users className="w-4 h-4 text-emerald-500" />}
-                              <span>{badge}</span>
+                          {donor.badges.length > 0 ? (
+                            donor.badges.map((badge, idx) => (
+                              <div key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                                {badge === 'Major Donor' && <Heart className="w-4 h-4 text-purple-500" fill="currentColor" />}
+                                {badge === 'Monthly Donor' && <Heart className="w-4 h-4 text-blue-500" />}
+                                <span>{badge}</span>
+                              </div>
+                            ))
+                          ) : (
+                            <div className="text-sm text-muted-foreground">
+                              <span>Building relationship</span>
                             </div>
-                          ))}
+                          )}
                         </div>
                       </div>
                     </div>

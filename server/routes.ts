@@ -104,12 +104,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const allDonors = await db.select().from(persons);
       
-      // Get gift counts for all donors
+      // Get all gifts with dates for proper calculations
       const allGifts = await db.select().from(gifts);
-      const giftCounts = allGifts.reduce((acc, gift) => {
-        acc[gift.personId] = (acc[gift.personId] || 0) + 1;
-        return acc;
-      }, {} as Record<string, number>);
+      
+      // Calculate gift counts and earliest gift dates
+      const giftCounts: Record<string, number> = {};
+      const earliestGiftDates: Record<string, Date> = {};
+      const recentGiftCounts: Record<string, number> = {};
+      const twelveMonthsAgo = new Date();
+      twelveMonthsAgo.setMonth(twelveMonthsAgo.getMonth() - 12);
+      
+      allGifts.forEach(gift => {
+        // Total gift count
+        giftCounts[gift.personId] = (giftCounts[gift.personId] || 0) + 1;
+        
+        // Track earliest gift date
+        const giftDate = new Date(gift.receivedAt);
+        if (!earliestGiftDates[gift.personId] || giftDate < earliestGiftDates[gift.personId]) {
+          earliestGiftDates[gift.personId] = giftDate;
+        }
+        
+        // Count gifts in last 12 months
+        if (giftDate >= twelveMonthsAgo) {
+          recentGiftCounts[gift.personId] = (recentGiftCounts[gift.personId] || 0) + 1;
+        }
+      });
       
       // Generate dummy data for donors without quadrant positions
       const donorsWithQuadrant = allDonors.map((donor) => {
@@ -134,25 +153,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
         energy = Math.max(0, Math.min(100, energy));
         structure = Math.max(0, Math.min(100, structure));
         
-        // Calculate years as donor
-        const yearsAsDonor = donor.lastGiftDate 
-          ? Math.floor((new Date().getTime() - new Date(donor.lastGiftDate).getTime()) / (1000 * 60 * 60 * 24 * 365))
-          : donor.createdAt
-            ? Math.floor((new Date().getTime() - new Date(donor.createdAt).getTime()) / (1000 * 60 * 60 * 24 * 365))
-            : 0;
+        // Calculate years as donor from FIRST gift (or createdAt as fallback)
+        let yearsAsDonor = 0;
+        if (earliestGiftDates[donor.id]) {
+          yearsAsDonor = Math.floor((new Date().getTime() - earliestGiftDates[donor.id].getTime()) / (1000 * 60 * 60 * 24 * 365));
+        } else if (donor.createdAt) {
+          yearsAsDonor = Math.floor((new Date().getTime() - new Date(donor.createdAt).getTime()) / (1000 * 60 * 60 * 24 * 365));
+        }
+        yearsAsDonor = Math.max(yearsAsDonor, 1); // Minimum 1 year
         
-        // Determine status
+        // Determine status based on last gift date
         const daysSinceLastGift = donor.lastGiftDate 
           ? Math.floor((new Date().getTime() - new Date(donor.lastGiftDate).getTime()) / (1000 * 60 * 60 * 24))
           : 999;
         const status = daysSinceLastGift < 365 ? 'ACTIVE' : 'INACTIVE';
         
-        // Determine badges
+        // Determine badges based on actual data
         const badges: string[] = [];
         const lifetimeGiving = parseFloat(donor.totalLifetimeGiving?.toString() || '0');
         if (lifetimeGiving >= 25000) badges.push('Major Donor');
-        if (giftCounts[donor.id] && giftCounts[donor.id] >= 12) badges.push('Monthly Donor');
-        if (donor.engagementScore && donor.engagementScore >= 80) badges.push('Volunteer');
+        // Monthly Donor: at least 8 gifts in the last 12 months (roughly monthly)
+        if (recentGiftCounts[donor.id] && recentGiftCounts[donor.id] >= 8) badges.push('Monthly Donor');
+        // Note: Volunteer badge removed until we have proper volunteer tracking field
         
         // Generate a short bio
         const bios = [
@@ -173,7 +195,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           organizationName: donor.organizationName,
           totalLifetimeGiving: donor.totalLifetimeGiving,
           giftCount: giftCounts[donor.id] || 0,
-          yearsAsDonor: Math.max(yearsAsDonor, 1),
+          yearsAsDonor,
           status,
           badges,
           bio,
