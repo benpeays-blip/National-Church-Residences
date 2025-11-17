@@ -329,7 +329,11 @@ export function AppSidebar() {
         className="h-16 flex items-center px-4 border-b bg-white relative"
       >
         <div className="flex flex-col gap-2 w-full pointer-events-none">
-          <FundRazorLogo width={160} height={46} variant="light" />
+          <img 
+            src="/attached_assets/newlogo-min_1763416734335.png" 
+            alt="National Church Residences" 
+            className="h-12 w-auto object-contain"
+          />
           {user?.role && (
             <Badge variant="secondary" className="text-xs w-fit pointer-events-auto" style={{ color: "#084594" }}>
               {user.role.replace("_", " ")}
