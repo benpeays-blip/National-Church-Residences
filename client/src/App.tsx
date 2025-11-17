@@ -222,7 +222,11 @@ function App() {
                 className="flex items-center gap-6 h-16 px-6 border-b shrink-0 bg-white"
               >
                 {/* Sidebar Toggle */}
-                <SidebarTrigger data-testid="button-sidebar-toggle" className="mr-2" style={{ color: "#084594" }} />
+                <SidebarTrigger 
+                  data-testid="button-sidebar-toggle" 
+                  className="hover:bg-gray-100" 
+                  style={{ color: "#084594" }} 
+                />
                 
                 <div className="flex items-center gap-3 ml-auto">
                   {/* Navigation Dropdowns */}
