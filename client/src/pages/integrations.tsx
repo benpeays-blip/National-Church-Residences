@@ -179,11 +179,15 @@ export default function Integrations() {
         {filteredIntegrations.map((integration) => (
           <Card
             key={integration.slug}
-            className="p-6 hover-elevate cursor-pointer"
+            className="overflow-hidden hover-elevate cursor-pointer"
             onClick={() => setSelectedIntegration(integration)}
             data-testid={`card-integration-${integration.slug}`}
           >
-            <div className="flex items-start justify-between mb-4">
+            {/* Header with subtle blue background */}
+            <div 
+              className="p-6 pb-4 flex items-start justify-between"
+              style={{ backgroundColor: "rgba(222, 235, 247, 0.5)" }}
+            >
               <div className="flex items-center gap-3">
                 <img
                   src={integration.logo}
@@ -210,25 +214,28 @@ export default function Integrations() {
               )}
             </div>
 
-            <p className="text-sm text-muted-foreground line-clamp-3 mb-4" data-testid={`text-integration-description-${integration.slug}`}>
-              {integration.description}
-            </p>
+            {/* Content section */}
+            <div className="p-6 pt-4">
+              <p className="text-sm text-muted-foreground line-clamp-3 mb-4" data-testid={`text-integration-description-${integration.slug}`}>
+                {integration.description}
+              </p>
 
-            <div className="space-y-2">
-              <div className="text-xs text-muted-foreground">
-                API: {integration.apiType}
-              </div>
-              <div className="flex flex-wrap gap-1">
-                {integration.modules.slice(0, 3).map((module) => (
-                  <Badge key={module} variant="secondary" className="text-xs" data-testid={`badge-module-${module.toLowerCase()}-${integration.slug}`}>
-                    {module}
-                  </Badge>
-                ))}
-                {integration.modules.length > 3 && (
-                  <Badge variant="secondary" className="text-xs">
-                    +{integration.modules.length - 3} more
-                  </Badge>
-                )}
+              <div className="space-y-2">
+                <div className="text-xs text-muted-foreground">
+                  API: {integration.apiType}
+                </div>
+                <div className="flex flex-wrap gap-1">
+                  {integration.modules.slice(0, 3).map((module) => (
+                    <Badge key={module} variant="secondary" className="text-xs" data-testid={`badge-module-${module.toLowerCase()}-${integration.slug}`}>
+                      {module}
+                    </Badge>
+                  ))}
+                  {integration.modules.length > 3 && (
+                    <Badge variant="secondary" className="text-xs">
+                      +{integration.modules.length - 3} more
+                    </Badge>
+                  )}
+                </div>
               </div>
             </div>
           </Card>
