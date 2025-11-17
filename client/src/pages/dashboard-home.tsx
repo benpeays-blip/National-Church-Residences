@@ -58,6 +58,13 @@ export default function DashboardHome() {
 
   return (
     <div className="space-y-8">
+      {/* Page Title */}
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-semibold" style={{ color: "#084594" }} data-testid="text-dashboard-title">
+          Dashboard
+        </h1>
+      </div>
+
       {/* Donor Quadrant Section */}
       <div className="space-y-4">
         <div className="flex items-center justify-between">
