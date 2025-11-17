@@ -1,68 +1,301 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState, useMemo } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import {
-  Plug,
-  Search,
-  CheckCircle2,
-  ExternalLink,
-  X,
-} from "lucide-react";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Search, Plus, ExternalLink } from "lucide-react";
 
 interface Integration {
-  slug: string;
+  id: string;
   name: string;
-  category: string;
   logo: string;
   description: string;
-  apiType: string;
-  modules: string[];
-  features: string[];
-  useCases: string[];
-  checklist: string[];
-  status: "connected" | "available";
+  category: string;
+  featured?: boolean;
+  url?: string;
 }
 
-export default function Integrations() {
-  const [integrations, setIntegrations] = useState<Integration[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("ALL");
-  const [selectedIntegration, setSelectedIntegration] = useState<Integration | null>(null);
+const integrations: Integration[] = [
+  {
+    id: "agile-ticketing",
+    name: "Agile Ticketing",
+    logo: "https://uploads.donorperfect.com/images/sites/3/Agile-Ticketing2-300x124-1.png",
+    description: "Nonprofit ticketing solutions that meet the needs of every venue.",
+    category: "Auctions + Events"
+  },
+  {
+    id: "appealmaker",
+    name: "AppealMaker",
+    logo: "https://uploads.donorperfect.com/images/sites/3/am-logo-white-300x41-1.png",
+    description: "Create and send your direct mail with the solution designed for nonprofits.",
+    category: "Email + Text + Marketing"
+  },
+  {
+    id: "birdease",
+    name: "BirdEase",
+    logo: "https://uploads.donorperfect.com/images/sites/3/BirdEase-white-300x203-1.png",
+    description: "Streamline the management of golf fundraisers",
+    category: "Auctions + Events"
+  },
+  {
+    id: "congress-plus",
+    name: "Congress Plus",
+    logo: "https://uploads.donorperfect.com/images/sites/3/congress-plus.png",
+    description: "A powerful government relations and advocacy platform.",
+    category: "Advocacy"
+  },
+  {
+    id: "constant-contact",
+    name: "Constant Contact",
+    logo: "https://uploads.donorperfect.com/images/sites/3/constant-contact_logo-white-300x.png",
+    description: "Create email and text campaigns that inspire more engagement.",
+    category: "Email + Text + Marketing",
+    featured: true
+  },
+  {
+    id: "consultants",
+    name: "Consultants",
+    logo: "https://uploads.donorperfect.com/images/sites/3/consultants-logo-1.png",
+    description: "See a complete list of consulting partners.",
+    category: "Consulting"
+  },
+  {
+    id: "donatestock",
+    name: "DonateStock",
+    logo: "https://uploads.donorperfect.com/images/sites/3/donate-stock-logo-long-1-1.png",
+    description: "Unlocking charitable stock gifting for all nonprofits.",
+    category: "Payment Processing"
+  },
+  {
+    id: "dp-classic-forms",
+    name: "DonorPerfect Classic Forms",
+    logo: "https://uploads.donorperfect.com/images/sites/3/dp-classic-forms-white-800px.png",
+    description: "Save time and raise more with customizable integrated online forms",
+    category: "Online Fundraising"
+  },
+  {
+    id: "dp-payment-services",
+    name: "DonorPerfect Payment Services",
+    logo: "https://uploads.donorperfect.com/images/sites/3/dp-payment-services-white-1.png",
+    description: "Manage gift collection with processing for nonprofits.",
+    category: "Payment Processing"
+  },
+  {
+    id: "donorsearch",
+    name: "DonorSearch",
+    logo: "https://uploads.donorperfect.com/images/sites/3/donorsearch-logo-white-grey-300x.png",
+    description: "Perform prospect research and wealth screening.",
+    category: "Prospect Research",
+    featured: true
+  },
+  {
+    id: "double-the-donation",
+    name: "Double the Donation",
+    logo: "https://uploads.donorperfect.com/images/sites/3/double-the-donation-logo-2.jpg",
+    description: "Prompt donors to submit for matching gifts.",
+    category: "Matching Gifts",
+    featured: true
+  },
+  {
+    id: "dp-address-updater",
+    name: "DP Address Updater",
+    logo: "https://uploads.donorperfect.com/images/sites/3/dp-address-updater-white-1.png",
+    description: "Keep your donor data up-to-date automatically.",
+    category: "Email + Text + Marketing"
+  },
+  {
+    id: "dp-checkscan",
+    name: "DP CheckScan",
+    logo: "https://uploads.donorperfect.com/images/sites/3/dp-check-scan-logo-white-1.png",
+    description: "Streamline the processing of check donations.",
+    category: "Payment Processing"
+  },
+  {
+    id: "dp-giving-meter",
+    name: "DP Giving Meter",
+    logo: "https://uploads.donorperfect.com/images/sites/3/dp-giving-meter-logo-white-1.png",
+    description: "Boost donations by showing your fundraising goal with a DP Giving Meter on your website.",
+    category: "Online Fundraising"
+  },
+  {
+    id: "dp-mobile",
+    name: "DP Mobile",
+    logo: "https://uploads.donorperfect.com/images/sites/3/dp-mobile-logo-white-1.png",
+    description: "Take DonorPerfect with you wherever you go.",
+    category: "Online Fundraising"
+  },
+  {
+    id: "dp-text",
+    name: "DP Text",
+    logo: "https://uploads.donorperfect.com/images/sites/3/dp-text-white-1.png",
+    description: "Communicate with supporters via text messaging.",
+    category: "Email + Text + Marketing"
+  },
+  {
+    id: "dp-video",
+    name: "DP Video powered by CauseVid",
+    logo: "https://uploads.donorperfect.com/images/sites/3/dp-video-logo-2-white-1.png",
+    description: "Add a personal touch to thank yous with custom videos",
+    category: "Email + Text + Marketing"
+  },
+  {
+    id: "formplus",
+    name: "FormPlus",
+    logo: "https://uploads.donorperfect.com/images/sites/3/form-plus-logo-white-e1705002906389-1.png",
+    description: "Get all of your printing needs taken care of plus swag items from Formsplus.",
+    category: "Email + Text + Marketing"
+  },
+  {
+    id: "givecloud",
+    name: "Givecloud",
+    logo: "https://uploads.donorperfect.com/images/sites/3/givecloud-white-logo.png",
+    description: "Event Registration, Membership, DonorPortal, E-Commerce and more.",
+    category: "Website Management",
+    featured: true
+  },
+  {
+    id: "google-analytics",
+    name: "Google Analytics",
+    logo: "https://uploads.donorperfect.com/images/sites/3/google-analytics-logo-1.png",
+    description: "Google Analytics 4 (GA4), the leading website reporting platform.",
+    category: "Email + Text + Marketing"
+  },
+  {
+    id: "kindsight",
+    name: "Kindsight",
+    logo: "https://uploads.donorperfect.com/images/sites/3/Kindsight_Logo_neutral5-1.png",
+    description: "Donor research and wealth screening to make evidence-based decisions.",
+    category: "Prospect Research"
+  },
+  {
+    id: "paypal",
+    name: "PayPal",
+    logo: "https://uploads.donorperfect.com/images/sites/3/paypal-logo-1.png",
+    description: "PayPal is the second most trusted financial services brand in the world.",
+    category: "Financial + Accounting"
+  },
+  {
+    id: "point",
+    name: "POINT",
+    logo: "https://uploads.donorperfect.com/images/sites/3/point-logo-1.png",
+    description: "Recruit, manage, engage and report on your volunteers",
+    category: "Volunteer Management"
+  },
+  {
+    id: "practivated",
+    name: "Practivated",
+    logo: "https://uploads.donorperfect.com/images/sites/3/practivated-logo-white.png",
+    description: "AI-powered conversation platform designed specifically for fundraisers.",
+    category: "Prospect Research"
+  },
+  {
+    id: "quickbooks-integration",
+    name: "QuickBooks Integration",
+    logo: "https://uploads.donorperfect.com/images/sites/3/DP-Accounting-with-Quickbooks-white-1.png",
+    description: "Send financial data from DonorPerfect to QuickBooks.",
+    category: "Financial + Accounting",
+    featured: true
+  },
+  {
+    id: "quickbooks-online",
+    name: "QuickBooks Online",
+    logo: "https://uploads.donorperfect.com/images/sites/3/intuit-quickbooks-logo-2.png",
+    description: "Get the #1 rated online accounting software for nonprofit organizations",
+    category: "Financial + Accounting"
+  },
+  {
+    id: "raisin",
+    name: "raisin",
+    logo: "https://uploads.donorperfect.com/images/sites/3/raisin-logo-white-1.png",
+    description: "Launch peer-to-peer fundraising campaigns.",
+    category: "Online Fundraising",
+    featured: true
+  },
+  {
+    id: "ravela-insights",
+    name: "Ravela Insights",
+    logo: "https://uploads.donorperfect.com/images/sites/3/ravela-logo.jpg",
+    description: "Gain insight into what's working for your organization and what's not.",
+    category: "Prospect Research"
+  },
+  {
+    id: "readysetauction",
+    name: "ReadySetAuction",
+    logo: "https://uploads.donorperfect.com/images/sites/3/readysetauction-logo-white-1.png",
+    description: "Run a live, silent, or online auction at your event.",
+    category: "Auctions + Events"
+  },
+  {
+    id: "rediker",
+    name: "Rediker Software",
+    logo: "https://uploads.donorperfect.com/images/sites/3/rediker-software-logo-1.png",
+    description: "Spend less time with data and more time with students.",
+    category: "Education"
+  },
+  {
+    id: "sage-intacct",
+    name: "Sage Intacct Fundraising",
+    logo: "https://uploads.donorperfect.com/images/sites/3/sage-rectangle-logo.png",
+    description: "A comprehensive fundraising and financial solution built for nonprofits with complex financial needs.",
+    category: "Financial + Accounting"
+  },
+  {
+    id: "shopraise",
+    name: "ShopRaise",
+    logo: "https://uploads.donorperfect.com/images/sites/3/shop-raise-logo-1.png",
+    description: "Raise money for your cause with everyday shopping.",
+    category: "Online Fundraising"
+  },
+  {
+    id: "signup",
+    name: "SignUp",
+    logo: "https://uploads.donorperfect.com/images/sites/3/vspot-white-logo-1.png",
+    description: "Make it easy for volunteers to autonomously sign up for positions at your organization.",
+    category: "Volunteer Management"
+  },
+  {
+    id: "simpletix",
+    name: "SimpleTix",
+    logo: "https://uploads.donorperfect.com/images/sites/3/simple-tix-logo.png",
+    description: "Manage event ticketing, seating, and attendance from your mobile devices.",
+    category: "Auctions + Events"
+  },
+  {
+    id: "volunteer-matrix",
+    name: "Volunteer Matrix",
+    logo: "https://uploads.donorperfect.com/images/sites/3/volunteer-matrix-logo-1-1.png",
+    description: "Customize your volunteer scheduling and management system to seamlessly match your nonprofit's internal processes.",
+    category: "Volunteer Management"
+  },
+  {
+    id: "winspire",
+    name: "Winspire",
+    logo: "https://uploads.donorperfect.com/images/sites/3/winspire-logo-copy-e1708629306330-1.png",
+    description: "Offer luxury items at your auction risk free.",
+    category: "Auctions + Events"
+  },
+  {
+    id: "zog-inc",
+    name: "ZOG Inc",
+    logo: "https://uploads.donorperfect.com/images/sites/3/zog-logo-big.jpg",
+    description: "Hire on demand IT experts for your nonprofit needs.",
+    category: "Website Management"
+  }
+];
 
-  useEffect(() => {
-    fetch("/integrations-registry.json")
-      .then((r) => r.json())
-      .then((data) => {
-        setIntegrations(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Failed to load integrations:", err);
-        setLoading(false);
-      });
-  }, []);
+export default function Integrations() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All Integrations");
 
   const categories = useMemo(() => {
-    const cats = Array.from(new Set(integrations.map((i) => i.category)));
-    return ["ALL", ...cats.sort()];
-  }, [integrations]);
+    const cats = Array.from(new Set(integrations.map(i => i.category))).sort();
+    return ["All Integrations", ...cats];
+  }, []);
 
   const filteredIntegrations = useMemo(() => {
     return integrations.filter((integration) => {
       const matchesCategory =
-        selectedCategory === "ALL" || integration.category === selectedCategory;
+        selectedCategory === "All Integrations" || integration.category === selectedCategory;
       
       if (!searchQuery) return matchesCategory;
 
@@ -70,150 +303,145 @@ export default function Integrations() {
       const matchesSearch =
         integration.name.toLowerCase().includes(searchLower) ||
         integration.description.toLowerCase().includes(searchLower) ||
-        integration.category.toLowerCase().includes(searchLower) ||
-        integration.modules.some((m) => m.toLowerCase().includes(searchLower)) ||
-        integration.features.some((f) => f.toLowerCase().includes(searchLower));
+        integration.category.toLowerCase().includes(searchLower);
 
       return matchesCategory && matchesSearch;
     });
   }, [integrations, searchQuery, selectedCategory]);
 
-  const connectedCount = integrations.filter((i) => i.status === "connected").length;
-
-  if (loading) {
-    return (
-      <div className="space-y-6">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-bold">Integrations Gallery</h1>
-          <p className="text-sm text-muted-foreground">
-            Connect fundraising tools and data sources
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {[1, 2, 3, 4, 5, 6].map((i) => (
-            <Skeleton key={i} className="h-64" />
-          ))}
-        </div>
-      </div>
-    );
-  }
+  const getCategoryCount = (category: string) => {
+    if (category === "All Integrations") return integrations.length;
+    return integrations.filter(i => i.category === category).length;
+  };
 
   return (
-    <div className="space-y-6">
-      {/* Header */}
-      <div className="flex items-start justify-between">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-bold">Integrations Gallery</h1>
-          <p className="text-sm text-muted-foreground">
-            Browse and connect {integrations.length} fundraising platforms and data sources
-          </p>
-          <div className="flex items-center gap-2">
-            <Badge variant="default" className="bg-chart-2 hover:bg-chart-2" data-testid="badge-connected-count">
-              <CheckCircle2 className="w-3 h-3 mr-1" />
-              {connectedCount} Connected
-            </Badge>
-            <Badge variant="secondary" data-testid="badge-available-count">
-              {integrations.length - connectedCount} Available
-            </Badge>
-          </div>
-        </div>
-        <Plug className="w-8 h-8 text-muted-foreground" />
+    <div className="space-y-8">
+      {/* Hero Section */}
+      <div className="text-center space-y-4 py-8">
+        <h1 className="text-4xl font-bold">Add to your fundraising toolbelt</h1>
+        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+          FundRazor already comes packed with powerful features, but your system doesn't have to stop there. 
+          We've found you the best tools for the job – each of our software integrations are tested and trusted by nonprofit professionals.
+        </p>
+        <p className="text-base font-medium">
+          Start adding capabilities to your FundRazor suite. Browse our integration partners below.
+        </p>
       </div>
 
-      {/* Category Tabs */}
-      <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
-        <TabsList className="w-full justify-start h-auto flex-wrap gap-1 bg-transparent border-b rounded-none p-0">
-          {categories.map((cat) => (
-            <TabsTrigger
-              key={cat}
-              value={cat}
-              className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none bg-transparent px-4"
-              data-testid={`tab-category-${cat.toLowerCase().replace(/\s+/g, '-')}`}
-            >
-              {cat}
-              {cat !== "ALL" && (
-                <Badge variant="secondary" className="ml-2 text-xs">
-                  {integrations.filter((i) => i.category === cat).length}
-                </Badge>
-              )}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
-
-      {/* Search */}
-      <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+      {/* Search Bar */}
+      <div className="relative max-w-2xl mx-auto">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
         <Input
-          placeholder="Search integrations, modules, or features..."
+          placeholder="Search integrations..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-9"
+          className="pl-10 h-12 text-base"
           data-testid="input-search-integrations"
         />
       </div>
 
-      {/* Results count */}
-      <div className="text-sm text-muted-foreground" data-testid="text-results-count">
+      {/* Category Filter */}
+      <div className="border-b">
+        <div className="flex items-center gap-2 overflow-x-auto pb-2">
+          <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">Filter by:</span>
+          {categories.map((category) => (
+            <Button
+              key={category}
+              variant={selectedCategory === category ? "default" : "outline"}
+              size="sm"
+              onClick={() => setSelectedCategory(category)}
+              className="whitespace-nowrap"
+              data-testid={`button-category-${category.toLowerCase().replace(/\s+/g, '-')}`}
+            >
+              {category}
+              <Badge variant="secondary" className="ml-2 text-xs">
+                {getCategoryCount(category)}
+              </Badge>
+            </Button>
+          ))}
+        </div>
+      </div>
+
+      {/* Results Count */}
+      <div className="text-sm text-muted-foreground">
         Showing {filteredIntegrations.length} of {integrations.length} integrations
       </div>
 
+      {/* Partner Card - Become a Partner */}
+      <Card className="p-8 bg-gradient-to-br from-primary/10 to-primary/5 border-2 border-primary/20 hover-elevate cursor-pointer">
+        <div className="flex items-center gap-6">
+          <div className="flex-shrink-0 w-24 h-24 bg-primary/10 rounded-lg flex items-center justify-center">
+            <Plus className="w-12 h-12 text-primary" />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-xl font-bold mb-2">Become a Partner</h3>
+            <p className="text-muted-foreground mb-4">
+              Join our partner ecosystem and bring your solution to nonprofit organizations worldwide.
+            </p>
+            <Button variant="default" data-testid="button-become-partner">
+              Send a Request
+            </Button>
+          </div>
+        </div>
+      </Card>
+
       {/* Integration Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredIntegrations.map((integration) => (
           <Card
-            key={integration.slug}
-            className="p-6 hover-elevate cursor-pointer"
-            onClick={() => setSelectedIntegration(integration)}
-            data-testid={`card-integration-${integration.slug}`}
+            key={integration.id}
+            className="p-6 hover-elevate cursor-pointer relative"
+            data-testid={`card-integration-${integration.id}`}
           >
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center gap-3">
+            {integration.featured && (
+              <Badge 
+                variant="default" 
+                className="absolute top-4 right-4 bg-chart-1 hover:bg-chart-1"
+                data-testid={`badge-featured-${integration.id}`}
+              >
+                Featured
+              </Badge>
+            )}
+            
+            <div className="space-y-4">
+              {/* Logo */}
+              <div className="h-20 flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 rounded-lg p-4">
                 <img
                   src={integration.logo}
                   alt={`${integration.name} logo`}
-                  className="w-12 h-12 object-contain bg-white rounded p-1"
-                  data-testid={`img-integration-logo-${integration.slug}`}
+                  className="max-w-full max-h-16 object-contain"
+                  data-testid={`img-logo-${integration.id}`}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                  }}
                 />
-                <div className="flex-1">
-                  <h3 className="font-semibold" data-testid={`text-integration-name-${integration.slug}`}>
-                    {integration.name}
-                  </h3>
-                  <div className="flex items-center gap-2 mt-1">
-                    <Badge variant="outline" className="text-xs" data-testid={`badge-integration-category-${integration.slug}`}>
-                      {integration.category}
-                    </Badge>
-                  </div>
-                </div>
               </div>
-              {integration.status === "connected" && (
-                <Badge variant="default" className="bg-chart-2 hover:bg-chart-2" data-testid={`badge-status-connected-${integration.slug}`}>
-                  <CheckCircle2 className="w-3 h-3 mr-1" />
-                  Connected
-                </Badge>
-              )}
-            </div>
 
-            <p className="text-sm text-muted-foreground line-clamp-3 mb-4" data-testid={`text-integration-description-${integration.slug}`}>
-              {integration.description}
-            </p>
+              {/* Name */}
+              <h3 className="font-bold text-lg" data-testid={`text-name-${integration.id}`}>
+                {integration.name}
+              </h3>
 
-            <div className="space-y-2">
-              <div className="text-xs text-muted-foreground">
-                API: {integration.apiType}
-              </div>
-              <div className="flex flex-wrap gap-1">
-                {integration.modules.slice(0, 3).map((module) => (
-                  <Badge key={module} variant="secondary" className="text-xs" data-testid={`badge-module-${module.toLowerCase()}-${integration.slug}`}>
-                    {module}
-                  </Badge>
-                ))}
-                {integration.modules.length > 3 && (
-                  <Badge variant="secondary" className="text-xs">
-                    +{integration.modules.length - 3} more
-                  </Badge>
-                )}
-              </div>
+              {/* Description */}
+              <p className="text-sm text-muted-foreground line-clamp-3" data-testid={`text-description-${integration.id}`}>
+                {integration.description}
+              </p>
+
+              {/* Category Badge */}
+              <Badge variant="outline" className="text-xs" data-testid={`badge-category-${integration.id}`}>
+                {integration.category}
+              </Badge>
+
+              {/* Learn More Button */}
+              <Button 
+                variant="outline" 
+                className="w-full" 
+                data-testid={`button-learn-more-${integration.id}`}
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                Learn more
+              </Button>
             </div>
           </Card>
         ))}
@@ -232,7 +460,7 @@ export default function Integrations() {
               variant="outline"
               onClick={() => {
                 setSearchQuery("");
-                setSelectedCategory("ALL");
+                setSelectedCategory("All Integrations");
               }}
               data-testid="button-clear-filters"
             >
@@ -241,139 +469,6 @@ export default function Integrations() {
           </div>
         </Card>
       )}
-
-      {/* Detail Drawer */}
-      <Sheet open={!!selectedIntegration} onOpenChange={() => setSelectedIntegration(null)}>
-        <SheetContent className="w-full sm:max-w-2xl overflow-y-auto" data-testid="drawer-integration-detail">
-          {selectedIntegration && (
-            <>
-              <SheetHeader>
-                <div className="flex items-start gap-4">
-                  <img
-                    src={selectedIntegration.logo}
-                    alt={`${selectedIntegration.name} logo`}
-                    className="w-16 h-16 object-contain bg-white rounded p-2"
-                    data-testid="img-detail-logo"
-                  />
-                  <div className="flex-1">
-                    <SheetTitle className="text-2xl" data-testid="text-detail-name">
-                      {selectedIntegration.name}
-                    </SheetTitle>
-                    <SheetDescription className="flex items-center gap-2 mt-2">
-                      <Badge variant="outline" data-testid="badge-detail-category">
-                        {selectedIntegration.category}
-                      </Badge>
-                      <Badge variant="outline" data-testid="badge-detail-api-type">
-                        {selectedIntegration.apiType}
-                      </Badge>
-                      {selectedIntegration.status === "connected" && (
-                        <Badge variant="default" className="bg-chart-2 hover:bg-chart-2" data-testid="badge-detail-status">
-                          <CheckCircle2 className="w-3 h-3 mr-1" />
-                          Connected
-                        </Badge>
-                      )}
-                    </SheetDescription>
-                  </div>
-                </div>
-              </SheetHeader>
-
-              <div className="mt-6 space-y-6">
-                {/* Description */}
-                <div>
-                  <h3 className="font-semibold mb-2">Overview</h3>
-                  <p className="text-sm text-muted-foreground" data-testid="text-detail-description">
-                    {selectedIntegration.description}
-                  </p>
-                </div>
-
-                {/* Supported Modules */}
-                <div>
-                  <h3 className="font-semibold mb-3">Supported Modules</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedIntegration.modules.map((module) => (
-                      <Badge key={module} variant="secondary" data-testid={`badge-detail-module-${module.toLowerCase()}`}>
-                        {module}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Features */}
-                <div>
-                  <h3 className="font-semibold mb-3">Key Features</h3>
-                  <ul className="space-y-2">
-                    {selectedIntegration.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm" data-testid={`text-detail-feature-${idx}`}>
-                        <CheckCircle2 className="w-4 h-4 text-chart-2 mt-0.5 flex-shrink-0" />
-                        <span>{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Use Cases */}
-                <div>
-                  <h3 className="font-semibold mb-3">Common Use Cases</h3>
-                  <ul className="space-y-2">
-                    {selectedIntegration.useCases.map((useCase, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground" data-testid={`text-detail-usecase-${idx}`}>
-                        <span className="text-primary">•</span>
-                        <span>{useCase}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Readiness Checklist */}
-                <div className="rounded-lg border p-4 bg-muted/30">
-                  <h3 className="font-semibold mb-3 flex items-center gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-primary" />
-                    Readiness Checklist
-                  </h3>
-                  <p className="text-xs text-muted-foreground mb-3">
-                    Complete these steps before connecting this integration
-                  </p>
-                  <ul className="space-y-2">
-                    {selectedIntegration.checklist.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm" data-testid={`text-detail-checklist-${idx}`}>
-                        <div className="w-4 h-4 rounded border border-input mt-0.5 flex-shrink-0" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Actions */}
-                <div className="flex gap-3 pt-4">
-                  {selectedIntegration.status === "connected" ? (
-                    <>
-                      <Button variant="default" className="flex-1" data-testid="button-detail-manage">
-                        <Plug className="w-4 h-4 mr-2" />
-                        Manage Connection
-                      </Button>
-                      <Button variant="outline" data-testid="button-detail-disconnect">
-                        <X className="w-4 h-4 mr-2" />
-                        Disconnect
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button variant="default" className="flex-1" data-testid="button-detail-connect">
-                        <Plug className="w-4 h-4 mr-2" />
-                        Connect Integration
-                      </Button>
-                      <Button variant="outline" data-testid="button-detail-docs">
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Documentation
-                      </Button>
-                    </>
-                  )}
-                </div>
-              </div>
-            </>
-          )}
-        </SheetContent>
-      </Sheet>
     </div>
   );
 }
