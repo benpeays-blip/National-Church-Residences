@@ -333,6 +333,43 @@ function App() {
                           size="sm"
                           className="font-semibold hover:bg-gray-100"
                           style={{ color: "#084594" }}
+                          data-testid="dropdown-campaigns"
+                        >
+                          Campaigns
+                          <ChevronDown className="h-3 w-3 ml-1.5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-48">
+                        <DropdownMenuItem asChild>
+                          <Link href="/campaigns" className="cursor-pointer">
+                            All Campaigns
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/campaigns?status=active" className="cursor-pointer">
+                            Active Campaigns
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/campaigns?status=planned" className="cursor-pointer">
+                            Planned Campaigns
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/campaigns?status=completed" className="cursor-pointer">
+                            Completed Campaigns
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold hover:bg-gray-100"
+                          style={{ color: "#084594" }}
                           data-testid="dropdown-donors"
                         >
                           Donors
