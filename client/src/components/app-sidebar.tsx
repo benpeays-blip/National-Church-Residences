@@ -318,7 +318,11 @@ export function AppSidebar() {
         className="h-16 flex items-center px-4 border-b bg-white relative overflow-hidden"
       >
         <div className="flex flex-col gap-2 w-full pointer-events-none">
-          <NationalChurchResidencesLogo className="scale-75 origin-left" />
+          <img 
+            src="/attached_assets/Screenshot 2025-11-17 at 4.01.27 PM_1763417108039.png" 
+            alt="National Church Residences" 
+            className="h-10 w-auto object-contain"
+          />
           {user?.role && (
             <Badge variant="secondary" className="text-xs w-fit pointer-events-auto" style={{ color: "#084594" }}>
               {user.role.replace("_", " ")}
