@@ -162,7 +162,7 @@ const workflowMenuItems = [
     ],
   },
   {
-    groupLabel: "Network",
+    groupLabel: "Relationship Mapping",
     items: [
       {
         title: "Board Network Mapper",
