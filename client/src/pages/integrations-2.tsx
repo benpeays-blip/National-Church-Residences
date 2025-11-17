@@ -331,27 +331,25 @@ export default function Integrations2() {
   };
 
   return (
-    <div className="space-y-8">
-      {/* Hero Section */}
-      <div className="text-center space-y-4 py-8">
-        <h1 className="text-4xl font-bold">Add to your fundraising toolbelt</h1>
-        <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-          FundRazor already comes packed with powerful features, but your system doesn't have to stop there. 
-          We've found you the best tools for the job – each of our software integrations are tested and trusted by nonprofit professionals.
-        </p>
-        <p className="text-base font-medium">
-          Start adding capabilities to your FundRazor suite. Browse our integration partners below.
-        </p>
+    <div className="space-y-6">
+      {/* Page Header */}
+      <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          <h1 className="text-3xl font-bold">Integrations 2</h1>
+          <p className="text-sm text-muted-foreground">
+            Browse and connect with our integration partners
+          </p>
+        </div>
       </div>
 
       {/* Search Bar */}
-      <div className="relative max-w-2xl mx-auto">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+      <div className="relative max-w-md">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <Input
           placeholder="Search integrations..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="pl-10 h-12 text-base"
+          className="pl-9"
           data-testid="input-search-integrations"
         />
       </div>
@@ -396,24 +394,6 @@ export default function Integrations2() {
             Showing {filteredIntegrations.length} of {integrations.length} integrations
           </div>
 
-          {/* Partner Card - Become a Partner */}
-          <Card className="p-8 bg-gradient-to-br from-primary/10 to-primary/5 border-2 border-primary/20 hover-elevate cursor-pointer">
-            <div className="flex items-center gap-6">
-              <div className="flex-shrink-0 w-24 h-24 bg-primary/10 rounded-lg flex items-center justify-center">
-                <Plus className="w-12 h-12 text-primary" />
-              </div>
-              <div className="flex-1">
-                <h3 className="text-xl font-bold mb-2">Become a Partner</h3>
-                <p className="text-muted-foreground mb-4">
-                  Join our partner ecosystem and bring your solution to nonprofit organizations worldwide.
-                </p>
-                <Button variant="default" data-testid="button-become-partner">
-                  Send a Request
-                </Button>
-              </div>
-            </div>
-          </Card>
-
           {/* Integration Grid - 2 columns */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {filteredIntegrations.map((integration) => {
@@ -437,7 +417,7 @@ export default function Integrations2() {
                   
                   {/* Category-colored Logo Section */}
                   <div 
-                    className="h-32 flex items-center justify-center p-6"
+                    className="h-16 flex items-center justify-center p-4"
                     style={{
                       background: `linear-gradient(to bottom right, ${colors.from}, ${colors.to})`
                     }}
@@ -446,7 +426,7 @@ export default function Integrations2() {
                     <img
                       src={integration.logo}
                       alt={`${integration.name} logo`}
-                      className="max-w-full max-h-20 object-contain"
+                      className="max-w-full max-h-10 object-contain"
                       data-testid={`img-logo-${integration.id}`}
                       onError={(e) => {
                         const target = e.target as HTMLImageElement;
