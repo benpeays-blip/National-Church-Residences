@@ -41,35 +41,6 @@ import { useState } from "react";
 
 const workflowMenuItems = [
   {
-    groupLabel: "Intelligence",
-    items: [
-      {
-        title: "Donors",
-        url: "/donors",
-        icon: Users,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
-        title: "Predictive Timing",
-        url: "/ai/predictive-timing",
-        icon: Brain,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
-      },
-      {
-        title: "Wealth Events",
-        url: "/ai/wealth-events",
-        icon: TrendingUp,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
-      },
-      {
-        title: "Meeting Briefs",
-        url: "/ai/meeting-briefs",
-        icon: FileText,
-        roles: ["ADMIN", "DEV_DIRECTOR", "MGO"],
-      },
-    ],
-  },
-  {
     groupLabel: "Operations",
     items: [
       {

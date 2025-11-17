@@ -14,7 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Calendar, FileText, Users, Network, Target } from "lucide-react";
+import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Calendar, FileText, Users, Network, Target, Brain, TrendingUp } from "lucide-react";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Dashboard from "@/pages/dashboard";
@@ -231,6 +231,43 @@ function App() {
                 <div className="flex items-center gap-3 ml-auto">
                   {/* Navigation Dropdowns */}
                   <nav className="flex items-center gap-1">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold hover:bg-gray-100"
+                          style={{ color: "#084594" }}
+                          data-testid="dropdown-intelligence"
+                        >
+                          Intelligence
+                          <ChevronDown className="h-3 w-3 ml-1.5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-48">
+                        <DropdownMenuItem asChild>
+                          <Link href="/donors" className="cursor-pointer">
+                            Donors
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/ai/predictive-timing" className="cursor-pointer">
+                            Predictive Timing
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/ai/wealth-events" className="cursor-pointer">
+                            Wealth Events
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/ai/meeting-briefs" className="cursor-pointer">
+                            Meeting Briefs
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button

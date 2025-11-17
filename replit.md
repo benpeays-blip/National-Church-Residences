@@ -18,13 +18,12 @@ FundRazor is an AI-powered, enterprise-grade fundraising CRM designed for nonpro
 - **State Management**: TanStack Query v5
 - **Navigation**: Hybrid navigation system combining collapsible sidebar with Salesforce-style header:
   - **Sidebar**: Collapsible left navigation (16rem expanded, 3rem collapsed) with role-based menu sections
-    - Dark gradient header with FundRazorLogo and user role badge
-    - Organized sections: Overview, Intelligence, Operations, Relationship Science, AI Tools, Analytics, System
+    - White header with National Church Residences logo and user role badge
+    - Organized sections: Operations, Relationship Science, AI Tools, Analytics, System, Design Ideas, Other
     - Collapsible sections with chevron indicators and localStorage persistence
   - **Top Header**: White background with dark navy blue accents (#084594 - b8)
     - Sidebar toggle button (hamburger icon, dark navy blue)
-    - FundRazor logo in center-left (dark navy blue)
-    - Four text-based dropdown menus (semibold, no icons): **Quadrant**, Events, Grants, Donors
+    - Six text-based dropdown menus (semibold, no icons): **Intelligence** (Donors, Predictive Timing, Wealth Events, Meeting Briefs), **Quadrant**, Events, Grants, Campaigns, Relationships
     - Utility icons on right: Search, Notifications, Settings, Account (all dark navy blue)
     - Gray separator between navigation and utility icons
     - Subtle gray hover states (`hover:bg-gray-100`)
