@@ -325,16 +325,12 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" data-testid="sidebar-main">
       <SidebarHeader 
-        className="h-16 flex items-center px-4 border-b"
-        style={{
-          background: "linear-gradient(135deg, #0A1628 0%, #1A3A5C 100%)",
-          borderColor: "#1A3A5C40"
-        }}
+        className="h-16 flex items-center px-4 border-b bg-white"
       >
         <div className="flex flex-col gap-2 w-full">
-          <FundRazorLogo width={160} height={46} variant="dark" />
+          <FundRazorLogo width={160} height={46} variant="light" />
           {user?.role && (
-            <Badge variant="secondary" className="text-xs w-fit bg-white/10 text-white border-white/20">
+            <Badge variant="secondary" className="text-xs w-fit" style={{ color: "#084594" }}>
               {user.role.replace("_", " ")}
             </Badge>
           )}
