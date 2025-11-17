@@ -48,12 +48,6 @@ const workflowMenuItems = [
         icon: LayoutDashboard,
         roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
       },
-      {
-        title: "Welcome",
-        url: "/welcome",
-        icon: Home,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
     ],
   },
   {
@@ -256,6 +250,12 @@ const workflowMenuItems = [
   {
     groupLabel: "Other",
     items: [
+      {
+        title: "Welcome",
+        url: "/welcome",
+        icon: Home,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
       {
         title: "Tech Stack Mapper",
         url: "/tech-stack-mapper",
