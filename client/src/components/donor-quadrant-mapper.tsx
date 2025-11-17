@@ -114,10 +114,11 @@ export default function DonorQuadrantMapper() {
           </div>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="relative w-full aspect-square border-2 border-border rounded-lg overflow-hidden bg-background">
-            {/* Grid Lines */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
-            <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
+          <div className="relative w-full pb-10 pl-10">
+            <div className="relative w-full aspect-square border-2 border-border rounded-lg overflow-hidden bg-background">
+              {/* Grid Lines */}
+              <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
+              <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
 
             {/* Quadrants - Clickable */}
             {/* Top Left - Friend */}
@@ -225,7 +226,7 @@ export default function DonorQuadrantMapper() {
                       </div>
                       <p className="text-sm text-muted-foreground mt-3 line-clamp-2">{donor.bio}</p>
                       <Button 
-                        variant="link" 
+                        variant="ghost" 
                         size="sm" 
                         className="px-0 h-auto text-sky-500 hover:text-sky-600 mt-1"
                         asChild
@@ -279,12 +280,13 @@ export default function DonorQuadrantMapper() {
                 </HoverCardContent>
               </HoverCard>
             ))}
+            </div>
 
-            {/* Axis Labels */}
-            <div className="absolute -left-8 top-1/2 -translate-y-1/2 -rotate-90 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+            {/* Axis Labels - outside overflow-hidden container */}
+            <div className="absolute -left-10 top-1/2 -translate-y-1/2 -rotate-90 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Energy →
             </div>
-            <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Structure →
             </div>
           </div>
