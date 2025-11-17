@@ -83,12 +83,6 @@ const workflowMenuItems = [
     groupLabel: "Operations",
     items: [
       {
-        title: "Pipeline",
-        url: "/pipeline",
-        icon: Target,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
-      },
-      {
         title: "Grants",
         url: "/grants",
         icon: FileText,
@@ -250,6 +244,12 @@ const workflowMenuItems = [
   {
     groupLabel: "Other",
     items: [
+      {
+        title: "Pipeline",
+        url: "/pipeline",
+        icon: Target,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
+      },
       {
         title: "Welcome",
         url: "/welcome",

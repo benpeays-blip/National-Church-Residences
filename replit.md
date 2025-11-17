@@ -67,9 +67,17 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
   - **Color Palette**: Derived from Sky Blue (#0284C7) and Ice Blue (#7DD3FC) accents - stages use sky-to-indigo gradient, roles use complementary cyan-to-teal tones, software uses neutral slate with purple accent
 - **Navigation Mockups Page**: Visual comparison of 5 navigation patterns (Focus Hubs, Command Surface, Progressive Masthead, Adaptive Matrix, Dual-Mode Ribbon) applied to the home screen, with mini screenshot-style mockups showing how each pattern would look in practice, key feature lists, and a Quick Decision Guide to help stakeholders choose the right approach.
 - **Hybrid Navigation Implementation**: Production hybrid navigation pattern deployed site-wide with:
-  - **Sidebar Navigation**: Persistent global navigation for main sections (Dashboard, Welcome, Solutions, Donors, Pipeline, Campaigns, Analytics, AI Intelligence, etc.). Features:
-    - **Collapsible Sections**: Using Radix UI Collapsible with localStorage persistence, allowing users to collapse/expand sections (Overview, Design Ideas, Intelligence, Operations, Network, AI Tools, Analytics, System) with state maintained across navigation and page reloads
-    - **Design Ideas Section**: New sidebar section containing Icon Style Guide, Navigation Mockups, and Navigation Preview pages for design system documentation and navigation pattern exploration
+  - **Sidebar Navigation**: Persistent global navigation organized into collapsible sections. Sidebar organization (top to bottom):
+    1. **Overview**: Dashboard only
+    2. **Intelligence**: Donors, Predictive Timing, Wealth Events, Meeting Briefs
+    3. **Operations**: Grants, Gifts, Campaigns
+    4. **Relationship Science**: Board Network Mapper, Board Connections, Corporate Partnerships, Peer Discovery
+    5. **AI Tools**: Voice-to-CRM, Outreach Generator, Grant Proposals, Impact Reports, Workflow Builder
+    6. **Analytics**: Peer Benchmarks, Donor Sentiment, Portfolio Optimization
+    7. **System**: Data Health, Integrations, Integrations 2, Settings
+    8. **Design Ideas**: Icon Style Guide, Navigation Mockups, Navigation Preview
+    9. **Other**: Pipeline, Welcome, Tech Stack Mapper, National Church Residences, Organization Mapper, Workflow Canvas
+    - **Collapsible Sections**: Using Radix UI Collapsible with localStorage persistence, allowing users to collapse/expand sections with state maintained across navigation and page reloads
     - **Full Sidebar Collapse**: Icon-only collapse mode (`collapsible="icon"`) accessible via toggle button in header or Cmd/Ctrl+B keyboard shortcut. Reduces sidebar from 15rem to 3rem width, shows tooltips on icon hover, persists state via cookies
   - **Contextual Tabs**: Section-specific navigation within major areas:
     - Dashboard tabs: Dev Director, Major Gifts Officer, CEO
