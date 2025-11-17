@@ -88,6 +88,9 @@ export function DonorCard({ donor, onSelect }: DonorCardProps) {
             </div>
           </div>
 
+        {/* Separator */}
+        <div className="border-t border-border my-3" />
+
         <div className="flex items-center justify-between gap-2">
           <div className="flex flex-col min-w-0">
             <div className="flex items-center gap-1">
