@@ -104,6 +104,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const allDonors = await db.select().from(persons);
       
+      // Get gift counts for all donors
+      const allGifts = await db.select().from(gifts);
+      const giftCounts = allGifts.reduce((acc, gift) => {
+        acc[gift.personId] = (acc[gift.personId] || 0) + 1;
+        return acc;
+      }, {} as Record<string, number>);
+      
       // Generate dummy data for donors without quadrant positions
       const donorsWithQuadrant = allDonors.map((donor) => {
         // If donor doesn't have quadrant scores, generate them based on their existing scores
@@ -127,13 +134,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
         energy = Math.max(0, Math.min(100, energy));
         structure = Math.max(0, Math.min(100, structure));
         
+        // Calculate years as donor
+        const yearsAsDonor = donor.lastGiftDate 
+          ? Math.floor((new Date().getTime() - new Date(donor.lastGiftDate).getTime()) / (1000 * 60 * 60 * 24 * 365))
+          : donor.createdAt
+            ? Math.floor((new Date().getTime() - new Date(donor.createdAt).getTime()) / (1000 * 60 * 60 * 24 * 365))
+            : 0;
+        
+        // Determine status
+        const daysSinceLastGift = donor.lastGiftDate 
+          ? Math.floor((new Date().getTime() - new Date(donor.lastGiftDate).getTime()) / (1000 * 60 * 60 * 24))
+          : 999;
+        const status = daysSinceLastGift < 365 ? 'ACTIVE' : 'INACTIVE';
+        
+        // Determine badges
+        const badges: string[] = [];
+        const lifetimeGiving = parseFloat(donor.totalLifetimeGiving?.toString() || '0');
+        if (lifetimeGiving >= 25000) badges.push('Major Donor');
+        if (giftCounts[donor.id] && giftCounts[donor.id] >= 12) badges.push('Monthly Donor');
+        if (donor.engagementScore && donor.engagementScore >= 80) badges.push('Volunteer');
+        
+        // Generate a short bio
+        const bios = [
+          `${donor.firstName} is a dedicated supporter who has a passion for sustainable living and community development.`,
+          `${donor.firstName} is a working professional who values education and youth programs.`,
+          `${donor.firstName} enjoys supporting arts and culture initiatives in the local community.`,
+          `${donor.firstName} is committed to environmental conservation and green initiatives.`,
+          `${donor.firstName} has a strong interest in healthcare access and medical research funding.`,
+        ];
+        const bio = bios[Math.floor(Math.random() * bios.length)];
+        
         return {
           id: donor.id,
           firstName: donor.firstName,
           lastName: donor.lastName,
           primaryEmail: donor.primaryEmail,
+          primaryPhone: donor.primaryPhone,
           organizationName: donor.organizationName,
           totalLifetimeGiving: donor.totalLifetimeGiving,
+          giftCount: giftCounts[donor.id] || 0,
+          yearsAsDonor: Math.max(yearsAsDonor, 1),
+          status,
+          badges,
+          bio,
           energy,
           structure,
           capacityScore: donor.capacityScore,
