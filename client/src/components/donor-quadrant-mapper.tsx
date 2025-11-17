@@ -4,15 +4,23 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { TrendingUp, Users, Lightbulb } from 'lucide-react';
+import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { TrendingUp, Users, Lightbulb, Phone, Mail, Heart, Award, Calendar } from 'lucide-react';
 
 interface Donor {
   id: string;
   firstName: string;
   lastName: string;
   primaryEmail: string | null;
+  primaryPhone: string | null;
   organizationName: string | null;
   totalLifetimeGiving: string | null;
+  giftCount: number;
+  yearsAsDonor: number;
+  status: 'ACTIVE' | 'INACTIVE';
+  badges: string[];
+  bio: string;
   energy: number;
   structure: number;
   quadrant: 'partner' | 'friend' | 'colleague' | 'acquaintance';
@@ -156,18 +164,114 @@ export default function DonorQuadrantMapper() {
               <Badge className="mt-2" data-testid="count-colleague">{data.counts.colleague}</Badge>
             </button>
 
-            {/* Donor Dots */}
+            {/* Donor Dots with Hover Cards */}
             {data.donors.map((donor) => (
-              <div
-                key={donor.id}
-                className="absolute w-2.5 h-2.5 rounded-full bg-primary/80 shadow-sm hover:scale-150 transition-transform cursor-pointer"
-                style={{
-                  left: `calc(${donor.structure}% - 5px)`,
-                  top: `calc(${100 - donor.energy}% - 5px)`,
-                }}
-                title={`${donor.firstName} ${donor.lastName}\nEnergy: ${donor.energy}\nStructure: ${donor.structure}`}
-                data-testid={`dot-donor-${donor.id}`}
-              />
+              <HoverCard key={donor.id} openDelay={200} closeDelay={100}>
+                <HoverCardTrigger asChild>
+                  <div
+                    className="absolute w-2.5 h-2.5 rounded-full bg-primary/80 shadow-sm hover:scale-150 transition-transform cursor-pointer"
+                    style={{
+                      left: `calc(${donor.structure}% - 5px)`,
+                      top: `calc(${100 - donor.energy}% - 5px)`,
+                    }}
+                    data-testid={`dot-donor-${donor.id}`}
+                  />
+                </HoverCardTrigger>
+                <HoverCardContent className="w-96 p-0 overflow-hidden" side="right" align="start">
+                  <div className="space-y-0">
+                    {/* Profile Header */}
+                    <div className="p-4 bg-card border-b">
+                      <div className="flex items-start gap-3">
+                        <Avatar className="w-16 h-16 border-2 border-primary/10">
+                          <AvatarImage src="" />
+                          <AvatarFallback className="bg-primary/10 text-primary text-lg font-semibold">
+                            {donor.firstName[0]}{donor.lastName[0]}
+                          </AvatarFallback>
+                        </Avatar>
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-lg truncate" data-testid={`hovercard-name-${donor.id}`}>
+                            {donor.firstName} {donor.lastName}
+                          </h3>
+                          <div className="flex flex-col gap-1.5 mt-2">
+                            {donor.primaryPhone && (
+                              <div className="flex items-center gap-1.5 text-xs">
+                                <Badge variant="secondary" className="px-1.5 py-0.5 bg-sky-500 text-white hover:bg-sky-600 no-default-hover-elevate">
+                                  <Phone className="w-3 h-3 mr-1" />
+                                  CELL
+                                </Badge>
+                                <span className="text-sky-600 dark:text-sky-400 font-medium">{donor.primaryPhone}</span>
+                              </div>
+                            )}
+                            {donor.primaryEmail && (
+                              <div className="flex items-center gap-1.5 text-xs">
+                                <Badge variant="secondary" className="px-1.5 py-0.5 bg-sky-500 text-white hover:bg-sky-600 no-default-hover-elevate">
+                                  <Mail className="w-3 h-3 mr-1" />
+                                  WORK
+                                </Badge>
+                                <span className="text-sky-600 dark:text-sky-400 font-medium truncate">{donor.primaryEmail}</span>
+                              </div>
+                            )}
+                          </div>
+                          <div className="mt-2">
+                            <Badge 
+                              variant={donor.status === 'ACTIVE' ? 'default' : 'secondary'} 
+                              className={donor.status === 'ACTIVE' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-300 no-default-hover-elevate' : 'no-default-hover-elevate'}
+                            >
+                              {donor.status}
+                            </Badge>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-sm text-muted-foreground mt-3 line-clamp-2">{donor.bio}</p>
+                      <Button 
+                        variant="link" 
+                        size="sm" 
+                        className="px-0 h-auto text-sky-500 hover:text-sky-600 mt-1"
+                        asChild
+                      >
+                        <a href={`/donors/${donor.id}`}>View More</a>
+                      </Button>
+                    </div>
+
+                    {/* Stats Section */}
+                    <div className="grid grid-cols-2 divide-x bg-muted/30">
+                      <div className="p-4 text-center">
+                        <div className="text-2xl font-bold text-primary">
+                          ${parseFloat(donor.totalLifetimeGiving || '0').toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                        </div>
+                        <div className="text-xs text-muted-foreground mt-1">Lifetime</div>
+                      </div>
+                      <div className="p-4 text-center">
+                        <div className="text-2xl font-bold text-primary">{donor.giftCount}</div>
+                        <div className="text-xs text-muted-foreground mt-1">Number of Gifts</div>
+                      </div>
+                    </div>
+
+                    {/* Badges Section */}
+                    <div className="p-4 border-t space-y-3">
+                      <div className="flex items-start gap-3">
+                        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                          <Award className="w-8 h-8 text-primary" />
+                        </div>
+                        <div className="flex-1 space-y-2">
+                          <div className="flex items-center gap-2 text-sm font-medium">
+                            <Calendar className="w-4 h-4 text-muted-foreground" />
+                            <span>Donor for <strong>{donor.yearsAsDonor}</strong> year{donor.yearsAsDonor !== 1 ? 's' : ''}</span>
+                          </div>
+                          {donor.badges.map((badge, idx) => (
+                            <div key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                              {badge === 'Major Donor' && <Heart className="w-4 h-4 text-purple-500" fill="currentColor" />}
+                              {badge === 'Monthly Donor' && <Heart className="w-4 h-4 text-blue-500" />}
+                              {badge === 'Volunteer' && <Users className="w-4 h-4 text-emerald-500" />}
+                              <span>{badge}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </HoverCardContent>
+              </HoverCard>
             ))}
 
             {/* Axis Labels */}
