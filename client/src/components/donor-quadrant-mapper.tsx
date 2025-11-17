@@ -123,7 +123,7 @@ export default function DonorQuadrantMapper() {
             {/* Top Left - Friend */}
             <button
               onClick={() => setSelectedQuadrant('friend')}
-              className={`absolute left-0 top-0 w-1/2 h-1/2 p-4 ${quadrantConfig.friend.color} hover-elevate active-elevate-2 transition-all`}
+              className={`absolute left-0 top-0 w-1/2 h-1/2 p-4 ${quadrantConfig.friend.color} hover:bg-sky-100/60 dark:hover:bg-sky-900/40 active-elevate-2 transition-all`}
               style={{ background: selectedQuadrant === 'friend' ? 'linear-gradient(180deg, rgba(14, 165, 233, 0.15), transparent 60%)' : 'linear-gradient(180deg, rgba(14, 165, 233, 0.08), transparent 60%)' }}
               data-testid="quadrant-friend"
             >
@@ -134,7 +134,7 @@ export default function DonorQuadrantMapper() {
             {/* Top Right - Partner */}
             <button
               onClick={() => setSelectedQuadrant('partner')}
-              className={`absolute right-0 top-0 w-1/2 h-1/2 p-4 ${quadrantConfig.partner.color} hover-elevate active-elevate-2 transition-all`}
+              className={`absolute right-0 top-0 w-1/2 h-1/2 p-4 ${quadrantConfig.partner.color} hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40 active-elevate-2 transition-all`}
               style={{ background: selectedQuadrant === 'partner' ? 'linear-gradient(180deg, rgba(16, 185, 129, 0.15), transparent 60%)' : 'linear-gradient(180deg, rgba(16, 185, 129, 0.08), transparent 60%)' }}
               data-testid="quadrant-partner"
             >
@@ -145,7 +145,7 @@ export default function DonorQuadrantMapper() {
             {/* Bottom Left - Acquaintance */}
             <button
               onClick={() => setSelectedQuadrant('acquaintance')}
-              className={`absolute left-0 bottom-0 w-1/2 h-1/2 p-4 ${quadrantConfig.acquaintance.color} hover-elevate active-elevate-2 transition-all`}
+              className={`absolute left-0 bottom-0 w-1/2 h-1/2 p-4 ${quadrantConfig.acquaintance.color} hover:bg-slate-100/60 dark:hover:bg-slate-900/40 active-elevate-2 transition-all`}
               style={{ background: selectedQuadrant === 'acquaintance' ? 'linear-gradient(0deg, rgba(100, 116, 139, 0.15), transparent 60%)' : 'linear-gradient(0deg, rgba(100, 116, 139, 0.08), transparent 60%)' }}
               data-testid="quadrant-acquaintance"
             >
@@ -156,7 +156,7 @@ export default function DonorQuadrantMapper() {
             {/* Bottom Right - Colleague */}
             <button
               onClick={() => setSelectedQuadrant('colleague')}
-              className={`absolute right-0 bottom-0 w-1/2 h-1/2 p-4 ${quadrantConfig.colleague.color} hover-elevate active-elevate-2 transition-all`}
+              className={`absolute right-0 bottom-0 w-1/2 h-1/2 p-4 ${quadrantConfig.colleague.color} hover:bg-amber-100/60 dark:hover:bg-amber-900/40 active-elevate-2 transition-all`}
               style={{ background: selectedQuadrant === 'colleague' ? 'linear-gradient(0deg, rgba(245, 158, 11, 0.15), transparent 60%)' : 'linear-gradient(0deg, rgba(245, 158, 11, 0.08), transparent 60%)' }}
               data-testid="quadrant-colleague"
             >
