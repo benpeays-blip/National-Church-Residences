@@ -91,7 +91,7 @@ export default function DashboardDevDirector() {
       <div className="space-y-6">
         <div className="space-y-1">
           <h1 className="text-3xl font-bold">
-            Development Director Dashboard
+            Dashboard
           </h1>
           <p className="text-sm text-muted-foreground">
             Team performance and pipeline health
@@ -113,7 +113,7 @@ export default function DashboardDevDirector() {
     <div className="space-y-6">
       <div className="space-y-1">
         <h1 className="text-3xl font-bold">
-          Development Director Dashboard
+          Dashboard
         </h1>
         <p className="text-sm text-muted-foreground">
           Team performance and pipeline health
