@@ -24,7 +24,7 @@
   /* b7: rgba(33, 113, 181, 1) - Strong brand accent */
   /* b8: rgba(8, 69, 148, 1) - Deepest blue, brand anchor */
 
-  --background: 210 100% 98%;
+  --background: 0 0% 100%;
   --foreground: 222 47% 11%;
   --border: 209 40% 88%;
   --card: 209 61% 96%;
