@@ -314,9 +314,9 @@ export default function DonorQuadrantMapper() {
             </Badge>
           </div>
         </CardHeader>
-        <CardContent className="p-4 space-y-4">
+        <CardContent className="p-4 flex flex-col h-[600px]">
           {/* Tab Buttons */}
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex gap-2 flex-wrap mb-4">
             {(['partner', 'friend', 'colleague', 'acquaintance'] as QuadrantType[]).map((q) => (
               <Button
                 key={q}
@@ -331,8 +331,8 @@ export default function DonorQuadrantMapper() {
             ))}
           </div>
 
-          {/* Donor List */}
-          <div className="space-y-2 max-h-64 overflow-y-auto">
+          {/* Donor List - Takes up remaining space */}
+          <div className="space-y-2 flex-1 overflow-y-auto mb-4">
             {selectedDonors.length === 0 ? (
               <div className="text-sm text-muted-foreground text-center py-8">
                 No donors in this quadrant yet.
@@ -362,11 +362,11 @@ export default function DonorQuadrantMapper() {
             )}
           </div>
 
-          {/* AI Playbook */}
+          {/* AI Playbook - Fixed at bottom */}
           <div className="pt-4 border-t">
-            <div className="flex items-center gap-2 text-sm font-medium mb-3">
+            <div className="flex items-center gap-2 text-sm font-semibold mb-3">
               <Lightbulb className="w-4 h-4 text-primary" />
-              <span>Playbook to move toward <strong>Partner</strong>:</span>
+              <span>AI Playbook to move towards Partner:</span>
             </div>
             <ol className="space-y-2 text-sm">
               {data.playbooks[selectedQuadrant].map((step, idx) => (
