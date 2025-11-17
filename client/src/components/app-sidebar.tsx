@@ -318,7 +318,7 @@ export function AppSidebar() {
       >
         <div className="flex flex-col gap-2 w-full pointer-events-none">
           <img 
-            src="/attached_assets/newlogo-min_1763416734335.png" 
+            src="/attached_assets/Screenshot 2025-11-17 at 4.19.59 PM_1763418018895.png" 
             alt="National Church Residences" 
             className="h-12 w-auto object-contain"
             data-testid="img-ncr-logo"
