@@ -318,9 +318,10 @@ export function AppSidebar() {
       >
         <div className="flex flex-col gap-2 w-full pointer-events-none">
           <img 
-            src="/attached_assets/Screenshot 2025-11-17 at 4.01.27 PM_1763416936924.png" 
+            src="/attached_assets/newlogo-min_1763416734335.png" 
             alt="National Church Residences" 
-            className="h-10 w-auto object-contain"
+            className="h-12 w-auto object-contain"
+            data-testid="img-ncr-logo"
           />
           {user?.role && (
             <Badge variant="secondary" className="text-xs w-fit pointer-events-auto" style={{ color: "#084594" }}>
