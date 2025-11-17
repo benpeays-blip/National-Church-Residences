@@ -216,7 +216,7 @@ function App() {
               <header 
                 className="flex items-center gap-4 h-16 px-6 border-b shrink-0"
                 style={{
-                  background: "#0A1628",
+                  background: "#2171B5",
                   borderColor: "#1A3A5C40"
                 }}
               >

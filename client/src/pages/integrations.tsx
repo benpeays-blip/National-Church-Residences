@@ -120,29 +120,8 @@ export default function Integrations() {
         <Plug className="w-8 h-8 text-muted-foreground" />
       </div>
 
-      {/* Category Tabs */}
-      <Tabs value={selectedCategory} onValueChange={setSelectedCategory} className="w-full">
-        <TabsList className="w-full justify-start h-auto flex-wrap gap-1 bg-transparent border-b rounded-none p-0">
-          {categories.map((cat) => (
-            <TabsTrigger
-              key={cat}
-              value={cat}
-              className="data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none bg-transparent px-4"
-              data-testid={`tab-category-${cat.toLowerCase().replace(/\s+/g, '-')}`}
-            >
-              {cat}
-              {cat !== "ALL" && (
-                <Badge variant="secondary" className="ml-2 text-xs">
-                  {integrations.filter((i) => i.category === cat).length}
-                </Badge>
-              )}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-      </Tabs>
-
       {/* Search */}
-      <div className="relative">
+      <div className="relative max-w-md">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
         <Input
           placeholder="Search integrations, modules, or features..."
@@ -153,13 +132,50 @@ export default function Integrations() {
         />
       </div>
 
-      {/* Results count */}
-      <div className="text-sm text-muted-foreground" data-testid="text-results-count">
-        Showing {filteredIntegrations.length} of {integrations.length} integrations
-      </div>
+      {/* Main Content Area with Sidebar */}
+      <div className="flex gap-8">
+        {/* Category Sidebar */}
+        <div className="w-64 flex-shrink-0">
+          <Card className="p-4 sticky top-4">
+            <h3 className="font-semibold text-sm mb-4">Categories</h3>
+            <div className="space-y-1">
+              {categories.map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
+                    selectedCategory === cat
+                      ? "bg-primary text-primary-foreground font-medium"
+                      : "hover:bg-muted"
+                  }`}
+                  data-testid={`button-category-${cat.toLowerCase().replace(/\s+/g, '-')}`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span>{cat}</span>
+                    {cat !== "ALL" && (
+                      <Badge 
+                        variant={selectedCategory === cat ? "secondary" : "outline"} 
+                        className="text-xs ml-2"
+                      >
+                        {integrations.filter((i) => i.category === cat).length}
+                      </Badge>
+                    )}
+                  </div>
+                </button>
+              ))}
+            </div>
+          </Card>
+        </div>
 
-      {/* Integration Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Main Content */}
+        <div className="flex-1 space-y-6">
+          {/* Results count */}
+          <div className="text-sm text-muted-foreground" data-testid="text-results-count">
+            Showing {filteredIntegrations.length} of {integrations.length} integrations
+          </div>
+
+          {/* Integration Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredIntegrations.map((integration) => (
           <Card
             key={integration.slug}
@@ -217,30 +233,32 @@ export default function Integrations() {
             </div>
           </Card>
         ))}
-      </div>
-
-      {/* Empty State */}
-      {filteredIntegrations.length === 0 && (
-        <Card className="p-12">
-          <div className="text-center space-y-3">
-            <Search className="w-12 h-12 text-muted-foreground mx-auto" />
-            <h3 className="text-lg font-semibold">No integrations found</h3>
-            <p className="text-sm text-muted-foreground">
-              Try adjusting your search or filter criteria
-            </p>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedCategory("ALL");
-              }}
-              data-testid="button-clear-filters"
-            >
-              Clear Filters
-            </Button>
           </div>
-        </Card>
-      )}
+
+          {/* Empty State */}
+          {filteredIntegrations.length === 0 && (
+            <Card className="p-12">
+              <div className="text-center space-y-3">
+                <Search className="w-12 h-12 text-muted-foreground mx-auto" />
+                <h3 className="text-lg font-semibold">No integrations found</h3>
+                <p className="text-sm text-muted-foreground">
+                  Try adjusting your search or filter criteria
+                </p>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSelectedCategory("ALL");
+                  }}
+                  data-testid="button-clear-filters"
+                >
+                  Clear Filters
+                </Button>
+              </div>
+            </Card>
+          )}
+        </div>
+      </div>
 
       {/* Detail Drawer */}
       <Sheet open={!!selectedIntegration} onOpenChange={() => setSelectedIntegration(null)}>
