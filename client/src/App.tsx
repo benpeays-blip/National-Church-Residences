@@ -224,7 +224,7 @@ function App() {
                 {/* Sidebar Toggle */}
                 <SidebarTrigger 
                   data-testid="button-sidebar-toggle" 
-                  className="hover:bg-gray-100" 
+                  className="hover:bg-gray-100 relative z-50" 
                   style={{ color: "#084594" }} 
                 />
                 
