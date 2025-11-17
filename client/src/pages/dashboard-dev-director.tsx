@@ -261,11 +261,13 @@ export default function DashboardDevDirector() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <Link href="/donors/lybunt">
-          <Card className="p-6 hover-elevate active-elevate-2 cursor-pointer" data-testid="card-lybunt-metric">
-            <div className="space-y-2">
+          <Card className="hover-elevate active-elevate-2 cursor-pointer" data-testid="card-lybunt-metric">
+            <div className="bg-primary/5 border-b px-6 py-4">
               <h3 className="text-2xl font-bold">
                 LYBUNT <span className="font-bold" data-testid="text-lybunt-count">({data?.metrics.lybuntCount ?? 0})</span>
               </h3>
+            </div>
+            <div className="p-6 space-y-2">
               <p className="text-sm font-medium text-muted-foreground">
                 Last Year But Unfortunately Not This
               </p>
@@ -276,11 +278,13 @@ export default function DashboardDevDirector() {
           </Card>
         </Link>
         <Link href="/donors/sybunt">
-          <Card className="p-6 hover-elevate active-elevate-2 cursor-pointer" data-testid="card-sybunt-metric">
-            <div className="space-y-2">
+          <Card className="hover-elevate active-elevate-2 cursor-pointer" data-testid="card-sybunt-metric">
+            <div className="bg-primary/5 border-b px-6 py-4">
               <h3 className="text-2xl font-bold">
                 SYBUNT <span className="font-bold" data-testid="text-sybunt-count">({data?.metrics.sybuntCount ?? 0})</span>
               </h3>
+            </div>
+            <div className="p-6 space-y-2">
               <p className="text-sm font-medium text-muted-foreground">
                 Some Years But Unfortunately Not This
               </p>
@@ -293,9 +297,12 @@ export default function DashboardDevDirector() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2 p-6">
-          <h2 className="text-lg font-semibold mb-4">Pipeline by Major Gift Officer</h2>
-          <Table>
+        <Card className="lg:col-span-2">
+          <div className="bg-primary/5 border-b px-6 py-4">
+            <h2 className="text-lg font-semibold">Pipeline by Major Gift Officer</h2>
+          </div>
+          <div className="p-6">
+            <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Major Gifts Officer</TableHead>
@@ -328,11 +335,14 @@ export default function DashboardDevDirector() {
               ))}
             </TableBody>
           </Table>
+          </div>
         </Card>
 
-        <Card className="p-6">
-          <h2 className="text-lg font-semibold mb-4">Recent Team Activity</h2>
-          <div className="space-y-4">
+        <Card>
+          <div className="bg-primary/5 border-b px-6 py-4">
+            <h2 className="text-lg font-semibold">Recent Team Activity</h2>
+          </div>
+          <div className="p-6 space-y-4">
             {data?.recentActivity.map((activity) => (
               <div key={activity.id} className="pb-3 border-b last:border-0">
                 <div className="flex items-start justify-between gap-2 mb-1">
@@ -352,15 +362,18 @@ export default function DashboardDevDirector() {
 
       {/* Pipeline Forecasting */}
       {(data?.pipelineForecasting && data.pipelineForecasting.length > 0) && (
-        <Card className="p-6" data-testid="card-pipeline-forecasting">
-          <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-chart-1" />
-            Pipeline Forecasting (Next 12 Months)
-          </h2>
-          <p className="text-sm text-muted-foreground mb-4">
-            Weighted pipeline forecast calculated as Σ(amount × probability) by expected close month. Shows total ask amounts and weighted expected revenue.
-          </p>
-          <Table data-testid="table-pipeline-forecasting">
+        <Card data-testid="card-pipeline-forecasting">
+          <div className="bg-primary/5 border-b px-6 py-4">
+            <h2 className="text-lg font-semibold flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-primary" />
+              Pipeline Forecasting (Next 12 Months)
+            </h2>
+          </div>
+          <div className="p-6">
+            <p className="text-sm text-muted-foreground mb-4">
+              Weighted pipeline forecast calculated as Σ(amount × probability) by expected close month. Shows total ask amounts and weighted expected revenue.
+            </p>
+            <Table data-testid="table-pipeline-forecasting">
             <TableHeader>
               <TableRow>
                 <TableHead>Month</TableHead>
@@ -407,18 +420,22 @@ export default function DashboardDevDirector() {
               </p>
             </div>
           </div>
+          </div>
         </Card>
       )}
 
       {(data?.lybuntDonors && data.lybuntDonors.length > 0) && (
-        <Card className="p-6" data-testid="card-lybunt-recovery">
-          <h2 className="text-lg font-semibold mb-4" data-testid="text-lybunt-recovery-title">
-            LYBUNT Recovery - Priority Reactivation
-          </h2>
-          <p className="text-sm text-muted-foreground mb-4">
-            These donors gave last year but haven't given this year. Reach out with personalized renewal campaigns.
-          </p>
-          <Table data-testid="table-lybunt-donors">
+        <Card data-testid="card-lybunt-recovery">
+          <div className="bg-primary/5 border-b px-6 py-4">
+            <h2 className="text-lg font-semibold" data-testid="text-lybunt-recovery-title">
+              LYBUNT Recovery - Priority Reactivation
+            </h2>
+          </div>
+          <div className="p-6">
+            <p className="text-sm text-muted-foreground mb-4">
+              These donors gave last year but haven't given this year. Reach out with personalized renewal campaigns.
+            </p>
+            <Table data-testid="table-lybunt-donors">
             <TableHeader>
               <TableRow>
                 <TableHead>Donor</TableHead>
@@ -467,18 +484,22 @@ export default function DashboardDevDirector() {
               ))}
             </TableBody>
           </Table>
+          </div>
         </Card>
       )}
 
       {(data?.sybuntDonors && data.sybuntDonors.length > 0) && (
-        <Card className="p-6" data-testid="card-sybunt-recovery">
-          <h2 className="text-lg font-semibold mb-4" data-testid="text-sybunt-recovery-title">
-            SYBUNT Recovery - Long-Term Reactivation
-          </h2>
-          <p className="text-sm text-muted-foreground mb-4">
-            These donors gave in prior years but not recently. Consider impact reports and re-engagement campaigns.
-          </p>
-          <Table data-testid="table-sybunt-donors">
+        <Card data-testid="card-sybunt-recovery">
+          <div className="bg-primary/5 border-b px-6 py-4">
+            <h2 className="text-lg font-semibold" data-testid="text-sybunt-recovery-title">
+              SYBUNT Recovery - Long-Term Reactivation
+            </h2>
+          </div>
+          <div className="p-6">
+            <p className="text-sm text-muted-foreground mb-4">
+              These donors gave in prior years but not recently. Consider impact reports and re-engagement campaigns.
+            </p>
+            <Table data-testid="table-sybunt-donors">
             <TableHeader>
               <TableRow>
                 <TableHead>Donor</TableHead>
@@ -527,6 +548,7 @@ export default function DashboardDevDirector() {
               ))}
             </TableBody>
           </Table>
+          </div>
         </Card>
       )}
     </div>
