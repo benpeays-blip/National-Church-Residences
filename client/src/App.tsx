@@ -224,49 +224,6 @@ function App() {
                 <Breadcrumbs className="text-white/90" />
                 
                 <div className="flex items-center gap-3 ml-auto">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    data-testid="button-global-search"
-                    aria-label="Global search (Cmd+K)"
-                    className="text-white hover:bg-white/10 hover:text-white"
-                  >
-                    <Search className="h-5 w-5" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    data-testid="button-notifications"
-                    aria-label="Notifications"
-                    className="text-white hover:bg-white/10 hover:text-white"
-                  >
-                    <Bell className="h-5 w-5" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    asChild
-                    data-testid="button-settings"
-                    aria-label="Settings"
-                    className="text-white hover:bg-white/10 hover:text-white"
-                  >
-                    <a href="/settings">
-                      <SettingsIcon className="h-5 w-5" />
-                    </a>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    data-testid="button-account"
-                    aria-label="Account menu"
-                    className="text-white hover:bg-white/10 hover:text-white"
-                  >
-                    <User className="h-5 w-5" />
-                  </Button>
-                  
-                  {/* Separator */}
-                  <div className="h-6 w-px bg-white/20" />
-                  
                   {/* Navigation Dropdowns */}
                   <nav className="flex items-center gap-1">
                     <DropdownMenu>
@@ -380,6 +337,49 @@ function App() {
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </nav>
+                  
+                  {/* Separator */}
+                  <div className="h-6 w-px bg-white/20" />
+                  
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    data-testid="button-global-search"
+                    aria-label="Global search (Cmd+K)"
+                    className="text-white hover:bg-white/10 hover:text-white"
+                  >
+                    <Search className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    data-testid="button-notifications"
+                    aria-label="Notifications"
+                    className="text-white hover:bg-white/10 hover:text-white"
+                  >
+                    <Bell className="h-5 w-5" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    asChild
+                    data-testid="button-settings"
+                    aria-label="Settings"
+                    className="text-white hover:bg-white/10 hover:text-white"
+                  >
+                    <a href="/settings">
+                      <SettingsIcon className="h-5 w-5" />
+                    </a>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    data-testid="button-account"
+                    aria-label="Account menu"
+                    className="text-white hover:bg-white/10 hover:text-white"
+                  >
+                    <User className="h-5 w-5" />
+                  </Button>
                 </div>
               </header>
               <main className="flex-1 overflow-auto p-6">
