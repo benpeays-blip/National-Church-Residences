@@ -41,17 +41,6 @@ import { useState } from "react";
 
 const workflowMenuItems = [
   {
-    groupLabel: "Overview",
-    items: [
-      {
-        title: "Dashboard",
-        url: "/",
-        icon: LayoutDashboard,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-    ],
-  },
-  {
     groupLabel: "Intelligence",
     items: [
       {
