@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
-import ncrLogo from "@assets/image_1762185084577.png";
+import ncrLogo from "@assets/ncr-logo-horizontal.png";
 import {
   LayoutDashboard,
   Users,
