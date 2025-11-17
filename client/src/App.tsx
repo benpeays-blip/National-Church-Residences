@@ -14,7 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Calendar, FileText, Users } from "lucide-react";
+import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Calendar, FileText, Users, Network, Target } from "lucide-react";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Dashboard from "@/pages/dashboard";
@@ -358,6 +358,43 @@ function App() {
                         <DropdownMenuItem asChild>
                           <Link href="/campaigns?status=completed" className="cursor-pointer">
                             Completed Campaigns
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold hover:bg-gray-100"
+                          style={{ color: "#084594" }}
+                          data-testid="dropdown-relationships"
+                        >
+                          Relationships
+                          <ChevronDown className="h-3 w-3 ml-1.5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-56">
+                        <DropdownMenuItem asChild>
+                          <Link href="/relationship/board-network-mapper" className="cursor-pointer">
+                            Board Network Mapper
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/relationship/board-connections" className="cursor-pointer">
+                            Board Connections
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/relationship/corporate-partnerships" className="cursor-pointer">
+                            Corporate Partnerships
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/relationship/peer-donors" className="cursor-pointer">
+                            Peer Discovery
                           </Link>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
