@@ -131,25 +131,63 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
       
       // Generate dummy data for donors without quadrant positions
-      const donorsWithQuadrant = allDonors.map((donor) => {
-        // If donor doesn't have quadrant scores, generate them based on their existing scores
-        let energy = donor.relationshipEnergy;
-        let structure = donor.relationshipStructure;
+      // Create an array to track which quadrant each donor will be assigned to
+      const quadrantAssignments: ('partner' | 'friend' | 'colleague' | 'acquaintance')[] = [];
+      const donorCount = allDonors.length;
+      
+      // Distribute donors evenly across quadrants
+      const donorsPerQuadrant = Math.floor(donorCount / 4);
+      const remainder = donorCount % 4;
+      
+      // Fill quadrant assignments evenly
+      for (let i = 0; i < donorsPerQuadrant; i++) {
+        quadrantAssignments.push('partner', 'friend', 'colleague', 'acquaintance');
+      }
+      // Distribute remaining donors
+      const extraQuadrants: ('partner' | 'friend' | 'colleague' | 'acquaintance')[] = ['partner', 'friend', 'colleague', 'acquaintance'];
+      for (let i = 0; i < remainder; i++) {
+        quadrantAssignments.push(extraQuadrants[i]);
+      }
+      
+      // Shuffle the assignments for randomness
+      for (let i = quadrantAssignments.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [quadrantAssignments[i], quadrantAssignments[j]] = [quadrantAssignments[j], quadrantAssignments[i]];
+      }
+      
+      const donorsWithQuadrant = allDonors.map((donor, index) => {
+        // Get the assigned quadrant for this donor
+        const assignedQuadrant = quadrantAssignments[index];
         
-        if (energy === null || energy === undefined) {
-          // Generate energy based on engagement and affinity scores
-          const baseEnergy = ((donor.engagementScore || 50) + (donor.affinityScore || 50)) / 2;
-          energy = Math.round(baseEnergy + (Math.random() * 20 - 10)); // Add some randomness
+        // Generate energy and structure based on the assigned quadrant
+        // Partner: high energy (50-95), high structure (50-95)
+        // Friend: high energy (50-95), low structure (5-49)
+        // Colleague: low energy (5-49), high structure (50-95)
+        // Acquaintance: low energy (5-49), low structure (5-49)
+        
+        let energy: number;
+        let structure: number;
+        
+        switch (assignedQuadrant) {
+          case 'partner':
+            energy = 50 + Math.floor(Math.random() * 46); // 50-95
+            structure = 50 + Math.floor(Math.random() * 46); // 50-95
+            break;
+          case 'friend':
+            energy = 50 + Math.floor(Math.random() * 46); // 50-95
+            structure = 5 + Math.floor(Math.random() * 45); // 5-49
+            break;
+          case 'colleague':
+            energy = 5 + Math.floor(Math.random() * 45); // 5-49
+            structure = 50 + Math.floor(Math.random() * 46); // 50-95
+            break;
+          case 'acquaintance':
+            energy = 5 + Math.floor(Math.random() * 45); // 5-49
+            structure = 5 + Math.floor(Math.random() * 45); // 5-49
+            break;
         }
         
-        if (structure === null || structure === undefined) {
-          // Generate structure based on giving history and capacity
-          const hasStructure = donor.totalLifetimeGiving && parseFloat(donor.totalLifetimeGiving.toString()) > 0;
-          const baseStructure = hasStructure ? 60 : 30;
-          structure = Math.round(baseStructure + (Math.random() * 30 - 15));
-        }
-        
-        // Ensure values are within 0-100 range
+        // Ensure values are within 0-100 range (already guaranteed by the switch above)
         energy = Math.max(0, Math.min(100, energy));
         structure = Math.max(0, Math.min(100, structure));
         
