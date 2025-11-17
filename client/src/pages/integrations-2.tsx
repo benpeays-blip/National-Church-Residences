@@ -5,6 +5,22 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Search, Plus, ExternalLink } from "lucide-react";
 
+// Category color mapping - using inline styles for reliable rendering
+const categoryColors: Record<string, { from: string; to: string }> = {
+  "Advocacy": { from: "#7C3AED", to: "#9333EA" },           // Purple
+  "Auctions + Events": { from: "#EA580C", to: "#F97316" }, // Orange
+  "Consulting": { from: "#334155", to: "#475569" },         // Slate
+  "Email + Text + Marketing": { from: "#2563EB", to: "#3B82F6" }, // Blue
+  "Financial + Accounting": { from: "#15803D", to: "#16A34A" },   // Green
+  "Matching Gifts": { from: "#DB2777", to: "#EC4899" },     // Pink
+  "Online Fundraising": { from: "#0891B2", to: "#06B6D4" }, // Cyan
+  "Payment Processing": { from: "#047857", to: "#10B981" }, // Emerald
+  "Prospect Research": { from: "#4338CA", to: "#6366F1" },  // Indigo
+  "Volunteer Management": { from: "#D97706", to: "#F59E0B" }, // Amber
+  "Website Management": { from: "#0F766E", to: "#14B8A6" }, // Teal
+  "Education": { from: "#6D28D9", to: "#8B5CF6" },          // Violet
+};
+
 interface Integration {
   id: string;
   name: string;
@@ -340,135 +356,161 @@ export default function Integrations2() {
         />
       </div>
 
-      {/* Category Filter */}
-      <div className="border-b">
-        <div className="flex items-center gap-2 overflow-x-auto pb-2">
-          <span className="text-sm font-medium text-muted-foreground whitespace-nowrap">Filter by:</span>
-          {categories.map((category) => (
-            <Button
-              key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
-              size="sm"
-              onClick={() => setSelectedCategory(category)}
-              className="whitespace-nowrap"
-              data-testid={`button-category-${category.toLowerCase().replace(/\s+/g, '-')}`}
-            >
-              {category}
-              <Badge variant="secondary" className="ml-2 text-xs">
-                {getCategoryCount(category)}
-              </Badge>
-            </Button>
-          ))}
-        </div>
-      </div>
-
-      {/* Results Count */}
-      <div className="text-sm text-muted-foreground">
-        Showing {filteredIntegrations.length} of {integrations.length} integrations
-      </div>
-
-      {/* Partner Card - Become a Partner */}
-      <Card className="p-8 bg-gradient-to-br from-primary/10 to-primary/5 border-2 border-primary/20 hover-elevate cursor-pointer">
-        <div className="flex items-center gap-6">
-          <div className="flex-shrink-0 w-24 h-24 bg-primary/10 rounded-lg flex items-center justify-center">
-            <Plus className="w-12 h-12 text-primary" />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-xl font-bold mb-2">Become a Partner</h3>
-            <p className="text-muted-foreground mb-4">
-              Join our partner ecosystem and bring your solution to nonprofit organizations worldwide.
-            </p>
-            <Button variant="default" data-testid="button-become-partner">
-              Send a Request
-            </Button>
-          </div>
-        </div>
-      </Card>
-
-      {/* Integration Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filteredIntegrations.map((integration) => (
-          <Card
-            key={integration.id}
-            className="p-6 hover-elevate cursor-pointer relative"
-            data-testid={`card-integration-${integration.id}`}
-          >
-            {integration.featured && (
-              <Badge 
-                variant="default" 
-                className="absolute top-4 right-4 bg-chart-1 hover:bg-chart-1"
-                data-testid={`badge-featured-${integration.id}`}
-              >
-                Featured
-              </Badge>
-            )}
-            
-            <div className="space-y-4">
-              {/* Logo */}
-              <div className="h-20 flex items-center justify-center bg-gradient-to-br from-slate-900 to-slate-800 rounded-lg p-4">
-                <img
-                  src={integration.logo}
-                  alt={`${integration.name} logo`}
-                  className="max-w-full max-h-16 object-contain"
-                  data-testid={`img-logo-${integration.id}`}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
-                />
-              </div>
-
-              {/* Name */}
-              <h3 className="font-bold text-lg" data-testid={`text-name-${integration.id}`}>
-                {integration.name}
-              </h3>
-
-              {/* Description */}
-              <p className="text-sm text-muted-foreground line-clamp-3" data-testid={`text-description-${integration.id}`}>
-                {integration.description}
-              </p>
-
-              {/* Category Badge */}
-              <Badge variant="outline" className="text-xs" data-testid={`badge-category-${integration.id}`}>
-                {integration.category}
-              </Badge>
-
-              {/* Learn More Button */}
-              <Button 
-                variant="outline" 
-                className="w-full" 
-                data-testid={`button-learn-more-${integration.id}`}
-              >
-                <ExternalLink className="w-4 h-4 mr-2" />
-                Learn more
-              </Button>
+      {/* Main Content Area with Sidebar */}
+      <div className="flex gap-8">
+        {/* Category Sidebar */}
+        <div className="w-64 flex-shrink-0">
+          <Card className="p-4 sticky top-4">
+            <h3 className="font-semibold text-sm mb-4">Filter by:</h3>
+            <div className="space-y-1">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${
+                    selectedCategory === category
+                      ? "bg-primary text-primary-foreground font-medium"
+                      : "hover:bg-muted"
+                  }`}
+                  data-testid={`button-category-${category.toLowerCase().replace(/\s+/g, '-')}`}
+                >
+                  <div className="flex items-center justify-between">
+                    <span>{category}</span>
+                    <Badge 
+                      variant={selectedCategory === category ? "secondary" : "outline"} 
+                      className="text-xs ml-2"
+                    >
+                      {getCategoryCount(category)}
+                    </Badge>
+                  </div>
+                </button>
+              ))}
             </div>
           </Card>
-        ))}
-      </div>
+        </div>
 
-      {/* Empty State */}
-      {filteredIntegrations.length === 0 && (
-        <Card className="p-12">
-          <div className="text-center space-y-3">
-            <Search className="w-12 h-12 text-muted-foreground mx-auto" />
-            <h3 className="text-lg font-semibold">No integrations found</h3>
-            <p className="text-sm text-muted-foreground">
-              Try adjusting your search or filter criteria
-            </p>
-            <Button
-              variant="outline"
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedCategory("All Integrations");
-              }}
-              data-testid="button-clear-filters"
-            >
-              Clear Filters
-            </Button>
+        {/* Main Content */}
+        <div className="flex-1 space-y-6">
+          {/* Results Count */}
+          <div className="text-sm text-muted-foreground">
+            Showing {filteredIntegrations.length} of {integrations.length} integrations
           </div>
-        </Card>
-      )}
+
+          {/* Partner Card - Become a Partner */}
+          <Card className="p-8 bg-gradient-to-br from-primary/10 to-primary/5 border-2 border-primary/20 hover-elevate cursor-pointer">
+            <div className="flex items-center gap-6">
+              <div className="flex-shrink-0 w-24 h-24 bg-primary/10 rounded-lg flex items-center justify-center">
+                <Plus className="w-12 h-12 text-primary" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-xl font-bold mb-2">Become a Partner</h3>
+                <p className="text-muted-foreground mb-4">
+                  Join our partner ecosystem and bring your solution to nonprofit organizations worldwide.
+                </p>
+                <Button variant="default" data-testid="button-become-partner">
+                  Send a Request
+                </Button>
+              </div>
+            </div>
+          </Card>
+
+          {/* Integration Grid - 2 columns */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {filteredIntegrations.map((integration) => {
+              const colors = categoryColors[integration.category] || { from: "#1E293B", to: "#334155" };
+              
+              return (
+                <Card
+                  key={integration.id}
+                  className="overflow-hidden hover-elevate cursor-pointer relative"
+                  data-testid={`card-integration-${integration.id}`}
+                >
+                  {integration.featured && (
+                    <Badge 
+                      variant="default" 
+                      className="absolute top-4 right-4 bg-chart-1 hover:bg-chart-1 z-10"
+                      data-testid={`badge-featured-${integration.id}`}
+                    >
+                      Featured
+                    </Badge>
+                  )}
+                  
+                  {/* Category-colored Logo Section */}
+                  <div 
+                    className="h-32 flex items-center justify-center p-6"
+                    style={{
+                      background: `linear-gradient(to bottom right, ${colors.from}, ${colors.to})`
+                    }}
+                    data-testid={`header-${integration.id}`}
+                  >
+                    <img
+                      src={integration.logo}
+                      alt={`${integration.name} logo`}
+                      className="max-w-full max-h-20 object-contain"
+                      data-testid={`img-logo-${integration.id}`}
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                      }}
+                    />
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="p-6 space-y-4">
+                    {/* Name */}
+                    <h3 className="font-bold text-lg" data-testid={`text-name-${integration.id}`}>
+                      {integration.name}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-sm text-muted-foreground line-clamp-3" data-testid={`text-description-${integration.id}`}>
+                      {integration.description}
+                    </p>
+
+                    {/* Category Badge */}
+                    <Badge variant="outline" className="text-xs" data-testid={`badge-category-${integration.id}`}>
+                      {integration.category}
+                    </Badge>
+
+                    {/* Learn More Button */}
+                    <Button 
+                      variant="outline" 
+                      className="w-full" 
+                      data-testid={`button-learn-more-${integration.id}`}
+                    >
+                      <ExternalLink className="w-4 h-4 mr-2" />
+                      Learn more
+                    </Button>
+                  </div>
+                </Card>
+              );
+            })}
+          </div>
+
+          {/* Empty State */}
+          {filteredIntegrations.length === 0 && (
+            <Card className="p-12">
+              <div className="text-center space-y-3">
+                <Search className="w-12 h-12 text-muted-foreground mx-auto" />
+                <h3 className="text-lg font-semibold">No integrations found</h3>
+                <p className="text-sm text-muted-foreground">
+                  Try adjusting your search or filter criteria
+                </p>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSelectedCategory("All Integrations");
+                  }}
+                  data-testid="button-clear-filters"
+                >
+                  Clear Filters
+                </Button>
+              </div>
+            </Card>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
