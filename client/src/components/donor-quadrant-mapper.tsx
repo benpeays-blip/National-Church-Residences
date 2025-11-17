@@ -281,10 +281,10 @@ export default function DonorQuadrantMapper() {
             ))}
 
             {/* Axis Labels */}
-            <div className="absolute -left-6 top-1/2 -translate-y-1/2 -rotate-90 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-              Energy ↑
+            <div className="absolute -left-8 top-1/2 -translate-y-1/2 -rotate-90 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+              Energy →
             </div>
-            <div className="absolute left-1/2 -translate-x-1/2 -bottom-6 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <div className="absolute left-1/2 -translate-x-1/2 -bottom-8 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Structure →
             </div>
           </div>
