@@ -1,4 +1,4 @@
-import { Switch, Route } from "wouter";
+import { Switch, Route, Link } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -35,6 +35,7 @@ import Pipeline from "@/pages/pipeline";
 import PipelineWithTabs from "@/pages/pipeline-with-tabs";
 import Grants from "@/pages/grants";
 import Gifts from "@/pages/gifts";
+import Events from "@/pages/events";
 import Campaigns from "@/pages/campaigns";
 import CampaignsWithTabs from "@/pages/campaigns-with-tabs";
 import CampaignDetail from "@/pages/campaign-detail";
@@ -132,6 +133,7 @@ function Router() {
       <Route path="/pipeline/forecast" component={PipelineWithTabs} />
       <Route path="/pipeline/analytics" component={PipelineWithTabs} />
       <Route path="/pipeline" component={PipelineWithTabs} />
+      <Route path="/events" component={Events} />
       <Route path="/grants" component={Grants} />
       <Route path="/gifts" component={Gifts} />
       <Route path="/campaigns/:id" component={CampaignDetail} />
@@ -212,6 +214,30 @@ function App() {
               >
                 <SidebarTrigger data-testid="button-sidebar-toggle" className="text-white hover:bg-white/10" />
                 <Breadcrumbs className="text-white/90" />
+                
+                <nav className="flex items-center gap-6 ml-8">
+                  <Link 
+                    href="/events" 
+                    className="text-white/90 hover:text-white text-sm font-medium transition-colors"
+                    data-testid="link-events"
+                  >
+                    Events
+                  </Link>
+                  <Link 
+                    href="/grants" 
+                    className="text-white/90 hover:text-white text-sm font-medium transition-colors"
+                    data-testid="link-grants"
+                  >
+                    Grants
+                  </Link>
+                  <Link 
+                    href="/donors" 
+                    className="text-white/90 hover:text-white text-sm font-medium transition-colors"
+                    data-testid="link-donors"
+                  >
+                    Donors
+                  </Link>
+                </nav>
                 
                 <div className="flex items-center gap-3 ml-auto">
                   <Button
