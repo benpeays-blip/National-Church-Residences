@@ -224,11 +224,6 @@ function App() {
                 {/* Sidebar Toggle */}
                 <SidebarTrigger data-testid="button-sidebar-toggle" className="mr-2" style={{ color: "#084594" }} />
                 
-                {/* Logo */}
-                <Link href="/" className="hover:opacity-90 transition-opacity">
-                  <FundRazorLogo variant="light" width={160} height={46} />
-                </Link>
-                
                 <div className="flex items-center gap-3 ml-auto">
                   {/* Navigation Dropdowns */}
                   <nav className="flex items-center gap-1">
