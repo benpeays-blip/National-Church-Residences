@@ -17,6 +17,7 @@ import {
 import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Calendar, FileText, Users, Network, Target, Brain, TrendingUp } from "lucide-react";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
+import DashboardHome from "@/pages/dashboard-home";
 import Dashboard from "@/pages/dashboard";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
@@ -110,7 +111,8 @@ import MGOMeetingsDetail from "@/pages/mgo-meetings-detail";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Home} />
+      <Route path="/" component={DashboardHome} />
+      <Route path="/home-old" component={Home} />
       <Route path="/welcome" component={Welcome} />
       <Route path="/national-church-residences" component={NationalChurchResidences} />
       <Route path="/dashboard" component={Dashboard} />

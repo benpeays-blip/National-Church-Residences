@@ -612,6 +612,155 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/dashboard/home", async (req, res) => {
+    try {
+      // Calculate fiscal year metrics
+      const yearStart = new Date(new Date().getFullYear(), 0, 1);
+      const annualGoal = 15000000; // $15M annual goal
+      
+      // Get YTD gifts
+      const ytdGifts = await db
+        .select({
+          amount: gifts.amount,
+          receivedAt: gifts.receivedAt,
+          personId: gifts.personId,
+          campaignId: gifts.campaignId,
+          id: gifts.id,
+        })
+        .from(gifts)
+        .where(gte(gifts.receivedAt, yearStart));
+      
+      const ytdRaised = ytdGifts.reduce((sum, g) => sum + parseFloat(g.amount), 0);
+      
+      // Get all opportunities for pipeline value
+      const allOpportunities = await db
+        .select({
+          id: opportunities.id,
+          askAmount: opportunities.askAmount,
+          probability: opportunities.probability,
+          personId: opportunities.personId,
+          stage: opportunities.stage,
+          closeDate: opportunities.closeDate,
+          daysInStage: opportunities.daysInStage,
+          personFirstName: persons.firstName,
+          personLastName: persons.lastName,
+        })
+        .from(opportunities)
+        .leftJoin(persons, eq(opportunities.personId, persons.id))
+        .orderBy(desc(opportunities.askAmount));
+      
+      const pipelineValue = allOpportunities.reduce((sum, opp) => sum + parseFloat(opp.askAmount || "0"), 0);
+      const pipelineWeightedValue = allOpportunities.reduce(
+        (sum, opp) => sum + (parseFloat(opp.askAmount || "0") * ((opp.probability || 0) / 100)),
+        0
+      );
+      
+      // Count active monthly donors (donors who gave in last 30 days)
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      const recentGifts = await db
+        .select({ personId: gifts.personId })
+        .from(gifts)
+        .where(gte(gifts.receivedAt, thirtyDaysAgo));
+      const activeMonthlyDonors = new Set(recentGifts.map(g => g.personId)).size;
+      
+      // Calculate average gift size
+      const avgGiftSize = ytdGifts.length > 0 ? ytdRaised / ytdGifts.length : 0;
+      
+      // Calculate 90-day forecast based on weighted pipeline opportunities closing in next 90 days
+      const ninetyDaysFromNow = new Date();
+      ninetyDaysFromNow.setDate(ninetyDaysFromNow.getDate() + 90);
+      const forecast90Days = allOpportunities
+        .filter(opp => opp.closeDate && new Date(opp.closeDate) <= ninetyDaysFromNow)
+        .reduce((sum, opp) => sum + (parseFloat(opp.askAmount || "0") * ((opp.probability || 0) / 100)), 0);
+      
+      // Get top 10 opportunities
+      const topOpportunities = allOpportunities.slice(0, 10).map(opp => ({
+        id: opp.id,
+        askAmount: opp.askAmount,
+        probability: opp.probability,
+        stage: opp.stage,
+        closeDate: opp.closeDate,
+        daysInStage: opp.daysInStage,
+        person: opp.personFirstName ? {
+          firstName: opp.personFirstName,
+          lastName: opp.personLastName,
+        } : undefined,
+      }));
+      
+      // Get recent gifts with person and campaign info
+      const recentGiftsData = await db
+        .select({
+          id: gifts.id,
+          amount: gifts.amount,
+          receivedAt: gifts.receivedAt,
+          personId: gifts.personId,
+          campaignId: gifts.campaignId,
+          personFirstName: persons.firstName,
+          personLastName: persons.lastName,
+          campaignName: campaigns.name,
+        })
+        .from(gifts)
+        .leftJoin(persons, eq(gifts.personId, persons.id))
+        .leftJoin(campaigns, eq(gifts.campaignId, campaigns.id))
+        .orderBy(desc(gifts.receivedAt))
+        .limit(10);
+      
+      const recentGiftsFormatted = recentGiftsData.map(g => ({
+        id: g.id,
+        amount: g.amount,
+        receivedAt: g.receivedAt,
+        person: g.personFirstName ? {
+          firstName: g.personFirstName,
+          lastName: g.personLastName,
+        } : undefined,
+        campaign: g.campaignName ? { name: g.campaignName } : undefined,
+      }));
+      
+      // Get next best actions
+      const allTasks = await db
+        .select({
+          id: tasks.id,
+          title: tasks.title,
+          priority: tasks.priority,
+          dueDate: tasks.dueDate,
+          completed: tasks.completed,
+          reason: tasks.reason,
+          personId: tasks.personId,
+        })
+        .from(tasks)
+        .where(eq(tasks.completed, 0))
+        .orderBy(
+          sql`CASE ${tasks.priority}
+            WHEN 'urgent' THEN 1
+            WHEN 'high' THEN 2
+            WHEN 'medium' THEN 3
+            WHEN 'low' THEN 4
+          END`,
+          tasks.dueDate
+        )
+        .limit(10);
+      
+      res.json({
+        metrics: {
+          ytdRaised,
+          annualGoal,
+          pipelineValue,
+          pipelineWeightedValue,
+          activeMonthlyDonors,
+          avgGiftSize,
+          forecast90Days,
+        },
+        topOpportunities,
+        recentGifts: recentGiftsFormatted,
+        nextBestActions: allTasks,
+      });
+    } catch (error) {
+      console.error("Error fetching home dashboard:", error);
+      res.status(500).json({ message: "Failed to fetch dashboard data" });
+    }
+  });
+
   app.get("/api/dashboard/mgo", async (req: any, res) => {
     try {
       // Use first MGO user for demo (no auth required)

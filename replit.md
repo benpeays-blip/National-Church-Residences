@@ -3,6 +3,14 @@
 ## Overview
 FundRazor is an AI-powered, enterprise-grade fundraising CRM designed for nonprofit development teams. It offers role-based dashboards, a comprehensive donor scoring system (Engagement, Capacity, Affinity), Kanban-style opportunity pipeline management, AI-generated "Next Best Action" recommendations, and a visual workflow builder. The platform aims to centralize fundraising intelligence, streamline donor management, enhance data-driven decision-making, and unify disparate fundraising systems with full data provenance tracking and transparency.
 
+The **Dashboard Home** (new homepage at `/`) provides a unified view of the entire fundraising operation, featuring:
+- Donor Relationship Quadrant visualization at the top
+- Key performance metrics (YTD Progress, Pipeline Value, Monthly Donors, 90-Day Forecast)
+- Top Opportunities
+- AI-generated Next Best Actions
+- Recent Gifts
+- Active Campaigns overview
+
 ## User Preferences
 - **Design Philosophy**: Enterprise-grade, data-dense UI inspired by Linear and Salesforce NPSP
 - **Visual Quality**: Paramount importance - must follow design_guidelines.md religiously
