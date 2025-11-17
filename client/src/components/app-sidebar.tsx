@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
-import ncrLogo from "@assets/image_1762185084577.png";
 import {
   LayoutDashboard,
   Users,
@@ -290,7 +289,7 @@ export function AppSidebar() {
       >
         <div className="flex flex-col gap-2 w-full pointer-events-none">
           <img 
-            src={ncrLogo}
+            src="/attached_assets/image_1762185084577.png"
             alt="National Church Residences" 
             className="h-12 w-auto object-contain"
             data-testid="img-ncr-logo"
