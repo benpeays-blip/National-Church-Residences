@@ -264,6 +264,12 @@ const workflowMenuItems = [
         roles: ["ADMIN", "DEV_DIRECTOR", "DATA_OPS"],
       },
       {
+        title: "Integrations 2",
+        url: "/integrations-2",
+        icon: Plug,
+        roles: ["ADMIN", "DEV_DIRECTOR", "DATA_OPS"],
+      },
+      {
         title: "Settings",
         url: "/settings",
         icon: SettingsIcon,

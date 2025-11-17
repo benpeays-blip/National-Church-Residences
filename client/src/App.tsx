@@ -48,6 +48,7 @@ import CampaignDetail from "@/pages/campaign-detail";
 import DataHealth from "@/pages/data-health";
 import Settings from "@/pages/settings";
 import Integrations from "@/pages/integrations";
+import Integrations2 from "@/pages/integrations-2";
 
 // AI Intelligence
 import AIPredictiveTiming from "@/pages/ai-predictive-timing";
@@ -149,6 +150,7 @@ function Router() {
       <Route path="/campaigns" component={CampaignsWithTabs} />
       <Route path="/data-health" component={DataHealth} />
       <Route path="/integrations" component={Integrations} />
+      <Route path="/integrations-2" component={Integrations2} />
       <Route path="/settings" component={Settings} />
       
       {/* AI Intelligence */}
