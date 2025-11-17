@@ -291,7 +291,7 @@ export default function DonorQuadrantMapper() {
             </div>
           </div>
         </CardContent>
-        <CardFooter className="bg-muted/30 border-t text-sm text-muted-foreground">
+        <CardFooter className="bg-muted/30 border-t text-sm text-muted-foreground py-4 flex items-center justify-center">
           <TrendingUp className="w-4 h-4 mr-2 text-primary" />
           <span>Goal: move every donor toward <strong className="text-foreground">Partner</strong> (top-right) with wise effort and structure.</span>
         </CardFooter>
