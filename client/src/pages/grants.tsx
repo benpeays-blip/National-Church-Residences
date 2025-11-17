@@ -176,68 +176,71 @@ export default function Grants() {
             return (
               <Card
                 key={grant.id}
-                className="p-6 hover-elevate cursor-pointer"
+                className="hover-elevate cursor-pointer overflow-hidden"
                 data-testid={`card-grant-${grant.id}`}
               >
-                <div className="space-y-4">
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-lg truncate" data-testid={`text-grant-funder-${grant.id}`}>
-                        {grant.funderName}
-                      </h3>
-                      <p className="text-sm text-muted-foreground line-clamp-2">
-                        {grant.purpose}
-                      </p>
-                    </div>
-                    <Badge variant={stageBadgeVariant(grant.stage)} data-testid={`badge-grant-stage-${grant.id}`}>
-                      {grant.stage}
-                    </Badge>
+                <div 
+                  className="p-4 flex items-start justify-between gap-2" 
+                  style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}
+                >
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-lg truncate" data-testid={`text-grant-funder-${grant.id}`}>
+                      {grant.funderName}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {grant.purpose}
+                    </p>
                   </div>
+                  <Badge variant={stageBadgeVariant(grant.stage)} data-testid={`badge-grant-stage-${grant.id}`}>
+                    {grant.stage}
+                  </Badge>
+                </div>
+                <div className="p-6 pt-4 space-y-4">
 
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground flex items-center gap-1">
-                        <DollarSign className="w-3 h-3" />
-                        Ask Amount
-                      </span>
-                      <span className="font-semibold tabular-nums">
-                        {grant.askAmount ? formatCurrency(parseFloat(grant.askAmount)) : "TBD"}
-                      </span>
-                    </div>
-
-                    {grant.awardedAmount && (
+                    <div className="space-y-2">
                       <div className="flex items-center justify-between text-sm">
                         <span className="text-muted-foreground flex items-center gap-1">
                           <DollarSign className="w-3 h-3" />
-                          Awarded
+                          Ask Amount
                         </span>
-                        <span className="font-semibold tabular-nums text-chart-1">
-                          {formatCurrency(parseFloat(grant.awardedAmount))}
-                        </span>
-                      </div>
-                    )}
-
-                    {nextDeadline && (
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground flex items-center gap-1">
-                          <Calendar className="w-3 h-3" />
-                          {nextDeadline.label}
-                        </span>
-                        <span className="tabular-nums">
-                          {formatDate(nextDeadline.date)}
+                        <span className="font-semibold tabular-nums">
+                          {grant.askAmount ? formatCurrency(parseFloat(grant.askAmount)) : "TBD"}
                         </span>
                       </div>
-                    )}
-                  </div>
 
-                  <div className="pt-2 border-t">
-                    <DataProvenanceBadge 
-                      sourceSystem={grant.sourceSystem}
-                      syncedAt={grant.syncedAt ? new Date(grant.syncedAt) : null}
-                      variant="default"
-                    />
+                      {grant.awardedAmount && (
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground flex items-center gap-1">
+                            <DollarSign className="w-3 h-3" />
+                            Awarded
+                          </span>
+                          <span className="font-semibold tabular-nums text-chart-1">
+                            {formatCurrency(parseFloat(grant.awardedAmount))}
+                          </span>
+                        </div>
+                      )}
+
+                      {nextDeadline && (
+                        <div className="flex items-center justify-between text-sm">
+                          <span className="text-muted-foreground flex items-center gap-1">
+                            <Calendar className="w-3 h-3" />
+                            {nextDeadline.label}
+                          </span>
+                          <span className="tabular-nums">
+                            {formatDate(nextDeadline.date)}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="pt-2 border-t">
+                      <DataProvenanceBadge 
+                        sourceSystem={grant.sourceSystem}
+                        syncedAt={grant.syncedAt ? new Date(grant.syncedAt) : null}
+                        variant="default"
+                      />
+                    </div>
                   </div>
-                </div>
               </Card>
             );
           })}
