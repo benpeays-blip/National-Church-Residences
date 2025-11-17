@@ -13,6 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
 import ncrLogo from "@assets/ncr-logo-horizontal.png";
+import { Link } from "wouter";
 import {
   LayoutDashboard,
   Users,
@@ -289,12 +290,14 @@ export function AppSidebar() {
         className="h-16 flex items-center px-4 border-b bg-white relative overflow-hidden"
       >
         <div className="flex flex-col gap-2 w-full pointer-events-none">
-          <img 
-            src={ncrLogo}
-            alt="National Church Residences" 
-            className="h-12 w-auto object-contain"
-            data-testid="img-ncr-logo"
-          />
+          <Link href="/" className="pointer-events-auto w-fit">
+            <img 
+              src={ncrLogo}
+              alt="National Church Residences" 
+              className="h-12 w-auto object-contain cursor-pointer hover-elevate active-elevate-2"
+              data-testid="img-ncr-logo"
+            />
+          </Link>
           {user?.role && (
             <Badge variant="secondary" className="text-xs w-fit pointer-events-auto" style={{ color: "#084594" }}>
               {user.role.replace("_", " ")}
