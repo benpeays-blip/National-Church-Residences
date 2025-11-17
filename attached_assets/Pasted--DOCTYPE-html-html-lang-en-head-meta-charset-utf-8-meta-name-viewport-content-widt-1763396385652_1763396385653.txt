@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Blues-8 UI Style Guide</title>
+<style>
+  /* === Brand Tokens: Blues-8 === */
+  :root{
+    --primary-100: rgba(247, 251, 255, 1); /* b1  */
+    --primary-300: rgba(222, 235, 247, 1); /* b2  */
+    --primary-400: rgba(198, 219, 239, 1); /* b3  */
+    --primary-500: rgba(158, 202, 225, 1); /* b4  */
+    --primary-600: rgba(107, 174, 214, 1); /* b5  */
+    --primary-700: rgba(66, 146, 198, 1);  /* b6  */
+    --primary-800: rgba(33, 113, 181, 1);  /* b7  */
+    --primary-900: rgba(8, 69, 148, 1);    /* b8  */
+
+    /* Neutrals & text */
+    --bg: #f8fafc;
+    --ink: #1f2937;        /* dark text */
+    --ink-soft: #4b5563;   /* body */
+    --ink-onblue: #ffffff; /* text on dark blue */
+    --border: #e5e7eb;
+    --shadow: 0 2px 10px rgba(0,0,0,.06);
+    --radius: 14px;
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Arial;background:var(--bg);color:var(--ink)}
+  .container{max-width:1100px;margin:32px auto;padding:0 18px;display:grid;gap:22px}
+
+  /* Header preview */
+  .site-header{background:var(--primary-900);color:var(--ink-onblue);border-bottom:1px solid rgba(255,255,255,.12)}
+  .nav{max-width:1100px;margin:0 auto;padding:14px 18px;display:flex;align-items:center;justify-content:space-between}
+  .brand{font-weight:700;letter-spacing:.3px}
+  .nav a{color:var(--ink-onblue);text-decoration:none;margin-left:20px;opacity:.9}
+  .nav a:hover{opacity:1;text-decoration:underline}
+
+  /* Panels */
+  .panel{background:#fff;border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+  .panel .hd{padding:12px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+  .panel .bd{padding:16px}
+  h2{margin:0;font-size:18px}
+
+  /* Swatches */
+  .swatches{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+  .sw{border-radius:12px;border:1px solid var(--border);overflow:hidden}
+  .sw-top{padding:18px 16px;display:flex;align-items:center;justify-content:space-between}
+  .sw-foot{padding:10px 12px;border-top:1px dashed rgba(0,0,0,.08);font-size:12px;color:var(--ink-soft);display:flex;justify-content:space-between}
+  .chip{display:flex;gap:8px;align-items:center;font-weight:600}
+  .pill{font-size:12px;border:1px solid rgba(0,0,0,.15);border-radius:999px;padding:2px 8px;background:rgba(255,255,255,.55)}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;font-size:12px}
+
+  /* Component previews */
+  .hero{border-radius:var(--radius);padding:28px 22px;color:#fff;background:linear-gradient(135deg,var(--primary-800),var(--primary-700))}
+  .btns{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{padding:10px 14px;border-radius:10px;border:1px solid transparent;cursor:pointer;font-weight:600}
+  .btn.primary{background:var(--primary-700);color:#fff;border-color:rgba(0,0,0,.06)}
+  .btn.primary:hover{background:var(--primary-800)}
+  .btn.secondary{background:transparent;color:var(--primary-700);border-color:var(--primary-600)}
+  .btn.secondary:hover{background:var(--primary-300)}
+  .cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .card{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}
+  .card-hd{background:var(--primary-600);color:#fff;padding:10px 12px;font-weight:700}
+  .card-bd{padding:12px;color:var(--ink-soft)}
+  .section-alt{background:var(--primary-300);border-radius:var(--radius);padding:16px}
+  .kpi{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+  .kpi .box{background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px}
+  .kpi .num{font-weight:800;font-size:22px;color:var(--primary-800)}
+  .table{width:100%;border-collapse:separate;border-spacing:0;border:1px solid var(--border);border-radius:12px;overflow:hidden}
+  .table thead th{background:var(--primary-500);color:#fff;text-align:left;padding:10px 12px}
+  .table tbody td{padding:10px 12px;border-top:1px solid var(--border)}
+  .table tbody tr:nth-child(even){background:var(--primary-100)}
+
+  /* Footer preview */
+  .site-footer{background:var(--primary-900);color:#fff;margin-top:20px}
+  .site-footer .inner{max-width:1100px;margin:0 auto;padding:16px 18px;font-size:14px;opacity:.95}
+  .link{color:#fff;opacity:.85;text-decoration:underline}
+  .link:hover{opacity:1}
+
+  /* Utility */
+  .grid-2{display:grid;grid-template-columns:1.1fr .9fr;gap:18px}
+  @media (max-width:960px){.grid-2,.cards,.swatches{grid-template-columns:1fr}}
+  .muted{color:var(--ink-soft)}
+  .copy{cursor:pointer;opacity:.9}
+  .copy:hover{opacity:1;text-decoration:underline}
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <nav class="nav">
+    <div class="brand">Your Site</div>
+    <div>
+      <a href="#">Home</a>
+      <a href="#">Donors</a>
+      <a href="#">Reports</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+</header>
+
+<main class="container">
+  <!-- PALETTE MAP -->
+  <section class="panel">
+    <div class="hd">
+      <h2>Blues-8 Palette • Functional Mapping</h2>
+      <div class="muted">Click a token to copy</div>
+    </div>
+    <div class="bd">
+      <div class="swatches" id="swatches">
+        <!-- Swatches injected by JS so labels & tokens stay in sync -->
+      </div>
+    </div>
+  </section>
+
+  <section class="grid-2">
+    <!-- COMPONENT GUIDANCE -->
+    <div class="panel">
+      <div class="hd"><h2>Best-Practice Usage</h2></div>
+      <div class="bd">
+        <ul>
+          <li><strong>Header / Nav:</strong> <span class="mono">--primary-900</span> background; links hover to <span class="mono">--primary-700</span>.</li>
+          <li><strong>Hero / Banner:</strong> gradient <span class="mono">--primary-800 → --primary-700</span>; text white.</li>
+          <li><strong>Primary Button:</strong> <span class="mono">--primary-700</span> (hover <span class="mono">--primary-800</span>), white text.</li>
+          <li><strong>Secondary Button:</strong> transparent, text <span class="mono">--primary-700</span>, border <span class="mono">--primary-600</span>, hover fill <span class="mono">--primary-300</span>.</li>
+          <li><strong>Card Header:</strong> <span class="mono">--primary-600</span>; <strong>Card Body:</strong> white or <span class="mono">--primary-300/100</span>.</li>
+          <li><strong>Section Alt Backgrounds:</strong> <span class="mono">--primary-300</span> with dark text.</li>
+          <li><strong>Tables:</strong> header row <span class="mono">--primary-500</span>; zebra rows <span class="mono">--primary-100</span>.</li>
+          <li><strong>Footer:</strong> <span class="mono">--primary-900</span>, links hover to <span class="mono">--primary-600</span>.</li>
+        </ul>
+        <p class="muted">Rule of thumb: darker = higher importance/elevation. Keep one true action blue (700/800) for CTAs.</p>
+      </div>
+    </div>
+
+    <!-- LIVE COMPONENT PREVIEW -->
+    <div class="panel">
+      <div class="hd"><h2>Live Preview</h2></div>
+      <div class="bd" style="display:grid;gap:14px">
+        <div class="hero">
+          <div style="font-weight:800;font-size:20px">Clear call to action</div>
+          <p style="margin:6px 0 12px 0;opacity:.95">Use 800→700 gradient with white text.</p>
+          <div class="btns">
+            <button class="btn primary">Primary</button>
+            <button class="btn secondary">Secondary</button>
+          </div>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="card-hd">Card Header</div>
+            <div class="card-bd">Use 600 here; it reads strong without overpowering.</div>
+          </div>
+          <div class="card">
+            <div class="card-hd">Donor Update</div>
+            <div class="card-bd">Card bodies on white or 100/300 backgrounds.</div>
+          </div>
+          <div class="card">
+            <div class="card-hd">Performance</div>
+            <div class="card-bd">Borders in neutral gray, not blue, to avoid washout.</div>
+          </div>
+        </div>
+
+        <div class="section-alt">
+          <div style="font-weight:700">Alternate Section</div>
+          <p class="muted" style="margin:6px 0 0 0">Background 300 with dark text. Good for subtle grouping.</p>
+          <div class="kpi" style="margin-top:10px">
+            <div class="box"><div class="num">42</div><div class="muted">New partners</div></div>
+            <div class="box"><div class="num">128</div><div class="muted">Active friends</div></div>
+            <div class="box"><div class="num">311</div><div class="muted">Acquaintances</div></div>
+          </div>
+        </div>
+
+        <table class="table">
+          <thead><tr><th>Donor</th><th>Stage</th><th>Next Action</th></tr></thead>
+          <tbody>
+            <tr><td>Alice Hart</td><td>Friend</td><td>Schedule site visit</td></tr>
+            <tr><td>Brandon Cole</td><td>Partner</td><td>Quarterly strategy call</td></tr>
+            <tr><td>Daniel King</td><td>Colleague</td><td>Warm intro to PM</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- OPTIONAL: Quadrant snippet styled with Blues-8 -->
+  <section class="panel">
+    <div class="hd"><h2>Quadrant Styling (Blues-8)</h2><div class="muted">Partner (top-right) uses the deepest tones</div></div>
+    <div class="bd">
+      <div style="display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:center">
+        <div style="position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#fff">
+          <div style="position:absolute;inset:0 50% 50% 0;background:linear-gradient(135deg,var(--primary-500),var(--primary-600))"></div><!-- TL Friend -->
+          <div style="position:absolute;inset:0 0 50% 50%;background:linear-gradient(135deg,var(--primary-700),var(--primary-900))"></div><!-- TR Partner -->
+          <div style="position:absolute;inset:50% 50% 0 0;background:linear-gradient(135deg,var(--primary-100),var(--primary-400))"></div><!-- BL Acquaintance -->
+          <div style="position:absolute;inset:50% 0 0 50%;background:linear-gradient(135deg,var(--primary-400),var(--primary-600))"></div><!-- BR Colleague -->
+          <div style="position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--border)"></div>
+          <div style="position:absolute;top:50%;left:0;right:0;height:1px;background:var(--border)"></div>
+          <div style="position:absolute;left:8px;top:8px;color:#fff;font-weight:700">Friend</div>
+          <div style="position:absolute;right:8px;top:8px;color:#fff;font-weight:700">Partner</div>
+          <div style="position:absolute;left:8px;bottom:8px;color:#0f172a;font-weight:700">Acquaintance</div>
+          <div style="position:absolute;right:8px;bottom:8px;color:#0f172a;font-weight:700">Colleague</div>
+        </div>
+        <div class="muted">
+          • TL (Friend): <span class="mono">--primary-500 → --primary-600</span><br/>
+          • TR (Partner): <span class="mono">--primary-700 → --primary-900</span><br/>
+          • BL (Acquaintance): <span class="mono">--primary-100 → --primary-400</span><br/>
+          • BR (Colleague): <span class="mono">--primary-400 → --primary-600</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="inner">
+    Footer uses <span class="mono">--primary-900</span>. Links hover toward <span class="mono">--primary-600</span>.
+    <a class="link" href="#">Example link</a>
+  </div>
+</footer>
+
+<script>
+/* Build swatches dynamically so tokens/labels stay in sync */
+const blues = [
+  {token:'--primary-900', label:'Brand Anchor / Header / Footer', use:'Header, primary nav, strongest accents'},
+  {token:'--primary-800', label:'Strong Accent', use:'CTA hover, section dividers'},
+  {token:'--primary-700', label:'Core Action', use:'Primary buttons, links'},
+  {token:'--primary-600', label:'Secondary Accent', use:'Card headers, chips'},
+  {token:'--primary-500', label:'Support Tone', use:'Table header, info sections'},
+  {token:'--primary-400', label:'Light Neutral', use:'Cards/panels on tinted backgrounds'},
+  {token:'--primary-300', label:'Very Light Neutral', use:'Alt sections, zebra rows'},
+  {token:'--primary-100', label:'Base Background', use:'Page/body bg'}
+];
+
+const swWrap = document.getElementById('swatches');
+blues.forEach(({token,label,use})=>{
+  const div = document.createElement('div');
+  div.className = 'sw';
+  const top = document.createElement('div');
+  top.className = 'sw-top';
+  top.style.background = `var(${token})`;
+  top.style.color = ['--primary-700','--primary-800','--primary-900'].includes(token) ? '#fff' : '#0f172a';
+  top.innerHTML = `
+    <div class="chip">Aa <span class="pill">${label}</span></div>
+    <div class="mono copy" data-token="${token}">${token}</div>
+  `;
+  const foot = document.createElement('div');
+  foot.className = 'sw-foot';
+  foot.innerHTML = `<span class="mono">rgb ${getComputedStyle(document.documentElement).getPropertyValue(token).trim()}</span>
+                    <span class="muted">${use}</span>`;
+  div.appendChild(top); div.appendChild(foot);
+  swWrap.appendChild(div);
+});
+
+// copy token name
+document.addEventListener('click', e=>{
+  const el = e.target.closest('.copy');
+  if(!el) return;
+  const txt = el.dataset.token;
+  navigator.clipboard.writeText(`var(${txt})`);
+  el.textContent = 'copied';
+  setTimeout(()=>{el.textContent = txt}, 900);
+});
+</script>
+</body>
+</html>
