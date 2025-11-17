@@ -16,13 +16,18 @@ FundRazor is an AI-powered, enterprise-grade fundraising CRM designed for nonpro
 - **Styling**: Tailwind CSS, shadcn/ui components
 - **Routing**: wouter
 - **State Management**: TanStack Query v5
-- **Navigation**: Salesforce-style header-only navigation with white background and dark navy blue accents (#084594 - b8). Clean top header features:
-  - FundRazor logo in top-left (dark navy blue)
-  - Four text-based dropdown menus (semibold, no icons): **Quadrant**, Events, Grants, Donors
-  - Utility icons on right: Search, Notifications, Settings, Account (all dark navy blue)
-  - Gray separator between navigation and utility icons
-  - Subtle gray hover states (`hover:bg-gray-100`)
-  - Contextual tabs appear within major sections
+- **Navigation**: Hybrid navigation system combining collapsible sidebar with Salesforce-style header:
+  - **Sidebar**: Collapsible left navigation (16rem expanded, 3rem collapsed) with role-based menu sections
+    - Dark gradient header with FundRazorLogo and user role badge
+    - Organized sections: Overview, Intelligence, Operations, Relationship Science, AI Tools, Analytics, System
+    - Collapsible sections with chevron indicators and localStorage persistence
+  - **Top Header**: White background with dark navy blue accents (#084594 - b8)
+    - Sidebar toggle button (hamburger icon, dark navy blue)
+    - FundRazor logo in center-left (dark navy blue)
+    - Four text-based dropdown menus (semibold, no icons): **Quadrant**, Events, Grants, Donors
+    - Utility icons on right: Search, Notifications, Settings, Account (all dark navy blue)
+    - Gray separator between navigation and utility icons
+    - Subtle gray hover states (`hover:bg-gray-100`)
 - **UI/UX Decisions**: Enterprise data platform aesthetic, Inter font family, Blues-8 gradient color system (8 shades from near-white to deep navy), Tailwind spacing system, standardized component guidelines (padding, font sizes for KPIs, dense tables, two-column forms, fixed-width sidebar).
 - **Color System (Blues-8)**: A professional 8-shade gradient palette for consistent branding and UI hierarchy, using darker shades for higher importance/elevation.
 - **Design Unification**: "Clean & Modern Left-Aligned Cards" pattern applied consistently across the platform.
