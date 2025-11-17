@@ -20,7 +20,17 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - **Navigation**: Hybrid navigation pattern combining persistent sidebar (global navigation) with contextual top tabs (section-specific navigation). Implemented via reusable `SectionTabs` component. Sidebar features:
   - **Collapsible Sections**: localStorage persistence for maintaining section expand/collapse preferences across sessions
   - **Sidebar Collapse**: Icon-only collapse mode (Cmd/Ctrl+B or click toggle button) that reduces sidebar to ~48px width with tooltips on hover, state persists via cookies
-- **UI/UX Decisions**: Enterprise data platform aesthetic, Inter font family, primary blue color palette with specific chart and semantic colors, Tailwind spacing system, standardized component guidelines (padding, font sizes for KPIs, dense tables, two-column forms, fixed-width sidebar).
+- **UI/UX Decisions**: Enterprise data platform aesthetic, Inter font family, Blues-8 gradient color system (8 shades from near-white to deep navy), Tailwind spacing system, standardized component guidelines (padding, font sizes for KPIs, dense tables, two-column forms, fixed-width sidebar).
+- **Color System (Blues-8)**: Professional 8-shade gradient palette implementing industry best practices:
+  - **b8** `rgba(8, 69, 148, 1)` → Deep navy blue - Headers, footers, sidebar background, brand anchor (--primary-900)
+  - **b7** `rgba(33, 113, 181, 1)` → Strong blue - Hover states, section dividers, highlights (--primary-800)
+  - **b6** `rgba(66, 146, 198, 1)` → Medium-dark blue - Primary buttons, links, core action color (--primary-700/--primary/--accent)
+  - **b5** `rgba(107, 174, 214, 1)` → Moderate blue - Card headers, secondary accents (--primary-600)
+  - **b4** `rgba(158, 202, 225, 1)` → Light steel blue - Info sections, borders, supporting tones (--primary-500)
+  - **b3** `rgba(198, 219, 239, 1)` → Soft powder blue - Card backgrounds, light panels (--primary-400)
+  - **b2** `rgba(222, 235, 247, 1)` → Pale sky blue - Page backgrounds, zebra rows (--primary-300/--muted)
+  - **b1** `rgba(247, 251, 255, 1)` → Near-white with blue tint - Base background (--primary-100/--background)
+  - Design principle: Darker shades indicate higher importance/elevation, aligning with Energy-Structure quadrant logic (Partner zone uses deepest blues)
 - **Design Unification**: "Clean & Modern Left-Aligned Cards" pattern applied across 40+ pages with consistent headers, loading/error states, metric card layouts, spacing, and typography.
 - **Branded Data Source Badges**: Visual data provenance system using company logos (Salesforce, Mailchimp, LinkedIn) with custom tinted backgrounds and borders, including compact, default, inline, and icon variants with interactive tooltips.
 - **Interactive Dashboard Metrics**: All 6 key metrics on the Dev Director dashboard link to dedicated drill-down analytics pages for Pipeline Value Analysis, 90-Day Forecast, YTD vs Goal, LYBUNT Donor Recovery, and SYBUNT Donor Recovery. Major Gifts Officer dashboard features 4 clickable metric cards linking to dedicated detail pages:
