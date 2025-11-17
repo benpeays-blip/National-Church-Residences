@@ -54,53 +54,6 @@ const workflowMenuItems = [
         icon: Home,
         roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
       },
-      {
-        title: "National Church Residences",
-        url: "/national-church-residences",
-        icon: Building2,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
-        title: "Tech Stack Mapper",
-        url: "/tech-stack-mapper",
-        icon: Layers,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
-        title: "Organization Mapper",
-        url: "/organization-mapper",
-        icon: Users,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
-        title: "Workflow Canvas",
-        url: "/organization-workflow-canvas",
-        icon: Network,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-    ],
-  },
-  {
-    groupLabel: "Design Ideas",
-    items: [
-      {
-        title: "Icon Style Guide",
-        url: "/icon-style-guide",
-        icon: Sparkles,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
-        title: "Navigation Mockups",
-        url: "/navigation-mockups",
-        icon: LayoutGrid,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
-        title: "Navigation Preview",
-        url: "/navigation-preview",
-        icon: Network,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
     ],
   },
   {
@@ -273,6 +226,58 @@ const workflowMenuItems = [
         title: "Settings",
         url: "/settings",
         icon: SettingsIcon,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+    ],
+  },
+  {
+    groupLabel: "Design Ideas",
+    items: [
+      {
+        title: "Icon Style Guide",
+        url: "/icon-style-guide",
+        icon: Sparkles,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+      {
+        title: "Navigation Mockups",
+        url: "/navigation-mockups",
+        icon: LayoutGrid,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+      {
+        title: "Navigation Preview",
+        url: "/navigation-preview",
+        icon: Network,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+    ],
+  },
+  {
+    groupLabel: "Other",
+    items: [
+      {
+        title: "Tech Stack Mapper",
+        url: "/tech-stack-mapper",
+        icon: Layers,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+      {
+        title: "National Church Residences",
+        url: "/national-church-residences",
+        icon: Building2,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+      {
+        title: "Organization Mapper",
+        url: "/organization-mapper",
+        icon: Users,
+        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
+      },
+      {
+        title: "Workflow Canvas",
+        url: "/organization-workflow-canvas",
+        icon: Network,
         roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
       },
     ],
