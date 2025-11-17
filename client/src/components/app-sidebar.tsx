@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/hooks/useAuth";
-import { FundRazorLogo } from "@/components/FundRazorLogo";
+import { NationalChurchResidencesLogo } from "@/components/NationalChurchResidencesLogo";
 import {
   LayoutDashboard,
   Users,
@@ -315,14 +315,10 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon" data-testid="sidebar-main">
       <SidebarHeader 
-        className="h-16 flex items-center px-4 border-b bg-white relative"
+        className="h-16 flex items-center px-4 border-b bg-white relative overflow-hidden"
       >
         <div className="flex flex-col gap-2 w-full pointer-events-none">
-          <img 
-            src="/attached_assets/newlogo-min_1763416734335.png" 
-            alt="National Church Residences" 
-            className="h-12 w-auto object-contain"
-          />
+          <NationalChurchResidencesLogo className="scale-75 origin-left" />
           {user?.role && (
             <Badge variant="secondary" className="text-xs w-fit pointer-events-auto" style={{ color: "#084594" }}>
               {user.role.replace("_", " ")}
