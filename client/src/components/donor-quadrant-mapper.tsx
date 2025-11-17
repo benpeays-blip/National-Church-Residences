@@ -1,0 +1,272 @@
+import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import { TrendingUp, Users, Lightbulb } from 'lucide-react';
+
+interface Donor {
+  id: string;
+  firstName: string;
+  lastName: string;
+  primaryEmail: string | null;
+  organizationName: string | null;
+  totalLifetimeGiving: string | null;
+  energy: number;
+  structure: number;
+  quadrant: 'partner' | 'friend' | 'colleague' | 'acquaintance';
+  capacityScore: number | null;
+  engagementScore: number | null;
+  affinityScore: number | null;
+}
+
+interface QuadrantData {
+  donors: Donor[];
+  counts: {
+    partner: number;
+    friend: number;
+    colleague: number;
+    acquaintance: number;
+  };
+  playbooks: {
+    partner: string[];
+    friend: string[];
+    colleague: string[];
+    acquaintance: string[];
+  };
+  totalDonors: number;
+}
+
+type QuadrantType = 'partner' | 'friend' | 'colleague' | 'acquaintance';
+
+export default function DonorQuadrantMapper() {
+  const [selectedQuadrant, setSelectedQuadrant] = useState<QuadrantType>('partner');
+
+  const { data, isLoading } = useQuery<QuadrantData>({
+    queryKey: ['/api/donors/quadrant'],
+  });
+
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <Card className="lg:col-span-3">
+          <CardHeader>
+            <Skeleton className="h-6 w-64" />
+            <Skeleton className="h-4 w-96 mt-2" />
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="w-full aspect-square" />
+          </CardContent>
+        </Card>
+        <Card className="lg:col-span-2">
+          <CardHeader>
+            <Skeleton className="h-6 w-48" />
+          </CardHeader>
+          <CardContent>
+            <Skeleton className="h-64 w-full" />
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return <div>No data available</div>;
+  }
+
+  const quadrantConfig = {
+    partner: { label: 'Partner', color: 'bg-emerald-50 dark:bg-emerald-950/20', borderColor: 'border-emerald-200 dark:border-emerald-800', textColor: 'text-emerald-700 dark:text-emerald-400', description: 'High Energy, High Structure' },
+    friend: { label: 'Friend', color: 'bg-sky-50 dark:bg-sky-950/20', borderColor: 'border-sky-200 dark:border-sky-800', textColor: 'text-sky-700 dark:text-sky-400', description: 'High Energy, Low Structure' },
+    colleague: { label: 'Colleague', color: 'bg-amber-50 dark:bg-amber-950/20', borderColor: 'border-amber-200 dark:border-amber-800', textColor: 'text-amber-700 dark:text-amber-400', description: 'Low Energy, High Structure' },
+    acquaintance: { label: 'Acquaintance', color: 'bg-slate-50 dark:bg-slate-950/20', borderColor: 'border-slate-200 dark:border-slate-800', textColor: 'text-slate-700 dark:text-slate-400', description: 'Low Energy, Low Structure' },
+  };
+
+  const selectedDonors = data.donors.filter(d => d.quadrant === selectedQuadrant)
+    .sort((a, b) => (b.energy + b.structure) - (a.energy + a.structure));
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+      {/* Main Quadrant Visualization */}
+      <Card className="lg:col-span-3">
+        <CardHeader className="bg-primary/5 border-b">
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2">
+                <Users className="w-5 h-5 text-primary" />
+                Donor Relationship Quadrant
+              </CardTitle>
+              <CardDescription className="mt-1">
+                Energy increases upward; structure increases to the right. Goal: move every donor toward Partner.
+              </CardDescription>
+            </div>
+            <Badge variant="outline" className="text-sm">
+              {data.totalDonors} Donors
+            </Badge>
+          </div>
+        </CardHeader>
+        <CardContent className="p-6">
+          <div className="relative w-full aspect-square border-2 border-border rounded-lg overflow-hidden bg-background">
+            {/* Grid Lines */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
+            <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
+
+            {/* Quadrants - Clickable */}
+            {/* Top Left - Friend */}
+            <button
+              onClick={() => setSelectedQuadrant('friend')}
+              className={`absolute left-0 top-0 w-1/2 h-1/2 p-4 ${quadrantConfig.friend.color} hover-elevate active-elevate-2 transition-all`}
+              style={{ background: selectedQuadrant === 'friend' ? 'linear-gradient(180deg, rgba(14, 165, 233, 0.15), transparent 60%)' : 'linear-gradient(180deg, rgba(14, 165, 233, 0.08), transparent 60%)' }}
+              data-testid="quadrant-friend"
+            >
+              <div className={`font-bold text-lg ${quadrantConfig.friend.textColor}`}>Friend</div>
+              <Badge className="mt-2" data-testid="count-friend">{data.counts.friend}</Badge>
+            </button>
+
+            {/* Top Right - Partner */}
+            <button
+              onClick={() => setSelectedQuadrant('partner')}
+              className={`absolute right-0 top-0 w-1/2 h-1/2 p-4 ${quadrantConfig.partner.color} hover-elevate active-elevate-2 transition-all`}
+              style={{ background: selectedQuadrant === 'partner' ? 'linear-gradient(180deg, rgba(16, 185, 129, 0.15), transparent 60%)' : 'linear-gradient(180deg, rgba(16, 185, 129, 0.08), transparent 60%)' }}
+              data-testid="quadrant-partner"
+            >
+              <div className={`font-bold text-lg ${quadrantConfig.partner.textColor}`}>Partner</div>
+              <Badge className="mt-2" data-testid="count-partner">{data.counts.partner}</Badge>
+            </button>
+
+            {/* Bottom Left - Acquaintance */}
+            <button
+              onClick={() => setSelectedQuadrant('acquaintance')}
+              className={`absolute left-0 bottom-0 w-1/2 h-1/2 p-4 ${quadrantConfig.acquaintance.color} hover-elevate active-elevate-2 transition-all`}
+              style={{ background: selectedQuadrant === 'acquaintance' ? 'linear-gradient(0deg, rgba(100, 116, 139, 0.15), transparent 60%)' : 'linear-gradient(0deg, rgba(100, 116, 139, 0.08), transparent 60%)' }}
+              data-testid="quadrant-acquaintance"
+            >
+              <div className={`font-bold text-lg ${quadrantConfig.acquaintance.textColor}`}>Acquaintance</div>
+              <Badge className="mt-2" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
+            </button>
+
+            {/* Bottom Right - Colleague */}
+            <button
+              onClick={() => setSelectedQuadrant('colleague')}
+              className={`absolute right-0 bottom-0 w-1/2 h-1/2 p-4 ${quadrantConfig.colleague.color} hover-elevate active-elevate-2 transition-all`}
+              style={{ background: selectedQuadrant === 'colleague' ? 'linear-gradient(0deg, rgba(245, 158, 11, 0.15), transparent 60%)' : 'linear-gradient(0deg, rgba(245, 158, 11, 0.08), transparent 60%)' }}
+              data-testid="quadrant-colleague"
+            >
+              <div className={`font-bold text-lg ${quadrantConfig.colleague.textColor}`}>Colleague</div>
+              <Badge className="mt-2" data-testid="count-colleague">{data.counts.colleague}</Badge>
+            </button>
+
+            {/* Donor Dots */}
+            {data.donors.map((donor) => (
+              <div
+                key={donor.id}
+                className="absolute w-2.5 h-2.5 rounded-full bg-primary/80 shadow-sm hover:scale-150 transition-transform cursor-pointer"
+                style={{
+                  left: `calc(${donor.structure}% - 5px)`,
+                  top: `calc(${100 - donor.energy}% - 5px)`,
+                }}
+                title={`${donor.firstName} ${donor.lastName}\nEnergy: ${donor.energy}\nStructure: ${donor.structure}`}
+                data-testid={`dot-donor-${donor.id}`}
+              />
+            ))}
+
+            {/* Axis Labels */}
+            <div className="absolute -left-6 top-1/2 -translate-y-1/2 -rotate-90 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+              Energy ↑
+            </div>
+            <div className="absolute left-1/2 -translate-x-1/2 -bottom-6 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+              Structure →
+            </div>
+          </div>
+        </CardContent>
+        <CardFooter className="bg-muted/30 border-t text-sm text-muted-foreground">
+          <TrendingUp className="w-4 h-4 mr-2 text-primary" />
+          <span>Goal: move every donor toward <strong className="text-foreground">Partner</strong> (top-right) with wise effort and structure.</span>
+        </CardFooter>
+      </Card>
+
+      {/* Right Panel - Quadrant Details */}
+      <Card className="lg:col-span-2">
+        <CardHeader className={`${quadrantConfig[selectedQuadrant].color} border-b`}>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className={quadrantConfig[selectedQuadrant].textColor}>
+                {quadrantConfig[selectedQuadrant].label}
+              </CardTitle>
+              <CardDescription className="text-xs mt-1">
+                {quadrantConfig[selectedQuadrant].description}
+              </CardDescription>
+            </div>
+            <Badge variant="outline" className="text-sm">
+              {selectedDonors.length} {selectedDonors.length === 1 ? 'donor' : 'donors'}
+            </Badge>
+          </div>
+        </CardHeader>
+        <CardContent className="p-4 space-y-4">
+          {/* Tab Buttons */}
+          <div className="flex gap-2 flex-wrap">
+            {(['partner', 'friend', 'colleague', 'acquaintance'] as QuadrantType[]).map((q) => (
+              <Button
+                key={q}
+                variant={selectedQuadrant === q ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setSelectedQuadrant(q)}
+                className="text-xs"
+                data-testid={`tab-${q}`}
+              >
+                {quadrantConfig[q].label}
+              </Button>
+            ))}
+          </div>
+
+          {/* Donor List */}
+          <div className="space-y-2 max-h-64 overflow-y-auto">
+            {selectedDonors.length === 0 ? (
+              <div className="text-sm text-muted-foreground text-center py-8">
+                No donors in this quadrant yet.
+              </div>
+            ) : (
+              selectedDonors.map((donor) => (
+                <div
+                  key={donor.id}
+                  className="flex items-start justify-between p-2 border rounded-lg hover-elevate text-sm"
+                  data-testid={`donor-item-${donor.id}`}
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="font-medium truncate">
+                      {donor.firstName} {donor.lastName}
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      Energy: {donor.energy} / Structure: {donor.structure}
+                    </div>
+                    {donor.organizationName && (
+                      <div className="text-xs text-muted-foreground truncate">
+                        {donor.organizationName}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+
+          {/* AI Playbook */}
+          <div className="pt-4 border-t">
+            <div className="flex items-center gap-2 text-sm font-medium mb-3">
+              <Lightbulb className="w-4 h-4 text-primary" />
+              <span>Playbook to move toward <strong>Partner</strong>:</span>
+            </div>
+            <ol className="space-y-2 text-sm">
+              {data.playbooks[selectedQuadrant].map((step, idx) => (
+                <li key={idx} className="flex gap-2">
+                  <span className="text-muted-foreground">{idx + 1}.</span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

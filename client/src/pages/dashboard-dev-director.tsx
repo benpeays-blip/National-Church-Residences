@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/utils";
 import { Database, Mail, TrendingUp, AlertCircle } from "lucide-react";
 import { Link } from "wouter";
+import DonorQuadrantMapper from "@/components/donor-quadrant-mapper";
 
 interface DevDirectorData {
   metrics: {
@@ -118,6 +119,9 @@ export default function DashboardDevDirector() {
           Team performance and pipeline health
         </p>
       </div>
+
+      {/* Donor Relationship Quadrant Mapper */}
+      <DonorQuadrantMapper />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <Link href="/analytics/ytd-vs-goal">

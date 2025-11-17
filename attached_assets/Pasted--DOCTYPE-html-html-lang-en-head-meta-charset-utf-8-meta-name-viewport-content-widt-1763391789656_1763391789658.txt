@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Donor Quadrant Mapper</title>
+<style>
+  :root{
+    --bg:#f7f7f8; --ink:#1f2937; --muted:#6b7280; --line:#d1d5db;
+    --friend:#cfe8ff; --partner:#d1f7d6; --acquaint:#f5f5f5; --colleague:#fff2cc;
+    --badge:#111827; --white:#fff; --accent:#374151;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans","Apple Color Emoji","Segoe UI Emoji"; color:var(--ink); background:var(--bg)}
+  .wrap{max-width:1100px; margin:32px auto; padding:0 16px; display:grid; grid-template-columns:1.2fr .8fr; gap:24px}
+  .panel{background:var(--white); border:1px solid var(--line); border-radius:14px; box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .head{padding:16px 18px; border-bottom:1px solid var(--line); display:flex; align-items:center; justify-content:space-between}
+  .head h2{margin:0; font-size:18px}
+  .content{padding:16px 18px}
+  .quad{position:relative; aspect-ratio:1/1; border-radius:12px; overflow:hidden; border:1px solid var(--line); background:var(--white)}
+  .gridline{position:absolute; background:var(--line)}
+  .gridline.v{top:0; bottom:0; width:1px; left:50%}
+  .gridline.h{left:0; right:0; height:1px; top:50%}
+  .axes-label{position:absolute; font-size:12px; letter-spacing:.06em; color:var(--muted); text-transform:uppercase}
+  .axes-label.y{left:-6px; top:50%; transform:translate(-100%,-50%) rotate(-90deg)}
+  .axes-label.x{left:50%; top:100%; transform:translate(-50%,8px)}
+  .cell{position:absolute; width:50%; height:50%; padding:10px}
+  .tl{left:0; top:0; background:linear-gradient(180deg, var(--friend), transparent 60%)}
+  .tr{right:0; top:0; background:linear-gradient(180deg, var(--partner), transparent 60%)}
+  .bl{left:0; bottom:0; background:linear-gradient(0deg, var(--acquaint), transparent 60%)}
+  .br{right:0; bottom:0; background:linear-gradient(0deg, var(--colleague), transparent 60%)}
+  .label{font-weight:700; font-size:16px}
+  .badge{display:inline-block; margin-top:6px; padding:3px 8px; border-radius:999px; background:var(--badge); color:var(--white); font-size:12px}
+  .clickmask{position:absolute; inset:0; cursor:pointer}
+  .dot{position:absolute; width:10px; height:10px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 2px rgba(255,255,255,.9), 0 1px 4px rgba(0,0,0,.2)}
+  .legend{display:flex; gap:10px; flex-wrap:wrap; color:var(--muted); font-size:13px}
+  .legend .swatch{display:inline-block; width:10px; height:10px; border-radius:50%; background:var(--accent); margin-right:6px}
+  .side{display:flex; flex-direction:column}
+  .pilltabs{display:flex; gap:8px; flex-wrap:wrap}
+  .pill{border:1px solid var(--line); background:#fff; border-radius:999px; padding:6px 10px; font-size:13px; cursor:pointer}
+  .pill.active{border-color:#111; background:#111; color:#fff}
+  .list{margin:10px 0 0 0; padding:0; list-style:none; max-height:280px; overflow:auto}
+  .list li{display:flex; align-items:center; justify-content:space-between; padding:8px 6px; border-bottom:1px dashed var(--line); font-size:14px}
+  .hint{font-size:12px; color:var(--muted)}
+  .steps{margin-top:10px; font-size:14px}
+  .steps li{margin:6px 0}
+  .muted{color:var(--muted)}
+  .foot{border-top:1px solid var(--line); padding:12px 18px; font-size:12px; color:var(--muted)}
+  @media (max-width:900px){ .wrap{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="panel">
+      <div class="head">
+        <h2>Donor Relationship Quadrant</h2>
+        <div class="legend"><span class="swatch"></span>Donors (0–100 Energy, 0–100 Structure)</div>
+      </div>
+      <div class="content">
+        <div id="board" class="quad">
+          <div class="gridline v"></div>
+          <div class="gridline h"></div>
+
+          <!-- Quadrant background cells + labels -->
+          <div class="cell tl" data-q="friend">
+            <div class="label">Friend</div>
+            <div class="badge" id="count-friend">0</div>
+          </div>
+          <div class="cell tr" data-q="partner">
+            <div class="label">Partner</div>
+            <div class="badge" id="count-partner">0</div>
+          </div>
+          <div class="cell bl" data-q="acquaintance">
+            <div class="label">Acquaintance</div>
+            <div class="badge" id="count-acquaintance">0</div>
+          </div>
+          <div class="cell br" data-q="colleague">
+            <div class="label">Colleague</div>
+            <div class="badge" id="count-colleague">0</div>
+          </div>
+
+          <!-- Invisible quadrant click layers -->
+          <div class="clickmask" style="left:0;top:0;width:50%;height:50%" data-q="friend" title="Friend (High Energy, Low Structure)"></div>
+          <div class="clickmask" style="left:50%;top:0;width:50%;height:50%" data-q="partner" title="Partner (High Energy, High Structure)"></div>
+          <div class="clickmask" style="left:0;top:50%;width:50%;height:50%" data-q="acquaintance" title="Acquaintance (Low Energy, Low Structure)"></div>
+          <div class="clickmask" style="left:50%;top:50%;width:50%;height:50%" data-q="colleague" title="Colleague (Low Energy, High Structure)"></div>
+
+          <!-- Axis labels -->
+          <div class="axes-label y">Energy ↑</div>
+          <div class="axes-label x">Structure →</div>
+        </div>
+
+        <div class="hint" style="margin-top:10px">
+          Tip: energy increases upward; structure increases to the right. Each dot is a donor. Click any quadrant to see details and strategy.
+        </div>
+      </div>
+      <div class="foot">Goal: move every donor toward <strong>Partner</strong> (top-right) with wise effort and structure.</div>
+    </div>
+
+    <div class="panel side">
+      <div class="head">
+        <h2 id="side-title">Quadrant Details</h2>
+        <div class="muted" id="side-count"></div>
+      </div>
+
+      <div class="content">
+        <div id="pilltabs" class="pilltabs">
+          <button class="pill active" data-q="partner">Partner</button>
+          <button class="pill" data-q="friend">Friend</button>
+          <button class="pill" data-q="colleague">Colleague</button>
+          <button class="pill" data-q="acquaintance">Acquaintance</button>
+        </div>
+
+        <ul id="donor-list" class="list"></ul>
+
+        <div style="margin-top:12px">
+          <div class="muted">Playbook to move toward <strong>Partner</strong>:</div>
+          <ol id="playbook" class="steps"></ol>
+        </div>
+      </div>
+      <div class="foot">Edit the donors[] array in the code to use your real data.</div>
+    </div>
+  </div>
+
+<script>
+  // --- EDIT THIS DATA ---
+  // energy: 0-100 (up = more energy) | structure: 0-100 (right = more structure)
+  const donors = [
+    { id: 1, name: "Alice Hart", energy: 78, structure: 25, notes: "Highly engaged volunteer" },
+    { id: 2, name: "Brandon Cole", energy: 82, structure: 77, notes: "Monthly donor + events" },
+    { id: 3, name: "Carmen Diaz", energy: 35, structure: 18, notes: "Met once at luncheon" },
+    { id: 4, name: "Daniel King", energy: 28, structure: 72, notes: "Gives through DAF, low touch" },
+    { id: 5, name: "Evelyn Moore", energy: 92, structure: 88, notes: "Board prospect" },
+    { id: 6, name: "Frank Li", energy: 60, structure: 45, notes: "Interested in site visit" },
+    { id: 7, name: "Grace Nguyen", energy: 20, structure: 40, notes: "Prefers email updates" },
+    { id: 8, name: "Henry Patel", energy: 70, structure: 15, notes: "Champions vision informally" },
+    { id: 9, name: "Iris Chen", energy: 12, structure: 90, notes: "Corporate giving channel" },
+    { id:10, name: "Jamal Reed", energy: 52, structure: 55, notes: "Warm intro from trustee" }
+  ];
+  // ----------------------
+
+  const board = document.getElementById('board');
+
+  // Compute quadrant from energy/structure (0-100), threshold at 50
+  function quadrantOf(d){
+    const e = d.energy, s = d.structure;
+    if (e >= 50 && s < 50) return 'friend';        // top-left
+    if (e >= 50 && s >= 50) return 'partner';       // top-right
+    if (e < 50  && s < 50) return 'acquaintance';   // bottom-left
+    return 'colleague';                             // bottom-right
+  }
+
+  // Place dots in the board (padding inside the frame slightly)
+  function renderDots(){
+    // remove existing dots
+    [...board.querySelectorAll('.dot')].forEach(n=>n.remove());
+    donors.forEach(d=>{
+      const dot = document.createElement('div');
+      dot.className = 'dot';
+      // position: left = structure%, top = 100 - energy%
+      const pad = 10; // px padding to avoid clipping
+      const rect = board.getBoundingClientRect(); // for size reference
+      // Use percentages for responsiveness
+      dot.style.left = `calc(${d.structure}% - 5px)`;       // 10px dot width => 5px offset
+      dot.style.top  = `calc(${100 - d.energy}% - 5px)`;
+      dot.title = `${d.name}\nEnergy: ${d.energy}\nStructure: ${d.structure}`;
+      dot.dataset.q = quadrantOf(d);
+      board.appendChild(dot);
+    });
+  }
+
+  // Count per quadrant
+  function counts(){
+    const c = { partner:0, friend:0, colleague:0, acquaintance:0 };
+    donors.forEach(d=> c[quadrantOf(d)]++);
+    return c;
+  }
+
+  // Update badges
+  function updateBadges(){
+    const c = counts();
+    document.getElementById('count-partner').textContent = c.partner;
+    document.getElementById('count-friend').textContent = c.friend;
+    document.getElementById('count-colleague').textContent = c.colleague;
+    document.getElementById('count-acquaintance').textContent = c.acquaintance;
+  }
+
+  // Strategy playbooks for moving toward Partner
+  const PLAYBOOKS = {
+    partner: [
+      "Protect cadence: quarterly 1:1 touch + semiannual impact brief.",
+      "Invite into planning: previews of strategy, governance opportunities.",
+      "Co-create: align giving vehicles (DAF, equity, family office) to initiatives."
+    ],
+    friend: [
+      "Channel energy into commitment: propose a simple, structured next step.",
+      "Add light structure: calendar a site visit / 30-min vision call.",
+      "Convert advocacy into plan: outline 90-day milestones toward partnership."
+    ],
+    colleague: [
+      "Warm the relationship: share a concise story of impact tied to their interests.",
+      "Humanize the structure: short video + invite to meet a program lead.",
+      "Map a path: define 1–2 co-owned wins that increase energy and trust."
+    ],
+    acquaintance: [
+      "Low-lift on-ramp: personalized thank-you + 2-minute impact clip.",
+      "Qualify interest: one thoughtful question with easy reply options.",
+      "Offer a micro-commitment: RSVP to a brief virtual update or tour."
+    ]
+  };
+
+  // Render side panel
+  function showQuadrant(q){
+    // Update tabs
+    document.querySelectorAll('.pill').forEach(p=>{
+      p.classList.toggle('active', p.dataset.q === q);
+    });
+    // Filter donors in quadrant
+    const list = document.getElementById('donor-list');
+    list.innerHTML = '';
+    const inQ = donors.filter(d=>quadrantOf(d)===q)
+                      .sort((a,b)=> b.energy + b.structure - (a.energy + a.structure));
+    if(inQ.length===0){
+      list.innerHTML = `<li><span class="muted">No donors in this quadrant yet.</span></li>`;
+    } else {
+      inQ.forEach(d=>{
+        const li = document.createElement('li');
+        li.innerHTML = `
+          <span><strong>${d.name}</strong> <span class="muted">(${d.energy}/${d.structure})</span></span>
+          <span class="muted">${d.notes || ''}</span>
+        `;
+        list.appendChild(li);
+      });
+    }
+    // Headers
+    document.getElementById('side-title').textContent =
+      q.charAt(0).toUpperCase()+q.slice(1) + " • Details";
+    document.getElementById('side-count').textContent = `${inQ.length} donor${inQ.length===1?'':'s'}`;
+    // Playbook
+    const pb = document.getElementById('playbook');
+    pb.innerHTML = '';
+    (PLAYBOOKS[q] || []).forEach(step=>{
+      const li = document.createElement('li'); li.textContent = step; pb.appendChild(li);
+    });
+  }
+
+  // Click handlers for quadrant areas and tabs
+  function wireClicks(){
+    board.querySelectorAll('.clickmask').forEach(el=>{
+      el.addEventListener('click', ()=> showQuadrant(el.dataset.q));
+    });
+    document.getElementById('pilltabs').addEventListener('click', (e)=>{
+      const btn = e.target.closest('.pill');
+      if(!btn) return;
+      showQuadrant(btn.dataset.q);
+    });
+    // Rerender dots on resize for perfect alignment (positions are % so they stay ok; we just refresh tooltips)
+    window.addEventListener('resize', ()=> renderDots());
+  }
+
+  // Initial render
+  function init(){
+    renderDots();
+    updateBadges();
+    wireClicks();
+    showQuadrant('partner'); // default open
+  }
+  init();
+</script>
+</body>
+</html>

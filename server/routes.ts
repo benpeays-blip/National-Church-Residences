@@ -863,6 +863,105 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/donors/quadrant", async (req, res) => {
+    try {
+      const allDonors = await db.select().from(persons);
+      
+      // Generate dummy data for donors without quadrant positions
+      const donorsWithQuadrant = allDonors.map((donor) => {
+        // If donor doesn't have quadrant scores, generate them based on their existing scores
+        let energy = donor.relationshipEnergy;
+        let structure = donor.relationshipStructure;
+        
+        if (energy === null || energy === undefined) {
+          // Generate energy based on engagement and affinity scores
+          const baseEnergy = ((donor.engagementScore || 50) + (donor.affinityScore || 50)) / 2;
+          energy = Math.round(baseEnergy + (Math.random() * 20 - 10)); // Add some randomness
+        }
+        
+        if (structure === null || structure === undefined) {
+          // Generate structure based on giving history and capacity
+          const hasStructure = donor.totalLifetimeGiving && parseFloat(donor.totalLifetimeGiving.toString()) > 0;
+          const baseStructure = hasStructure ? 60 : 30;
+          structure = Math.round(baseStructure + (Math.random() * 30 - 15));
+        }
+        
+        // Ensure values are within 0-100 range
+        energy = Math.max(0, Math.min(100, energy));
+        structure = Math.max(0, Math.min(100, structure));
+        
+        return {
+          id: donor.id,
+          firstName: donor.firstName,
+          lastName: donor.lastName,
+          primaryEmail: donor.primaryEmail,
+          organizationName: donor.organizationName,
+          totalLifetimeGiving: donor.totalLifetimeGiving,
+          energy,
+          structure,
+          capacityScore: donor.capacityScore,
+          engagementScore: donor.engagementScore,
+          affinityScore: donor.affinityScore,
+        };
+      });
+      
+      // Calculate quadrant for each donor
+      const getQuadrant = (energy: number, structure: number) => {
+        if (energy >= 50 && structure < 50) return 'friend';
+        if (energy >= 50 && structure >= 50) return 'partner';
+        if (energy < 50 && structure < 50) return 'acquaintance';
+        return 'colleague';
+      };
+      
+      const donorsWithQuadrantName = donorsWithQuadrant.map(d => ({
+        ...d,
+        quadrant: getQuadrant(d.energy, d.structure),
+      }));
+      
+      // Count by quadrant
+      const counts = {
+        partner: donorsWithQuadrantName.filter(d => d.quadrant === 'partner').length,
+        friend: donorsWithQuadrantName.filter(d => d.quadrant === 'friend').length,
+        colleague: donorsWithQuadrantName.filter(d => d.quadrant === 'colleague').length,
+        acquaintance: donorsWithQuadrantName.filter(d => d.quadrant === 'acquaintance').length,
+      };
+      
+      // AI-generated playbooks for each quadrant
+      const playbooks = {
+        partner: [
+          "Protect cadence: quarterly 1:1 touch + semiannual impact brief",
+          "Invite into planning: previews of strategy, governance opportunities",
+          "Co-create: align giving vehicles (DAF, equity, family office) to initiatives"
+        ],
+        friend: [
+          "Channel energy into commitment: propose a simple, structured next step",
+          "Add light structure: calendar a site visit / 30-min vision call",
+          "Convert advocacy into plan: outline 90-day milestones toward partnership"
+        ],
+        colleague: [
+          "Warm the relationship: share a concise story of impact tied to their interests",
+          "Humanize the structure: short video + invite to meet a program lead",
+          "Map a path: define 1–2 co-owned wins that increase energy and trust"
+        ],
+        acquaintance: [
+          "Low-lift on-ramp: personalized thank-you + 2-minute impact clip",
+          "Qualify interest: one thoughtful question with easy reply options",
+          "Offer a micro-commitment: RSVP to a brief virtual update or tour"
+        ]
+      };
+      
+      res.json({
+        donors: donorsWithQuadrantName,
+        counts,
+        playbooks,
+        totalDonors: donorsWithQuadrant.length,
+      });
+    } catch (error) {
+      console.error("Error fetching donor quadrant data:", error);
+      res.status(500).json({ message: "Failed to fetch donor quadrant data" });
+    }
+  });
+
   app.get("/api/data-health", async (req, res) => {
     try {
       const allPersons = await db.select().from(persons);

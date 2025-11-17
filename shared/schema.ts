@@ -166,6 +166,8 @@ export const persons = pgTable("persons", {
   capacityScore: integer("capacity_score"), // 0-100
   engagementScore: integer("engagement_score"), // 0-100
   affinityScore: integer("affinity_score"), // 0-100
+  relationshipEnergy: integer("relationship_energy"), // 0-100, energy required for relationship
+  relationshipStructure: integer("relationship_structure"), // 0-100, structure level in relationship
   lastGiftDate: timestamp("last_gift_date"),
   lastGiftAmount: decimal("last_gift_amount", { precision: 10, scale: 2 }),
   totalLifetimeGiving: decimal("total_lifetime_giving", {
