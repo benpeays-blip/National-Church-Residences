@@ -259,16 +259,13 @@ export default function DashboardDevDirector() {
         <Link href="/donors/lybunt">
           <Card className="p-6 hover-elevate active-elevate-2 cursor-pointer" data-testid="card-lybunt-metric">
             <div className="space-y-2">
+              <h3 className="text-2xl font-bold">
+                LYBUNT <span className="font-bold" data-testid="text-lybunt-count">({data?.metrics.lybuntCount ?? 0})</span>
+              </h3>
               <p className="text-sm font-medium text-muted-foreground">
-                "Last Year But Unfortunately Not This" (LYBUNT) Donors
+                Last Year But Unfortunately Not This
               </p>
-              <p 
-                className="text-4xl font-bold tabular-nums text-chart-4"
-                data-testid="text-lybunt-count"
-              >
-                {data?.metrics.lybuntCount ?? 0}
-              </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 Gave last year but not this year - priority for reactivation
               </p>
             </div>
@@ -277,16 +274,13 @@ export default function DashboardDevDirector() {
         <Link href="/donors/sybunt">
           <Card className="p-6 hover-elevate active-elevate-2 cursor-pointer" data-testid="card-sybunt-metric">
             <div className="space-y-2">
+              <h3 className="text-2xl font-bold">
+                SYBUNT <span className="font-bold" data-testid="text-sybunt-count">({data?.metrics.sybuntCount ?? 0})</span>
+              </h3>
               <p className="text-sm font-medium text-muted-foreground">
-                "Some Years But Unfortunately Not This" (SYBUNT) Donors
+                Some Years But Unfortunately Not This
               </p>
-              <p 
-                className="text-4xl font-bold tabular-nums text-chart-3"
-                data-testid="text-sybunt-count"
-              >
-                {data?.metrics.sybuntCount ?? 0}
-              </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-sm text-muted-foreground">
                 Gave in prior years but not recently - long-term recovery needed
               </p>
             </div>
