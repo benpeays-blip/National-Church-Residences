@@ -8,7 +8,13 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { CommandPalette } from "@/components/command-palette";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Button } from "@/components/ui/button";
-import { Search, Settings as SettingsIcon, Bell, User } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Calendar, FileText, Users } from "lucide-react";
 import NotFound from "@/pages/not-found";
 import Dashboard from "@/pages/dashboard";
 import DashboardMGO from "@/pages/dashboard-mgo";
@@ -215,30 +221,6 @@ function App() {
                 <SidebarTrigger data-testid="button-sidebar-toggle" className="text-white hover:bg-white/10" />
                 <Breadcrumbs className="text-white/90" />
                 
-                <nav className="flex items-center gap-6 ml-8">
-                  <Link 
-                    href="/events" 
-                    className="text-white/90 hover:text-white text-sm font-medium transition-colors"
-                    data-testid="link-events"
-                  >
-                    Events
-                  </Link>
-                  <Link 
-                    href="/grants" 
-                    className="text-white/90 hover:text-white text-sm font-medium transition-colors"
-                    data-testid="link-grants"
-                  >
-                    Grants
-                  </Link>
-                  <Link 
-                    href="/donors" 
-                    className="text-white/90 hover:text-white text-sm font-medium transition-colors"
-                    data-testid="link-donors"
-                  >
-                    Donors
-                  </Link>
-                </nav>
-                
                 <div className="flex items-center gap-3 ml-auto">
                   <Button
                     variant="ghost"
@@ -279,6 +261,123 @@ function App() {
                   >
                     <User className="h-5 w-5" />
                   </Button>
+                  
+                  {/* Separator */}
+                  <div className="h-6 w-px bg-white/20" />
+                  
+                  {/* Navigation Dropdowns */}
+                  <nav className="flex items-center gap-1">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-white/90 hover:bg-white/10 hover:text-white"
+                          data-testid="dropdown-events"
+                        >
+                          <Calendar className="h-4 w-4 mr-1.5" />
+                          Events
+                          <ChevronDown className="h-3 w-3 ml-1.5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-48">
+                        <DropdownMenuItem asChild>
+                          <Link href="/events" className="cursor-pointer">
+                            All Events
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/events?filter=upcoming" className="cursor-pointer">
+                            Upcoming Events
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/events?filter=past" className="cursor-pointer">
+                            Past Events
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-white/90 hover:bg-white/10 hover:text-white"
+                          data-testid="dropdown-grants"
+                        >
+                          <FileText className="h-4 w-4 mr-1.5" />
+                          Grants
+                          <ChevronDown className="h-3 w-3 ml-1.5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-48">
+                        <DropdownMenuItem asChild>
+                          <Link href="/grants" className="cursor-pointer">
+                            All Grants
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/grants?stage=Research" className="cursor-pointer">
+                            Research
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/grants?stage=Submitted" className="cursor-pointer">
+                            Submitted
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/grants?stage=Awarded" className="cursor-pointer">
+                            Awarded
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="text-white/90 hover:bg-white/10 hover:text-white"
+                          data-testid="dropdown-donors"
+                        >
+                          <Users className="h-4 w-4 mr-1.5" />
+                          Donors
+                          <ChevronDown className="h-3 w-3 ml-1.5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end" className="w-48">
+                        <DropdownMenuItem asChild>
+                          <Link href="/donors" className="cursor-pointer">
+                            All Donors
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/donors/major-gifts" className="cursor-pointer">
+                            Major Gifts
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/donors/prospects" className="cursor-pointer">
+                            Prospects
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/donors/lybunt" className="cursor-pointer">
+                            LYBUNT
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/donors/sybunt" className="cursor-pointer">
+                            SYBUNT
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </nav>
                 </div>
               </header>
               <main className="flex-1 overflow-auto p-6">
