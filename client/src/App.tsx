@@ -206,14 +206,10 @@ function App() {
         <div className="flex flex-col h-screen w-full">
           {/* Top Header Navigation */}
           <header 
-            className="flex items-center gap-6 h-16 px-6 border-b shrink-0"
-            style={{
-              background: "#2171B5",
-              borderColor: "#1A3A5C40"
-            }}
+            className="flex items-center gap-6 h-16 px-6 border-b shrink-0 bg-white"
           >
             {/* Logo */}
-            <Link href="/" className="flex items-center gap-2 text-white font-bold text-xl hover:opacity-90 transition-opacity">
+            <Link href="/" className="flex items-center gap-2 font-bold text-xl hover:opacity-90 transition-opacity" style={{ color: "#084594" }}>
               <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" opacity="0.9"/>
                 <path d="M2 17L12 22L22 17V12L12 17L2 12V17Z" fill="currentColor" opacity="0.7"/>
@@ -229,15 +225,42 @@ function App() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-white/90 hover:bg-white/10 hover:text-white"
+                          className="font-semibold hover:bg-gray-100"
+                          style={{ color: "#084594" }}
+                          data-testid="dropdown-quadrant"
+                        >
+                          Quadrant
+                          <ChevronDown className="h-3 w-3 ml-1.5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-48">
+                        <DropdownMenuItem asChild>
+                          <Link href="/donors" className="cursor-pointer">
+                            Donor Quadrant
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/pipeline" className="cursor-pointer">
+                            Pipeline View
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold hover:bg-gray-100"
+                          style={{ color: "#084594" }}
                           data-testid="dropdown-events"
                         >
-                          <Calendar className="h-4 w-4 mr-1.5" />
                           Events
                           <ChevronDown className="h-3 w-3 ml-1.5" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuContent align="start" className="w-48">
                         <DropdownMenuItem asChild>
                           <Link href="/events" className="cursor-pointer">
                             All Events
@@ -261,15 +284,15 @@ function App() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-white/90 hover:bg-white/10 hover:text-white"
+                          className="font-semibold hover:bg-gray-100"
+                          style={{ color: "#084594" }}
                           data-testid="dropdown-grants"
                         >
-                          <FileText className="h-4 w-4 mr-1.5" />
                           Grants
                           <ChevronDown className="h-3 w-3 ml-1.5" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuContent align="start" className="w-48">
                         <DropdownMenuItem asChild>
                           <Link href="/grants" className="cursor-pointer">
                             All Grants
@@ -298,15 +321,15 @@ function App() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-white/90 hover:bg-white/10 hover:text-white"
+                          className="font-semibold hover:bg-gray-100"
+                          style={{ color: "#084594" }}
                           data-testid="dropdown-donors"
                         >
-                          <Users className="h-4 w-4 mr-1.5" />
                           Donors
                           <ChevronDown className="h-3 w-3 ml-1.5" />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end" className="w-48">
+                      <DropdownMenuContent align="start" className="w-48">
                         <DropdownMenuItem asChild>
                           <Link href="/donors" className="cursor-pointer">
                             All Donors
@@ -337,14 +360,15 @@ function App() {
                   </nav>
                   
                   {/* Separator */}
-                  <div className="h-6 w-px bg-white/20" />
+                  <div className="h-6 w-px bg-gray-200" />
                   
                   <Button
                     variant="ghost"
                     size="icon"
                     data-testid="button-global-search"
                     aria-label="Global search (Cmd+K)"
-                    className="text-white hover:bg-white/10 hover:text-white"
+                    className="hover:bg-gray-100"
+                    style={{ color: "#084594" }}
                   >
                     <Search className="h-5 w-5" />
                   </Button>
@@ -353,7 +377,8 @@ function App() {
                     size="icon"
                     data-testid="button-notifications"
                     aria-label="Notifications"
-                    className="text-white hover:bg-white/10 hover:text-white"
+                    className="hover:bg-gray-100"
+                    style={{ color: "#084594" }}
                   >
                     <Bell className="h-5 w-5" />
                   </Button>
@@ -363,7 +388,8 @@ function App() {
                     asChild
                     data-testid="button-settings"
                     aria-label="Settings"
-                    className="text-white hover:bg-white/10 hover:text-white"
+                    className="hover:bg-gray-100"
+                    style={{ color: "#084594" }}
                   >
                     <a href="/settings">
                       <SettingsIcon className="h-5 w-5" />
@@ -374,7 +400,8 @@ function App() {
                     size="icon"
                     data-testid="button-account"
                     aria-label="Account menu"
-                    className="text-white hover:bg-white/10 hover:text-white"
+                    className="hover:bg-gray-100"
+                    style={{ color: "#084594" }}
                   >
                     <User className="h-5 w-5" />
                   </Button>
