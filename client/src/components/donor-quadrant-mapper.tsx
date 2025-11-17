@@ -84,10 +84,10 @@ export default function DonorQuadrantMapper() {
   }
 
   const quadrantConfig = {
-    partner: { label: 'Partner', color: 'bg-emerald-50 dark:bg-emerald-950/20', borderColor: 'border-emerald-200 dark:border-emerald-800', textColor: 'text-emerald-700 dark:text-emerald-400', description: 'High Energy, High Structure' },
-    friend: { label: 'Friend', color: 'bg-sky-50 dark:bg-sky-950/20', borderColor: 'border-sky-200 dark:border-sky-800', textColor: 'text-sky-700 dark:text-sky-400', description: 'High Energy, Low Structure' },
-    colleague: { label: 'Colleague', color: 'bg-amber-50 dark:bg-amber-950/20', borderColor: 'border-amber-200 dark:border-amber-800', textColor: 'text-amber-700 dark:text-amber-400', description: 'Low Energy, High Structure' },
-    acquaintance: { label: 'Acquaintance', color: 'bg-slate-50 dark:bg-slate-950/20', borderColor: 'border-slate-200 dark:border-slate-800', textColor: 'text-slate-700 dark:text-slate-400', description: 'Low Energy, Low Structure' },
+    partner: { label: 'Partner', color: 'bg-blue-50 dark:bg-blue-950/20', borderColor: 'border-blue-200 dark:border-blue-800', textColor: 'text-blue-900 dark:text-blue-400', description: 'High Energy, High Structure' },
+    friend: { label: 'Friend', color: 'bg-blue-50 dark:bg-blue-950/20', borderColor: 'border-blue-200 dark:border-blue-800', textColor: 'text-blue-700 dark:text-blue-400', description: 'High Energy, Low Structure' },
+    colleague: { label: 'Colleague', color: 'bg-blue-50 dark:bg-blue-950/20', borderColor: 'border-blue-200 dark:border-blue-800', textColor: 'text-blue-600 dark:text-blue-400', description: 'Low Energy, High Structure' },
+    acquaintance: { label: 'Acquaintance', color: 'bg-blue-50 dark:bg-blue-950/20', borderColor: 'border-blue-200 dark:border-blue-800', textColor: 'text-blue-500 dark:text-blue-400', description: 'Low Energy, Low Structure' },
   };
 
   const selectedDonors = data.donors.filter(d => d.quadrant === selectedQuadrant)
