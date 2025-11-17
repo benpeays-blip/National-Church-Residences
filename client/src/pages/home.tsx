@@ -1,7 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import DonorQuadrantMapper from "@/components/donor-quadrant-mapper";
 import { 
   TrendingUp, 
   Users, 
@@ -98,12 +97,6 @@ export default function Home() {
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
           Your enterprise-grade donor management and fundraising intelligence platform
         </p>
-      </div>
-
-      {/* Donor Quadrant */}
-      <div>
-        <h2 className="text-2xl font-semibold mb-6">Donor Relationship Quadrant</h2>
-        <DonorQuadrantMapper />
       </div>
 
       {/* Quick Actions Grid */}

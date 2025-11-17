@@ -38,6 +38,7 @@ import DonorsWithTabs from "@/pages/donors-with-tabs";
 import Donor360 from "@/pages/donor-360";
 import DonorDetail from "@/pages/donor-detail";
 import DonorCardShowcase from "@/pages/donor-card-showcase";
+import DonorQuadrant from "@/pages/donor-quadrant";
 import Pipeline from "@/pages/pipeline";
 import PipelineWithTabs from "@/pages/pipeline-with-tabs";
 import Grants from "@/pages/grants";
@@ -131,6 +132,7 @@ function Router() {
       <Route path="/navigation-mockups" component={NavigationMockups} />
       <Route path="/navigation-hybrid-mockup" component={NavigationHybridMockup} />
       <Route path="/icon-style-guide" component={IconStyleGuide} />
+      <Route path="/donor-quadrant" component={DonorQuadrant} />
       <Route path="/donors/card-showcase" component={DonorCardShowcase} />
       <Route path="/donors/major-gifts" component={DonorsWithTabs} />
       <Route path="/donors/lybunt" component={DonorsWithTabs} />
@@ -245,7 +247,7 @@ function App() {
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="start" className="w-48">
                         <DropdownMenuItem asChild>
-                          <Link href="/donors" className="cursor-pointer">
+                          <Link href="/donor-quadrant" className="cursor-pointer">
                             Donor Quadrant
                           </Link>
                         </DropdownMenuItem>
