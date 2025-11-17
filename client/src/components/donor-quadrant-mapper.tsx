@@ -84,10 +84,10 @@ export default function DonorQuadrantMapper() {
   }
 
   const quadrantConfig = {
-    partner: { label: 'Partner', color: 'bg-blue-50 dark:bg-blue-950/20', borderColor: 'border-blue-200 dark:border-blue-800', textColor: 'text-blue-900 dark:text-blue-400', description: 'High Energy, High Structure' },
-    friend: { label: 'Friend', color: 'bg-blue-50 dark:bg-blue-950/20', borderColor: 'border-blue-200 dark:border-blue-800', textColor: 'text-blue-900 dark:text-blue-400', description: 'High Energy, Low Structure' },
-    colleague: { label: 'Colleague', color: 'bg-blue-50 dark:bg-blue-950/20', borderColor: 'border-blue-200 dark:border-blue-800', textColor: 'text-blue-900 dark:text-blue-400', description: 'Low Energy, High Structure' },
-    acquaintance: { label: 'Acquaintance', color: 'bg-blue-50 dark:bg-blue-950/20', borderColor: 'border-blue-200 dark:border-blue-800', textColor: 'text-blue-900 dark:text-blue-400', description: 'Low Energy, Low Structure' },
+    partner: { label: 'Partner', description: 'High Energy, High Structure' },
+    friend: { label: 'Friend', description: 'High Energy, Low Structure' },
+    colleague: { label: 'Colleague', description: 'Low Energy, High Structure' },
+    acquaintance: { label: 'Acquaintance', description: 'Low Energy, Low Structure' },
   };
 
   const selectedDonors = data.donors.filter(d => d.quadrant === selectedQuadrant)
@@ -124,44 +124,48 @@ export default function DonorQuadrantMapper() {
             {/* Top Left - Friend */}
             <button
               onClick={() => setSelectedQuadrant('friend')}
-              className={`absolute left-0 top-0 w-1/2 h-1/2 p-4 ${quadrantConfig.friend.color} hover:bg-sky-100/60 dark:hover:bg-sky-900/40 active-elevate-2 transition-all`}
-              style={{ background: selectedQuadrant === 'friend' ? 'linear-gradient(180deg, rgba(14, 165, 233, 0.15), transparent 60%)' : 'linear-gradient(180deg, rgba(14, 165, 233, 0.08), transparent 60%)' }}
+              className={`absolute left-0 top-0 w-1/2 h-1/2 p-4 hover-elevate active-elevate-2 transition-all ${
+                selectedQuadrant === 'friend' ? 'bg-muted/50' : 'bg-muted/20'
+              }`}
               data-testid="quadrant-friend"
             >
-              <div className={`font-bold text-lg ${quadrantConfig.friend.textColor}`}>Friend</div>
+              <div className="font-bold text-lg">Friend</div>
               <Badge className="mt-2" data-testid="count-friend">{data.counts.friend}</Badge>
             </button>
 
             {/* Top Right - Partner */}
             <button
               onClick={() => setSelectedQuadrant('partner')}
-              className={`absolute right-0 top-0 w-1/2 h-1/2 p-4 ${quadrantConfig.partner.color} hover:bg-emerald-100/60 dark:hover:bg-emerald-900/40 active-elevate-2 transition-all`}
-              style={{ background: selectedQuadrant === 'partner' ? 'linear-gradient(180deg, rgba(16, 185, 129, 0.15), transparent 60%)' : 'linear-gradient(180deg, rgba(16, 185, 129, 0.08), transparent 60%)' }}
+              className={`absolute right-0 top-0 w-1/2 h-1/2 p-4 hover-elevate active-elevate-2 transition-all ${
+                selectedQuadrant === 'partner' ? 'bg-muted/50' : 'bg-muted/20'
+              }`}
               data-testid="quadrant-partner"
             >
-              <div className={`font-bold text-lg ${quadrantConfig.partner.textColor}`}>Partner</div>
+              <div className="font-bold text-lg">Partner</div>
               <Badge className="mt-2" data-testid="count-partner">{data.counts.partner}</Badge>
             </button>
 
             {/* Bottom Left - Acquaintance */}
             <button
               onClick={() => setSelectedQuadrant('acquaintance')}
-              className={`absolute left-0 bottom-0 w-1/2 h-1/2 p-4 ${quadrantConfig.acquaintance.color} hover:bg-slate-100/60 dark:hover:bg-slate-900/40 active-elevate-2 transition-all`}
-              style={{ background: selectedQuadrant === 'acquaintance' ? 'linear-gradient(0deg, rgba(100, 116, 139, 0.15), transparent 60%)' : 'linear-gradient(0deg, rgba(100, 116, 139, 0.08), transparent 60%)' }}
+              className={`absolute left-0 bottom-0 w-1/2 h-1/2 p-4 hover-elevate active-elevate-2 transition-all ${
+                selectedQuadrant === 'acquaintance' ? 'bg-muted/50' : 'bg-muted/20'
+              }`}
               data-testid="quadrant-acquaintance"
             >
-              <div className={`font-bold text-lg ${quadrantConfig.acquaintance.textColor}`}>Acquaintance</div>
+              <div className="font-bold text-lg">Acquaintance</div>
               <Badge className="mt-2" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
             </button>
 
             {/* Bottom Right - Colleague */}
             <button
               onClick={() => setSelectedQuadrant('colleague')}
-              className={`absolute right-0 bottom-0 w-1/2 h-1/2 p-4 ${quadrantConfig.colleague.color} hover:bg-amber-100/60 dark:hover:bg-amber-900/40 active-elevate-2 transition-all`}
-              style={{ background: selectedQuadrant === 'colleague' ? 'linear-gradient(0deg, rgba(245, 158, 11, 0.15), transparent 60%)' : 'linear-gradient(0deg, rgba(245, 158, 11, 0.08), transparent 60%)' }}
+              className={`absolute right-0 bottom-0 w-1/2 h-1/2 p-4 hover-elevate active-elevate-2 transition-all ${
+                selectedQuadrant === 'colleague' ? 'bg-muted/50' : 'bg-muted/20'
+              }`}
               data-testid="quadrant-colleague"
             >
-              <div className={`font-bold text-lg ${quadrantConfig.colleague.textColor}`}>Colleague</div>
+              <div className="font-bold text-lg">Colleague</div>
               <Badge className="mt-2" data-testid="count-colleague">{data.counts.colleague}</Badge>
             </button>
 
@@ -299,10 +303,10 @@ export default function DonorQuadrantMapper() {
 
       {/* Right Panel - Quadrant Details */}
       <Card className="lg:col-span-2">
-        <CardHeader className={`${quadrantConfig[selectedQuadrant].color} border-b`}>
+        <CardHeader className="bg-muted/30 border-b">
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className={quadrantConfig[selectedQuadrant].textColor}>
+              <CardTitle>
                 {quadrantConfig[selectedQuadrant].label}
               </CardTitle>
               <CardDescription className="text-xs mt-1">
