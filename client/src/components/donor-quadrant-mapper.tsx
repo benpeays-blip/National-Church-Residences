@@ -166,18 +166,19 @@ export default function DonorQuadrantMapper() {
 
             {/* Donor Dots with Hover Cards */}
             {data.donors.map((donor) => (
-              <HoverCard key={donor.id} openDelay={200} closeDelay={100}>
+              <HoverCard key={donor.id} openDelay={150} closeDelay={50}>
                 <HoverCardTrigger asChild>
-                  <div
-                    className="absolute w-2.5 h-2.5 rounded-full bg-primary/80 shadow-sm hover:scale-150 transition-transform cursor-pointer"
+                  <button
+                    className="absolute w-2.5 h-2.5 rounded-full bg-primary/80 shadow-sm hover:scale-150 transition-transform cursor-pointer border-0 p-0"
                     style={{
                       left: `calc(${donor.structure}% - 5px)`,
                       top: `calc(${100 - donor.energy}% - 5px)`,
                     }}
                     data-testid={`dot-donor-${donor.id}`}
+                    aria-label={`View profile for ${donor.firstName} ${donor.lastName}`}
                   />
                 </HoverCardTrigger>
-                <HoverCardContent className="w-96 p-0 overflow-hidden" side="right" align="start">
+                <HoverCardContent className="w-96 p-0 overflow-hidden z-50" side="right" align="start" sideOffset={10}>
                   <div className="space-y-0">
                     {/* Profile Header */}
                     <div className="p-4 bg-card border-b">
