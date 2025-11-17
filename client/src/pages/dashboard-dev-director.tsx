@@ -127,8 +127,8 @@ export default function DashboardDevDirector() {
         <Link href="/analytics/ytd-vs-goal">
           <div className="hover-elevate active-elevate-2 cursor-pointer">
             <MetricCard
-              label="YTD vs Goal"
-              value={`${ytdProgress.toFixed(0)}%`}
+              label={`YTD Raised (${ytdProgress.toFixed(0)}% of Goal)`}
+              value={formatCurrency(data?.metrics.ytdRaised)}
               change={12}
               trend="up"
             />
@@ -139,6 +139,8 @@ export default function DashboardDevDirector() {
             <MetricCard
               label="Pipeline Value"
               value={formatCurrency(data?.metrics.pipelineValue)}
+              change={18}
+              trend="up"
             />
           </div>
         </Link>
@@ -147,6 +149,8 @@ export default function DashboardDevDirector() {
             <MetricCard
               label="90-Day Forecast"
               value={formatCurrency(data?.metrics.forecast90Days)}
+              change={25}
+              trend="up"
             />
           </div>
         </Link>
