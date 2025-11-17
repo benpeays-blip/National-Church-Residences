@@ -3,6 +3,24 @@
 ## Overview
 FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprofit development teams. It provides role-based dashboards, a comprehensive donor scoring system (Engagement, Capacity, Affinity), Kanban-style opportunity pipeline management, AI-generated "Next Best Action" recommendations, and a visual workflow builder. The platform aims to centralize fundraising intelligence, streamline donor management, and enhance data-driven decision-making, unifying disparate fundraising systems with full data provenance tracking and transparency.
 
+## Recent Changes
+
+### November 17, 2025 - Salesforce-Style Navigation Redesign
+- **Removed Persistent Sidebar**: Eliminated sidebar from homepage for cleaner, more modern Salesforce-inspired layout
+- **Header-Only Navigation**: Redesigned top header with:
+  - FundRazor logo in top-left (links to homepage)
+  - Three dropdown menus: Events, Grants, Donors
+  - Utility icons on right: Search, Notifications, Settings, Account
+  - Blue header bar using b7 (#2171B5) from Blues-8 palette
+- **New Homepage**: Created clean landing page at `/` featuring:
+  - Hero section with "Welcome to FundRazor" heading
+  - Quick Actions grid with 6 cards (Dashboard, Donors, Pipeline, Events, Grants, Campaigns)
+  - AI Intelligence section with 3 feature cards
+  - Platform Overview stats showcasing key metrics
+  - CTAs for "Go to Dashboard" and "Learn More"
+- **Contextual Tabs Retained**: Section-specific tabs still appear within pages when navigating to major sections (Dashboard, Donors, Pipeline, etc.)
+- **Integrations Expansion**: Added 14 new integrations from FundraiseUp including HubSpot, Microsoft Dynamics 365, Bonterra EveryAction, Virtuous, Kindful, Meta Pixel, Zapier, PayPal, Gemini, 360MatchPro, Okta, Google Identity, and Microsoft Entra ID (total: 47 integrations)
+
 ## User Preferences
 
 - **Design Philosophy**: Enterprise-grade, data-dense UI inspired by Linear and Salesforce NPSP
@@ -17,9 +35,11 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
 - **Styling**: Tailwind CSS, shadcn/ui components
 - **Routing**: wouter
 - **State Management**: TanStack Query v5
-- **Navigation**: Hybrid navigation pattern combining persistent sidebar (global navigation) with contextual top tabs (section-specific navigation). Implemented via reusable `SectionTabs` component. Sidebar features:
-  - **Collapsible Sections**: localStorage persistence for maintaining section expand/collapse preferences across sessions
-  - **Sidebar Collapse**: Icon-only collapse mode (Cmd/Ctrl+B or click toggle button) that reduces sidebar to ~48px width with tooltips on hover, state persists via cookies
+- **Navigation**: Salesforce-style header-only navigation with no persistent sidebar on homepage. Clean, minimal top header with:
+  - **Logo**: FundRazor branding in left corner linking to homepage
+  - **Dropdown Menus**: Events, Grants, Donors dropdowns for quick access
+  - **Utility Icons**: Search, Notifications, Settings, Account in right corner
+  - **Contextual Tabs**: Section-specific tabs appear within pages when navigating to major sections
 - **UI/UX Decisions**: Enterprise data platform aesthetic, Inter font family, Blues-8 gradient color system (8 shades from near-white to deep navy), Tailwind spacing system, standardized component guidelines (padding, font sizes for KPIs, dense tables, two-column forms, fixed-width sidebar).
 - **Color System (Blues-8)**: Professional 8-shade gradient palette implementing industry best practices:
   - **b8** `rgba(8, 69, 148, 1)` → Deep navy blue - Headers, footers, sidebar background, brand anchor (--primary-900)
@@ -66,20 +86,14 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
   - **Persistence**: Full CRUD API with organizationCanvases table storing canvas name, description, owner, and canvasData (nodes, edges, viewport) as JSONB
   - **Color Palette**: Derived from Sky Blue (#0284C7) and Ice Blue (#7DD3FC) accents - stages use sky-to-indigo gradient, roles use complementary cyan-to-teal tones, software uses neutral slate with purple accent
 - **Navigation Mockups Page**: Visual comparison of 5 navigation patterns (Focus Hubs, Command Surface, Progressive Masthead, Adaptive Matrix, Dual-Mode Ribbon) applied to the home screen, with mini screenshot-style mockups showing how each pattern would look in practice, key feature lists, and a Quick Decision Guide to help stakeholders choose the right approach.
-- **Hybrid Navigation Implementation**: Production hybrid navigation pattern deployed site-wide with:
-  - **Sidebar Navigation**: Persistent global navigation organized into collapsible sections. Sidebar organization (top to bottom):
-    1. **Overview**: Dashboard only
-    2. **Intelligence**: Donors, Predictive Timing, Wealth Events, Meeting Briefs
-    3. **Operations**: Grants, Gifts, Campaigns
-    4. **Relationship Science**: Board Network Mapper, Board Connections, Corporate Partnerships, Peer Discovery
-    5. **AI Tools**: Voice-to-CRM, Outreach Generator, Grant Proposals, Impact Reports, Workflow Builder
-    6. **Analytics**: Peer Benchmarks, Donor Sentiment, Portfolio Optimization
-    7. **System**: Data Health, Integrations, Integrations 2, Settings
-    8. **Design Ideas**: Icon Style Guide, Navigation Mockups, Navigation Preview
-    9. **Other**: Pipeline, Welcome, Tech Stack Mapper, National Church Residences, Organization Mapper, Workflow Canvas
-    - **Collapsible Sections**: Using Radix UI Collapsible with localStorage persistence, allowing users to collapse/expand sections with state maintained across navigation and page reloads
-    - **Full Sidebar Collapse**: Icon-only collapse mode (`collapsible="icon"`) accessible via toggle button in header or Cmd/Ctrl+B keyboard shortcut. Reduces sidebar from 15rem to 3rem width, shows tooltips on icon hover, persists state via cookies
-  - **Contextual Tabs**: Section-specific navigation within major areas:
+- **Header-Only Navigation**: Salesforce-inspired clean navigation with no sidebar on homepage:
+  - **Top Header Bar**: Fixed blue header (b7 #2171B5) with logo, navigation dropdowns, and utility icons
+  - **Navigation Dropdowns**: 
+    - **Events**: All Events, Upcoming Events, Past Events
+    - **Grants**: All Grants, Research, Submitted, Awarded
+    - **Donors**: All Donors, Major Gifts, Prospects, LYBUNT, SYBUNT
+  - **Utility Actions**: Global search (Cmd+K), Notifications, Settings, Account menu
+  - **Contextual Tabs**: Section-specific tabs appear within pages when navigating to major sections:
     - Dashboard tabs: Dev Director, Major Gifts Officer, CEO
     - Donors tabs: All Donors, Major Gifts, LYBUNT, SYBUNT, Prospects
     - Pipeline tabs: Opportunities, Pipeline Value, 90-Day Forecast, Analytics
@@ -90,7 +104,6 @@ FundRazor is an AI-powered enterprise-grade fundraising CRM designed for nonprof
     - Reusable `SectionTabs` component in `client/src/components/section-tabs.tsx` with icon support, smooth transitions, and wouter integration
     - **Routing Architecture**: All tab-specific URLs resolve to wrapper components (Dashboard, DonorsWithTabs, PipelineWithTabs, CampaignsWithTabs, AnalyticsWithTabs, AIWithTabs) which maintain tab visibility and determine child component rendering based on current path
     - **Dashboard Links**: Metric cards on Dev Director dashboard link to correct tab routes (/pipeline/value, /pipeline/forecast, /donors/lybunt, /donors/sybunt, /analytics/ytd-vs-goal)
-    - **Breadcrumbs Navigation**: Site-wide breadcrumb navigation in header showing hierarchical path with Home icon, clickable intermediate segments, and current page. Features canonical route mapping for sections without index pages, full accessibility (aria-label, aria-current, screen reader text), and hidden on root path.
 - **Welcome Marketing Page**: Full marketing landing page at `/welcome` featuring hero section, feature highlights grid (6 key features), benefits section, stats showcase, and multiple CTAs. Positioned in sidebar above Solutions for easy first-time user onboarding.
 - **National Church Residences Landing Page**: Branded partnership landing page at `/national-church-residences` featuring NCR logo (#E86C3C warm orange/coral branding matching NCR's official website), "Let's Thrive Together" messaging, six key capability cards (360° Donor Profiles, Predictive AI Insights, Pipeline Management, Wealth Event Monitoring, Advanced Analytics, Campaign Tracking), mission-aligned impact section, and strategic CTAs. Features custom top navigation bar with four dropdown menus (Grants, Events, Donors, Pipelines) styled in NCR orange, providing demo access to key platform sections. Accessible from Overview section in sidebar with Building2 icon. Responsive design with mobile-optimized stat grid (10K+ donors, 300+ communities, 60+ years).
 - **FundRazor Logo Component**: Production-ready SVG logo with automatic dark/light mode support, using CSS classes for theme adaptation.

@@ -3,10 +3,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
 import { CommandPalette } from "@/components/command-palette";
-import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -16,6 +13,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Calendar, FileText, Users } from "lucide-react";
 import NotFound from "@/pages/not-found";
+import Home from "@/pages/home";
 import Dashboard from "@/pages/dashboard";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
@@ -108,9 +106,10 @@ import MGOMeetingsDetail from "@/pages/mgo-meetings-detail";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Dashboard} />
+      <Route path="/" component={Home} />
       <Route path="/welcome" component={Welcome} />
       <Route path="/national-church-residences" component={NationalChurchResidences} />
+      <Route path="/dashboard" component={Dashboard} />
       <Route path="/dashboard/mgo" component={Dashboard} />
       <Route path="/dashboard/dev-director" component={Dashboard} />
       <Route path="/dashboard/ceo" component={Dashboard} />
@@ -200,28 +199,27 @@ function Router() {
 
 
 function App() {
-  const style = {
-    "--sidebar-width": "15rem",
-    "--sidebar-width-icon": "3rem",
-  };
-
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <SidebarProvider style={style as React.CSSProperties}>
-          <CommandPalette />
-          <div className="flex h-screen w-full">
-            <AppSidebar />
-            <div className="flex flex-col flex-1">
-              <header 
-                className="flex items-center gap-4 h-16 px-6 border-b shrink-0"
-                style={{
-                  background: "#2171B5",
-                  borderColor: "#1A3A5C40"
-                }}
-              >
-                <SidebarTrigger data-testid="button-sidebar-toggle" className="text-white hover:bg-white/10" />
-                <Breadcrumbs className="text-white/90" />
+        <CommandPalette />
+        <div className="flex flex-col h-screen w-full">
+          {/* Top Header Navigation */}
+          <header 
+            className="flex items-center gap-6 h-16 px-6 border-b shrink-0"
+            style={{
+              background: "#2171B5",
+              borderColor: "#1A3A5C40"
+            }}
+          >
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2 text-white font-bold text-xl hover:opacity-90 transition-opacity">
+              <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor" opacity="0.9"/>
+                <path d="M2 17L12 22L22 17V12L12 17L2 12V17Z" fill="currentColor" opacity="0.7"/>
+              </svg>
+              <span>FundRazor</span>
+            </Link>
                 
                 <div className="flex items-center gap-3 ml-auto">
                   {/* Navigation Dropdowns */}
@@ -381,13 +379,11 @@ function App() {
                     <User className="h-5 w-5" />
                   </Button>
                 </div>
-              </header>
-              <main className="flex-1 overflow-auto p-6">
-                <Router />
-              </main>
-            </div>
-          </div>
-        </SidebarProvider>
+          </header>
+          <main className="flex-1 overflow-auto p-6 bg-background">
+            <Router />
+          </main>
+        </div>
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
