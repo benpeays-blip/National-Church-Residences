@@ -13,10 +13,12 @@ type EventFilter = "all" | "past" | "upcoming";
 export default function Events() {
   const [location, setLocation] = useLocation();
   
-  // Derive active filter from URL
+  // Derive active filter from URL (using 'tab' parameter for consistency with SectionTabs)
   const activeFilter = useMemo<EventFilter>(() => {
     const params = new URLSearchParams(window.location.search);
-    return (params.get('filter') as EventFilter) || "all";
+    const tab = params.get('tab');
+    if (tab === 'past' || tab === 'upcoming') return tab;
+    return "all";
   }, [location]);
 
   const { data: events, isLoading } = useQuery<FundraisingEvent[]>({
@@ -25,7 +27,11 @@ export default function Events() {
 
   // Handle filter change
   const handleFilterChange = (newFilter: EventFilter) => {
-    setLocation(`/events?filter=${newFilter}`);
+    if (newFilter === "all") {
+      setLocation('/events');
+    } else {
+      setLocation(`/events?tab=${newFilter}`);
+    }
   };
 
   // Filter events based on active filter
@@ -103,42 +109,6 @@ export default function Events() {
         </Card>
       </div>
 
-      {/* Tabs */}
-      <div className="flex gap-1 border-b">
-        <button
-          onClick={() => handleFilterChange("all")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
-            activeFilter === "all"
-              ? "border-primary text-primary"
-              : "border-transparent text-muted-foreground hover:text-foreground"
-          }`}
-          data-testid="filter-all"
-        >
-          All Events
-        </button>
-        <button
-          onClick={() => handleFilterChange("upcoming")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
-            activeFilter === "upcoming"
-              ? "border-primary text-primary"
-              : "border-transparent text-muted-foreground hover:text-foreground"
-          }`}
-          data-testid="filter-upcoming"
-        >
-          Upcoming
-        </button>
-        <button
-          onClick={() => handleFilterChange("past")}
-          className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
-            activeFilter === "past"
-              ? "border-primary text-primary"
-              : "border-transparent text-muted-foreground hover:text-foreground"
-          }`}
-          data-testid="filter-past"
-        >
-          Past Events
-        </button>
-      </div>
 
       {/* Events List */}
       <div className="grid grid-cols-1 gap-4">
