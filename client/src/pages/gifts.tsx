@@ -26,37 +26,30 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useLocation } from "wouter";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 
 type GiftType = "all" | "major" | "recurring" | "planned";
 
 export default function Gifts() {
   const [location, setLocation] = useLocation();
-  const searchParams = new URLSearchParams(location.split('?')[1]);
-  const typeParam = searchParams.get('type') as GiftType | null;
-  const [activeTab, setActiveTab] = useState<GiftType>(typeParam || "all");
   const [showDateFilter, setShowDateFilter] = useState(false);
+  
+  // Derive active tab from URL (source of truth)
+  // Note: wouter's location is pathname only, query params are in window.location.search
+  const activeTab = useMemo<GiftType>(() => {
+    const params = new URLSearchParams(window.location.search);
+    return (params.get('tab') as GiftType) || "all";
+  }, [location]); // location change triggers recomputation even though we read from window.location
   
   const { data: gifts, isLoading } = useQuery<Gift[]>({
     queryKey: ["/api/gifts"],
   });
 
-  // Sync URL with active tab
-  useEffect(() => {
-    if (activeTab === "all") {
-      setLocation("/gifts");
-    } else {
-      setLocation(`/gifts?type=${activeTab}`);
-    }
-  }, [activeTab, setLocation]);
-
-  // Update tab when URL changes
-  useEffect(() => {
-    const newType = new URLSearchParams(location.split('?')[1]).get('type') as GiftType | null;
-    if (newType && newType !== activeTab) {
-      setActiveTab(newType);
-    }
-  }, [location]);
+  // Handle tab changes by updating URL only
+  const handleTabChange = (newTab: GiftType) => {
+    // Always use explicit tab parameter for consistency
+    setLocation(`/gifts?tab=${newTab}`);
+  };
 
   // Filter gifts based on type using structured fields with keyword fallbacks
   const filteredGifts = useMemo(() => {
@@ -280,7 +273,7 @@ export default function Gifts() {
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as GiftType)}>
+      <Tabs value={activeTab} onValueChange={(v) => handleTabChange(v as GiftType)}>
         <TabsList className="grid w-full grid-cols-4">
           <TabsTrigger value="all" data-testid="tab-all-gifts">
             <DollarSign className="w-4 h-4 mr-2" />

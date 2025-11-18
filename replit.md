@@ -34,10 +34,21 @@ Implemented production-ready gift tracking pages with hybrid schema approach:
 - CSV export functionality
 - URL parameter sync for direct linking to tabs
 
+**URL Navigation:**
+- All tabs use explicit `?tab=` parameters for consistent URL sync
+- Direct navigation to `/gifts?tab=major|recurring|planned` works correctly
+- Browser back/forward navigation fully supported
+
 **Known Limitations:**
 - Current implementation assumes gifts with recurringCadence represent actual installment payments, not one-time pledges with cadence stamps
 - Database needs reseeding to populate new structured fields on existing records
 - Future enhancement: Add `isInstallment` flag or `recurringAmount` field to distinguish pledge intents from actual recurring charges
+
+**Testing Status:**
+- ✅ E2E tests passed for tab navigation and URL sync
+- ✅ KPI calculations verified (structured fields + fallbacks)
+- ✅ Hybrid filtering approach working correctly
+- ✅ CSV export functionality implemented
 
 ## User Preferences
 - **Design Philosophy**: Enterprise-grade, data-dense UI inspired by Linear and Salesforce NPSP
