@@ -1,44 +1,12 @@
 import { useLocation } from "wouter";
+import { useMemo, useState, useEffect } from "react";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
 import { Mic, MessageSquare, FileText, BarChart3, Workflow } from "lucide-react";
 import AIVoiceNotes from "@/pages/ai-voice-notes";
-
-// Placeholder components for pages that don't exist yet
-function OutreachGenerator() {
-  return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold">Outreach Generator</h2>
-      <p className="text-muted-foreground">AI-powered donor outreach templates and personalized communications.</p>
-    </div>
-  );
-}
-
-function GrantProposals() {
-  return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold">Grant Proposals</h2>
-      <p className="text-muted-foreground">AI-assisted grant writing and proposal generation.</p>
-    </div>
-  );
-}
-
-function ImpactReports() {
-  return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold">Impact Reports</h2>
-      <p className="text-muted-foreground">Automated impact report generation and donor communications.</p>
-    </div>
-  );
-}
-
-function WorkflowBuilder() {
-  return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold">Workflow Builder</h2>
-      <p className="text-muted-foreground">Visual workflow automation builder for fundraising processes.</p>
-    </div>
-  );
-}
+import OutreachGenerator from "@/pages/content-outreach";
+import GrantProposals from "@/pages/content-grant-proposals";
+import ImpactReports from "@/pages/content-impact-reports";
+import Workflows from "@/pages/workflows";
 
 const aiToolsTabs: SectionTab[] = [
   {
@@ -76,28 +44,29 @@ const aiToolsTabs: SectionTab[] = [
 export default function AIToolsWithTabs() {
   const [location] = useLocation();
   
-  // Determine active tab from URL
+  // Read active tab directly from URL on every render
   const params = new URLSearchParams(window.location.search);
   const activeTab = params.get('tab') || 'voice';
 
-  // Determine which component to render
-  let AIComponent = AIVoiceNotes;
-  
+  // Render the appropriate component based on activeTab
+  let content;
   if (activeTab === 'outreach') {
-    AIComponent = OutreachGenerator;
+    content = <OutreachGenerator />;
   } else if (activeTab === 'grants') {
-    AIComponent = GrantProposals;
+    content = <GrantProposals />;
   } else if (activeTab === 'reports') {
-    AIComponent = ImpactReports;
+    content = <ImpactReports />;
   } else if (activeTab === 'workflows') {
-    AIComponent = WorkflowBuilder;
+    content = <Workflows />;
+  } else {
+    content = <AIVoiceNotes />;
   }
 
   return (
     <div className="flex flex-col h-full">
       <SectionTabs tabs={aiToolsTabs} currentPath={location} />
       <div className="flex-1 overflow-auto p-6">
-        <AIComponent />
+        {content}
       </div>
     </div>
   );
