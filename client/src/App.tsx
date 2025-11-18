@@ -45,6 +45,7 @@ import PipelineWithTabs from "@/pages/pipeline-with-tabs";
 import Grants from "@/pages/grants";
 import Gifts from "@/pages/gifts";
 import Events from "@/pages/events";
+import PastEvents from "@/pages/past-events";
 import Campaigns from "@/pages/campaigns";
 import CampaignsWithTabs from "@/pages/campaigns-with-tabs";
 import CampaignDetail from "@/pages/campaign-detail";
@@ -147,6 +148,7 @@ function Router() {
       <Route path="/pipeline/analytics" component={PipelineWithTabs} />
       <Route path="/pipeline" component={PipelineWithTabs} />
       <Route path="/events" component={Events} />
+      <Route path="/events/past" component={PastEvents} />
       <Route path="/grants" component={Grants} />
       <Route path="/gifts" component={Gifts} />
       <Route path="/campaigns/:id" component={CampaignDetail} />
@@ -322,8 +324,8 @@ function App() {
                           </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                          <Link href="/events?filter=past" className="cursor-pointer">
-                            Past Events
+                          <Link href="/events/past" className="cursor-pointer">
+                            Past Events & Initiatives
                           </Link>
                         </DropdownMenuItem>
                       </DropdownMenuContent>
