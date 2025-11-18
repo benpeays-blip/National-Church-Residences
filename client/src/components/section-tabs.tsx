@@ -24,13 +24,30 @@ export function SectionTabs({ tabs, currentPath }: SectionTabsProps) {
     }
   };
 
-  const activeTab = tabs.find(t => t.path === currentPath)?.value || tabs[0]?.value;
+  // Determine active tab by matching path with or without query params
+  const getActiveTab = () => {
+    // Get the full URL path with query params
+    const fullPath = window.location.pathname + window.location.search;
+    
+    // Try exact match first
+    let matchedTab = tabs.find(t => t.path === fullPath);
+    
+    // If no exact match, try matching just the pathname
+    if (!matchedTab) {
+      matchedTab = tabs.find(t => t.path === currentPath);
+    }
+    
+    // Fall back to first tab
+    return matchedTab?.value || tabs[0]?.value;
+  };
+
+  const activeTab = getActiveTab();
 
   return (
     <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="px-6">
         <Tabs value={activeTab} onValueChange={handleTabChange}>
-          <TabsList className="h-12 bg-transparent border-0 rounded-none gap-1">
+          <TabsList className="h-12 bg-transparent border-0 rounded-none gap-1 w-auto inline-flex">
             {tabs.map((tab) => {
               const Icon = tab.icon;
               return (
