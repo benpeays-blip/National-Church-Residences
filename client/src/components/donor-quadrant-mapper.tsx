@@ -393,12 +393,16 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
       {showEducationalContent && (
         <>
           {/* Section Title */}
-          <div className="lg:col-span-5 space-y-1">
-            <h2 className="text-3xl font-bold">The Quadrant Explained</h2>
-            <p className="text-sm text-muted-foreground">
-              A comprehensive framework for understanding and advancing donor relationships
-            </p>
-          </div>
+          <Card className="lg:col-span-5">
+            <CardHeader className="bg-primary/5 border-b">
+              <div className="space-y-1">
+                <h2 className="text-3xl font-bold">The Quadrant Explained</h2>
+                <p className="text-sm text-muted-foreground">
+                  A comprehensive framework for understanding and advancing donor relationships
+                </p>
+              </div>
+            </CardHeader>
+          </Card>
 
           {/* Master Tabs for Educational Content */}
           <Card className="lg:col-span-5">
