@@ -8,13 +8,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { FundRazorLogo } from "@/components/FundRazorLogo";
 import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Calendar, FileText, Users, Network, Target, Brain, TrendingUp } from "lucide-react";
+import { Search, Settings as SettingsIcon, Bell, User } from "lucide-react";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import DashboardHome from "@/pages/dashboard-home";
@@ -61,6 +55,7 @@ import EventsWithTabs from "@/pages/events-with-tabs";
 import GrantsWithTabs from "@/pages/grants-with-tabs";
 import AIToolsWithTabs from "@/pages/ai-tools-with-tabs";
 import RelationshipsWithTabs from "@/pages/relationships-with-tabs";
+import OtherWithTabs from "@/pages/other-with-tabs";
 
 // AI Intelligence
 import AIPredictiveTiming from "@/pages/ai-predictive-timing";
@@ -164,6 +159,7 @@ function Router() {
       <Route path="/gifts" component={GiftsWithTabs} />
       <Route path="/ai-tools" component={AIToolsWithTabs} />
       <Route path="/relationships" component={RelationshipsWithTabs} />
+      <Route path="/other" component={OtherWithTabs} />
       
       <Route path="/events/past" component={PastEvents} />
       <Route path="/campaigns/:id" component={CampaignDetail} />
@@ -346,94 +342,29 @@ function App() {
                       </Button>
                     </Link>
                     
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="font-semibold hover:bg-gray-100"
-                          style={{ color: "#084594" }}
-                          data-testid="dropdown-donors"
-                        >
-                          Donors
-                          <ChevronDown className="h-3 w-3 ml-1.5" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="start" className="w-48">
-                        <DropdownMenuItem asChild>
-                          <Link href="/donors" className="cursor-pointer">
-                            All Donors
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/donors/major-gifts" className="cursor-pointer">
-                            Major Gifts
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/donors/prospects" className="cursor-pointer">
-                            Prospects
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/donors/lybunt" className="cursor-pointer">
-                            LYBUNT
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/donors/sybunt" className="cursor-pointer">
-                            SYBUNT
-                          </Link>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <Link href="/donors">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="font-semibold hover:bg-gray-100"
+                        style={{ color: "#084594" }}
+                        data-testid="button-donors"
+                      >
+                        Donors
+                      </Button>
+                    </Link>
                     
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="font-semibold hover:bg-gray-100"
-                          style={{ color: "#084594" }}
-                          data-testid="dropdown-other"
-                        >
-                          Other
-                          <ChevronDown className="h-3 w-3 ml-1.5" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="start" className="w-56">
-                        <DropdownMenuItem asChild>
-                          <Link href="/pipeline" className="cursor-pointer">
-                            Pipeline
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/welcome" className="cursor-pointer">
-                            Welcome
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/tech-stack-mapper" className="cursor-pointer">
-                            Tech Stack Mapper
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/national-church-residences" className="cursor-pointer">
-                            National Church Residences
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/organization-mapper" className="cursor-pointer">
-                            Organization Mapper
-                          </Link>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem asChild>
-                          <Link href="/organization-workflow-canvas" className="cursor-pointer">
-                            Workflow Canvas
-                          </Link>
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    <Link href="/other">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="font-semibold hover:bg-gray-100"
+                        style={{ color: "#084594" }}
+                        data-testid="button-other"
+                      >
+                        Other
+                      </Button>
+                    </Link>
                   </nav>
                   
                   {/* Separator */}
