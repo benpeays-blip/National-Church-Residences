@@ -65,35 +65,6 @@ const workflowMenuItems = [
     ],
   },
   {
-    groupLabel: "Relationship Science",
-    items: [
-      {
-        title: "Board Network Mapper",
-        url: "/relationship/board-network-mapper",
-        icon: Network,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
-      },
-      {
-        title: "Board Connections",
-        url: "/relationship/board-connections",
-        icon: Users,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
-      },
-      {
-        title: "Corporate Partnerships",
-        url: "/relationship/corporate-partnerships",
-        icon: Target,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR"],
-      },
-      {
-        title: "Peer Discovery",
-        url: "/relationship/peer-donors",
-        icon: Users,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
-      },
-    ],
-  },
-  {
     groupLabel: "AI Tools",
     items: [
       {
