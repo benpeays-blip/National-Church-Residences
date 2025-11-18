@@ -13,6 +13,23 @@ The **Dashboard Home** (new homepage at `/`) provides a unified view of the enti
 
 ## Recent Changes (November 18, 2025)
 
+### Navigation Modernization
+Implemented tab-based landing pages replacing dropdown menus for cleaner, more direct navigation:
+
+**Campaigns Navigation:**
+- Converted from dropdown menu to clickable button
+- Landing page at `/campaigns` with 4 tabs: All Campaigns, Active, Planned, Completed
+- URL-based tab navigation with `?tab=` parameters for direct linking
+- Campaigns component now accepts `filterStatus` prop for filtering by status
+
+**Gift Types Educational Content:**
+- Added new "Gift Types" tab to Gifts page (5 tabs total)
+- Educational content about donor giving options:
+  - Cash Gifts, Wills & Bequests, IRA Qualified Charitable Distribution
+  - Charitable Gift Annuities, Memorial Gifts, Refundable Entrance Fees, Donor Advised Funds
+- Each gift type presented in card format with icon, title, and descriptive content
+- Provides donors with comprehensive information about giving methods
+
 ### Dashboard Homepage Updates
 - Removed "Dashboard" title from homepage
 - Removed "Donor Relationship Intelligence" section title and description
@@ -54,6 +71,7 @@ Implemented production-ready gift tracking pages with hybrid schema approach:
 2. **Major Gifts**: $10k+ tracking with pipeline value, wealth indicators, solicitation status
 3. **Recurring Gifts**: Monthly revenue (MRR) with cadence normalization, retention/churn tracking
 4. **Planned Gifts**: Legacy society tracking, bequest pipeline, estate planning stages
+5. **Gift Types**: Educational content about 7 different giving methods for donor guidance
 
 **Key Features:**
 - Hybrid filtering: Structured fields (primary) → Amount thresholds (secondary) → Keywords (fallback)
@@ -98,10 +116,11 @@ Implemented production-ready gift tracking pages with hybrid schema approach:
     - Collapsible sections with chevron indicators and localStorage persistence
   - **Top Header**: White background with dark navy blue accents (#084594 - b8)
     - Sidebar toggle button (hamburger icon, dark navy blue)
-    - Six text-based dropdown menus (semibold, no icons): **Intelligence** (Donors, Predictive Timing, Wealth Events, Meeting Briefs), **Quadrant**, Events, Grants, Campaigns, Relationships
+    - Navigation items (semibold, no icons): **Intelligence** dropdown (Donors, Predictive Timing, Wealth Events, Meeting Briefs), **Quadrant** dropdown, Events dropdown, Grants dropdown, **Campaigns** clickable button (links to tab-based page), Relationships dropdown
     - Utility icons on right: Search, Notifications, Settings, Account (all dark navy blue)
     - Gray separator between navigation and utility icons
     - Subtle gray hover states (`hover:bg-gray-100`)
+  - **Tab-Based Landing Pages**: Modern navigation pattern where major sections (Campaigns, Gifts) use tabs instead of dropdown submenus
 - **UI/UX Decisions**: Enterprise data platform aesthetic, Inter font family, Blues-8 gradient color system (8 shades from near-white to deep navy), Tailwind spacing system, standardized component guidelines (padding, font sizes for KPIs, dense tables, two-column forms, fixed-width sidebar).
 - **Color System (Blues-8)**: A professional 8-shade gradient palette for consistent branding and UI hierarchy, using darker shades for higher importance/elevation.
 - **Design Unification**: "Clean & Modern Left-Aligned Cards" pattern applied consistently across the platform.
