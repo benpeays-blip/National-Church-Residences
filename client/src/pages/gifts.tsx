@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   DollarSign, 
   TrendingUp, 
@@ -223,10 +222,10 @@ export default function Gifts() {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold">Gift Tracking</h1>
+          <h1 className="text-3xl font-bold">Gifts</h1>
           <p className="text-sm text-muted-foreground">
             Comprehensive donor contribution management
           </p>
@@ -274,32 +273,9 @@ export default function Gifts() {
         </div>
       </div>
 
-      <Tabs value={activeTab} onValueChange={(v) => handleTabChange(v as GiftType)}>
-        <TabsList className="grid w-full grid-cols-5">
-          <TabsTrigger value="all" data-testid="tab-all-gifts">
-            <DollarSign className="w-4 h-4 mr-2" />
-            All Gifts
-          </TabsTrigger>
-          <TabsTrigger value="major" data-testid="tab-major-gifts">
-            <Heart className="w-4 h-4 mr-2" />
-            Major Gifts
-          </TabsTrigger>
-          <TabsTrigger value="recurring" data-testid="tab-recurring-gifts">
-            <Repeat className="w-4 h-4 mr-2" />
-            Recurring
-          </TabsTrigger>
-          <TabsTrigger value="planned" data-testid="tab-planned-gifts">
-            <FileText className="w-4 h-4 mr-2" />
-            Planned
-          </TabsTrigger>
-          <TabsTrigger value="types" data-testid="tab-gift-types">
-            <GiftIcon className="w-4 h-4 mr-2" />
-            Gift Types
-          </TabsTrigger>
-        </TabsList>
-
-        {/* All Gifts Tab */}
-        <TabsContent value="all" className="space-y-6">
+      {/* All Gifts Tab */}
+      {activeTab === "all" && (
+        <div className="space-y-6">
           {/* KPI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card>
@@ -391,10 +367,12 @@ export default function Gifts() {
               </Table>
             </CardContent>
           </Card>
-        </TabsContent>
+        </div>
+      )}
 
-        {/* Major Gifts Tab */}
-        <TabsContent value="major" className="space-y-6">
+      {/* Major Gifts Tab */}
+      {activeTab === "major" && (
+        <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
@@ -484,10 +462,12 @@ export default function Gifts() {
               </Table>
             </CardContent>
           </Card>
-        </TabsContent>
+        </div>
+      )}
 
-        {/* Recurring Gifts Tab */}
-        <TabsContent value="recurring" className="space-y-6">
+      {/* Recurring Gifts Tab */}
+      {activeTab === "recurring" && (
+        <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
@@ -575,10 +555,12 @@ export default function Gifts() {
               </Table>
             </CardContent>
           </Card>
-        </TabsContent>
+        </div>
+      )}
 
-        {/* Planned Gifts Tab */}
-        <TabsContent value="planned" className="space-y-6">
+      {/* Planned Gifts Tab */}
+      {activeTab === "planned" && (
+        <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <Card>
               <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
@@ -668,10 +650,12 @@ export default function Gifts() {
               </Table>
             </CardContent>
           </Card>
-        </TabsContent>
+        </div>
+      )}
 
-        {/* Gift Types Tab */}
-        <TabsContent value="types" className="space-y-6">
+      {/* Gift Types Tab */}
+      {activeTab === "types" && (
+        <div className="space-y-6">
           <div className="space-y-1 mb-6">
             <h2 className="text-2xl font-bold" data-testid="heading-gift-types">Donor Generosity Takes Many Forms</h2>
             <p className="text-sm text-muted-foreground">
@@ -816,8 +800,8 @@ export default function Gifts() {
               </CardContent>
             </Card>
           </div>
-        </TabsContent>
-      </Tabs>
+        </div>
+      )}
     </div>
   );
 }
