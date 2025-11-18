@@ -117,47 +117,6 @@ const workflowMenuItems = [
       },
     ],
   },
-  {
-    groupLabel: "Other",
-    items: [
-      {
-        title: "Pipeline",
-        url: "/pipeline",
-        icon: Target,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
-      },
-      {
-        title: "Welcome",
-        url: "/welcome",
-        icon: Home,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
-        title: "Tech Stack Mapper",
-        url: "/tech-stack-mapper",
-        icon: Layers,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
-        title: "National Church Residences",
-        url: "/national-church-residences",
-        icon: Building2,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
-        title: "Organization Mapper",
-        url: "/organization-mapper",
-        icon: Users,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
-        title: "Workflow Canvas",
-        url: "/organization-workflow-canvas",
-        icon: Network,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-    ],
-  },
 ];
 
 export function AppSidebar() {

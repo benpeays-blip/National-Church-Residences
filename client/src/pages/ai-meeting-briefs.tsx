@@ -68,7 +68,7 @@ export default function AIMeetingBriefs() {
         <div className="grid grid-cols-1 gap-6">
           {briefs.map((item) => (
             <Card key={item.brief.id}>
-              <CardHeader>
+              <CardHeader className="bg-primary/5 border-b">
                 <div className="flex items-start justify-between">
                   <div>
                     <CardTitle className="text-xl">
@@ -84,7 +84,7 @@ export default function AIMeetingBriefs() {
                 </div>
               </CardHeader>
               <CardContent className="space-y-4">
-                <div>
+                <div className="pt-4">
                   <h4 className="font-semibold flex items-center gap-2 mb-2">
                     <Target className="w-4 h-4" />
                     Optimal Ask Amount
@@ -95,7 +95,7 @@ export default function AIMeetingBriefs() {
                 </div>
 
                 {item.brief.conversationStarters && item.brief.conversationStarters.length > 0 && (
-                  <div>
+                  <div className="pt-4 border-t">
                     <h4 className="font-semibold flex items-center gap-2 mb-2">
                       <Lightbulb className="w-4 h-4 text-yellow-500" />
                       Conversation Starters

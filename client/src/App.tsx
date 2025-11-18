@@ -560,6 +560,53 @@ function App() {
                         </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
+                    
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold hover:bg-gray-100"
+                          style={{ color: "#084594" }}
+                          data-testid="dropdown-other"
+                        >
+                          Other
+                          <ChevronDown className="h-3 w-3 ml-1.5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-56">
+                        <DropdownMenuItem asChild>
+                          <Link href="/pipeline" className="cursor-pointer">
+                            Pipeline
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/welcome" className="cursor-pointer">
+                            Welcome
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/tech-stack-mapper" className="cursor-pointer">
+                            Tech Stack Mapper
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/national-church-residences" className="cursor-pointer">
+                            National Church Residences
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/organization-mapper" className="cursor-pointer">
+                            Organization Mapper
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/organization-workflow-canvas" className="cursor-pointer">
+                            Workflow Canvas
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </nav>
                   
                   {/* Separator */}
