@@ -10,7 +10,8 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Mail } from "lucide-react";
+import { Mail, ExternalLink } from "lucide-react";
+import { Link } from "wouter";
 import type { Bipartite, Person } from "@/lib/boardMapTypes";
 
 // Helper function to get shared people between two organizations
@@ -144,28 +145,42 @@ export default function OverlapMatrix() {
                 No shared board members found.
               </div>
             ) : (
-              selectedCell?.people.map((person) => (
-                <div
-                  key={person.id}
-                  className="flex items-center gap-3 p-3 rounded-lg border hover-elevate"
-                  data-testid={`shared-person-${person.id}`}
-                >
-                  <Avatar className="w-12 h-12">
-                    <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                      {person.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div className="flex-1">
-                    <div className="font-semibold">{person.name}</div>
-                    {person.email && (
-                      <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-1">
-                        <Mail className="w-3 h-3" />
-                        <span>{person.email}</span>
+              selectedCell?.people.map((person) => {
+                // Construct search URL using email if available, otherwise name
+                const searchParam = person.email 
+                  ? `search=${encodeURIComponent(person.email)}`
+                  : `search=${encodeURIComponent(person.name)}`;
+                
+                return (
+                  <Link 
+                    key={person.id} 
+                    href={`/donors?${searchParam}`}
+                  >
+                    <div
+                      className="flex items-center gap-3 p-3 rounded-lg border hover-elevate active-elevate-2 cursor-pointer"
+                      data-testid={`shared-person-${person.id}`}
+                    >
+                      <Avatar className="w-12 h-12">
+                        <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                          {person.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1">
+                        <div className="font-semibold flex items-center gap-2">
+                          {person.name}
+                          <ExternalLink className="w-3.5 h-3.5 text-muted-foreground" />
+                        </div>
+                        {person.email && (
+                          <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-1">
+                            <Mail className="w-3 h-3" />
+                            <span>{person.email}</span>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                </div>
-              ))
+                    </div>
+                  </Link>
+                );
+              })
             )}
           </div>
         </DialogContent>
