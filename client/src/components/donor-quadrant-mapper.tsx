@@ -849,55 +849,62 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               </div>
 
               <div>
-                <h4 className="font-semibold text-lg mb-3">Strategy</h4>
+                <h4 className="font-semibold text-lg mb-4">Strategy</h4>
                 
-                <div className="space-y-4">
-                  <div>
-                    <p className="font-semibold text-sm mb-2">1. Acknowledge their gift personally</p>
-                    <p className="text-sm text-muted-foreground ml-4">
-                      Humanize the relationship. Acquaintances become friends when they feel seen.
-                    </p>
+                {/* 2-Column Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Left Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-semibold text-sm mb-2">1. Acknowledge their gift personally</p>
+                      <p className="text-sm text-muted-foreground ml-4">
+                        Humanize the relationship. Acquaintances become friends when they feel seen.
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-sm mb-2">2. Invite them into light-touch structure</p>
+                      <p className="text-sm text-muted-foreground ml-4 mb-2">Examples:</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Short update email with a personal note</li>
+                        <li className="list-disc">Quick "behind the scenes" story</li>
+                        <li className="list-disc">Low-commitment survey ("Which part of our mission matters most to you?")</li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-sm mb-2">3. Place them in a predictable cadence</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Quarterly impact summaries</li>
+                        <li className="list-disc">Personalized content based on interest</li>
+                      </ul>
+                    </div>
                   </div>
 
-                  <div>
-                    <p className="font-semibold text-sm mb-2">2. Invite them into light-touch structure</p>
-                    <p className="text-sm text-muted-foreground ml-4 mb-2">Examples:</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Short update email with a personal note</li>
-                      <li className="list-disc">Quick "behind the scenes" story</li>
-                      <li className="list-disc">Low-commitment survey ("Which part of our mission matters most to you?")</li>
-                    </ul>
-                  </div>
+                  {/* Right Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-semibold text-sm mb-2">4. Offer a micro-commitment</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">RSVP for a 15-minute virtual update</li>
+                        <li className="list-disc">Join a small group tour</li>
+                        <li className="list-disc">Attend an info session</li>
+                      </ul>
+                    </div>
 
-                  <div>
-                    <p className="font-semibold text-sm mb-2">3. Place them in a predictable cadence</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Quarterly impact summaries</li>
-                      <li className="list-disc">Personalized content based on interest</li>
-                    </ul>
-                  </div>
+                    <div>
+                      <p className="font-semibold text-sm mb-2">5. Identify affinity signals</p>
+                      <p className="text-sm text-muted-foreground ml-4">
+                        Once they show interest, move them to "Friend."
+                      </p>
+                    </div>
 
-                  <div>
-                    <p className="font-semibold text-sm mb-2">4. Offer a micro-commitment</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">RSVP for a 15-minute virtual update</li>
-                      <li className="list-disc">Join a small group tour</li>
-                      <li className="list-disc">Attend an info session</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p className="font-semibold text-sm mb-2">5. Identify affinity signals</p>
-                    <p className="text-sm text-muted-foreground ml-4">
-                      Once they show interest, move them to "Friend."
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="font-semibold text-sm mb-2">6. Bridge to higher-touch conversation</p>
-                    <p className="text-sm text-muted-foreground ml-4 italic">
-                      "I noticed your interest in ___. Could we share a short update with you?"
-                    </p>
+                    <div>
+                      <p className="font-semibold text-sm mb-2">6. Bridge to higher-touch conversation</p>
+                      <p className="text-sm text-muted-foreground ml-4 italic">
+                        "I noticed your interest in ___. Could we share a short update with you?"
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -924,52 +931,59 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               </div>
 
               <div>
-                <h4 className="font-semibold text-lg mb-3">Strategy</h4>
+                <h4 className="font-semibold text-lg mb-4">Strategy</h4>
                 
-                <div className="space-y-4">
-                  <div>
-                    <p className="font-semibold text-sm mb-2">1. Convert relational warmth into a plan</p>
-                    <p className="text-sm text-muted-foreground ml-4 italic">
-                      "You've been close to our story — I'd love to explore what meaningful partnership might look like."
-                    </p>
+                {/* 2-Column Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Left Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-semibold text-sm mb-2">1. Convert relational warmth into a plan</p>
+                      <p className="text-sm text-muted-foreground ml-4 italic">
+                        "You've been close to our story — I'd love to explore what meaningful partnership might look like."
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-sm mb-2">2. Introduce cadence</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Calendar the next touchpoint before ending the current one</li>
+                        <li className="list-disc">Move from spontaneous connection → predictable engagement</li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-sm mb-2">3. Give them a role or responsibility</p>
+                      <p className="text-sm text-muted-foreground ml-4 mb-2">
+                        Friends become partners when they feel needed, not just liked:
+                      </p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Host a small gathering</li>
+                        <li className="list-disc">Join a vision preview</li>
+                        <li className="list-disc">Help shape a project</li>
+                      </ul>
+                    </div>
                   </div>
 
-                  <div>
-                    <p className="font-semibold text-sm mb-2">2. Introduce cadence</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Calendar the next touchpoint before ending the current one</li>
-                      <li className="list-disc">Move from spontaneous connection → predictable engagement</li>
-                    </ul>
-                  </div>
+                  {/* Right Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-semibold text-sm mb-2">4. Present specific investment opportunities</p>
+                      <p className="text-sm text-muted-foreground ml-4 mb-2">
+                        Friends respond to emotion; partners respond to clarity.
+                      </p>
+                      <p className="text-sm text-muted-foreground ml-4">
+                        Give them something concrete to own.
+                      </p>
+                    </div>
 
-                  <div>
-                    <p className="font-semibold text-sm mb-2">3. Give them a role or responsibility</p>
-                    <p className="text-sm text-muted-foreground ml-4 mb-2">
-                      Friends become partners when they feel needed, not just liked:
-                    </p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Host a small gathering</li>
-                      <li className="list-disc">Join a vision preview</li>
-                      <li className="list-disc">Help shape a project</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p className="font-semibold text-sm mb-2">4. Present specific investment opportunities</p>
-                    <p className="text-sm text-muted-foreground ml-4 mb-2">
-                      Friends respond to emotion; partners respond to clarity.
-                    </p>
-                    <p className="text-sm text-muted-foreground ml-4">
-                      Give them something concrete to own.
-                    </p>
-                  </div>
-
-                  <div>
-                    <p className="font-semibold text-sm mb-2">5. Create a vision conversation</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Invite them into the "why now" and the long-term plan</li>
-                      <li className="list-disc">Connect their passion to a strategic initiative</li>
-                    </ul>
+                    <div>
+                      <p className="font-semibold text-sm mb-2">5. Create a vision conversation</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Invite them into the "why now" and the long-term plan</li>
+                        <li className="list-disc">Connect their passion to a strategic initiative</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -996,54 +1010,61 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               </div>
 
               <div>
-                <h4 className="font-semibold text-lg mb-3">Strategy</h4>
+                <h4 className="font-semibold text-lg mb-4">Strategy</h4>
                 
-                <div className="space-y-4">
-                  <div>
-                    <p className="font-semibold text-sm mb-2">1. Move from impersonal to personal</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Send a personalized update tied to their giving history</li>
-                      <li className="list-disc">Invite them to a short thank-you call</li>
-                    </ul>
+                {/* 2-Column Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Left Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-semibold text-sm mb-2">1. Move from impersonal to personal</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Send a personalized update tied to their giving history</li>
+                        <li className="list-disc">Invite them to a short thank-you call</li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-sm mb-2">2. Show them the meaning behind the structure</p>
+                      <p className="text-sm text-muted-foreground ml-4 mb-2 italic">
+                        "Your automated monthly gift has helped…"
+                      </p>
+                      <p className="text-sm text-muted-foreground ml-4">
+                        Give emotional significance to their pattern.
+                      </p>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-sm mb-2">3. Offer deeper insight and stories</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Video updates</li>
+                        <li className="list-disc">Program leader testimonials</li>
+                        <li className="list-disc">Real-life transformation stories</li>
+                      </ul>
+                    </div>
                   </div>
 
-                  <div>
-                    <p className="font-semibold text-sm mb-2">2. Show them the meaning behind the structure</p>
-                    <p className="text-sm text-muted-foreground ml-4 mb-2 italic">
-                      "Your automated monthly gift has helped…"
-                    </p>
-                    <p className="text-sm text-muted-foreground ml-4">
-                      Give emotional significance to their pattern.
-                    </p>
-                  </div>
+                  {/* Right Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-semibold text-sm mb-2">4. Personal invitation to a higher-value opportunity</p>
+                      <p className="text-sm text-muted-foreground ml-4 mb-2">
+                        Colleagues respond to system integrity, so show how a major gift fits the broader structure:
+                      </p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Multi-year vision</li>
+                        <li className="list-disc">Strategic initiative</li>
+                        <li className="list-disc">Campaign involvement</li>
+                      </ul>
+                    </div>
 
-                  <div>
-                    <p className="font-semibold text-sm mb-2">3. Offer deeper insight and stories</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Video updates</li>
-                      <li className="list-disc">Program leader testimonials</li>
-                      <li className="list-disc">Real-life transformation stories</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p className="font-semibold text-sm mb-2">4. Personal invitation to a higher-value opportunity</p>
-                    <p className="text-sm text-muted-foreground ml-4 mb-2">
-                      Colleagues respond to system integrity, so show how a major gift fits the broader structure:
-                    </p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Multi-year vision</li>
-                      <li className="list-disc">Strategic initiative</li>
-                      <li className="list-disc">Campaign involvement</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p className="font-semibold text-sm mb-2">5. Bridge them to relational connection</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Introduce them to a key leader</li>
-                      <li className="list-disc">Invite them to smaller gatherings where partnership feels natural</li>
-                    </ul>
+                    <div>
+                      <p className="font-semibold text-sm mb-2">5. Bridge them to relational connection</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Introduce them to a key leader</li>
+                        <li className="list-disc">Invite them to smaller gatherings where partnership feels natural</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1070,52 +1091,59 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               </div>
 
               <div>
-                <h4 className="font-semibold text-lg mb-3">Strategy</h4>
+                <h4 className="font-semibold text-lg mb-4">Strategy</h4>
                 
-                <div className="space-y-4">
-                  <div>
-                    <p className="font-semibold text-sm mb-2">1. Maintain regular, meaningful communication</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Provide quarterly impact reports with personalized insights</li>
-                      <li className="list-disc">Share behind-the-scenes updates and strategic decisions</li>
-                      <li className="list-disc">Schedule regular check-ins and vision conversations</li>
-                    </ul>
+                {/* 2-Column Layout */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Left Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-semibold text-sm mb-2">1. Maintain regular, meaningful communication</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Provide quarterly impact reports with personalized insights</li>
+                        <li className="list-disc">Share behind-the-scenes updates and strategic decisions</li>
+                        <li className="list-disc">Schedule regular check-ins and vision conversations</li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-sm mb-2">2. Deepen their involvement</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Invite to strategic planning sessions</li>
+                        <li className="list-disc">Offer board or advisory committee opportunities</li>
+                        <li className="list-disc">Create co-ownership of specific initiatives</li>
+                      </ul>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-sm mb-2">3. Honor their partnership publicly and privately</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Recognition events and acknowledgments</li>
+                        <li className="list-disc">Personal thank-you from leadership</li>
+                        <li className="list-disc">Share stories of impact enabled by their partnership</li>
+                      </ul>
+                    </div>
                   </div>
 
-                  <div>
-                    <p className="font-semibold text-sm mb-2">2. Deepen their involvement</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Invite to strategic planning sessions</li>
-                      <li className="list-disc">Offer board or advisory committee opportunities</li>
-                      <li className="list-disc">Create co-ownership of specific initiatives</li>
-                    </ul>
-                  </div>
+                  {/* Right Column */}
+                  <div className="space-y-4">
+                    <div>
+                      <p className="font-semibold text-sm mb-2">4. Provide exclusive access and insight</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">VIP tours and program visits</li>
+                        <li className="list-disc">Direct access to executive leadership</li>
+                        <li className="list-disc">Early preview of new initiatives and opportunities</li>
+                      </ul>
+                    </div>
 
-                  <div>
-                    <p className="font-semibold text-sm mb-2">3. Honor their partnership publicly and privately</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Recognition events and acknowledgments</li>
-                      <li className="list-disc">Personal thank-you from leadership</li>
-                      <li className="list-disc">Share stories of impact enabled by their partnership</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p className="font-semibold text-sm mb-2">4. Provide exclusive access and insight</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">VIP tours and program visits</li>
-                      <li className="list-disc">Direct access to executive leadership</li>
-                      <li className="list-disc">Early preview of new initiatives and opportunities</li>
-                    </ul>
-                  </div>
-
-                  <div>
-                    <p className="font-semibold text-sm mb-2">5. Continuously align with their evolving interests</p>
-                    <ul className="space-y-1 text-sm ml-8">
-                      <li className="list-disc">Regular conversations about their philanthropic goals</li>
-                      <li className="list-disc">Adapt engagement to life changes and new priorities</li>
-                      <li className="list-disc">Present opportunities that match their current passions</li>
-                    </ul>
+                    <div>
+                      <p className="font-semibold text-sm mb-2">5. Continuously align with their evolving interests</p>
+                      <ul className="space-y-1 text-sm ml-8">
+                        <li className="list-disc">Regular conversations about their philanthropic goals</li>
+                        <li className="list-disc">Adapt engagement to life changes and new priorities</li>
+                        <li className="list-disc">Present opportunities that match their current passions</li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </div>
