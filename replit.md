@@ -13,6 +13,15 @@ The **Dashboard Home** (new homepage at `/`) provides a unified view of the enti
 
 ## Recent Changes (November 18, 2025)
 
+### Events Section - Upcoming Count Fix
+- Fixed "Upcoming Events" metric card to display correct count (now shows "2")
+- Updated seed data: Changed event dates from 2025 to 2026 to ensure they're truly upcoming
+  - 14th Annual Golf Classic: June 13, 2026
+  - 5th Annual Ride for Hospice: September 19, 2026
+- Made "Upcoming Events" card clickable to navigate to upcoming tab
+- Added hover-elevate styling for better UX
+- Verified with e2e tests: Card displays "2", clicking navigates to filtered view showing both events
+
 ### Navigation Modernization
 Implemented tab-based landing pages replacing dropdown menus for cleaner, more direct navigation:
 

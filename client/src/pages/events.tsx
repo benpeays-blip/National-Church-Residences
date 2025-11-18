@@ -95,7 +95,11 @@ export default function Events() {
 
       {/* Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="p-6 border">
+        <Card 
+          className="p-6 border hover-elevate cursor-pointer" 
+          onClick={() => setLocation('/events?tab=upcoming')}
+          data-testid="card-upcoming-events"
+        >
           <div className="text-sm text-muted-foreground mb-1">Upcoming Events</div>
           <div className="text-2xl font-semibold tabular-nums">{metrics.upcoming}</div>
         </Card>

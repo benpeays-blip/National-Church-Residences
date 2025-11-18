@@ -2816,7 +2816,7 @@ async function seed() {
     {
       name: "14th Annual Golf Classic",
       eventType: "golf",
-      eventDate: new Date("2025-06-14T08:00:00"),
+      eventDate: new Date("2026-06-13T08:00:00"),
       venue: "Pine Valley Country Club",
       description: "Join us for our 14th annual golf tournament! Foursome packages include continental breakfast, on-course refreshments, lunch, dinner, and premium swag bags. All proceeds benefit senior living programs.",
       goalAmount: "95000",
@@ -2829,7 +2829,7 @@ async function seed() {
     {
       name: "5th Annual Ride for Hospice",
       eventType: "ride",
-      eventDate: new Date("2025-09-20T07:00:00"),
+      eventDate: new Date("2026-09-19T07:00:00"),
       venue: "Riverside Park & Trail",
       description: "Our annual cycling fundraiser returns for its 5th year! Choose from 10-mile family ride, 25-mile recreational route, or 50-mile challenge course. Post-ride festival with food trucks, live music, and awards.",
       goalAmount: "52000",
