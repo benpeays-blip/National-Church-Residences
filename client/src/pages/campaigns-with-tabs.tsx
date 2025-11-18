@@ -1,10 +1,41 @@
 import { useLocation } from "wouter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LayoutGrid, Calendar, Clock, CheckCircle2 } from "lucide-react";
+import { LayoutGrid, Calendar, Clock, CheckCircle2, TrendingUp, Target, BarChart3 } from "lucide-react";
 import Campaigns from "@/pages/campaigns";
 import { useMemo } from "react";
 
-type CampaignTab = "all" | "active" | "planned" | "completed";
+type CampaignTab = "all" | "active" | "planned" | "completed" | "performance" | "goals" | "trends";
+
+// Placeholder components for new tabs
+function CampaignPerformance() {
+  return (
+    <div className="p-6 text-center text-muted-foreground">
+      <TrendingUp className="h-12 w-12 mx-auto mb-4 opacity-50" />
+      <h3 className="text-lg font-semibold mb-2">Campaign Performance Analytics</h3>
+      <p>Performance metrics and analytics will be displayed here</p>
+    </div>
+  );
+}
+
+function CampaignGoals() {
+  return (
+    <div className="p-6 text-center text-muted-foreground">
+      <Target className="h-12 w-12 mx-auto mb-4 opacity-50" />
+      <h3 className="text-lg font-semibold mb-2">Campaign Goals</h3>
+      <p>Goal tracking and progress will be displayed here</p>
+    </div>
+  );
+}
+
+function CampaignTrends() {
+  return (
+    <div className="p-6 text-center text-muted-foreground">
+      <BarChart3 className="h-12 w-12 mx-auto mb-4 opacity-50" />
+      <h3 className="text-lg font-semibold mb-2">Campaign Trends</h3>
+      <p>Historical trends and forecasting will be displayed here</p>
+    </div>
+  );
+}
 
 export default function CampaignsWithTabs() {
   const [location, setLocation] = useLocation();
@@ -30,7 +61,7 @@ export default function CampaignsWithTabs() {
       </div>
 
       <Tabs value={activeTab} onValueChange={(v) => handleTabChange(v as CampaignTab)}>
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-7 gap-1">
           <TabsTrigger value="all" data-testid="tab-all-campaigns">
             <LayoutGrid className="w-4 h-4 mr-2" />
             All Campaigns
@@ -46,6 +77,18 @@ export default function CampaignsWithTabs() {
           <TabsTrigger value="completed" data-testid="tab-completed-campaigns">
             <CheckCircle2 className="w-4 h-4 mr-2" />
             Completed
+          </TabsTrigger>
+          <TabsTrigger value="performance" data-testid="tab-performance">
+            <TrendingUp className="w-4 h-4 mr-2" />
+            Performance
+          </TabsTrigger>
+          <TabsTrigger value="goals" data-testid="tab-goals">
+            <Target className="w-4 h-4 mr-2" />
+            Goals
+          </TabsTrigger>
+          <TabsTrigger value="trends" data-testid="tab-trends">
+            <BarChart3 className="w-4 h-4 mr-2" />
+            Trends
           </TabsTrigger>
         </TabsList>
 
@@ -63,6 +106,18 @@ export default function CampaignsWithTabs() {
 
         <TabsContent value="completed" className="space-y-6">
           <Campaigns filterStatus="completed" />
+        </TabsContent>
+
+        <TabsContent value="performance" className="space-y-6">
+          <CampaignPerformance />
+        </TabsContent>
+
+        <TabsContent value="goals" className="space-y-6">
+          <CampaignGoals />
+        </TabsContent>
+
+        <TabsContent value="trends" className="space-y-6">
+          <CampaignTrends />
         </TabsContent>
       </Tabs>
     </div>
