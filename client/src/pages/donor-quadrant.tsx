@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DonorQuadrantMapper from "@/components/donor-quadrant-mapper";
+import PartnerPathwayWizard from "@/components/partner-pathway-wizard";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -161,6 +162,9 @@ export default function DonorQuadrant() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <DonorQuadrantMapper showEducationalContent={true} />
+      
+      {/* Partner Pathway Wizard */}
+      <PartnerPathwayWizard />
       
       {/* Top 10 Actionable Opportunities */}
       <Card>
