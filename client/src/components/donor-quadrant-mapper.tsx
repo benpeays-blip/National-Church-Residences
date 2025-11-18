@@ -7,7 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TrendingUp, Users, Lightbulb, Phone, Mail, Heart, Award, Calendar, BookOpen, AlertTriangle } from 'lucide-react';
+import { TrendingUp, Users, Lightbulb, Phone, Mail, Heart, Award, Calendar, BookOpen, AlertTriangle, ArrowRight, CheckCircle2 } from 'lucide-react';
 
 interface Donor {
   id: string;
@@ -649,6 +649,327 @@ export default function DonorQuadrantMapper() {
                   <li className="list-disc">Donor fatigue quickly</li>
                   <li className="list-disc">No memory of your organization among their giving priorities</li>
                 </ul>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+
+      {/* Movement Strategies Section */}
+      <Card className="lg:col-span-5">
+        <CardHeader className="bg-primary/5 border-b">
+          <div className="flex items-center gap-2">
+            <ArrowRight className="w-5 h-5 text-primary" />
+            <div>
+              <CardTitle>MOVEMENT STRATEGIES</CardTitle>
+              <CardDescription className="mt-1">
+                HOW EACH QUADRANT ADVANCES TO PARTNER
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <Tabs defaultValue="acquaintance" className="w-full">
+            <TabsList className="grid w-full grid-cols-4 mb-6">
+              <TabsTrigger value="acquaintance" data-testid="tab-strategy-acquaintance">Acquaintance → Partner</TabsTrigger>
+              <TabsTrigger value="friend" data-testid="tab-strategy-friend">Friend → Partner</TabsTrigger>
+              <TabsTrigger value="colleague" data-testid="tab-strategy-colleague">Colleague → Partner</TabsTrigger>
+              <TabsTrigger value="partner" data-testid="tab-strategy-partner">Maintaining Partner</TabsTrigger>
+            </TabsList>
+
+            {/* Acquaintance → Partner */}
+            <TabsContent value="acquaintance" className="space-y-6">
+              <div>
+                <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
+                  <ArrowRight className="w-5 h-5 text-primary" />
+                  ACQUAINTANCE → PARTNER
+                </h3>
+                <p className="text-sm font-semibold text-primary mb-4">
+                  Primary Goal: Move from transactional giving to relational awareness and structured next steps.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-lg mb-3">Strategy</h4>
+                
+                <div className="space-y-4">
+                  <div>
+                    <p className="font-semibold text-sm mb-2">1. Acknowledge their gift personally</p>
+                    <p className="text-sm text-muted-foreground ml-4">
+                      Humanize the relationship. Acquaintances become friends when they feel seen.
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">2. Invite them into light-touch structure</p>
+                    <p className="text-sm text-muted-foreground ml-4 mb-2">Examples:</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Short update email with a personal note</li>
+                      <li className="list-disc">Quick "behind the scenes" story</li>
+                      <li className="list-disc">Low-commitment survey ("Which part of our mission matters most to you?")</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">3. Place them in a predictable cadence</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Quarterly impact summaries</li>
+                      <li className="list-disc">Personalized content based on interest</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">4. Offer a micro-commitment</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">RSVP for a 15-minute virtual update</li>
+                      <li className="list-disc">Join a small group tour</li>
+                      <li className="list-disc">Attend an info session</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">5. Identify affinity signals</p>
+                    <p className="text-sm text-muted-foreground ml-4">
+                      Once they show interest, move them to "Friend."
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">6. Bridge to higher-touch conversation</p>
+                    <p className="text-sm text-muted-foreground ml-4 italic">
+                      "I noticed your interest in ___. Could we share a short update with you?"
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900 rounded-lg p-4">
+                <h4 className="font-semibold text-lg mb-2 flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-600" />
+                  Outcome
+                </h4>
+                <p className="text-sm">They become Friends, then Colleagues, then Partners.</p>
+              </div>
+            </TabsContent>
+
+            {/* Friend → Partner */}
+            <TabsContent value="friend" className="space-y-6">
+              <div>
+                <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
+                  <ArrowRight className="w-5 h-5 text-primary" />
+                  FRIEND → PARTNER
+                </h3>
+                <p className="text-sm font-semibold text-primary mb-4">
+                  Primary Goal: Add structure to high-energy relational warmth.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-lg mb-3">Strategy</h4>
+                
+                <div className="space-y-4">
+                  <div>
+                    <p className="font-semibold text-sm mb-2">1. Convert relational warmth into a plan</p>
+                    <p className="text-sm text-muted-foreground ml-4 italic">
+                      "You've been close to our story — I'd love to explore what meaningful partnership might look like."
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">2. Introduce cadence</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Calendar the next touchpoint before ending the current one</li>
+                      <li className="list-disc">Move from spontaneous connection → predictable engagement</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">3. Give them a role or responsibility</p>
+                    <p className="text-sm text-muted-foreground ml-4 mb-2">
+                      Friends become partners when they feel needed, not just liked:
+                    </p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Host a small gathering</li>
+                      <li className="list-disc">Join a vision preview</li>
+                      <li className="list-disc">Help shape a project</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">4. Present specific investment opportunities</p>
+                    <p className="text-sm text-muted-foreground ml-4 mb-2">
+                      Friends respond to emotion; partners respond to clarity.
+                    </p>
+                    <p className="text-sm text-muted-foreground ml-4">
+                      Give them something concrete to own.
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">5. Create a vision conversation</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Invite them into the "why now" and the long-term plan</li>
+                      <li className="list-disc">Connect their passion to a strategic initiative</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900 rounded-lg p-4">
+                <h4 className="font-semibold text-lg mb-2 flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-600" />
+                  Outcome
+                </h4>
+                <p className="text-sm">Friendship + structure becomes Partnership.</p>
+              </div>
+            </TabsContent>
+
+            {/* Colleague → Partner */}
+            <TabsContent value="colleague" className="space-y-6">
+              <div>
+                <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
+                  <ArrowRight className="w-5 h-5 text-primary" />
+                  COLLEAGUE → PARTNER
+                </h3>
+                <p className="text-sm font-semibold text-primary mb-4">
+                  Primary Goal: Warm the relationship and deepen energy without removing structure.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-lg mb-3">Strategy</h4>
+                
+                <div className="space-y-4">
+                  <div>
+                    <p className="font-semibold text-sm mb-2">1. Move from impersonal to personal</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Send a personalized update tied to their giving history</li>
+                      <li className="list-disc">Invite them to a short thank-you call</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">2. Show them the meaning behind the structure</p>
+                    <p className="text-sm text-muted-foreground ml-4 mb-2 italic">
+                      "Your automated monthly gift has helped…"
+                    </p>
+                    <p className="text-sm text-muted-foreground ml-4">
+                      Give emotional significance to their pattern.
+                    </p>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">3. Offer deeper insight and stories</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Video updates</li>
+                      <li className="list-disc">Program leader testimonials</li>
+                      <li className="list-disc">Real-life transformation stories</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">4. Personal invitation to a higher-value opportunity</p>
+                    <p className="text-sm text-muted-foreground ml-4 mb-2">
+                      Colleagues respond to system integrity, so show how a major gift fits the broader structure:
+                    </p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Multi-year vision</li>
+                      <li className="list-disc">Strategic initiative</li>
+                      <li className="list-disc">Campaign involvement</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">5. Bridge them to relational connection</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Introduce them to a key leader</li>
+                      <li className="list-disc">Invite them to smaller gatherings where partnership feels natural</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900 rounded-lg p-4">
+                <h4 className="font-semibold text-lg mb-2 flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-green-600" />
+                  Outcome
+                </h4>
+                <p className="text-sm">Colleague → relational warmth → structured major gift pathway → Partner.</p>
+              </div>
+            </TabsContent>
+
+            {/* Maintaining Partner */}
+            <TabsContent value="partner" className="space-y-6">
+              <div>
+                <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
+                  <Award className="w-5 h-5 text-primary" />
+                  MAINTAINING PARTNER STATUS
+                </h3>
+                <p className="text-sm font-semibold text-primary mb-4">
+                  Primary Goal: Sustain high energy and high structure through continuous engagement and transparency.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-lg mb-3">Strategy</h4>
+                
+                <div className="space-y-4">
+                  <div>
+                    <p className="font-semibold text-sm mb-2">1. Maintain regular, meaningful communication</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Provide quarterly impact reports with personalized insights</li>
+                      <li className="list-disc">Share behind-the-scenes updates and strategic decisions</li>
+                      <li className="list-disc">Schedule regular check-ins and vision conversations</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">2. Deepen their involvement</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Invite to strategic planning sessions</li>
+                      <li className="list-disc">Offer board or advisory committee opportunities</li>
+                      <li className="list-disc">Create co-ownership of specific initiatives</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">3. Honor their partnership publicly and privately</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Recognition events and acknowledgments</li>
+                      <li className="list-disc">Personal thank-you from leadership</li>
+                      <li className="list-disc">Share stories of impact enabled by their partnership</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">4. Provide exclusive access and insight</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">VIP tours and program visits</li>
+                      <li className="list-disc">Direct access to executive leadership</li>
+                      <li className="list-disc">Early preview of new initiatives and opportunities</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <p className="font-semibold text-sm mb-2">5. Continuously align with their evolving interests</p>
+                    <ul className="space-y-1 text-sm ml-8">
+                      <li className="list-disc">Regular conversations about their philanthropic goals</li>
+                      <li className="list-disc">Adapt engagement to life changes and new priorities</li>
+                      <li className="list-disc">Present opportunities that match their current passions</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 rounded-lg p-4">
+                <h4 className="font-semibold text-lg mb-2 flex items-center gap-2">
+                  <Lightbulb className="w-5 h-5 text-blue-600" />
+                  Key Principle
+                </h4>
+                <p className="text-sm">
+                  Partners are not a destination but a relationship to be nurtured. Like a garden, partnership requires constant attention, 
+                  care, and cultivation. The goal is not to maintain status quo, but to deepen engagement and co-create transformational impact together.
+                </p>
               </div>
             </TabsContent>
           </Tabs>
