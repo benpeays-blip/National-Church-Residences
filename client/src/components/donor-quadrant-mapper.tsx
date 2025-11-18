@@ -392,191 +392,210 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
       {/* Educational Content - Only show on dedicated quadrant page */}
       {showEducationalContent && (
         <>
-          {/* Overview Section */}
+          {/* Master Tabs for Educational Content */}
           <Card className="lg:col-span-5">
-        <CardHeader className="bg-primary/5 border-b">
-          <CardTitle>Overview</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-6 space-y-4">
-          <p className="text-sm">
-            This framework maps donors using two essential axes:
-          </p>
+            <CardContent className="pt-6">
+              <Tabs defaultValue="overview" className="w-full">
+                <TabsList className="grid w-full grid-cols-5 mb-6">
+                  <TabsTrigger value="overview" data-testid="tab-master-overview">Overview</TabsTrigger>
+                  <TabsTrigger value="thesis" data-testid="tab-master-thesis">Thesis</TabsTrigger>
+                  <TabsTrigger value="summary" data-testid="tab-master-summary">Summary</TabsTrigger>
+                  <TabsTrigger value="quadrant" data-testid="tab-master-quadrant">Quadrant Explained</TabsTrigger>
+                  <TabsTrigger value="strategies" data-testid="tab-master-strategies">Movement Strategies</TabsTrigger>
+                </TabsList>
 
-          <div className="space-y-3">
-            <div>
-              <h4 className="font-semibold text-sm mb-2">Y-Axis: ENERGY (Low → High)</h4>
-              <p className="text-sm text-muted-foreground ml-4">
-                The relational energy and emotional investment exchanged between the organization and the donor.
-              </p>
-              <p className="text-sm text-muted-foreground ml-4 mt-1">
-                Energy = attention, personal connection, affinity, and sense of shared mission.
-              </p>
-            </div>
+                {/* Overview Tab */}
+                <TabsContent value="overview" className="space-y-6">
+                  <Card className="border-0 shadow-none">
+                    <CardHeader className="bg-primary/5 border-b">
+                      <CardTitle>Overview</CardTitle>
+                    </CardHeader>
+                    <CardContent className="pt-6 space-y-4">
+                      <p className="text-sm">
+                        This framework maps donors using two essential axes:
+                      </p>
 
-            <div>
-              <h4 className="font-semibold text-sm mb-2">X-Axis: STRUCTURE (Low → High)</h4>
-              <p className="text-sm text-muted-foreground ml-4">
-                The systems, processes, touchpoints, and formalized pathways that define how donors engage.
-              </p>
-              <p className="text-sm text-muted-foreground ml-4 mt-1">
-                Structure = cadence, planning, communication channels, intentional movement, strategic invitations.
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+                      <div className="space-y-3">
+                        <div>
+                          <h4 className="font-semibold text-sm mb-2">Y-Axis: ENERGY (Low → High)</h4>
+                          <p className="text-sm text-muted-foreground ml-4">
+                            The relational energy and emotional investment exchanged between the organization and the donor.
+                          </p>
+                          <p className="text-sm text-muted-foreground ml-4 mt-1">
+                            Energy = attention, personal connection, affinity, and sense of shared mission.
+                          </p>
+                        </div>
 
-      {/* Thesis Section */}
-      <Card className="lg:col-span-5">
-        <CardHeader className="bg-primary/5 border-b">
-          <CardTitle>THE CENTRAL THESIS OF THE MODEL</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-6">
-          {/* 2-Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Left Column */}
-            <div className="space-y-5">
-              <div>
-                <h4 className="font-semibold text-sm mb-2">1. Donor movement is predictable.</h4>
-                <p className="text-sm text-muted-foreground ml-4 mb-2">
-                  Every donor relationship moves from:
-                </p>
-                <p className="text-sm text-muted-foreground ml-4 italic">
-                  anonymous → known → seen → valued → essential.
-                </p>
-                <p className="text-sm text-muted-foreground ml-4 mt-2">
-                  This quadrant system maps that progression.
-                </p>
-              </div>
+                        <div>
+                          <h4 className="font-semibold text-sm mb-2">X-Axis: STRUCTURE (Low → High)</h4>
+                          <p className="text-sm text-muted-foreground ml-4">
+                            The systems, processes, touchpoints, and formalized pathways that define how donors engage.
+                          </p>
+                          <p className="text-sm text-muted-foreground ml-4 mt-1">
+                            Structure = cadence, planning, communication channels, intentional movement, strategic invitations.
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
 
-              <div>
-                <h4 className="font-semibold text-sm mb-2">2. All movement requires BOTH energy and structure.</h4>
-                <ul className="space-y-1 text-sm ml-8">
-                  <li className="list-disc">Energy builds closeness.</li>
-                  <li className="list-disc">Structure builds commitment.</li>
-                </ul>
-                <p className="text-sm text-muted-foreground ml-4 mt-2">
-                  Partner-level donors emerge only where both converge.
-                </p>
-              </div>
+                {/* Thesis Tab */}
+                <TabsContent value="thesis" className="space-y-6">
+                  <Card className="border-0 shadow-none">
+                    <CardHeader className="bg-primary/5 border-b">
+                      <CardTitle>THE CENTRAL THESIS OF THE MODEL</CardTitle>
+                    </CardHeader>
+                    <CardContent className="pt-6">
+                      {/* 2-Column Layout */}
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        {/* Left Column */}
+                        <div className="space-y-5">
+                          <div>
+                            <h4 className="font-semibold text-sm mb-2">1. Donor movement is predictable.</h4>
+                            <p className="text-sm text-muted-foreground ml-4 mb-2">
+                              Every donor relationship moves from:
+                            </p>
+                            <p className="text-sm text-muted-foreground ml-4 italic">
+                              anonymous → known → seen → valued → essential.
+                            </p>
+                            <p className="text-sm text-muted-foreground ml-4 mt-2">
+                              This quadrant system maps that progression.
+                            </p>
+                          </div>
 
-              <div>
-                <h4 className="font-semibold text-sm mb-2">3. Each quadrant has a "default destiny."</h4>
-                <p className="text-sm text-muted-foreground ml-4 mb-2">
-                  If not intentionally moved:
-                </p>
-                <ul className="space-y-1 text-sm ml-8">
-                  <li className="list-disc">Acquaintances disappear.</li>
-                  <li className="list-disc">Friends drift.</li>
-                  <li className="list-disc">Colleagues plateau.</li>
-                  <li className="list-disc">Partners deepen movements and eventually become legacy givers.</li>
-                </ul>
-              </div>
-            </div>
+                          <div>
+                            <h4 className="font-semibold text-sm mb-2">2. All movement requires BOTH energy and structure.</h4>
+                            <ul className="space-y-1 text-sm ml-8">
+                              <li className="list-disc">Energy builds closeness.</li>
+                              <li className="list-disc">Structure builds commitment.</li>
+                            </ul>
+                            <p className="text-sm text-muted-foreground ml-4 mt-2">
+                              Partner-level donors emerge only where both converge.
+                            </p>
+                          </div>
 
-            {/* Right Column */}
-            <div className="space-y-5">
-              <div>
-                <h4 className="font-semibold text-sm mb-2">4. The organization's internal discipline determines upward movement.</h4>
-                <p className="text-sm text-muted-foreground ml-4 mb-2">
-                  Most donors do not move on their own. They move because YOU intentionally:
-                </p>
-                <ul className="space-y-1 text-sm ml-8">
-                  <li className="list-disc">invest energy,</li>
-                  <li className="list-disc">introduce structure,</li>
-                  <li className="list-disc">create clarity,</li>
-                  <li className="list-disc">present meaningful opportunities.</li>
-                </ul>
-              </div>
+                          <div>
+                            <h4 className="font-semibold text-sm mb-2">3. Each quadrant has a "default destiny."</h4>
+                            <p className="text-sm text-muted-foreground ml-4 mb-2">
+                              If not intentionally moved:
+                            </p>
+                            <ul className="space-y-1 text-sm ml-8">
+                              <li className="list-disc">Acquaintances disappear.</li>
+                              <li className="list-disc">Friends drift.</li>
+                              <li className="list-disc">Colleagues plateau.</li>
+                              <li className="list-disc">Partners deepen movements and eventually become legacy givers.</li>
+                            </ul>
+                          </div>
+                        </div>
 
-              <div>
-                <h4 className="font-semibold text-sm mb-2">5. The ultimate goal is to form a community of Partners.</h4>
-                <p className="text-sm text-muted-foreground ml-4 mb-2">
-                  This is where:
-                </p>
-                <ul className="space-y-1 text-sm ml-8">
-                  <li className="list-disc">transformational gifts occur,</li>
-                  <li className="list-disc">multi-year commitments are made,</li>
-                  <li className="list-disc">advocacy spreads,</li>
-                  <li className="list-disc">the mission accelerates exponentially.</li>
-                </ul>
-                <p className="text-sm text-muted-foreground ml-4 mt-2">
-                  This quadrant is not a "category of donors" — it is the future leadership of the organization.
-                </p>
-              </div>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+                        {/* Right Column */}
+                        <div className="space-y-5">
+                          <div>
+                            <h4 className="font-semibold text-sm mb-2">4. The organization's internal discipline determines upward movement.</h4>
+                            <p className="text-sm text-muted-foreground ml-4 mb-2">
+                              Most donors do not move on their own. They move because YOU intentionally:
+                            </p>
+                            <ul className="space-y-1 text-sm ml-8">
+                              <li className="list-disc">invest energy,</li>
+                              <li className="list-disc">introduce structure,</li>
+                              <li className="list-disc">create clarity,</li>
+                              <li className="list-disc">present meaningful opportunities.</li>
+                            </ul>
+                          </div>
 
-      {/* Summary Section */}
-      <Card className="lg:col-span-5">
-        <CardHeader className="bg-primary/5 border-b">
-          <CardTitle>THE FINAL SUMMARY FRAMEWORK</CardTitle>
-        </CardHeader>
-        <CardContent className="pt-6">
-          <p className="text-sm mb-4 font-semibold">To reach the Partner quadrant:</p>
-          
-          <div className="overflow-x-auto">
-            <table className="w-full border-collapse border border-border">
-              <thead>
-                <tr className="bg-muted/50">
-                  <th className="border border-border p-3 text-left text-sm font-semibold">Quadrant</th>
-                  <th className="border border-border p-3 text-left text-sm font-semibold">Needed Input</th>
-                  <th className="border border-border p-3 text-left text-sm font-semibold">Movement Path</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="hover-elevate">
-                  <td className="border border-border p-3 text-sm font-medium">Acquaintance</td>
-                  <td className="border border-border p-3 text-sm">Energy + Initial Structure</td>
-                  <td className="border border-border p-3 text-sm">Make them known → move to Friend</td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="border border-border p-3 text-sm font-medium">Friend</td>
-                  <td className="border border-border p-3 text-sm">Structure</td>
-                  <td className="border border-border p-3 text-sm">Build plan + cadence → move to Colleague/Partner</td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="border border-border p-3 text-sm font-medium">Colleague</td>
-                  <td className="border border-border p-3 text-sm">Energy</td>
-                  <td className="border border-border p-3 text-sm">Personalize → deepen meaning → move to Partner</td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="border border-border p-3 text-sm font-medium">Partner</td>
-                  <td className="border border-border p-3 text-sm">Consistent Energy + Structure</td>
-                  <td className="border border-border p-3 text-sm">Maintain → grow → legacy-level commitment</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </CardContent>
-      </Card>
+                          <div>
+                            <h4 className="font-semibold text-sm mb-2">5. The ultimate goal is to form a community of Partners.</h4>
+                            <p className="text-sm text-muted-foreground ml-4 mb-2">
+                              This is where:
+                            </p>
+                            <ul className="space-y-1 text-sm ml-8">
+                              <li className="list-disc">transformational gifts occur,</li>
+                              <li className="list-disc">multi-year commitments are made,</li>
+                              <li className="list-disc">advocacy spreads,</li>
+                              <li className="list-disc">the mission accelerates exponentially.</li>
+                            </ul>
+                            <p className="text-sm text-muted-foreground ml-4 mt-2">
+                              This quadrant is not a "category of donors" — it is the future leadership of the organization.
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
 
-      {/* Educational Framework Section */}
-      <Card className="lg:col-span-5">
-        <CardHeader className="bg-primary/5 border-b">
-          <div className="flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-primary" />
-            <div>
-              <CardTitle>QUADRANT EXPLAINED</CardTitle>
-              <CardDescription className="mt-1">
-                A Strategic Model for Understanding and Moving Donors Toward Long-Term Partnership
-              </CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="pt-6">
-          <Tabs defaultValue="partner" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-6">
-              <TabsTrigger value="partner" data-testid="tab-framework-partner">Partner</TabsTrigger>
-              <TabsTrigger value="friend" data-testid="tab-framework-friend">Friend</TabsTrigger>
-              <TabsTrigger value="colleague" data-testid="tab-framework-colleague">Colleague</TabsTrigger>
-              <TabsTrigger value="acquaintance" data-testid="tab-framework-acquaintance">Acquaintance</TabsTrigger>
-            </TabsList>
+                {/* Summary Tab */}
+                <TabsContent value="summary" className="space-y-6">
+                  <Card className="border-0 shadow-none">
+                    <CardHeader className="bg-primary/5 border-b">
+                      <CardTitle>THE FINAL SUMMARY FRAMEWORK</CardTitle>
+                    </CardHeader>
+                    <CardContent className="pt-6">
+                      <p className="text-sm mb-4 font-semibold">To reach the Partner quadrant:</p>
+                      
+                      <div className="overflow-x-auto">
+                        <table className="w-full border-collapse border border-border">
+                          <thead>
+                            <tr className="bg-muted/50">
+                              <th className="border border-border p-3 text-left text-sm font-semibold">Quadrant</th>
+                              <th className="border border-border p-3 text-left text-sm font-semibold">Needed Input</th>
+                              <th className="border border-border p-3 text-left text-sm font-semibold">Movement Path</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr className="hover-elevate">
+                              <td className="border border-border p-3 text-sm font-medium">Acquaintance</td>
+                              <td className="border border-border p-3 text-sm">Energy + Initial Structure</td>
+                              <td className="border border-border p-3 text-sm">Make them known → move to Friend</td>
+                            </tr>
+                            <tr className="hover-elevate">
+                              <td className="border border-border p-3 text-sm font-medium">Friend</td>
+                              <td className="border border-border p-3 text-sm">Structure</td>
+                              <td className="border border-border p-3 text-sm">Build plan + cadence → move to Colleague/Partner</td>
+                            </tr>
+                            <tr className="hover-elevate">
+                              <td className="border border-border p-3 text-sm font-medium">Colleague</td>
+                              <td className="border border-border p-3 text-sm">Energy</td>
+                              <td className="border border-border p-3 text-sm">Personalize → deepen meaning → move to Partner</td>
+                            </tr>
+                            <tr className="hover-elevate">
+                              <td className="border border-border p-3 text-sm font-medium">Partner</td>
+                              <td className="border border-border p-3 text-sm">Consistent Energy + Structure</td>
+                              <td className="border border-border p-3 text-sm">Maintain → grow → legacy-level commitment</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
 
-            {/* Partner Tab */}
-            <TabsContent value="partner" className="space-y-6">
+                {/* Quadrant Explained Tab */}
+                <TabsContent value="quadrant" className="space-y-6">
+                  <Card className="border-0 shadow-none">
+                    <CardHeader className="bg-primary/5 border-b">
+                      <div className="flex items-center gap-2">
+                        <BookOpen className="w-5 h-5 text-primary" />
+                        <div>
+                          <CardTitle>QUADRANT EXPLAINED</CardTitle>
+                          <CardDescription className="mt-1">
+                            A Strategic Model for Understanding and Moving Donors Toward Long-Term Partnership
+                          </CardDescription>
+                        </div>
+                      </div>
+                    </CardHeader>
+                    <CardContent className="pt-6">
+                      <Tabs defaultValue="partner" className="w-full">
+                        <TabsList className="grid w-full grid-cols-4 mb-6">
+                          <TabsTrigger value="partner" data-testid="tab-framework-partner">Partner</TabsTrigger>
+                          <TabsTrigger value="friend" data-testid="tab-framework-friend">Friend</TabsTrigger>
+                          <TabsTrigger value="colleague" data-testid="tab-framework-colleague">Colleague</TabsTrigger>
+                          <TabsTrigger value="acquaintance" data-testid="tab-framework-acquaintance">Acquaintance</TabsTrigger>
+                        </TabsList>
+
+                        {/* Partner Tab */}
+                        <TabsContent value="partner" className="space-y-6">
               <div>
                 <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
                   <Award className="w-5 h-5 text-primary" />
@@ -646,10 +665,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                   <li className="list-disc">Requires both relational energy AND organizational excellence</li>
                 </ul>
               </div>
-            </TabsContent>
+                        </TabsContent>
 
-            {/* Friend Tab */}
-            <TabsContent value="friend" className="space-y-6">
+                        {/* Friend Tab */}
+                        <TabsContent value="friend" className="space-y-6">
               <div>
                 <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
                   <Heart className="w-5 h-5 text-primary" />
@@ -718,10 +737,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                   <li className="list-disc">Can stay "stuck" in friendliness without movement</li>
                 </ul>
               </div>
-            </TabsContent>
+                        </TabsContent>
 
-            {/* Colleague Tab */}
-            <TabsContent value="colleague" className="space-y-6">
+                        {/* Colleague Tab */}
+                        <TabsContent value="colleague" className="space-y-6">
               <div>
                 <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
                   <Users className="w-5 h-5 text-primary" />
@@ -785,10 +804,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                   <li className="list-disc">They will leave quietly if structure breaks down</li>
                 </ul>
               </div>
-            </TabsContent>
+                        </TabsContent>
 
-            {/* Acquaintance Tab */}
-            <TabsContent value="acquaintance" className="space-y-6">
+                        {/* Acquaintance Tab */}
+                        <TabsContent value="acquaintance" className="space-y-6">
               <div>
                 <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
                   <Mail className="w-5 h-5 text-primary" />
@@ -855,34 +874,36 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 </ul>
               </div>
             </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+                  </Tabs>
+                </CardContent>
+              </Card>
+            </TabsContent>
 
-      {/* Movement Strategies Section */}
-      <Card className="lg:col-span-5">
-        <CardHeader className="bg-primary/5 border-b">
-          <div className="flex items-center gap-2">
-            <ArrowRight className="w-5 h-5 text-primary" />
-            <div>
-              <CardTitle>MOVEMENT STRATEGIES</CardTitle>
-              <CardDescription className="mt-1">
-                HOW EACH QUADRANT ADVANCES TO PARTNER
-              </CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="pt-6">
-          <Tabs defaultValue="acquaintance" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-6">
-              <TabsTrigger value="acquaintance" data-testid="tab-strategy-acquaintance">Acquaintance → Partner</TabsTrigger>
-              <TabsTrigger value="friend" data-testid="tab-strategy-friend">Friend → Partner</TabsTrigger>
-              <TabsTrigger value="colleague" data-testid="tab-strategy-colleague">Colleague → Partner</TabsTrigger>
-              <TabsTrigger value="partner" data-testid="tab-strategy-partner">Maintaining Partner</TabsTrigger>
-            </TabsList>
+            {/* Movement Strategies Tab */}
+            <TabsContent value="strategies" className="space-y-6">
+              <Card className="border-0 shadow-none">
+                <CardHeader className="bg-primary/5 border-b">
+                  <div className="flex items-center gap-2">
+                    <ArrowRight className="w-5 h-5 text-primary" />
+                    <div>
+                      <CardTitle>MOVEMENT STRATEGIES</CardTitle>
+                      <CardDescription className="mt-1">
+                        HOW EACH QUADRANT ADVANCES TO PARTNER
+                      </CardDescription>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="pt-6">
+                  <Tabs defaultValue="acquaintance" className="w-full">
+                    <TabsList className="grid w-full grid-cols-4 mb-6">
+                      <TabsTrigger value="acquaintance" data-testid="tab-strategy-acquaintance">Acquaintance → Partner</TabsTrigger>
+                      <TabsTrigger value="friend" data-testid="tab-strategy-friend">Friend → Partner</TabsTrigger>
+                      <TabsTrigger value="colleague" data-testid="tab-strategy-colleague">Colleague → Partner</TabsTrigger>
+                      <TabsTrigger value="partner" data-testid="tab-strategy-partner">Maintaining Partner</TabsTrigger>
+                    </TabsList>
 
-            {/* Acquaintance → Partner */}
-            <TabsContent value="acquaintance" className="space-y-6">
+                    {/* Acquaintance → Partner */}
+                    <TabsContent value="acquaintance" className="space-y-6">
               <div>
                 <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
                   <ArrowRight className="w-5 h-5 text-primary" />
@@ -961,10 +982,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 </h4>
                 <p className="text-sm">They become Friends, then Colleagues, then Partners.</p>
               </div>
-            </TabsContent>
+                    </TabsContent>
 
-            {/* Friend → Partner */}
-            <TabsContent value="friend" className="space-y-6">
+                    {/* Friend → Partner */}
+                    <TabsContent value="friend" className="space-y-6">
               <div>
                 <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
                   <ArrowRight className="w-5 h-5 text-primary" />
@@ -1040,10 +1061,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 </h4>
                 <p className="text-sm">Friendship + structure becomes Partnership.</p>
               </div>
-            </TabsContent>
+                    </TabsContent>
 
-            {/* Colleague → Partner */}
-            <TabsContent value="colleague" className="space-y-6">
+                    {/* Colleague → Partner */}
+                    <TabsContent value="colleague" className="space-y-6">
               <div>
                 <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
                   <ArrowRight className="w-5 h-5 text-primary" />
@@ -1121,10 +1142,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 </h4>
                 <p className="text-sm">Colleague → relational warmth → structured major gift pathway → Partner.</p>
               </div>
-            </TabsContent>
+                    </TabsContent>
 
-            {/* Maintaining Partner */}
-            <TabsContent value="partner" className="space-y-6">
+                    {/* Maintaining Partner */}
+                    <TabsContent value="partner" className="space-y-6">
               <div>
                 <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
                   <Award className="w-5 h-5 text-primary" />
@@ -1203,10 +1224,15 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                   care, and cultivation. The goal is not to maintain status quo, but to deepen engagement and co-create transformational impact together.
                 </p>
               </div>
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+                </TabsContent>
+              </Tabs>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+      </Tabs>
+    </CardContent>
+  </Card>
         </>
       )}
       
