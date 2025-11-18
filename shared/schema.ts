@@ -120,6 +120,23 @@ export const orgArtifactTypeEnum = pgEnum("org_artifact_type", [
   "process",
 ]);
 
+export const giftTypeEnum = pgEnum("gift_type", [
+  "one_time",
+  "major",
+  "recurring",
+  "planned",
+  "pledge",
+  "in_kind",
+]);
+
+export const recurringCadenceEnum = pgEnum("recurring_cadence", [
+  "weekly",
+  "monthly",
+  "quarterly",
+  "annual",
+  "one_time",
+]);
+
 // Session storage table (required for Replit Auth)
 export const sessions = pgTable(
   "sessions",
@@ -214,6 +231,9 @@ export const gifts = pgTable("gifts", {
   campaignId: varchar("campaign_id").references(() => campaigns.id),
   designation: varchar("designation"),
   paymentMethod: varchar("payment_method"),
+  // Gift classification (structured fields)
+  giftType: giftTypeEnum("gift_type").default("one_time"),
+  recurringCadence: recurringCadenceEnum("recurring_cadence").default("one_time"),
   // Integration metadata
   sourceSystem: varchar("source_system"), // e.g., "Salesforce", "Classy"
   sourceRecordId: varchar("source_record_id"),

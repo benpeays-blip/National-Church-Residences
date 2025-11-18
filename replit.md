@@ -11,6 +11,34 @@ The **Dashboard Home** (new homepage at `/`) provides a unified view of the enti
 - Recent Gifts
 - Active Campaigns overview
 
+## Recent Changes (November 18, 2025)
+
+### Comprehensive Gift Tracking System
+Implemented production-ready gift tracking pages with hybrid schema approach:
+
+**Schema Enhancements:**
+- Added `giftTypeEnum`: one_time, major, recurring, planned, pledge, in_kind
+- Added `recurringCadenceEnum`: weekly, monthly, quarterly, annual, one_time
+- Extended gifts table with structured classification fields
+
+**Pages Implemented:**
+1. **All Gifts**: Comprehensive dashboard with total raised, gift count, average gift, retention metrics
+2. **Major Gifts**: $10k+ tracking with pipeline value, wealth indicators, solicitation status
+3. **Recurring Gifts**: Monthly revenue (MRR) with cadence normalization, retention/churn tracking
+4. **Planned Gifts**: Legacy society tracking, bequest pipeline, estate planning stages
+
+**Key Features:**
+- Hybrid filtering: Structured fields (primary) → Amount thresholds (secondary) → Keywords (fallback)
+- Cadence normalization for MRR: weekly×4.33, monthly×1, quarterly÷3, annual÷12
+- Real-time KPI calculations using full dataset for retention/churn
+- CSV export functionality
+- URL parameter sync for direct linking to tabs
+
+**Known Limitations:**
+- Current implementation assumes gifts with recurringCadence represent actual installment payments, not one-time pledges with cadence stamps
+- Database needs reseeding to populate new structured fields on existing records
+- Future enhancement: Add `isInstallment` flag or `recurringAmount` field to distinguish pledge intents from actual recurring charges
+
 ## User Preferences
 - **Design Philosophy**: Enterprise-grade, data-dense UI inspired by Linear and Salesforce NPSP
 - **Visual Quality**: Paramount importance - must follow design_guidelines.md religiously

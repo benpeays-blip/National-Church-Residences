@@ -1094,17 +1094,69 @@ async function seed() {
       // Data quality: 90-100 for recent gifts, lower for older
       const dataQuality = daysSinceGift < 30 ? 95 + Math.floor(Math.random() * 5) : 85 + Math.floor(Math.random() * 10);
       
+      // Determine designation and gift classification based on amount and donor type
+      let designation: string;
+      let giftType: "one_time" | "major" | "recurring" | "planned" | "pledge" | "in_kind" = "one_time";
+      let recurringCadence: "weekly" | "monthly" | "quarterly" | "annual" | "one_time" = "one_time";
+      const giftAmount = giftAmounts[i];
+      
+      if (giftAmount >= 50000) {
+        // Major gifts: specific naming campaigns or bequest/legacy
+        const designationOptions = [
+          { des: "Capital Campaign - Science Building", type: "major" as const },
+          { des: "Endowment Fund", type: "major" as const },
+          { des: "Planned Gift - Bequest", type: "planned" as const },
+          { des: "Major Donor Society", type: "major" as const },
+          { des: "Legacy Circle - Estate Gift", type: "planned" as const },
+        ];
+        const selected = weightedRandom(designationOptions, [35, 25, 15, 15, 10]);
+        designation = selected.des;
+        giftType = selected.type;
+      } else if (giftAmount >= 10000) {
+        // Major gifts: capital campaigns or leadership annual fund
+        const designationOptions = [
+          { des: "Capital Fund", type: "major" as const },
+          { des: "Leadership Annual Fund", type: "major" as const },
+          { des: "Scholarship Endowment", type: "major" as const },
+          { des: "Capital Campaign - Science Building", type: "major" as const },
+          { des: "Planned Gift - Charitable Bequest", type: "planned" as const },
+        ];
+        const selected = weightedRandom(designationOptions, [30, 30, 20, 10, 10]);
+        designation = selected.des;
+        giftType = selected.type;
+      } else if (giftAmount < 500 && person.capacityScore && person.capacityScore < 70) {
+        // Smaller gifts from regular donors - more likely to be recurring
+        const designationOptions = [
+          { des: "Monthly Sustainer Program", type: "recurring" as const, cadence: "monthly" as const },
+          { des: "General Fund", type: "one_time" as const, cadence: "one_time" as const },
+          { des: "Education Program", type: "one_time" as const, cadence: "one_time" as const },
+          { des: "Recurring Monthly Gift", type: "recurring" as const, cadence: "monthly" as const },
+          { des: "Community Outreach", type: "one_time" as const, cadence: "one_time" as const },
+        ];
+        const selected = weightedRandom(designationOptions, [25, 30, 20, 15, 10]);
+        designation = selected.des;
+        giftType = selected.type;
+        recurringCadence = selected.cadence;
+      } else {
+        // Mid-range gifts
+        designation = weightedRandom(
+          ["General Fund", "Education Program", "Community Outreach", "Capital Fund", "Scholarship Fund"],
+          [40, 25, 15, 12, 8]
+        );
+        giftType = "one_time";
+      }
+      
       giftsList.push({
         personId: person.id,
         amount: giftAmounts[i].toFixed(2),
         currency: "USD",
         receivedAt: giftDates[i],
         campaignId: campaignId,
-        designation: weightedRandom(
-          ["General Fund", "Education Program", "Community Outreach", "Capital Fund"],
-          [50, 25, 15, 10]
-        ),
+        designation: designation,
         paymentMethod: paymentMethod,
+        // Gift classification (structured fields)
+        giftType: giftType,
+        recurringCadence: recurringCadence,
         // Integration metadata
         sourceSystem: sourceSystem,
         sourceRecordId: `${sourceSystem === "Salesforce" ? "SF-G" : sourceSystem === "Classy" ? "CL-G" : "DAF-G"}-${Math.floor(Math.random() * 900000) + 100000}`,
