@@ -4,16 +4,7 @@ import { Network, Users, Building2, UserPlus } from "lucide-react";
 import BoardNetworkMapper from "@/pages/board-network-mapper";
 import BoardConnections from "@/pages/relationship-board-connections";
 import CorporatePartnerships from "@/pages/relationship-corporate-partnerships";
-
-// Placeholder for Peer Discovery
-function PeerDiscovery() {
-  return (
-    <div className="space-y-4">
-      <h2 className="text-2xl font-bold">Peer Discovery</h2>
-      <p className="text-muted-foreground">Discover peer donors and relationship connections.</p>
-    </div>
-  );
-}
+import PeerDonors from "@/pages/relationship-peer-donors";
 
 const relationshipsTabs: SectionTab[] = [
   {
@@ -57,7 +48,7 @@ export default function RelationshipsWithTabs() {
   } else if (activeTab === 'corporate') {
     RelationshipComponent = CorporatePartnerships;
   } else if (activeTab === 'peer') {
-    RelationshipComponent = PeerDiscovery;
+    RelationshipComponent = PeerDonors;
   }
 
   return (
