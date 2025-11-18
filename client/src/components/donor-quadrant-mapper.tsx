@@ -392,6 +392,14 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
       {/* Educational Content - Only show on dedicated quadrant page */}
       {showEducationalContent && (
         <>
+          {/* Section Title */}
+          <div className="lg:col-span-5 space-y-1">
+            <h2 className="text-3xl font-bold">The Quadrant Explained</h2>
+            <p className="text-sm text-muted-foreground">
+              A comprehensive framework for understanding and advancing donor relationships
+            </p>
+          </div>
+
           {/* Master Tabs for Educational Content */}
           <Card className="lg:col-span-5">
             <CardContent className="pt-6">
