@@ -407,28 +407,13 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
           {/* Master Tabs for Educational Content */}
           <Card className="lg:col-span-5">
             <CardContent className="pt-6">
-              <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="grid w-full grid-cols-5 mb-6">
-                  <TabsTrigger value="overview" data-testid="tab-master-overview">Overview</TabsTrigger>
+              <Tabs defaultValue="thesis" className="w-full">
+                <TabsList className="grid w-full grid-cols-4 mb-6">
                   <TabsTrigger value="thesis" data-testid="tab-master-thesis">Thesis</TabsTrigger>
                   <TabsTrigger value="summary" data-testid="tab-master-summary">Summary</TabsTrigger>
                   <TabsTrigger value="quadrant" data-testid="tab-master-quadrant">Quadrant Explained</TabsTrigger>
                   <TabsTrigger value="strategies" data-testid="tab-master-strategies">Movement Strategies</TabsTrigger>
                 </TabsList>
-
-                {/* Overview Tab */}
-                <TabsContent value="overview" className="space-y-6">
-                  <Card className="border-0 shadow-none">
-                    <CardHeader className="bg-primary/5 border-b">
-                      <CardTitle>Overview</CardTitle>
-                    </CardHeader>
-                    <CardContent className="pt-6">
-                      <p className="text-sm text-muted-foreground">
-                        The Donor Relationship Quadrant Framework provides a strategic model for understanding donor relationships across two key dimensions: relational energy and organizational structure. This framework helps development teams identify where each donor stands and provides clear pathways for advancing relationships toward meaningful partnership.
-                      </p>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
 
                 {/* Thesis Tab */}
                 <TabsContent value="thesis" className="space-y-6">
