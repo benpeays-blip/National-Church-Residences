@@ -128,11 +128,11 @@ export default function Gifts() {
         .filter(g => new Date(g.receivedAt).getFullYear() === currentYear - 1)
         .map(g => g.personId)
     );
-    const retainedDonors = [...thisYearDonors].filter(id => lastYearDonors.has(id)).length;
+    const retainedDonors = Array.from(thisYearDonors).filter(id => lastYearDonors.has(id)).length;
     const retention = lastYearDonors.size > 0 ? (retainedDonors / lastYearDonors.size) * 100 : 0;
     
     // Churn rate - MUST use ALL gifts
-    const churnedDonors = [...lastYearDonors].filter(id => !thisYearDonors.has(id)).length;
+    const churnedDonors = Array.from(lastYearDonors).filter(id => !thisYearDonors.has(id)).length;
     const churnRate = lastYearDonors.size > 0 ? (churnedDonors / lastYearDonors.size) * 100 : 0;
     
     // Major gifts specific: pipeline value (future major gifts using structured fields)
