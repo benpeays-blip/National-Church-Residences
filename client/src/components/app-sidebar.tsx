@@ -65,41 +65,6 @@ const workflowMenuItems = [
     ],
   },
   {
-    groupLabel: "AI Tools",
-    items: [
-      {
-        title: "Voice-to-CRM",
-        url: "/ai/voice-notes",
-        icon: Brain,
-        roles: ["ADMIN", "DEV_DIRECTOR", "MGO"],
-      },
-      {
-        title: "Outreach Generator",
-        url: "/content/outreach",
-        icon: Sparkles,
-        roles: ["ADMIN", "DEV_DIRECTOR", "MGO"],
-      },
-      {
-        title: "Grant Proposals",
-        url: "/content/grant-proposals",
-        icon: FileText,
-        roles: ["ADMIN", "DEV_DIRECTOR"],
-      },
-      {
-        title: "Impact Reports",
-        url: "/content/impact-reports",
-        icon: FileText,
-        roles: ["ADMIN", "DEV_DIRECTOR", "MGO"],
-      },
-      {
-        title: "Workflow Builder",
-        url: "/workflows",
-        icon: Workflow,
-        roles: ["ADMIN", "DEV_DIRECTOR", "DATA_OPS"],
-      },
-    ],
-  },
-  {
     groupLabel: "Analytics",
     items: [
       {

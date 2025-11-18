@@ -410,6 +410,48 @@ function App() {
                           size="sm"
                           className="font-semibold hover:bg-gray-100"
                           style={{ color: "#084594" }}
+                          data-testid="dropdown-ai-tools"
+                        >
+                          AI Tools
+                          <ChevronDown className="h-3 w-3 ml-1.5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-48">
+                        <DropdownMenuItem asChild>
+                          <Link href="/ai/voice-notes" className="cursor-pointer">
+                            Voice-to-CRM
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/content/outreach" className="cursor-pointer">
+                            Outreach Generator
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/content/grant-proposals" className="cursor-pointer">
+                            Grant Proposals
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/content/impact-reports" className="cursor-pointer">
+                            Impact Reports
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/workflows" className="cursor-pointer">
+                            Workflow Builder
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold hover:bg-gray-100"
+                          style={{ color: "#084594" }}
                           data-testid="dropdown-relationships"
                         >
                           Relationships
