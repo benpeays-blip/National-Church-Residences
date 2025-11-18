@@ -254,7 +254,7 @@ export default function DonorQuadrantMapper() {
                     </div>
 
                     {/* Badges Section */}
-                    <div className="p-4 border-t space-y-3">
+                    <div className="p-4 border-t space-y-3 bg-white">
                       <div className="flex items-start gap-3">
                         <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                           <Award className="w-8 h-8 text-primary" />
