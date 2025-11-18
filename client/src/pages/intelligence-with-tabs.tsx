@@ -1,73 +1,62 @@
 import { useLocation } from "wouter";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SectionTabs, SectionTab } from "@/components/section-tabs";
 import { Users, TrendingUp, DollarSign, Calendar } from "lucide-react";
 import Donors from "@/pages/donors";
 import AIPredictiveTiming from "@/pages/ai-predictive-timing";
 import AIWealthEvents from "@/pages/ai-wealth-events";
 import AIMeetingBriefs from "@/pages/ai-meeting-briefs";
-import { useMemo } from "react";
 
-type IntelligenceTab = "donors" | "timing" | "wealth" | "briefs";
+const intelligenceTabs: SectionTab[] = [
+  {
+    label: "Donors",
+    value: "donors",
+    icon: Users,
+    path: "/intelligence",
+  },
+  {
+    label: "Predictive Timing",
+    value: "timing",
+    icon: TrendingUp,
+    path: "/intelligence?tab=timing",
+  },
+  {
+    label: "Wealth Events",
+    value: "wealth",
+    icon: DollarSign,
+    path: "/intelligence?tab=wealth",
+  },
+  {
+    label: "Meeting Briefs",
+    value: "briefs",
+    icon: Calendar,
+    path: "/intelligence?tab=briefs",
+  },
+];
 
 export default function IntelligenceWithTabs() {
-  const [location, setLocation] = useLocation();
+  const [location] = useLocation();
+  
+  // Determine active tab from URL
+  const params = new URLSearchParams(window.location.search);
+  const activeTab = params.get('tab') || 'donors';
 
-  // Derive active tab from URL
-  const activeTab = useMemo<IntelligenceTab>(() => {
-    const params = new URLSearchParams(window.location.search);
-    return (params.get('tab') as IntelligenceTab) || "donors";
-  }, [location]);
-
-  // Handle tab changes by updating URL
-  const handleTabChange = (newTab: IntelligenceTab) => {
-    setLocation(`/intelligence?tab=${newTab}`);
-  };
+  // Determine which component to render
+  let IntelligenceComponent = Donors;
+  
+  if (activeTab === 'timing') {
+    IntelligenceComponent = AIPredictiveTiming;
+  } else if (activeTab === 'wealth') {
+    IntelligenceComponent = AIWealthEvents;
+  } else if (activeTab === 'briefs') {
+    IntelligenceComponent = AIMeetingBriefs;
+  }
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="space-y-1">
-        <h1 className="text-3xl font-bold">Intelligence</h1>
-        <p className="text-sm text-muted-foreground">
-          AI-powered donor insights and relationship intelligence
-        </p>
+    <div className="flex flex-col h-full">
+      <SectionTabs tabs={intelligenceTabs} currentPath={location} />
+      <div className="flex-1 overflow-auto p-6">
+        <IntelligenceComponent />
       </div>
-
-      <Tabs value={activeTab} onValueChange={(v) => handleTabChange(v as IntelligenceTab)}>
-        <TabsList className="grid w-full grid-cols-4 gap-1">
-          <TabsTrigger value="donors" data-testid="tab-donors">
-            <Users className="w-4 h-4 mr-2" />
-            Donors
-          </TabsTrigger>
-          <TabsTrigger value="timing" data-testid="tab-predictive-timing">
-            <TrendingUp className="w-4 h-4 mr-2" />
-            Predictive Timing
-          </TabsTrigger>
-          <TabsTrigger value="wealth" data-testid="tab-wealth-events">
-            <DollarSign className="w-4 h-4 mr-2" />
-            Wealth Events
-          </TabsTrigger>
-          <TabsTrigger value="briefs" data-testid="tab-meeting-briefs">
-            <Calendar className="w-4 h-4 mr-2" />
-            Meeting Briefs
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="donors" className="space-y-6">
-          <Donors />
-        </TabsContent>
-
-        <TabsContent value="timing" className="space-y-6">
-          <AIPredictiveTiming />
-        </TabsContent>
-
-        <TabsContent value="wealth" className="space-y-6">
-          <AIWealthEvents />
-        </TabsContent>
-
-        <TabsContent value="briefs" className="space-y-6">
-          <AIMeetingBriefs />
-        </TabsContent>
-      </Tabs>
     </div>
   );
 }

@@ -1,55 +1,44 @@
 import { useLocation } from "wouter";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SectionTabs, SectionTab } from "@/components/section-tabs";
 import { Grid3x3, List } from "lucide-react";
 import DonorQuadrant from "@/pages/donor-quadrant";
 import Pipeline from "@/pages/pipeline";
-import { useMemo } from "react";
 
-type QuadrantTab = "quadrant" | "pipeline";
+const quadrantTabs: SectionTab[] = [
+  {
+    label: "Donor Quadrant",
+    value: "quadrant",
+    icon: Grid3x3,
+    path: "/quadrant",
+  },
+  {
+    label: "Pipeline View",
+    value: "pipeline",
+    icon: List,
+    path: "/quadrant?tab=pipeline",
+  },
+];
 
 export default function QuadrantWithTabs() {
-  const [location, setLocation] = useLocation();
+  const [location] = useLocation();
+  
+  // Determine active tab from URL
+  const params = new URLSearchParams(window.location.search);
+  const activeTab = params.get('tab') || 'quadrant';
 
-  // Derive active tab from URL
-  const activeTab = useMemo<QuadrantTab>(() => {
-    const params = new URLSearchParams(window.location.search);
-    return (params.get('tab') as QuadrantTab) || "quadrant";
-  }, [location]);
-
-  // Handle tab changes by updating URL
-  const handleTabChange = (newTab: QuadrantTab) => {
-    setLocation(`/quadrant?tab=${newTab}`);
-  };
+  // Determine which component to render
+  let QuadrantComponent = DonorQuadrant;
+  
+  if (activeTab === 'pipeline') {
+    QuadrantComponent = Pipeline;
+  }
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="space-y-1">
-        <h1 className="text-3xl font-bold">Quadrant</h1>
-        <p className="text-sm text-muted-foreground">
-          Donor relationship mapping and pipeline management
-        </p>
+    <div className="flex flex-col h-full">
+      <SectionTabs tabs={quadrantTabs} currentPath={location} />
+      <div className="flex-1 overflow-auto p-6">
+        <QuadrantComponent />
       </div>
-
-      <Tabs value={activeTab} onValueChange={(v) => handleTabChange(v as QuadrantTab)}>
-        <TabsList className="grid w-full grid-cols-2 gap-1">
-          <TabsTrigger value="quadrant" data-testid="tab-donor-quadrant">
-            <Grid3x3 className="w-4 h-4 mr-2" />
-            Donor Quadrant
-          </TabsTrigger>
-          <TabsTrigger value="pipeline" data-testid="tab-pipeline-view">
-            <List className="w-4 h-4 mr-2" />
-            Pipeline View
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="quadrant" className="space-y-6">
-          <DonorQuadrant />
-        </TabsContent>
-
-        <TabsContent value="pipeline" className="space-y-6">
-          <Pipeline />
-        </TabsContent>
-      </Tabs>
     </div>
   );
 }
