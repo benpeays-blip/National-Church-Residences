@@ -17,7 +17,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import type { Opportunity, Gift as GiftType, Task } from "@shared/schema";
+import type { Opportunity, Gift as GiftType, Task, Campaign } from "@shared/schema";
 
 interface DashboardData {
   metrics: {
@@ -43,6 +43,13 @@ export default function DashboardHome() {
   const { data, isLoading } = useQuery<DashboardData>({
     queryKey: ["/api/dashboard/home"],
   });
+
+  const { data: allCampaigns, isLoading: campaignsLoading } = useQuery<Campaign[]>({
+    queryKey: ["/api/campaigns"],
+  });
+
+  // Filter for active campaigns and take top 3
+  const activeCampaigns = allCampaigns?.filter(c => c.status === 'active').slice(0, 3) || [];
 
   if (isLoading) {
     return (
@@ -316,13 +323,57 @@ export default function DashboardHome() {
             </div>
           </CardHeader>
           <CardContent className="pt-6">
-            <div className="space-y-3">
-              <div className="text-center py-12">
-                <Target className="h-12 w-12 mx-auto text-muted-foreground/40 mb-3" />
-                <p className="text-sm text-muted-foreground">
-                  Campaign tracking coming soon
-                </p>
-              </div>
+            <div className="space-y-4">
+              {campaignsLoading ? (
+                <div className="space-y-3">
+                  {[1, 2, 3].map((i) => (
+                    <div key={i} className="rounded-lg p-3 bg-muted/20 animate-pulse">
+                      <div className="h-4 bg-muted rounded w-3/4 mb-2" />
+                      <div className="h-2 bg-muted rounded w-full mb-2" />
+                      <div className="flex justify-between">
+                        <div className="h-3 bg-muted rounded w-20" />
+                        <div className="h-3 bg-muted rounded w-20" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : activeCampaigns.length > 0 ? (
+                activeCampaigns.map((campaign) => {
+                  const goal = parseFloat(campaign.goal || "0");
+                  const raised = parseFloat(campaign.raised || "0");
+                  const progress = goal > 0 ? (raised / goal) * 100 : 0;
+                  
+                  return (
+                    <Link key={campaign.id} href={`/campaigns/${campaign.id}`}>
+                      <div className="hover-elevate active-elevate-2 rounded-lg p-3 cursor-pointer" data-testid={`campaign-${campaign.id}`}>
+                        <div className="flex items-center justify-between mb-2">
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium truncate text-sm" data-testid={`campaign-name-${campaign.id}`}>
+                              {campaign.name}
+                            </p>
+                            <p className="text-xs text-muted-foreground">{campaign.type}</p>
+                          </div>
+                          <Badge variant="default" className="ml-2 text-xs">
+                            {progress.toFixed(0)}%
+                          </Badge>
+                        </div>
+                        <Progress value={progress} className="h-2 mb-2" />
+                        <div className="flex items-center justify-between text-xs text-muted-foreground">
+                          <span>{formatCurrency(raised)} raised</span>
+                          <span>of {formatCurrency(goal)}</span>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })
+              ) : (
+                <div className="text-center py-8">
+                  <Target className="h-10 w-10 mx-auto text-muted-foreground/40 mb-2" />
+                  <p className="text-sm text-muted-foreground">
+                    No active campaigns
+                  </p>
+                </div>
+              )}
             </div>
           </CardContent>
         </Card>

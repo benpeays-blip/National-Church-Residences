@@ -322,6 +322,34 @@ async function seed() {
         startDate: new Date("2024-01-01"),
         endDate: new Date("2024-12-31"),
       },
+      {
+        name: "Legacy Society Initiative 2025",
+        type: "Planned Giving",
+        description: "New planned giving society launching in Q2 2025. Will cultivate major donors for bequest commitments, charitable gift annuities, and other estate planning vehicles. Includes exclusive events and recognition opportunities.",
+        status: "planning",
+        goal: "2500000.00",
+        raised: "0.00",
+        donorCount: 0,
+        avgGiftSize: "0.00",
+        totalGifts: 0,
+        ownerId: usersList[2].id, // MGO 1
+        startDate: new Date("2025-04-01"),
+        endDate: new Date("2027-12-31"),
+      },
+      {
+        name: "Summer Challenge 2024",
+        type: "Challenge Grant",
+        description: "Matching challenge campaign paused mid-cycle due to donor health issues. Raised $43k of $100k before pause. Awaiting resolution to resume or restructure campaign approach.",
+        status: "paused",
+        goal: "100000.00",
+        raised: "43250.00",
+        donorCount: 78,
+        avgGiftSize: "554.49",
+        totalGifts: 89,
+        ownerId: usersList[1].id, // Dev Director
+        startDate: new Date("2024-06-01"),
+        endDate: new Date("2024-08-31"),
+      },
     ])
     .returning();
   console.log(`✅ Created ${campaignsList.length} campaigns`);

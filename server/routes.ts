@@ -401,7 +401,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/gifts", isAuthenticated, async (req, res) => {
+  app.get("/api/gifts", async (req, res) => {
     try {
       const personId = req.query.personId as string | undefined;
       const giftsList = await storage.getGifts(personId);
@@ -525,7 +525,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/campaigns", isAuthenticated, async (req, res) => {
+  app.get("/api/campaigns", async (req, res) => {
     try {
       const campaignsList = await storage.getCampaigns();
       res.json(campaignsList);
@@ -535,7 +535,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/campaigns/:id", isAuthenticated, async (req, res) => {
+  app.get("/api/campaigns/:id", async (req, res) => {
     try {
       const { id } = req.params;
       const [campaign] = await db

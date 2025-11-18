@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "wouter";
-import { Calendar, Users, DollarSign, Target, TrendingUp, Activity, Clock, Pause, CheckCircle2 } from "lucide-react";
+import { Calendar, Users, DollarSign, Target, TrendingUp, Activity, Clock, Pause, CheckCircle2, LayoutGrid } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils";
 
 type Campaign = {
@@ -50,12 +50,91 @@ export default function Campaigns({ filterStatus }: CampaignsProps = {}) {
     return campaign.status === filterStatus;
   });
 
+  // Calculate aggregate metrics
+  const totalCampaigns = campaigns?.length || 0;
+  const activeCampaigns = campaigns?.filter(c => c.status === 'active').length || 0;
+  const totalGoal = campaigns?.reduce((sum, c) => sum + parseFloat(c.goal || "0"), 0) || 0;
+  const totalRaised = campaigns?.reduce((sum, c) => sum + parseFloat(c.raised || "0"), 0) || 0;
+  const overallProgress = totalGoal > 0 ? (totalRaised / totalGoal) * 100 : 0;
+
   if (isLoading) {
-    return <Skeleton className="h-96" />;
+    return (
+      <div className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {[1, 2, 3, 4].map(i => (
+            <Skeleton key={i} className="h-32" />
+          ))}
+        </div>
+        <Skeleton className="h-96" />
+      </div>
+    );
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="space-y-6">
+      {/* KPI Metrics */}
+      {!filterStatus && (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <Card data-testid="card-total-campaigns">
+            <CardHeader className="flex flex-row items-center justify-between gap-1 space-y-0 pb-2">
+              <p className="text-sm font-medium text-muted-foreground">Total Campaigns</p>
+              <LayoutGrid className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold" data-testid="text-total-campaigns">{totalCampaigns}</div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {activeCampaigns} active
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card data-testid="card-total-goal">
+            <CardHeader className="flex flex-row items-center justify-between gap-1 space-y-0 pb-2">
+              <p className="text-sm font-medium text-muted-foreground">Total Goal</p>
+              <Target className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold" data-testid="text-total-goal">
+                {formatCurrency(totalGoal)}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Across all campaigns
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card data-testid="card-total-raised">
+            <CardHeader className="flex flex-row items-center justify-between gap-1 space-y-0 pb-2">
+              <p className="text-sm font-medium text-muted-foreground">Total Raised</p>
+              <DollarSign className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold" data-testid="text-total-raised">
+                {formatCurrency(totalRaised)}
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                YTD performance
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card data-testid="card-overall-progress">
+            <CardHeader className="flex flex-row items-center justify-between gap-1 space-y-0 pb-2">
+              <p className="text-sm font-medium text-muted-foreground">Overall Progress</p>
+              <TrendingUp className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold" data-testid="text-overall-progress">
+                {overallProgress.toFixed(0)}%
+              </div>
+              <Progress value={overallProgress} className="mt-2" />
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Campaign Cards Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {filteredCampaigns?.map((campaign) => {
           const goal = parseFloat(campaign.goal || "0");
           const raised = parseFloat(campaign.raised || "0");
@@ -144,6 +223,7 @@ export default function Campaigns({ filterStatus }: CampaignsProps = {}) {
             </Link>
           );
         })}
+      </div>
     </div>
   );
 }

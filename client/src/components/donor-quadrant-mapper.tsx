@@ -129,49 +129,57 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             {/* Top Left - Friend */}
             <button
               onClick={() => setSelectedQuadrant('friend')}
-              className={`absolute left-0 top-0 w-1/2 h-1/2 p-4 hover-elevate active-elevate-2 transition-all ${
+              className={`absolute left-0 top-0 w-1/2 h-1/2 hover-elevate active-elevate-2 transition-all ${
                 selectedQuadrant === 'friend' ? 'bg-muted/50' : 'bg-muted/20'
               }`}
               data-testid="quadrant-friend"
             >
-              <div className="font-bold text-lg">Friend</div>
-              <Badge className="mt-2" data-testid="count-friend">{data.counts.friend}</Badge>
+              <div className="relative z-10 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2">
+                <div className="font-bold text-base">Friend</div>
+                <Badge className="mt-1" data-testid="count-friend">{data.counts.friend}</Badge>
+              </div>
             </button>
 
             {/* Top Right - Partner */}
             <button
               onClick={() => setSelectedQuadrant('partner')}
-              className={`absolute right-0 top-0 w-1/2 h-1/2 p-4 hover-elevate active-elevate-2 transition-all ${
+              className={`absolute right-0 top-0 w-1/2 h-1/2 hover-elevate active-elevate-2 transition-all ${
                 selectedQuadrant === 'partner' ? 'bg-muted/50' : 'bg-muted/20'
               }`}
               data-testid="quadrant-partner"
             >
-              <div className="font-bold text-lg">Partner</div>
-              <Badge className="mt-2" data-testid="count-partner">{data.counts.partner}</Badge>
+              <div className="relative z-10 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2">
+                <div className="font-bold text-base">Partner</div>
+                <Badge className="mt-1" data-testid="count-partner">{data.counts.partner}</Badge>
+              </div>
             </button>
 
             {/* Bottom Left - Acquaintance */}
             <button
               onClick={() => setSelectedQuadrant('acquaintance')}
-              className={`absolute left-0 bottom-0 w-1/2 h-1/2 p-4 hover-elevate active-elevate-2 transition-all ${
+              className={`absolute left-0 bottom-0 w-1/2 h-1/2 hover-elevate active-elevate-2 transition-all ${
                 selectedQuadrant === 'acquaintance' ? 'bg-muted/50' : 'bg-muted/20'
               }`}
               data-testid="quadrant-acquaintance"
             >
-              <div className="font-bold text-lg">Acquaintance</div>
-              <Badge className="mt-2" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
+              <div className="relative z-10 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2">
+                <div className="font-bold text-base">Acquaintance</div>
+                <Badge className="mt-1" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
+              </div>
             </button>
 
             {/* Bottom Right - Colleague */}
             <button
               onClick={() => setSelectedQuadrant('colleague')}
-              className={`absolute right-0 bottom-0 w-1/2 h-1/2 p-4 hover-elevate active-elevate-2 transition-all ${
+              className={`absolute right-0 bottom-0 w-1/2 h-1/2 hover-elevate active-elevate-2 transition-all ${
                 selectedQuadrant === 'colleague' ? 'bg-muted/50' : 'bg-muted/20'
               }`}
               data-testid="quadrant-colleague"
             >
-              <div className="font-bold text-lg">Colleague</div>
-              <Badge className="mt-2" data-testid="count-colleague">{data.counts.colleague}</Badge>
+              <div className="relative z-10 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2">
+                <div className="font-bold text-base">Colleague</div>
+                <Badge className="mt-1" data-testid="count-colleague">{data.counts.colleague}</Badge>
+              </div>
             </button>
 
             {/* Donor Dots with Hover Cards */}
