@@ -13,6 +13,20 @@ The **Dashboard Home** (new homepage at `/`) provides a unified view of the enti
 
 ## Recent Changes (November 18, 2025)
 
+### Peer Discovery Implementation
+- Built comprehensive Peer Discovery page in Relationships section
+- **Critical Bug Fix**: Fixed similarity score scaling issue
+  - Scores stored as decimals (0-1 range) in database, now correctly display as percentages (0-100%)
+  - Updated all score displays: `Math.round((score || 0) * 100)%`
+  - Fixed high potential threshold: Changed from `>= 80` to `>= 0.8` (decimal comparison)
+  - Affects: Average Match Score KPI, High Potential count, peer card badges, detail displays
+- Features:
+  - Real-time metrics: Total Peers Discovered, Average Match Score, High Potential Matches
+  - Professional peer cards showing similarity scores, shared characteristics, programs peer supports
+  - Opportunity highlighting for programs donor hasn't been asked for yet
+  - Full integration with peer_donors schema fields
+- Verified with architect review: All percentage calculations now accurate
+
 ### Events Section - Upcoming Count Fix
 - Fixed "Upcoming Events" metric card to display correct count (now shows "2")
 - Updated seed data: Changed event dates from 2025 to 2026 to ensure they're truly upcoming
