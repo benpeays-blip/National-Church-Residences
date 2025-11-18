@@ -42,29 +42,6 @@ import { useState } from "react";
 
 const workflowMenuItems = [
   {
-    groupLabel: "Operations",
-    items: [
-      {
-        title: "Grants",
-        url: "/grants",
-        icon: FileText,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "DATA_OPS"],
-      },
-      {
-        title: "Gifts",
-        url: "/gifts",
-        icon: Gift,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO", "DATA_OPS"],
-      },
-      {
-        title: "Campaigns",
-        url: "/campaigns",
-        icon: Calendar,
-        roles: ["ADMIN", "CEO", "DEV_DIRECTOR", "MGO"],
-      },
-    ],
-  },
-  {
     groupLabel: "Analytics",
     items: [
       {

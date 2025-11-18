@@ -373,6 +373,43 @@ function App() {
                           size="sm"
                           className="font-semibold hover:bg-gray-100"
                           style={{ color: "#084594" }}
+                          data-testid="dropdown-gifts"
+                        >
+                          Gifts
+                          <ChevronDown className="h-3 w-3 ml-1.5" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-48">
+                        <DropdownMenuItem asChild>
+                          <Link href="/gifts" className="cursor-pointer">
+                            All Gifts
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/gifts?type=major" className="cursor-pointer">
+                            Major Gifts
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/gifts?type=recurring" className="cursor-pointer">
+                            Recurring Gifts
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild>
+                          <Link href="/gifts?type=planned" className="cursor-pointer">
+                            Planned Gifts
+                          </Link>
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                    
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold hover:bg-gray-100"
+                          style={{ color: "#084594" }}
                           data-testid="dropdown-campaigns"
                         >
                           Campaigns
