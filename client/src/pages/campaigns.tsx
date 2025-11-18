@@ -29,36 +29,34 @@ const STATUS_CONFIG = {
   paused: { label: "Paused", icon: Pause, variant: "secondary" as const },
 };
 
-export default function Campaigns() {
+interface CampaignsProps {
+  filterStatus?: "active" | "planned" | "completed";
+}
+
+export default function Campaigns({ filterStatus }: CampaignsProps = {}) {
   const { data: campaigns, isLoading } = useQuery<Campaign[]>({
     queryKey: ["/api/campaigns"],
   });
 
+  // Filter campaigns based on filterStatus prop
+  const filteredCampaigns = campaigns?.filter(campaign => {
+    if (!filterStatus) return true; // Show all if no filter
+    
+    // Map "planned" to "planning" status
+    if (filterStatus === "planned") {
+      return campaign.status === "planning";
+    }
+    
+    return campaign.status === filterStatus;
+  });
+
   if (isLoading) {
-    return (
-      <div className="space-y-6">
-        <div className="space-y-1">
-          <h1 className="text-3xl font-bold">Campaigns</h1>
-          <p className="text-sm text-muted-foreground">
-            Manage fundraising campaigns and initiatives
-          </p>
-        </div>
-        <Skeleton className="h-96" />
-      </div>
-    );
+    return <Skeleton className="h-96" />;
   }
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-1">
-        <h1 className="text-3xl font-bold">Campaigns</h1>
-        <p className="text-sm text-muted-foreground">
-          Manage fundraising campaigns and initiatives
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {campaigns?.map((campaign) => {
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {filteredCampaigns?.map((campaign) => {
           const goal = parseFloat(campaign.goal || "0");
           const raised = parseFloat(campaign.raised || "0");
           const percentComplete = goal > 0 ? (raised / goal) * 100 : 0;
@@ -146,7 +144,6 @@ export default function Campaigns() {
             </Link>
           );
         })}
-      </div>
     </div>
   );
 }

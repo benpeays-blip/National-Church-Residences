@@ -13,7 +13,8 @@ import {
   Repeat,
   FileText,
   Filter,
-  Download
+  Download,
+  Gift as GiftIcon
 } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { Gift } from "@shared/schema";
@@ -28,7 +29,7 @@ import {
 import { useLocation } from "wouter";
 import { useMemo, useState, useEffect, useRef } from "react";
 
-type GiftType = "all" | "major" | "recurring" | "planned";
+type GiftType = "all" | "major" | "recurring" | "planned" | "types";
 
 export default function Gifts() {
   const [location, setLocation] = useLocation();
@@ -274,7 +275,7 @@ export default function Gifts() {
       </div>
 
       <Tabs value={activeTab} onValueChange={(v) => handleTabChange(v as GiftType)}>
-        <TabsList className="grid w-full grid-cols-4">
+        <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="all" data-testid="tab-all-gifts">
             <DollarSign className="w-4 h-4 mr-2" />
             All Gifts
@@ -290,6 +291,10 @@ export default function Gifts() {
           <TabsTrigger value="planned" data-testid="tab-planned-gifts">
             <FileText className="w-4 h-4 mr-2" />
             Planned
+          </TabsTrigger>
+          <TabsTrigger value="types" data-testid="tab-gift-types">
+            <GiftIcon className="w-4 h-4 mr-2" />
+            Gift Types
           </TabsTrigger>
         </TabsList>
 
@@ -663,6 +668,154 @@ export default function Gifts() {
               </Table>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        {/* Gift Types Tab */}
+        <TabsContent value="types" className="space-y-6">
+          <div className="space-y-1 mb-6">
+            <h2 className="text-2xl font-bold" data-testid="heading-gift-types">Donor Generosity Takes Many Forms</h2>
+            <p className="text-sm text-muted-foreground">
+              Donors have the opportunity to make gifts to the National Church Residences Foundation in many ways. Every donation is deeply appreciated, regardless of size.
+            </p>
+          </div>
+
+          <div className="grid gap-4">
+            {/* Cash Gifts */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center flex-shrink-0">
+                    <DollarSign className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <div>
+                    <CardTitle>Cash Gifts</CardTitle>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  The majority of gifts to the Foundation are gifts of cash. You may give through a check made out to National Church Residences Foundation, or online via credit card at:{" "}
+                  <a href="https://www.NationalChurchResidences.org/donate" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+                    www.NationalChurchResidences.org/donate
+                  </a>
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Wills & Bequests */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center flex-shrink-0">
+                    <FileText className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <div>
+                    <CardTitle>Wills & Bequests</CardTitle>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  A charitable bequest (gift by will) is a beautiful expression of your life as it reaches forward to help others. You can arrange a charitable bequest to the Foundation through your will and be certain that the bequest is carried out according to your wishes. This is a great way to leave a legacy while not impacting your day-to-day finances. Changing your will is a simple process, and the Foundation team can provide the specific language to ensure your gift is properly directed.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* IRA Qualified Charitable Distribution */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/20 flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  </div>
+                  <div>
+                    <CardTitle>IRA Qualified Charitable Distribution</CardTitle>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Rolling over your IRA's "required minimum distribution" (or RMD) to a charity like National Church Residences Foundation can help reduce your tax bill while supporting your community.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Charitable Gift Annuities */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center flex-shrink-0">
+                    <Repeat className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                  </div>
+                  <div>
+                    <CardTitle>Charitable Gift Annuities</CardTitle>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  With a minimum gift of $10,000, you can receive a tax deduction in the year of your gift, plus set primarily tax free annuity payments for life. After all payments have been made, the Foundation receives the balance to use for its mission.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Memorial Gifts */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-pink-100 dark:bg-pink-900/20 flex items-center justify-center flex-shrink-0">
+                    <Heart className="w-5 h-5 text-pink-600 dark:text-pink-400" />
+                  </div>
+                  <div>
+                    <CardTitle>Memorial Gifts</CardTitle>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Is your heart called to honor a loved one? Consider a gift to the Foundation as a way to remember someone dear to you. Donating in recognition of a loved one can be a beautiful tribute and can create an enduring legacy.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Refundable Entrance Fees */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-cyan-100 dark:bg-cyan-900/20 flex items-center justify-center flex-shrink-0">
+                    <Calendar className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                  </div>
+                  <div>
+                    <CardTitle>Refundable Entrance Fees</CardTitle>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Supporting the Foundation with a gift made from a Refundable Entrance Fee (associated with your Senior Living community) allows you to earmark a contribution from funds that are currently idle and to leave a legacy of support. You may choose to allocate all or a portion of your Refundable Entry Fee as a gift.
+                </p>
+              </CardContent>
+            </Card>
+
+            {/* Donor Advised Funds */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/20 flex items-center justify-center flex-shrink-0">
+                    <Users className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                  </div>
+                  <div>
+                    <CardTitle>Donor Advised Funds</CardTitle>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <p className="text-sm text-muted-foreground">
+                  Do you have a relationship with a donor advised fund that might add the National Church Residences Foundation to their charities of choice? You can contribute cash, stocks or other assets to a donor advised fund and receive a tax deduction in the year of the donation.
+                </p>
+              </CardContent>
+            </Card>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
