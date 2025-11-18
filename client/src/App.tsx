@@ -43,7 +43,7 @@ import DonorQuadrant from "@/pages/donor-quadrant";
 import Pipeline from "@/pages/pipeline";
 import PipelineWithTabs from "@/pages/pipeline-with-tabs";
 import Grants from "@/pages/grants";
-import Gifts from "@/pages/gifts";
+import GiftsWithTabs from "@/pages/gifts-with-tabs";
 import Events from "@/pages/events";
 import PastEvents from "@/pages/past-events";
 import Campaigns from "@/pages/campaigns";
@@ -161,7 +161,7 @@ function Router() {
       <Route path="/quadrant" component={QuadrantWithTabs} />
       <Route path="/events" component={EventsWithTabs} />
       <Route path="/grants" component={GrantsWithTabs} />
-      <Route path="/gifts" component={Gifts} />
+      <Route path="/gifts" component={GiftsWithTabs} />
       <Route path="/ai-tools" component={AIToolsWithTabs} />
       <Route path="/relationships" component={RelationshipsWithTabs} />
       

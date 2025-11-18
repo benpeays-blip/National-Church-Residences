@@ -1,10 +1,7 @@
 import { useLocation } from "wouter";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SectionTabs, SectionTab } from "@/components/section-tabs";
 import { Mic, MessageSquare, FileText, BarChart3, Workflow } from "lucide-react";
 import AIVoiceNotes from "@/pages/ai-voice-notes";
-import { useMemo } from "react";
-
-type AIToolsTab = "voice" | "outreach" | "grants" | "reports" | "workflows";
 
 // Placeholder components for pages that don't exist yet
 function OutreachGenerator() {
@@ -43,73 +40,65 @@ function WorkflowBuilder() {
   );
 }
 
+const aiToolsTabs: SectionTab[] = [
+  {
+    label: "Voice-to-CRM",
+    value: "voice",
+    icon: Mic,
+    path: "/ai-tools",
+  },
+  {
+    label: "Outreach Generator",
+    value: "outreach",
+    icon: MessageSquare,
+    path: "/ai-tools?tab=outreach",
+  },
+  {
+    label: "Grant Proposals",
+    value: "grants",
+    icon: FileText,
+    path: "/ai-tools?tab=grants",
+  },
+  {
+    label: "Impact Reports",
+    value: "reports",
+    icon: BarChart3,
+    path: "/ai-tools?tab=reports",
+  },
+  {
+    label: "Workflow Builder",
+    value: "workflows",
+    icon: Workflow,
+    path: "/ai-tools?tab=workflows",
+  },
+];
+
 export default function AIToolsWithTabs() {
-  const [location, setLocation] = useLocation();
+  const [location] = useLocation();
+  
+  // Determine active tab from URL
+  const params = new URLSearchParams(window.location.search);
+  const activeTab = params.get('tab') || 'voice';
 
-  // Derive active tab from URL
-  const activeTab = useMemo<AIToolsTab>(() => {
-    const params = new URLSearchParams(window.location.search);
-    return (params.get('tab') as AIToolsTab) || "voice";
-  }, [location]);
-
-  // Handle tab changes by updating URL
-  const handleTabChange = (newTab: AIToolsTab) => {
-    setLocation(`/ai-tools?tab=${newTab}`);
-  };
+  // Determine which component to render
+  let AIComponent = AIVoiceNotes;
+  
+  if (activeTab === 'outreach') {
+    AIComponent = OutreachGenerator;
+  } else if (activeTab === 'grants') {
+    AIComponent = GrantProposals;
+  } else if (activeTab === 'reports') {
+    AIComponent = ImpactReports;
+  } else if (activeTab === 'workflows') {
+    AIComponent = WorkflowBuilder;
+  }
 
   return (
-    <div className="space-y-6 p-6">
-      <div className="space-y-1">
-        <h1 className="text-3xl font-bold">AI Tools</h1>
-        <p className="text-sm text-muted-foreground">
-          AI-powered tools to enhance fundraising efficiency
-        </p>
+    <div className="flex flex-col h-full">
+      <SectionTabs tabs={aiToolsTabs} currentPath={location} />
+      <div className="flex-1 overflow-auto p-6">
+        <AIComponent />
       </div>
-
-      <Tabs value={activeTab} onValueChange={(v) => handleTabChange(v as AIToolsTab)}>
-        <TabsList className="grid w-full grid-cols-5 gap-1">
-          <TabsTrigger value="voice" data-testid="tab-voice-to-crm">
-            <Mic className="w-4 h-4 mr-2" />
-            Voice-to-CRM
-          </TabsTrigger>
-          <TabsTrigger value="outreach" data-testid="tab-outreach-generator">
-            <MessageSquare className="w-4 h-4 mr-2" />
-            Outreach Generator
-          </TabsTrigger>
-          <TabsTrigger value="grants" data-testid="tab-grant-proposals">
-            <FileText className="w-4 h-4 mr-2" />
-            Grant Proposals
-          </TabsTrigger>
-          <TabsTrigger value="reports" data-testid="tab-impact-reports">
-            <BarChart3 className="w-4 h-4 mr-2" />
-            Impact Reports
-          </TabsTrigger>
-          <TabsTrigger value="workflows" data-testid="tab-workflow-builder">
-            <Workflow className="w-4 h-4 mr-2" />
-            Workflow Builder
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="voice" className="space-y-6">
-          <AIVoiceNotes />
-        </TabsContent>
-
-        <TabsContent value="outreach" className="space-y-6">
-          <OutreachGenerator />
-        </TabsContent>
-
-        <TabsContent value="grants" className="space-y-6">
-          <GrantProposals />
-        </TabsContent>
-
-        <TabsContent value="reports" className="space-y-6">
-          <ImpactReports />
-        </TabsContent>
-
-        <TabsContent value="workflows" className="space-y-6">
-          <WorkflowBuilder />
-        </TabsContent>
-      </Tabs>
     </div>
   );
 }
