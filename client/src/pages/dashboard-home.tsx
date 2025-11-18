@@ -60,14 +60,6 @@ export default function DashboardHome() {
     <div className="space-y-8">
       {/* Donor Quadrant Section */}
       <div className="space-y-4">
-        <div className="flex items-center justify-end">
-          <Link href="/donor-quadrant">
-            <Button variant="outline" size="sm">
-              Full View
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </Button>
-          </Link>
-        </div>
         <DonorQuadrantMapper />
       </div>
 
