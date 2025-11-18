@@ -1,4 +1,5 @@
 import { useLocation } from "wouter";
+import { useMemo } from "react";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
 import { Users, TrendingUp, DollarSign, Calendar } from "lucide-react";
 import Donors from "@/pages/donors";
@@ -36,20 +37,23 @@ const intelligenceTabs: SectionTab[] = [
 export default function IntelligenceWithTabs() {
   const [location] = useLocation();
   
-  // Determine active tab from URL
-  const params = new URLSearchParams(window.location.search);
-  const activeTab = params.get('tab') || 'donors';
+  // Determine active tab from URL (using location to trigger re-render)
+  const activeTab = useMemo(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('tab') || 'donors';
+  }, [location]);
 
   // Determine which component to render
-  let IntelligenceComponent = Donors;
-  
-  if (activeTab === 'timing') {
-    IntelligenceComponent = AIPredictiveTiming;
-  } else if (activeTab === 'wealth') {
-    IntelligenceComponent = AIWealthEvents;
-  } else if (activeTab === 'briefs') {
-    IntelligenceComponent = AIMeetingBriefs;
-  }
+  const IntelligenceComponent = useMemo(() => {
+    if (activeTab === 'timing') {
+      return AIPredictiveTiming;
+    } else if (activeTab === 'wealth') {
+      return AIWealthEvents;
+    } else if (activeTab === 'briefs') {
+      return AIMeetingBriefs;
+    }
+    return Donors;
+  }, [activeTab]);
 
   return (
     <div className="flex flex-col h-full">
