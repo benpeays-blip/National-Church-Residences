@@ -385,6 +385,158 @@ export default function DonorQuadrantMapper() {
         </CardContent>
       </Card>
 
+      {/* Overview Section */}
+      <Card className="lg:col-span-5">
+        <CardHeader className="bg-primary/5 border-b">
+          <CardTitle>Overview</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-6 space-y-4">
+          <p className="text-sm">
+            This framework maps donors using two essential axes:
+          </p>
+
+          <div className="space-y-3">
+            <div>
+              <h4 className="font-semibold text-sm mb-2">Y-Axis: ENERGY (Low → High)</h4>
+              <p className="text-sm text-muted-foreground ml-4">
+                The relational energy and emotional investment exchanged between the organization and the donor.
+              </p>
+              <p className="text-sm text-muted-foreground ml-4 mt-1">
+                Energy = attention, personal connection, affinity, and sense of shared mission.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-sm mb-2">X-Axis: STRUCTURE (Low → High)</h4>
+              <p className="text-sm text-muted-foreground ml-4">
+                The systems, processes, touchpoints, and formalized pathways that define how donors engage.
+              </p>
+              <p className="text-sm text-muted-foreground ml-4 mt-1">
+                Structure = cadence, planning, communication channels, intentional movement, strategic invitations.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Thesis Section */}
+      <Card className="lg:col-span-5">
+        <CardHeader className="bg-primary/5 border-b">
+          <CardTitle>THE CENTRAL THESIS OF THE MODEL</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-6 space-y-5">
+          <div>
+            <h4 className="font-semibold text-sm mb-2">1. Donor movement is predictable.</h4>
+            <p className="text-sm text-muted-foreground ml-4 mb-2">
+              Every donor relationship moves from:
+            </p>
+            <p className="text-sm text-muted-foreground ml-4 italic">
+              anonymous → known → seen → valued → essential.
+            </p>
+            <p className="text-sm text-muted-foreground ml-4 mt-2">
+              This quadrant system maps that progression.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-sm mb-2">2. All movement requires BOTH energy and structure.</h4>
+            <ul className="space-y-1 text-sm ml-8">
+              <li className="list-disc">Energy builds closeness.</li>
+              <li className="list-disc">Structure builds commitment.</li>
+            </ul>
+            <p className="text-sm text-muted-foreground ml-4 mt-2">
+              Partner-level donors emerge only where both converge.
+            </p>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-sm mb-2">3. Each quadrant has a "default destiny."</h4>
+            <p className="text-sm text-muted-foreground ml-4 mb-2">
+              If not intentionally moved:
+            </p>
+            <ul className="space-y-1 text-sm ml-8">
+              <li className="list-disc">Acquaintances disappear.</li>
+              <li className="list-disc">Friends drift.</li>
+              <li className="list-disc">Colleagues plateau.</li>
+              <li className="list-disc">Partners deepen movements and eventually become legacy givers.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-sm mb-2">4. The organization's internal discipline determines upward movement.</h4>
+            <p className="text-sm text-muted-foreground ml-4 mb-2">
+              Most donors do not move on their own. They move because YOU intentionally:
+            </p>
+            <ul className="space-y-1 text-sm ml-8">
+              <li className="list-disc">invest energy,</li>
+              <li className="list-disc">introduce structure,</li>
+              <li className="list-disc">create clarity,</li>
+              <li className="list-disc">present meaningful opportunities.</li>
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="font-semibold text-sm mb-2">5. The ultimate goal is to form a community of Partners.</h4>
+            <p className="text-sm text-muted-foreground ml-4 mb-2">
+              This is where:
+            </p>
+            <ul className="space-y-1 text-sm ml-8">
+              <li className="list-disc">transformational gifts occur,</li>
+              <li className="list-disc">multi-year commitments are made,</li>
+              <li className="list-disc">advocacy spreads,</li>
+              <li className="list-disc">the mission accelerates exponentially.</li>
+            </ul>
+            <p className="text-sm text-muted-foreground ml-4 mt-2">
+              This quadrant is not a "category of donors" — it is the future leadership of the organization.
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Summary Section */}
+      <Card className="lg:col-span-5">
+        <CardHeader className="bg-primary/5 border-b">
+          <CardTitle>THE FINAL SUMMARY FRAMEWORK</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <p className="text-sm mb-4 font-semibold">To reach the Partner quadrant:</p>
+          
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse border border-border">
+              <thead>
+                <tr className="bg-muted/50">
+                  <th className="border border-border p-3 text-left text-sm font-semibold">Quadrant</th>
+                  <th className="border border-border p-3 text-left text-sm font-semibold">Needed Input</th>
+                  <th className="border border-border p-3 text-left text-sm font-semibold">Movement Path</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="hover-elevate">
+                  <td className="border border-border p-3 text-sm font-medium">Acquaintance</td>
+                  <td className="border border-border p-3 text-sm">Energy + Initial Structure</td>
+                  <td className="border border-border p-3 text-sm">Make them known → move to Friend</td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="border border-border p-3 text-sm font-medium">Friend</td>
+                  <td className="border border-border p-3 text-sm">Structure</td>
+                  <td className="border border-border p-3 text-sm">Build plan + cadence → move to Colleague/Partner</td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="border border-border p-3 text-sm font-medium">Colleague</td>
+                  <td className="border border-border p-3 text-sm">Energy</td>
+                  <td className="border border-border p-3 text-sm">Personalize → deepen meaning → move to Partner</td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="border border-border p-3 text-sm font-medium">Partner</td>
+                  <td className="border border-border p-3 text-sm">Consistent Energy + Structure</td>
+                  <td className="border border-border p-3 text-sm">Maintain → grow → legacy-level commitment</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Educational Framework Section */}
       <Card className="lg:col-span-5">
         <CardHeader className="bg-primary/5 border-b">
