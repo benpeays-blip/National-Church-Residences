@@ -504,7 +504,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 <TabsContent value="summary" className="space-y-6">
                   <Card className="border-0 shadow-none">
                     <CardHeader className="bg-primary/5 border-b">
-                      <CardTitle>THE FINAL SUMMARY FRAMEWORK</CardTitle>
+                      <CardTitle>Framework Summary</CardTitle>
                     </CardHeader>
                     <CardContent className="pt-6 space-y-6">
                       <div>
