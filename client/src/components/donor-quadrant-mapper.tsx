@@ -559,7 +559,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
           <div className="flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-primary" />
             <div>
-              <CardTitle>THE DONOR RELATIONSHIP QUADRANT FRAMEWORK</CardTitle>
+              <CardTitle>QUADRANT EXPLAINED</CardTitle>
               <CardDescription className="mt-1">
                 A Strategic Model for Understanding and Moving Donors Toward Long-Term Partnership
               </CardDescription>
