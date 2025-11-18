@@ -49,7 +49,11 @@ interface QuadrantData {
 
 type QuadrantType = 'partner' | 'friend' | 'colleague' | 'acquaintance';
 
-export default function DonorQuadrantMapper() {
+interface DonorQuadrantMapperProps {
+  showEducationalContent?: boolean;
+}
+
+export default function DonorQuadrantMapper({ showEducationalContent = false }: DonorQuadrantMapperProps) {
   const [selectedQuadrant, setSelectedQuadrant] = useState<QuadrantType>('partner');
 
   const { data, isLoading } = useQuery<QuadrantData>({
@@ -385,8 +389,11 @@ export default function DonorQuadrantMapper() {
         </CardContent>
       </Card>
 
-      {/* Overview Section */}
-      <Card className="lg:col-span-5">
+      {/* Educational Content - Only show on dedicated quadrant page */}
+      {showEducationalContent && (
+        <>
+          {/* Overview Section */}
+          <Card className="lg:col-span-5">
         <CardHeader className="bg-primary/5 border-b">
           <CardTitle>Overview</CardTitle>
         </CardHeader>
@@ -1127,6 +1134,9 @@ export default function DonorQuadrantMapper() {
           </Tabs>
         </CardContent>
       </Card>
+        </>
+      )}
+      
     </div>
   );
 }
