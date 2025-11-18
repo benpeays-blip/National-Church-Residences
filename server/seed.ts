@@ -31,6 +31,7 @@ import {
   stewardshipWorkflows,
   taskPriorityScores,
   giftRegistries,
+  fundraisingEvents,
 } from "@shared/schema";
 import { sql } from "drizzle-orm";
 
@@ -68,6 +69,7 @@ async function seed() {
   console.log("🗑️  Clearing existing data...");
   await db.delete(taskPriorityScores);
   await db.delete(tasks);
+  await db.delete(fundraisingEvents);
   await db.delete(giftRegistries);
   await db.delete(stewardshipWorkflows);
   await db.delete(calendarEvents);
@@ -2778,6 +2780,69 @@ async function seed() {
 
   await db.insert(boardMemberships).values(boardMembershipsList);
   console.log(`✅ Created ${boardMembershipsList.length} board memberships across 25+ organizations`);
+
+  // ==================== FUNDRAISING EVENTS ====================
+  console.log("🎪 Creating fundraising events...");
+  const fundraisingEventsList: any[] = [
+    // PAST EVENTS
+    {
+      name: "13th Annual Golf Classic",
+      eventType: "golf",
+      eventDate: new Date("2024-06-15T08:00:00"),
+      venue: "Pine Valley Country Club",
+      description: "Our signature golf tournament brought together 144 golfers for a beautiful day supporting senior services. Includes breakfast, lunch, dinner, and awards ceremony.",
+      goalAmount: "85000",
+      amountRaised: "92450",
+      attendees: 144,
+      sponsors: ["FirstBank", "Valley Medical Group", "Thompson Properties", "Summit Insurance"],
+      campaignId: campaignsList[0].id, // Annual Fund
+      status: "completed",
+    },
+    {
+      name: "4th Annual Ride for Hospice",
+      eventType: "ride",
+      eventDate: new Date("2024-09-21T07:00:00"),
+      venue: "Riverside Park & Trail",
+      description: "A scenic cycling event with 10-mile, 25-mile, and 50-mile routes to raise awareness and funds for our hospice care services. Riders of all skill levels welcome.",
+      goalAmount: "45000",
+      amountRaised: "51200",
+      attendees: 186,
+      sponsors: ["BikeWorld", "Summit Health", "Green Valley Fitness", "Trail Mix Cafe"],
+      campaignId: campaignsList[0].id, // Annual Fund
+      status: "completed",
+    },
+    
+    // UPCOMING EVENTS
+    {
+      name: "14th Annual Golf Classic",
+      eventType: "golf",
+      eventDate: new Date("2025-06-14T08:00:00"),
+      venue: "Pine Valley Country Club",
+      description: "Join us for our 14th annual golf tournament! Foursome packages include continental breakfast, on-course refreshments, lunch, dinner, and premium swag bags. All proceeds benefit senior living programs.",
+      goalAmount: "95000",
+      amountRaised: "23750",
+      attendees: 48,
+      sponsors: ["FirstBank", "Valley Medical Group"],
+      campaignId: campaignsList[0].id, // Annual Fund
+      status: "upcoming",
+    },
+    {
+      name: "5th Annual Ride for Hospice",
+      eventType: "ride",
+      eventDate: new Date("2025-09-20T07:00:00"),
+      venue: "Riverside Park & Trail",
+      description: "Our annual cycling fundraiser returns for its 5th year! Choose from 10-mile family ride, 25-mile recreational route, or 50-mile challenge course. Post-ride festival with food trucks, live music, and awards.",
+      goalAmount: "52000",
+      amountRaised: "8400",
+      attendees: 32,
+      sponsors: ["BikeWorld"],
+      campaignId: campaignsList[0].id, // Annual Fund
+      status: "upcoming",
+    },
+  ];
+  
+  await db.insert(fundraisingEvents).values(fundraisingEventsList);
+  console.log(`✅ Created ${fundraisingEventsList.length} fundraising events (2 past, 2 upcoming)`);
 
   console.log("\n🎉 All 20 game-changing features seeded successfully!");
 

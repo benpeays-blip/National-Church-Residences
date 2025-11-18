@@ -649,6 +649,24 @@ export const giftRegistries = pgTable("gift_registries", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
+// Fundraising Events - Galas, Golf Tournaments, Rides, etc.
+export const fundraisingEvents = pgTable("fundraising_events", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  eventType: varchar("event_type").notNull(), // "golf", "gala", "ride", "walk", "auction", etc.
+  eventDate: timestamp("event_date").notNull(),
+  venue: varchar("venue"),
+  description: text("description"),
+  goalAmount: decimal("goal_amount", { precision: 12, scale: 2 }),
+  amountRaised: decimal("amount_raised", { precision: 12, scale: 2 }).notNull().default('0'),
+  attendees: integer("attendees"),
+  sponsors: text("sponsors").array(),
+  campaignId: varchar("campaign_id").references(() => campaigns.id),
+  status: varchar("status").notNull().default("upcoming"), // "upcoming", "completed", "cancelled"
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
 // Workflows - Visual Workflow Builder
 export const workflows = pgTable("workflows", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -1025,6 +1043,12 @@ export const insertGiftRegistrySchema = createInsertSchema(giftRegistries).omit(
   closedAt: true,
 });
 
+export const insertFundraisingEventSchema = createInsertSchema(fundraisingEvents).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 export const insertWorkflowSchema = createInsertSchema(workflows).omit({
   id: true,
   createdAt: true,
@@ -1124,6 +1148,8 @@ export type InsertTaskPriorityScore = z.infer<typeof insertTaskPriorityScoreSche
 export type TaskPriorityScore = typeof taskPriorityScores.$inferSelect;
 export type InsertGiftRegistry = z.infer<typeof insertGiftRegistrySchema>;
 export type GiftRegistry = typeof giftRegistries.$inferSelect;
+export type InsertFundraisingEvent = z.infer<typeof insertFundraisingEventSchema>;
+export type FundraisingEvent = typeof fundraisingEvents.$inferSelect;
 export type InsertWorkflow = z.infer<typeof insertWorkflowSchema>;
 export type Workflow = typeof workflows.$inferSelect;
 export type InsertWorkflowBlock = z.infer<typeof insertWorkflowBlockSchema>;

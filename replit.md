@@ -13,7 +13,35 @@ The **Dashboard Home** (new homepage at `/`) provides a unified view of the enti
 
 ## Recent Changes (November 18, 2025)
 
-### Comprehensive Gift Tracking System
+### Dashboard Homepage Updates
+- Removed "Dashboard" title from homepage
+- Removed "Donor Relationship Intelligence" section title and description
+- Cleaner, more streamlined homepage with donor quadrant front and center
+
+### Fundraising Events System
+Implemented comprehensive event tracking for galas, golf tournaments, rides, and other fundraising activities:
+
+**Schema Additions:**
+- Created `fundraising_events` table with fields: name, eventType, eventDate, venue, description, goalAmount, amountRaised, attendees, sponsors (array), campaignId, status
+- Added insert schema and types for FundraisingEvent
+
+**Seed Data:**
+- **Past Events**: 13th Annual Golf Classic (June 2024, $92,450 raised), 4th Annual Ride for Hospice (Sept 2024, $51,200 raised)
+- **Upcoming Events**: 14th Annual Golf Classic (June 2025), 5th Annual Ride for Hospice (Sept 2025)
+- All events linked to Annual Fund campaign with realistic sponsors, attendee counts, and progress tracking
+
+**Events Page Features:**
+- Three-tab interface: All Events, Upcoming, Past Events
+- URL-based filtering with `?filter=all|upcoming|past` parameters
+- Real-time metrics: upcoming count, this month count, total raised from completed events
+- Rich event cards showing: date, venue, attendance, fundraising progress, sponsor badges
+- Visual progress bars for goal tracking
+- Event type badges (golf, ride, etc.) and status indicators
+
+**API Routes:**
+- `GET /api/fundraising-events` - Returns all events ordered by date (most recent first)
+
+### Gift Tracking System
 Implemented production-ready gift tracking pages with hybrid schema approach:
 
 **Schema Enhancements:**

@@ -8,6 +8,7 @@ import {
   predictiveScores, wealthEvents, meetingBriefs, voiceNotes, boardConnections, corporatePartnerships, peerDonors,
   outreachTemplates, grantProposals, impactReports, sentimentAnalysis, peerBenchmarks, portfolioOptimizations,
   calendarEvents, stewardshipWorkflows, taskPriorityScores, giftRegistries, grants, boardMemberships,
+  fundraisingEvents,
   insertBoardMembershipSchema, insertOrganizationCanvasSchema
 } from "@shared/schema";
 import { eq, sql, desc, gte, and, inArray } from "drizzle-orm";
@@ -487,6 +488,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error updating grant:", error);
       res.status(500).json({ message: "Failed to update grant" });
+    }
+  });
+
+  app.get("/api/fundraising-events", async (req, res) => {
+    try {
+      const events = await db
+        .select()
+        .from(fundraisingEvents)
+        .orderBy(desc(fundraisingEvents.eventDate));
+      res.json(events);
+    } catch (error) {
+      console.error("Error fetching fundraising events:", error);
+      res.status(500).json({ message: "Failed to fetch fundraising events" });
     }
   });
 

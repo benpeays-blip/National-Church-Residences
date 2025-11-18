@@ -58,22 +58,9 @@ export default function DashboardHome() {
 
   return (
     <div className="space-y-8">
-      {/* Page Title */}
-      <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-semibold" style={{ color: "#084594" }} data-testid="text-dashboard-title">
-          Dashboard
-        </h1>
-      </div>
-
       {/* Donor Quadrant Section */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-2xl font-bold tracking-tight">Donor Relationship Intelligence</h2>
-            <p className="text-sm text-muted-foreground mt-1">
-              Strategic quadrant analysis of your donor portfolio
-            </p>
-          </div>
+        <div className="flex items-center justify-end">
           <Link href="/donor-quadrant">
             <Button variant="outline" size="sm">
               Full View
