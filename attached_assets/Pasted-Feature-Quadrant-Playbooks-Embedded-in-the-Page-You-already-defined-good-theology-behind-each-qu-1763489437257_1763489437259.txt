@@ -1,0 +1,128 @@
+Feature: Quadrant “Playbooks” Embedded in the Page
+
+You already defined good theology behind each quadrant. Turn that into codified playbooks.
+
+For each quadrant you click:
+
+Show:
+
+Definition (what this type of donor looks like)
+
+Core risks (what happens if we do nothing)
+
+1–3 movement pathways (short sequences of steps)
+
+Example for Friend → Partner:
+
+Pathway A:
+
+Schedule 1:1 vision conversation
+
+Share 2–3 specific partnership options
+
+Follow up in 7 days with clear ask
+
+Pathway B (for busy people):
+
+Invite to small, curated dinner
+
+Share 12–18 month vision
+
+Propose becoming a “lead partner” on one project
+
+On the page, you can pair these pathways with buttons:
+
+“Apply Pathway A” → opens wizard filtered to Friends fitting that pattern.
+
+“Show Donors Ready for Pathway B” → filters the top 10 list.
+
+5. Feature: Movement Alerts & “Recent Shifts”
+
+To make this feel alive, show what’s changing:
+
+“New to Friend” – donors who just showed high energy (event attendance, notes, replies).
+
+“New to Colleague” – signed up for autopay, recurring, etc.
+
+“At Risk” – donors who were Partner/Friend/Colleague but have gone quiet for 6–12 months.
+
+A simple panel:
+
+4 tiles, one for each quadrant, with:
+
+Count
+
+Net change since last 30 days
+
+“View changes” link to see who moved.
+
+This tells the team:
+
+Who is warming up (to pursue).
+
+Who is cooling down (to rescue).
+
+6. Feature: “Time Budget to Action Plan” Connector
+
+One of the most useful things you can do:
+
+Let a director enter:
+
+“This week our team has 4 lunch slots, 8 call slots, 20 personalized-email slots.”
+
+The system uses that to auto-generate a schedule:
+
+Example output:
+
+Lunches (4)
+
+Evelyn – Friend → Partner
+
+Brandon – Colleague → Partner
+
+Couple in Dallas – high-capacity Friends
+
+New prospect introduced by board member
+
+Calls (8)
+Names and scripts.
+
+Emails (20)
+List of colleagues and acquaintances to warm up with specific templates.
+
+Now the dev team doesn’t just see data; they see this week’s marching orders.
+
+7. Feature: Integrated Notes and “Spiritual / Relational Context”
+
+Because your world is Christian, you might want a layer beyond pure CRM fields:
+
+For each donor card (when clicked from the quadrant), show:
+
+Relational history summary.
+
+Spiritual context (e.g., where they’re at spiritually or in understanding the mission).
+
+“Prayer focus” (what staff are praying for regarding that donor).
+
+Last “non-ask” touch (encouragement, Scripture shared, hospitality, etc.).
+
+This reinforces that donors are people, not just revenue sources, while still being highly strategic.
+
+8. Feature: Scenario & Impact Simulation (Optional, but Powerful)
+
+This is more advanced, but it makes the quadrant feel like a strategic tool:
+
+“If we successfully move:
+
+3 of the top 10 Friends to Partner at average gift X;
+
+and 4 of the top 20 Colleagues to Partner at average upgrade Y;
+what would that do to our 12-month forecast?”
+
+The tool could show:
+
+Estimated increase in annual giving.
+
+Influence effects (e.g., if a Partner typically brings 1–2 new major leads).
+
+This helps leadership see why time with certain people is worth more than time with others.
