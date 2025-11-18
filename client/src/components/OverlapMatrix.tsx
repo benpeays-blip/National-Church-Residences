@@ -139,32 +139,32 @@ export default function OverlapMatrix() {
           </DialogHeader>
           
           <div className="space-y-3 mt-4">
-            {selectedCell?.people.length === 0 ? (
+            {selectedCell && selectedCell.people.length === 0 ? (
               <div className="text-center text-muted-foreground py-8">
                 No shared board members found.
               </div>
             ) : (
               selectedCell?.people.map((person) => (
-              <div
-                key={person.id}
-                className="flex items-center gap-3 p-3 rounded-lg border hover-elevate"
-                data-testid={`shared-person-${person.id}`}
-              >
-                <Avatar className="w-12 h-12">
-                  <AvatarFallback className="bg-primary/10 text-primary font-semibold">
-                    {person.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
-                  </AvatarFallback>
-                </Avatar>
-                <div className="flex-1">
-                  <div className="font-semibold">{person.name}</div>
-                  {person.email && (
-                    <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-1">
-                      <Mail className="w-3 h-3" />
-                      <span>{person.email}</span>
-                    </div>
-                  )}
+                <div
+                  key={person.id}
+                  className="flex items-center gap-3 p-3 rounded-lg border hover-elevate"
+                  data-testid={`shared-person-${person.id}`}
+                >
+                  <Avatar className="w-12 h-12">
+                    <AvatarFallback className="bg-primary/10 text-primary font-semibold">
+                      {person.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase()}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1">
+                    <div className="font-semibold">{person.name}</div>
+                    {person.email && (
+                      <div className="flex items-center gap-1.5 text-sm text-muted-foreground mt-1">
+                        <Mail className="w-3 h-3" />
+                        <span>{person.email}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
               ))
             )}
           </div>
