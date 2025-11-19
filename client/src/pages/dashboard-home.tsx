@@ -31,12 +31,15 @@ interface DashboardData {
   };
   topOpportunities: (Opportunity & {
     person?: { firstName: string; lastName: string };
+    actionDescription?: string;
   })[];
   recentGifts: (GiftType & {
     person?: { firstName: string; lastName: string };
     campaign?: { name: string };
   })[];
-  nextBestActions: Task[];
+  nextBestActions: (Task & {
+    description?: string;
+  })[];
 }
 
 export default function DashboardHome() {
@@ -161,27 +164,34 @@ export default function DashboardHome() {
               {data?.topOpportunities.slice(0, 5).map((opp) => (
                 <div
                   key={opp.id}
-                  className="flex items-center justify-between p-3 rounded-lg hover-elevate"
+                  className="p-3 rounded-lg hover-elevate"
                   style={{ backgroundColor: 'rgba(247, 251, 255, 1)' }}
                 >
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">
-                      {opp.person?.firstName} {opp.person?.lastName}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {opp.stage}
-                    </p>
+                  <div className="flex items-start justify-between gap-3 mb-2">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-medium truncate">
+                        {opp.person?.firstName} {opp.person?.lastName}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {opp.stage}
+                      </p>
+                    </div>
+                    <div className="text-right shrink-0">
+                      <p className="text-sm font-semibold tabular-nums">
+                        {formatCurrency(opp.askAmount)}
+                      </p>
+                      {opp.probability && (
+                        <Badge variant="secondary" className="text-xs mt-1">
+                          {opp.probability}%
+                        </Badge>
+                      )}
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm font-semibold tabular-nums">
-                      {formatCurrency(opp.askAmount)}
+                  {opp.actionDescription && (
+                    <p className="text-xs text-muted-foreground leading-relaxed">
+                      {opp.actionDescription}
                     </p>
-                    {opp.probability && (
-                      <Badge variant="secondary" className="text-xs">
-                        {opp.probability}%
-                      </Badge>
-                    )}
-                  </div>
+                  )}
                 </div>
               ))}
               {(!data?.topOpportunities || data.topOpportunities.length === 0) && (
@@ -219,14 +229,9 @@ export default function DashboardHome() {
                     className="p-3 rounded-lg hover-elevate"
                     style={{ backgroundColor: 'rgba(247, 251, 255, 1)' }}
                   >
-                    <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-start justify-between gap-2 mb-2">
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium">{task.title}</p>
-                        {task.reason && (
-                          <p className="text-xs text-muted-foreground mt-1 italic">
-                            {task.reason}
-                          </p>
-                        )}
                       </div>
                       <Badge 
                         variant={task.priority === 'urgent' ? 'destructive' : 'secondary'}
@@ -235,8 +240,13 @@ export default function DashboardHome() {
                         {task.priority}
                       </Badge>
                     </div>
+                    {task.description && (
+                      <p className="text-xs text-muted-foreground leading-relaxed mb-2">
+                        {task.description}
+                      </p>
+                    )}
                     {task.dueDate && (
-                      <div className="flex items-center gap-1 mt-2">
+                      <div className="flex items-center gap-1">
                         {isOverdue && <AlertCircle className="h-3 w-3 text-destructive" />}
                         <span className={`text-xs ${isOverdue ? 'text-destructive font-medium' : 'text-muted-foreground'}`}>
                           {formatDate(task.dueDate)}
