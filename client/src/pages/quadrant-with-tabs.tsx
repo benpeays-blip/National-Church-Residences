@@ -1,8 +1,11 @@
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Grid3x3, List } from "lucide-react";
+import { Grid3x3, BookOpen, ArrowRight, FileText, Target } from "lucide-react";
 import DonorQuadrant from "@/pages/donor-quadrant";
-import Pipeline from "@/pages/pipeline";
+import QuadrantThesis from "@/pages/quadrant-thesis";
+import QuadrantExplained from "@/pages/quadrant-explained";
+import QuadrantStrategies from "@/pages/quadrant-strategies";
+import QuadrantSummary from "@/pages/quadrant-summary";
 
 const quadrantTabs: SectionTab[] = [
   {
@@ -12,25 +15,45 @@ const quadrantTabs: SectionTab[] = [
     path: "/quadrant",
   },
   {
-    label: "Pipeline View",
-    value: "pipeline",
-    icon: List,
-    path: "/quadrant?tab=pipeline",
+    label: "Summary",
+    value: "summary",
+    icon: FileText,
+    path: "/quadrant/summary",
+  },
+  {
+    label: "Thesis",
+    value: "thesis",
+    icon: BookOpen,
+    path: "/quadrant/thesis",
+  },
+  {
+    label: "Quadrant Explained",
+    value: "explained",
+    icon: Target,
+    path: "/quadrant/explained",
+  },
+  {
+    label: "Movement Strategies",
+    value: "strategies",
+    icon: ArrowRight,
+    path: "/quadrant/strategies",
   },
 ];
 
 export default function QuadrantWithTabs() {
   const [location] = useLocation();
-  
-  // Determine active tab from URL
-  const params = new URLSearchParams(window.location.search);
-  const activeTab = params.get('tab') || 'quadrant';
 
-  // Determine which component to render
+  // Determine which component to render based on route
   let QuadrantComponent = DonorQuadrant;
   
-  if (activeTab === 'pipeline') {
-    QuadrantComponent = Pipeline;
+  if (location === "/quadrant/summary") {
+    QuadrantComponent = QuadrantSummary;
+  } else if (location === "/quadrant/thesis") {
+    QuadrantComponent = QuadrantThesis;
+  } else if (location === "/quadrant/explained") {
+    QuadrantComponent = QuadrantExplained;
+  } else if (location === "/quadrant/strategies") {
+    QuadrantComponent = QuadrantStrategies;
   }
 
   return (
