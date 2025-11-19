@@ -696,32 +696,35 @@ const campaignTabs: SectionTab[] = [
 export default function CampaignsWithTabs() {
   const [location] = useLocation();
   
-  // Determine active tab from URL
-  const params = new URLSearchParams(window.location.search);
+  // Determine active tab from URL - parse from location to ensure reactivity
+  const params = new URLSearchParams(location.split('?')[1] || '');
   const activeTab = params.get('tab') || 'all';
 
-  // Determine which component to render
-  let CampaignComponent = () => <Campaigns />;
-  
-  if (activeTab === 'active') {
-    CampaignComponent = () => <Campaigns filterStatus="active" />;
-  } else if (activeTab === 'planned') {
-    CampaignComponent = () => <Campaigns filterStatus="planned" />;
-  } else if (activeTab === 'completed') {
-    CampaignComponent = () => <Campaigns filterStatus="completed" />;
-  } else if (activeTab === 'performance') {
-    CampaignComponent = CampaignPerformance;
-  } else if (activeTab === 'goals') {
-    CampaignComponent = CampaignGoals;
-  } else if (activeTab === 'trends') {
-    CampaignComponent = CampaignTrends;
-  }
+  // Render the appropriate component based on active tab
+  const renderContent = () => {
+    switch (activeTab) {
+      case 'active':
+        return <Campaigns key="active" filterStatus="active" />;
+      case 'planned':
+        return <Campaigns key="planned" filterStatus="planned" />;
+      case 'completed':
+        return <Campaigns key="completed" filterStatus="completed" />;
+      case 'performance':
+        return <CampaignPerformance key="performance" />;
+      case 'goals':
+        return <CampaignGoals key="goals" />;
+      case 'trends':
+        return <CampaignTrends key="trends" />;
+      default:
+        return <Campaigns key="all" />;
+    }
+  };
 
   return (
     <div className="flex flex-col h-full">
       <SectionTabs tabs={campaignTabs} currentPath={location} />
       <div className="flex-1 overflow-auto p-6">
-        <CampaignComponent />
+        {renderContent()}
       </div>
     </div>
   );
