@@ -50,8 +50,11 @@ export default function Pipeline() {
       <div className="overflow-x-auto">
         <div className="flex gap-4 min-w-max pb-2">
           {stages.map((stage) => (
-            <Card key={stage} className="w-80 shrink-0 p-6 border">
-              <div className="mb-4">
+            <Card key={stage} className="w-80 shrink-0 overflow-hidden border">
+              <div 
+                className="p-4 pb-3"
+                style={{ backgroundColor: "rgba(222, 235, 247, 0.5)" }}
+              >
                 <div className="flex items-center justify-between">
                   <h3 className="text-base font-medium">{stage}</h3>
                   <span className="text-xs text-muted-foreground">
@@ -59,19 +62,21 @@ export default function Pipeline() {
                   </span>
                 </div>
               </div>
-              <ScrollArea className="h-[600px]">
-                <div className="space-y-2 pr-2">
-                  {grouped?.[stage]?.map((opp) => (
-                    <OpportunityCard key={opp.id} opportunity={opp} />
-                  )) ?? (
-                    <div className="text-center py-8">
-                      <p className="text-xs text-muted-foreground">
-                        No opportunities
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </ScrollArea>
+              <div className="px-6 pb-6">
+                <ScrollArea className="h-[600px]">
+                  <div className="space-y-2 pr-2">
+                    {grouped?.[stage]?.map((opp) => (
+                      <OpportunityCard key={opp.id} opportunity={opp} />
+                    )) ?? (
+                      <div className="text-center py-8">
+                        <p className="text-xs text-muted-foreground">
+                          No opportunities
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </ScrollArea>
+              </div>
             </Card>
           ))}
         </div>
