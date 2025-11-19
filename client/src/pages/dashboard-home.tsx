@@ -67,7 +67,7 @@ export default function DashboardHome() {
     : 0;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-6">
       {/* Donor Quadrant Section */}
       <div className="space-y-4">
         <DonorQuadrantMapper />

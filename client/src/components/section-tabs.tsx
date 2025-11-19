@@ -37,6 +37,14 @@ export function SectionTabs({ tabs, currentPath }: SectionTabsProps) {
       matchedTab = tabs.find(t => t.path === currentPath);
     }
     
+    // If still no match, try prefix matching for nested routes
+    // E.g., /pipeline/value should match /pipeline tab
+    if (!matchedTab) {
+      matchedTab = tabs.find(t => 
+        t.path !== '/' && currentPath.startsWith(t.path)
+      );
+    }
+    
     // Fall back to first tab
     return matchedTab?.value || tabs[0]?.value;
   };

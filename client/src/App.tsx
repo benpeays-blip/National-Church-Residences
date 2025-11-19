@@ -119,9 +119,8 @@ function Router() {
     <Switch>
       <Route path="/" component={DashboardHomeWithTabs} />
       <Route path="/home-old" component={Home} />
-      <Route path="/welcome" component={Welcome} />
-      <Route path="/national-church-residences" component={NationalChurchResidences} />
-      <Route path="/dashboard" component={DashboardHomeWithTabs} />
+      <Route path="/welcome" component={OtherWithTabs} />
+      <Route path="/national-church-residences" component={OtherWithTabs} />
       <Route path="/dashboard/mgo" component={Dashboard} />
       <Route path="/dashboard/dev-director" component={Dashboard} />
       <Route path="/dashboard/ceo" component={Dashboard} />
@@ -131,11 +130,11 @@ function Router() {
       <Route path="/mgo/meetings" component={MGOMeetingsDetail} />
       <Route path="/solutions" component={Solutions} />
       <Route path="/proposals" component={Proposals} />
-      <Route path="/tech-stack-mapper" component={TechStackMapper} />
+      <Route path="/tech-stack-mapper" component={OtherWithTabs} />
       <Route path="/card-design-preview" component={CardDesignPreview} />
       <Route path="/card-design-modern" component={CardDesignModern} />
-      <Route path="/organization-mapper" component={OrganizationMapper} />
-      <Route path="/organization-workflow-canvas" component={OrganizationWorkflowCanvas} />
+      <Route path="/organization-mapper" component={OtherWithTabs} />
+      <Route path="/organization-workflow-canvas" component={OtherWithTabs} />
       <Route path="/navigation-preview" component={NavigationPreview} />
       <Route path="/navigation-mockups" component={NavigationMockups} />
       <Route path="/navigation-hybrid-mockup" component={NavigationHybridMockup} />

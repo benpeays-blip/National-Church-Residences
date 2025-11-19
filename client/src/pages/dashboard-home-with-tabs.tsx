@@ -9,7 +9,7 @@ const dashboardTabs: SectionTab[] = [
     label: "Overview",
     value: "overview",
     icon: LayoutDashboard,
-    path: "/dashboard",
+    path: "/",
   },
   {
     label: "Pipeline",
