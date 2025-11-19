@@ -12,6 +12,7 @@ import { Search, Settings as SettingsIcon, Bell, User } from "lucide-react";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import DashboardHome from "@/pages/dashboard-home";
+import DashboardHomeWithTabs from "@/pages/dashboard-home-with-tabs";
 import Dashboard from "@/pages/dashboard";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
@@ -116,11 +117,11 @@ import MGOMeetingsDetail from "@/pages/mgo-meetings-detail";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={DashboardHome} />
+      <Route path="/" component={DashboardHomeWithTabs} />
       <Route path="/home-old" component={Home} />
       <Route path="/welcome" component={Welcome} />
       <Route path="/national-church-residences" component={NationalChurchResidences} />
-      <Route path="/dashboard" component={Dashboard} />
+      <Route path="/dashboard" component={DashboardHomeWithTabs} />
       <Route path="/dashboard/mgo" component={Dashboard} />
       <Route path="/dashboard/dev-director" component={Dashboard} />
       <Route path="/dashboard/ceo" component={Dashboard} />
@@ -147,10 +148,10 @@ function Router() {
       <Route path="/donors/prospects" component={DonorsWithTabs} />
       <Route path="/donors/:id" component={DonorDetail} />
       <Route path="/donors" component={DonorsWithTabs} />
-      <Route path="/pipeline/value" component={PipelineWithTabs} />
-      <Route path="/pipeline/forecast" component={PipelineWithTabs} />
-      <Route path="/pipeline/analytics" component={PipelineWithTabs} />
-      <Route path="/pipeline" component={PipelineWithTabs} />
+      <Route path="/pipeline/value" component={DashboardHomeWithTabs} />
+      <Route path="/pipeline/forecast" component={DashboardHomeWithTabs} />
+      <Route path="/pipeline/analytics" component={DashboardHomeWithTabs} />
+      <Route path="/pipeline" component={DashboardHomeWithTabs} />
       
       {/* Tab-based landing pages */}
       <Route path="/intelligence" component={IntelligenceWithTabs} />
