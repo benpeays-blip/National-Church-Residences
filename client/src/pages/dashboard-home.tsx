@@ -179,19 +179,19 @@ export default function DashboardHome() {
                         {opp.stage}
                       </Badge>
                     </div>
-                    <div className="text-right shrink-0 space-y-2">
-                      <div>
-                        <p className="text-xs text-muted-foreground">Amount to Request</p>
-                        <p className="text-sm font-semibold tabular-nums">
+                    <div className="text-right shrink-0 space-y-1">
+                      <div className="whitespace-nowrap">
+                        <span className="text-xs text-muted-foreground">Amount to Request: </span>
+                        <span className="text-sm font-semibold tabular-nums">
                           {formatCurrency(opp.askAmount)}
-                        </p>
+                        </span>
                       </div>
                       {opp.probability && (
-                        <div>
-                          <p className="text-xs text-muted-foreground">Success Rate</p>
-                          <p className="text-sm font-semibold tabular-nums">
+                        <div className="whitespace-nowrap">
+                          <span className="text-xs text-muted-foreground">Success Rate: </span>
+                          <span className="text-sm font-semibold tabular-nums">
                             {opp.probability}%
-                          </p>
+                          </span>
                         </div>
                       )}
                     </div>
