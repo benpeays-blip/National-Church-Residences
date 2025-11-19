@@ -274,18 +274,6 @@ function App() {
                       </Button>
                     </Link>
 
-                    <Link href="/pipeline">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
-                        data-testid="button-pipeline"
-                      >
-                        Pipeline
-                      </Button>
-                    </Link>
-
                     <Link href="/events">
                       <Button
                         variant="ghost"
@@ -367,6 +355,18 @@ function App() {
                         data-testid="button-donors"
                       >
                         Donors
+                      </Button>
+                    </Link>
+                    
+                    <Link href="/pipeline">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="font-semibold hover:bg-gray-100"
+                        style={{ color: "#084594" }}
+                        data-testid="button-pipeline"
+                      >
+                        Pipeline
                       </Button>
                     </Link>
                     
