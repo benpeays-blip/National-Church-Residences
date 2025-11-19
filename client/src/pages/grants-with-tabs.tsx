@@ -32,12 +32,26 @@ const grantsTabs: SectionTab[] = [
 
 export default function GrantsWithTabs() {
   const [location] = useLocation();
+  
+  // Determine active tab from URL - parse from location to ensure reactivity
+  const params = new URLSearchParams(location.split('?')[1] || '');
+  const activeTab = params.get('tab') || 'all';
+
+  // Map activeTab to stageFilter for Grants component
+  const getStageFilter = (): string | undefined => {
+    if (activeTab === 'research') return 'Research';
+    if (activeTab === 'submitted') return 'Submitted';
+    if (activeTab === 'awarded') return 'Awarded';
+    return undefined; // Return undefined for 'all' to show the dropdown
+  };
 
   return (
     <div className="flex flex-col h-full">
       <SectionTabs tabs={grantsTabs} currentPath={location} />
       <div className="flex-1 overflow-auto p-6">
-        <Grants />
+        {(activeTab === 'all' || activeTab === 'research' || activeTab === 'submitted' || activeTab === 'awarded') && (
+          <Grants key={`grants-${activeTab}`} initialStageFilter={getStageFilter()} />
+        )}
       </div>
     </div>
   );

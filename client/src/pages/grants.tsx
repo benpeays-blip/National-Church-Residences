@@ -18,9 +18,13 @@ import { FileText, Plus, Search, Calendar, DollarSign } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { Grant } from "@shared/schema";
 
-export default function Grants() {
+interface GrantsProps {
+  initialStageFilter?: string;
+}
+
+export default function Grants({ initialStageFilter }: GrantsProps = {}) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [stageFilter, setStageFilter] = useState<string>("all");
+  const [stageFilter, setStageFilter] = useState<string>(initialStageFilter || "all");
 
   const { data: allGrants, isLoading } = useQuery<Grant[]>({
     queryKey: ["/api/grants"],
@@ -147,20 +151,23 @@ export default function Grants() {
             data-testid="input-search-grants"
           />
         </div>
-        <Select value={stageFilter} onValueChange={setStageFilter}>
-          <SelectTrigger className="w-[180px]" data-testid="select-stage-filter">
-            <SelectValue placeholder="Filter by stage" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Stages</SelectItem>
-            <SelectItem value="Research">Research</SelectItem>
-            <SelectItem value="LOI">LOI</SelectItem>
-            <SelectItem value="Submitted">Submitted</SelectItem>
-            <SelectItem value="Awarded">Awarded</SelectItem>
-            <SelectItem value="ReportDue">Report Due</SelectItem>
-            <SelectItem value="Declined">Declined</SelectItem>
-          </SelectContent>
-        </Select>
+        {/* Only show dropdown filter when not filtering via tabs */}
+        {!initialStageFilter && (
+          <Select value={stageFilter} onValueChange={setStageFilter}>
+            <SelectTrigger className="w-[180px]" data-testid="select-stage-filter">
+              <SelectValue placeholder="Filter by stage" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Stages</SelectItem>
+              <SelectItem value="Research">Research</SelectItem>
+              <SelectItem value="LOI">LOI</SelectItem>
+              <SelectItem value="Submitted">Submitted</SelectItem>
+              <SelectItem value="Awarded">Awarded</SelectItem>
+              <SelectItem value="ReportDue">Report Due</SelectItem>
+              <SelectItem value="Declined">Declined</SelectItem>
+            </SelectContent>
+          </Select>
+        )}
       </div>
 
       {isLoading ? (
