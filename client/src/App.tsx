@@ -232,22 +232,26 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <CommandPalette />
-        <SidebarProvider style={style as React.CSSProperties}>
+        {/* Sidebar temporarily hidden - functionality preserved for future use */}
+        {/* <SidebarProvider style={style as React.CSSProperties}>
           <div className="flex h-screen w-full">
             <AppSidebar />
-            <div className="flex flex-col flex-1">
-              {/* Top Header Navigation */}
-              <header 
-                className="flex items-center gap-6 h-16 px-6 border-b shrink-0 bg-white"
-              >
-                {/* Sidebar Toggle */}
-                <SidebarTrigger 
-                  data-testid="button-sidebar-toggle" 
-                  className="hover:bg-gray-100 relative z-50" 
-                  style={{ color: "#084594" }} 
-                />
-                
-                <div className="flex items-center gap-3 ml-auto">
+            <div className="flex flex-col flex-1"> */}
+        
+        <div className="flex h-screen w-full">
+          <div className="flex flex-col flex-1">
+            {/* Top Header Navigation */}
+            <header 
+              className="flex items-center gap-6 h-16 px-6 border-b shrink-0 bg-white"
+            >
+              {/* Sidebar Toggle - Hidden (sidebar functionality preserved) */}
+              {/* <SidebarTrigger 
+                data-testid="button-sidebar-toggle" 
+                className="hover:bg-gray-100 relative z-50" 
+                style={{ color: "#084594" }} 
+              /> */}
+              
+              <div className="flex items-center gap-3 ml-auto">
                   {/* Navigation Buttons */}
                   <nav className="flex items-center gap-1">
                     <Link href="/intelligence">
@@ -436,7 +440,9 @@ function App() {
               </main>
             </div>
           </div>
-        </SidebarProvider>
+        {/* </div>
+          </div>
+        </SidebarProvider> */}
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
