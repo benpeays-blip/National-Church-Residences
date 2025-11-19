@@ -117,7 +117,7 @@ import MGOMeetingsDetail from "@/pages/mgo-meetings-detail";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={DashboardHomeWithTabs} />
+      <Route path="/" component={DashboardHome} />
       <Route path="/home-old" component={Home} />
       <Route path="/welcome" component={OtherWithTabs} />
       <Route path="/national-church-residences" component={OtherWithTabs} />
@@ -147,10 +147,10 @@ function Router() {
       <Route path="/donors/prospects" component={DonorsWithTabs} />
       <Route path="/donors/:id" component={DonorDetail} />
       <Route path="/donors" component={DonorsWithTabs} />
-      <Route path="/pipeline/value" component={DashboardHomeWithTabs} />
-      <Route path="/pipeline/forecast" component={DashboardHomeWithTabs} />
-      <Route path="/pipeline/analytics" component={DashboardHomeWithTabs} />
-      <Route path="/pipeline" component={DashboardHomeWithTabs} />
+      <Route path="/pipeline/value" component={PipelineWithTabs} />
+      <Route path="/pipeline/forecast" component={PipelineWithTabs} />
+      <Route path="/pipeline/analytics" component={PipelineWithTabs} />
+      <Route path="/pipeline" component={PipelineWithTabs} />
       
       {/* Tab-based landing pages */}
       <Route path="/intelligence" component={IntelligenceWithTabs} />
