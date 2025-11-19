@@ -1,0 +1,390 @@
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { BookOpen, Award, Heart, Users, Mail, AlertTriangle } from 'lucide-react';
+
+export default function QuadrantExplained() {
+  return (
+    <div className="container mx-auto p-6 space-y-6">
+      {/* Summary Section */}
+      <Card className="border-0 shadow-none">
+        <CardHeader className="bg-primary/5 border-b">
+          <CardTitle>Framework Summary</CardTitle>
+        </CardHeader>
+        <CardContent className="pt-6 space-y-6">
+          <div>
+            <p className="text-sm mb-4 font-semibold">To reach the Partner quadrant:</p>
+            
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse border border-border">
+                <thead>
+                  <tr className="bg-muted/50">
+                    <th className="border border-border p-3 text-left text-sm font-semibold">Quadrant</th>
+                    <th className="border border-border p-3 text-left text-sm font-semibold">Needed Input</th>
+                    <th className="border border-border p-3 text-left text-sm font-semibold">Movement Path</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="hover-elevate">
+                    <td className="border border-border p-3 text-sm font-medium">Acquaintance</td>
+                    <td className="border border-border p-3 text-sm">Energy + Initial Structure</td>
+                    <td className="border border-border p-3 text-sm">Make them known → move to Friend</td>
+                  </tr>
+                  <tr className="hover-elevate">
+                    <td className="border border-border p-3 text-sm font-medium">Friend</td>
+                    <td className="border border-border p-3 text-sm">Structure</td>
+                    <td className="border border-border p-3 text-sm">Build plan + cadence → move to Colleague/Partner</td>
+                  </tr>
+                  <tr className="hover-elevate">
+                    <td className="border border-border p-3 text-sm font-medium">Colleague</td>
+                    <td className="border border-border p-3 text-sm">Energy</td>
+                    <td className="border border-border p-3 text-sm">Personalize → deepen meaning → move to Partner</td>
+                  </tr>
+                  <tr className="hover-elevate">
+                    <td className="border border-border p-3 text-sm font-medium">Partner</td>
+                    <td className="border border-border p-3 text-sm">Consistent Energy + Structure</td>
+                    <td className="border border-border p-3 text-sm">Maintain → grow → legacy-level commitment</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          {/* Framework Axes Explanation */}
+          <div className="border-t pt-6">
+            <p className="text-sm mb-4">
+              This framework maps donors using two essential axes:
+            </p>
+
+            <div className="space-y-3">
+              <div>
+                <h4 className="font-semibold text-sm mb-2">Y-Axis: ENERGY (Low → High)</h4>
+                <p className="text-sm text-muted-foreground ml-4">
+                  The relational energy and emotional investment exchanged between the organization and the donor.
+                </p>
+                <p className="text-sm text-muted-foreground ml-4 mt-1">
+                  Energy = attention, personal connection, affinity, and sense of shared mission.
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-semibold text-sm mb-2">X-Axis: STRUCTURE (Low → High)</h4>
+                <p className="text-sm text-muted-foreground ml-4">
+                  The systems, processes, touchpoints, and formalized pathways that define how donors engage.
+                </p>
+                <p className="text-sm text-muted-foreground ml-4 mt-1">
+                  Structure = cadence, planning, communication channels, intentional movement, strategic invitations.
+                </p>
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Quadrant Explained Section */}
+      <Card className="border-0 shadow-none">
+        <CardHeader className="bg-primary/5 border-b">
+          <div className="flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-primary" />
+            <div>
+              <CardTitle>QUADRANT EXPLAINED</CardTitle>
+              <CardDescription className="mt-1">
+                A Strategic Model for Understanding and Moving Donors Toward Long-Term Partnership
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="pt-6">
+          <Tabs defaultValue="partner" className="w-full">
+            <TabsList className="grid w-full grid-cols-4 mb-6">
+              <TabsTrigger value="partner" data-testid="tab-framework-partner">Partner</TabsTrigger>
+              <TabsTrigger value="friend" data-testid="tab-framework-friend">Friend</TabsTrigger>
+              <TabsTrigger value="colleague" data-testid="tab-framework-colleague">Colleague</TabsTrigger>
+              <TabsTrigger value="acquaintance" data-testid="tab-framework-acquaintance">Acquaintance</TabsTrigger>
+            </TabsList>
+
+            {/* Partner Tab */}
+            <TabsContent value="partner" className="space-y-6">
+              <div>
+                <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
+                  <Award className="w-5 h-5 text-primary" />
+                  THE PARTNER (HIGH ENERGY, HIGH STRUCTURE)
+                </h3>
+                <p className="text-muted-foreground italic mb-4">
+                  "Aligned, invested, relationally connected, and strategically engaged."
+                </p>
+              </div>
+
+              {/* 2-Column Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Left Column */}
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-semibold text-lg mb-3">Definition</h4>
+                    <p className="text-sm mb-2">Partners are:</p>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">Multi-year givers</li>
+                      <li className="list-disc">Multi-digit donors (major gift level)</li>
+                      <li className="list-disc">People who see themselves as part of the mission</li>
+                      <li className="list-disc">Investors, not simply donors</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-lg mb-3">Characteristics</h4>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">Deep personal connection</li>
+                      <li className="list-disc">Clear strategic alignment</li>
+                      <li className="list-disc">Participates in planning, not simply funding</li>
+                      <li className="list-disc">Regular rhythm of communication</li>
+                      <li className="list-disc">Eager for updates, impact conversations, shared vision moments</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-semibold text-lg mb-3">Psychology</h4>
+                    <p className="text-sm mb-2">Partners are motivated by:</p>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">Belonging and shared ownership</li>
+                      <li className="list-disc">Transformational impact</li>
+                      <li className="list-disc">Purpose and stewardship</li>
+                    </ul>
+                    <p className="text-sm mt-3 mb-2">They want:</p>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">Visibility into what matters</li>
+                      <li className="list-disc">Relational access</li>
+                      <li className="list-disc">Clear next steps</li>
+                      <li className="list-disc">Meaningful engagement</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900 rounded-lg p-4">
+                <h4 className="font-semibold text-lg mb-3 flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                  Risks
+                </h4>
+                <ul className="space-y-1.5 text-sm ml-6">
+                  <li className="list-disc">High expectation for transparency</li>
+                  <li className="list-disc">Relationship must be tended like a garden</li>
+                  <li className="list-disc">Requires both relational energy AND organizational excellence</li>
+                </ul>
+              </div>
+            </TabsContent>
+
+            {/* Friend Tab */}
+            <TabsContent value="friend" className="space-y-6">
+              <div>
+                <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
+                  <Heart className="w-5 h-5 text-primary" />
+                  THE FRIEND (HIGH ENERGY, LOW STRUCTURE)
+                </h3>
+                <p className="text-muted-foreground italic mb-4">
+                  "Deep affection, high relational warmth, but no organized path to partnership."
+                </p>
+              </div>
+
+              {/* 2-Column Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Left Column */}
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-semibold text-lg mb-3">Definition</h4>
+                    <p className="text-sm mb-2">Friends are donors who:</p>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">Know you personally (staff, volunteers, neighbors, church members)</li>
+                      <li className="list-disc">Like what you do, and like YOU</li>
+                      <li className="list-disc">Say things like, "Let me know how I can help," but no plan emerges</li>
+                      <li className="list-disc">Willing to give time or emotional encouragement</li>
+                      <li className="list-disc">Often inconsistent givers because no structure nudges them forward</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-lg mb-3">Characteristics</h4>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">High relational capital</li>
+                      <li className="list-disc">Motivated by affinity, story, and people</li>
+                      <li className="list-disc">Warm, but unpredictable</li>
+                      <li className="list-disc">Relationship = personal, not institutional</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-semibold text-lg mb-3">Psychology</h4>
+                    <p className="text-sm mb-2">Friends give because:</p>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">They trust the person more than the organization</li>
+                      <li className="list-disc">They feel emotional resonance</li>
+                      <li className="list-disc">They feel loyalty to a leader or founder</li>
+                    </ul>
+                    <p className="text-sm mt-3 mb-2">But without structure:</p>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">They never fully integrate</li>
+                      <li className="list-disc">They rarely become large or sustained givers</li>
+                      <li className="list-disc">They remain "friendly, but uncommitted"</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900 rounded-lg p-4">
+                <h4 className="font-semibold text-lg mb-3 flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                  Risks
+                </h4>
+                <ul className="space-y-1.5 text-sm ml-6">
+                  <li className="list-disc">Relational drift if contact is inconsistent</li>
+                  <li className="list-disc">Emotional energy spent without strategic progression</li>
+                  <li className="list-disc">Can stay "stuck" in friendliness without movement</li>
+                </ul>
+              </div>
+            </TabsContent>
+
+            {/* Colleague Tab */}
+            <TabsContent value="colleague" className="space-y-6">
+              <div>
+                <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
+                  <Users className="w-5 h-5 text-primary" />
+                  THE COLLEAGUE (LOW ENERGY, HIGH STRUCTURE)
+                </h3>
+                <p className="text-muted-foreground italic mb-4">
+                  "Predictable, routine, system-driven, but not emotionally invested."
+                </p>
+              </div>
+
+              {/* 2-Column Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Left Column */}
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-semibold text-lg mb-3">Definition</h4>
+                    <p className="text-sm mb-2">Colleagues are:</p>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">Auto-pay donors</li>
+                      <li className="list-disc">Monthly small givers</li>
+                      <li className="list-disc">Workplace donors</li>
+                      <li className="list-disc">Event attendees who give because "this is what we do every year"</li>
+                      <li className="list-disc">People who respond well to structured programs but not personal connection</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-lg mb-3">Characteristics</h4>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">Stable but not passionate</li>
+                      <li className="list-disc">Consistent but not relational</li>
+                      <li className="list-disc">Follow process; don't require high-touch work</li>
+                      <li className="list-disc">They give because the system prompts them, not because the mission grips them</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-semibold text-lg mb-3">Psychology</h4>
+                    <p className="text-sm mb-2">Colleagues value:</p>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">Convenience and predictability</li>
+                      <li className="list-disc">Minimal emotional demand</li>
+                      <li className="list-disc">Professionalism and clarity</li>
+                    </ul>
+                    <p className="text-sm mt-3">They may not feel strongly connected, but they do trust your structure.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900 rounded-lg p-4">
+                <h4 className="font-semibold text-lg mb-3 flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                  Risks
+                </h4>
+                <ul className="space-y-1.5 text-sm ml-6">
+                  <li className="list-disc">They don't grow their giving</li>
+                  <li className="list-disc">They rarely advocate or influence others</li>
+                  <li className="list-disc">They will leave quietly if structure breaks down</li>
+                </ul>
+              </div>
+            </TabsContent>
+
+            {/* Acquaintance Tab */}
+            <TabsContent value="acquaintance" className="space-y-6">
+              <div>
+                <h3 className="text-xl font-bold flex items-center gap-2 mb-2">
+                  <Mail className="w-5 h-5 text-primary" />
+                  THE ACQUAINTANCE (LOW ENERGY, LOW STRUCTURE)
+                </h3>
+                <p className="text-muted-foreground italic mb-4">
+                  "Loosely known, lightly engaged, no emotional bond, and no clear pathway."
+                </p>
+              </div>
+
+              {/* 2-Column Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {/* Left Column */}
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-semibold text-lg mb-3">Definition</h4>
+                    <p className="text-sm mb-2">Acquaintances are donors who:</p>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">Respond to general appeals (direct mail, email blasts, digital ads)</li>
+                      <li className="list-disc">Have minimal relationship history with the organization</li>
+                      <li className="list-disc">Have given once or a few times but without ongoing personal engagement</li>
+                      <li className="list-disc">Are not yet relationally "seen"</li>
+                      <li className="list-disc">Often don't remember giving or can't articulate the mission clearly</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="font-semibold text-lg mb-3">Characteristics</h4>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">Transactional giving</li>
+                      <li className="list-disc">Motivated by broad causes, not relationships</li>
+                      <li className="list-disc">No expectation of reciprocation</li>
+                      <li className="list-disc">Low brand loyalty</li>
+                      <li className="list-disc">Easily lost if communication lapses</li>
+                    </ul>
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div className="space-y-6">
+                  <div>
+                    <h4 className="font-semibold text-lg mb-3">Psychology</h4>
+                    <p className="text-sm mb-2">Acquaintances give out of:</p>
+                    <ul className="space-y-1.5 text-sm ml-6">
+                      <li className="list-disc">Impulse or low-level curiosity</li>
+                      <li className="list-disc">"Someone asked me and it sounded good"</li>
+                      <li className="list-disc">Social conformity (everyone gives to something)</li>
+                    </ul>
+                    <p className="text-sm mt-3">The relationship is shallow because no intentional structure OR personal energy exists.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900 rounded-lg p-4">
+                <h4 className="font-semibold text-lg mb-3 flex items-center gap-2">
+                  <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                  Risks
+                </h4>
+                <ul className="space-y-1.5 text-sm ml-6">
+                  <li className="list-disc">High churn</li>
+                  <li className="list-disc">Forgotten donors</li>
+                  <li className="list-disc">Donor fatigue quickly</li>
+                  <li className="list-disc">No memory of your organization among their giving priorities</li>
+                </ul>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}

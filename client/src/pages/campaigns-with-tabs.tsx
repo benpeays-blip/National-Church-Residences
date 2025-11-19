@@ -700,31 +700,24 @@ export default function CampaignsWithTabs() {
   const params = new URLSearchParams(location.split('?')[1] || '');
   const activeTab = params.get('tab') || 'all';
 
-  // Render the appropriate component based on active tab
-  const renderContent = () => {
-    switch (activeTab) {
-      case 'active':
-        return <Campaigns key="active" filterStatus="active" />;
-      case 'planned':
-        return <Campaigns key="planned" filterStatus="planned" />;
-      case 'completed':
-        return <Campaigns key="completed" filterStatus="completed" />;
-      case 'performance':
-        return <CampaignPerformance key="performance" />;
-      case 'goals':
-        return <CampaignGoals key="goals" />;
-      case 'trends':
-        return <CampaignTrends key="trends" />;
-      default:
-        return <Campaigns key="all" />;
-    }
+  // Map activeTab to filterStatus for Campaigns component
+  const getFilterStatus = (): "active" | "planned" | "completed" | undefined => {
+    if (activeTab === 'active') return 'active';
+    if (activeTab === 'planned') return 'planned';
+    if (activeTab === 'completed') return 'completed';
+    return undefined;
   };
 
   return (
     <div className="flex flex-col h-full">
       <SectionTabs tabs={campaignTabs} currentPath={location} />
       <div className="flex-1 overflow-auto p-6">
-        {renderContent()}
+        {(activeTab === 'all' || activeTab === 'active' || activeTab === 'planned' || activeTab === 'completed') && (
+          <Campaigns key={`campaigns-${activeTab}`} filterStatus={getFilterStatus()} />
+        )}
+        {activeTab === 'performance' && <CampaignPerformance key="performance" />}
+        {activeTab === 'goals' && <CampaignGoals key="goals" />}
+        {activeTab === 'trends' && <CampaignTrends key="trends" />}
       </div>
     </div>
   );

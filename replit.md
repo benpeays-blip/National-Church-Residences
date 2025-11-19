@@ -5,6 +5,11 @@ FundRazor is an AI-powered, enterprise-grade fundraising CRM designed for nonpro
 
 The Dashboard Home provides a unified view of the entire fundraising operation, featuring a Donor Relationship Quadrant, key performance metrics, top opportunities, AI-generated Next Best Actions, recent gifts, and an active campaigns overview.
 
+## Recent Changes (November 19, 2025)
+- **Fixed Campaigns Tab Filtering Bug**: Resolved React re-rendering issue where tab navigation updated URLs but didn't filter campaign cards. Solution: Added dynamic key prop (`campaigns-${activeTab}`) to force component remounting when tabs change, ensuring proper filter application across All Campaigns, Active, Planned, and Completed views.
+- **Enhanced Dashboard**: Added stage-specific action descriptions and detailed task context for Top Opportunities. Converted opportunity stages to badge-styled tags using Blues-8 color system.
+- **Donor Quadrant Restructure**: Extracted educational content into separate tabs (Thesis, Quadrant Explained, Movement Strategies) with dedicated pages.
+
 ## User Preferences
 - **Design Philosophy**: Enterprise-grade, data-dense UI inspired by Linear and Salesforce NPSP
 - **Visual Quality**: Paramount importance - must follow design_guidelines.md religiously
