@@ -169,21 +169,30 @@ export default function DashboardHome() {
                 >
                   <div className="flex items-start justify-between gap-3 mb-2">
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium truncate">
+                      <p className="text-sm font-medium truncate mb-1.5">
                         {opp.person?.firstName} {opp.person?.lastName}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <Badge 
+                        variant="outline" 
+                        className="bg-primary/5 border-primary/20 text-primary text-xs"
+                      >
                         {opp.stage}
-                      </p>
+                      </Badge>
                     </div>
-                    <div className="text-right shrink-0">
-                      <p className="text-sm font-semibold tabular-nums">
-                        {formatCurrency(opp.askAmount)}
-                      </p>
+                    <div className="text-right shrink-0 space-y-2">
+                      <div>
+                        <p className="text-xs text-muted-foreground">Amount to Request</p>
+                        <p className="text-sm font-semibold tabular-nums">
+                          {formatCurrency(opp.askAmount)}
+                        </p>
+                      </div>
                       {opp.probability && (
-                        <Badge variant="secondary" className="text-xs mt-1">
-                          {opp.probability}%
-                        </Badge>
+                        <div>
+                          <p className="text-xs text-muted-foreground">Success Rate</p>
+                          <p className="text-sm font-semibold tabular-nums">
+                            {opp.probability}%
+                          </p>
+                        </div>
                       )}
                     </div>
                   </div>
