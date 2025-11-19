@@ -156,6 +156,9 @@ function Router() {
       <Route path="/intelligence" component={IntelligenceWithTabs} />
       <Route path="/quadrant" component={QuadrantWithTabs} />
       <Route path="/events" component={EventsWithTabs} />
+      <Route path="/grants/research" component={GrantsWithTabs} />
+      <Route path="/grants/submitted" component={GrantsWithTabs} />
+      <Route path="/grants/awarded" component={GrantsWithTabs} />
       <Route path="/grants" component={GrantsWithTabs} />
       <Route path="/gifts" component={GiftsWithTabs} />
       <Route path="/ai-tools" component={AIToolsWithTabs} />
