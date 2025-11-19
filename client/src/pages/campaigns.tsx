@@ -145,7 +145,7 @@ export default function Campaigns({ filterStatus }: CampaignsProps = {}) {
           return (
             <Link key={campaign.id} href={`/campaigns/${campaign.id}`}>
               <Card className="hover-elevate active-elevate-2 cursor-pointer" data-testid={`card-campaign-${campaign.id}`}>
-                <CardHeader className="flex flex-row items-center justify-between gap-1 space-y-0 pb-3">
+                <CardHeader className="flex flex-row items-center justify-between gap-1 space-y-0 pb-3 bg-b1">
                   <div className="flex-1 min-w-0">
                     <h3 className="text-xl font-semibold truncate" data-testid={`text-campaign-name-${campaign.id}`}>
                       {campaign.name}
