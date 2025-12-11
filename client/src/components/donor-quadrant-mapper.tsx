@@ -127,68 +127,12 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
 
             {/* Quadrants - Clickable */}
-            {/* Top Left - Friend */}
-            <button
-              onClick={() => setSelectedQuadrant('friend')}
-              className={`absolute left-0 top-0 w-1/2 h-1/2 hover-elevate active-elevate-2 transition-all ${
-                selectedQuadrant === 'friend' ? 'bg-muted/50' : 'bg-muted/20'
-              }`}
-              data-testid="quadrant-friend"
-            >
-              <div className="relative z-10 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2">
-                <div className="font-bold text-base">Friend</div>
-                <Badge className="mt-1" data-testid="count-friend">{data.counts.friend}</Badge>
-              </div>
-            </button>
-
-            {/* Top Right - Partner */}
-            <button
-              onClick={() => setSelectedQuadrant('partner')}
-              className={`absolute right-0 top-0 w-1/2 h-1/2 hover-elevate active-elevate-2 transition-all ${
-                selectedQuadrant === 'partner' ? 'bg-muted/50' : 'bg-muted/20'
-              }`}
-              data-testid="quadrant-partner"
-            >
-              <div className="relative z-10 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2">
-                <div className="font-bold text-base">Partner</div>
-                <Badge className="mt-1" data-testid="count-partner">{data.counts.partner}</Badge>
-              </div>
-            </button>
-
-            {/* Bottom Left - Acquaintance */}
-            <button
-              onClick={() => setSelectedQuadrant('acquaintance')}
-              className={`absolute left-0 bottom-0 w-1/2 h-1/2 hover-elevate active-elevate-2 transition-all ${
-                selectedQuadrant === 'acquaintance' ? 'bg-muted/50' : 'bg-muted/20'
-              }`}
-              data-testid="quadrant-acquaintance"
-            >
-              <div className="relative z-10 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2">
-                <div className="font-bold text-base">Acquaintance</div>
-                <Badge className="mt-1" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
-              </div>
-            </button>
-
-            {/* Bottom Right - Colleague */}
-            <button
-              onClick={() => setSelectedQuadrant('colleague')}
-              className={`absolute right-0 bottom-0 w-1/2 h-1/2 hover-elevate active-elevate-2 transition-all ${
-                selectedQuadrant === 'colleague' ? 'bg-muted/50' : 'bg-muted/20'
-              }`}
-              data-testid="quadrant-colleague"
-            >
-              <div className="relative z-10 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2">
-                <div className="font-bold text-base">Colleague</div>
-                <Badge className="mt-1" data-testid="count-colleague">{data.counts.colleague}</Badge>
-              </div>
-            </button>
-
-            {/* Donor Dots with Hover Cards */}
+            {/* Donor Dots with Hover Cards - rendered first so labels appear on top */}
             {data.donors.map((donor) => (
               <HoverCard key={donor.id} openDelay={150} closeDelay={50}>
                 <HoverCardTrigger asChild>
                   <button
-                    className="absolute w-2.5 h-2.5 rounded-full bg-primary/80 shadow-sm hover:scale-150 transition-transform cursor-pointer border-0 p-0"
+                    className="absolute w-2.5 h-2.5 rounded-full bg-primary/80 shadow-sm hover:scale-150 transition-transform cursor-pointer border-0 p-0 z-10"
                     style={{
                       left: `calc(${donor.structure}% - 5px)`,
                       top: `calc(${100 - donor.energy}% - 5px)`,
@@ -312,6 +256,63 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 </HoverCardContent>
               </HoverCard>
             ))}
+
+            {/* Quadrant Label Boxes - rendered after dots so they appear on top */}
+            {/* Top Left - Friend */}
+            <button
+              onClick={() => setSelectedQuadrant('friend')}
+              className={`absolute left-0 top-0 w-1/2 h-1/2 transition-all pointer-events-none ${
+                selectedQuadrant === 'friend' ? 'bg-muted/50' : 'bg-muted/20'
+              }`}
+              data-testid="quadrant-friend"
+            >
+              <div className="relative z-20 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2 pointer-events-auto hover-elevate active-elevate-2">
+                <div className="font-bold text-base">Friend</div>
+                <Badge className="mt-1" data-testid="count-friend">{data.counts.friend}</Badge>
+              </div>
+            </button>
+
+            {/* Top Right - Partner */}
+            <button
+              onClick={() => setSelectedQuadrant('partner')}
+              className={`absolute right-0 top-0 w-1/2 h-1/2 transition-all pointer-events-none ${
+                selectedQuadrant === 'partner' ? 'bg-muted/50' : 'bg-muted/20'
+              }`}
+              data-testid="quadrant-partner"
+            >
+              <div className="relative z-20 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2 pointer-events-auto hover-elevate active-elevate-2">
+                <div className="font-bold text-base">Partner</div>
+                <Badge className="mt-1" data-testid="count-partner">{data.counts.partner}</Badge>
+              </div>
+            </button>
+
+            {/* Bottom Left - Acquaintance */}
+            <button
+              onClick={() => setSelectedQuadrant('acquaintance')}
+              className={`absolute left-0 bottom-0 w-1/2 h-1/2 transition-all pointer-events-none ${
+                selectedQuadrant === 'acquaintance' ? 'bg-muted/50' : 'bg-muted/20'
+              }`}
+              data-testid="quadrant-acquaintance"
+            >
+              <div className="relative z-20 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2 pointer-events-auto hover-elevate active-elevate-2">
+                <div className="font-bold text-base">Acquaintance</div>
+                <Badge className="mt-1" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
+              </div>
+            </button>
+
+            {/* Bottom Right - Colleague */}
+            <button
+              onClick={() => setSelectedQuadrant('colleague')}
+              className={`absolute right-0 bottom-0 w-1/2 h-1/2 transition-all pointer-events-none ${
+                selectedQuadrant === 'colleague' ? 'bg-muted/50' : 'bg-muted/20'
+              }`}
+              data-testid="quadrant-colleague"
+            >
+              <div className="relative z-20 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2 pointer-events-auto hover-elevate active-elevate-2">
+                <div className="font-bold text-base">Colleague</div>
+                <Badge className="mt-1" data-testid="count-colleague">{data.counts.colleague}</Badge>
+              </div>
+            </button>
             </div>
 
             {/* Axis Labels - outside overflow-hidden container */}
