@@ -33,6 +33,7 @@ import Donors from "@/pages/donors";
 import DonorsWithTabs from "@/pages/donors-with-tabs";
 import Donor360 from "@/pages/donor-360";
 import DonorDetail from "@/pages/donor-detail";
+import DonorActionPlan from "@/pages/donor-action-plan";
 import DonorCardShowcase from "@/pages/donor-card-showcase";
 import DonorQuadrant from "@/pages/donor-quadrant";
 import DonorQuadrantWithTabs from "@/pages/donor-quadrant-with-tabs";
@@ -145,6 +146,7 @@ function Router() {
       <Route path="/donors/lybunt" component={DonorsWithTabs} />
       <Route path="/donors/sybunt" component={DonorsWithTabs} />
       <Route path="/donors/prospects" component={DonorsWithTabs} />
+      <Route path="/donors/:id/action-plan" component={DonorActionPlan} />
       <Route path="/donors/:id" component={DonorDetail} />
       <Route path="/donors" component={DonorsWithTabs} />
       <Route path="/pipeline/value" component={PipelineWithTabs} />

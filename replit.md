@@ -5,7 +5,10 @@ FundRazor is an AI-powered, enterprise-grade fundraising CRM designed for nonpro
 
 The Dashboard Home provides a unified view of the entire fundraising operation, featuring a Donor Relationship Quadrant, key performance metrics, top opportunities, AI-generated Next Best Actions, recent gifts, and an active campaigns overview.
 
-## Recent Changes (November 19, 2025)
+## Recent Changes (December 11, 2025)
+- **Added Generate Action Plan Feature**: Added "Generate Action Plan" button to donor HoverCard popup on the Donor Relationship Quadrant. Clicking opens a dedicated page (/donors/:id/action-plan) with an AI-generated 8-week cultivation strategy to move donors toward Partner status. Features personalized phone scripts, meeting agendas, email drafts, and mail pieces similar to the AI Tools Outreach Generator. **Status: ✅ WORKING**
+
+## Previous Changes (November 19, 2025)
 - **Added Pipeline to Top Navigation**: Added Pipeline button to the top header navigation between Donors and Other for quick access to the opportunity pipeline management system. **Status: ✅ WORKING**
 - **Simplified Dashboard Homepage**: Removed Overview/Pipeline tabs from homepage. The root route (/) now shows the dashboard content directly with donor quadrant and metrics. Pipeline is accessible via the top navigation and displays its own tabs (Opportunities, Pipeline Value, 90-Day Forecast, Analytics). **Status: ✅ WORKING**
 - **Temporarily Hidden Sidebar**: Sidebar navigation is now hidden from the UI while preserving all functionality for future restoration. All sidebar code remains intact and commented out in App.tsx. Content now displays at full width without the left sidebar. **Status: ✅ WORKING**

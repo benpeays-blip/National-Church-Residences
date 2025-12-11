@@ -7,7 +7,8 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TrendingUp, Users, Lightbulb, Phone, Mail, Heart, Award, Calendar, BookOpen, AlertTriangle, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { TrendingUp, Users, Lightbulb, Phone, Mail, Heart, Award, Calendar, BookOpen, AlertTriangle, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { Link } from 'wouter';
 
 interface Donor {
   id: string;
@@ -242,14 +243,28 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                         </div>
                       </div>
                       <p className="text-sm text-muted-foreground mt-3 line-clamp-2">{donor.bio}</p>
-                      <Button 
-                        variant="ghost" 
-                        size="sm" 
-                        className="px-0 h-auto text-sky-500 hover:text-sky-600 mt-1"
-                        asChild
-                      >
-                        <a href={`/donors/${donor.id}`}>View More</a>
-                      </Button>
+                      <div className="flex items-center gap-2 mt-2">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          className="px-0 h-auto text-sky-500 hover:text-sky-600"
+                          asChild
+                        >
+                          <a href={`/donors/${donor.id}`}>View More</a>
+                        </Button>
+                        <span className="text-muted-foreground">•</span>
+                        <Link href={`/donors/${donor.id}/action-plan`}>
+                          <Button 
+                            variant="default"
+                            size="sm"
+                            className="h-7 text-xs"
+                            data-testid={`button-action-plan-${donor.id}`}
+                          >
+                            <Sparkles className="w-3 h-3 mr-1" />
+                            Generate Action Plan
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
 
                     {/* Stats Section */}
