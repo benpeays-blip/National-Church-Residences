@@ -1,9 +1,8 @@
 import { useLocation } from "wouter";
 import { useMemo } from "react";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Users, TrendingUp, DollarSign, Calendar } from "lucide-react";
+import { Users, DollarSign, Calendar } from "lucide-react";
 import Donors from "@/pages/donors";
-import AIPredictiveTiming from "@/pages/ai-predictive-timing";
 import AIWealthEvents from "@/pages/ai-wealth-events";
 import AIMeetingBriefs from "@/pages/ai-meeting-briefs";
 
@@ -13,12 +12,6 @@ const intelligenceTabs: SectionTab[] = [
     value: "donors",
     icon: Users,
     path: "/intelligence",
-  },
-  {
-    label: "Predictive Timing",
-    value: "timing",
-    icon: TrendingUp,
-    path: "/intelligence?tab=timing",
   },
   {
     label: "Wealth Events",
@@ -45,9 +38,7 @@ export default function IntelligenceWithTabs() {
 
   // Determine which component to render
   const IntelligenceComponent = useMemo(() => {
-    if (activeTab === 'timing') {
-      return AIPredictiveTiming;
-    } else if (activeTab === 'wealth') {
+    if (activeTab === 'wealth') {
       return AIWealthEvents;
     } else if (activeTab === 'briefs') {
       return AIMeetingBriefs;

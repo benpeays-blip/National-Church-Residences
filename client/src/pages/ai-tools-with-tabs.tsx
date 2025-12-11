@@ -1,19 +1,26 @@
 import { useLocation } from "wouter";
 import { useMemo, useState, useEffect } from "react";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Mic, MessageSquare, FileText, BarChart3, Workflow } from "lucide-react";
+import { Mic, MessageSquare, FileText, BarChart3, Workflow, TrendingUp } from "lucide-react";
 import AIVoiceNotes from "@/pages/ai-voice-notes";
 import OutreachGenerator from "@/pages/content-outreach";
 import GrantProposals from "@/pages/content-grant-proposals";
 import ImpactReports from "@/pages/content-impact-reports";
 import Workflows from "@/pages/workflows";
+import AIPredictiveTiming from "@/pages/ai-predictive-timing";
 
 const aiToolsTabs: SectionTab[] = [
+  {
+    label: "Predictive Timing",
+    value: "timing",
+    icon: TrendingUp,
+    path: "/ai-tools",
+  },
   {
     label: "Voice-to-CRM",
     value: "voice",
     icon: Mic,
-    path: "/ai-tools",
+    path: "/ai-tools?tab=voice",
   },
   {
     label: "Outreach Generator",
@@ -46,11 +53,13 @@ export default function AIToolsWithTabs() {
   
   // Read active tab directly from URL on every render
   const params = new URLSearchParams(window.location.search);
-  const activeTab = params.get('tab') || 'voice';
+  const activeTab = params.get('tab') || 'timing';
 
   // Render the appropriate component based on activeTab
   let content;
-  if (activeTab === 'outreach') {
+  if (activeTab === 'voice') {
+    content = <AIVoiceNotes />;
+  } else if (activeTab === 'outreach') {
     content = <OutreachGenerator />;
   } else if (activeTab === 'grants') {
     content = <GrantProposals />;
@@ -59,7 +68,7 @@ export default function AIToolsWithTabs() {
   } else if (activeTab === 'workflows') {
     content = <Workflows />;
   } else {
-    content = <AIVoiceNotes />;
+    content = <AIPredictiveTiming />;
   }
 
   return (
