@@ -1596,7 +1596,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Corporate Partnerships
+  // Corporate Partnerships (legacy route for relationships page)
   app.get("/api/relationship/corporate-partnerships", async (req, res) => {
     try {
       const partnerships = await db
@@ -1608,6 +1608,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching corporate partnerships:", error);
       res.status(500).json({ message: "Failed to fetch corporate partnerships" });
+    }
+  });
+
+  // Corporate Partnerships - Main listing
+  app.get("/api/corporate-partnerships", async (req, res) => {
+    try {
+      const partnerships = await db
+        .select()
+        .from(corporatePartnerships)
+        .orderBy(desc(corporatePartnerships.totalContributions));
+      
+      res.json(partnerships);
+    } catch (error) {
+      console.error("Error fetching corporate partnerships:", error);
+      res.status(500).json({ message: "Failed to fetch corporate partnerships" });
+    }
+  });
+
+  // Corporate Partnership - Single partner detail
+  app.get("/api/corporate-partnerships/:id", async (req, res) => {
+    try {
+      const { id } = req.params;
+      const partnership = await db
+        .select()
+        .from(corporatePartnerships)
+        .where(eq(corporatePartnerships.id, id))
+        .limit(1);
+      
+      if (partnership.length === 0) {
+        return res.status(404).json({ message: "Corporate partnership not found" });
+      }
+      
+      res.json(partnership[0]);
+    } catch (error) {
+      console.error("Error fetching corporate partnership:", error);
+      res.status(500).json({ message: "Failed to fetch corporate partnership" });
     }
   });
 

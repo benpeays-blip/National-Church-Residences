@@ -69,9 +69,13 @@ import AIWithTabs from "@/pages/ai-with-tabs";
 
 // Relationship Intelligence
 import BoardConnections from "@/pages/relationship-board-connections";
-import CorporatePartnerships from "@/pages/relationship-corporate-partnerships";
+import RelationshipCorporatePartnerships from "@/pages/relationship-corporate-partnerships";
 import PeerDonors from "@/pages/relationship-peer-donors";
 import BoardNetworkMapper from "@/pages/board-network-mapper";
+
+// Corporate Partnerships (top-level section)
+import CorporatePartnershipsPage from "@/pages/corporate-partnerships";
+import CorporatePartnershipDetail from "@/pages/corporate-partnership-detail";
 
 // AI Content
 import OutreachGenerator from "@/pages/content-outreach";
@@ -169,6 +173,8 @@ function Router() {
       <Route path="/gifts" component={GiftsWithTabs} />
       <Route path="/ai-tools" component={AIToolsWithTabs} />
       <Route path="/relationships" component={RelationshipsWithTabs} />
+      <Route path="/corporate-partnerships/:id" component={CorporatePartnershipDetail} />
+      <Route path="/corporate-partnerships" component={CorporatePartnershipsPage} />
       <Route path="/other" component={OtherWithTabs} />
       
       <Route path="/events/past" component={PastEvents} />
@@ -191,7 +197,7 @@ function Router() {
       {/* Relationship Intelligence - individual pages */}
       <Route path="/relationship/board-connections" component={BoardConnections} />
       <Route path="/relationship/board-network-mapper" component={BoardNetworkMapper} />
-      <Route path="/relationship/corporate-partnerships" component={CorporatePartnerships} />
+      <Route path="/relationship/corporate-partnerships" component={RelationshipCorporatePartnerships} />
       <Route path="/relationship/peer-donors" component={PeerDonors} />
       
       {/* AI Content */}
@@ -353,6 +359,18 @@ function App() {
                         data-testid="button-relationships"
                       >
                         Relationships
+                      </Button>
+                    </Link>
+                    
+                    <Link href="/corporate-partnerships">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="font-semibold hover:bg-gray-100"
+                        style={{ color: "#084594" }}
+                        data-testid="button-corporate-partnerships"
+                      >
+                        Corporate
                       </Button>
                     </Link>
                     
