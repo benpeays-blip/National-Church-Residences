@@ -266,7 +266,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               }`}
               data-testid="quadrant-friend"
             >
-              <div className="relative z-20 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2 pointer-events-auto hover-elevate active-elevate-2">
+              <div className="relative z-20 inline-block bg-white dark:bg-gray-900 px-3 py-2 rounded-lg border border-border shadow-sm m-2 pointer-events-auto hover-elevate active-elevate-2">
                 <div className="font-bold text-base">Friend</div>
                 <Badge className="mt-1" data-testid="count-friend">{data.counts.friend}</Badge>
               </div>
@@ -280,7 +280,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               }`}
               data-testid="quadrant-partner"
             >
-              <div className="relative z-20 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2 pointer-events-auto hover-elevate active-elevate-2">
+              <div className="relative z-20 inline-block bg-white dark:bg-gray-900 px-3 py-2 rounded-lg border border-border shadow-sm m-2 pointer-events-auto hover-elevate active-elevate-2">
                 <div className="font-bold text-base">Partner</div>
                 <Badge className="mt-1" data-testid="count-partner">{data.counts.partner}</Badge>
               </div>
@@ -294,7 +294,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               }`}
               data-testid="quadrant-acquaintance"
             >
-              <div className="relative z-20 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2 pointer-events-auto hover-elevate active-elevate-2">
+              <div className="relative z-20 inline-block bg-white dark:bg-gray-900 px-3 py-2 rounded-lg border border-border shadow-sm m-2 pointer-events-auto hover-elevate active-elevate-2">
                 <div className="font-bold text-base">Acquaintance</div>
                 <Badge className="mt-1" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
               </div>
@@ -308,7 +308,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               }`}
               data-testid="quadrant-colleague"
             >
-              <div className="relative z-20 inline-block bg-background/95 backdrop-blur-sm px-3 py-2 rounded-lg border border-border shadow-sm m-2 pointer-events-auto hover-elevate active-elevate-2">
+              <div className="relative z-20 inline-block bg-white dark:bg-gray-900 px-3 py-2 rounded-lg border border-border shadow-sm m-2 pointer-events-auto hover-elevate active-elevate-2">
                 <div className="font-bold text-base">Colleague</div>
                 <Badge className="mt-1" data-testid="count-colleague">{data.counts.colleague}</Badge>
               </div>
