@@ -469,11 +469,29 @@ export const corporatePartnerships = pgTable("corporate_partnerships", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   companyName: varchar("company_name").notNull(),
   domain: varchar("domain"), // Company domain for logo API (e.g., "apple.com")
+  logoUrl: text("logo_url"), // Direct logo URL
+  description: text("description"), // Company description
+  industry: varchar("industry"), // Industry category
+  location: varchar("location"), // Headquarters location
   employeeCount: integer("employee_count"), // Number of donors at this company
   totalEmployeeGiving: decimal("total_employee_giving", { precision: 12, scale: 2 }),
+  totalContributions: decimal("total_contributions", { precision: 12, scale: 2 }), // All-time contributions
   hasMatchingProgram: integer("has_matching_program").notNull().default(0),
   matchingRatio: varchar("matching_ratio"), // "1:1", "2:1", etc.
   estimatedMatchingPotential: decimal("estimated_matching_potential", { precision: 12, scale: 2 }),
+  // Contact info
+  contactName: varchar("contact_name"),
+  contactTitle: varchar("contact_title"),
+  contactEmail: varchar("contact_email"),
+  contactPhone: varchar("contact_phone"),
+  // Partnership details
+  partnershipTypes: text("partnership_types").array(), // ["volunteer", "donate", "sponsor", "goods_services"]
+  partnershipGoals: text("partnership_goals"), // What they want to achieve
+  pastActivities: text("past_activities").array(), // Array of past activity descriptions
+  partnershipStatus: varchar("partnership_status").default("active"), // active, inactive, prospect
+  partnershipStartYear: integer("partnership_start_year"),
+  volunteerHours: integer("volunteer_hours"), // Total volunteer hours contributed
+  volunteerCount: integer("volunteer_count"), // Number of volunteers
   decisionMakers: text("decision_makers").array(), // Array of person IDs
   foundationUrl: text("foundation_url"),
   notes: text("notes"),
