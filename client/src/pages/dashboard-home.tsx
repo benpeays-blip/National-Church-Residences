@@ -51,8 +51,15 @@ export default function DashboardHome() {
     queryKey: ["/api/campaigns"],
   });
 
-  // Filter for active campaigns and take top 3
-  const activeCampaigns = allCampaigns?.filter(c => c.status === 'active').slice(0, 3) || [];
+  // Filter for active campaigns, prioritize $10 Million campaign, and take top 3
+  const activeCampaigns = allCampaigns?.filter(c => c.status === 'active')
+    .sort((a, b) => {
+      // Put $10 Million campaign first
+      if (a.name.includes('$10 Million')) return -1;
+      if (b.name.includes('$10 Million')) return 1;
+      return 0;
+    })
+    .slice(0, 3) || [];
 
   if (isLoading) {
     return (
