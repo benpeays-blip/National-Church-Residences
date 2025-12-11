@@ -186,17 +186,16 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                           </div>
                         </div>
                       </div>
-                      <p className="text-sm text-muted-foreground mt-3 line-clamp-2">{donor.bio}</p>
-                      <div className="flex items-center gap-2 mt-2">
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          className="px-0 h-auto text-sky-500 hover:text-sky-600"
-                          asChild
+                      <p className="text-sm text-muted-foreground mt-3 line-clamp-2">
+                        {donor.bio}{' '}
+                        <a 
+                          href={`/donors/${donor.id}`} 
+                          className="text-sky-500 hover:text-sky-600 hover:underline"
                         >
-                          <a href={`/donors/${donor.id}`}>View More</a>
-                        </Button>
-                        <span className="text-muted-foreground">•</span>
+                          View More
+                        </a>
+                      </p>
+                      <div className="mt-3">
                         <Link href={`/donors/${donor.id}/action-plan`}>
                           <Button 
                             variant="default"
