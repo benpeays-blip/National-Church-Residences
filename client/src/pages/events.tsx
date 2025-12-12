@@ -52,22 +52,18 @@ export default function Events() {
 
   // Calculate metrics
   const metrics = useMemo(() => {
-    if (!events) return { upcoming: 0, thisMonth: 0, totalRaised: 0 };
+    if (!events) return { total: 0, upcoming: 0, past: 0, totalRaised: 0 };
     
     const now = new Date();
-    const thisMonthStart = new Date(now.getFullYear(), now.getMonth(), 1);
-    const thisMonthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0);
     
+    const total = events.length;
     const upcoming = events.filter(e => new Date(e.eventDate) >= now).length;
-    const thisMonth = events.filter(e => {
-      const date = new Date(e.eventDate);
-      return date >= thisMonthStart && date <= thisMonthEnd;
-    }).length;
+    const past = events.filter(e => new Date(e.eventDate) < now).length;
     const totalRaised = events
       .filter(e => e.status === "completed")
       .reduce((sum, e) => sum + parseFloat(e.amountRaised || "0"), 0);
     
-    return { upcoming, thisMonth, totalRaised };
+    return { total, upcoming, past, totalRaised };
   }, [events]);
 
   if (isLoading) {
@@ -94,126 +90,155 @@ export default function Events() {
       </div>
 
       {/* Metrics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <Card 
-          className="p-6 border hover-elevate cursor-pointer" 
-          onClick={() => setLocation('/events?tab=upcoming')}
+          className="p-4 border hover-elevate cursor-pointer" 
+          onClick={() => handleFilterChange("all")}
+          data-testid="card-total-events"
+        >
+          <div className="text-xs text-muted-foreground mb-1">Total Events</div>
+          <div className="text-xl font-semibold tabular-nums">{metrics.total}</div>
+        </Card>
+        <Card 
+          className="p-4 border hover-elevate cursor-pointer" 
+          onClick={() => handleFilterChange("upcoming")}
           data-testid="card-upcoming-events"
         >
-          <div className="text-sm text-muted-foreground mb-1">Upcoming Events</div>
-          <div className="text-2xl font-semibold tabular-nums">{metrics.upcoming}</div>
+          <div className="text-xs text-muted-foreground mb-1">Upcoming Events</div>
+          <div className="text-xl font-semibold tabular-nums" style={{ color: "#2171b5" }}>{metrics.upcoming}</div>
         </Card>
-        <Card className="p-6 border">
-          <div className="text-sm text-muted-foreground mb-1">This Month</div>
-          <div className="text-2xl font-semibold tabular-nums text-chart-1">{metrics.thisMonth}</div>
+        <Card 
+          className="p-4 border hover-elevate cursor-pointer" 
+          onClick={() => handleFilterChange("past")}
+          data-testid="card-past-events"
+        >
+          <div className="text-xs text-muted-foreground mb-1">Past Events</div>
+          <div className="text-xl font-semibold tabular-nums text-muted-foreground">{metrics.past}</div>
         </Card>
-        <Card className="p-6 border">
-          <div className="text-sm text-muted-foreground mb-1">Total Raised (Completed)</div>
-          <div className="text-2xl font-semibold tabular-nums">{formatCurrency(metrics.totalRaised)}</div>
+        <Card className="p-4 border" data-testid="card-total-raised">
+          <div className="text-xs text-muted-foreground mb-1">Total Raised</div>
+          <div className="text-xl font-semibold tabular-nums" style={{ color: "#1a5f2a" }}>{formatCurrency(metrics.totalRaised)}</div>
         </Card>
       </div>
 
 
-      {/* Events List */}
-      <div className="grid grid-cols-1 gap-4">
-        {filteredEvents.length === 0 ? (
-          <Card className="p-12 text-center border">
-            <Calendar className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-            <h3 className="text-lg font-semibold mb-2">No events found</h3>
-            <p className="text-sm text-muted-foreground mb-4">
-              {activeFilter === "upcoming" && "No upcoming events scheduled"}
-              {activeFilter === "past" && "No past events on record"}
-              {activeFilter === "all" && "Get started by adding your first fundraising event"}
-            </p>
-            <Button size="sm" data-testid="button-add-first-event">
-              <Plus className="w-4 h-4 mr-2" />
-              Add Event
-            </Button>
-          </Card>
-        ) : (
-          filteredEvents.map((event) => {
+      {/* Events Gallery */}
+      {filteredEvents.length === 0 ? (
+        <Card className="p-12 text-center border">
+          <Calendar className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
+          <h3 className="text-lg font-semibold mb-2">No events found</h3>
+          <p className="text-sm text-muted-foreground mb-4">
+            {activeFilter === "upcoming" && "No upcoming events scheduled"}
+            {activeFilter === "past" && "No past events on record"}
+            {activeFilter === "all" && "Get started by adding your first fundraising event"}
+          </p>
+          <Button size="sm" data-testid="button-add-first-event">
+            <Plus className="w-4 h-4 mr-2" />
+            Add Event
+          </Button>
+        </Card>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          {filteredEvents.map((event) => {
             const progress = event.goalAmount
               ? (parseFloat(event.amountRaised || "0") / parseFloat(event.goalAmount)) * 100
               : 0;
 
             return (
-              <Card key={event.id} className="p-6 border" data-testid={`event-${event.id}`}>
-                <div className="flex items-start justify-between mb-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-xl font-semibold">{event.name}</h3>
-                      <Badge variant={event.status === "completed" ? "secondary" : "default"}>
-                        {event.status === "completed" ? "Completed" : "Upcoming"}
-                      </Badge>
-                      <Badge variant="outline">{event.eventType}</Badge>
+              <Card key={event.id} className="border flex flex-col" data-testid={`event-${event.id}`}>
+                <div className="p-4 border-b">
+                  <div className="flex items-start justify-between gap-2 mb-2">
+                    <h3 className="font-semibold text-base line-clamp-1">{event.name}</h3>
+                    <Badge 
+                      variant={event.status === "completed" ? "secondary" : "default"}
+                      className="shrink-0 text-xs"
+                    >
+                      {event.status === "completed" ? "Completed" : "Upcoming"}
+                    </Badge>
+                  </div>
+                  <Badge variant="outline" className="text-xs">{event.eventType}</Badge>
+                </div>
+                
+                <div className="p-4 flex-1 space-y-3">
+                  {event.description && (
+                    <p className="text-xs text-muted-foreground line-clamp-2">{event.description}</p>
+                  )}
+                  
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 text-xs">
+                      <Calendar className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+                      <span>{formatDate(new Date(event.eventDate))}</span>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-4">{event.description}</p>
-                    
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                      <div className="flex items-center gap-2 text-sm">
-                        <Calendar className="w-4 h-4 text-muted-foreground" />
-                        <span>{formatDate(new Date(event.eventDate))}</span>
+                    {event.venue && (
+                      <div className="flex items-center gap-2 text-xs">
+                        <MapPin className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+                        <span className="line-clamp-1">{event.venue}</span>
                       </div>
-                      {event.venue && (
-                        <div className="flex items-center gap-2 text-sm">
-                          <MapPin className="w-4 h-4 text-muted-foreground" />
-                          <span>{event.venue}</span>
-                        </div>
-                      )}
-                      {event.attendees && (
-                        <div className="flex items-center gap-2 text-sm">
-                          <Users className="w-4 h-4 text-muted-foreground" />
-                          <span>{event.attendees} attendees</span>
-                        </div>
-                      )}
-                    </div>
+                    )}
+                    {event.attendees && (
+                      <div className="flex items-center gap-2 text-xs">
+                        <Users className="w-3.5 h-3.5 text-muted-foreground shrink-0" />
+                        <span>{event.attendees} attendees</span>
+                      </div>
+                    )}
                   </div>
                 </div>
 
                 {/* Progress and Financial Info */}
-                <div className="space-y-4">
-                  {event.goalAmount && (
+                <div className="p-4 border-t space-y-3">
+                  {event.goalAmount ? (
                     <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <div className="flex items-center gap-2">
-                          <DollarSign className="w-4 h-4 text-muted-foreground" />
-                          <span className="text-sm font-medium">
-                            {formatCurrency(parseFloat(event.amountRaised || "0"))} of {formatCurrency(parseFloat(event.goalAmount))}
+                      <div className="flex items-center justify-between mb-1.5">
+                        <div className="flex items-center gap-1.5">
+                          <DollarSign className="w-3.5 h-3.5 text-muted-foreground" />
+                          <span className="text-xs font-medium">
+                            {formatCurrency(parseFloat(event.amountRaised || "0"))}
                           </span>
                         </div>
-                        <span className="text-sm text-muted-foreground">{progress.toFixed(0)}%</span>
+                        <span className="text-xs text-muted-foreground">
+                          {progress.toFixed(0)}% of {formatCurrency(parseFloat(event.goalAmount))}
+                        </span>
                       </div>
-                      <div className="w-full bg-muted rounded-full h-2">
+                      <div className="w-full bg-muted rounded-full h-1.5">
                         <div
-                          className="bg-primary h-2 rounded-full transition-all"
+                          className="bg-primary h-1.5 rounded-full transition-all"
                           style={{ width: `${Math.min(progress, 100)}%` }}
                         />
                       </div>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-1.5">
+                      <DollarSign className="w-3.5 h-3.5 text-muted-foreground" />
+                      <span className="text-xs font-medium">
+                        {formatCurrency(parseFloat(event.amountRaised || "0"))} raised
+                      </span>
                     </div>
                   )}
 
                   {/* Sponsors */}
                   {event.sponsors && event.sponsors.length > 0 && (
-                    <div className="flex items-start gap-2">
-                      <Trophy className="w-4 h-4 text-muted-foreground mt-0.5" />
-                      <div className="flex-1">
-                        <div className="text-sm font-medium mb-1">Sponsors</div>
-                        <div className="flex flex-wrap gap-2">
-                          {event.sponsors.map((sponsor, i) => (
-                            <Badge key={i} variant="outline" className="text-xs">
-                              {sponsor}
-                            </Badge>
-                          ))}
-                        </div>
+                    <div className="flex items-start gap-1.5">
+                      <Trophy className="w-3.5 h-3.5 text-muted-foreground mt-0.5 shrink-0" />
+                      <div className="flex flex-wrap gap-1">
+                        {event.sponsors.slice(0, 3).map((sponsor, i) => (
+                          <Badge key={i} variant="outline" className="text-xs py-0">
+                            {sponsor}
+                          </Badge>
+                        ))}
+                        {event.sponsors.length > 3 && (
+                          <Badge variant="outline" className="text-xs py-0">
+                            +{event.sponsors.length - 3}
+                          </Badge>
+                        )}
                       </div>
                     </div>
                   )}
                 </div>
               </Card>
             );
-          })
-        )}
-      </div>
+          })}
+        </div>
+      )}
     </div>
   );
 }
