@@ -244,9 +244,9 @@ function Router() {
       <Route path="/workflow/gift-registries" component={GiftRegistries} />
       
       {/* Workflow Builder */}
-      <Route path="/workflows" component={Workflows} />
       <Route path="/workflows/templates" component={WorkflowTemplates} />
       <Route path="/workflows/:id/canvas" component={WorkflowCanvas} />
+      <Route path="/workflows" component={OtherWithTabs} />
       
       {/* Logo Preview */}
       <Route path="/logo-preview" component={LogoPreview} />

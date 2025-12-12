@@ -1,12 +1,13 @@
 import { useLocation } from "wouter";
 import { useEffect } from "react";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Home, Layers, Building2, Grid3x3, Workflow } from "lucide-react";
+import { Home, Layers, Building2, Grid3x3, Workflow, GitBranch } from "lucide-react";
 import Welcome from "@/pages/welcome";
 import TechStackMapper from "@/pages/tech-stack-mapper";
 import NationalChurchResidences from "@/pages/national-church-residences";
 import OrganizationMapper from "@/pages/organization-mapper";
 import OrganizationWorkflowCanvas from "@/pages/organization-workflow-canvas";
+import Workflows from "@/pages/workflows";
 
 const otherTabs: SectionTab[] = [
   {
@@ -34,10 +35,16 @@ const otherTabs: SectionTab[] = [
     path: "/organization-mapper",
   },
   {
-    label: "Workflow Canvas",
-    value: "workflow-canvas",
+    label: "Org Canvas",
+    value: "org-canvas",
     icon: Workflow,
     path: "/organization-workflow-canvas",
+  },
+  {
+    label: "Workflow Canvas",
+    value: "workflow-canvas",
+    icon: GitBranch,
+    path: "/workflows",
   },
 ];
 
@@ -61,6 +68,8 @@ export default function OtherWithTabs() {
     PageComponent = OrganizationMapper;
   } else if (location === "/organization-workflow-canvas") {
     PageComponent = OrganizationWorkflowCanvas;
+  } else if (location === "/workflows") {
+    PageComponent = Workflows;
   }
 
   return (
