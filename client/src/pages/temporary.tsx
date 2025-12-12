@@ -453,7 +453,7 @@ export default function Temporary() {
 
   return (
     <div className="flex flex-col h-full">
-      <SectionTabs tabs={temporaryTabs} currentPath={location} />
+      <SectionTabs tabs={temporaryTabs} currentPath={location} variant="cards" />
       <div className="flex-1 overflow-auto p-6">
         <ContentComponent />
       </div>
