@@ -1,0 +1,90 @@
+NCR – Complete Legal & Risk Landscape
+Healthcare & Data Privacy
+HIPAA – Protects resident health data; violations include unauthorized access, improper sharing, or lack of encryption.
+
+HITECH Act – Expands HIPAA enforcement; requires breach notifications.
+
+42 CFR Part 2 – Strict rules for handling addiction treatment records; violations include unauthorized disclosure.
+
+CMS Regulations – Require accurate billing, reporting, and compliance; violations include false claims or inaccurate reporting.
+
+State Health Privacy Laws – Residents may request access, correction, or deletion of personal data.
+
+Housing & Resident Rights
+Fair Housing Act – Prohibits discrimination in housing eligibility decisions; violations include biased AI recommendations.
+
+HUD Regulations – Service coordinators must collect accurate data and report compliance.
+
+Section 504 (Rehabilitation Act) – Requires accessibility for residents with disabilities.
+
+ADA – Requires accessible technology and housing facilities.
+
+State Senior Housing Licensing Laws – Regulate assisted living, memory care, and affordable housing.
+
+Donor & Fundraising Compliance
+IRS Form 990 – Requires accurate reporting of donations, grants, and expenses.
+
+State Charitable Solicitation Laws – Require registration and disclosure when soliciting donations.
+
+FASB/GAAP Standards – Require accurate financial reporting.
+
+Grant Compliance Requirements – Funders require outcome reporting tied to specific metrics.
+
+Donor Privacy Laws – Require protection of donor data.
+
+Legal & Compliance
+Corporate Entity Tracking – NCR must maintain accurate records for 1,100+ legal entities.
+
+HUD/CMS Filing Requirements – Require timely, accurate compliance filings.
+
+Sarbanes‑Oxley Principles – Require accurate financial controls and reporting.
+
+State Nonprofit Corporation Laws – Govern board governance, fiduciary duties, and reporting.
+
+Finance & Operations
+IRS & GAAP Standards – Require accurate consolidated financial reporting.
+
+Value‑Based Care Models – Require accurate outcome tracking tied to reimbursement.
+
+Labor Laws (FLSA, OSHA) – Require proper overtime, breaks, and safe staffing ratios.
+
+ERISA – Governs staff benefits.
+
+State Employment Laws – Cover wage, hour, and workplace safety requirements.
+
+Cybersecurity & Technology
+HIPAA Security Rule – Requires safeguards for electronic health information.
+
+State Data Breach Notification Laws – Require notifying residents and regulators of breaches.
+
+FTC Act (Section 5) – Prohibits unfair or deceptive practices.
+
+CISA Guidelines – Healthcare considered “target rich, cyber poor.”
+
+PCI DSS – Governs online rent and donation payments.
+
+Ethics & Trust
+Bias in AI Decisions – Housing eligibility, donor scoring, and grant prioritization must be bias‑free.
+
+Consent Management – Residents and donors must know how their data is used.
+
+Transparency Requirements – Families and donors must see how outcomes are calculated.
+
+Accessibility Standards (WCAG 2.1) – Apps and portals must be accessible.
+
+Executive Takeaway
+The full risk landscape for NCR includes:
+
+Healthcare: HIPAA, HITECH, 42 CFR Part 2, CMS, state privacy laws.
+
+Housing: Fair Housing Act, HUD, Section 504, ADA, state licensing.
+
+Fundraising: IRS 990, solicitation laws, GAAP/FASB, grant compliance, donor privacy.
+
+Legal: Entity tracking, HUD/CMS filings, Sarbanes‑Oxley principles, state nonprofit laws.
+
+Finance: IRS, GAAP, value‑based care, labor laws, ERISA.
+
+Cybersecurity: HIPAA Security Rule, breach laws, FTC Act, CISA, PCI DSS.
+
+Ethics: Bias, consent, transparency, accessibility (WCAG).

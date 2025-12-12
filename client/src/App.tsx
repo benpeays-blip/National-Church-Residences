@@ -180,6 +180,7 @@ function Router() {
       <Route path="/temporary" component={Temporary} />
       <Route path="/temporary/tech-stack" component={Temporary} />
       <Route path="/temporary/integration-ideas" component={Temporary} />
+      <Route path="/temporary/risk-compliance" component={Temporary} />
       
       <Route path="/events/past" component={PastEvents} />
       <Route path="/campaigns/:id" component={CampaignDetail} />

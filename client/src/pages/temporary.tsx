@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb } from "lucide-react";
+import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -24,6 +24,12 @@ const temporaryTabs: SectionTab[] = [
     value: "integration-ideas",
     icon: Lightbulb,
     path: "/temporary/integration-ideas",
+  },
+  {
+    label: "Risk & Compliance",
+    value: "risk-compliance",
+    icon: Shield,
+    path: "/temporary/risk-compliance",
   },
 ];
 
@@ -474,6 +480,206 @@ function IntegrationIdeas() {
   );
 }
 
+interface RiskCategory {
+  id: string;
+  title: string;
+  icon: typeof Shield;
+  color: string;
+  bgColor: string;
+  regulations: { name: string; description: string }[];
+}
+
+const riskCategories: RiskCategory[] = [
+  {
+    id: "healthcare",
+    title: "Healthcare & Data Privacy",
+    icon: Heart,
+    color: "#dc2626",
+    bgColor: "rgba(220, 38, 38, 0.1)",
+    regulations: [
+      { name: "HIPAA", description: "Protects resident health data; violations include unauthorized access, improper sharing, or lack of encryption." },
+      { name: "HITECH Act", description: "Expands HIPAA enforcement; requires breach notifications." },
+      { name: "42 CFR Part 2", description: "Strict rules for handling addiction treatment records; violations include unauthorized disclosure." },
+      { name: "CMS Regulations", description: "Require accurate billing, reporting, and compliance; violations include false claims or inaccurate reporting." },
+      { name: "State Health Privacy Laws", description: "Residents may request access, correction, or deletion of personal data." },
+    ]
+  },
+  {
+    id: "housing",
+    title: "Housing & Resident Rights",
+    icon: Home,
+    color: "#2563eb",
+    bgColor: "rgba(37, 99, 235, 0.1)",
+    regulations: [
+      { name: "Fair Housing Act", description: "Prohibits discrimination in housing eligibility decisions; violations include biased AI recommendations." },
+      { name: "HUD Regulations", description: "Service coordinators must collect accurate data and report compliance." },
+      { name: "Section 504 (Rehabilitation Act)", description: "Requires accessibility for residents with disabilities." },
+      { name: "ADA", description: "Requires accessible technology and housing facilities." },
+      { name: "State Senior Housing Licensing Laws", description: "Regulate assisted living, memory care, and affordable housing." },
+    ]
+  },
+  {
+    id: "fundraising",
+    title: "Donor & Fundraising Compliance",
+    icon: DollarSign,
+    color: "#16a34a",
+    bgColor: "rgba(22, 163, 74, 0.1)",
+    regulations: [
+      { name: "IRS Form 990", description: "Requires accurate reporting of donations, grants, and expenses." },
+      { name: "State Charitable Solicitation Laws", description: "Require registration and disclosure when soliciting donations." },
+      { name: "FASB/GAAP Standards", description: "Require accurate financial reporting." },
+      { name: "Grant Compliance Requirements", description: "Funders require outcome reporting tied to specific metrics." },
+      { name: "Donor Privacy Laws", description: "Require protection of donor data." },
+    ]
+  },
+  {
+    id: "legal",
+    title: "Legal & Compliance",
+    icon: Scale,
+    color: "#7c3aed",
+    bgColor: "rgba(124, 58, 237, 0.1)",
+    regulations: [
+      { name: "Corporate Entity Tracking", description: "NCR must maintain accurate records for 1,100+ legal entities." },
+      { name: "HUD/CMS Filing Requirements", description: "Require timely, accurate compliance filings." },
+      { name: "Sarbanes-Oxley Principles", description: "Require accurate financial controls and reporting." },
+      { name: "State Nonprofit Corporation Laws", description: "Govern board governance, fiduciary duties, and reporting." },
+    ]
+  },
+  {
+    id: "finance",
+    title: "Finance & Operations",
+    icon: DollarSign,
+    color: "#ca8a04",
+    bgColor: "rgba(202, 138, 4, 0.1)",
+    regulations: [
+      { name: "IRS & GAAP Standards", description: "Require accurate consolidated financial reporting." },
+      { name: "Value-Based Care Models", description: "Require accurate outcome tracking tied to reimbursement." },
+      { name: "Labor Laws (FLSA, OSHA)", description: "Require proper overtime, breaks, and safe staffing ratios." },
+      { name: "ERISA", description: "Governs staff benefits." },
+      { name: "State Employment Laws", description: "Cover wage, hour, and workplace safety requirements." },
+    ]
+  },
+  {
+    id: "cybersecurity",
+    title: "Cybersecurity & Technology",
+    icon: Server,
+    color: "#0891b2",
+    bgColor: "rgba(8, 145, 178, 0.1)",
+    regulations: [
+      { name: "HIPAA Security Rule", description: "Requires safeguards for electronic health information." },
+      { name: "State Data Breach Notification Laws", description: "Require notifying residents and regulators of breaches." },
+      { name: "FTC Act (Section 5)", description: "Prohibits unfair or deceptive practices." },
+      { name: "CISA Guidelines", description: "Healthcare considered 'target rich, cyber poor.'" },
+      { name: "PCI DSS", description: "Governs online rent and donation payments." },
+    ]
+  },
+  {
+    id: "ethics",
+    title: "Ethics & Trust",
+    icon: Sparkles,
+    color: "#db2777",
+    bgColor: "rgba(219, 39, 119, 0.1)",
+    regulations: [
+      { name: "Bias in AI Decisions", description: "Housing eligibility, donor scoring, and grant prioritization must be bias-free." },
+      { name: "Consent Management", description: "Residents and donors must know how their data is used." },
+      { name: "Transparency Requirements", description: "Families and donors must see how outcomes are calculated." },
+      { name: "Accessibility Standards (WCAG 2.1)", description: "Apps and portals must be accessible." },
+    ]
+  },
+];
+
+function RiskCategoryCard({ category }: { category: RiskCategory }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const Icon = category.icon;
+
+  return (
+    <Card 
+      className="overflow-hidden hover-elevate cursor-pointer transition-all"
+      data-testid={`card-risk-${category.id}`}
+    >
+      <div 
+        className="p-4 flex items-center justify-between gap-3"
+        style={{ backgroundColor: category.bgColor }}
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <div className="flex items-center gap-3">
+          <div 
+            className="w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-sm"
+            style={{ backgroundColor: category.color }}
+          >
+            <Icon className="w-5 h-5" />
+          </div>
+          <div>
+            <h3 className="font-semibold text-sm">{category.title}</h3>
+            <p className="text-xs text-muted-foreground">{category.regulations.length} regulations</p>
+          </div>
+        </div>
+        <Button variant="ghost" size="icon">
+          {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        </Button>
+      </div>
+
+      {isExpanded && (
+        <div className="p-4 border-t space-y-3">
+          {category.regulations.map((reg, idx) => (
+            <div key={idx} className="flex items-start gap-3">
+              <div 
+                className="w-6 h-6 rounded flex items-center justify-center shrink-0 mt-0.5"
+                style={{ backgroundColor: category.bgColor }}
+              >
+                <AlertTriangle className="w-3 h-3" style={{ color: category.color }} />
+              </div>
+              <div>
+                <p className="text-sm font-medium">{reg.name}</p>
+                <p className="text-xs text-muted-foreground mt-0.5">{reg.description}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </Card>
+  );
+}
+
+function RiskCompliance() {
+  return (
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Shield className="h-5 w-5 text-blue-600" />
+            <CardTitle>NCR Legal & Risk Landscape</CardTitle>
+          </div>
+          <CardDescription>
+            Complete overview of regulatory compliance requirements across healthcare, housing, fundraising, and operations. Click any category to expand details.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card className="p-4" style={{ backgroundColor: "rgba(8, 69, 148, 0.05)" }}>
+        <div className="flex items-start gap-3">
+          <Building2 className="h-5 w-5 mt-0.5" style={{ color: "#084594" }} />
+          <div>
+            <h4 className="font-medium text-sm" style={{ color: "#084594" }}>Executive Summary</h4>
+            <p className="text-sm text-muted-foreground mt-1">
+              NCR's risk landscape spans <strong>7 major domains</strong>: Healthcare (HIPAA, HITECH, 42 CFR Part 2, CMS), 
+              Housing (Fair Housing Act, HUD, Section 504, ADA), Fundraising (IRS 990, solicitation laws, GAAP/FASB), 
+              Legal (entity tracking, HUD/CMS filings, Sarbanes-Oxley), Finance (IRS, GAAP, labor laws, ERISA), 
+              Cybersecurity (HIPAA Security Rule, breach laws, PCI DSS), and Ethics (bias, consent, transparency, accessibility).
+            </p>
+          </div>
+        </div>
+      </Card>
+
+      <div className="grid md:grid-cols-2 gap-4">
+        {riskCategories.map((category) => (
+          <RiskCategoryCard key={category.id} category={category} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Temporary() {
   const [location] = useLocation();
 
@@ -482,6 +688,8 @@ export default function Temporary() {
     ContentComponent = TechStack;
   } else if (location === "/temporary/integration-ideas") {
     ContentComponent = IntegrationIdeas;
+  } else if (location === "/temporary/risk-compliance") {
+    ContentComponent = RiskCompliance;
   }
 
   return (
