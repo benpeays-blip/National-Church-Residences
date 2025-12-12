@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle } from "lucide-react";
+import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -29,10 +29,10 @@ const temporaryTabs: SectionTab[] = [
     path: "/temporary/tech-stack",
   },
   {
-    label: "Integration Ideas",
-    value: "integration-ideas",
+    label: "Optimization Ideas",
+    value: "optimization-ideas",
     icon: Lightbulb,
-    path: "/temporary/integration-ideas",
+    path: "/temporary/optimization-ideas",
   },
   {
     label: "Risk & Compliance",
@@ -479,24 +479,420 @@ function TechStack() {
   );
 }
 
-function IntegrationIdeas() {
+interface TechComponent {
+  id: string;
+  name: string;
+  role: string;
+  icon: typeof Database;
+  color: string;
+  aiHelp: string;
+  appRole: string;
+  owners: string[];
+  steps: string[];
+  timeline: string;
+}
+
+const techComponents: TechComponent[] = [
+  {
+    id: "fabric",
+    name: "Microsoft Fabric OneLake + Purview",
+    role: "Enterprise data lakehouse + governance",
+    icon: Database,
+    color: "#0078d4",
+    aiHelp: "Cleans duplicates, enforces golden records, flags anomalies, ensures HIPAA/PII compliance.",
+    appRole: "Integration Hub module surfaces unified records and lineage; AI queries OneLake directly.",
+    owners: ["IT", "Data Governance", "Compliance"],
+    steps: ["Inventory systems", "Migrate data pipelines", "Enforce Purview policies", "Set golden record rules"],
+    timeline: "3–6 months phased integration"
+  },
+  {
+    id: "powerbi",
+    name: "Power BI (with Fabric datasets)",
+    role: "Unified reporting and dashboards",
+    icon: BarChart3,
+    color: "#f2c811",
+    aiHelp: "Embeds predictive analytics, generates outcome reports, explains anomalies.",
+    appRole: "Role-based dashboards (executive, fundraising, housing, healthcare, finance).",
+    owners: ["BI Team", "Finance", "Strategy"],
+    steps: ["Build certified datasets", "Design dashboards", "Embed predictive overlays", "Retire Excel-driven reporting"],
+    timeline: "2–4 months"
+  },
+  {
+    id: "sharepoint",
+    name: "SharePoint + Microsoft Search",
+    role: "Intranet, document store, enterprise search",
+    icon: FileText,
+    color: "#036c5f",
+    aiHelp: "Conversational search across policies, SOPs, filings, donor letters.",
+    appRole: "Knowledge & Training Hub with wiki, contextual help, micro-learning.",
+    owners: ["IT", "HR", "Legal"],
+    steps: ["Migrate Mango Apps content", "Configure hubs", "Index documents", "Train staff"],
+    timeline: "6–8 weeks"
+  },
+  {
+    id: "raisersedge",
+    name: "Raiser's Edge + iWave/WealthEngine",
+    role: "Donor CRM + enrichment",
+    icon: Heart,
+    color: "#00a4e4",
+    aiHelp: "Predict donor likelihood, draft personalized communications, auto-assign leads.",
+    appRole: "Donor Hub with funnel, messaging templates, acquisition tracking.",
+    owners: ["Annual Giving", "Marketing", "IT CRM"],
+    steps: ["Integrate enrichment tools", "Build scoring models", "Deploy voice memo capture", "Unify templates"],
+    timeline: "6–8 weeks"
+  },
+  {
+    id: "yardi",
+    name: "Yardi (RightSource)",
+    role: "Housing management + rent payments",
+    icon: Home,
+    color: "#1a5f2a",
+    aiHelp: "Auto-validate intake data, flag compliance risks, nudge residents toward online payments.",
+    appRole: "Housing Manager Portal with streamlined intake, compliance workflows, payment options.",
+    owners: ["Housing Ops", "Property Managers", "IT"],
+    steps: ["Standardize intake forms", "Integrate online payments", "Outreach campaigns", "Donor transparency dashboards"],
+    timeline: "2–3 months"
+  },
+  {
+    id: "athena",
+    name: "AthenaHealth / Epic",
+    role: "Healthcare EHR",
+    icon: Heart,
+    color: "#7b2d8e",
+    aiHelp: "Auto-summarize intake, generate donor impact stories, streamline billing.",
+    appRole: "Healthcare Integration Module linking EHR + Workday + Power BI.",
+    owners: ["Health Services", "Finance", "IT"],
+    steps: ["Map intake fields", "Build connectors", "Configure capital expense workflows", "Design dashboards"],
+    timeline: "8–12 weeks"
+  },
+  {
+    id: "workday",
+    name: "Workday",
+    role: "HR + Finance backbone",
+    icon: Users,
+    color: "#0875e1",
+    aiHelp: "Predict staffing shortages, auto-generate schedules, streamline billing and expense tracking.",
+    appRole: "HR Frontline Mode (mobile 3-button app) + Finance integration with P&L.",
+    owners: ["HR", "Finance", "IT"],
+    steps: ["Build mobile HR app", "Integrate billing with healthcare", "Harmonize chart of accounts"],
+    timeline: "3–6 months"
+  },
+  {
+    id: "instrumentl",
+    name: "Instrumentl + Candid",
+    role: "Grant discovery and management",
+    icon: DollarSign,
+    color: "#6366f1",
+    aiHelp: "Draft narratives, prevent duplicate funder outreach, generate dashboards.",
+    appRole: "Grants Workspace with pipeline, expense workflows, grantee portal.",
+    owners: ["Grants", "Finance", "IT"],
+    steps: ["Connect Instrumentl ↔ Workday ↔ RE", "Build pipeline Kanban", "Launch portal"],
+    timeline: "10–14 weeks"
+  },
+  {
+    id: "azure",
+    name: "Azure Event Grid / Service Bus",
+    role: "Real-time eventing backbone",
+    icon: Zap,
+    color: "#0089d6",
+    aiHelp: "Trigger workflows (e.g., donor follow-up, compliance filing reminders, intake updates).",
+    appRole: "Integration Hub uses events to keep modules in sync.",
+    owners: ["IT Architecture"],
+    steps: ["Configure event bus", "Define triggers", "Connect modules"],
+    timeline: "6–10 weeks"
+  },
+  {
+    id: "unified-app",
+    name: "Unified App Shell (React/Power Platform)",
+    role: "Modular web + mobile app",
+    icon: Layout,
+    color: "#084594",
+    aiHelp: "Embedded assistants in each module, orchestrating tasks and surfacing 'next best actions.'",
+    appRole: "Houses CareGuide 2.0, Grants Workspace, Donor Hub, Volunteer Hub, Compliance Dashboard, Financial Transparency, Strategy Dashboard, Housing Manager Portal.",
+    owners: ["IT PMO", "Product Teams"],
+    steps: ["Build modular shell", "Integrate modules", "Embed AI agents", "Pilot with 3–4 roles"],
+    timeline: "6–9 months phased rollout"
+  }
+];
+
+interface AgentType {
+  id: string;
+  name: string;
+  description: string;
+  icon: typeof Bot;
+  color: string;
+}
+
+const agentTypes: AgentType[] = [
+  { id: "careguide", name: "CareGuide Agent", description: "Conversational intake assistant for families; validates coordinator entries; generates outcome metrics.", icon: UserCheck, color: "#16a34a" },
+  { id: "compliance", name: "Compliance Agent", description: "Automates HUD/CMS filings, assembles evidence, enforces HIPAA/PII rules.", icon: Shield, color: "#dc2626" },
+  { id: "document", name: "Document Agent", description: "Drafts donor letters, grant narratives, board reports, and audit bundles.", icon: FileText, color: "#2563eb" },
+  { id: "engagement", name: "Engagement Agent", description: "Prioritizes donors, volunteers, and funders; prevents cannibalization; schedules outreach.", icon: Heart, color: "#db2777" },
+  { id: "financial", name: "Financial Agent", description: "Consolidates P&L, detects double counting, forecasts cash flow, tracks donor acquisition costs.", icon: DollarSign, color: "#ca8a04" },
+  { id: "orchestration", name: "Orchestration Agent", description: "Coordinates tasks across modules, enforces SLAs, escalates anomalies.", icon: Workflow, color: "#7c3aed" },
+  { id: "training", name: "Training Agent", description: "Provides contextual help, micro-learning, and adoption nudges inside workflows.", icon: BrainCircuit, color: "#0891b2" },
+];
+
+const redundanciesRemoved = [
+  { old: "Multiple donor letter engines", new: "Consolidated into Document Agent + Donor/Volunteer modules" },
+  { old: "Standalone predictive dashboards", new: "Embedded into Power BI role-based dashboards" },
+  { old: "Duplicate volunteer tools (SignUpGenius, homegrown)", new: "Replaced by Volunteer & Engagement Hub" },
+  { old: "Mango Apps intranet", new: "Migrated to SharePoint" },
+  { old: "Legacy custom apps (3–5)", new: "Retired or rebuilt in Power Apps" },
+  { old: "Excel-driven reporting", new: "Replaced by Fabric datasets + Power BI certified reports" },
+];
+
+function TechComponentCard({ component }: { component: TechComponent }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const Icon = component.icon;
+
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Lightbulb className="h-5 w-5 text-blue-600" />
-          <CardTitle>Integration Ideas</CardTitle>
+    <Card className="overflow-hidden hover-elevate cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
+      <div className="p-4 flex items-start justify-between gap-3">
+        <div className="flex items-start gap-3">
+          <div 
+            className="w-10 h-10 rounded-lg flex items-center justify-center text-white shrink-0"
+            style={{ backgroundColor: component.color }}
+          >
+            <Icon className="w-5 h-5" />
+          </div>
+          <div className="flex-1">
+            <h3 className="font-semibold text-sm">{component.name}</h3>
+            <p className="text-xs text-muted-foreground mt-0.5">{component.role}</p>
+          </div>
         </div>
-        <CardDescription>
-          Potential integrations and connections between NCR technology systems
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground">
-          Content coming soon...
-        </p>
-      </CardContent>
+        <Button variant="ghost" size="icon">
+          {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        </Button>
+      </div>
+
+      {isExpanded && (
+        <div className="border-t">
+          <div className="grid md:grid-cols-2 gap-0">
+            <div className="p-4 border-b md:border-b-0 md:border-r">
+              <div className="flex items-center gap-2 mb-2">
+                <Bot className="h-4 w-4 text-purple-600" />
+                <h4 className="font-medium text-xs text-purple-600">AI Assistance</h4>
+              </div>
+              <p className="text-xs text-muted-foreground">{component.aiHelp}</p>
+            </div>
+            <div className="p-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Layout className="h-4 w-4 text-blue-600" />
+                <h4 className="font-medium text-xs text-blue-600">App Role</h4>
+              </div>
+              <p className="text-xs text-muted-foreground">{component.appRole}</p>
+            </div>
+          </div>
+          <div className="p-4 border-t bg-muted/30">
+            <div className="flex items-center gap-2 mb-2">
+              <Clock className="h-4 w-4" />
+              <h4 className="font-medium text-xs">Implementation</h4>
+            </div>
+            <div className="flex flex-wrap gap-1 mb-2">
+              {component.owners.map((owner, idx) => (
+                <Badge key={idx} variant="outline" className="text-xs">{owner}</Badge>
+              ))}
+            </div>
+            <ul className="text-xs text-muted-foreground space-y-1">
+              {component.steps.map((step, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <span className="text-green-600 mt-0.5">→</span>
+                  <span>{step}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-2 pt-2 border-t">
+              <Badge style={{ backgroundColor: component.color }} className="text-white text-xs">
+                {component.timeline}
+              </Badge>
+            </div>
+          </div>
+        </div>
+      )}
     </Card>
+  );
+}
+
+function OptimizationIdeas() {
+  return (
+    <div className="space-y-8">
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Lightbulb className="h-5 w-5 text-blue-600" />
+            <CardTitle>NCR Optimized Tech Stack</CardTitle>
+          </div>
+          <CardDescription>
+            A unified ecosystem where existing systems remain the source of record, Fabric + Purview unify data, AI agents handle busywork, and the app provides a single pane of glass.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <Card className="p-4" style={{ backgroundColor: "rgba(8, 69, 148, 0.05)" }}>
+        <div className="flex items-start gap-3">
+          <Building2 className="h-5 w-5 mt-0.5 shrink-0" style={{ color: "#084594" }} />
+          <div>
+            <h4 className="font-medium text-sm" style={{ color: "#084594" }}>Executive Summary</h4>
+            <p className="text-sm text-muted-foreground mt-1">
+              <strong>Tech Stack:</strong> Microsoft Fabric OneLake + Purview, Power BI, SharePoint, Raiser's Edge, Yardi, Athena/Epic, Workday, Instrumentl, Azure Event Grid, unified React/Power Platform app.
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              <strong>Agentic AI:</strong> Specialized agents (CareGuide, Compliance, Document, Engagement, Financial, Orchestration) embedded in each module, governed with audit trails.
+            </p>
+            <p className="text-sm text-muted-foreground mt-2">
+              <strong>App:</strong> Modular shell with 8–10 hubs (CareGuide, Grants, Donor, Volunteer, Compliance, Finance, Strategy, Housing, Healthcare, Knowledge).
+            </p>
+          </div>
+        </div>
+      </Card>
+
+      <div>
+        <div className="flex items-center gap-2 mb-4">
+          <Server className="h-5 w-5 text-blue-600" />
+          <h2 className="font-semibold text-lg">Technology Components</h2>
+        </div>
+        <div className="grid md:grid-cols-2 gap-4">
+          {techComponents.map((component) => (
+            <TechComponentCard key={component.id} component={component} />
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <div className="flex items-center gap-2 mb-4">
+          <Bot className="h-5 w-5 text-purple-600" />
+          <h2 className="font-semibold text-lg">AI Agent Strategy</h2>
+        </div>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          {agentTypes.map((agent) => {
+            const Icon = agent.icon;
+            return (
+              <Card key={agent.id} className="p-4">
+                <div className="flex items-center gap-3 mb-2">
+                  <div 
+                    className="w-8 h-8 rounded-lg flex items-center justify-center text-white"
+                    style={{ backgroundColor: agent.color }}
+                  >
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  <h3 className="font-medium text-sm">{agent.name}</h3>
+                </div>
+                <p className="text-xs text-muted-foreground">{agent.description}</p>
+              </Card>
+            );
+          })}
+        </div>
+
+        <Card className="mt-4 p-4">
+          <h3 className="font-medium text-sm mb-3 flex items-center gap-2">
+            <Workflow className="h-4 w-4 text-blue-600" />
+            Agent Operating Principles
+          </h3>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="flex items-start gap-2">
+              <Badge variant="outline" className="shrink-0">1</Badge>
+              <p className="text-xs text-muted-foreground"><strong>Embedded in modules:</strong> Each agent lives inside its relevant app hub.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <Badge variant="outline" className="shrink-0">2</Badge>
+              <p className="text-xs text-muted-foreground"><strong>Human-in-the-loop:</strong> Sensitive actions require staff approval.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <Badge variant="outline" className="shrink-0">3</Badge>
+              <p className="text-xs text-muted-foreground"><strong>Audit trails:</strong> Every agent action logged for compliance and trust.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <Badge variant="outline" className="shrink-0">4</Badge>
+              <p className="text-xs text-muted-foreground"><strong>Feedback loops:</strong> Staff can correct or rate AI outputs; agents learn continuously.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <Badge variant="outline" className="shrink-0">5</Badge>
+              <p className="text-xs text-muted-foreground"><strong>Event-driven:</strong> Agents respond to triggers from Azure Event Grid.</p>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+      <div>
+        <div className="flex items-center gap-2 mb-4">
+          <Smartphone className="h-5 w-5 text-green-600" />
+          <h2 className="font-semibold text-lg">Unified App Strategy</h2>
+        </div>
+        <div className="grid md:grid-cols-2 gap-4">
+          <Card className="p-4">
+            <h3 className="font-medium text-sm mb-3">App Structure</h3>
+            <ul className="space-y-2 text-xs text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <Check className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+                <span><strong>Modular shell:</strong> React/Power Platform with hubs for CareGuide, Grants, Donor, Volunteer, Compliance, Finance, Strategy, Housing, Healthcare, Knowledge.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+                <span><strong>Role-based dashboards:</strong> Executives, fundraisers, clinicians, housing managers each see tailored "next best actions."</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+                <span><strong>Global search:</strong> Microsoft Search integration across residents, donors, grants, properties, filings, documents.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+                <span><strong>Smart notifications:</strong> Context-aware nudges (expiring certifications, donor lapses, lease renewals).</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Check className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+                <span><strong>Mobile-first:</strong> Simplified frontline views (3–4 primary actions per role).</span>
+              </li>
+            </ul>
+          </Card>
+          <Card className="p-4">
+            <h3 className="font-medium text-sm mb-3">How the App Supports Agents</h3>
+            <ul className="space-y-2 text-xs text-muted-foreground">
+              <li className="flex items-start gap-2">
+                <Zap className="h-3 w-3 text-purple-600 mt-0.5 shrink-0" />
+                <span><strong>Data context:</strong> App modules provide structured data (eligibility rules, donor records, grant pipelines) that agents act on.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Zap className="h-3 w-3 text-purple-600 mt-0.5 shrink-0" />
+                <span><strong>Workflow orchestration:</strong> App defines steps and approvals; agents automate them.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Zap className="h-3 w-3 text-purple-600 mt-0.5 shrink-0" />
+                <span><strong>Simplified info searching:</strong> App organizes records into hubs; agents query across hubs to answer questions instantly.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Zap className="h-3 w-3 text-purple-600 mt-0.5 shrink-0" />
+                <span><strong>User interface:</strong> App is the "face" of the agents—staff interact with dashboards, forms, and portals, while agents handle the heavy lifting behind the scenes.</span>
+              </li>
+            </ul>
+          </Card>
+        </div>
+      </div>
+
+      <div>
+        <div className="flex items-center gap-2 mb-4">
+          <Trash2 className="h-5 w-5 text-red-600" />
+          <h2 className="font-semibold text-lg">Redundancies Removed</h2>
+        </div>
+        <Card>
+          <div className="divide-y">
+            {redundanciesRemoved.map((item, idx) => (
+              <div key={idx} className="p-4 flex items-start gap-4">
+                <div className="flex-1">
+                  <p className="text-sm text-muted-foreground line-through">{item.old}</p>
+                </div>
+                <div className="text-center shrink-0">
+                  <Badge variant="outline" className="text-xs">→</Badge>
+                </div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-green-700">{item.new}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </div>
+    </div>
   );
 }
 
@@ -706,8 +1102,8 @@ export default function Temporary() {
   let ContentComponent = OnSiteInterviews;
   if (location === "/temporary/tech-stack") {
     ContentComponent = TechStack;
-  } else if (location === "/temporary/integration-ideas") {
-    ContentComponent = IntegrationIdeas;
+  } else if (location === "/temporary/optimization-ideas") {
+    ContentComponent = OptimizationIdeas;
   } else if (location === "/temporary/risk-compliance") {
     ContentComponent = RiskCompliance;
   }
