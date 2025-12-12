@@ -1,0 +1,303 @@
+Below is a clear, **non-marketing**, practical explanation of what **Relationship Science (RelSci)** and **Dun & Bradstreet (D&B)** actually do, how they work, and how they would realistically be used by **NCR / NCR Foundation** for research and fundraising.
+
+---
+
+## 1. Relationship Science (RelSci)
+
+### What it is (plain English)
+
+RelSci is a **relationship-mapping platform**.
+It shows **who knows whom**, how they’re connected, and where influence flows.
+
+Think of it as:
+
+* “LinkedIn + boardrooms + family ties + philanthropic circles”
+* Built specifically for **fundraising, major gifts, and institutional relationships**
+
+---
+
+### What data RelSci uses
+
+RelSci aggregates and curates:
+
+* Corporate board memberships
+* Executive leadership roles
+* Nonprofit boards & trustees
+* Family relationships (when public)
+* Educational overlap
+* Shared philanthropy
+* Prior employment overlap
+* Advisory roles
+
+It **does not** scrape private data — it relies on:
+
+* SEC filings
+* IRS Form 990s
+* Annual reports
+* Press releases
+* Public bios
+* Reputable databases
+
+---
+
+### What RelSci actually does for NCR
+
+#### A. Relationship Mapping
+
+You can:
+
+* Enter a **prospect name**
+* Enter a **foundation**
+* Enter a **corporation**
+* Enter a **board member**
+
+And see:
+
+* Who they are connected to
+* Whether someone in NCR’s orbit already knows them
+* How many “degrees” of separation exist
+
+Example:
+
+* NCR board member → sits on board with → CEO of regional bank → also trustee at foundation → potential major donor
+
+---
+
+#### B. Warm-Path Discovery
+
+Instead of cold outreach, RelSci answers:
+
+* “Who can open the door?”
+* “Who should make the introduction?”
+* “Who already has relational capital?”
+
+This is **huge** for:
+
+* Major gifts
+* Foundation cultivation
+* Corporate partnerships
+
+---
+
+### Typical NCR Use Cases
+
+* Major donor research
+* Foundation strategy
+* Board engagement
+* Event invitation prioritization
+* Capital campaign preparation
+
+---
+
+### Strengths
+
+* Best-in-class for **relationship intelligence**
+* Very strong for **high-net-worth and institutional donors**
+* Excellent for **board-driven fundraising cultures**
+
+---
+
+### Limitations
+
+* Not a financial database
+* Not a CRM
+* Not good for small donors
+* Requires disciplined usage to justify cost
+
+---
+
+## 2. Dun & Bradstreet (D&B)
+
+### What it is (plain English)
+
+D&B is a **business intelligence and corporate financial database**.
+
+It answers:
+
+* “Is this company financially healthy?”
+* “Who owns it?”
+* “What subsidiaries exist?”
+* “What’s their revenue scale?”
+* “Are they stable?”
+
+---
+
+### What data D&B uses
+
+* Self-reported company filings
+* Trade payment data
+* Credit activity
+* Government records
+* Corporate disclosures
+
+Every company has a **D-U-N-S number** (unique identifier).
+
+---
+
+### What D&B actually does for NCR
+
+#### A. Corporate Prospecting
+
+You can research:
+
+* Corporate donors
+* Employers of donors
+* Potential sponsors
+* Corporate foundations
+* Regional business strength
+
+You’ll see:
+
+* Estimated revenue
+* Number of employees
+* Growth trend
+* Ownership structure
+* Parent / subsidiary relationships
+
+---
+
+#### B. Risk & Capacity Assessment
+
+D&B helps answer:
+
+* “Is this company strong enough to give?”
+* “Is this a long-term partner?”
+* “Is this business declining or growing?”
+
+This matters for:
+
+* Sponsorship asks
+* Multi-year commitments
+* Naming opportunities
+* Vendor-partner relationships
+
+---
+
+### Typical NCR Use Cases
+
+* Corporate giving research
+* Sponsor vetting
+* Foundation due diligence
+* Employer-matching gift strategy
+* Regional market analysis
+
+---
+
+### Strengths
+
+* Gold standard for **corporate data**
+* Very strong for **mid-to-large businesses**
+* Useful beyond fundraising (finance, partnerships)
+
+---
+
+### Limitations
+
+* Weak on personal relationships
+* Less useful for individual donors
+* Data can lag for small or private firms
+
+---
+
+## 3. How RelSci + D&B Work Together (Important)
+
+Used together, they cover **two different intelligence layers**:
+
+| Layer                              | Tool                 |
+| ---------------------------------- | -------------------- |
+| **Who knows whom?**                | Relationship Science |
+| **Can this organization give?**    | Dun & Bradstreet     |
+| **Board & influence paths**        | RelSci               |
+| **Corporate capacity & stability** | D&B                  |
+| **Warm introductions**             | RelSci               |
+| **Financial vetting**              | D&B                  |
+
+### Example Workflow
+
+1. Use **D&B** to identify:
+
+   * Top employers in NCR regions
+   * Strong, growing companies
+2. Use **RelSci** to:
+
+   * Map NCR board connections to executives at those firms
+   * Identify warm intro paths
+3. Move prospects into CRM (Raiser’s Edge)
+4. Assign cultivation strategy
+
+---
+
+## 4. How This Fits NCR’s Existing Stack
+
+Since NCR is already using:
+
+* **Raiser’s Edge NXT** (CRM)
+* **WealthEngine** (individual wealth)
+
+Then:
+
+* **RelSci** fills the **relationship gap**
+* **D&B** fills the **corporate intelligence gap**
+
+They do **not replace** existing tools — they **augment** them.
+
+---
+
+## 5. Practical Subscription Reality
+
+### Relationship Science
+
+* Enterprise pricing
+* Typically licensed per user
+* Best for:
+
+  * Major gifts officers
+  * Foundation relations
+  * Executive leadership
+* Needs:
+
+  * Clear use cases
+  * Regular training
+  * Defined research workflows
+
+### Dun & Bradstreet
+
+* Tiered subscriptions
+* Often modular
+* Can be used by:
+
+  * Development
+  * Finance
+  * Partnerships
+* Easier to justify across departments
+
+---
+
+## 6. Bottom-Line Recommendation for NCR
+
+**If NCR is serious about:**
+
+* Major gifts
+* Institutional funding
+* Board-driven fundraising
+* Corporate partnerships
+
+Then:
+
+* **RelSci = strategic advantage**
+* **D&B = strong operational intelligence**
+
+But the real value comes when:
+
+* There is **process discipline**
+* Research feeds directly into **action**
+* Board members are engaged using the insights
+
+---
+
+If you want, next I can:
+
+* Map this to **specific NCR fundraising scenarios**
+* Help decide **how many seats** make sense
+* Compare RelSci vs alternatives (PitchBook, BoardEx, iWave, etc.)
+* Design a **research → action workflow** so this doesn’t become shelfware
