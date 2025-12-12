@@ -178,6 +178,7 @@ function Router() {
       <Route path="/corporate-partnerships" component={CorporatePartnershipsPage} />
       <Route path="/other" component={OtherWithTabs} />
       <Route path="/temporary" component={Temporary} />
+      <Route path="/temporary/tech-stack" component={Temporary} />
       
       <Route path="/events/past" component={PastEvents} />
       <Route path="/campaigns/:id" component={CampaignDetail} />
