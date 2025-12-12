@@ -299,8 +299,11 @@ export default function Campaigns({ filterStatus }: CampaignsProps = {}) {
 
           return (
             <Link key={campaign.id} href={`/campaigns/${campaign.id}`}>
-              <Card className="hover-elevate active-elevate-2 cursor-pointer" data-testid={`card-campaign-${campaign.id}`}>
-                <CardHeader className="flex flex-row items-center justify-between gap-1 space-y-0 pb-3 bg-b1">
+              <Card className="hover-elevate active-elevate-2 cursor-pointer overflow-hidden" data-testid={`card-campaign-${campaign.id}`}>
+                <div 
+                  className="p-4 flex items-start justify-between gap-2" 
+                  style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}
+                >
                   <div className="flex-1 min-w-0">
                     <h3 className="text-xl font-semibold truncate" data-testid={`text-campaign-name-${campaign.id}`}>
                       {campaign.name}
@@ -311,7 +314,7 @@ export default function Campaigns({ filterStatus }: CampaignsProps = {}) {
                     <StatusIcon className="w-3 h-3" />
                     {statusConfig.label}
                   </Badge>
-                </CardHeader>
+                </div>
                 <CardContent className="space-y-4">
                   {/* Progress */}
                   <div className="space-y-2">
