@@ -1,0 +1,78 @@
+Sonya Brown
+Senior Vice President
+Affordable Housing Strategy
+
+ (21 years at NCR; started at age 12; 3 years at HUD with government housing expertise)
+
+1. Current Challenges
+Operational Inefficiency
+
+
+Managers spend ~2 hours per resident (interviewing, scanning, uploading).
+Data accuracy is poor (“junk in, junk out”), creating risk if shared nationally.
+Compliance processes are bureaucratic and time-consuming due to government and state agency requirements.
+Compliance Burden
+
+
+Compliance work must be extremely detailed and diligent.
+Every resident must be qualified and recertified annually.
+Current workflows are manual despite partial AI adoption.
+System Limitations
+
+
+CareGuide system used by service coordinators is outdated and does not meet NCR’s needs.
+No vendor has been able to modernize CareGuide to NCR’s requirements.
+Resident information is fragmented and not easily leveraged for insights.
+Resident & Payment Barriers
+
+
+Only ~12% of residents pay rent online.
+Many properties lack internet access, though most residents have smartphones.
+Average resident age is 78, but eligibility age is lowering (55+), creating a shift toward younger seniors who expect technology and affordable internet.
+
+2. Current Tech Stack
+RightSource (part of Yardi) – Used for compliance tasks such as file reviews and certifications; digitizes applications.
+Yardi – Broader property management platform, though much of its functionality is acquired from third parties.
+CareGuide – Legacy system used by service coordinators to bridge residents and property managers; slated for rebuild.
+
+3. Desired Capabilities (“Wants”)
+Efficiency & Accuracy
+
+
+Streamlined resident intake and compliance processes.
+Automated scanning, uploading, and verification to reduce manual workload.
+Reliable, accurate data collection to prevent chaos across national operations.
+System Modernization
+
+
+Rebuild CareGuide into a modern, data-driven platform.
+Integration of service coordinator workflows with property management systems.
+AI-driven compliance and reporting tools to reduce manual effort.
+Resident Engagement & Technology Access
+
+
+Expand online rent payment adoption beyond 12%.
+Provide affordable internet access for residents.
+Support younger seniors who expect technology-enabled housing services.
+Data for Donors
+
+
+Build systems that capture and present resident and service data in ways donors can understand and value.
+Use data storytelling to demonstrate impact and secure philanthropic support.
+
+4. Additional Observations
+Sonya manages 700 property managers across the country, overseeing preservation and high-level operations.
+Runs a tight operation focused on compliance and property performance.
+87% of properties have service coordinators who provide resident services.
+AI already supports ~60% of compliance work, with ~80% progress toward automation.
+Donors increasingly demand data transparency to validate impact.
+Yardi often acquires functionality from other vendors rather than building in-house.
+
+5. Summary Insight
+Sonya’s perspective highlights inefficient intake processes, outdated systems, and limited resident technology adoption as key barriers in affordable housing. Compliance is critical but overly manual, and CareGuide is not meeting NCR’s needs.
+The desired future state requires:
+A modernized CareGuide system integrated with Yardi and service coordinator workflows
+Automated compliance and intake processes to reduce manual burden
+Accurate, reliable data collection to support national operations and donor transparency
+Expanded resident technology access (online payments, affordable internet) to meet the expectations of younger seniors
+Sonya’s vision is to run a tight, efficient, and modern housing operation that preserves properties, ensures compliance, and leverages data to improve resident experience, organizational efficiency, and donor confidence.

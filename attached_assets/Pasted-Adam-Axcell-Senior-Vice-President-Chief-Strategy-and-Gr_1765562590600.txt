@@ -1,0 +1,56 @@
+Adam Axcell
+Senior Vice President, Chief Strategy and Growth Officer
+Strategy & Growth Vision
+(Sales & Marketing, Public Policy, M&A Strategy, Technology; 1 year 8 months, healthcare professional)
+1. Current Challenges
+Organizational Fragmentation
+NCR grew with a siloed mentality across Affordable Housing, Senior Housing, Senior Living (16 communities), Senior Services (value-based care), Real Estate Development, and Foundations.
+Systems are antiquated; unclear how to migrate data onto modern platforms.
+Data does not flow across the company as it should, limiting visibility and efficiency.
+Culture is struggling to keep pace with rapid change; leadership may need to slow down transformation.
+Data & Monetization Gaps
+Large volumes of patient and resident data exist but have not been monetized.
+No clear governance process; data security and compliance are not yet standardized.
+Must pass Medicaid and Medicare audits by June, requiring stronger governance.
+CareGuide Update Needed
+Legacy CareGuide system requires modernization and integration into the broader tech stack.
+2. Current Tech Stack
+Microsoft Elevate – Strategic relationship to update tech stack and gain access to foundation funding.
+Azure & Microsoft Fabric – Migration underway to enable unified data storage and governance.
+Power BI – New partner for advanced analytics and reporting; expected to provide unprecedented data access.
+Yardi – Affordable housing platform; should be leveraged as a competitive advantage.
+GraceWorks – Planning to sell NCR 700 systems, adding complexity to integration.
+3. Desired Capabilities (“Wants”)
+Competitive Tech Stack
+Build a technology infrastructure that provides NCR with a competitive advantage in housing, healthcare, and services.
+Overlay tech stack across affordable housing facilities (50 managed properties) and senior living communities.
+Data Governance & Flow
+Launching a data governance project to understand and standardize how data flows through the organization.
+Secure data, develop governance processes, and ensure compliance with audits.
+Value-Based Care Integration
+Roll up value-based care programs and share savings with third-party partners.
+Use services to acquire patients while delivering care, aligning with Medicare’s shared savings model.
+Strategic Growth & Alignment
+Align divisions under a three-year roadmap toward consolidation.
+Position NCR as a thought leader in affordable housing, senior living, and value-based care.
+Explore acquisition strategies in HUD spaces despite nonprofit constraints.
+4. Notes & Strategic Context
+Member of the Vision Task Force guiding sales/marketing, public policy, M&A strategy, and technology.
+Leadership roles:
+Matt builds
+Sonya Brown runs affordable housing
+Adam overlays the tech stack across divisions
+NCR grew up as a real estate company, now expanded into housing, healthcare, and services.
+Technology adoption (Azure, Fabric, Power BI) is central to future growth.
+Current state of change makes adoption of advanced platforms like Futuria premature.
+5. Summary Insight
+Adam’s perspective highlights deep fragmentation, antiquated systems, and unmonetized data as core barriers to growth. NCR is in a fluid adjustment period where culture and infrastructure cannot keep pace with strategic ambitions.
+The desired future state requires:
+A competitive tech stack that unifies housing, healthcare, services, and development
+Strong data governance to secure information, pass audits, and enable monetization
+Integration of value-based care with shared savings models
+Consolidation roadmap to align divisions under one enterprise vision
+Strategic partnerships (Microsoft Elevate, GraceWorks, Power BI) leveraged to accelerate transformation
+Adam’s role is to overlay technology as a growth enabler, positioning NCR as a thought leader in affordable housing, senior living, and value-based care while building a sustainable competitive advantage.
+
+

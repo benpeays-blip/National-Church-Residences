@@ -442,24 +442,285 @@ function ProductDetailModal({ product, onClose }: { product: TechProduct | null;
   );
 }
 
+interface InterviewPerson {
+  id: string;
+  name: string;
+  title: string;
+  area: string;
+  areaColor: string;
+  background: string;
+  challenges: { title: string; items: string[] }[];
+  techStack: { name: string; description: string }[];
+  wants: { title: string; items: string[] }[];
+  observations: string[];
+  summaryInsight: string;
+}
+
+const interviewees: InterviewPerson[] = [
+  {
+    id: "sonya-brown",
+    name: "Sonya Brown",
+    title: "Senior Vice President",
+    area: "Affordable Housing",
+    areaColor: "#1a5f2a",
+    background: "21 years at NCR; started at age 12; 3 years at HUD with government housing expertise",
+    challenges: [
+      {
+        title: "Operational Inefficiency",
+        items: [
+          "Managers spend ~2 hours per resident (interviewing, scanning, uploading)",
+          "Data accuracy is poor ('junk in, junk out'), creating risk if shared nationally",
+          "Compliance processes are bureaucratic and time-consuming due to government and state agency requirements"
+        ]
+      },
+      {
+        title: "Compliance Burden",
+        items: [
+          "Compliance work must be extremely detailed and diligent",
+          "Every resident must be qualified and recertified annually",
+          "Current workflows are manual despite partial AI adoption"
+        ]
+      },
+      {
+        title: "System Limitations",
+        items: [
+          "CareGuide system used by service coordinators is outdated and does not meet NCR's needs",
+          "No vendor has been able to modernize CareGuide to NCR's requirements",
+          "Resident information is fragmented and not easily leveraged for insights"
+        ]
+      },
+      {
+        title: "Resident & Payment Barriers",
+        items: [
+          "Only ~12% of residents pay rent online",
+          "Many properties lack internet access, though most residents have smartphones",
+          "Average resident age is 78, but eligibility age is lowering (55+), creating a shift toward younger seniors who expect technology and affordable internet"
+        ]
+      }
+    ],
+    techStack: [
+      { name: "RightSource (part of Yardi)", description: "Used for compliance tasks such as file reviews and certifications; digitizes applications" },
+      { name: "Yardi", description: "Broader property management platform, though much of its functionality is acquired from third parties" },
+      { name: "CareGuide", description: "Legacy system used by service coordinators to bridge residents and property managers; slated for rebuild" }
+    ],
+    wants: [
+      {
+        title: "Efficiency & Accuracy",
+        items: [
+          "Streamlined resident intake and compliance processes",
+          "Automated scanning, uploading, and verification to reduce manual workload",
+          "Reliable, accurate data collection to prevent chaos across national operations"
+        ]
+      },
+      {
+        title: "System Modernization",
+        items: [
+          "Rebuild CareGuide into a modern, data-driven platform",
+          "Integration of service coordinator workflows with property management systems",
+          "AI-driven compliance and reporting tools to reduce manual effort"
+        ]
+      },
+      {
+        title: "Resident Engagement & Technology Access",
+        items: [
+          "Expand online rent payment adoption beyond 12%",
+          "Provide affordable internet access for residents",
+          "Support younger seniors who expect technology-enabled housing services"
+        ]
+      },
+      {
+        title: "Data for Donors",
+        items: [
+          "Build systems that capture and present resident and service data in ways donors can understand and value",
+          "Use data storytelling to demonstrate impact and secure philanthropic support"
+        ]
+      }
+    ],
+    observations: [
+      "Sonya manages 700 property managers across the country, overseeing preservation and high-level operations",
+      "Runs a tight operation focused on compliance and property performance",
+      "87% of properties have service coordinators who provide resident services",
+      "AI already supports ~60% of compliance work, with ~80% progress toward automation",
+      "Donors increasingly demand data transparency to validate impact",
+      "Yardi often acquires functionality from other vendors rather than building in-house"
+    ],
+    summaryInsight: "Sonya's perspective highlights inefficient intake processes, outdated systems, and limited resident technology adoption as key barriers in affordable housing. Compliance is critical but overly manual, and CareGuide is not meeting NCR's needs. The desired future state requires: A modernized CareGuide system integrated with Yardi and service coordinator workflows, automated compliance and intake processes to reduce manual burden, accurate reliable data collection to support national operations and donor transparency, expanded resident technology access (online payments, affordable internet) to meet the expectations of younger seniors. Sonya's vision is to run a tight, efficient, and modern housing operation that preserves properties, ensures compliance, and leverages data to improve resident experience, organizational efficiency, and donor confidence."
+  }
+];
+
+function InterviewCard({ person }: { person: InterviewPerson }) {
+  const [, navigate] = useLocation();
+  
+  return (
+    <Card 
+      className="overflow-hidden hover-elevate cursor-pointer transition-all"
+      data-testid={`card-interview-${person.id}`}
+      onClick={() => navigate(`/temporary/interviews/${person.id}`)}
+    >
+      <div className="p-5">
+        <h3 className="font-bold text-lg mb-1">{person.name}</h3>
+        <p className="text-sm text-muted-foreground mb-3">{person.title}</p>
+        <Badge style={{ backgroundColor: person.areaColor }} className="text-white text-xs">
+          {person.area}
+        </Badge>
+      </div>
+    </Card>
+  );
+}
+
+function InterviewDetailPage({ personId }: { personId: string }) {
+  const [, navigate] = useLocation();
+  const person = interviewees.find(p => p.id === personId);
+
+  if (!person) {
+    return (
+      <div className="p-6">
+        <Card className="p-6 text-center">
+          <p className="text-muted-foreground">Interview not found</p>
+          <Button className="mt-4" onClick={() => navigate("/temporary")}>
+            Back to Interviews
+          </Button>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-6 space-y-6">
+      <Button 
+        variant="ghost" 
+        className="mb-2"
+        onClick={() => navigate("/temporary")}
+        data-testid="button-back-to-interviews"
+      >
+        ← Back to Interviews
+      </Button>
+
+      <Card>
+        <div className="p-6">
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <h1 className="text-2xl font-bold mb-1">{person.name}</h1>
+              <p className="text-lg text-muted-foreground mb-3">{person.title}</p>
+              <Badge style={{ backgroundColor: person.areaColor }} className="text-white">
+                {person.area}
+              </Badge>
+            </div>
+          </div>
+          <p className="text-sm text-muted-foreground mt-4 italic">{person.background}</p>
+        </div>
+      </Card>
+
+      <div>
+        <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
+          <AlertTriangle className="h-5 w-5 text-orange-600" />
+          Current Challenges
+        </h2>
+        <div className="grid md:grid-cols-2 gap-4">
+          {person.challenges.map((challenge, idx) => (
+            <Card key={idx} className="p-4">
+              <h3 className="font-medium text-sm mb-3">{challenge.title}</h3>
+              <ul className="space-y-2">
+                {challenge.items.map((item, itemIdx) => (
+                  <li key={itemIdx} className="text-xs text-muted-foreground flex items-start gap-2">
+                    <span className="text-orange-600 mt-0.5 shrink-0">•</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
+          <Server className="h-5 w-5 text-blue-600" />
+          Current Tech Stack
+        </h2>
+        <Card>
+          <div className="divide-y">
+            {person.techStack.map((tech, idx) => (
+              <div key={idx} className="p-4">
+                <h3 className="font-medium text-sm">{tech.name}</h3>
+                <p className="text-xs text-muted-foreground mt-1">{tech.description}</p>
+              </div>
+            ))}
+          </div>
+        </Card>
+      </div>
+
+      <div>
+        <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
+          <Sparkles className="h-5 w-5 text-green-600" />
+          Desired Capabilities
+        </h2>
+        <div className="grid md:grid-cols-2 gap-4">
+          {person.wants.map((want, idx) => (
+            <Card key={idx} className="p-4">
+              <h3 className="font-medium text-sm mb-3">{want.title}</h3>
+              <ul className="space-y-2">
+                {want.items.map((item, itemIdx) => (
+                  <li key={itemIdx} className="text-xs text-muted-foreground flex items-start gap-2">
+                    <span className="text-green-600 mt-0.5 shrink-0">+</span>
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
+          <Users className="h-5 w-5 text-purple-600" />
+          Additional Observations
+        </h2>
+        <Card className="p-4">
+          <ul className="space-y-2">
+            {person.observations.map((obs, idx) => (
+              <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                <span className="text-purple-600 mt-0.5 shrink-0">→</span>
+                <span>{obs}</span>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      </div>
+
+      <Card className="p-6" style={{ backgroundColor: "rgba(8, 69, 148, 0.05)" }}>
+        <div className="flex items-center gap-2 mb-4">
+          <Building2 className="h-5 w-5" style={{ color: "#084594" }} />
+          <h2 className="font-semibold text-lg" style={{ color: "#084594" }}>Summary Insight</h2>
+        </div>
+        <p className="text-muted-foreground">{person.summaryInsight}</p>
+      </Card>
+    </div>
+  );
+}
+
 function OnSiteInterviews() {
   return (
-    <Card>
-      <CardHeader>
-        <div className="flex items-center gap-2">
-          <Users className="h-5 w-5 text-blue-600" />
-          <CardTitle>On Site Interviews</CardTitle>
-        </div>
-        <CardDescription>
-          Manage and track on-site donor and prospect interviews
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground">
-          Content coming soon...
-        </p>
-      </CardContent>
-    </Card>
+    <div className="space-y-6">
+      <Card>
+        <CardHeader>
+          <div className="flex items-center gap-2">
+            <Users className="h-5 w-5 text-blue-600" />
+            <CardTitle>On Site Interviews</CardTitle>
+          </div>
+          <CardDescription>
+            Key stakeholder interviews conducted at NCR. Click on any card to view detailed insights.
+          </CardDescription>
+        </CardHeader>
+      </Card>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        {interviewees.map((person) => (
+          <InterviewCard key={person.id} person={person} />
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -1214,6 +1475,7 @@ export default function Temporary() {
   const [location] = useLocation();
 
   const productDetailMatch = location.match(/^\/temporary\/tech-stack\/(.+)$/);
+  const interviewDetailMatch = location.match(/^\/temporary\/interviews\/(.+)$/);
   
   if (productDetailMatch) {
     const productId = productDetailMatch[1];
@@ -1221,6 +1483,17 @@ export default function Temporary() {
       <div className="flex flex-col h-full">
         <div className="flex-1 overflow-auto">
           <ProductDetailPage productId={productId} />
+        </div>
+      </div>
+    );
+  }
+
+  if (interviewDetailMatch) {
+    const personId = interviewDetailMatch[1];
+    return (
+      <div className="flex flex-col h-full">
+        <div className="flex-1 overflow-auto">
+          <InterviewDetailPage personId={personId} />
         </div>
       </div>
     );
