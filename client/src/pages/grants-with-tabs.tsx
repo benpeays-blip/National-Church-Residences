@@ -1,19 +1,20 @@
-import { useLocation, Redirect } from "wouter";
+import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { LayoutGrid, Search, Send, Award } from "lucide-react";
+import { LayoutGrid, Search, Send, Award, Sparkles } from "lucide-react";
 import Grants from "@/pages/grants";
+import GrantResearchPage from "@/pages/grant-research";
 
 const grantsTabs: SectionTab[] = [
   {
-    label: "All Grants",
+    label: "Pipeline",
     value: "all",
     icon: LayoutGrid,
     path: "/grants",
   },
   {
-    label: "Research",
+    label: "Research & Discovery",
     value: "research",
-    icon: Search,
+    icon: Sparkles,
     path: "/grants/research",
   },
   {
@@ -33,19 +34,17 @@ const grantsTabs: SectionTab[] = [
 export default function GrantsWithTabs() {
   const [location] = useLocation();
 
-  // Map location to stageFilter for Grants component
-  const getStageFilter = (): string | undefined => {
-    if (location === '/grants/research') return 'Research';
-    if (location === '/grants/submitted') return 'Submitted';
-    if (location === '/grants/awarded') return 'Awarded';
-    return undefined; // Return undefined for '/grants' to show all
-  };
-
-  // Determine which component to render based on route
   const renderContent = () => {
-    const stageFilter = getStageFilter();
-    const key = location.split('/').pop() || 'all';
-    return <Grants key={`grants-${key}`} initialStageFilter={stageFilter} />;
+    if (location === '/grants/research') {
+      return <GrantResearchPage key="research" />;
+    }
+    if (location === '/grants/submitted') {
+      return <Grants key="submitted" initialStageFilter="Submitted" />;
+    }
+    if (location === '/grants/awarded') {
+      return <Grants key="awarded" initialStageFilter="Awarded" />;
+    }
+    return <Grants key="all" />;
   };
 
   return (
