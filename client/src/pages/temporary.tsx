@@ -545,6 +545,85 @@ const interviewees: InterviewPerson[] = [
       "Yardi often acquires functionality from other vendors rather than building in-house"
     ],
     summaryInsight: "Sonya's perspective highlights inefficient intake processes, outdated systems, and limited resident technology adoption as key barriers in affordable housing. Compliance is critical but overly manual, and CareGuide is not meeting NCR's needs. The desired future state requires: A modernized CareGuide system integrated with Yardi and service coordinator workflows, automated compliance and intake processes to reduce manual burden, accurate reliable data collection to support national operations and donor transparency, expanded resident technology access (online payments, affordable internet) to meet the expectations of younger seniors. Sonya's vision is to run a tight, efficient, and modern housing operation that preserves properties, ensures compliance, and leverages data to improve resident experience, organizational efficiency, and donor confidence."
+  },
+  {
+    id: "adam-axcell",
+    name: "Adam Axcell",
+    title: "Senior Vice President, Chief Strategy and Growth Officer",
+    area: "Strategy & Growth",
+    areaColor: "#084594",
+    background: "Sales & Marketing, Public Policy, M&A Strategy, Technology; 1 year 8 months at NCR; healthcare professional",
+    challenges: [
+      {
+        title: "Organizational Fragmentation",
+        items: [
+          "NCR grew with a siloed mentality across Affordable Housing, Senior Housing, Senior Living (16 communities), Senior Services (value-based care), Real Estate Development, and Foundations",
+          "Systems are antiquated; unclear how to migrate data onto modern platforms",
+          "Data does not flow across the company as it should, limiting visibility and efficiency",
+          "Culture is struggling to keep pace with rapid change; leadership may need to slow down transformation"
+        ]
+      },
+      {
+        title: "Data & Monetization Gaps",
+        items: [
+          "Large volumes of patient and resident data exist but have not been monetized",
+          "No clear governance process; data security and compliance are not yet standardized",
+          "Must pass Medicaid and Medicare audits by June, requiring stronger governance"
+        ]
+      },
+      {
+        title: "CareGuide Update Needed",
+        items: [
+          "Legacy CareGuide system requires modernization and integration into the broader tech stack"
+        ]
+      }
+    ],
+    techStack: [
+      { name: "Microsoft Elevate", description: "Strategic relationship to update tech stack and gain access to foundation funding" },
+      { name: "Azure & Microsoft Fabric", description: "Migration underway to enable unified data storage and governance" },
+      { name: "Power BI", description: "New partner for advanced analytics and reporting; expected to provide unprecedented data access" },
+      { name: "Yardi", description: "Affordable housing platform; should be leveraged as a competitive advantage" },
+      { name: "GraceWorks", description: "Planning to sell NCR 700 systems, adding complexity to integration" }
+    ],
+    wants: [
+      {
+        title: "Competitive Tech Stack",
+        items: [
+          "Build a technology infrastructure that provides NCR with a competitive advantage in housing, healthcare, and services",
+          "Overlay tech stack across affordable housing facilities (50 managed properties) and senior living communities"
+        ]
+      },
+      {
+        title: "Data Governance & Flow",
+        items: [
+          "Launching a data governance project to understand and standardize how data flows through the organization",
+          "Secure data, develop governance processes, and ensure compliance with audits"
+        ]
+      },
+      {
+        title: "Value-Based Care Integration",
+        items: [
+          "Roll up value-based care programs and share savings with third-party partners",
+          "Use services to acquire patients while delivering care, aligning with Medicare's shared savings model"
+        ]
+      },
+      {
+        title: "Strategic Growth & Alignment",
+        items: [
+          "Align divisions under a three-year roadmap toward consolidation",
+          "Position NCR as a thought leader in affordable housing, senior living, and value-based care",
+          "Explore acquisition strategies in HUD spaces despite nonprofit constraints"
+        ]
+      }
+    ],
+    observations: [
+      "Member of the Vision Task Force guiding sales/marketing, public policy, M&A strategy, and technology",
+      "Leadership roles: Matt builds, Sonya Brown runs affordable housing, Adam overlays the tech stack across divisions",
+      "NCR grew up as a real estate company, now expanded into housing, healthcare, and services",
+      "Technology adoption (Azure, Fabric, Power BI) is central to future growth",
+      "Current state of change makes adoption of advanced platforms like Futuria premature"
+    ],
+    summaryInsight: "Adam's perspective highlights deep fragmentation, antiquated systems, and unmonetized data as core barriers to growth. NCR is in a fluid adjustment period where culture and infrastructure cannot keep pace with strategic ambitions. The desired future state requires: A competitive tech stack that unifies housing, healthcare, services, and development; strong data governance to secure information, pass audits, and enable monetization; integration of value-based care with shared savings models; consolidation roadmap to align divisions under one enterprise vision; strategic partnerships (Microsoft Elevate, GraceWorks, Power BI) leveraged to accelerate transformation. Adam's role is to overlay technology as a growth enabler, positioning NCR as a thought leader in affordable housing, senior living, and value-based care while building a sustainable competitive advantage."
   }
 ];
 
