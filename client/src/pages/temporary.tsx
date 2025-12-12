@@ -271,68 +271,97 @@ const techProducts: TechProduct[] = [
   }
 ];
 
-function ProductCard({ product }: { product: TechProduct }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
+function ProductCard({ product, onSelect }: { product: TechProduct; onSelect: (product: TechProduct) => void }) {
   return (
     <Card 
-      className="overflow-hidden hover-elevate cursor-pointer transition-all"
+      className="overflow-hidden hover-elevate cursor-pointer transition-all h-full flex flex-col"
       data-testid={`card-product-${product.id}`}
+      onClick={() => onSelect(product)}
     >
       <div 
-        className="p-5 flex items-start justify-between gap-4"
+        className="p-4 flex flex-col items-center text-center"
         style={{ backgroundColor: product.brandColorLight }}
-        onClick={() => setIsExpanded(!isExpanded)}
       >
-        <div className="flex items-center gap-4">
-          <div 
-            className="w-14 h-14 rounded-lg flex items-center justify-center text-white font-bold text-xs"
-            style={{ backgroundColor: product.brandColor }}
-          >
-            {product.logoText.slice(0, 2).toUpperCase()}
-          </div>
-          <div className="flex-1">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="font-semibold text-lg" data-testid={`text-product-name-${product.id}`}>
-                {product.name}
-              </h3>
-              <Badge variant="outline" className="text-xs">
-                {product.category}
-              </Badge>
+        <div 
+          className="w-16 h-16 rounded-xl flex items-center justify-center text-white font-bold text-sm mb-3 shadow-md"
+          style={{ backgroundColor: product.brandColor }}
+        >
+          {product.logoText.slice(0, 2).toUpperCase()}
+        </div>
+        <h3 className="font-semibold text-sm" data-testid={`text-product-name-${product.id}`}>
+          {product.name}
+        </h3>
+        <Badge variant="outline" className="text-xs mt-2">
+          {product.category}
+        </Badge>
+      </div>
+      <div className="p-3 flex-1 flex flex-col">
+        <p className="text-xs text-muted-foreground text-center line-clamp-2">{product.tagline}</p>
+      </div>
+    </Card>
+  );
+}
+
+function ProductDetailModal({ product, onClose }: { product: TechProduct | null; onClose: () => void }) {
+  if (!product) return null;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={onClose}>
+      <Card 
+        className="w-full max-w-4xl max-h-[90vh] overflow-auto"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div 
+          className="p-6 flex items-start justify-between gap-4"
+          style={{ backgroundColor: product.brandColorLight }}
+        >
+          <div className="flex items-center gap-4">
+            <div 
+              className="w-16 h-16 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-md"
+              style={{ backgroundColor: product.brandColor }}
+            >
+              {product.logoText.slice(0, 2).toUpperCase()}
             </div>
-            <p className="text-sm text-muted-foreground mt-1">{product.tagline}</p>
+            <div className="flex-1">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-semibold text-xl">{product.name}</h3>
+                <Badge variant="outline" className="text-xs">
+                  {product.category}
+                </Badge>
+              </div>
+              <p className="text-sm text-muted-foreground mt-1">{product.tagline}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={(e) => {
+                e.stopPropagation();
+                window.open(product.website, '_blank');
+              }}
+              data-testid={`button-visit-${product.id}`}
+            >
+              <ExternalLink className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onClose}
+              data-testid={`button-close-${product.id}`}
+            >
+              <X className="h-4 w-4" />
+            </Button>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(product.website, '_blank');
-            }}
-            data-testid={`button-visit-${product.id}`}
-          >
-            <ExternalLink className="h-4 w-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            data-testid={`button-expand-${product.id}`}
-          >
-            {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-          </Button>
+
+        <div className="p-6 border-t">
+          <p className="text-sm text-muted-foreground">{product.description}</p>
         </div>
-      </div>
 
-      <div className="p-5 border-t">
-        <p className="text-sm text-muted-foreground">{product.description}</p>
-      </div>
-
-      {isExpanded && (
         <div className="border-t">
           <div className="grid md:grid-cols-2 gap-0">
-            <div className="p-5 border-b md:border-b-0 md:border-r">
+            <div className="p-6 border-b md:border-b-0 md:border-r">
               <div className="flex items-center gap-2 mb-3">
                 <Check className="h-4 w-4 text-green-600" />
                 <h4 className="font-medium text-sm">Strengths</h4>
@@ -346,7 +375,7 @@ function ProductCard({ product }: { product: TechProduct }) {
                 ))}
               </ul>
             </div>
-            <div className="p-5">
+            <div className="p-6">
               <div className="flex items-center gap-2 mb-3">
                 <X className="h-4 w-4 text-red-600" />
                 <h4 className="font-medium text-sm">Weaknesses</h4>
@@ -362,7 +391,7 @@ function ProductCard({ product }: { product: TechProduct }) {
             </div>
           </div>
           
-          <div className="p-5 border-t" style={{ backgroundColor: "rgba(8, 69, 148, 0.05)" }}>
+          <div className="p-6 border-t" style={{ backgroundColor: "rgba(8, 69, 148, 0.05)" }}>
             <div className="flex items-center gap-2 mb-3">
               <Building2 className="h-4 w-4" style={{ color: "#084594" }} />
               <h4 className="font-medium text-sm" style={{ color: "#084594" }}>NCR Context</h4>
@@ -370,8 +399,8 @@ function ProductCard({ product }: { product: TechProduct }) {
             <p className="text-sm text-muted-foreground">{product.ncrContext}</p>
           </div>
         </div>
-      )}
-    </Card>
+      </Card>
+    </div>
   );
 }
 
@@ -397,6 +426,8 @@ function OnSiteInterviews() {
 }
 
 function TechStack() {
+  const [selectedProduct, setSelectedProduct] = useState<TechProduct | null>(null);
+
   return (
     <div className="space-y-6">
       <Card>
@@ -406,16 +437,18 @@ function TechStack() {
             <CardTitle>NCR Technology Stack</CardTitle>
           </div>
           <CardDescription>
-            Overview of software products used across National Church Residences fundraising and operations. Click any card to expand details.
+            Overview of software products used across National Church Residences fundraising and operations. Click any card to view details.
           </CardDescription>
         </CardHeader>
       </Card>
 
-      <div className="grid gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
         {techProducts.map((product) => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product.id} product={product} onSelect={setSelectedProduct} />
         ))}
       </div>
+
+      <ProductDetailModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
     </div>
   );
 }
