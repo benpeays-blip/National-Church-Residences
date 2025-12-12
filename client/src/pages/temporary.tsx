@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2 } from "lucide-react";
+import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -18,6 +18,12 @@ const temporaryTabs: SectionTab[] = [
     value: "tech-stack",
     icon: Layers,
     path: "/temporary/tech-stack",
+  },
+  {
+    label: "Integration Ideas",
+    value: "integration-ideas",
+    icon: Lightbulb,
+    path: "/temporary/integration-ideas",
   },
 ];
 
@@ -414,12 +420,35 @@ function TechStack() {
   );
 }
 
+function IntegrationIdeas() {
+  return (
+    <Card>
+      <CardHeader>
+        <div className="flex items-center gap-2">
+          <Lightbulb className="h-5 w-5 text-blue-600" />
+          <CardTitle>Integration Ideas</CardTitle>
+        </div>
+        <CardDescription>
+          Potential integrations and connections between NCR technology systems
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground">
+          Content coming soon...
+        </p>
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function Temporary() {
   const [location] = useLocation();
 
   let ContentComponent = OnSiteInterviews;
   if (location === "/temporary/tech-stack") {
     ContentComponent = TechStack;
+  } else if (location === "/temporary/integration-ideas") {
+    ContentComponent = IntegrationIdeas;
   }
 
   return (
