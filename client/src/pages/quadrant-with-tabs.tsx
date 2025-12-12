@@ -1,11 +1,12 @@
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Grid3x3, BookOpen, ArrowRight, FileText, Target } from "lucide-react";
+import { Grid3x3, BookOpen, ArrowRight, FileText, Target, Wand2 } from "lucide-react";
 import DonorQuadrant from "@/pages/donor-quadrant";
 import QuadrantThesis from "@/pages/quadrant-thesis";
 import QuadrantExplained from "@/pages/quadrant-explained";
 import QuadrantStrategies from "@/pages/quadrant-strategies";
 import QuadrantSummary from "@/pages/quadrant-summary";
+import QuadrantWizard from "@/pages/quadrant-wizard";
 
 const quadrantTabs: SectionTab[] = [
   {
@@ -38,6 +39,12 @@ const quadrantTabs: SectionTab[] = [
     icon: ArrowRight,
     path: "/quadrant/strategies",
   },
+  {
+    label: "Partner Pathway Wizard",
+    value: "wizard",
+    icon: Wand2,
+    path: "/quadrant/wizard",
+  },
 ];
 
 export default function QuadrantWithTabs() {
@@ -54,6 +61,8 @@ export default function QuadrantWithTabs() {
     QuadrantComponent = QuadrantExplained;
   } else if (location === "/quadrant/strategies") {
     QuadrantComponent = QuadrantStrategies;
+  } else if (location === "/quadrant/wizard") {
+    QuadrantComponent = QuadrantWizard;
   }
 
   return (
