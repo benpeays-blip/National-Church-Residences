@@ -273,18 +273,6 @@ function App() {
               <div className="flex items-center gap-3 ml-auto">
                   {/* Navigation Buttons */}
                   <nav className="flex items-center gap-1">
-                    <Link href="/intelligence">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
-                        data-testid="button-intelligence"
-                      >
-                        Intelligence
-                      </Button>
-                    </Link>
-
                     <Link href="/quadrant">
                       <Button
                         variant="ghost"
