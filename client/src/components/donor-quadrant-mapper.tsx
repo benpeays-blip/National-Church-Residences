@@ -394,7 +394,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
           <div className="flex-1" />
 
           {/* AI Playbook - Fixed at bottom */}
-          <div className="pt-4 border-t">
+          <div className="pt-4 border-t mt-auto">
             <div className="flex items-center gap-2 text-sm font-semibold mb-3">
               <Lightbulb className="w-4 h-4 text-primary" />
               <span>AI Playbook to move towards Partner:</span>
