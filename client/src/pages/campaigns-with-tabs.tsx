@@ -659,46 +659,55 @@ const campaignTabs: SectionTab[] = [
     label: "Active",
     value: "active",
     icon: Calendar,
-    path: "/campaigns?tab=active",
+    path: "/campaigns/active",
   },
   {
     label: "Planned",
     value: "planned",
     icon: Clock,
-    path: "/campaigns?tab=planned",
+    path: "/campaigns/planned",
   },
   {
     label: "Completed",
     value: "completed",
     icon: CheckCircle2,
-    path: "/campaigns?tab=completed",
+    path: "/campaigns/completed",
   },
   {
     label: "Performance",
     value: "performance",
     icon: TrendingUp,
-    path: "/campaigns?tab=performance",
+    path: "/campaigns/performance",
   },
   {
     label: "Goals",
     value: "goals",
     icon: Target,
-    path: "/campaigns?tab=goals",
+    path: "/campaigns/goals",
   },
   {
     label: "Trends",
     value: "trends",
     icon: BarChart3,
-    path: "/campaigns?tab=trends",
+    path: "/campaigns/trends",
   },
 ];
 
 export default function CampaignsWithTabs() {
   const [location] = useLocation();
   
-  // Determine active tab from URL - parse from location to ensure reactivity
-  const params = new URLSearchParams(location.split('?')[1] || '');
-  const activeTab = params.get('tab') || 'all';
+  // Determine active tab from URL path
+  const getActiveTab = (): string => {
+    if (location.includes('/campaigns/active')) return 'active';
+    if (location.includes('/campaigns/planned')) return 'planned';
+    if (location.includes('/campaigns/completed')) return 'completed';
+    if (location.includes('/campaigns/performance')) return 'performance';
+    if (location.includes('/campaigns/goals')) return 'goals';
+    if (location.includes('/campaigns/trends')) return 'trends';
+    return 'all';
+  };
+  
+  const activeTab = getActiveTab();
 
   // Map activeTab to filterStatus for Campaigns component
   const getFilterStatus = (): "active" | "planned" | "completed" | undefined => {

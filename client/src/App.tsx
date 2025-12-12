@@ -191,10 +191,13 @@ function Router() {
       <Route path="/temporary/risk-compliance" component={Temporary} />
       
       <Route path="/events/past" component={PastEvents} />
-      <Route path="/campaigns/:id" component={CampaignDetail} />
+      <Route path="/campaigns/active" component={CampaignsWithTabs} />
+      <Route path="/campaigns/planned" component={CampaignsWithTabs} />
+      <Route path="/campaigns/completed" component={CampaignsWithTabs} />
       <Route path="/campaigns/performance" component={CampaignsWithTabs} />
       <Route path="/campaigns/goals" component={CampaignsWithTabs} />
       <Route path="/campaigns/trends" component={CampaignsWithTabs} />
+      <Route path="/campaigns/:id" component={CampaignDetail} />
       <Route path="/campaigns" component={CampaignsWithTabs} />
       <Route path="/data-health" component={DataHealth} />
       <Route path="/integrations" component={Integrations} />
