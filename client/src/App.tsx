@@ -190,6 +190,8 @@ function Router() {
       <Route path="/relationships/connections" component={RelationshipsWithTabs} />
       <Route path="/relationships/corporate" component={RelationshipsWithTabs} />
       <Route path="/relationships/peer" component={RelationshipsWithTabs} />
+      <Route path="/relationships/relsci" component={RelationshipsWithTabs} />
+      <Route path="/relationships/dnb" component={RelationshipsWithTabs} />
       <Route path="/relationships" component={RelationshipsWithTabs} />
       <Route path="/corporate-partnerships/:id" component={CorporatePartnershipDetail} />
       <Route path="/corporate-partnerships" component={CorporatePartnershipsPage} />
