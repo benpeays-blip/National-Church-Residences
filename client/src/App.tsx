@@ -385,7 +385,7 @@ function App() {
                         style={{ color: "#084594" }}
                         data-testid="button-corporate-partnerships"
                       >
-                        Corporate
+                        Corporations
                       </Button>
                     </Link>
                     
