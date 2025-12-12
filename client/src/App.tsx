@@ -59,6 +59,7 @@ import GrantsWithTabs from "@/pages/grants-with-tabs";
 import AIToolsWithTabs from "@/pages/ai-tools-with-tabs";
 import RelationshipsWithTabs from "@/pages/relationships-with-tabs";
 import OtherWithTabs from "@/pages/other-with-tabs";
+import Temporary from "@/pages/temporary";
 
 // AI Intelligence
 import AIPredictiveTiming from "@/pages/ai-predictive-timing";
@@ -176,6 +177,7 @@ function Router() {
       <Route path="/corporate-partnerships/:id" component={CorporatePartnershipDetail} />
       <Route path="/corporate-partnerships" component={CorporatePartnershipsPage} />
       <Route path="/other" component={OtherWithTabs} />
+      <Route path="/temporary" component={Temporary} />
       
       <Route path="/events/past" component={PastEvents} />
       <Route path="/campaigns/:id" component={CampaignDetail} />
@@ -407,6 +409,18 @@ function App() {
                         data-testid="button-other"
                       >
                         Other
+                      </Button>
+                    </Link>
+                    
+                    <Link href="/temporary">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="font-semibold hover:bg-gray-100"
+                        style={{ color: "#084594" }}
+                        data-testid="button-temporary"
+                      >
+                        Temporary
                       </Button>
                     </Link>
                   </nav>
