@@ -976,8 +976,8 @@ async function seed() {
           engagementScore: d.engagement,
           affinityScore: d.affinity,
           // Integration metadata
-          sourceSystem: "Salesforce", // All donors from CRM
-          sourceRecordId: `SF-${String(index + 1000).padStart(6, '0')}`,
+          sourceSystem: "Raiser's Edge", // All donors from CRM
+          sourceRecordId: `RE-${String(index + 1000).padStart(6, '0')}`,
           syncedAt: syncedAt,
           dataQualityScore: dataQuality,
         };
@@ -1108,9 +1108,9 @@ async function seed() {
       const paymentMethod = weightedRandom(paymentMethods, paymentWeights);
       
       // Integration metadata: determine source system based on payment method and campaign
-      let sourceSystem = "Salesforce"; // default CRM
+      let sourceSystem = "Raiser's Edge"; // default CRM
       if (paymentMethod === "Credit Card" && Math.random() > 0.5) {
-        sourceSystem = "Classy"; // Online giving platform
+        sourceSystem = "Workday"; // Online giving platform
       } else if (paymentMethod === "DAF") {
         sourceSystem = "DAFGiving360";
       }
@@ -1189,7 +1189,7 @@ async function seed() {
         recurringCadence: recurringCadence,
         // Integration metadata
         sourceSystem: sourceSystem,
-        sourceRecordId: `${sourceSystem === "Salesforce" ? "SF-G" : sourceSystem === "Classy" ? "CL-G" : "DAF-G"}-${Math.floor(Math.random() * 900000) + 100000}`,
+        sourceRecordId: `${sourceSystem === "Raiser's Edge" ? "RE-G" : sourceSystem === "Workday" ? "WD-G" : "DAF-G"}-${Math.floor(Math.random() * 900000) + 100000}`,
         syncedAt: syncedAt,
         dataQualityScore: dataQuality,
       });
@@ -1293,7 +1293,7 @@ async function seed() {
 
       const owner = mgoUsers[Math.floor(Math.random() * mgoUsers.length)];
 
-      // Integration metadata: all opportunities from Salesforce CRM
+      // Integration metadata: all opportunities from Raiser's Edge CRM
       const createdDaysAgo = Math.floor(Math.random() * 90); // Created in last 90 days
       const syncedDaysAgo = Math.floor(Math.random() * 3); // Synced in last 3 days
       const syncedAt = new Date();
@@ -1311,8 +1311,8 @@ async function seed() {
         notes: `Major gift opportunity for ${donor.organizationName || "individual donor"} - ${donor.firstName} ${donor.lastName}`,
         ownerId: owner.id,
         // Integration metadata
-        sourceSystem: "Salesforce",
-        sourceRecordId: `SF-OPP-${Math.floor(Math.random() * 900000) + 100000}`,
+        sourceSystem: "Raiser's Edge",
+        sourceRecordId: `RE-OPP-${Math.floor(Math.random() * 900000) + 100000}`,
         syncedAt: syncedAt,
         dataQualityScore: dataQuality,
       });
@@ -1361,8 +1361,8 @@ async function seed() {
         closeDate: closeDate,
         notes: `${stage} opportunity for ${donor.firstName} ${donor.lastName}`,
         ownerId: owner.id,
-        sourceSystem: "Salesforce",
-        sourceRecordId: `SF-OPP-${Math.floor(Math.random() * 900000) + 100000}`,
+        sourceSystem: "Raiser's Edge",
+        sourceRecordId: `RE-OPP-${Math.floor(Math.random() * 900000) + 100000}`,
         syncedAt: syncedAt,
         dataQualityScore: 85,
       });
@@ -1592,8 +1592,8 @@ async function seed() {
         description = "Follow-up note sent with personalized impact story";
       }
 
-      // Integration metadata: email interactions from Mailchimp, others from Salesforce
-      const sourceSystem = (type === "email_open" || type === "email_click") ? "Mailchimp" : "Salesforce";
+      // Integration metadata: email interactions from Mailchimp, others from Raiser's Edge
+      const sourceSystem = (type === "email_open" || type === "email_click") ? "Mailchimp" : "Raiser's Edge";
       
       // Sync timestamp: email interactions sync faster (hourly), manual entries sync daily
       const syncDelayHours = sourceSystem === "Mailchimp" ? Math.floor(Math.random() * 4) + 1 : Math.floor(Math.random() * 48) + 2;
@@ -1611,7 +1611,7 @@ async function seed() {
         ownerId: owner.id,
         // Integration metadata
         sourceSystem: sourceSystem,
-        sourceRecordId: `${sourceSystem === "Mailchimp" ? "MC-" : "SF-"}INT-${Math.floor(Math.random() * 900000) + 100000}`,
+        sourceRecordId: `${sourceSystem === "Mailchimp" ? "MC-" : "RE-"}INT-${Math.floor(Math.random() * 900000) + 100000}`,
         syncedAt: syncedAt,
         dataQualityScore: dataQuality,
       });
@@ -1629,14 +1629,14 @@ async function seed() {
     .insert(integrations)
     .values([
       {
-        name: "Salesforce NPSP",
+        name: "Raiser's Edge NXT",
         type: "CRM",
         status: "connected",
         lastSyncAt: new Date(now.getTime() - 2 * 60 * 60 * 1000), // 2 hours ago
         lastSuccessfulSyncAt: new Date(now.getTime() - 2 * 60 * 60 * 1000),
-        recordCount: personsList.length + giftsList.filter(g => g.sourceSystem === "Salesforce").length + opportunitiesList.length,
+        recordCount: personsList.length + giftsList.filter(g => g.sourceSystem === "Raiser's Edge").length + opportunitiesList.length,
         errorMessage: null,
-        config: { instanceUrl: "https://fundrazor.my.salesforce.com", apiVersion: "v58.0" },
+        config: { instanceUrl: "https://fundrazor.blackbaud.com", apiVersion: "v2.0" },
       },
       {
         name: "Mailchimp",
@@ -1649,14 +1649,14 @@ async function seed() {
         config: { listId: "a1b2c3d4e5", audienceSize: 12450 },
       },
       {
-        name: "Classy Online Giving",
+        name: "Workday Adaptive Planning",
         type: "Giving",
         status: "connected",
         lastSyncAt: new Date(now.getTime() - 4 * 60 * 60 * 1000), // 4 hours ago
         lastSuccessfulSyncAt: new Date(now.getTime() - 4 * 60 * 60 * 1000),
-        recordCount: giftsList.filter(g => g.sourceSystem === "Classy").length,
+        recordCount: giftsList.filter(g => g.sourceSystem === "Workday").length,
         errorMessage: null,
-        config: { campaignIds: ["12345", "12346", "12347"] },
+        config: { tenantId: "ncr-foundation", integrationId: "WD-12347" },
       },
       {
         name: "WealthEngine",
@@ -1744,15 +1744,15 @@ async function seed() {
     if (entityType === "person") {
       const randomPerson = personsList[Math.floor(Math.random() * personsList.length)];
       entityId = randomPerson.id;
-      sourceSystem = randomPerson.sourceSystem || "Salesforce";
+      sourceSystem = randomPerson.sourceSystem || "Raiser's Edge";
     } else if (entityType === "gift") {
       const randomGift = giftsList[Math.floor(Math.random() * giftsList.length)];
       entityId = randomGift.personId; // Using personId as proxy
-      sourceSystem = randomGift.sourceSystem || "Salesforce";
+      sourceSystem = randomGift.sourceSystem || "Raiser's Edge";
     } else {
       const randomInteraction = interactionsList[Math.floor(Math.random() * interactionsList.length)];
       entityId = randomInteraction.personId;
-      sourceSystem = randomInteraction.sourceSystem || "Salesforce";
+      sourceSystem = randomInteraction.sourceSystem || "Raiser's Edge";
     }
     
     const issueTypes = ["missing_field", "stale_data", "duplicate", "invalid_format"];
