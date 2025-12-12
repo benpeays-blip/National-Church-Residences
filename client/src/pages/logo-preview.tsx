@@ -61,10 +61,10 @@ export default function LogoPreview() {
             variant="ghost"
             onClick={() => setLocation("/")}
             className="mb-6"
-            data-testid="button-back-to-dashboard"
+            data-testid="button-back"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Dashboard
+            Back
           </Button>
           <h1 className="text-4xl font-semibold mb-3">FundRazor Brand Options</h1>
           <p className="text-lg text-muted-foreground">

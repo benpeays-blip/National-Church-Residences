@@ -59,10 +59,10 @@ export default function HeroPreview() {
             variant="ghost"
             onClick={() => setLocation("/solutions")}
             className="mb-6"
-            data-testid="button-back-to-solutions"
+            data-testid="button-back"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Solutions
+            Back
           </Button>
           <h1 className="text-4xl font-semibold mb-3">Solutions Hero Design Options</h1>
           <p className="text-lg text-muted-foreground">

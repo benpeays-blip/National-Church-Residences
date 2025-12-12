@@ -67,7 +67,7 @@ export default function CorporatePartnershipDetail() {
           <Link href="/corporate-partnerships">
             <Button>
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Partners
+              Back
             </Button>
           </Link>
         </Card>
@@ -78,9 +78,9 @@ export default function CorporatePartnershipDetail() {
   return (
     <div className="p-6 space-y-6">
       <Link href="/corporate-partnerships">
-        <Button variant="ghost" size="sm" className="mb-2">
+        <Button variant="ghost" size="sm" className="mb-2" data-testid="button-back">
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Corporate Partnerships
+          Back
         </Button>
       </Link>
 

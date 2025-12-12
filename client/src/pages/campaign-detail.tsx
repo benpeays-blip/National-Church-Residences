@@ -77,9 +77,9 @@ export default function CampaignDetail() {
             <XCircle className="w-12 h-12 text-muted-foreground" />
             <p className="text-muted-foreground">This campaign could not be found.</p>
             <Link href="/campaigns">
-              <Button variant="outline" data-testid="button-back-to-campaigns">
-                <ArrowLeft className="w-4 h-4" />
-                Back to Campaigns
+              <Button variant="outline" data-testid="button-back">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
               </Button>
             </Link>
           </div>

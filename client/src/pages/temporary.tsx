@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone } from "lucide-react";
+import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -657,7 +657,8 @@ function InterviewDetailPage({ personId }: { personId: string }) {
         <Card className="p-6 text-center">
           <p className="text-muted-foreground">Interview not found</p>
           <Button className="mt-4" onClick={() => navigate("/temporary")}>
-            Back to Interviews
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back
           </Button>
         </Card>
       </div>
@@ -670,9 +671,10 @@ function InterviewDetailPage({ personId }: { personId: string }) {
         variant="ghost" 
         className="mb-2"
         onClick={() => navigate("/temporary")}
-        data-testid="button-back-to-interviews"
+        data-testid="button-back"
       >
-        ← Back to Interviews
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back
       </Button>
 
       <Card>
@@ -837,7 +839,8 @@ function ProductDetailPage({ productId }: { productId: string }) {
         <Card className="p-6 text-center">
           <p className="text-muted-foreground">Product not found</p>
           <Button className="mt-4" onClick={() => navigate("/temporary/tech-stack")}>
-            Back to Tech Stack
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back
           </Button>
         </Card>
       </div>
@@ -850,9 +853,10 @@ function ProductDetailPage({ productId }: { productId: string }) {
         variant="ghost" 
         className="mb-2"
         onClick={() => navigate("/temporary/tech-stack")}
-        data-testid="button-back-to-tech-stack"
+        data-testid="button-back"
       >
-        ← Back to Tech Stack
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back
       </Button>
 
       <Card>

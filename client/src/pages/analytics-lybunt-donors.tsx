@@ -64,8 +64,8 @@ export default function LYBUNTDonors() {
         <div className="flex items-center gap-2 mb-2">
           <Link href="/dashboard/dev-director">
             <Button variant="ghost" size="sm" data-testid="button-back">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Dashboard
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
             </Button>
           </Link>
         </div>

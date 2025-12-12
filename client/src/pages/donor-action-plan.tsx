@@ -99,7 +99,7 @@ export default function DonorActionPlan() {
             <Link href="/quadrant">
               <Button variant="outline" className="mt-4">
                 <ChevronLeft className="w-4 h-4 mr-2" />
-                Back to Quadrant
+                Back
               </Button>
             </Link>
           </CardContent>
@@ -342,9 +342,9 @@ Close: "Regardless of what you decide, I want you to know how grateful we are fo
     <div className="space-y-6 p-6">
       {/* Back Button */}
       <Link href="/quadrant">
-        <Button variant="ghost" size="sm" data-testid="button-back-quadrant">
+        <Button variant="ghost" size="sm" data-testid="button-back">
           <ChevronLeft className="w-4 h-4 mr-1" />
-          Back to Quadrant
+          Back
         </Button>
       </Link>
 
