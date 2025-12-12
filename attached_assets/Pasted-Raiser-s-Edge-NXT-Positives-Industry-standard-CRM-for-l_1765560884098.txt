@@ -1,0 +1,552 @@
+Raiser’s Edge NXT – Positives
+Industry-standard CRM for large and established nonprofits
+
+
+Handles complex donor records extremely well (pledges, soft credits, tributes, planned giving)
+
+
+Large ecosystem: consultants, integrations, and RE-trained fundraisers readily available
+
+
+Long-term stability and trusted by boards/executives
+
+
+Strong native integration with WealthEngine
+
+
+Solid for traditional major-gifts recordkeeping and stewardship
+
+
+
+Raiser’s Edge NXT – Negatives
+Outdated user experience; slow, clunky, and not intuitive for frontline fundraisers
+
+
+Weak reporting and analytics; often requires exports to Excel/PowerBI/Tableau
+
+
+Does not unify data across systems (no connection to Yardi, RealPage, program data, finance, etc.)
+
+
+Limited AI capabilities; not built for automation, insights, or modern workflows
+
+
+High cost relative to features; add-ons and customizations drive cost up
+
+
+Difficult to customize or adapt to organizational processes
+
+
+Low adoption by frontline fundraisers, resulting in low ROI
+DonorSearch
+Why They Have DonorSearch but Don’t Use It
+It was bundled or added years ago and never fully rolled out to staff.
+
+
+No one was trained on how to interpret or apply DonorSearch scores.
+
+
+Fundraisers often feel the data is “too noisy” or produces false positives, so they stop trusting it.
+
+
+WealthEngine is already integrated into Raiser’s Edge, making it the easier tool to access—so DonorSearch becomes redundant.
+
+
+DonorSearch requires manual searching, while staff prefer not to switch systems or open extra tabs.
+
+
+Leadership didn’t champion adoption, so it never became part of the culture.
+
+
+Capacity constraints—teams are overwhelmed and stick with familiar tools rather than learning a second prospecting system.
+
+
+Fundraisers believe DonorSearch inflates capacity estimates, so they ignore it.
+
+
+No workflows or SOPs were built around using DonorSearch for portfolio management.
+
+
+The organization has historically been grant-centric, not major-gift-centric, so the tool’s value wasn’t obvious.
+
+
+DonorSearch requires clean data for best results, and many orgs don’t have that, leading to mistrust.
+
+
+The UI is less intuitive than WealthEngine’s inside-RE experience.
+
+
+It was purchased with the belief that “we should have a screening tool,” but no strategic owner kept it alive.
+
+
+
+Here is a clean, balanced, high-level summary of the real-world positives and negatives of DonorSearch, written for executive decision-makers.
+
+DonorSearch – Positives
+Excellent philanthropic giving data
+
+ Strong at identifying past charitable giving, foundation board ties, and donor generosity patterns.
+
+
+Better for faith-based donors than WealthEngine
+
+ Includes church giving when publicly available and picks up patterns helpful for Christian organizations.
+
+
+Strong affinity/propensity scoring
+
+ Helps identify donors likely to give to specific causes or types of missions.
+
+
+Robust screening reports
+
+ Good for batch screenings, major gift prospecting, and uncovering hidden mid-level donors.
+
+
+Integrates with major CRMs
+
+ Works with Raiser’s Edge, Salesforce, DonorPerfect, Neon, etc.
+
+
+Useful for foundation prospecting
+
+ Can surface charitable trusts, donor-advised fund histories, and family foundation board members.
+
+
+Good customer support
+
+ Generally responsive and offers onboarding help.
+
+
+
+DonorSearch – Negatives
+Higher rate of “false positives”
+
+ Many nonprofits say it flags donors as wealthy who aren’t—leading to research fatigue and mistrust.
+
+
+Not naturally embedded in Raiser’s Edge workflows
+
+ Staff must switch systems or open separate tools, which hurts adoption.
+
+
+More manual than WealthEngine
+
+ Requires extra steps to validate results or drill down into data.
+
+
+Interface is clunky compared to modern tools
+
+ The UI feels dated and harder to navigate, especially for frontline fundraisers.
+
+
+Capacity scores can be inflated
+
+ Some organizations stop trusting DS ratings because the wealth estimates feel overly generous.
+
+
+Doesn’t meaningfully unify data
+
+ Still just a lookup tool—not a holistic intelligence layer.
+
+
+Underused without a champion
+
+ Many nonprofits buy DonorSearch but never integrate it into daily portfolio or pipeline processes.
+
+
+Staff often lack training to interpret results
+
+ Without clear SOPs, fundraisers don’t know how to apply the ratings correctly.
+
+
+Not optimized for real-time automation or AI
+
+ Data is static; it doesn’t generate next-best actions or relationship intelligence without another platform (like Futuria) sitting on top.
+
+
+Summary in One Sentence
+DonorSearch is a powerful donor discovery and philanthropic-giving database, but it is often underutilized because its results can feel noisy, its UI is dated, and it requires training and intentional workflow design to use effectively.
+
+SignUpGenius is an online tool that helps people create and manage sign-ups for events, volunteers, meetings, schedules, or any activity where you need people to pick time slots.
+Here’s the simple breakdown:
+What SignUpGenius Is
+A web-based scheduling and coordination tool
+
+
+Used for volunteer sign-ups, meal trains, church events, school activities, sports teams, or any situation requiring organized participation
+
+
+Lets an organizer create a page with time slots, tasks, or items needed
+
+
+Participants click the link and sign up for a spot without needing an account
+
+
+Key Features
+Create sign-up sheets for events, shifts, or responsibilities
+
+
+Automatic reminders to volunteers or participants
+
+
+Ability to limit the number of sign-ups per slot
+
+
+Collect information like contact info, notes, or preferences
+
+
+Optional payment collection (for events, fees, donations)
+
+
+Can export lists to Excel or share with teams
+
+
+Integrates with calendars
+
+
+Common Uses
+Church volunteer schedules
+
+
+Potlucks and small-group gatherings
+
+
+School parent-teacher conferences
+
+
+Sports team snack rotations
+
+
+Charity events and nonprofit volunteer management
+
+
+Corporate meeting sign-ups
+
+
+Holiday or community service schedules
+
+
+Why People Use It
+Simple
+
+
+Free (premium plans available)
+
+
+No login required for volunteers
+
+
+Easy to coordinate large groups without messy email chains
+
+
+If you want, I can also give a quick comparison of SignUpGenius vs. Calendly vs. VolunteerHub depending on how NCR might use it.
+
+Power BI is Microsoft’s data analytics and dashboard tool.
+It turns raw data into interactive charts, dashboards, and reports that leaders can use to make decisions.
+Here’s the simple breakdown:
+
+What Power BI Is
+A business intelligence and reporting platform
+
+
+Used to visualize data, track KPIs, and build dashboards
+
+
+Connects to almost any data source: Excel, SQL, Salesforce, Raiser’s Edge, Yardi, etc.
+
+
+Cloud-based, desktop-based, or embedded inside apps
+
+
+Think of it as Excel + dashboards + automation + live data connections.
+
+What Power BI Is Used For
+Executive dashboards
+
+
+Financial reporting
+
+
+Donor pipeline dashboards
+
+
+Grant performance tracking
+
+
+Operational metrics
+
+
+Compliance benchmarks
+
+
+Housing occupancy data
+
+
+Revenue and expense analysis
+
+
+Board reporting
+
+
+National Church Residences definitely uses it or would benefit from it—especially because RE NXT reporting is weak.
+
+Power BI – Key Strengths
+Connects to dozens of systems (Excel, SQL, APIs, etc.)
+
+
+Creates real-time dashboards for leadership
+
+
+Much more powerful than Excel for complex data
+
+
+Customizable visualizations
+
+
+Can automate recurring reporting
+
+
+Works well with Microsoft environments (Teams, SharePoint, Azure)
+
+
+Excellent for slicing, filtering, and drilling into data
+
+
+
+Power BI – Weaknesses
+Requires technical skill to set up
+
+
+Can get complicated when many data sources are involved
+
+
+Needs clean data—messy data produces messy dashboards
+
+
+Hard for non-technical staff to build advanced reports
+
+
+Still requires Excel for some prep work
+
+
+Not a fundraising system—just a visualization tool
+
+
+
+Summary
+Power BI is Microsoft’s analytics and dashboard tool. It pulls data from multiple systems, visualizes it clearly, and automates reporting. It’s powerful, but requires technical expertise to build and maintain.
+
+
+
+
+PointClickCare
+
+PointClickCare is one of the leading EHR (Electronic Health Record) and care-coordination platforms for senior living, long-term care, skilled nursing, assisted living, and home health.
+
+
+Instrumentl (often misspelled as “Instrumental”) is a grant-finding and grant-management software platform widely used by nonprofits, foundations, and fundraising teams.
+It is one of the fastest-growing tools in the grant world.
+Here’s the clean breakdown:
+
+What Instrumentl Is
+A cloud-based system that helps nonprofits:
+Find new grants (federal, state, local, corporate, and foundation)
+
+
+Track deadlines and submissions
+
+
+Manage active grants in a centralized dashboard
+
+
+Store documents and reporting requirements
+
+
+Automate reminders
+
+
+Collaborate across teams
+
+
+It’s basically a grant discovery + CRM + workflow tracker for grant teams.
+
+Positives of Instrumentl
+Excellent grant discovery engine
+
+ Pulls from federal, state, county, local, and private funders—far better organized than Grants.gov or Foundation Directory alone.
+
+
+Automatic matching
+
+ Suggests grants based on your organization’s mission and history.
+
+
+Very clean, modern user interface
+
+ Easier to use than older tools.
+
+
+Centralized grant pipeline
+
+ Keeps discovery → applications → awards all in one place.
+
+
+Automated reminders and deadline tracking
+
+ Prevents missed opportunities.
+
+
+Great for small and mid-sized teams
+
+ Reduces manual spreadsheets and email chaos.
+
+
+Good collaboration tools
+
+ Team notes, shared workspaces, document uploads.
+
+
+Affordable compared to many enterprise systems
+
+ Lower cost than Blackbaud’s grant tools or Fluxx.
+
+
+Strong customer support & training
+
+ Known for helpful onboarding and webinars.
+
+
+
+Negatives of Instrumentl
+Not a full enterprise grants system
+
+ Good for discovery and workflow but not a full compliance system like eCivis or SmartSimple.
+
+
+Limited reporting capabilities
+
+ Not as deep as Power BI, Salesforce, or Foundry.
+
+
+Weak integration with large CRMs
+
+ Limited native integrations with Raiser’s Edge or Salesforce without middleware.
+
+
+Not built for federal-heavy compliance
+
+ If your org relies heavily on HUD, CMS, or HHS grants, you still need separate compliance systems.
+
+
+Not ideal for massive organizations
+
+ Larger nonprofits sometimes outgrow it.
+
+
+Still requires manual input
+
+ It organizes grants but doesn’t write them or automate complex workflows.
+
+
+Designed primarily for grant fundraising, not grant administration
+
+ It is discovery-first, not compliance-first.
+
+
+
+Summary
+Instrumentl is a modern, user-friendly platform that helps nonprofits find and manage grants more efficiently. It’s excellent for discovery, organization, and team collaboration—but it’s not a full compliance system, lacks deep CRM integrations, and isn’t as powerful for large organizations with complex federal grants.
+
+Here is the clear, honest, executive-level answer:
+Instrumentl is the best grant discovery and lightweight tracking tool for small–mid sized nonprofits, but it is not the best tool for large, complex organizations with heavy federal and HUD compliance—like National Church Residences.
+Let’s break that down simply.
+
+Where Instrumentl IS the Best
+Instrumentl is arguably #1 in these categories:
+Grant discovery (best search engine for foundations + state/local grants)
+
+
+Ease of use (very simple, clean UI)
+
+
+Small-to-mid-sized nonprofit workflow management
+
+
+Affordable grant-finding tool
+
+
+Modern, searchable database for private foundations
+
+
+Automated deadline reminders
+
+
+Centralized pipeline for a small team
+
+
+If your grant work is mostly philanthropic foundations, Instrumentl is probably the best modern tool.
+
+Where Instrumentl Is NOT the Best
+Large organizations with complex federal grants (HUD, CMS, HHS, state agencies) need features Instrumentl does not provide.
+Instrumentl is not the best for:
+Federal grant compliance
+
+
+Post-award grant management
+
+
+Complex reporting requirements (HUD, LIHTC, Medicare/Medicaid, state agencies)
+
+
+Budgeting, match tracking, subrecipient monitoring
+
+
+Audit trails or OMB Uniform Guidance needs
+
+
+Integrating with enterprise systems (Yardi, Workday, finance systems)
+
+
+High-volume government grant portfolios
+
+
+For this level of complexity, the best tools are systems like:
+SmartSimple
+
+
+eCivis
+
+
+Fluxx
+
+
+Blackbaud Grantmaking (the enterprise product, not RE NXT)
+
+
+These are expensive, but they handle federal requirements—Instrumentl does not.
+
+So, is Instrumentl the best for National Church Residences?
+No—not for their full portfolio.
+NCR has:
+HUD grants
+
+
+state & federal funding
+
+
+compliance-heavy reporting
+
+
+large operational complexity
+
+
+cross-functional finance requirements
+
+
+Instrumentl cannot meet that enterprise need.
+But it could be a great supplement for finding philanthropic or local grants.
+
+Simple Summary
+Instrumentl is the best modern tool for finding and organizing philanthropic grants.
+It is not the best tool for managing large, federal, compliance-heavy grants for a national housing & senior-care organization.

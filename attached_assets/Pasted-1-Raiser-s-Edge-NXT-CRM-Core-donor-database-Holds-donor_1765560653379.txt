@@ -1,0 +1,43 @@
+1. Raiser’s Edge NXT (CRM)
+Core donor database: Holds donor records, pledges, tributes, planned giving.
+Strengths: Trusted by boards, integrates with WealthEngine, stable for major gifts.
+Weaknesses: Poor reporting, clunky UX, limited AI, weak adoption by frontline fundraisers.
+Role at NCR: The “system of record” for donor relationships, but needs augmentation for analytics and usability.
+
+2. DonorSearch
+Prospecting engine: Surfaces philanthropic giving, faith-based donors, foundation ties.
+Strengths: Excellent charitable giving data, strong affinity scoring, good for batch screenings.
+Weaknesses: False positives, clunky UI, not embedded in RE workflows, underused without training.
+Role at NCR: Could complement WealthEngine by identifying hidden donors, but adoption requires SOPs and integration.
+
+3. Power BI
+Analytics layer: Connects RE NXT, Yardi, Workday, PointClickCare, finance systems.
+Strengths: Real-time dashboards, customizable visualizations, integrates across Microsoft ecosystem.
+Weaknesses: Requires clean data and technical skill.
+Role at NCR: Bridges the reporting gap in RE NXT, giving executives donor pipeline, occupancy, and grant dashboards.
+
+4. Instrumentl
+Grant discovery tool: Finds philanthropic and local grants, tracks deadlines, organizes pipeline.
+Strengths: Best for foundation grants, clean UI, automated reminders, affordable.
+Weaknesses: Not built for federal/HUD compliance, weak CRM integrations.
+Role at NCR: Excellent supplement for foundation and local grants, but not sufficient for HUD/state compliance-heavy grants.
+
+5. Workday
+HR + payroll backbone: Manages employees, pay, recruiting, compliance.
+Strengths: Secure, enterprise-class, strong HR workflows.
+Weaknesses: Overly complex, poor frontline adoption, hard to customize.
+Role at NCR: System of record for staff, but needs simplification and integration with housing/clinical systems.
+
+6. PointClickCare
+Clinical EHR: Resident health records, care coordination, compliance in senior living.
+Role at NCR: Core for healthcare operations, must integrate with housing, finance, and HR systems.
+
+7. GuideStar / Candid
+Transparency + funder intelligence: Nonprofit profiles, 990s, foundation giving history.
+Strengths: Trusted by donors, definitive source for legitimacy.
+Weaknesses: Outdated data, poor integrations, expensive for deep use.
+Role at NCR: Due diligence and reputation management; complements Instrumentl for grant prospecting.
+
+8. SignUpGenius
+Volunteer coordination tool: Simple sign-ups for events, shifts, church activities.
+Role at NCR: Useful for community engagement, volunteer scheduling, small-group coordination.
