@@ -24,6 +24,8 @@ interface DataProvenanceBadgeProps {
 const SOURCE_SYSTEM_COLORS: Record<string, string> = {
   Salesforce: "bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/20",
   "Salesforce NPSP": "bg-blue-500/10 text-blue-700 dark:text-blue-300 border-blue-500/20",
+  "Raiser's Edge": "bg-red-500/10 text-red-700 dark:text-red-300 border-red-500/20",
+  "Raiser's Edge NXT": "bg-red-500/10 text-red-700 dark:text-red-300 border-red-500/20",
   WealthEngine: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/20",
   iWave: "bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 border-emerald-500/20",
   Mailchimp: "bg-orange-500/10 text-orange-700 dark:text-orange-300 border-orange-500/20",
@@ -35,6 +37,8 @@ const SOURCE_SYSTEM_COLORS: Record<string, string> = {
 const SOURCE_SYSTEM_LOGOS: Record<string, React.ComponentType<{ className?: string }>> = {
   Salesforce: SiSalesforce,
   "Salesforce NPSP": SiSalesforce,
+  "Raiser's Edge": Database,
+  "Raiser's Edge NXT": Database,
   Mailchimp: SiMailchimp,
   LinkedIn: SiLinkedin,
   WealthEngine: Database,
