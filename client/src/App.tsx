@@ -165,6 +165,8 @@ function Router() {
       <Route path="/quadrant/thesis" component={QuadrantWithTabs} />
       <Route path="/quadrant/explained" component={QuadrantWithTabs} />
       <Route path="/quadrant/strategies" component={QuadrantWithTabs} />
+      <Route path="/quadrant/top10" component={QuadrantWithTabs} />
+      <Route path="/quadrant/wizard" component={QuadrantWithTabs} />
       <Route path="/quadrant" component={QuadrantWithTabs} />
       <Route path="/events" component={EventsWithTabs} />
       <Route path="/grants/research" component={GrantsWithTabs} />
