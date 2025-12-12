@@ -76,6 +76,7 @@ import BoardNetworkMapper from "@/pages/board-network-mapper";
 // Corporate Partnerships (top-level section)
 import CorporatePartnershipsPage from "@/pages/corporate-partnerships";
 import CorporatePartnershipDetail from "@/pages/corporate-partnership-detail";
+import CorporationsWithTabs from "@/pages/corporations-with-tabs";
 
 // AI Content
 import OutreachGenerator from "@/pages/content-outreach";
@@ -193,8 +194,14 @@ function Router() {
       <Route path="/relationships/relsci" component={RelationshipsWithTabs} />
       <Route path="/relationships/dnb" component={RelationshipsWithTabs} />
       <Route path="/relationships" component={RelationshipsWithTabs} />
+      <Route path="/corporate-partnerships/sponsorships" component={CorporationsWithTabs} />
+      <Route path="/corporate-partnerships/giving" component={CorporationsWithTabs} />
+      <Route path="/corporate-partnerships/volunteering" component={CorporationsWithTabs} />
+      <Route path="/corporate-partnerships/inkind" component={CorporationsWithTabs} />
+      <Route path="/corporate-partnerships/foundations" component={CorporationsWithTabs} />
+      <Route path="/corporate-partnerships/prospects" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/:id" component={CorporatePartnershipDetail} />
-      <Route path="/corporate-partnerships" component={CorporatePartnershipsPage} />
+      <Route path="/corporate-partnerships" component={CorporationsWithTabs} />
       <Route path="/other" component={OtherWithTabs} />
       <Route path="/temporary" component={Temporary} />
       <Route path="/temporary/interviews/:personId" component={Temporary} />
