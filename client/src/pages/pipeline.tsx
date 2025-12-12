@@ -63,7 +63,7 @@ export default function Pipeline() {
                 </div>
               </div>
               <div className="px-6 pb-6">
-                <ScrollArea className="h-[600px]">
+                <ScrollArea className="h-[calc(100vh-320px)]">
                   <div className="space-y-2 pr-2">
                     {grouped?.[stage]?.map((opp) => (
                       <OpportunityCard key={opp.id} opportunity={opp} />
