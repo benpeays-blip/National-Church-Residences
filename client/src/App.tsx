@@ -42,7 +42,6 @@ import PipelineWithTabs from "@/pages/pipeline-with-tabs";
 import Grants from "@/pages/grants";
 import GiftsWithTabs from "@/pages/gifts-with-tabs";
 import Events from "@/pages/events";
-import PastEvents from "@/pages/past-events";
 import Campaigns from "@/pages/campaigns";
 import CampaignsWithTabs from "@/pages/campaigns-with-tabs";
 import CampaignDetail from "@/pages/campaign-detail";
@@ -160,6 +159,8 @@ function Router() {
       <Route path="/pipeline" component={PipelineWithTabs} />
       
       {/* Tab-based landing pages */}
+      <Route path="/intelligence/wealth" component={IntelligenceWithTabs} />
+      <Route path="/intelligence/briefs" component={IntelligenceWithTabs} />
       <Route path="/intelligence" component={IntelligenceWithTabs} />
       <Route path="/quadrant/summary" component={QuadrantWithTabs} />
       <Route path="/quadrant/thesis" component={QuadrantWithTabs} />
@@ -168,6 +169,8 @@ function Router() {
       <Route path="/quadrant/top10" component={QuadrantWithTabs} />
       <Route path="/quadrant/wizard" component={QuadrantWithTabs} />
       <Route path="/quadrant" component={QuadrantWithTabs} />
+      <Route path="/events/upcoming" component={EventsWithTabs} />
+      <Route path="/events/past" component={EventsWithTabs} />
       <Route path="/events" component={EventsWithTabs} />
       <Route path="/grants/research" component={GrantsWithTabs} />
       <Route path="/grants/submitted" component={GrantsWithTabs} />
@@ -178,7 +181,15 @@ function Router() {
       <Route path="/gifts/planned" component={GiftsWithTabs} />
       <Route path="/gifts/types" component={GiftsWithTabs} />
       <Route path="/gifts" component={GiftsWithTabs} />
+      <Route path="/ai-tools/voice" component={AIToolsWithTabs} />
+      <Route path="/ai-tools/outreach" component={AIToolsWithTabs} />
+      <Route path="/ai-tools/grants" component={AIToolsWithTabs} />
+      <Route path="/ai-tools/reports" component={AIToolsWithTabs} />
+      <Route path="/ai-tools/workflows" component={AIToolsWithTabs} />
       <Route path="/ai-tools" component={AIToolsWithTabs} />
+      <Route path="/relationships/connections" component={RelationshipsWithTabs} />
+      <Route path="/relationships/corporate" component={RelationshipsWithTabs} />
+      <Route path="/relationships/peer" component={RelationshipsWithTabs} />
       <Route path="/relationships" component={RelationshipsWithTabs} />
       <Route path="/corporate-partnerships/:id" component={CorporatePartnershipDetail} />
       <Route path="/corporate-partnerships" component={CorporatePartnershipsPage} />
@@ -190,7 +201,6 @@ function Router() {
       <Route path="/temporary/optimization-ideas" component={Temporary} />
       <Route path="/temporary/risk-compliance" component={Temporary} />
       
-      <Route path="/events/past" component={PastEvents} />
       <Route path="/campaigns/active" component={CampaignsWithTabs} />
       <Route path="/campaigns/planned" component={CampaignsWithTabs} />
       <Route path="/campaigns/completed" component={CampaignsWithTabs} />

@@ -10,16 +10,20 @@ import { useLocation } from "wouter";
 
 type EventFilter = "all" | "past" | "upcoming";
 
-export default function Events() {
+interface EventsProps {
+  filterType?: "upcoming" | "past";
+}
+
+export default function Events({ filterType }: EventsProps = {}) {
   const [location, setLocation] = useLocation();
   
-  // Derive active filter from URL (using 'tab' parameter for consistency with SectionTabs)
+  // Derive active filter from prop or URL path
   const activeFilter = useMemo<EventFilter>(() => {
-    const params = new URLSearchParams(window.location.search);
-    const tab = params.get('tab');
-    if (tab === 'past' || tab === 'upcoming') return tab;
+    if (filterType) return filterType;
+    if (location.includes('/events/upcoming')) return 'upcoming';
+    if (location.includes('/events/past')) return 'past';
     return "all";
-  }, [location]);
+  }, [location, filterType]);
 
   const { data: events, isLoading } = useQuery<FundraisingEvent[]>({
     queryKey: ["/api/fundraising-events"],
@@ -30,7 +34,7 @@ export default function Events() {
     if (newFilter === "all") {
       setLocation('/events');
     } else {
-      setLocation(`/events?tab=${newFilter}`);
+      setLocation(`/events/${newFilter}`);
     }
   };
 

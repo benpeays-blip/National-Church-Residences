@@ -20,40 +20,48 @@ const aiToolsTabs: SectionTab[] = [
     label: "Voice-to-CRM",
     value: "voice",
     icon: Mic,
-    path: "/ai-tools?tab=voice",
+    path: "/ai-tools/voice",
   },
   {
     label: "Outreach Generator",
     value: "outreach",
     icon: MessageSquare,
-    path: "/ai-tools?tab=outreach",
+    path: "/ai-tools/outreach",
   },
   {
     label: "Grant Proposals",
     value: "grants",
     icon: FileText,
-    path: "/ai-tools?tab=grants",
+    path: "/ai-tools/grants",
   },
   {
     label: "Impact Reports",
     value: "reports",
     icon: BarChart3,
-    path: "/ai-tools?tab=reports",
+    path: "/ai-tools/reports",
   },
   {
     label: "Workflow Builder",
     value: "workflows",
     icon: Workflow,
-    path: "/ai-tools?tab=workflows",
+    path: "/ai-tools/workflows",
   },
 ];
 
 export default function AIToolsWithTabs() {
   const [location] = useLocation();
   
-  // Read active tab directly from URL on every render
-  const params = new URLSearchParams(window.location.search);
-  const activeTab = params.get('tab') || 'timing';
+  // Determine active tab from URL path
+  const getActiveTab = (): string => {
+    if (location.includes('/ai-tools/voice')) return 'voice';
+    if (location.includes('/ai-tools/outreach')) return 'outreach';
+    if (location.includes('/ai-tools/grants')) return 'grants';
+    if (location.includes('/ai-tools/reports')) return 'reports';
+    if (location.includes('/ai-tools/workflows')) return 'workflows';
+    return 'timing';
+  };
+  
+  const activeTab = getActiveTab();
 
   // Render the appropriate component based on activeTab
   let content;

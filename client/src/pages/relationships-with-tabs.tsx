@@ -17,28 +17,34 @@ const relationshipsTabs: SectionTab[] = [
     label: "Board Connections",
     value: "connections",
     icon: Users,
-    path: "/relationships?tab=connections",
+    path: "/relationships/connections",
   },
   {
     label: "Corporate Partnerships",
     value: "corporate",
     icon: Building2,
-    path: "/relationships?tab=corporate",
+    path: "/relationships/corporate",
   },
   {
     label: "Peer Discovery",
     value: "peer",
     icon: UserPlus,
-    path: "/relationships?tab=peer",
+    path: "/relationships/peer",
   },
 ];
 
 export default function RelationshipsWithTabs() {
   const [location] = useLocation();
   
-  // Determine active tab from URL
-  const params = new URLSearchParams(window.location.search);
-  const activeTab = params.get('tab') || 'network';
+  // Determine active tab from URL path
+  const getActiveTab = (): string => {
+    if (location.includes('/relationships/connections')) return 'connections';
+    if (location.includes('/relationships/corporate')) return 'corporate';
+    if (location.includes('/relationships/peer')) return 'peer';
+    return 'network';
+  };
+  
+  const activeTab = getActiveTab();
 
   // Determine which component to render
   let RelationshipComponent = BoardNetworkMapper;

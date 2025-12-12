@@ -17,24 +17,27 @@ const intelligenceTabs: SectionTab[] = [
     label: "Wealth Events",
     value: "wealth",
     icon: DollarSign,
-    path: "/intelligence?tab=wealth",
+    path: "/intelligence/wealth",
   },
   {
     label: "Meeting Briefs",
     value: "briefs",
     icon: Calendar,
-    path: "/intelligence?tab=briefs",
+    path: "/intelligence/briefs",
   },
 ];
 
 export default function IntelligenceWithTabs() {
   const [location] = useLocation();
   
-  // Determine active tab from URL (using location to trigger re-render)
-  const activeTab = useMemo(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('tab') || 'donors';
-  }, [location]);
+  // Determine active tab from URL path
+  const getActiveTab = (): string => {
+    if (location.includes('/intelligence/wealth')) return 'wealth';
+    if (location.includes('/intelligence/briefs')) return 'briefs';
+    return 'donors';
+  };
+  
+  const activeTab = getActiveTab();
 
   // Determine which component to render
   const IntelligenceComponent = useMemo(() => {

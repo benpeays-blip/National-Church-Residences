@@ -14,28 +14,33 @@ const eventsTabs: SectionTab[] = [
     label: "Upcoming",
     value: "upcoming",
     icon: CalendarDays,
-    path: "/events?tab=upcoming",
+    path: "/events/upcoming",
   },
   {
     label: "Past Events",
     value: "past",
     icon: Clock,
-    path: "/events?tab=past",
+    path: "/events/past",
   },
 ];
 
 export default function EventsWithTabs() {
   const [location] = useLocation();
   
-  // Determine active tab from URL (used by Events component for filtering)
-  const params = new URLSearchParams(window.location.search);
-  const activeTab = params.get('tab') || 'all';
+  // Determine active tab from URL path
+  const getActiveTab = (): "all" | "upcoming" | "past" => {
+    if (location.includes('/events/upcoming')) return 'upcoming';
+    if (location.includes('/events/past')) return 'past';
+    return 'all';
+  };
+  
+  const activeTab = getActiveTab();
 
   return (
     <div className="flex flex-col h-full">
       <SectionTabs tabs={eventsTabs} currentPath={location} />
       <div className="flex-1 overflow-auto p-6">
-        <Events />
+        <Events filterType={activeTab === 'all' ? undefined : activeTab} />
       </div>
     </div>
   );
