@@ -1,12 +1,13 @@
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Grid3x3, BookOpen, ArrowRight, FileText, Target, Wand2 } from "lucide-react";
+import { Grid3x3, BookOpen, ArrowRight, FileText, Target, Wand2, ListOrdered } from "lucide-react";
 import DonorQuadrant from "@/pages/donor-quadrant";
 import QuadrantThesis from "@/pages/quadrant-thesis";
 import QuadrantExplained from "@/pages/quadrant-explained";
 import QuadrantStrategies from "@/pages/quadrant-strategies";
 import QuadrantSummary from "@/pages/quadrant-summary";
 import QuadrantWizard from "@/pages/quadrant-wizard";
+import QuadrantTop10 from "@/pages/quadrant-top10";
 
 const quadrantTabs: SectionTab[] = [
   {
@@ -40,6 +41,12 @@ const quadrantTabs: SectionTab[] = [
     path: "/quadrant/strategies",
   },
   {
+    label: "Top 10",
+    value: "top10",
+    icon: ListOrdered,
+    path: "/quadrant/top10",
+  },
+  {
     label: "Partner Pathway Wizard",
     value: "wizard",
     icon: Wand2,
@@ -61,6 +68,8 @@ export default function QuadrantWithTabs() {
     QuadrantComponent = QuadrantExplained;
   } else if (location === "/quadrant/strategies") {
     QuadrantComponent = QuadrantStrategies;
+  } else if (location === "/quadrant/top10") {
+    QuadrantComponent = QuadrantTop10;
   } else if (location === "/quadrant/wizard") {
     QuadrantComponent = QuadrantWizard;
   }
