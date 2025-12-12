@@ -295,33 +295,45 @@ const techProducts: TechProduct[] = [
   }
 ];
 
-function ProductCard({ product, onSelect }: { product: TechProduct; onSelect: (product: TechProduct) => void }) {
+function ProductCard({ product }: { product: TechProduct }) {
+  const [, navigate] = useLocation();
+  
   return (
     <Card 
       className="overflow-hidden hover-elevate cursor-pointer transition-all h-full flex flex-col"
       data-testid={`card-product-${product.id}`}
-      onClick={() => onSelect(product)}
+      onClick={() => navigate(`/temporary/tech-stack/${product.id}`)}
     >
       <div 
-        className="p-4 flex flex-col items-center text-center"
+        className="p-4"
         style={{ backgroundColor: product.brandColorLight }}
       >
-        <div className="w-16 h-16 rounded-xl overflow-hidden mb-3 shadow-md bg-white flex items-center justify-center">
-          <img 
-            src={product.logoImage} 
-            alt={`${product.name} logo`}
-            className="w-full h-full object-cover"
-          />
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <h3 
+            className="font-bold text-base"
+            style={{ color: product.brandColor }}
+            data-testid={`text-product-name-${product.id}`}
+          >
+            {product.name}
+          </h3>
+          <Badge variant="outline" className="text-xs shrink-0">
+            {product.category}
+          </Badge>
         </div>
-        <h3 className="font-semibold text-sm" data-testid={`text-product-name-${product.id}`}>
-          {product.name}
-        </h3>
-        <Badge variant="outline" className="text-xs mt-2">
-          {product.category}
-        </Badge>
+        <p className="text-xs text-muted-foreground">{product.tagline}</p>
       </div>
-      <div className="p-3 flex-1 flex flex-col">
-        <p className="text-xs text-muted-foreground text-center line-clamp-2">{product.tagline}</p>
+      <div className="p-4 flex-1 flex flex-col">
+        <p className="text-xs text-muted-foreground mb-3">{product.description}</p>
+        <div className="mt-auto space-y-2">
+          <div className="flex items-start gap-2">
+            <Check className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+            <p className="text-xs text-muted-foreground line-clamp-1">{product.strengths[0]}</p>
+          </div>
+          <div className="flex items-start gap-2">
+            <X className="h-3 w-3 text-red-600 mt-0.5 shrink-0" />
+            <p className="text-xs text-muted-foreground line-clamp-1">{product.weaknesses[0]}</p>
+          </div>
+        </div>
       </div>
     </Card>
   );
@@ -452,8 +464,6 @@ function OnSiteInterviews() {
 }
 
 function TechStack() {
-  const [selectedProduct, setSelectedProduct] = useState<TechProduct | null>(null);
-
   return (
     <div className="space-y-6">
       <Card>
@@ -463,18 +473,122 @@ function TechStack() {
             <CardTitle>NCR Technology Stack</CardTitle>
           </div>
           <CardDescription>
-            Overview of software products used across National Church Residences fundraising and operations. Click any card to view details.
+            Overview of software products used across National Church Residences fundraising and operations. Click any card to view full details.
           </CardDescription>
         </CardHeader>
       </Card>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {techProducts.map((product) => (
-          <ProductCard key={product.id} product={product} onSelect={setSelectedProduct} />
+          <ProductCard key={product.id} product={product} />
         ))}
       </div>
+    </div>
+  );
+}
 
-      <ProductDetailModal product={selectedProduct} onClose={() => setSelectedProduct(null)} />
+function ProductDetailPage({ productId }: { productId: string }) {
+  const [, navigate] = useLocation();
+  const product = techProducts.find(p => p.id === productId);
+
+  if (!product) {
+    return (
+      <div className="p-6">
+        <Card className="p-6 text-center">
+          <p className="text-muted-foreground">Product not found</p>
+          <Button className="mt-4" onClick={() => navigate("/temporary/tech-stack")}>
+            Back to Tech Stack
+          </Button>
+        </Card>
+      </div>
+    );
+  }
+
+  return (
+    <div className="p-6 space-y-6">
+      <Button 
+        variant="ghost" 
+        className="mb-2"
+        onClick={() => navigate("/temporary/tech-stack")}
+        data-testid="button-back-to-tech-stack"
+      >
+        ← Back to Tech Stack
+      </Button>
+
+      <Card>
+        <div 
+          className="p-6"
+          style={{ backgroundColor: product.brandColorLight }}
+        >
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div>
+              <h1 
+                className="text-2xl font-bold mb-2"
+                style={{ color: product.brandColor }}
+              >
+                {product.name}
+              </h1>
+              <Badge variant="outline" className="text-sm">
+                {product.category}
+              </Badge>
+              <p className="text-sm text-muted-foreground mt-3">{product.tagline}</p>
+            </div>
+            <Button
+              variant="outline"
+              onClick={() => window.open(product.website, '_blank')}
+              data-testid={`button-visit-${product.id}`}
+            >
+              <ExternalLink className="h-4 w-4 mr-2" />
+              Visit Website
+            </Button>
+          </div>
+        </div>
+
+        <div className="p-6 border-t">
+          <h2 className="font-semibold text-lg mb-3">Overview</h2>
+          <p className="text-muted-foreground">{product.description}</p>
+        </div>
+      </Card>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <Card className="p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Check className="h-5 w-5 text-green-600" />
+            <h2 className="font-semibold text-lg">Strengths</h2>
+          </div>
+          <ul className="space-y-3">
+            {product.strengths.map((strength, idx) => (
+              <li key={idx} className="flex items-start gap-3">
+                <span className="text-green-600 font-bold mt-0.5">+</span>
+                <span className="text-sm text-muted-foreground">{strength}</span>
+              </li>
+            ))}
+          </ul>
+        </Card>
+
+        <Card className="p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <X className="h-5 w-5 text-red-600" />
+            <h2 className="font-semibold text-lg">Weaknesses</h2>
+          </div>
+          <ul className="space-y-3">
+            {product.weaknesses.map((weakness, idx) => (
+              <li key={idx} className="flex items-start gap-3">
+                <span className="text-red-600 font-bold mt-0.5">−</span>
+                <span className="text-sm text-muted-foreground">{weakness}</span>
+              </li>
+            ))}
+          </ul>
+        </Card>
+      </div>
+
+      <Card className="p-6" style={{ backgroundColor: "rgba(8, 69, 148, 0.05)" }}>
+        <div className="flex items-center gap-2 mb-4">
+          <Building2 className="h-5 w-5" style={{ color: "#084594" }} />
+          <h2 className="font-semibold text-lg" style={{ color: "#084594" }}>NCR Context</h2>
+        </div>
+        <p className="text-muted-foreground">{product.ncrContext}</p>
+      </Card>
     </div>
   );
 }
@@ -1098,6 +1212,19 @@ function RiskCompliance() {
 
 export default function Temporary() {
   const [location] = useLocation();
+
+  const productDetailMatch = location.match(/^\/temporary\/tech-stack\/(.+)$/);
+  
+  if (productDetailMatch) {
+    const productId = productDetailMatch[1];
+    return (
+      <div className="flex flex-col h-full">
+        <div className="flex-1 overflow-auto">
+          <ProductDetailPage productId={productId} />
+        </div>
+      </div>
+    );
+  }
 
   let ContentComponent = OnSiteInterviews;
   if (location === "/temporary/tech-stack") {

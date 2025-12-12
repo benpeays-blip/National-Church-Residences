@@ -179,6 +179,7 @@ function Router() {
       <Route path="/other" component={OtherWithTabs} />
       <Route path="/temporary" component={Temporary} />
       <Route path="/temporary/tech-stack" component={Temporary} />
+      <Route path="/temporary/tech-stack/:productId" component={Temporary} />
       <Route path="/temporary/optimization-ideas" component={Temporary} />
       <Route path="/temporary/risk-compliance" component={Temporary} />
       
