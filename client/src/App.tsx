@@ -198,6 +198,7 @@ function Router() {
       <Route path="/temporary/interviews/:personId" component={Temporary} />
       <Route path="/temporary/tech-stack" component={Temporary} />
       <Route path="/temporary/tech-stack/:productId" component={Temporary} />
+      <Route path="/temporary/technology-categories" component={Temporary} />
       <Route path="/temporary/optimization-ideas" component={Temporary} />
       <Route path="/temporary/risk-compliance" component={Temporary} />
       

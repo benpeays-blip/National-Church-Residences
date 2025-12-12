@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft } from "lucide-react";
+import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import TechStackMapper from "@/pages/tech-stack-mapper";
 
 import raisersEdgeLogo from "@assets/stock_images/raiser's_edge_nxt_bl_dec6c4f9.jpg";
 import donorSearchLogo from "@assets/stock_images/donorsearch_logo_f681dabc.jpg";
@@ -27,6 +28,12 @@ const temporaryTabs: SectionTab[] = [
     value: "tech-stack",
     icon: Layers,
     path: "/temporary/tech-stack",
+  },
+  {
+    label: "Technology Categories",
+    value: "technology-categories",
+    icon: FolderTree,
+    path: "/temporary/technology-categories",
   },
   {
     label: "Optimization Ideas",
@@ -1582,9 +1589,11 @@ export default function Temporary() {
     );
   }
 
-  let ContentComponent = OnSiteInterviews;
+  let ContentComponent: React.ComponentType = OnSiteInterviews;
   if (location === "/temporary/tech-stack") {
     ContentComponent = TechStack;
+  } else if (location === "/temporary/technology-categories") {
+    ContentComponent = TechStackMapper;
   } else if (location === "/temporary/optimization-ideas") {
     ContentComponent = OptimizationIdeas;
   } else if (location === "/temporary/risk-compliance") {
