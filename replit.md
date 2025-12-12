@@ -5,7 +5,13 @@ FundRazor is an AI-powered, enterprise-grade fundraising CRM designed for nonpro
 
 The Dashboard Home provides a unified view of the entire fundraising operation, featuring a Donor Relationship Quadrant, key performance metrics, top opportunities, AI-generated Next Best Actions, recent gifts, and an active campaigns overview.
 
-## Recent Changes (December 11, 2025)
+## Recent Changes (December 12, 2025)
+- **Integrated RelSci Relationship Intelligence**: Added new "RelSci Mapping" tab to Relationships section (/relationships/relsci) featuring Path Finder for discovering warm introduction paths through NCR's network, Prospect Research with high-value donor profiles including philanthropic history and board memberships, and NCR Connections analytics showing network coverage across Board, Foundation, and Leadership teams. **Status: ✅ WORKING**
+- **Integrated D&B Corporate Intelligence**: Added new "D&B Intelligence" tab to Relationships section (/relationships/dnb) featuring Company Research with D-U-N-S number lookup and company profiles, Corporate Prospects ranking by capacity and giving potential, and Risk Assessment for supplier/partner monitoring with credit scores and financial health indicators. **Status: ✅ WORKING**
+- **Added Technology Categories to Temporary**: Moved Tech Stack Mapper to Temporary section as "Technology Categories" tab (/temporary/technology-categories). **Status: ✅ WORKING**
+- **Renamed Corporate header**: Changed "Corporate" to "Corporations" in top navigation. **Status: ✅ WORKING**
+
+## Previous Changes (December 11, 2025)
 - **Added Generate Action Plan Feature**: Added "Generate Action Plan" button to donor HoverCard popup on the Donor Relationship Quadrant. Clicking opens a dedicated page (/donors/:id/action-plan) with an AI-generated 8-week cultivation strategy to move donors toward Partner status. Features personalized phone scripts, meeting agendas, email drafts, and mail pieces similar to the AI Tools Outreach Generator. **Status: ✅ WORKING**
 
 ## Previous Changes (November 19, 2025)
