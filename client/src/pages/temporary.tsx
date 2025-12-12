@@ -6,6 +6,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 
+import raisersEdgeLogo from "@assets/stock_images/raiser's_edge_nxt_bl_dec6c4f9.jpg";
+import donorSearchLogo from "@assets/stock_images/donorsearch_logo_f681dabc.jpg";
+import powerBiLogo from "@assets/stock_images/microsoft_power_bi_l_49b1fec0.jpg";
+import instrumentlLogo from "@assets/stock_images/instrumentl_grant_ma_12728f53.jpg";
+import workdayLogo from "@assets/stock_images/workday_hcm_logo_85daffca.jpg";
+import pointClickCareLogo from "@assets/stock_images/pointclickcare_healt_1ce43dfa.jpg";
+import guidestarLogo from "@assets/stock_images/guidestar_candid_non_4e34ba7b.jpg";
+import signupGeniusLogo from "@assets/stock_images/signupgenius_logo_bd1e3da8.jpg";
+
 const temporaryTabs: SectionTab[] = [
   {
     label: "On Site Interviews",
@@ -43,6 +52,7 @@ interface TechProduct {
   brandColor: string;
   brandColorLight: string;
   logoText: string;
+  logoImage: string;
   strengths: string[];
   weaknesses: string[];
   ncrContext: string;
@@ -59,6 +69,7 @@ const techProducts: TechProduct[] = [
     brandColor: "#00a4e4",
     brandColorLight: "rgba(0, 164, 228, 0.1)",
     logoText: "Blackbaud",
+    logoImage: raisersEdgeLogo,
     strengths: [
       "Industry-standard CRM for large and established nonprofits",
       "Handles complex donor records extremely well (pledges, soft credits, tributes, planned giving)",
@@ -88,6 +99,7 @@ const techProducts: TechProduct[] = [
     brandColor: "#1e3a5f",
     brandColorLight: "rgba(30, 58, 95, 0.1)",
     logoText: "DonorSearch",
+    logoImage: donorSearchLogo,
     strengths: [
       "Excellent philanthropic giving data - strong at identifying past charitable giving, foundation board ties, and donor generosity patterns",
       "Better for faith-based donors than WealthEngine - includes church giving when publicly available",
@@ -119,6 +131,7 @@ const techProducts: TechProduct[] = [
     brandColor: "#f2c811",
     brandColorLight: "rgba(242, 200, 17, 0.1)",
     logoText: "Microsoft",
+    logoImage: powerBiLogo,
     strengths: [
       "Connects to dozens of systems (Excel, SQL, APIs, Salesforce, Raiser's Edge, Yardi, etc.)",
       "Creates real-time dashboards for leadership",
@@ -147,6 +160,7 @@ const techProducts: TechProduct[] = [
     brandColor: "#6366f1",
     brandColorLight: "rgba(99, 102, 241, 0.1)",
     logoText: "Instrumentl",
+    logoImage: instrumentlLogo,
     strengths: [
       "Excellent grant discovery engine - pulls from federal, state, county, local, and private funders",
       "Automatic matching - suggests grants based on organization's mission and history",
@@ -178,6 +192,7 @@ const techProducts: TechProduct[] = [
     brandColor: "#0875e1",
     brandColorLight: "rgba(8, 117, 225, 0.1)",
     logoText: "Workday",
+    logoImage: workdayLogo,
     strengths: [
       "Secure, enterprise-class platform trusted by large organizations",
       "Strong HR workflows for recruiting, onboarding, and payroll",
@@ -205,6 +220,7 @@ const techProducts: TechProduct[] = [
     brandColor: "#00a3e0",
     brandColorLight: "rgba(0, 163, 224, 0.1)",
     logoText: "PointClickCare",
+    logoImage: pointClickCareLogo,
     strengths: [
       "Purpose-built for senior living and long-term care",
       "Comprehensive resident health records and care coordination",
@@ -231,6 +247,7 @@ const techProducts: TechProduct[] = [
     brandColor: "#00b4b4",
     brandColorLight: "rgba(0, 180, 180, 0.1)",
     logoText: "Candid",
+    logoImage: guidestarLogo,
     strengths: [
       "Trusted by donors - definitive source for nonprofit legitimacy",
       "Comprehensive 990 data and nonprofit profiles",
@@ -257,6 +274,7 @@ const techProducts: TechProduct[] = [
     brandColor: "#ff6b00",
     brandColorLight: "rgba(255, 107, 0, 0.1)",
     logoText: "SignUpGenius",
+    logoImage: signupGeniusLogo,
     strengths: [
       "Simple and easy to use - no login required for volunteers",
       "Free tier available with premium plans for advanced features",
@@ -288,11 +306,12 @@ function ProductCard({ product, onSelect }: { product: TechProduct; onSelect: (p
         className="p-4 flex flex-col items-center text-center"
         style={{ backgroundColor: product.brandColorLight }}
       >
-        <div 
-          className="w-16 h-16 rounded-xl flex items-center justify-center text-white font-bold text-sm mb-3 shadow-md"
-          style={{ backgroundColor: product.brandColor }}
-        >
-          {product.logoText.slice(0, 2).toUpperCase()}
+        <div className="w-16 h-16 rounded-xl overflow-hidden mb-3 shadow-md bg-white flex items-center justify-center">
+          <img 
+            src={product.logoImage} 
+            alt={`${product.name} logo`}
+            className="w-full h-full object-cover"
+          />
         </div>
         <h3 className="font-semibold text-sm" data-testid={`text-product-name-${product.id}`}>
           {product.name}
@@ -322,11 +341,12 @@ function ProductDetailModal({ product, onClose }: { product: TechProduct | null;
           style={{ backgroundColor: product.brandColorLight }}
         >
           <div className="flex items-center gap-4">
-            <div 
-              className="w-16 h-16 rounded-xl flex items-center justify-center text-white font-bold text-sm shadow-md"
-              style={{ backgroundColor: product.brandColor }}
-            >
-              {product.logoText.slice(0, 2).toUpperCase()}
+            <div className="w-16 h-16 rounded-xl overflow-hidden shadow-md bg-white flex items-center justify-center">
+              <img 
+                src={product.logoImage} 
+                alt={`${product.name} logo`}
+                className="w-full h-full object-cover"
+              />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 flex-wrap">

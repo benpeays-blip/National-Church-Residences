@@ -1,0 +1,126 @@
+Executive Takeaway
+Tech stack: Microsoft Fabric OneLake + Purview, Power BI, SharePoint, Raiser’s Edge, Yardi, Athena/Epic, Workday, Instrumentl, Azure Event Grid, unified React/Power Platform app.
+Agentic AI: Specialized agents (CareGuide, Compliance, Document, Engagement, Financial, Orchestration) embedded in each module, governed with audit trails.
+App: Modular shell with 8–10 hubs (CareGuide, Grants, Donor, Volunteer, Compliance, Finance, Strategy, Housing, Healthcare, Knowledge).
+Redundancies fixed: Donor letters, volunteer tools, predictive dashboards, Mango Apps, legacy custom apps, Excel reporting.
+This design gives NCR a lean, unified ecosystem: existing systems remain the source of record, Fabric + Purview unify data, AI agents handle busywork, and the app provides a single pane of glass for staff, families, donors, and regulators.
+NCR Optimized Tech Stack by Component
+1. Microsoft Fabric OneLake + Purview
+Role: Enterprise data lakehouse + governance.
+Agentic AI Help: Cleans duplicates, enforces golden records, flags anomalies, ensures HIPAA/PII compliance.
+App Role: Integration Hub module surfaces unified records and lineage; AI queries OneLake directly.
+Implementation:
+Owners: IT, Data Governance, Compliance.
+Steps: Inventory systems, migrate data pipelines, enforce Purview policies, set golden record rules.
+Timeline: 3–6 months phased integration.
+2. Power BI (with Fabric datasets)
+Role: Unified reporting and dashboards.
+Agentic AI Help: Embeds predictive analytics, generates outcome reports, explains anomalies.
+App Role: Role-based dashboards (executive, fundraising, housing, healthcare, finance).
+Implementation:
+Owners: BI Team, Finance, Strategy.
+Steps: Build certified datasets, design dashboards, embed predictive overlays, retire Excel-driven reporting.
+Timeline: 2–4 months.
+3. SharePoint + Microsoft Search
+Role: Intranet, document store, enterprise search.
+Agentic AI Help: Conversational search across policies, SOPs, filings, donor letters.
+App Role: Knowledge & Training Hub with wiki, contextual help, micro-learning.
+Implementation:
+Owners: IT, HR, Legal.
+Steps: Migrate Mango Apps content, configure hubs, index documents, train staff.
+Timeline: 6–8 weeks.
+4. Raiser’s Edge + iWave/WealthEngine
+Role: Donor CRM + enrichment.
+Agentic AI Help: Predict donor likelihood, draft personalized communications, auto-assign leads.
+App Role: Donor Hub with funnel, messaging templates, acquisition tracking.
+Implementation:
+Owners: Annual Giving, Marketing, IT CRM.
+Steps: Integrate enrichment tools, build scoring models, deploy voice memo capture, unify templates.
+Timeline: 6–8 weeks.
+5. Yardi (RightSource)
+Role: Housing management + rent payments.
+Agentic AI Help: Auto-validate intake data, flag compliance risks, nudge residents toward online payments.
+App Role: Housing Manager Portal with streamlined intake, compliance workflows, payment options.
+Implementation:
+Owners: Housing Ops, Property Managers, IT.
+Steps: Standardize intake forms, integrate online payments, outreach campaigns, donor transparency dashboards.
+Timeline: 2–3 months.
+6. AthenaHealth / Epic
+Role: Healthcare EHR.
+Agentic AI Help: Auto-summarize intake, generate donor impact stories, streamline billing.
+App Role: Healthcare Integration Module linking EHR + Workday + Power BI.
+Implementation:
+Owners: Health Services, Finance, IT.
+Steps: Map intake fields, build connectors, configure capital expense workflows, design dashboards.
+Timeline: 8–12 weeks.
+7. Workday
+Role: HR + Finance backbone.
+Agentic AI Help: Predict staffing shortages, auto-generate schedules, streamline billing and expense tracking.
+App Role: HR Frontline Mode (mobile 3-button app) + Finance integration with P&L.
+Implementation:
+Owners: HR, Finance, IT.
+Steps: Build mobile HR app, integrate billing with healthcare, harmonize chart of accounts.
+Timeline: 3–6 months.
+8. Instrumentl + Candid
+Role: Grant discovery and management.
+Agentic AI Help: Draft narratives, prevent duplicate funder outreach, generate dashboards.
+App Role: Grants Workspace with pipeline, expense workflows, grantee portal.
+Implementation:
+Owners: Grants, Finance, IT.
+Steps: Connect Instrumentl ↔ Workday ↔ RE, build pipeline Kanban, launch portal.
+Timeline: 10–14 weeks.
+9. Azure Event Grid / Service Bus
+Role: Real-time eventing backbone.
+Agentic AI Help: Trigger workflows (e.g., donor follow-up, compliance filing reminders, intake updates).
+App Role: Integration Hub uses events to keep modules in sync.
+Implementation:
+Owners: IT Architecture.
+Steps: Configure event bus, define triggers, connect modules.
+Timeline: 6–10 weeks.
+10. Unified App Shell (React/Power Platform)
+Role: Modular web + mobile app.
+Agentic AI Help: Embedded assistants in each module, orchestrating tasks and surfacing “next best actions.”
+App Role: Houses CareGuide 2.0, Grants Workspace, Donor Hub, Volunteer Hub, Compliance Dashboard, Financial Transparency, Strategy Dashboard, Housing Manager Portal.
+Implementation:
+Owners: IT PMO, Product Teams.
+Steps: Build modular shell, integrate modules, embed AI agents, pilot with 3–4 roles.
+Timeline: 6–9 months phased rollout.
+🚫 Redundancies Removed
+Multiple donor letter engines → Consolidated into Document Agent + Donor/Volunteer modules.
+Standalone predictive dashboards → Embedded into Power BI role-based dashboards.
+Duplicate volunteer tools (SignUpGenius, homegrown) → Replaced by Volunteer & Engagement Hub.
+Mango Apps intranet → Migrated to SharePoint.
+Legacy custom apps (3–5) → Retired or rebuilt in Power Apps.
+Excel-driven reporting → Replaced by Fabric datasets + Power BI certified reports.
+
+
+
+
+Agent Strategy
+1. Core Agent Types
+CareGuide Agent: Conversational intake assistant for families; validates coordinator entries; generates outcome metrics.
+Compliance Agent: Automates HUD/CMS filings, assembles evidence, enforces HIPAA/PII rules.
+Document Agent: Drafts donor letters, grant narratives, board reports, and audit bundles.
+Engagement Agent: Prioritizes donors, volunteers, and funders; prevents cannibalization; schedules outreach.
+Financial Agent: Consolidates P&L, detects double counting, forecasts cash flow, tracks donor acquisition costs.
+Orchestration Agent: Coordinates tasks across modules, enforces SLAs, escalates anomalies.
+Training Agent: Provides contextual help, micro-learning, and adoption nudges inside workflows.
+2. Agent Operating Principles
+Embedded in modules: Each agent lives inside its relevant app hub (e.g., CareGuide Agent inside CareGuide 2.0).
+Human-in-the-loop: Sensitive actions (filings, donor comms, merges) require staff approval.
+Audit trails: Every agent action logged for compliance and trust.
+Feedback loops: Staff can correct or rate AI outputs; agents learn continuously.
+Event-driven: Agents respond to triggers from Azure Event Grid (e.g., intake submitted, donor pledge logged, compliance deadline approaching).
+📱 App Strategy
+1. Unified App Shell
+Structure: Modular web + mobile app (React/Power Platform) with hubs for CareGuide, Grants, Donor, Volunteer, Compliance, Finance, Strategy, Housing, Healthcare, Knowledge.
+Role-based dashboards: Executives, fundraisers, clinicians, housing managers each see tailored “next best actions.”
+Global search: Microsoft Search integration across residents, donors, grants, properties, filings, documents.
+Smart notifications: Context-aware nudges (expiring certifications, donor lapses, lease renewals).
+Mobile-first: Simplified frontline views (3–4 primary actions per role).
+2. How the App Supports Agents
+Data context: App modules provide structured data (eligibility rules, donor records, grant pipelines) that agents act on.
+Workflow orchestration: App defines steps and approvals; agents automate them.
+Simplified info searching: App organizes records into hubs; agents query across hubs to answer questions instantly.
+User interface: App is the “face” of the agents—staff interact with dashboards, forms, and portals, while agents handle the heavy lifting behind the scenes.
+
