@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -6,30 +6,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
   Database, 
   DollarSign, 
-  Mail, 
-  Calendar, 
   FileText, 
   BarChart3, 
   Users, 
-  Globe,
   Search,
   AlertCircle,
   CheckCircle2,
-  Building2
+  Building2,
+  Stethoscope,
+  Eye,
+  CalendarCheck,
+  LucideIcon
 } from "lucide-react";
-import {
-  SiSalesforce,
-  SiMailchimp,
-  SiHubspot,
-  SiStripe,
-  SiQuickbooks,
-  SiGoogle,
-  SiAsana,
-  SiTableau,
-  SiEventbrite,
-  SiSmartthings,
-  SiAdp
-} from "react-icons/si";
 import {
   Accordion,
   AccordionContent,
@@ -37,26 +25,34 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+import { 
+  techProducts, 
+  TechProduct,
+  categoryDescriptions, 
+  categoryIntegrationNeeds 
+} from "@/data/tech-products";
+
 interface Platform {
   name: string;
   description: string;
   popularity?: "high" | "medium" | "growing";
   logo?: React.ComponentType<{ className?: string; size?: number }>;
+  logoImage?: string;
   logoColor?: string;
   fallbackInitials?: string;
+  ncrContext?: string;
 }
 
 interface TechCategory {
   id: string;
   title: string;
   description: string;
-  icon: any;
+  icon: LucideIcon;
   platforms: Platform[];
   painPoints: string[];
   integrationNeed: "critical" | "high" | "medium";
 }
 
-// Logo fallback component for platforms without official icons
 const LogoFallback = ({ initials, color }: { initials: string; color?: string }) => (
   <div 
     className={`w-10 h-10 rounded-lg flex items-center justify-center text-sm font-semibold ${
@@ -67,403 +63,63 @@ const LogoFallback = ({ initials, color }: { initials: string; color?: string })
   </div>
 );
 
-const techStackData: TechCategory[] = [
-  {
-    id: "crm",
-    title: "Constituent Relationship Management (CRM)",
-    description: "Core donor database tracking gifts, pledges, events, moves management, and communications history",
-    icon: Database,
-    platforms: [
-      { 
-        name: "Blackbaud Raiser's Edge NXT", 
-        description: "Industry standard for large nonprofits and faith-based foundations", 
-        popularity: "high",
-        fallbackInitials: "BB",
-        logoColor: "bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300"
-      },
-      { 
-        name: "Salesforce NPSP", 
-        description: "Flexible, cloud-based CRM for integrated donor + volunteer + grant tracking", 
-        popularity: "high",
-        logo: SiSalesforce,
-        logoColor: "#00A1E0"
-      },
-      { 
-        name: "Virtuous CRM", 
-        description: "Growing in popularity for mid-to-large orgs seeking donor personalization and automation", 
-        popularity: "growing",
-        fallbackInitials: "VC",
-        logoColor: "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
-      },
-      { 
-        name: "EveryAction / Bonterra", 
-        description: "Often used by advocacy or membership-based nonprofits", 
-        popularity: "medium",
-        fallbackInitials: "EA",
-        logoColor: "bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-300"
-      }
-    ],
-    painPoints: [
-      "Limited integration with other tools",
-      "Manual data entry for events or grants",
-      "Reporting requires exports to Excel or Power BI"
-    ],
-    integrationNeed: "critical"
-  },
-  {
-    id: "wealth",
-    title: "Wealth Screening & Prospect Research",
-    description: "Identify, score, and prioritize high-capacity donors and institutions",
-    icon: DollarSign,
-    platforms: [
-      { 
-        name: "WealthEngine", 
-        description: "Wealth and lifestyle indicators", 
-        popularity: "high",
-        fallbackInitials: "WE",
-        logoColor: "bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300"
-      },
-      { 
-        name: "iWave", 
-        description: "Combines wealth, philanthropic, and corporate data", 
-        popularity: "high",
-        fallbackInitials: "iW",
-        logoColor: "bg-cyan-100 dark:bg-cyan-950 text-cyan-700 dark:text-cyan-300"
-      },
-      { 
-        name: "DonorSearch", 
-        description: "Major gift indicators and giving history across databases", 
-        popularity: "medium",
-        fallbackInitials: "DS",
-        logoColor: "bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300"
-      },
-      { 
-        name: "Windfall", 
-        description: "Real estate and household income data updated weekly", 
-        popularity: "growing",
-        fallbackInitials: "WF",
-        logoColor: "bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300"
-      }
-    ],
-    painPoints: [
-      "Static data quickly becomes outdated",
-      "Systems often siloed from CRM (manual import/export)",
-      "Quarterly screenings not real-time"
-    ],
-    integrationNeed: "critical"
-  },
-  {
-    id: "marketing",
-    title: "Marketing & Donor Communication",
-    description: "Email, newsletters, text campaigns, and donor journeys",
-    icon: Mail,
-    platforms: [
-      { 
-        name: "Mailchimp", 
-        description: "Traditional email marketing", 
-        popularity: "high",
-        logo: SiMailchimp,
-        logoColor: "#FFE01B"
-      },
-      { 
-        name: "Microsoft Outlook", 
-        description: "Email and calendar management", 
-        popularity: "high",
-        fallbackInitials: "OL",
-        logoColor: "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
-      },
-      { 
-        name: "Constant Contact", 
-        description: "Email marketing for nonprofits", 
-        popularity: "medium",
-        fallbackInitials: "CC",
-        logoColor: "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
-      },
-      { 
-        name: "HubSpot for Nonprofits", 
-        description: "Integrated marketing automation and donor nurturing", 
-        popularity: "growing",
-        logo: SiHubspot,
-        logoColor: "#FF7A59"
-      },
-      { 
-        name: "Classy / Funraise", 
-        description: "Donation pages, crowdfunding, and event management", 
-        popularity: "medium",
-        fallbackInitials: "CF",
-        logoColor: "bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300"
-      }
-    ],
-    painPoints: [
-      "Disconnected from CRM, limited donor segmentation",
-      "No unified record of donor communications across channels",
-      "Manual list uploads and updates"
-    ],
-    integrationNeed: "high"
-  },
-  {
-    id: "events",
-    title: "Event Management",
-    description: "Galas, luncheons, golf tournaments, and donor visits",
-    icon: Calendar,
-    platforms: [
-      { 
-        name: "Eventbrite", 
-        description: "Registration, ticketing, and auction management", 
-        popularity: "high",
-        logo: SiEventbrite,
-        logoColor: "#F05537"
-      },
-      { 
-        name: "Greater Giving / GiveSmart", 
-        description: "Nonprofit event and auction platforms", 
-        popularity: "medium",
-        fallbackInitials: "GG",
-        logoColor: "bg-orange-100 dark:bg-orange-950 text-orange-700 dark:text-orange-300"
-      },
-      { 
-        name: "OneCause", 
-        description: "Event fundraising and bidding", 
-        popularity: "medium",
-        fallbackInitials: "OC",
-        logoColor: "bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300"
-      },
-      { 
-        name: "Cvent", 
-        description: "Large national conferences or hybrid events", 
-        popularity: "medium",
-        fallbackInitials: "CV",
-        logoColor: "bg-violet-100 dark:bg-violet-950 text-violet-700 dark:text-violet-300"
-      }
-    ],
-    painPoints: [
-      "Event data not synced back to CRM",
-      "Limited insights on event ROI",
-      "No attendee-to-donor conversion tracking"
-    ],
-    integrationNeed: "high"
-  },
-  {
-    id: "grants",
-    title: "Grant Management Systems",
-    description: "Proposals, deadlines, submissions, and reporting for institutional funders",
-    icon: FileText,
-    platforms: [
-      { 
-        name: "Fluxx", 
-        description: "Large foundations and government grantors", 
-        popularity: "high",
-        fallbackInitials: "FX",
-        logoColor: "bg-teal-100 dark:bg-teal-950 text-teal-700 dark:text-teal-300"
-      },
-      { 
-        name: "Foundant GLM", 
-        description: "Mid-sized nonprofits managing multiple grants", 
-        popularity: "medium",
-        fallbackInitials: "FG",
-        logoColor: "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
-      },
-      { 
-        name: "SmartSimple / Submittable", 
-        description: "Multi-funder coordination and workflow automation", 
-        popularity: "medium",
-        logo: SiSmartthings,
-        logoColor: "#15BFFF"
-      }
-    ],
-    painPoints: [
-      "Operates separately from donor CRM",
-      "No centralized view of funder engagement",
-      "Manual tracking of proposal outcomes"
-    ],
-    integrationNeed: "high"
-  },
-  {
-    id: "financial",
-    title: "Financial & Accounting Systems",
-    description: "Accounting, reconciliation, and integration with fundraising database",
-    icon: BarChart3,
-    platforms: [
-      { 
-        name: "Blackbaud Financial Edge NXT", 
-        description: "Integrates with Raiser's Edge", 
-        popularity: "high",
-        fallbackInitials: "BB",
-        logoColor: "bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300"
-      },
-      { 
-        name: "QuickBooks Enterprise", 
-        description: "Common for nonprofits under $50M", 
-        popularity: "high",
-        logo: SiQuickbooks,
-        logoColor: "#2CA01C"
-      },
-      { 
-        name: "Sage Intacct", 
-        description: "Modern cloud-based accounting and budgeting", 
-        popularity: "growing",
-        fallbackInitials: "SI",
-        logoColor: "bg-green-100 dark:bg-green-950 text-green-700 dark:text-green-300"
-      }
-    ],
-    painPoints: [
-      "Manual reconciliation between accounting and development",
-      "Inconsistent revenue coding and fund designations",
-      "Data entry duplication"
-    ],
-    integrationNeed: "critical"
-  },
-  {
-    id: "analytics",
-    title: "Data Analytics & Reporting",
-    description: "Visualize performance, donor trends, and campaign results",
-    icon: BarChart3,
-    platforms: [
-      { 
-        name: "Microsoft Power BI", 
-        description: "Highly adopted for dashboarding", 
-        popularity: "high",
-        fallbackInitials: "PBI",
-        logoColor: "bg-yellow-100 dark:bg-yellow-950 text-yellow-700 dark:text-yellow-300"
-      },
-      { 
-        name: "Tableau", 
-        description: "Visual analytics and executive reporting", 
-        popularity: "high",
-        logo: SiTableau,
-        logoColor: "#E97627"
-      },
-      { 
-        name: "Google Data Studio / Looker", 
-        description: "Lightweight integrations", 
-        popularity: "medium",
-        logo: SiGoogle,
-        logoColor: "#4285F4"
-      }
-    ],
-    painPoints: [
-      "Requires manual data exports and cleaning",
-      "Inconsistent data definitions across departments",
-      "Reports become stale quickly"
-    ],
-    integrationNeed: "medium"
-  },
-  {
-    id: "collaboration",
-    title: "Collaboration & Project Management",
-    description: "Internal communication, workflow tracking, and coordination",
-    icon: Users,
-    platforms: [
-      { 
-        name: "Microsoft Teams / SharePoint", 
-        description: "Communication and document storage", 
-        popularity: "high",
-        fallbackInitials: "MS",
-        logoColor: "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
-      },
-      { 
-        name: "Asana", 
-        description: "Project tracking and collaboration", 
-        popularity: "medium",
-        logo: SiAsana,
-        logoColor: "#F06A6A"
-      },
-      { 
-        name: "Monday.com", 
-        description: "Work management and team collaboration", 
-        popularity: "growing",
-        fallbackInitials: "M",
-        logoColor: "bg-red-100 dark:bg-red-950 text-red-700 dark:text-red-300"
-      },
-      { 
-        name: "Google Workspace", 
-        description: "Email, Drive, Docs, Sheets", 
-        popularity: "high",
-        logo: SiGoogle,
-        logoColor: "#4285F4"
-      }
-    ],
-    painPoints: [
-      "Fragmented communication between departments",
-      "Files and data stored inconsistently",
-      "Multiple versions, lack of control"
-    ],
-    integrationNeed: "medium"
-  },
-  {
-    id: "digital",
-    title: "Digital Fundraising & Payment Processing",
-    description: "Online giving, recurring donations, and payment integrations",
-    icon: Globe,
-    platforms: [
-      { 
-        name: "Classy / Funraise", 
-        description: "Modern online giving solutions", 
-        popularity: "high",
-        fallbackInitials: "CF",
-        logoColor: "bg-pink-100 dark:bg-pink-950 text-pink-700 dark:text-pink-300"
-      },
-      { 
-        name: "Stripe / Authorize.net", 
-        description: "Payment processing layers", 
-        popularity: "high",
-        logo: SiStripe,
-        logoColor: "#635BFF"
-      },
-      { 
-        name: "Double the Donation", 
-        description: "Employer matching integration", 
-        popularity: "medium",
-        fallbackInitials: "DD",
-        logoColor: "bg-yellow-100 dark:bg-yellow-950 text-yellow-700 dark:text-yellow-300"
-      }
-    ],
-    painPoints: [
-      "Donation data not linked cleanly to CRM",
-      "Limited donor journey tracking post-gift",
-      "Manual reconciliation required"
-    ],
-    integrationNeed: "critical"
-  },
-  {
-    id: "operations",
-    title: "HR, Volunteer & Operations",
-    description: "Manage HR, volunteers, and internal staff operations",
-    icon: Users,
-    platforms: [
-      { 
-        name: "Paylocity / ADP", 
-        description: "Payroll and HR", 
-        popularity: "high",
-        logo: SiAdp,
-        logoColor: "#D8232A"
-      },
-      { 
-        name: "VolunteerHub / Galaxy Digital", 
-        description: "Volunteer tracking", 
-        popularity: "medium",
-        fallbackInitials: "VH",
-        logoColor: "bg-purple-100 dark:bg-purple-950 text-purple-700 dark:text-purple-300"
-      },
-      { 
-        name: "Smartsheet", 
-        description: "Operational planning and reporting", 
-        popularity: "medium",
-        fallbackInitials: "SS",
-        logoColor: "bg-blue-100 dark:bg-blue-950 text-blue-700 dark:text-blue-300"
-      }
-    ],
-    painPoints: [
-      "Isolated from donor and grant systems",
-      "Hard to connect operational impact to fundraising",
-      "Volunteer data disconnected from donor profiles"
-    ],
-    integrationNeed: "medium"
-  }
-];
+const categoryIcons: Record<string, LucideIcon> = {
+  "CRM": Database,
+  "Prospecting": DollarSign,
+  "Analytics": BarChart3,
+  "Grants": FileText,
+  "HR & Finance": Users,
+  "Clinical EHR": Stethoscope,
+  "Transparency": Eye,
+  "Coordination": CalendarCheck
+};
+
+const categoryTitles: Record<string, string> = {
+  "CRM": "Constituent Relationship Management (CRM)",
+  "Prospecting": "Prospecting & Wealth Screening",
+  "Analytics": "Data Analytics & Reporting",
+  "Grants": "Grant Discovery & Management",
+  "HR & Finance": "HR & Finance",
+  "Clinical EHR": "Clinical EHR",
+  "Transparency": "Transparency & Funder Intelligence",
+  "Coordination": "Volunteer & Event Coordination"
+};
+
+function buildTechStackData(products: TechProduct[]): TechCategory[] {
+  const categoryMap = new Map<string, TechCategory>();
+  
+  products.forEach((product) => {
+    const category = product.category;
+    
+    if (!categoryMap.has(category)) {
+      categoryMap.set(category, {
+        id: category.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+        title: categoryTitles[category] || category,
+        description: categoryDescriptions[category] || "",
+        icon: categoryIcons[category] || Building2,
+        platforms: [],
+        painPoints: product.weaknesses.slice(0, 3),
+        integrationNeed: categoryIntegrationNeeds[category] || "medium"
+      });
+    }
+    
+    const techCategory = categoryMap.get(category)!;
+    techCategory.platforms.push({
+      name: product.name,
+      description: product.description,
+      popularity: "high",
+      logoImage: product.logoImage,
+      ncrContext: product.ncrContext
+    });
+  });
+  
+  return Array.from(categoryMap.values());
+}
 
 export default function TechStackMapper() {
   const [searchQuery, setSearchQuery] = useState("");
+  
+  const techStackData = useMemo(() => buildTechStackData(techProducts), []);
   
   const filteredData = techStackData.filter(category => 
     category.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -501,9 +157,12 @@ export default function TechStackMapper() {
         className="flex items-start gap-3 p-4 rounded-lg border bg-card hover-elevate transition-all"
         data-testid={`card-platform-${platform.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
       >
-        {/* Logo */}
         <div className="shrink-0">
-          {Logo ? (
+          {platform.logoImage ? (
+            <div className="w-10 h-10 rounded-lg overflow-hidden">
+              <img src={platform.logoImage} alt={platform.name} className="w-full h-full object-cover" />
+            </div>
+          ) : Logo ? (
             <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center p-2" style={platform.logoColor && platform.logoColor.startsWith('#') ? { color: platform.logoColor } : undefined}>
               <Logo size={24} className="shrink-0" />
             </div>
@@ -515,7 +174,6 @@ export default function TechStackMapper() {
           )}
         </div>
 
-        {/* Content */}
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2 mb-1">
             <h4 className="font-semibold text-sm" data-testid={`text-platform-name-${platform.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>
@@ -540,7 +198,6 @@ export default function TechStackMapper() {
           <TabsTrigger value="categories" data-testid="tab-categories">Technology Categories</TabsTrigger>
         </TabsList>
 
-        {/* Tab 1: System Architecture Overview */}
         <TabsContent value="architecture" className="space-y-6">
           <Card>
             <CardHeader>
@@ -556,7 +213,6 @@ export default function TechStackMapper() {
                 key={category.id}
                 className="rounded-lg border overflow-hidden hover-elevate transition-all"
               >
-                {/* Thin Sky Blue Header */}
                 <div 
                   className="flex items-center gap-3 px-4 py-3"
                   style={{ backgroundColor: '#0284C7' }}
@@ -569,7 +225,6 @@ export default function TechStackMapper() {
                   </h4>
                 </div>
                 
-                {/* Content Area */}
                 <div className="p-5 bg-card">
                   <div className="flex flex-wrap gap-2">
                     {category.platforms.map((platform) => {
@@ -580,7 +235,11 @@ export default function TechStackMapper() {
                           className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-muted/50 hover-elevate transition-all"
                           title={platform.name}
                         >
-                          {Logo ? (
+                          {platform.logoImage ? (
+                            <div className="w-5 h-5 rounded overflow-hidden shrink-0">
+                              <img src={platform.logoImage} alt={platform.name} className="w-full h-full object-cover" />
+                            </div>
+                          ) : Logo ? (
                             <div style={platform.logoColor && platform.logoColor.startsWith('#') ? { color: platform.logoColor } : undefined}>
                               <Logo size={16} className="shrink-0" />
                             </div>
@@ -604,7 +263,6 @@ export default function TechStackMapper() {
       </Card>
         </TabsContent>
 
-        {/* Tab 2: Tech Stack Layers */}
         <TabsContent value="layers" className="space-y-6">
           <Card>
         <CardHeader>
@@ -614,9 +272,7 @@ export default function TechStackMapper() {
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          {/* Three Layer Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Digital Engagement Platform */}
             <div className="rounded-lg border overflow-hidden">
               <div className="px-4 py-3" style={{ backgroundColor: '#0284C7' }}>
                 <h4 className="font-semibold text-sm text-white">Digital Engagement Platforms</h4>
@@ -663,7 +319,6 @@ export default function TechStackMapper() {
               </div>
             </div>
 
-            {/* CRM */}
             <div className="rounded-lg border overflow-hidden">
               <div className="px-4 py-3" style={{ backgroundColor: '#0284C7' }}>
                 <h4 className="font-semibold text-sm text-white">CRM — Customer Relationship Management</h4>
@@ -710,7 +365,6 @@ export default function TechStackMapper() {
               </div>
             </div>
 
-            {/* ERP */}
             <div className="rounded-lg border overflow-hidden">
               <div className="px-4 py-3" style={{ backgroundColor: '#0284C7' }}>
                 <h4 className="font-semibold text-sm text-white">ERP — Enterprise Resource Planning</h4>
@@ -737,7 +391,7 @@ export default function TechStackMapper() {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-primary mt-0.5">•</span>
-                      <span>Reporting & analytics dashboards</span>
+                      <span>Project & operations management</span>
                     </li>
                   </ul>
                 </div>
@@ -745,144 +399,142 @@ export default function TechStackMapper() {
                   <p className="text-xs font-medium text-muted-foreground">EXAMPLES</p>
                   <div className="flex flex-wrap gap-1.5">
                     <Badge variant="secondary" className="text-xs">SAP S/4HANA</Badge>
-                    <Badge variant="secondary" className="text-xs">Oracle ERP Cloud</Badge>
-                    <Badge variant="secondary" className="text-xs">NetSuite</Badge>
-                    <Badge variant="secondary" className="text-xs">Dynamics 365 F&O</Badge>
+                    <Badge variant="secondary" className="text-xs">Oracle Fusion</Badge>
+                    <Badge variant="secondary" className="text-xs">Workday</Badge>
+                    <Badge variant="secondary" className="text-xs">Microsoft Dynamics 365 Finance</Badge>
                   </div>
                 </div>
                 <div className="space-y-2">
                   <p className="text-xs font-medium text-muted-foreground">PRIMARY USERS</p>
-                  <p className="text-sm">Finance, HR, Operations</p>
+                  <p className="text-sm">Finance, Operations, HR</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Integration Flow Example */}
-          <div className="rounded-lg border p-5 bg-muted/30">
-            <h4 className="font-semibold text-sm mb-3 flex items-center gap-2">
-              <Globe className="w-4 h-4 text-primary" />
-              Integration Flow Example
-            </h4>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              A donor gives online through a <strong>digital engagement platform</strong>, which records the gift and contact info into the <strong>CRM</strong>. The financial record and reconciliation then sync into the <strong>ERP</strong> for accounting and reporting. This seamless data flow ensures all systems stay synchronized while serving their specialized functions.
-            </p>
-          </div>
+          <Card className="border-dashed">
+            <CardContent className="pt-6">
+              <div className="flex items-start gap-4">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                  <Building2 className="w-5 h-5 text-primary" />
+                </div>
+                <div className="space-y-2">
+                  <h4 className="font-semibold">Key Insight: The Integration Challenge</h4>
+                  <p className="text-sm text-muted-foreground">
+                    Most organizations struggle because these three layers don't naturally talk to each other. 
+                    <span className="font-medium text-foreground"> ERP systems</span> know about budgets and employees, 
+                    <span className="font-medium text-foreground"> CRM systems</span> know about donors and relationships, and 
+                    <span className="font-medium text-foreground"> Digital Engagement platforms</span> know about website visits and email clicks — 
+                    but getting unified insights across all three requires intentional integration strategy.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </CardContent>
       </Card>
         </TabsContent>
 
-        {/* Tab 3: Technology Categories */}
         <TabsContent value="categories" className="space-y-6">
-          {/* Search */}
           <Card>
-            <CardContent className="p-6">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                <Input
-                  type="text"
-                  placeholder="Search categories, platforms, or keywords..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                  data-testid="input-search"
-                />
+            <CardHeader className="pb-4">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                  <CardTitle>NCR Technology Categories</CardTitle>
+                  <CardDescription>
+                    Current software platforms used at National Church Residences organized by function
+                  </CardDescription>
+                </div>
+                <div className="relative w-full md:w-72">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search categories..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="pl-10"
+                    data-testid="input-search-categories"
+                  />
+                </div>
               </div>
+            </CardHeader>
+            <CardContent>
+              <Accordion type="multiple" className="w-full space-y-3">
+                {filteredData.map((category) => (
+                  <AccordionItem 
+                    key={category.id} 
+                    value={category.id}
+                    className="border rounded-lg overflow-hidden"
+                  >
+                    <AccordionTrigger 
+                      className="px-4 py-3 hover:no-underline hover-elevate"
+                      data-testid={`accordion-trigger-${category.id}`}
+                    >
+                      <div className="flex items-center gap-4 flex-1">
+                        <div 
+                          className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                          style={{ backgroundColor: '#0284C7' }}
+                        >
+                          <category.icon className="w-5 h-5 text-white" />
+                        </div>
+                        <div className="text-left flex-1">
+                          <div className="flex items-center gap-2 flex-wrap">
+                            <h3 className="font-semibold text-sm">{category.title}</h3>
+                            <Badge 
+                              variant="outline" 
+                              className={`text-xs ${getIntegrationColor(category.integrationNeed)}`}
+                            >
+                              {category.integrationNeed === "critical" ? (
+                                <><AlertCircle className="w-3 h-3 mr-1" /> Critical</>
+                              ) : category.integrationNeed === "high" ? (
+                                <><AlertCircle className="w-3 h-3 mr-1" /> High Priority</>
+                              ) : (
+                                <><CheckCircle2 className="w-3 h-3 mr-1" /> Medium</>
+                              )}
+                            </Badge>
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-0.5">{category.description}</p>
+                        </div>
+                      </div>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-4 pb-4">
+                      <div className="space-y-4 pt-2">
+                        <div className="space-y-2">
+                          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                            NCR Platform{category.platforms.length > 1 ? 's' : ''}
+                          </h4>
+                          <div className="grid grid-cols-1 gap-3">
+                            {category.platforms.map(renderPlatformCard)}
+                          </div>
+                        </div>
+                        
+                        {category.painPoints.length > 0 && (
+                          <div className="space-y-2">
+                            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
+                              Key Challenges
+                            </h4>
+                            <ul className="space-y-1.5">
+                              {category.painPoints.map((point, idx) => (
+                                <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                                  <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                                  <span>{point}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                        )}
+                      </div>
+                    </AccordionContent>
+                  </AccordionItem>
+                ))}
+              </Accordion>
+              
+              {filteredData.length === 0 && (
+                <div className="text-center py-12">
+                  <p className="text-muted-foreground">No categories match your search.</p>
+                </div>
+              )}
             </CardContent>
           </Card>
-
-          {/* Categories */}
-          <Card>
-        <CardHeader>
-          <CardTitle>Technology Categories</CardTitle>
-          <CardDescription>
-            {filteredData.length} {filteredData.length === 1 ? 'category' : 'categories'} found
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Accordion type="single" collapsible className="space-y-4">
-            {filteredData.map((category) => (
-              <AccordionItem 
-                key={category.id} 
-                value={category.id}
-                className="border rounded-lg px-6 py-2"
-                data-testid={`accordion-category-${category.id}`}
-              >
-                <AccordionTrigger className="hover:no-underline">
-                  <div className="flex items-center gap-4 text-left w-full">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <category.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <h3 className="font-semibold text-base" data-testid={`text-category-title-${category.id}`}>
-                          {category.title}
-                        </h3>
-                        <Badge 
-                          variant="outline" 
-                          className={`text-xs ${getIntegrationColor(category.integrationNeed)}`}
-                        >
-                          {category.integrationNeed.charAt(0).toUpperCase() + category.integrationNeed.slice(1)} Priority
-                        </Badge>
-                      </div>
-                      <p className="text-sm text-muted-foreground">
-                        {category.description}
-                      </p>
-                    </div>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent className="pt-4 pb-2">
-                  <div className="space-y-6 ml-14">
-                    {/* Most Common Platforms */}
-                    <div>
-                      <h4 className="font-medium text-sm mb-3 flex items-center gap-2">
-                        <Building2 className="w-4 h-4 text-primary" />
-                        Most Common Platforms
-                      </h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        {category.platforms.map(renderPlatformCard)}
-                      </div>
-                    </div>
-
-                    {/* Pain Points */}
-                    <div>
-                      <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
-                        <AlertCircle className="w-4 h-4 text-primary" />
-                        Common Pain Points
-                      </h4>
-                      <ul className="space-y-1 text-sm text-muted-foreground">
-                        {category.painPoints.map((point, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <span className="text-primary mt-0.5">•</span>
-                            <span>{point}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Integration Requirement */}
-                    <div className={`rounded-lg p-4 ${getIntegrationColor(category.integrationNeed)}`}>
-                      <h4 className="font-medium text-sm mb-1 flex items-center gap-2">
-                        <CheckCircle2 className="w-4 h-4 text-primary" />
-                        Integration Requirement
-                      </h4>
-                      <p className="text-sm">
-                        This category requires <strong>{category.integrationNeed}</strong> priority integration with FundRazor's unified data layer.
-                      </p>
-                    </div>
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
-
-            {filteredData.length === 0 && (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">No categories found matching "{searchQuery}"</p>
-              </div>
-            )}
-          </CardContent>
-        </Card>
         </TabsContent>
       </Tabs>
     </div>
