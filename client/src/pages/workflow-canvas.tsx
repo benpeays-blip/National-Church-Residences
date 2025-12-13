@@ -10,48 +10,63 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Save, Play, ArrowLeft, Plus } from "lucide-react";
+import { Save, Play, ArrowLeft, Plus, MoreHorizontal, Info } from "lucide-react";
 import type { Workflow, WorkflowBlock, WorkflowConnection } from "@shared/schema";
 import { systemBlocks, humanBlocks, dataBlocks, actionBlocks, organizationBlocks, logicBlocks } from "@shared/workflows";
 import { useCallback, useEffect, useState } from "react";
 
-// Custom node component for workflow blocks
+// Icon colors for different block types (teal/cyan style from reference)
+const getIconColor = (type: string): string => {
+  const colors: Record<string, string> = {
+    system: '#0891b2',     // cyan-600
+    human: '#0d9488',      // teal-600
+    data: '#0284c7',       // sky-600
+    action: '#059669',     // emerald-600
+    organization: '#7c3aed', // violet-600
+    logic: '#dc2626',      // red-600 (for warning/decision nodes)
+  };
+  return colors[type] || '#0891b2';
+};
+
+// Custom node component for workflow blocks - matching the D&B style
 function WorkflowNodeComponent({ data }: { data: { label: string; type: string; subtype: string } }) {
-  const getCategoryVariant = (type: string): "default" | "secondary" | "outline" | "destructive" => {
-    const variants: Record<string, "default" | "secondary" | "outline" | "destructive"> = {
-      system: "default",
-      human: "secondary",
-      data: "default",
-      action: "secondary",
-      organization: "outline",
-      logic: "outline",
-    };
-    return variants[type] || "outline";
-  };
-
-  const getCategoryLabel = (type: string): string => {
-    const labels: Record<string, string> = {
-      system: "System",
-      human: "Person",
-      data: "Data",
-      action: "Action",
-      organization: "Organization",
-      logic: "Logic",
-    };
-    return labels[type] || "Other";
-  };
-
   return (
-    <div className="px-4 py-3 rounded-lg border-2 bg-card shadow-md min-w-[180px]">
-      <Handle type="target" position={Position.Left} className="w-3 h-3 !bg-primary" />
-      <div className="flex items-center justify-between mb-2">
-        <Badge variant={getCategoryVariant(data.type)} className="text-xs">
-          {getCategoryLabel(data.type)}
-        </Badge>
+    <div 
+      className="px-4 py-3 rounded-xl bg-white shadow-lg min-w-[200px] border border-gray-100"
+      style={{ 
+        boxShadow: '0 4px 20px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)'
+      }}
+    >
+      <Handle 
+        type="target" 
+        position={Position.Left} 
+        className="w-3 h-3 !border-2 !border-white"
+        style={{ backgroundColor: '#0891b2' }}
+      />
+      <div className="flex items-start gap-3">
+        {/* Icon container */}
+        <div 
+          className="w-8 h-8 rounded-md flex items-center justify-center shrink-0 mt-0.5"
+          style={{ backgroundColor: `${getIconColor(data.type)}15` }}
+        >
+          <Info className="w-4 h-4" style={{ color: getIconColor(data.type) }} />
+        </div>
+        {/* Content */}
+        <div className="flex-1 min-w-0">
+          <div className="font-semibold text-sm text-gray-900">{data.label}</div>
+          <div className="text-xs text-gray-500 mt-0.5">{data.subtype}</div>
+        </div>
+        {/* Menu button */}
+        <button className="p-1 rounded hover:bg-gray-100 text-gray-400 hover:text-gray-600 shrink-0">
+          <MoreHorizontal className="w-4 h-4" />
+        </button>
       </div>
-      <div className="font-semibold text-sm">{data.label}</div>
-      <div className="text-xs text-muted-foreground mt-1">{data.subtype}</div>
-      <Handle type="source" position={Position.Right} className="w-3 h-3 !bg-primary" />
+      <Handle 
+        type="source" 
+        position={Position.Right} 
+        className="w-3 h-3 !border-2 !border-white"
+        style={{ backgroundColor: '#0891b2' }}
+      />
     </div>
   );
 }
@@ -112,16 +127,11 @@ export default function WorkflowCanvas() {
         source: conn.sourceBlockId,
         target: conn.targetBlockId,
         label: conn.label || undefined,
-        animated: true,
+        animated: false,
         type: 'smoothstep',
-        markerEnd: {
-          type: 'arrowclosed',
-          width: 20,
-          height: 20,
-        },
         style: {
           strokeWidth: 2,
-          stroke: 'hsl(var(--primary))',
+          stroke: '#4a5568',
         },
       }));
       setEdges(flowEdges);
@@ -288,7 +298,10 @@ export default function WorkflowCanvas() {
           </div>
         </div>
 
-        <div className="flex-1 relative">
+        <div 
+          className="flex-1 relative"
+          style={{ backgroundColor: '#0f1c2e' }}
+        >
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -297,6 +310,11 @@ export default function WorkflowCanvas() {
             onConnect={onConnect}
             nodeTypes={nodeTypes}
             fitView
+            defaultEdgeOptions={{
+              type: 'smoothstep',
+              animated: false,
+              style: { stroke: '#4a5568', strokeWidth: 2 },
+            }}
             onDrop={(e) => {
               e.preventDefault();
               const data = e.dataTransfer.getData("application/reactflow");
@@ -327,11 +345,20 @@ export default function WorkflowCanvas() {
             }}
             data-testid="workflow-canvas"
           >
-            <Background />
-            <Controls />
-            <MiniMap />
-            <Panel position="top-right" className="bg-background/80 backdrop-blur-sm p-2 rounded-md border">
-              <div className="text-xs text-muted-foreground">
+            <Background 
+              color="#1e3a5f" 
+              gap={20} 
+              size={1}
+              style={{ backgroundColor: '#0f1c2e' }}
+            />
+            <Controls className="!bg-white/10 !border-white/20 [&>button]:!bg-white/10 [&>button]:!border-white/20 [&>button]:!text-white [&>button:hover]:!bg-white/20" />
+            <MiniMap 
+              nodeColor="#ffffff"
+              maskColor="rgba(15, 28, 46, 0.8)"
+              style={{ backgroundColor: '#1a2d47' }}
+            />
+            <Panel position="top-right" className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-white/20">
+              <div className="text-xs text-white/80">
                 {nodes.length} blocks • {edges.length} connections
               </div>
             </Panel>
