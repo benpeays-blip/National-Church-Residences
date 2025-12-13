@@ -631,6 +631,850 @@ const interviewees: InterviewPerson[] = [
       "Current state of change makes adoption of advanced platforms like Futuria premature"
     ],
     summaryInsight: "Adam's perspective highlights deep fragmentation, antiquated systems, and unmonetized data as core barriers to growth. NCR is in a fluid adjustment period where culture and infrastructure cannot keep pace with strategic ambitions. The desired future state requires: A competitive tech stack that unifies housing, healthcare, services, and development; strong data governance to secure information, pass audits, and enable monetization; integration of value-based care with shared savings models; consolidation roadmap to align divisions under one enterprise vision; strategic partnerships (Microsoft Elevate, GraceWorks, Power BI) leveraged to accelerate transformation. Adam's role is to overlay technology as a growth enabler, positioning NCR as a thought leader in affordable housing, senior living, and value-based care while building a sustainable competitive advantage."
+  },
+  {
+    id: "joanna-freeman",
+    name: "JoAnna Freeman",
+    title: "Grants Manager",
+    area: "Grants Management",
+    areaColor: "#6366f1",
+    background: "Grants management strategy specialist focused on streamlining grant operations and reporting",
+    challenges: [
+      {
+        title: "Fragmented Information",
+        items: [
+          "Reliance on anecdotal stories; no structured process to collect impact narratives",
+          "Old grants stored only in Excel and paper files, making reporting slow and error-prone",
+          "No unified visibility across teams—Marketing, Foundation, Affordable Housing, Development, and Services often contact the same external organizations without coordination"
+        ]
+      },
+      {
+        title: "System & Workflow Inefficiency",
+        items: [
+          "Workday does not integrate with Instrumentl; data must be exported to CSV and manually uploaded",
+          "Workday is cumbersome, requiring extensive navigation and long page reads",
+          "Grant management involves excessive manual work (narratives, reporting, purchase requests, receipt uploads)",
+          "Outstanding invoices and credit card transactions do not appear on Workday gift tags, creating inaccurate financial visibility"
+        ]
+      },
+      {
+        title: "Lack of Insight & Reporting",
+        items: [
+          "No dashboard to view overall grant pipeline, submission progress, approvals vs. denials, or individual grant status",
+          "Cannot easily track grant expenses or see available balances",
+          "Limited ability to research organizations efficiently due to lack of integrated tools and time constraints"
+        ]
+      },
+      {
+        title: "Relationship & Fundraising Conflicts",
+        items: [
+          "Cannibalization: multiple staff unknowingly ask the same funder for support",
+          "Different divisions pursue fundraising independently, creating a confusing external message",
+          "No central system showing who has contacted whom, when, and for what purpose"
+        ]
+      }
+    ],
+    techStack: [
+      { name: "Instrumentl", description: "Well-liked and used since April; helps find and track grants but remains highly manual" },
+      { name: "Workday", description: "Holds all financial data including gift tags; poor user experience, lacks dashboards, no integration with grant systems" },
+      { name: "GuideStar", description: "Used for research" },
+      { name: "Microsoft Copilot", description: "Approved tool but not yet leveraged" }
+    ],
+    wants: [
+      {
+        title: "Grant Team Needs",
+        items: [
+          "Full grants dashboard showing pipeline stages, submissions, approvals/denials, life cycle progress, real-time spend vs. budgets",
+          "Accurate expense tracking with visibility into all affecting balances",
+          "Relationship intelligence to identify board connections, previous giving history, and engagement 'sweet spots'",
+          "Structured, automated narrative and compliance reporting"
+        ]
+      },
+      {
+        title: "Grantee Portal Requirements",
+        items: [
+          "Grantees log in to view grant terms, conditions, and remaining balance",
+          "Guided expense submission with receipt uploads",
+          "Structured reporting questionnaires",
+          "Automated reminders and deadline visibility"
+        ]
+      },
+      {
+        title: "Organizational Alignment",
+        items: [
+          "One shared system showing who is talking to which external organization, when, and for what purpose",
+          "Centralized view across grants, individual donors, government grants, HUD funding, and property-specific requests",
+          "Monday-style pipeline dashboard"
+        ]
+      }
+    ],
+    observations: [
+      "Expensing for grants is intertwined with Workday's financial workflows, creating friction",
+      "Purchases for grant-related items require manual processing",
+      "Weekly Workday gift tag reports do not reflect true available funds because unpaid items are invisible",
+      "Significant opportunity exists to centralize and modernize grant operations"
+    ],
+    summaryInsight: "JoAnna's perspective highlights a fragmented ecosystem where systems don't talk to each other, teams lack visibility, and grant-related work is manual, repetitive, and error-prone. The desired future state is an integrated, automated, relationship-aware grants command center that streamlines financial tracking and reporting, provides structured grantee interactions through a portal, centralizes organizational visibility to avoid duplication and conflicts, and enables proactive, intelligence-driven grant management."
+  },
+  {
+    id: "donna-tabbah",
+    name: "Donna Tabbah",
+    title: "Foundations Coordinator",
+    area: "Foundations & Donor Relations",
+    areaColor: "#ec4899",
+    background: "Foundations and donor relations strategy specialist managing volunteer coordination and donor acknowledgments",
+    challenges: [
+      {
+        title: "Volunteer Experience Difficulties",
+        items: [
+          "Information on company volunteer requirements must be manually gathered from websites",
+          "Data is often incomplete or unclear, leading to frustration and wasted effort",
+          "No centralized record of volunteer group requirements; repetitive conversations occur"
+        ]
+      },
+      {
+        title: "Donor Acknowledgment Challenges",
+        items: [
+          "Letters must be personalized to each donor's specific giving purpose",
+          "High volume: ~200 letters per month plus three mailings per week",
+          "Many donors are seniors who require physical copies",
+          "Current process is labor-intensive and not automated"
+        ]
+      },
+      {
+        title: "Wishlist Inefficiencies",
+        items: [
+          "Amazon wishlists are managed manually and are extremely time-consuming",
+          "No centralized system for communities to manage or publish wishlists"
+        ]
+      },
+      {
+        title: "Data Quality & Reporting Issues",
+        items: [
+          "Current system usage is reactive rather than intentional",
+          "Raiser's Edge is underutilized due to limited training and expertise",
+          "990 reports are sometimes incorrect due to improper categorization of in-kind donations",
+          "Donations in Raiser's Edge and Workday must be manually reconciled due to monthly sync"
+        ]
+      }
+    ],
+    techStack: [
+      { name: "Raiser's Edge (Blackbaud)", description: "Used for donor and gift management; underutilized due to limited training. Syncs manually with Workday once per month" },
+      { name: "Workday", description: "Accounting system of record; requires manual alignment with Raiser's Edge data" },
+      { name: "ChatGPT/Microsoft Copilot", description: "Used personally but not fully integrated into workflows" }
+    ],
+    wants: [
+      {
+        title: "Volunteer & Corporate Partner Needs",
+        items: [
+          "Centralized database of company volunteer requirements",
+          "Automatic extraction of information from websites",
+          "Notes from prior engagements stored in a structured, searchable record"
+        ]
+      },
+      {
+        title: "Donor Acknowledgment Automation",
+        items: [
+          "Personalized, purpose-specific donor letters generated automatically",
+          "Integration with Raiser's Edge to tie letters directly to giving data",
+          "Support for printing physical copies for senior donors"
+        ]
+      },
+      {
+        title: "Wishlist Modernization",
+        items: [
+          "Centralized Community Wishlist Hub where each community manages its own list",
+          "Automatic branded public pages for each community",
+          "Aggregated directory of wishlists for donors and corporate partners",
+          "Integration with Amazon Charity Lists or Gooddler"
+        ]
+      },
+      {
+        title: "Reporting & Compliance Improvements",
+        items: [
+          "More rigorous tracking of in-kind donations",
+          "Structured categories for donated goods within CRM",
+          "Improved accuracy of 990 reporting"
+        ]
+      }
+    ],
+    observations: [
+      "Donor lapses (e.g., annual appeal drop-offs) are not proactively tracked",
+      "Many operational delays stem from manual tasks that could be automated",
+      "Strong donor loyalty exists, especially among seniors who require consistent physical communication",
+      "Volunteer strategy would benefit from an internal intelligence layer summarizing corporate interests"
+    ],
+    summaryInsight: "Donna's perspective highlights manual, repetitive processes across donor acknowledgments, volunteer management, wishlist coordination, and data reporting. The desired future state is a centralized, automated, intelligence-driven system that simplifies donor communication, tracks corporate volunteer preferences, creates self-managed community wishlists, ensures accurate compliance reporting, and uses Raiser's Edge and Workday proactively instead of reactively."
+  },
+  {
+    id: "jake-swint",
+    name: "Jake Swint",
+    title: "VP Strategic Growth and Operations Support",
+    area: "Strategy & Operations",
+    areaColor: "#f59e0b",
+    background: "Strategy and operations support covering healthcare operations, billing, patient engagement, and talent acquisition",
+    challenges: [
+      {
+        title: "Manual Processes",
+        items: [
+          "Intake decisions rely on judgment calls rather than standardized workflows",
+          "Heavy reliance on paper, fax, and printed documents",
+          "Batch file transfers and manual audits slow down operations"
+        ]
+      },
+      {
+        title: "Billing & Outsourcing Costs",
+        items: [
+          "NCR pays around $1M annually to home health and hospice vendors for billing",
+          "Outsourcing costs approach $1M, not including in-house expenses"
+        ]
+      },
+      {
+        title: "Talent Acquisition & Occupancy",
+        items: [
+          "Recruitment pipeline is slow, delaying onboarding of critical staff",
+          "Occupancy issue: demand exists, but response times to inquiries are days or weeks instead of hours"
+        ]
+      },
+      {
+        title: "Accounts Payable Inefficiency",
+        items: [
+          "AP relies on physical check printing",
+          "Hundreds of checks are mailed manually, creating inefficiency and risk"
+        ]
+      }
+    ],
+    techStack: [
+      { name: "Paper-based systems", description: "Primarily paper-based and manual systems" },
+      { name: "Fax machines", description: "Batch file transfers and check printers dominate workflows" },
+      { name: "Limited automation", description: "Little integration with modern platforms" }
+    ],
+    wants: [
+      {
+        title: "Visibility & Process Mapping",
+        items: [
+          "Full transparency into intake workflows",
+          "Map data and processes to identify inefficiencies",
+          "Deploy intelligent agents to represent entire departments and interact across functions"
+        ]
+      },
+      {
+        title: "Automation & Scheduling",
+        items: [
+          "Automated scheduling for clinicians to reduce manual coordination",
+          "Streamlined intake decisions supported by AI agents rather than human judgment alone"
+        ]
+      },
+      {
+        title: "Patient Engagement",
+        items: [
+          "Improved communication and faster response times",
+          "Digital tools to enhance patient experience and reduce delays"
+        ]
+      }
+    ],
+    observations: [
+      "Current operations are fragmented and inefficient, with high reliance on manual processes and outsourcing",
+      "Billing and AP represent immediate opportunities for automation and cost savings",
+      "Occupancy challenges stem from slow response times, not lack of demand",
+      "Jake's vision emphasizes visibility, automation, and intelligent agents as the foundation for operational transformation"
+    ],
+    summaryInsight: "Jake's perspective highlights manual processes, outsourcing costs, and slow response times as core barriers to operational efficiency. NCR's current reliance on paper, fax, and physical checks creates unnecessary expense and risk. The desired future state requires tremendous visibility into workflows and data, intelligent agents to streamline intake and cross-departmental interactions, automated scheduling for clinicians, and improved patient engagement tools to accelerate response times."
+  },
+  {
+    id: "julie-worley",
+    name: "Julie Worley",
+    title: "Chief Legal Officer",
+    area: "Legal & Governance",
+    areaColor: "#7c3aed",
+    background: "Legal and governance strategy overseeing 1,100+ legal entities with focus on compliance and data governance",
+    challenges: [
+      {
+        title: "System Fragmentation",
+        items: [
+          "Numerous homegrown systems across the organization that do not communicate with one another",
+          "No unified data pool; information lives in silos with no shared visibility",
+          "Current fragmentation creates operational friction despite Mark Miller's multi-year integration plan"
+        ]
+      },
+      {
+        title: "Manual, Inefficient Workflows",
+        items: [
+          "Gift processing is manual with no automation",
+          "Thank-you letters are manually generated and physically mailed",
+          "Volunteer event coordination is manual (e.g., SignUpGenius pages)",
+          "Signup workflows are not standardized or integrated with internal databases"
+        ]
+      },
+      {
+        title: "Information Hoarding",
+        items: [
+          "Employees hold onto information due to protectiveness or uncertainty about data use",
+          "This obstructs cross-team collaboration and prevents a unified understanding of partners, donors, and activities"
+        ]
+      },
+      {
+        title: "Regulatory & Structural Complexity",
+        items: [
+          "Over 1,100 legal entities require tracking and coordination",
+          "Heavy compliance restrictions (HIPAA, substance-use protections) limit data sharing",
+          "Peer organizations achieve higher collaboration and transparency despite similar constraints"
+        ]
+      }
+    ],
+    techStack: [
+      { name: "Homegrown Database", description: "Outdated; modernization is on Mark Miller's roadmap" },
+      { name: "PointClickCare", description: "EHR system for senior living, skilled nursing, assisted living, and home health" },
+      { name: "AthenaHealth", description: "Used for palliative care" },
+      { name: "SignUpGenius", description: "Used manually for volunteer events and coordination" },
+      { name: "Microsoft Copilot", description: "Only approved AI tool" }
+    ],
+    wants: [
+      {
+        title: "System Integration & Unified Data",
+        items: [
+          "Connected environment where clinical, housing, volunteer, donor, and legal systems talk to each other",
+          "Centralized database for corporate entities (1,100+), legal documentation, and project tracking",
+          "Unified data pool across business lines while respecting HIPAA and privacy constraints"
+        ]
+      },
+      {
+        title: "Automation of Manual Processes",
+        items: [
+          "Automated thank-you letters generated by AI (Copilot), tailored to gifts, mailed or emailed automatically",
+          "Automated volunteer-event workflows: sign-up creation, participation tracking, and integration with organizational systems"
+        ]
+      },
+      {
+        title: "AI Governance & Safe Adoption",
+        items: [
+          "Clear policies defining approved AI tools, data upload rules, and IT vetting requirements",
+          "Human review required for AI outputs",
+          "AI used intentionally for innovation, not informally or haphazardly"
+        ]
+      },
+      {
+        title: "Social Determinants of Health (SDOH) Intelligence",
+        items: [
+          "Cross-department data layer to identify resident-level activities",
+          "Highlight gaps in care or support",
+          "Enable cross-marketing and cross-service efforts",
+          "Unified understanding of each resident across medical, housing, and services"
+        ]
+      }
+    ],
+    observations: [
+      "No direct pain points in philanthropy, but upstream problems stem from disconnected systems",
+      "Legal oversight of 1,100 entities creates significant data/document management burdens",
+      "A central project log would support compliance, transparency, and coordination",
+      "Data integration is as much a cultural challenge (information hoarding) as a technical one",
+      "NCR lags behind peers in collaboration and data-sharing sophistication"
+    ],
+    summaryInsight: "Julie's perspective highlights NCR's foundational challenge: system fragmentation and data isolation. Manual processes, inconsistent data governance, and a culture of information protection hinder efficiency and compliance. The future state requires a unified data backbone, automated workflows, standardized AI governance, a centralized legal/corporate entity system, and cross-functional collaboration aligned with Mark Miller's data-link strategy."
+  },
+  {
+    id: "briana-mettlet",
+    name: "Briana Mettlet",
+    title: "SVP of Senior Living Facilities",
+    area: "Health Services & Senior Living",
+    areaColor: "#0ea5e9",
+    background: "20 years of experience in senior services; leads senior living operations",
+    challenges: [
+      {
+        title: "Information Requests & Visibility",
+        items: [
+          "Constant demand for stories, statistics, and analysis from external stakeholders",
+          "Limited ability to package and present data in a compelling, donor-facing way"
+        ]
+      },
+      {
+        title: "Operational Inefficiencies",
+        items: [
+          "Back-office intake for home health is tedious: 4 staff manually process insurance documents and Medicare Advantage plans",
+          "Manual reporting of capital expenses for each property",
+          "Employment and agency billing systems not standardized; need urgent setup in Workday"
+        ]
+      },
+      {
+        title: "Data & Reporting Gaps",
+        items: [
+          "Relies on daily census report (Dapper report) for occupancy",
+          "Monday morning report tracks incoming funds, restrictions, and project notes, but lacks automation",
+          "No streamlined way to thank donors or view gifts tied to projects"
+        ]
+      },
+      {
+        title: "Philanthropy & Program Development",
+        items: [
+          "Hospice identified as a major area for philanthropic growth",
+          "Wellness programs are a huge opportunity since insurance does not cover them",
+          "Senior living philanthropy is harder to position because residents may already have funds"
+        ]
+      }
+    ],
+    techStack: [
+      { name: "Athena", description: "Clinical system" },
+      { name: "Power BI", description: "Reporting tool; data rolls up to Workday" },
+      { name: "Workday", description: "Financial and operational backbone under Mark Miller" },
+      { name: "Thrivent X", description: "Grades resident satisfaction, employee satisfaction, and polity" },
+      { name: "Dax Copilot", description: "Needed for efficiency in intake and reporting" }
+    ],
+    wants: [
+      {
+        title: "System Integration & Automation",
+        items: [
+          "Intake and agency billing processes automated in Workday",
+          "Capital expense tracking streamlined in Workday",
+          "Automated donor acknowledgment tied to financial and project data"
+        ]
+      },
+      {
+        title: "Data & Analytics",
+        items: [
+          "Enhanced Power BI dashboards for occupancy, financials, and satisfaction metrics",
+          "Unified reporting across housing, healthcare, and senior living",
+          "Ability to share revenue insights back across divisions"
+        ]
+      },
+      {
+        title: "Philanthropy & Storytelling",
+        items: [
+          "Clear narrative combining housing, program support, healthcare, home health, assisted living, and rehab",
+          "Storytelling framework to raise funds by showing holistic impact",
+          "Position hospice and wellness programs as philanthropic priorities"
+        ]
+      },
+      {
+        title: "Collaboration & Alignment",
+        items: [
+          "Better coordination between Karla and Briana to unify housing and healthcare strategies",
+          "Integration of senior services and senior living, with senior care layered on top"
+        ]
+      }
+    ],
+    observations: [
+      "NCR is the largest nonprofit provider of affordable housing in the nation, and the largest in central Ohio for senior housing",
+      "Shawn Shields (new hire) will handle parent financials",
+      "Data analytics team leads Thrivent X and reporting initiatives",
+      "Affordable housing philanthropy is easier to position; senior living requires more nuanced messaging"
+    ],
+    summaryInsight: "Briana's perspective highlights operational inefficiencies, fragmented reporting, and untapped philanthropic opportunities in hospice and wellness. The desired future state requires automated intake, billing, and capital expense tracking in Workday, unified reporting through Power BI and Workday integration, a compelling narrative that combines housing, healthcare, and senior living into one holistic story, and stronger collaboration between housing and healthcare leadership."
+  },
+  {
+    id: "susan-dimickele",
+    name: "Susan DiMickele",
+    title: "President and CEO",
+    area: "AI Strategy & Future Growth",
+    areaColor: "#dc2626",
+    background: "Executive leadership driving AI strategy and organizational transformation for 25,000 residents",
+    challenges: [
+      {
+        title: "Housing Qualification Confusion",
+        items: [
+          "Older adults and families don't know what type of housing they qualify for"
+        ]
+      },
+      {
+        title: "Data Inefficiency",
+        items: [
+          "Information is anecdotal, voluntary, and stored in an outdated CareGuide",
+          "Service coordinators input data manually, often with errors",
+          "NCR relies on industry data but lacks NCR-specific resident data"
+        ]
+      },
+      {
+        title: "Workflow Inefficiencies",
+        items: [
+          "Processes for research, assembling documents, and daily coordination are not streamlined"
+        ]
+      }
+    ],
+    techStack: [
+      { name: "JourneyGuide", description: "Financial planning and housing qualification support" },
+      { name: "At Your Door Visiting Healthcare Services", description: "Onsite medical and primary care for assisted living, independent living, skilled nursing, memory care, and group homes" }
+    ],
+    wants: [
+      {
+        title: "Data Modernization",
+        items: [
+          "Automate data retrieval and replace antiquated CareGuide with an AI-powered platform",
+          "Capture NCR-specific resident data to measure outcomes"
+        ]
+      },
+      {
+        title: "Family Guidance",
+        items: [
+          "Provide a comprehensive, trusted guide tailored to NCR housing qualifications"
+        ]
+      },
+      {
+        title: "Workflow Automation",
+        items: [
+          "Streamline processes for research, documentation, and daily task management",
+          "Deliver personalized daily action items to service coordinators"
+        ]
+      },
+      {
+        title: "Outcome Tracking",
+        items: [
+          "Measure health improvements, depression reduction, and loneliness metrics",
+          "Communicate improvements clearly: 'NCR improves in X ways by doing X'",
+          "Position AI as a tool to free people up, not replace them"
+        ]
+      }
+    ],
+    observations: [
+      "Scale: 25,000 residents served",
+      "Financial ROI: $50,000 savings per resident potential",
+      "Health Outcomes: Better health, reduced depression, improved loneliness metrics",
+      "Donor Engagement: Transparent ROI reporting tied to measurable outcomes",
+      "Community Impact: Older adults living in NCR communities experience better outcomes than those outside"
+    ],
+    summaryInsight: "Susan's vision is to redesign CareGuide into a dynamic, AI-powered platform, enable outcome-driven reporting for donors and stakeholders, demonstrate ROI through savings, health outcomes, and quality-of-life improvements, and position NCR as a leader in housing and healthcare outcomes for older adults. The opportunity is to transform NCR into a data-driven, AI-enabled organization that can prove its impact at scale."
+  },
+  {
+    id: "chel-kissler",
+    name: "Chel Kissler",
+    title: "Event Manager (Contractor)",
+    area: "Events & Branding",
+    areaColor: "#14b8a6",
+    background: "Contractor managing NCR's major annual golf event and national conference; oversees branding",
+    challenges: [
+      {
+        title: "Information Management & Workflow Inefficiency",
+        items: [
+          "80% of the job is manually tracking people and information",
+          "Reliance on multiple spreadsheets and disconnected documents",
+          "Tracking is repetitive, error-prone, and inefficient",
+          "Communications across teams are weaker than they should be"
+        ]
+      },
+      {
+        title: "Organizational Visibility & Structure Issues",
+        items: [
+          "No unified place to view organizational structure, roles, and functions",
+          "Staff 'live in a vacuum' instead of sharing information and working as a community",
+          "Lack of a centralized knowledge hub to understand responsibilities and internal capabilities"
+        ]
+      },
+      {
+        title: "Event Management Limitations",
+        items: [
+          "Golf event registration and reporting are entirely manual",
+          "Sponsorship pricing is under-optimized ($10,000 per foursome considered underpriced)",
+          "Sponsorship tiers do not drive competition or maximize revenue",
+          "Foursomes often sell out before higher sponsorship tiers are reached",
+          "No visibility into who is actually in each foursome"
+        ]
+      },
+      {
+        title: "Strategic Alignment & Fundraising Culture",
+        items: [
+          "Incentives are not tied to organizational goals",
+          "No framework to guide pricing or sponsorship tiers",
+          "Brand alignment opportunities are underutilized"
+        ]
+      }
+    ],
+    techStack: [
+      { name: "Adobe Suite", description: "Used for branding and design" },
+      { name: "No dedicated event system", description: "No dedicated event management system for golf events or national conference" },
+      { name: "GolfStatus (recommended)", description: "Would automate golf registration, foursome tracking, sponsorship tiers, digital scoring" }
+    ],
+    wants: [
+      {
+        title: "Golf Event Modernization",
+        items: [
+          "Streamlined, automated golf registration and management system",
+          "Centralized registration for players, sponsors, vendors, and foursomes",
+          "Tiered sponsorship levels with pricing that drives competition",
+          "Integration with donor CRM to tie invitations and vendor communications to historical giving"
+        ]
+      },
+      {
+        title: "Organizational Knowledge Hub",
+        items: [
+          "Centralized, searchable space showing org chart, department functions, staff responsibilities, and contact information",
+          "Tool to reduce the 'vacuum' effect and increase cross-team collaboration"
+        ]
+      },
+      {
+        title: "Improved Communication & Data Use",
+        items: [
+          "Communications tied to centralized data, not individual spreadsheets",
+          "Automated updates for vendors, sponsors, and participants",
+          "Better cross-team coordination for events and fundraising"
+        ]
+      }
+    ],
+    observations: [
+      "Coordinates NCR's major annual golf event and national conference",
+      "Works with 200-300 vendors, seeing untapped value in brand alignment and sponsor visibility",
+      "Believes NCR's brand value increases when vendors associate with a high-impact nonprofit",
+      "Identifies four pillars NCR must strengthen: fundraising, awareness, culture, stewardship"
+    ],
+    summaryInsight: "Chel's perspective highlights manual tracking, weak communication, and under-optimized sponsorship structures as barriers to effective event management. The desired future state requires a modern, automated event-management platform, strategic sponsorship structures that maximize competition and revenue, clear org-wide visibility through a centralized knowledge hub, and unified communications tied to a shared data source."
+  },
+  {
+    id: "mark-miller",
+    name: "Mark Miller",
+    title: "VP of Information Technology",
+    area: "IT Strategy & Modernization",
+    areaColor: "#0078d4",
+    background: "Leading IT modernization and data strategy; building internal capability after outsourcing to MSP",
+    challenges: [
+      {
+        title: "Application Overlap & Silos",
+        items: [
+          "Multiple groups use apps that do the same thing in different, unlinked ways",
+          "Heavy reliance on spreadsheets; systems are unorganized and fragmented",
+          "Lack of adoption training across platforms"
+        ]
+      },
+      {
+        title: "Data & Reporting Gaps",
+        items: [
+          "BI team has current data but not full visibility",
+          "Data remains siloed across Yardi, Workday, and custom apps"
+        ]
+      },
+      {
+        title: "Legacy Systems",
+        items: [
+          "3-5 business-critical custom apps are dated",
+          "CareGuide is a legacy application still in use",
+          "Centralized EHR strategy is unclear; multiple platforms in use"
+        ]
+      },
+      {
+        title: "Analysis Needs",
+        items: [
+          "Significant analysis required over the next few years to consolidate and modernize"
+        ]
+      }
+    ],
+    techStack: [
+      { name: "Workday", description: "Long-term platform for HR, messaging, lifestyle management" },
+      { name: "Yardi", description: "Property management, accounting, HUD/LIHTC compliance, resident management" },
+      { name: "MFiles", description: "Document management" },
+      { name: "Mango Apps", description: "Current intranet, messaging, collaboration" },
+      { name: "Blueworks", description: "Process mapping, workflow documentation, automation prep" },
+      { name: "Microsoft Fabric/Azure", description: "Migration underway for unified data storage and governance" },
+      { name: "Copilot", description: "AI productivity assistant" }
+    ],
+    wants: [
+      {
+        title: "Data & Governance",
+        items: [
+          "Stand up Microsoft Maverick for data migration",
+          "Connect into Microsoft Elevate and BDO",
+          "Store all organizational data in Microsoft Fabric's OneLake",
+          "Govern and secure data with Microsoft Purview"
+        ]
+      },
+      {
+        title: "Consolidation & Standardization",
+        items: [
+          "Simplify and standardize the application landscape",
+          "Consolidation of overlapping apps and workflows",
+          "Move intranet from Mango Apps to SharePoint",
+          "Complete remaining file share migrations to SharePoint"
+        ]
+      },
+      {
+        title: "EHR Strategy",
+        items: [
+          "Move toward a central EHR system",
+          "Currently fragmented across Homecare Homebase, PointClickCare, Athena, Epic"
+        ]
+      },
+      {
+        title: "Innovation & AI",
+        items: [
+          "POC with Athena for AI dictation (note-taking and summarization for clinic technicians)",
+          "Explore AI-driven efficiencies while maintaining security and compliance"
+        ]
+      }
+    ],
+    observations: [
+      "Previously outsourced IT to MSP until 18 months ago; now building internal capability",
+      "Working on POC with asset management team",
+      "Emily maintains master list of applications",
+      "NCR acquired At Your Door Visiting Healthcare Services, expanding healthcare footprint",
+      "Technology adoption (Azure, Fabric, Power BI) is central to future growth"
+    ],
+    summaryInsight: "Mark's perspective highlights application overlap, siloed data, and legacy systems as core barriers to IT efficiency. The desired future state requires unified data through Microsoft Fabric OneLake, governed by Purview, with standardized applications, consolidated EHR, and AI-driven innovation. His role is to modernize NCR's tech stack, reduce duplication, and enable data-driven decision-making across the enterprise."
+  },
+  {
+    id: "suzan-nocella",
+    name: "Suzan Nocella",
+    title: "Director of Annual Giving",
+    area: "Annual Giving",
+    areaColor: "#be185d",
+    background: "14-15 years with the foundation team; focused on annual giving strategy and donor communications",
+    challenges: [
+      {
+        title: "Information Access & Reliance",
+        items: [
+          "Must rely on sales and marketing team for resident information, which may be incomplete",
+          "Information often stored in her head instead of Raiser's Edge due to system inefficiency",
+          "Board members and leadership lack clarity on messaging and processes"
+        ]
+      },
+      {
+        title: "Campaign & Communication Limitations",
+        items: [
+          "No infrastructure to build campaigns; limited time for research and development",
+          "Writing donor communications takes significant time; AI could help refine",
+          "No unified message across the organization; inconsistent language and presentation",
+          "Leadership communication often bypasses legal review, creating risk"
+        ]
+      },
+      {
+        title: "Donor Engagement Gaps",
+        items: [
+          "No acquisition strategy for fundraising; no new prospecting",
+          "Current fundraising relies only on resident donors giving to their own communities",
+          "Leads from prospective donors/residents are not captured or assigned",
+          "Time is disproportionately spent on low-value donors instead of targeted high-net-worth prospects"
+        ]
+      },
+      {
+        title: "Organizational Inefficiency",
+        items: [
+          "Mapping of onramps and touchpoints is unclear; requests bounce between leaders",
+          "Leadership lacks education on proper communication channels and ownership",
+          "Processes are overly complex, leading to delays and miscommunication"
+        ]
+      }
+    ],
+    techStack: [
+      { name: "WealthEngine", description: "Not found helpful; not embraced or utilized" },
+      { name: "Raiser's Edge", description: "Used for donor management but cumbersome and underutilized" },
+      { name: "iWave", description: "Donor-prospecting and wealth-screening platform; potential tool for identifying major-gift prospects" }
+    ],
+    wants: [
+      {
+        title: "Donor Intelligence & Funnel Development",
+        items: [
+          "Funnel for 'getting to know donors' section",
+          "AI-assisted donor insights without intrusiveness or confidentiality risks",
+          "Voice memo tool to capture donor notes directly into database for easy retrieval"
+        ]
+      },
+      {
+        title: "Campaign & Communication Support",
+        items: [
+          "AI to refine and generate holiday appeals, campaigns, and year-round communications",
+          "Unified messaging across the organization—consistent language and presentation",
+          "Clear company lines for presenting NCR externally"
+        ]
+      },
+      {
+        title: "Strategic Planning",
+        items: [
+          "Strategic plan for each community",
+          "Mapping exercise to define organizational touchpoints and communication pathways",
+          "Education for leadership to simplify processes and reduce misrouting of information"
+        ]
+      },
+      {
+        title: "Fundraising Growth",
+        items: [
+          "Acquisition strategy for new donors and prospects",
+          "Redeployment of staff to focus on targeted, high-value donor funnels",
+          "Shift away from reliance solely on resident donors"
+        ]
+      }
+    ],
+    observations: [
+      "Has never directly asked for a gift, though residents trust her to execute fundraising",
+      "Current fundraising success is tied only to residents giving to their own communities",
+      "Significant untapped potential exists in prospecting and acquisition strategies",
+      "Donor groups include general population donors (unknown), resident donors (high-net-worth seniors), and growing base of new community members"
+    ],
+    summaryInsight: "Suzan's perspective highlights gaps in donor acquisition, campaign infrastructure, and unified messaging. Current fundraising relies too heavily on resident donors, with no strategy for new prospects. The desired future state requires AI-driven donor intelligence and communication support, a unified organizational message and streamlined communication pathways, strategic plans for each community, a clear acquisition strategy, and redeployment of staff toward targeted, high-value donor funnels."
+  },
+  {
+    id: "sean-alexander",
+    name: "Sean Alexander",
+    title: "Senior VP and CFO",
+    area: "Financial Strategy",
+    areaColor: "#059669",
+    background: "Financial strategy and enterprise visibility; overseeing 350 properties with audited P&Ls",
+    challenges: [
+      {
+        title: "Data & Reporting Inefficiency",
+        items: [
+          "Loading Excel files is highly inefficient; monthly manual population from Yardi for 350 properties",
+          "Bond documents require summarization with property-level detail for senior living",
+          "No consolidated P&L; financials only consolidated at a very high level",
+          "Discrepancies in counting: some items recorded before parent consolidation, leading to double counting (~80%)"
+        ]
+      },
+      {
+        title: "Enterprise Expense Visibility",
+        items: [
+          "Limited visibility into enterprise-wide expenses",
+          "Marketing does not provide adequate financial information",
+          "Business Intelligence team lacks true data access; 'BI' name is misleading"
+        ]
+      },
+      {
+        title: "Resident & Service Data Gaps",
+        items: [
+          "Data sits across multiple systems but is not used effectively",
+          "Marketing holds resident and facility-specific information, but it is siloed",
+          "No clear aggregation of resident data (HIPAA-limited)"
+        ]
+      }
+    ],
+    techStack: [
+      { name: "Excel", description: "Heavy reliance for property-level P&L reporting" },
+      { name: "Workday", description: "Enterprise system of record; difficult to access, not fully utilized" },
+      { name: "Yardi", description: "Affordable housing platform; source of monthly property P&Ls" },
+      { name: "CID (Community Information Document)", description: "Official property profile for affordable housing (regulatory, financial, operational, compliance)" }
+    ],
+    wants: [
+      {
+        title: "Audits & Taxes",
+        items: [
+          "Automated site-level audits and tax checks with error-free scanning"
+        ]
+      },
+      {
+        title: "Data Aggregation & Visibility",
+        items: [
+          "Resident data aggregation (HIPAA-compliant) to understand demographics and sources",
+          "Consolidated P&L across communities and parent entity",
+          "Clear enterprise expense visibility"
+        ]
+      },
+      {
+        title: "Financial Reporting Improvements",
+        items: [
+          "Property-level detail tied to bond documents",
+          "Automated dashboards for consolidated and community-level reporting",
+          "Eliminate double counting in parent consolidation"
+        ]
+      },
+      {
+        title: "Donor & Patient Acquisition Insights",
+        items: [
+          "Ability to calculate donor acquisition costs",
+          "Value-based care tracking: patient profiles, cost benchmarks, and savings opportunities",
+          "Services leveraged to acquire new patients while delivering care"
+        ]
+      }
+    ],
+    observations: [
+      "350 properties each have audited P&Ls that drive headcount",
+      "Information exists in multiple systems but is underutilized",
+      "Marketing controls resident and facility data but does not share effectively",
+      "Value-based care model offers opportunity: lowering patient costs allows shared savings with Medicare",
+      "Financial systems and reporting need modernization to support growth and transparency"
+    ],
+    summaryInsight: "Sean's perspective highlights fragmented financial reporting, lack of consolidated visibility, and inefficient manual processes. Current reliance on Excel and siloed systems prevents NCR from answering critical financial questions. The desired future state requires automated audits and tax validation, consolidated P&Ls across communities and parent entity, resident data aggregation with HIPAA compliance, clear enterprise expense visibility, and value-based care integration to align patient outcomes with financial sustainability."
   }
 ];
 

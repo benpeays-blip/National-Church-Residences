@@ -1,0 +1,56 @@
+Sean Alexander
+Senior VP and CFO
+Financial Strategy & Enterprise Visibility
+1. Current Challenges
+Data & Reporting Inefficiency
+Loading Excel files is highly inefficient; monthly manual population from Yardi for 350 properties.
+Bond documents require summarization with property-level detail for senior living.
+No consolidated P&L; financials only consolidated at a very high level.
+Discrepancies in counting: some items recorded before parent consolidation, leading to double counting (~80%).
+Focus remains on parent entity instead of community-level visibility.
+No easy way to present financial information due to disconnected P&Ls.
+Enterprise Expense Visibility
+Limited visibility into enterprise-wide expenses.
+Marketing does not provide adequate financial information.
+Business Intelligence team lacks true data access; “BI” name is misleading.
+Resident & Service Data Gaps
+Data sits across multiple systems but is not used effectively.
+Marketing holds resident and facility-specific information, but it is siloed.
+No clear aggregation of resident data (HIPAA-limited).
+2. Current Tools & Constraints
+Excel – Heavy reliance for property-level P&L reporting.
+Workday – Enterprise system of record; difficult to access, not fully utilized.
+Yardi – Affordable housing platform; source of monthly property P&Ls.
+CID (Community Information Document) – Official property profile for affordable housing (regulatory, financial, operational, compliance).
+3. Desired Capabilities (“Wants”)
+Audits & Taxes
+Automated site-level audits and tax checks with error-free scanning.
+Data Aggregation & Visibility
+Resident data aggregation (HIPAA-compliant) to understand demographics and sources.
+Consolidated P&L across communities and parent entity.
+Clear enterprise expense visibility.
+Financial Reporting Improvements
+Property-level detail tied to bond documents.
+Automated dashboards for consolidated and community-level reporting.
+Eliminate double counting in parent consolidation.
+Donor & Patient Acquisition Insights
+Ability to calculate donor acquisition costs.
+Value-based care tracking: patient profiles, cost benchmarks, and savings opportunities.
+Services leveraged to acquire new patients while delivering care.
+4. Additional Observations
+350 properties each have audited P&Ls that drive headcount.
+Information exists in multiple systems but is underutilized.
+Marketing controls resident and facility data but does not share effectively.
+Value-based care model offers opportunity: lowering patient costs allows shared savings with Medicare.
+Financial systems and reporting need modernization to support growth and transparency.
+5. Summary Insight
+Sean’s perspective highlights fragmented financial reporting, lack of consolidated visibility, and inefficient manual processes. Current reliance on Excel and siloed systems prevents NCR from answering critical financial questions and presenting clear enterprise-wide insights.
+The desired future state requires:
+Automated audits and tax validation at the site level
+Consolidated, connected P&Ls across communities and parent entity
+Resident data aggregation with HIPAA compliance
+Clear enterprise expense visibility and donor acquisition cost tracking
+Value-based care integration to align patient outcomes with financial sustainability
+This transformation would shift NCR from a parent-focused holding model to a community-driven, transparent financial ecosystem, enabling stronger decision-making, compliance, and fundraising.
+
+

@@ -1,0 +1,61 @@
+Briana Mettlet
+SVP of Senior Living Facilities
+Health Services & Senior Living Strategy
+
+1. Current Challenges
+Information Requests & Visibility
+Constant demand for stories, statistics, and analysis from external stakeholders.
+Limited ability to package and present data in a compelling, donor-facing way.
+Operational Inefficiencies
+Back-office intake for home health is tedious: 4 staff manually process insurance documents and Medicare Advantage plans.
+Manual reporting of capital expenses for each property.
+Employment and agency billing systems not standardized; need urgent setup in Workday.
+Data & Reporting Gaps
+Relies on daily census report (Dapper report) for occupancy.
+Monday morning report tracks incoming funds, restrictions, and project notes, but lacks automation.
+No streamlined way to thank donors or view gifts tied to projects.
+Philanthropy & Program Development
+Hospice identified as a major area for philanthropic growth.
+Wellness programs are a huge opportunity since insurance does not cover them.
+Senior living philanthropy is harder to position because residents may already have funds.
+Collaboration Issues
+Need stronger collaboration between Karla and Briana to align housing, healthcare, and services.
+Disconnect between senior services and senior living operations.
+2. Current Tools & Constraints
+Athena – Clinical system.
+Power BI – Reporting tool; data rolls up to Workday.
+Workday – Financial and operational backbone under Mark Miller.
+Thrivent X – Grades resident satisfaction, employee satisfaction, and polity.
+Dax Copilot – Needed for efficiency in intake and reporting.
+Manual Reports – Used for capital expenses and occupancy tracking.
+3. Desired Capabilities (“Wants”)
+System Integration & Automation
+Intake and agency billing processes automated in Workday.
+Capital expense tracking streamlined in Workday.
+Automated donor acknowledgment tied to financial and project data.
+Data & Analytics
+Enhanced Power BI dashboards for occupancy, financials, and satisfaction metrics.
+Unified reporting across housing, healthcare, and senior living.
+Ability to share revenue insights back across divisions.
+Philanthropy & Storytelling
+Clear narrative combining housing, program support, healthcare, home health, assisted living, and rehab.
+Storytelling framework to raise funds by showing holistic impact.
+Position hospice and wellness programs as philanthropic priorities.
+Collaboration & Alignment
+Better coordination between Karla and Briana to unify housing and healthcare strategies.
+Integration of senior services and senior living, with senior care layered on top.
+4. Additional Observations
+Briana has 20 years of experience in senior services and leads senior living operations.
+NCR is the largest nonprofit provider of affordable housing in the nation, and the largest in central Ohio for senior housing.
+Shawn Shields (new hire) will handle parent financials.
+Data analytics team leads Thrivent X and reporting initiatives.
+Affordable housing philanthropy is easier to position; senior living requires more nuanced messaging.
+5. Summary Insight
+Briana’s perspective highlights operational inefficiencies, fragmented reporting, and untapped philanthropic opportunities in hospice and wellness.
+The desired future state requires:
+Automated intake, billing, and capital expense tracking in Workday
+Unified reporting through Power BI and Workday integration
+A compelling narrative that combines housing, healthcare, and senior living into one holistic story
+Stronger collaboration between housing and healthcare leadership
+This positions NCR to leverage its scale as the nation’s largest affordable housing provider while expanding philanthropy in hospice, wellness, and integrated senior care.
+

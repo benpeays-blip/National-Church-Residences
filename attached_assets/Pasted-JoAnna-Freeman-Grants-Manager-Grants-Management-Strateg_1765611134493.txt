@@ -1,0 +1,61 @@
+JoAnna Freeman
+Grants Manager
+Grants Management Strategy
+1. Current Challenges
+Fragmented Information
+Reliance on anecdotal stories; no structured process to collect impact narratives.
+Old grants stored only in Excel and paper files, making reporting slow and error-prone.
+No unified visibility across teams—Marketing, Foundation, Affordable Housing, Development, and Services often contact the same external organizations without coordination.
+System & Workflow Inefficiency
+Workday does not integrate with Instrumentl; data must be exported to CSV and manually uploaded.
+Workday is cumbersome, requiring extensive navigation and long page reads.
+Grant management involves excessive manual work (narratives, reporting, purchase requests, receipt uploads).
+Grantees email reports with no structured system; tracking is manual and scattered.
+Outstanding invoices and credit card transactions do not appear on Workday gift tags, creating inaccurate financial visibility.
+Lack of Insight & Reporting
+No dashboard to view overall grant pipeline, submission progress, approvals vs. denials, or individual grant status.
+Cannot easily track grant expenses or see available balances.
+Limited ability to research organizations efficiently due to lack of integrated tools and time constraints.
+Relationship & Fundraising Conflicts
+Cannibalization: multiple staff unknowingly ask the same funder for support.
+Different divisions pursue fundraising independently, creating a confusing external message.
+No central system showing who has contacted whom, when, and for what purpose.
+Informal approaches (e.g., lunches, gift card asks) sometimes outperform structured grant requests due to inefficiencies.
+2. Current Tools & Constraints
+Instrumentl – Well-liked and used since April; helps find and track grants but remains highly manual.
+Workday – Holds all financial data including gift tags; poor user experience, lacks dashboards, no integration with grant systems.
+GuideStar – Used for research.
+Microsoft Copilot – Approved tool but not yet leveraged.
+GrantHub Pro – Previously used, now inactive.
+3. Desired Capabilities (“Wants”)
+Grant Team Needs
+Full grants dashboard showing pipeline stages, submissions, approvals/denials, life cycle progress, real-time spend vs. budgets, and outstanding expenses.
+Accurate expense tracking with visibility into all affecting balances.
+Easier research of potential organizations.
+Relationship intelligence to identify board connections, previous giving history, and engagement “sweet spots.”
+Formal, simple expense submission workflow.
+Structured, automated narrative and compliance reporting.
+Automated emails and reminders tied to reporting deadlines.
+Grantee Portal Requirements
+Grantees log in to view grant terms, conditions, and remaining balance.
+Guided expense submission with receipt uploads.
+Structured reporting questionnaires.
+Automated reminders and deadline visibility.
+Organizational Alignment Needs
+One shared system showing who is talking to which external organization, when, and for what purpose.
+Centralized view across grants, individual donors, government grants, HUD funding, and property-specific requests.
+Monday-style pipeline dashboard (similar to what another department already sends weekly).
+4. Additional Observations
+Expensing for grants is intertwined with Workday’s financial workflows, creating friction.
+Purchases for grant-related items (e.g., Christmas gifts) require manual processing.
+Weekly Workday gift tag reports do not reflect true available funds because unpaid items are invisible.
+Significant opportunity exists to centralize and modernize grant operations.
+5. Summary Insight
+JoAnna’s perspective highlights a fragmented ecosystem where systems don’t talk to each other, teams lack visibility, and grant-related work is manual, repetitive, and error-prone.
+The desired future state is an integrated, automated, relationship-aware grants command center that:
+Streamlines financial tracking and reporting
+Provides structured grantee interactions through a portal
+Centralizes organizational visibility to avoid duplication and conflicts
+Enables proactive, intelligence-driven grant management
+
+

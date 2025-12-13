@@ -1,0 +1,51 @@
+Jake Swint
+VP Strategic Growth and Operations Support
+Strategy and Operations Support  
+(Strategy & Operations Support; healthcare operations, billing, patient engagement, talent acquisition)
+1. Current Challenges
+Manual Processes
+Intake decisions rely on judgment calls rather than standardized workflows.
+Heavy reliance on paper, fax, and printed documents.
+Batch file transfers and manual audits slow down operations.
+Billing & Outsourcing Costs
+NCR pays around $1M annually to home health and hospice vendors for billing.
+Outsourcing costs approach $1M, not including in‑house expenses.
+Talent Acquisition & Occupancy
+Recruitment pipeline is slow, delaying onboarding of critical staff.
+Occupancy issue: demand exists, but response times to inquiries are days or weeks instead of hours.
+Accounts Payable Inefficiency
+AP relies on physical check printing.
+Hundreds of checks are mailed manually, creating inefficiency and risk.
+
+2. Current Tech Stack
+Primarily paper‑based and manual systems.
+Fax machines, batch file transfers, and check printers dominate workflows.
+Limited automation or integration with modern platforms.
+
+3. Desired Capabilities (“Wants”)
+Visibility & Process Mapping
+Full transparency into intake workflows.
+Map data and processes to identify inefficiencies.
+Deploy intelligent agents to represent entire departments and interact across functions.
+Automation & Scheduling
+Automated scheduling for clinicians to reduce manual coordination.
+Streamlined intake decisions supported by AI agents rather than human judgment alone.
+Patient Engagement
+Improved communication and faster response times.
+Digital tools to enhance patient experience and reduce delays.
+
+4. Notes & Strategic Context
+Current operations are fragmented and inefficient, with high reliance on manual processes and outsourcing.
+Billing and AP represent immediate opportunities for automation and cost savings.
+Occupancy challenges stem from slow response times, not lack of demand — highlighting the need for patient engagement tools.
+Jake’s vision emphasizes visibility, automation, and intelligent agents as the foundation for operational transformation.
+
+5. Summary Insight
+Jake’s perspective highlights manual processes, outsourcing costs, and slow response times as core barriers to operational efficiency. NCR’s current reliance on paper, fax, and physical checks creates unnecessary expense and risk.
+The desired future state requires:
+Tremendous visibility into workflows and data to identify inefficiencies.
+Intelligent agents deployed to streamline intake and cross‑departmental interactions.
+Automated scheduling for clinicians to reduce manual burden.
+Improved patient engagement tools to accelerate response times and enhance experience.
+Jake’s role is to drive operational modernization, reducing costs, improving efficiency, and positioning NCR to deliver faster, more reliable services while building a scalable operations support model.
+

@@ -1,0 +1,66 @@
+Donna Tabbah
+Foundations Coordinator
+Foundations & Donor Relations Strategy
+
+1. Current Challenges
+Volunteer Experience Difficulties
+Information on company volunteer requirements must be manually gathered from websites.
+Data is often incomplete or unclear, leading to frustration and wasted effort.
+No centralized record of volunteer group requirements; repetitive conversations occur.
+Donor Acknowledgment Challenges
+Letters must be personalized to each donor’s specific giving purpose.
+High volume: ~200 letters per month plus three mailings per week.
+Many donors are seniors who require physical copies.
+Current process is labor-intensive and not automated.
+Wishlist Inefficiencies
+Amazon wishlists are managed manually and are extremely time-consuming.
+No centralized system for communities to manage or publish wishlists.
+Data Quality & Reporting Issues
+Current system usage is reactive rather than intentional.
+Raiser’s Edge is underutilized due to limited training and expertise.
+990 reports are sometimes incorrect due to improper categorization of in-kind donations.
+Donated goods are not tracked properly, leading to compliance and reporting inaccuracies.
+Donations in Raiser’s Edge and Workday must be manually reconciled due to monthly sync.
+2. Current Tools & Constraints
+Raiser’s Edge (Blackbaud) – Used for donor and gift management; underutilized due to limited training. Syncs manually with Workday once per month.
+Workday – Accounting system of record; requires manual alignment with Raiser’s Edge data.
+ChatGPT (transitioning to Microsoft Copilot) – Used personally but not fully integrated into workflows.
+3. Desired Capabilities (“Wants”)
+Volunteer & Corporate Partner Needs
+Centralized database of company volunteer requirements.
+Automatic extraction of information from websites.
+Notes from prior engagements stored in a structured, searchable record.
+Donor Acknowledgment Automation
+Personalized, purpose-specific donor letters generated automatically.
+Integration with Raiser’s Edge to tie letters directly to giving data.
+Support for printing physical copies for senior donors.
+Wishlist Modernization
+Centralized Community Wishlist Hub where each community manages its own list.
+Automatic branded public pages for each community.
+Aggregated directory of wishlists for donors and corporate partners.
+Tracking of purchased items, remaining needs, and corporate “adoptions.”
+Integration with Amazon Charity Lists or Gooddler.
+Reporting & Compliance Improvements
+More rigorous tracking of in-kind donations.
+Structured categories for donated goods within CRM.
+Improved accuracy of 990 reporting.
+System Optimization
+Better training and expertise in Raiser’s Edge.
+Integration of automation tools (Copilot, AI assistants).
+More seamless, automated syncing between Raiser’s Edge and Workday.
+4. Additional Observations
+Donor lapses (e.g., annual appeal drop-offs) are not proactively tracked.
+Many operational delays stem from manual tasks that could be automated.
+Strong donor loyalty exists, especially among seniors who require consistent physical communication.
+Volunteer strategy would benefit from an internal intelligence layer summarizing corporate interests.
+5. Summary Insight
+Donna’s perspective highlights manual, repetitive processes across donor acknowledgments, volunteer management, wishlist coordination, and data reporting.
+The desired future state is a centralized, automated, intelligence-driven system that:
+Simplifies donor communication
+Tracks corporate volunteer preferences
+Creates self-managed community wishlists
+Ensures accurate compliance reporting
+Uses Raiser’s Edge and Workday proactively instead of reactively
+The opportunity is to replace fragmented workflows with a unified operational and donor-relationship intelligence platform.
+
+

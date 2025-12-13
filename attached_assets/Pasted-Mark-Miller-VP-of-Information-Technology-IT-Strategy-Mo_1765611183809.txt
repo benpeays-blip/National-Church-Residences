@@ -1,0 +1,48 @@
+Mark Miller
+VP of Information Technology
+IT Strategy & Modernization
+
+1. Current Challenges
+Multiple groups use apps that do the same thing in different, unlinked ways.
+Heavy reliance on spreadsheets; systems are unorganized and fragmented.
+Lack of adoption training across platforms.
+Data remains siloed; BI team has current data but not full visibility.
+3–5 business-critical custom apps are dated.
+CareGuide is still in use as a legacy application.
+Centralized EHR strategy unclear; multiple platforms in play (Homecare Homebase, PointClickCare, Athena, Epic mentioned).
+Significant analysis required over the next few years to consolidate and modernize.
+2. Opportunities with AI & Technology
+Simplify and standardize the application landscape.
+Consolidate overlapping apps and workflows.
+Automate and streamline data migration and governance.
+Move intranet from Mango Apps to SharePoint.
+Complete remaining file share migrations to SharePoint.
+Stand up Microsoft Maverick for data migration, connected into Microsoft Elevate and BDO.
+Store all organizational data in Microsoft Fabric’s OneLake.
+Govern and secure data with Microsoft Purview (classification, monitoring, access control).
+Explore AI-driven efficiencies (e.g., Athena POC for AI dictation and summarization).
+Position Future Secure AI as a foundation for trustworthy, compliant systems.
+3. Strategic Goals
+Establish a central EHR system to unify healthcare data.
+Enable outcome-driven reporting through BI team with full access to OneLake data.
+Standardize processes and workflows across the organization.
+Build internal IT capability after years of outsourcing.
+Modernize legacy applications and reduce duplication.
+Ensure governance, security, and compliance across all systems.
+4. Tech Stack
+Core Systems: Workday, Yardi, MFiles, Mango Apps (to be migrated), Blueworks, Copilot, Future Secure AI.
+Healthcare Systems: HomeCare, HomeBase, CareGuide (legacy), Athena (POC with AI dictation), Epic (mentioned).
+Hardware: Surface Pros (recent upgrade; standardized devices for staff).
+5. Organizational Context
+Previously outsourced IT to MSP until 18 months ago; now building internal capability.
+Working on POC with asset management team.
+Emily maintains master list of applications.
+NCR acquired At Your Door Visiting Healthcare Services, expanding healthcare footprint.
+6. Impact Potential
+Operational Efficiency: Reduced duplication, streamlined workflows, standardized platforms.
+Data Visibility: Unified reporting through BI team with full access to OneLake data.
+Governance & Security: Compliance and trust reinforced through Purview and Future Secure AI.
+Healthcare Outcomes: Centralized EHR and AI tools improve care delivery and documentation.
+Scalability: Modernized tech stack supports NCR’s growth in housing and healthcare.
+
+

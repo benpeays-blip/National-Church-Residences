@@ -1,0 +1,41 @@
+Susan DiMickele
+President and CEO
+AI Strategy & Future Growth
+1. Current Challenges
+Housing Qualification Confusion
+Older adults and families don’t know what type of housing they qualify for.
+Data Inefficiency
+Information is anecdotal, voluntary, and stored in an outdated CareGuide.
+Service coordinators input data manually, often with errors.
+NCR relies on industry data but lacks NCR-specific resident data.
+Workflow Inefficiencies
+Processes for research, assembling documents, and daily coordination are not streamlined.
+2. Opportunities with AI
+Data Modernization
+Automate data retrieval and replace antiquated CareGuide with an AI-powered platform.
+Capture NCR-specific resident data to measure outcomes.
+Family Guidance
+Provide a comprehensive, trusted guide tailored to NCR housing qualifications.
+Workflow Automation
+Streamline processes for research, documentation, and daily task management.
+Deliver personalized daily action items to service coordinators.
+Outcome Tracking
+Measure health improvements, depression reduction, and loneliness metrics (via chaplaincy care line).
+Communicate improvements clearly: “NCR improves in X ways by doing X.”
+Mindset Shift
+Position AI as a tool to free people up, not replace them.
+3. Strategic Goals
+Redesign CareGuide into a dynamic, AI-powered platform.
+Enable outcome-driven reporting for donors and stakeholders.
+Demonstrate ROI: savings, health outcomes, and quality-of-life improvements.
+Position NCR as a leader in housing and healthcare outcomes for older adults.
+4. Tech Stack
+JourneyGuide – financial planning and housing qualification support.
+At Your Door Visiting Healthcare Services – onsite medical and primary care for assisted living, independent living, skilled nursing, memory care, and group homes.
+5. Impact Potential
+Scale: 25,000 residents served.
+Financial ROI: $50,000 savings per resident.
+Health Outcomes: Better health, reduced depression, improved loneliness metrics.
+Donor Engagement: Transparent ROI reporting tied to measurable outcomes.
+Community Impact: Older adults living in NCR communities experience better outcomes than those outside.
+

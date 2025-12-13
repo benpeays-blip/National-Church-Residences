@@ -1,0 +1,71 @@
+Chel Kissler
+Contractor
+
+Event Manager (Contractor) – 1. Current Challenges
+Information Management & Workflow Inefficiency
+80% of the job is manually tracking people and information.
+Reliance on multiple spreadsheets and disconnected documents.
+Tracking is repetitive, error‑prone, and inefficient.
+Invitations and registration processes are not tied to any centralized system or data source.
+Communications across teams are weaker than they should be.
+Organizational Visibility & Structure Issues
+No unified place to view organizational structure, roles, and functions.
+Staff “live in a vacuum” instead of sharing information and working as a community.
+Lack of a centralized knowledge hub to understand responsibilities and internal capabilities.
+Event Management Limitations (Golf Event + National Conference)
+Golf event registration and reporting are entirely manual.
+Sponsorship pricing is under‑optimized ($10,000 per foursome considered underpriced).
+Sponsorship tiers do not drive competition or maximize revenue.
+Foursomes often sell out before higher sponsorship tiers are reached.
+No visibility into who is actually in each foursome — only the purchaser is known.
+Vendors lack structured competition or value‑driven placement, despite 200–300 participants.
+Invitations and registration systems are disconnected from donor or vendor profiles.
+Strategic Alignment & Fundraising Culture
+Incentives are not tied to organizational goals.
+No framework to guide pricing or sponsorship tiers.
+Brand alignment opportunities are underutilized.
+Current approach limits fundraising potential, awareness, culture‑building, and stewardship cycles.
+
+2. Current Tools & Constraints
+Adobe Suite — used for branding and design.
+No dedicated event management system for golf events or national conference.
+GolfStatus (recommended, not used) — would automate golf registration, foursome tracking, sponsorship tiers, digital scoring, and team data.
+Mission Central (concept awareness) — referenced as an example of a structured nonprofit logistics system.
+Overall: heavy reliance on manual tools; little integration across systems.
+
+3. Desired Capabilities (“Wants”)
+Golf Event Modernization
+Streamlined, automated golf registration and management system.
+Centralized registration for players, sponsors, vendors, and foursomes.
+Automated tracking of sponsorship purchasers, actual players, and vendor booth assignments.
+Tiered sponsorship levels with pricing that drives competition.
+Ability to sell higher‑priced sponsorships before foursomes sell out.
+Vendor competition for premium placement.
+Integration with donor CRM to tie invitations and vendor communications to historical giving or sponsorship data.
+Reporting dashboards for registrations, revenue forecasting, vendor/sponsor performance, and event status.
+Organizational Knowledge Hub
+Centralized, searchable space showing org chart, department functions, staff responsibilities, and contact information.
+Tool to reduce the “vacuum” effect and increase cross‑team collaboration.
+Improved Communication & Data Use
+Communications tied to centralized data, not individual spreadsheets.
+Automated updates for vendors, sponsors, and participants.
+Better cross‑team coordination for events and fundraising.
+
+4. Notes & Strategic Context
+Coordinates NCR’s major annual golf event and national conference.
+Oversees branding for the organization.
+Works with 200–300 vendors, seeing untapped value in brand alignment, sponsor visibility, competitive pricing, and nonprofit‑partner positioning.
+Believes NCR’s brand value increases when vendors associate with a high‑impact nonprofit.
+Identifies four pillars NCR must strengthen: fundraising, awareness, culture, stewardship.
+
+5. Summary Insight
+Chel’s perspective highlights manual tracking, weak communication, and under‑optimized sponsorship structures as barriers to effective event management.
+The desired future state requires:
+A modern, automated event‑management platform.
+Strategic sponsorship structures that maximize competition and revenue.
+Clear org‑wide visibility through a centralized knowledge hub.
+Unified communications tied to a shared data source.
+Chel’s role is to modernize NCR’s event management, ensuring flagship events like golf tournaments and the national conference are efficient, financially transparent, and strategically aligned with organizational goals.
+
+Would you like me to now merge Chel’s profile into the consolidated leadership document alongside Jake, Sonya, and Adam so you have one unified, board‑ready package?
+

@@ -1,0 +1,63 @@
+Mark Miller
+VP of Information Technology
+IT Strategy & Modernization
+
+1. Current Challenges
+Application Overlap & Silos
+Multiple groups use apps that do the same thing in different, unlinked ways.
+Heavy reliance on spreadsheets; systems are unorganized and fragmented.
+Lack of adoption training across platforms.
+Data & Reporting Gaps
+BI team (reporting to Jake Swint and Justin Gonzalez) has current data but not full visibility.
+Data remains siloed across Yardi, Workday, and custom apps.
+Legacy Systems
+3–5 business-critical custom apps are dated.
+CareGuide is a legacy application still in use.
+Centralized EHR strategy is unclear; multiple platforms (Homecare Homebase, PointClickCare, Athena, Epic mentioned).
+Analysis Needs
+Significant analysis required over the next few years to consolidate and modernize.
+2. Tech Stack
+Core Systems
+Workday (long-term platform for HR, messaging, lifestyle management).
+Yardi (property management, accounting, HUD/LIHTC compliance, resident management).
+MFiles (document management).
+Mango Apps (current intranet, messaging, collaboration).
+Blueworks (process mapping, workflow documentation, automation prep).
+Copilot (AI productivity assistant).
+Future Secure AI (AI systems built with security, privacy, governance, reliability, trustworthiness).
+Healthcare Systems
+HomeCare – Medical Services.
+HomeBase – Medical Services.
+CareGuide – Legacy application.
+Epic (mentioned as potential).
+Athena (POC with AI dictation tools for clinic technicians).
+Hardware
+Surface Pros (recent upgrade; standardized devices for staff).
+3. Strategic Wants & Initiatives
+Data & Governance
+Stand up Microsoft Maverick for data migration.
+Connect into Microsoft Elevate and BDO.
+Store all organizational data in Microsoft Fabric’s OneLake.
+Govern and secure data with Microsoft Purview (classification, monitoring, access control).
+Consolidation & Standardization
+Simplify and standardize the application landscape.
+Consolidation of overlapping apps and workflows.
+Move intranet from Mango Apps to SharePoint.
+Complete remaining file share migrations to SharePoint.
+EHR Strategy
+Move toward a central EHR system (currently fragmented across Homecare Homebase, PointClickCare, Athena, Epic).
+Innovation & AI
+POC with Athena for AI dictation (note-taking and summarization for clinic technicians).
+Explore AI-driven efficiencies while maintaining security and compliance.
+4. Organizational Context
+Previously outsourced IT to MSP until 18 months ago; now building internal capability.
+Working on POC with asset management team.
+Emily maintains master list of applications.
+NCR acquired At Your Door Visiting Healthcare Services, expanding healthcare footprint.
+5. Impact Potential
+Operational Efficiency: Reduced duplication, streamlined workflows, standardized platforms.
+Data Visibility: Unified reporting through BI team with full access to OneLake data.
+Governance & Security: Compliance and trust reinforced through Purview and Future Secure AI.
+Healthcare Outcomes: Centralized EHR and AI tools improve care delivery and documentation.
+Scalability: Modernized tech stack supports NCR’s growth in housing and healthcare.
+
