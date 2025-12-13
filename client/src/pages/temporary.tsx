@@ -5,7 +5,7 @@ import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import TechStackMapper from "@/pages/tech-stack-mapper";
@@ -1222,9 +1222,6 @@ const interviewees: InterviewPerson[] = [
 ];
 
 function InterviewCard({ person, onClick }: { person: InterviewPerson; onClick: () => void }) {
-  const challengeCount = person.challenges.reduce((acc, c) => acc + c.items.length, 0);
-  const wantCount = person.wants.reduce((acc, w) => acc + w.items.length, 0);
-  
   return (
     <Card 
       className="overflow-hidden hover-elevate cursor-pointer transition-all h-full flex flex-col"
@@ -1247,46 +1244,35 @@ function InterviewCard({ person, onClick }: { person: InterviewPerson; onClick: 
             {person.area}
           </Badge>
         </div>
-        <p className="text-xs text-muted-foreground line-clamp-2">{person.title}</p>
+        <p className="text-xs text-muted-foreground">{person.title}</p>
       </div>
-      <div className="p-6 flex-1 flex flex-col">
-        <p className="text-xs text-muted-foreground mb-3 italic border-l-2 pl-2 line-clamp-2" style={{ borderColor: `${person.areaColor}50` }}>
+      <div className="p-6 flex-1">
+        <p className="text-sm text-muted-foreground italic border-l-2 pl-3" style={{ borderColor: `${person.areaColor}50` }}>
           {person.background}
         </p>
-        <div className="mt-auto space-y-1.5">
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <AlertTriangle className="h-3 w-3 text-orange-500 shrink-0" />
-            <span>{challengeCount} challenges identified</span>
-          </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Sparkles className="h-3 w-3 text-green-500 shrink-0" />
-            <span>{wantCount} desired capabilities</span>
-          </div>
-        </div>
       </div>
     </Card>
   );
 }
 
-function InterviewDetailSheet({ person, open, onOpenChange }: { person: InterviewPerson | null; open: boolean; onOpenChange: (open: boolean) => void }) {
+function InterviewDetailDialog({ person, open, onOpenChange }: { person: InterviewPerson | null; open: boolean; onOpenChange: (open: boolean) => void }) {
   if (!person) return null;
 
   return (
-    <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent 
-        side="right" 
-        className="w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl p-0 flex flex-col"
-        data-testid="sheet-interview-detail"
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent 
+        className="max-w-4xl max-h-[90vh] p-0 flex flex-col overflow-hidden"
+        data-testid="dialog-interview-detail"
       >
         <div 
-          className="p-6 border-b"
+          className="p-6 border-b shrink-0"
           style={{ backgroundColor: `${person.areaColor}10` }}
         >
-          <SheetHeader className="space-y-3">
+          <DialogHeader className="space-y-3">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
-                <SheetTitle className="text-2xl font-bold">{person.name}</SheetTitle>
-                <SheetDescription className="text-base mt-1">{person.title}</SheetDescription>
+                <DialogTitle className="text-2xl font-bold">{person.name}</DialogTitle>
+                <DialogDescription className="text-base mt-1">{person.title}</DialogDescription>
               </div>
               <Badge 
                 style={{ backgroundColor: person.areaColor }} 
@@ -1298,10 +1284,10 @@ function InterviewDetailSheet({ person, open, onOpenChange }: { person: Intervie
             <p className="text-sm text-muted-foreground italic border-l-2 pl-3" style={{ borderColor: person.areaColor }}>
               {person.background}
             </p>
-          </SheetHeader>
+          </DialogHeader>
         </div>
 
-        <ScrollArea className="flex-1">
+        <ScrollArea className="flex-1 overflow-auto">
           <div className="p-6">
             <Accordion type="multiple" defaultValue={["challenges", "wants", "tech", "observations", "summary"]} className="space-y-2">
               <AccordionItem value="challenges" className="border rounded-lg px-4">
@@ -1425,8 +1411,8 @@ function InterviewDetailSheet({ person, open, onOpenChange }: { person: Intervie
             </Accordion>
           </div>
         </ScrollArea>
-      </SheetContent>
-    </Sheet>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -1438,16 +1424,16 @@ function OnSiteInterviews({ initialPersonId }: { initialPersonId?: string }) {
     }
     return null;
   });
-  const [sheetOpen, setSheetOpen] = useState(!!initialPersonId);
+  const [dialogOpen, setDialogOpen] = useState(!!initialPersonId);
 
   const handleCardClick = (person: InterviewPerson) => {
     setSelectedPerson(person);
-    setSheetOpen(true);
+    setDialogOpen(true);
     navigate(`/temporary/interviews/${person.id}`);
   };
 
-  const handleSheetClose = (open: boolean) => {
-    setSheetOpen(open);
+  const handleDialogClose = (open: boolean) => {
+    setDialogOpen(open);
     if (!open) {
       navigate("/temporary");
     }
@@ -1477,10 +1463,10 @@ function OnSiteInterviews({ initialPersonId }: { initialPersonId?: string }) {
         ))}
       </div>
 
-      <InterviewDetailSheet 
+      <InterviewDetailDialog 
         person={selectedPerson} 
-        open={sheetOpen} 
-        onOpenChange={handleSheetClose}
+        open={dialogOpen} 
+        onOpenChange={handleDialogClose}
       />
     </div>
   );
