@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CommandPalette, openCommandPalette } from "@/components/command-palette";
 import { FundRazorLogo } from "@/components/FundRazorLogo";
+import ncrLogo from "@assets/image_1765636583140.png";
 // Sidebar imports preserved for future use
 // import { AppSidebar } from "@/components/app-sidebar";
 // import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
@@ -351,7 +352,7 @@ function App() {
               {/* Logo / Home Link */}
               <Link href="/">
                 <div className="cursor-pointer hover:opacity-80 transition-opacity" data-testid="link-home">
-                  <FundRazorLogo width={140} height={36} />
+                  <img src={ncrLogo} alt="NCR Logo" className="h-10 w-auto" />
                 </div>
               </Link>
               
