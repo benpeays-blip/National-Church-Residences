@@ -39,8 +39,6 @@ const navigationDomains = {
       { name: "AI Tools", href: "/ai-tools" },
       { name: "Infrastructure", href: "/other" },
       { name: "Special Projects", href: "/temporary" },
-      { name: "Other", href: "/other" },
-      { name: "Temporary", href: "/temporary" },
     ]
   }
 };
@@ -384,14 +382,14 @@ function App() {
                           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
                             <div className="py-2 px-1">
                               {navigationDomains["Constituents"].items.map((item) => (
-                                <Link key={item.name} href={item.href}>
-                                  <a
-                                    className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                                    onClick={closeDropdown}
-                                    data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
-                                  >
-                                    {item.name}
-                                  </a>
+                                <Link 
+                                  key={item.name} 
+                                  href={item.href}
+                                  className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                  onClick={closeDropdown}
+                                  data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                >
+                                  {item.name}
                                 </Link>
                               ))}
                             </div>
@@ -442,15 +440,15 @@ function App() {
                           >
                             <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
                               <div className="py-2 px-1">
-                                {navigationDomains[domain].items.map((item, index) => (
-                                  <Link key={item.name} href={item.href}>
-                                    <a
-                                      className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                                      onClick={closeDropdown}
-                                      data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
-                                    >
-                                      {item.name}
-                                    </a>
+                                {navigationDomains[domain].items.map((item) => (
+                                  <Link 
+                                    key={item.name} 
+                                    href={item.href}
+                                    className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                    onClick={closeDropdown}
+                                    data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                  >
+                                    {item.name}
                                   </Link>
                                 ))}
                               </div>
