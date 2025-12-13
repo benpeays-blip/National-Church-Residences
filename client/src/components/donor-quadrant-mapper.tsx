@@ -359,8 +359,8 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             ))}
           </div>
 
-          {/* Donor List - Fixed height scrollable area */}
-          <div className="h-[280px] space-y-2 overflow-y-auto">
+          {/* Donor List - Flexible height scrollable area */}
+          <div className="flex-1 space-y-2 overflow-y-auto min-h-0">
             {selectedDonors.length === 0 ? (
               <div className="text-sm text-muted-foreground text-center py-8">
                 No donors in this quadrant yet.
@@ -391,7 +391,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
           </div>
 
           {/* AI Playbook - Fixed height at bottom */}
-          <div className="pt-4 border-t h-[220px] overflow-y-auto">
+          <div className="pt-4 mt-4 border-t shrink-0">
             <div className="flex items-center gap-2 text-sm font-semibold mb-3">
               <Lightbulb className="w-4 h-4 text-primary" />
               <span>AI Playbook to move towards Partner:</span>
