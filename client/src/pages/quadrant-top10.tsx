@@ -2,8 +2,9 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowRight, Target } from "lucide-react";
+import { ArrowRight, Target, ChevronDown } from "lucide-react";
 
 type OpportunityFilter = "all" | "friend-to-partner" | "colleague-to-partner" | "acquaintance-to-colleague";
 
@@ -118,16 +119,219 @@ const mockOpportunities: ActionableOpportunity[] = [
     estimatedImpact: "Med-High",
     owner: "Ben",
     transitionType: "colleague-to-partner"
+  },
+  {
+    id: "11",
+    donorName: "Sarah Mitchell",
+    currentQuadrant: "Friend",
+    whyNow: "Recently retired, expressed interest in giving back",
+    recommendedMove: "Schedule lunch meeting to discuss legacy",
+    estimatedImpact: "High",
+    owner: "Sarah",
+    transitionType: "friend-to-partner"
+  },
+  {
+    id: "12",
+    donorName: "William Garcia",
+    currentQuadrant: "Acquaintance",
+    whyNow: "Attended virtual tour, asked follow-up questions",
+    recommendedMove: "Send personalized impact report",
+    estimatedImpact: "Medium",
+    owner: "James",
+    transitionType: "acquaintance-to-colleague"
+  },
+  {
+    id: "13",
+    donorName: "Elizabeth Brown",
+    currentQuadrant: "Colleague",
+    whyNow: "Anniversary of first major gift approaching",
+    recommendedMove: "Plan stewardship call and thank you",
+    estimatedImpact: "Med-High",
+    owner: "Maria",
+    transitionType: "colleague-to-partner"
+  },
+  {
+    id: "14",
+    donorName: "James Wilson",
+    currentQuadrant: "Friend",
+    whyNow: "Children now out of college, more disposable income",
+    recommendedMove: "Present endowment giving options",
+    estimatedImpact: "High",
+    owner: "Ben",
+    transitionType: "friend-to-partner"
+  },
+  {
+    id: "15",
+    donorName: "Margaret Taylor",
+    currentQuadrant: "Acquaintance",
+    whyNow: "Opened and shared newsletter on social media",
+    recommendedMove: "Invite to upcoming donor appreciation event",
+    estimatedImpact: "Medium",
+    owner: "Sarah",
+    transitionType: "acquaintance-to-colleague"
+  },
+  {
+    id: "16",
+    donorName: "Richard Anderson",
+    currentQuadrant: "Colleague",
+    whyNow: "Recently sold business for significant profit",
+    recommendedMove: "Discuss stock gift or DAF contribution",
+    estimatedImpact: "High",
+    owner: "Maria",
+    transitionType: "colleague-to-partner"
+  },
+  {
+    id: "17",
+    donorName: "Nancy Martinez",
+    currentQuadrant: "Friend",
+    whyNow: "Volunteered at three events this quarter",
+    recommendedMove: "Offer board observer role",
+    estimatedImpact: "Med-High",
+    owner: "James",
+    transitionType: "friend-to-partner"
+  },
+  {
+    id: "18",
+    donorName: "Thomas Jackson",
+    currentQuadrant: "Acquaintance",
+    whyNow: "Registered for upcoming gala",
+    recommendedMove: "Personal welcome call before event",
+    estimatedImpact: "Medium",
+    owner: "Ben",
+    transitionType: "acquaintance-to-colleague"
+  },
+  {
+    id: "19",
+    donorName: "Karen White",
+    currentQuadrant: "Friend",
+    whyNow: "Asked about impact of previous gifts",
+    recommendedMove: "Schedule site visit to see programs",
+    estimatedImpact: "High",
+    owner: "Sarah",
+    transitionType: "friend-to-partner"
+  },
+  {
+    id: "20",
+    donorName: "Charles Harris",
+    currentQuadrant: "Colleague",
+    whyNow: "Mentioned in conversation with board member",
+    recommendedMove: "Arrange introduction to CEO",
+    estimatedImpact: "Med-High",
+    owner: "Maria",
+    transitionType: "colleague-to-partner"
+  },
+  {
+    id: "21",
+    donorName: "Dorothy Clark",
+    currentQuadrant: "Acquaintance",
+    whyNow: "First-time donor last month",
+    recommendedMove: "Send handwritten thank you note",
+    estimatedImpact: "Medium",
+    owner: "James",
+    transitionType: "acquaintance-to-colleague"
+  },
+  {
+    id: "22",
+    donorName: "Joseph Lewis",
+    currentQuadrant: "Friend",
+    whyNow: "Company has new CSR initiative",
+    recommendedMove: "Propose corporate partnership opportunity",
+    estimatedImpact: "High",
+    owner: "Ben",
+    transitionType: "friend-to-partner"
+  },
+  {
+    id: "23",
+    donorName: "Betty Robinson",
+    currentQuadrant: "Colleague",
+    whyNow: "Upgraded giving level twice this year",
+    recommendedMove: "Invite to major donor circle",
+    estimatedImpact: "Med-High",
+    owner: "Sarah",
+    transitionType: "colleague-to-partner"
+  },
+  {
+    id: "24",
+    donorName: "Steven Walker",
+    currentQuadrant: "Friend",
+    whyNow: "Celebrating 10-year donor anniversary",
+    recommendedMove: "Plan special recognition and ask",
+    estimatedImpact: "High",
+    owner: "Maria",
+    transitionType: "friend-to-partner"
+  },
+  {
+    id: "25",
+    donorName: "Susan Hall",
+    currentQuadrant: "Acquaintance",
+    whyNow: "Responded positively to survey",
+    recommendedMove: "Follow up with program information",
+    estimatedImpact: "Medium",
+    owner: "James",
+    transitionType: "acquaintance-to-colleague"
+  },
+  {
+    id: "26",
+    donorName: "Edward Young",
+    currentQuadrant: "Colleague",
+    whyNow: "Professional connection to new board member",
+    recommendedMove: "Request introduction through board",
+    estimatedImpact: "Med-High",
+    owner: "Ben",
+    transitionType: "colleague-to-partner"
+  },
+  {
+    id: "27",
+    donorName: "Helen King",
+    currentQuadrant: "Friend",
+    whyNow: "Expressed interest in scholarship fund",
+    recommendedMove: "Present named scholarship opportunity",
+    estimatedImpact: "High",
+    owner: "Sarah",
+    transitionType: "friend-to-partner"
+  },
+  {
+    id: "28",
+    donorName: "George Wright",
+    currentQuadrant: "Acquaintance",
+    whyNow: "Referred by existing major donor",
+    recommendedMove: "Schedule introduction meeting",
+    estimatedImpact: "Medium",
+    owner: "Maria",
+    transitionType: "acquaintance-to-colleague"
+  },
+  {
+    id: "29",
+    donorName: "Barbara Lopez",
+    currentQuadrant: "Friend",
+    whyNow: "Recently mentioned estate planning",
+    recommendedMove: "Connect with planned giving officer",
+    estimatedImpact: "High",
+    owner: "James",
+    transitionType: "friend-to-partner"
+  },
+  {
+    id: "30",
+    donorName: "Kenneth Scott",
+    currentQuadrant: "Colleague",
+    whyNow: "Family foundation reviewing grant priorities",
+    recommendedMove: "Submit grant proposal package",
+    estimatedImpact: "Med-High",
+    owner: "Ben",
+    transitionType: "colleague-to-partner"
   }
 ];
 
 export default function QuadrantTop10() {
   const [opportunityFilter, setOpportunityFilter] = useState<OpportunityFilter>("all");
+  const [visibleCount, setVisibleCount] = useState(10);
 
   const filteredOpportunities = mockOpportunities.filter(opp => {
     if (opportunityFilter === "all") return true;
     return opp.transitionType === opportunityFilter;
   });
+
+  const visibleOpportunities = filteredOpportunities.slice(0, visibleCount);
 
   const getImpactVariant = (impact: string): "destructive" | "secondary" | "outline" | "default" => {
     switch (impact) {
@@ -193,7 +397,7 @@ export default function QuadrantTop10() {
                   </TableCell>
                 </TableRow>
               ) : (
-                filteredOpportunities.map((opp) => (
+                visibleOpportunities.map((opp) => (
                   <TableRow key={opp.id} data-testid={`row-opportunity-${opp.id}`}>
                     <TableCell className="font-medium">{opp.donorName}</TableCell>
                     <TableCell>
@@ -220,6 +424,24 @@ export default function QuadrantTop10() {
             </TableBody>
           </Table>
         </div>
+        {visibleCount < filteredOpportunities.length && (
+          <div className="flex justify-center mt-4">
+            <Button 
+              variant="outline" 
+              onClick={() => setVisibleCount(prev => prev + 10)}
+              className="gap-2"
+              data-testid="button-show-more"
+            >
+              Show More
+              <ChevronDown className="h-4 w-4" />
+            </Button>
+          </div>
+        )}
+        {visibleCount >= filteredOpportunities.length && filteredOpportunities.length > 10 && (
+          <p className="text-center text-sm text-muted-foreground mt-4">
+            Showing all {filteredOpportunities.length} opportunities
+          </p>
+        )}
       </CardContent>
     </Card>
   );
