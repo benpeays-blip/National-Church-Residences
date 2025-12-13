@@ -112,6 +112,9 @@ import LogoPreview from "@/pages/logo-preview";
 // Hero Preview
 import HeroPreview from "@/pages/hero-preview";
 
+// Navigation Previews
+import NavigationMegaMenuPreview from "@/pages/navigation-mega-menu-preview";
+
 // Icon Style Guide
 import IconStyleGuide from "@/pages/icon-style-guide";
 
@@ -264,6 +267,9 @@ function Router() {
       
       {/* Hero Preview */}
       <Route path="/hero-preview" component={HeroPreview} />
+      
+      {/* Navigation Previews */}
+      <Route path="/navigation-mega-menu-preview" component={NavigationMegaMenuPreview} />
       
       <Route component={NotFound} />
     </Switch>
