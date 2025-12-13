@@ -44,6 +44,8 @@ const navigationDomains = {
       { name: "AI Tools", href: "/ai-tools" },
       { name: "Infrastructure", href: "/other" },
       { name: "Special Projects", href: "/temporary" },
+      { name: "Other", href: "/other" },
+      { name: "Temporary", href: "/temporary" },
     ]
   }
 };
