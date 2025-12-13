@@ -11,7 +11,7 @@ import QuadrantTop10 from "@/pages/quadrant-top10";
 
 const quadrantTabs: SectionTab[] = [
   {
-    label: "Dan Orr Quadrant",
+    label: "Donor Quadrant",
     value: "quadrant",
     icon: Grid3x3,
     path: "/quadrant",
