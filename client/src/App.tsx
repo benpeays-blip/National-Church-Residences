@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Switch, Route, Link } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -9,7 +10,45 @@ import { FundRazorLogo } from "@/components/FundRazorLogo";
 // import { AppSidebar } from "@/components/app-sidebar";
 // import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Search, Settings as SettingsIcon, Bell, User } from "lucide-react";
+import { Search, Settings as SettingsIcon, Bell, User, ChevronDown } from "lucide-react";
+
+// Navigation dropdown categories
+const navigationDomains = {
+  "Constituents": {
+    items: [
+      { name: "Donors", href: "/donors" },
+      { name: "Relationships", href: "/relationships" },
+      { name: "Corporations", href: "/corporate-partnerships" },
+      { name: "Quadrant", href: "/quadrant" },
+    ]
+  },
+  "Pipeline": {
+    items: [
+      { name: "Pipeline", href: "/pipeline" },
+    ]
+  },
+  "Revenue": {
+    items: [
+      { name: "Gifts", href: "/gifts" },
+      { name: "Grants", href: "/grants" },
+    ]
+  },
+  "Campaigns & Events": {
+    items: [
+      { name: "Campaigns", href: "/campaigns" },
+      { name: "Events", href: "/events" },
+    ]
+  },
+  "Operations & Strategy": {
+    items: [
+      { name: "AI Tools", href: "/ai-tools" },
+      { name: "Infrastructure", href: "/other" },
+      { name: "Special Projects", href: "/temporary" },
+    ]
+  }
+};
+
+type DomainKey = keyof typeof navigationDomains;
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import DashboardHome from "@/pages/dashboard-home";
@@ -278,9 +317,18 @@ function Router() {
 
 
 function App() {
-  const style = {
-    "--sidebar-width": "16rem",
-    "--sidebar-width-icon": "3rem",
+  const [activeDropdown, setActiveDropdown] = useState<DomainKey | null>(null);
+
+  const handleDropdownClick = (domain: DomainKey) => {
+    if (activeDropdown === domain) {
+      setActiveDropdown(null);
+    } else {
+      setActiveDropdown(domain);
+    }
+  };
+
+  const closeDropdown = () => {
+    setActiveDropdown(null);
   };
 
   return (
@@ -307,139 +355,52 @@ function App() {
               </Link>
               
               <div className="flex items-center gap-3 ml-auto">
-                  {/* Navigation Buttons */}
-                  <nav className="flex items-center gap-1">
-                    <Link href="/quadrant">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        data-testid="button-quadrant"
+                  {/* Dropdown Navigation */}
+                  <nav className="flex items-center gap-0.5">
+                    {(Object.keys(navigationDomains) as DomainKey[]).map((domain) => (
+                      <div
+                        key={domain}
+                        className="relative"
+                        onMouseEnter={() => setActiveDropdown(domain)}
+                        onMouseLeave={() => setActiveDropdown(null)}
                       >
-                        Quadrant
-                      </Button>
-                    </Link>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDropdownClick(domain)}
+                          className={`font-semibold gap-1 text-sm ${
+                            activeDropdown === domain 
+                              ? "bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400" 
+                              : "text-blue-800 dark:text-blue-300"
+                          } hover:bg-gray-100 dark:hover:bg-gray-800`}
+                          data-testid={`button-nav-${domain.toLowerCase().replace(/\s+/g, '-').replace('&', 'and')}`}
+                        >
+                          {domain}
+                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === domain ? "rotate-180" : ""}`} />
+                        </Button>
 
-                    <Link href="/events">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        data-testid="button-events"
-                      >
-                        Events
-                      </Button>
-                    </Link>
-                    
-                    <Link href="/grants">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        data-testid="button-grants"
-                      >
-                        Grants
-                      </Button>
-                    </Link>
-                    
-                    <Link href="/gifts">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        data-testid="button-gifts"
-                      >
-                        Gifts
-                      </Button>
-                    </Link>
-                    
-                    <Link href="/campaigns">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        data-testid="button-campaigns"
-                      >
-                        Campaigns
-                      </Button>
-                    </Link>
-                    
-                    <Link href="/ai-tools">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        data-testid="button-ai-tools"
-                      >
-                        AI Tools
-                      </Button>
-                    </Link>
-                    
-                    <Link href="/relationships">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        data-testid="button-relationships"
-                      >
-                        Relationships
-                      </Button>
-                    </Link>
-                    
-                    <Link href="/corporate-partnerships">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        data-testid="button-corporate-partnerships"
-                      >
-                        Corporations
-                      </Button>
-                    </Link>
-                    
-                    <Link href="/donors">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        data-testid="button-donors"
-                      >
-                        Donors
-                      </Button>
-                    </Link>
-                    
-                    <Link href="/pipeline">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        data-testid="button-pipeline"
-                      >
-                        Pipeline
-                      </Button>
-                    </Link>
-                    
-                    <Link href="/other">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        data-testid="button-other"
-                      >
-                        Other
-                      </Button>
-                    </Link>
-                    
-                    <Link href="/temporary">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                        data-testid="button-temporary"
-                      >
-                        Temporary
-                      </Button>
-                    </Link>
+                        {/* Dropdown Menu */}
+                        {activeDropdown === domain && (
+                          <div 
+                            className="absolute right-0 top-full mt-1 bg-white dark:bg-gray-900 border rounded-md shadow-lg z-50 min-w-[160px]"
+                          >
+                            <div className="py-1">
+                              {navigationDomains[domain].items.map((item) => (
+                                <Link key={item.name} href={item.href}>
+                                  <a
+                                    className="block px-4 py-2 text-sm text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                                    onClick={closeDropdown}
+                                    data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                  >
+                                    {item.name}
+                                  </a>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    ))}
                   </nav>
                   
                   {/* Separator */}
