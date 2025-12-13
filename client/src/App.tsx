@@ -22,11 +22,6 @@ const navigationDomains = {
       { name: "Quadrant", href: "/quadrant" },
     ]
   },
-  "Pipeline": {
-    items: [
-      { name: "Pipeline", href: "/pipeline" },
-    ]
-  },
   "Revenue": {
     items: [
       { name: "Gifts", href: "/gifts" },
@@ -360,7 +355,61 @@ function App() {
               <div className="flex items-center gap-3 ml-auto">
                   {/* Dropdown Navigation */}
                   <nav className="flex items-center gap-0.5">
-                    {(Object.keys(navigationDomains) as DomainKey[]).map((domain) => (
+                    {/* Constituents Dropdown */}
+                    <div
+                      className="relative"
+                      onMouseEnter={() => setActiveDropdown("Constituents")}
+                      onMouseLeave={() => setActiveDropdown(null)}
+                    >
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDropdownClick("Constituents")}
+                        className={`font-semibold gap-1 text-sm ${
+                          activeDropdown === "Constituents" 
+                            ? "bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400" 
+                            : "text-blue-800 dark:text-blue-300"
+                        } hover:bg-gray-100 dark:hover:bg-gray-800`}
+                        data-testid="button-nav-constituents"
+                      >
+                        Constituents
+                        <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Constituents" ? "rotate-180" : ""}`} />
+                      </Button>
+                      {activeDropdown === "Constituents" && (
+                        <div className="absolute right-0 top-full pt-1 z-50">
+                          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
+                            <div className="py-2 px-1">
+                              {navigationDomains["Constituents"].items.map((item) => (
+                                <Link key={item.name} href={item.href}>
+                                  <a
+                                    className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                    onClick={closeDropdown}
+                                    data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                  >
+                                    {item.name}
+                                  </a>
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Pipeline - Direct Link (not a dropdown) */}
+                    <Link href="/pipeline">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="font-semibold text-sm text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        data-testid="button-nav-pipeline"
+                      >
+                        Pipeline
+                      </Button>
+                    </Link>
+
+                    {/* Other Dropdowns */}
+                    {(Object.keys(navigationDomains) as DomainKey[]).filter(d => d !== "Constituents").map((domain) => (
                       <div
                         key={domain}
                         className="relative"
