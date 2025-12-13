@@ -19,49 +19,37 @@ export default function Home() {
       title: "Dashboard",
       description: "View key metrics and analytics",
       icon: BarChart3,
-      href: "/dashboard",
-      color: "text-blue-600",
-      bgColor: "bg-blue-50"
+      href: "/dashboard"
     },
     {
       title: "Donors",
       description: "Manage donor relationships",
       icon: Users,
-      href: "/donors",
-      color: "text-green-600",
-      bgColor: "bg-green-50"
+      href: "/donors"
     },
     {
       title: "Pipeline",
       description: "Track opportunities and forecasts",
       icon: TrendingUp,
-      href: "/pipeline",
-      color: "text-purple-600",
-      bgColor: "bg-purple-50"
+      href: "/pipeline"
     },
     {
       title: "Events",
       description: "Coordinate fundraising events",
       icon: Calendar,
-      href: "/events",
-      color: "text-orange-600",
-      bgColor: "bg-orange-50"
+      href: "/events"
     },
     {
       title: "Grants",
       description: "Research and submit grants",
       icon: FileText,
-      href: "/grants",
-      color: "text-indigo-600",
-      bgColor: "bg-indigo-50"
+      href: "/grants"
     },
     {
       title: "Campaigns",
       description: "Plan and execute campaigns",
       icon: Target,
-      href: "/campaigns",
-      color: "text-pink-600",
-      bgColor: "bg-pink-50"
+      href: "/campaigns"
     }
   ];
 
@@ -110,8 +98,8 @@ export default function Home() {
                 <Card className="hover-elevate active-elevate-2 cursor-pointer transition-all h-full">
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
-                      <div className={`p-3 rounded-lg ${action.bgColor}`}>
-                        <Icon className={`h-6 w-6 ${action.color}`} />
+                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Icon className="h-6 w-6 text-primary" />
                       </div>
                       <div className="flex-1 space-y-1">
                         <h3 className="font-semibold text-lg flex items-center justify-between">

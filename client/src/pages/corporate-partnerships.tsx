@@ -45,10 +45,10 @@ import {
 import type { CorporatePartnership } from "@shared/schema";
 
 const partnershipTypeLabels: Record<string, { label: string; icon: typeof Heart; color: string }> = {
-  volunteer: { label: "Volunteer", icon: Users, color: "bg-green-100 text-green-700" },
-  donate: { label: "Financial", icon: DollarSign, color: "bg-blue-100 text-blue-700" },
-  sponsor: { label: "Sponsor", icon: Trophy, color: "bg-purple-100 text-purple-700" },
-  goods_services: { label: "Goods & Services", icon: Package, color: "bg-orange-100 text-orange-700" },
+  volunteer: { label: "Volunteer", icon: Users, color: "bg-primary/10 text-primary" },
+  donate: { label: "Financial", icon: DollarSign, color: "bg-primary/10 text-primary" },
+  sponsor: { label: "Sponsor", icon: Trophy, color: "bg-primary/10 text-primary" },
+  goods_services: { label: "Goods & Services", icon: Package, color: "bg-primary/10 text-primary" },
 };
 
 type MetricType = 'active' | 'contributions' | 'hours' | 'volunteers' | null;
@@ -450,7 +450,6 @@ export default function CorporatePartnershipsPage() {
                       </div>
                       <Badge 
                         variant={partner.partnershipStatus === 'active' ? 'default' : 'secondary'}
-                        className={partner.partnershipStatus === 'active' ? 'bg-green-100 text-green-700' : ''}
                       >
                         {partner.partnershipStatus}
                       </Badge>
@@ -557,7 +556,6 @@ export default function CorporatePartnershipsPage() {
                     <TableCell>
                       <Badge 
                         variant={partner.partnershipStatus === 'active' ? 'default' : 'secondary'}
-                        className={partner.partnershipStatus === 'active' ? 'bg-green-100 text-green-700' : ''}
                       >
                         {partner.partnershipStatus}
                       </Badge>

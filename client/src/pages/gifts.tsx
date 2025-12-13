@@ -1015,8 +1015,8 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center flex-shrink-0">
-                    <DollarSign className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <DollarSign className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <CardTitle>Cash Gifts</CardTitle>
@@ -1037,8 +1037,8 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <FileText className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <CardTitle>Wills & Bequests</CardTitle>
@@ -1056,8 +1056,8 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-green-100 dark:bg-green-900/20 flex items-center justify-center flex-shrink-0">
-                    <TrendingUp className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <CardTitle>IRA Qualified Charitable Distribution</CardTitle>
@@ -1075,8 +1075,8 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-orange-100 dark:bg-orange-900/20 flex items-center justify-center flex-shrink-0">
-                    <Repeat className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Repeat className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <CardTitle>Charitable Gift Annuities</CardTitle>
@@ -1094,8 +1094,8 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-pink-100 dark:bg-pink-900/20 flex items-center justify-center flex-shrink-0">
-                    <Heart className="w-5 h-5 text-pink-600 dark:text-pink-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Heart className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <CardTitle>Memorial Gifts</CardTitle>
@@ -1113,8 +1113,8 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-cyan-100 dark:bg-cyan-900/20 flex items-center justify-center flex-shrink-0">
-                    <Calendar className="w-5 h-5 text-cyan-600 dark:text-cyan-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Calendar className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <CardTitle>Refundable Entrance Fees</CardTitle>
@@ -1132,8 +1132,8 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-indigo-100 dark:bg-indigo-900/20 flex items-center justify-center flex-shrink-0">
-                    <Users className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Users className="w-6 h-6 text-primary" />
                   </div>
                   <div>
                     <CardTitle>Donor Advised Funds</CardTitle>
