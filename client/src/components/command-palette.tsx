@@ -413,6 +413,11 @@ const navItems: NavItem[] = [
   },
 ];
 
+// Global function to open command palette
+export function openCommandPalette() {
+  window.dispatchEvent(new CustomEvent('open-command-palette'));
+}
+
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
   const [, setLocation] = useLocation();
@@ -425,8 +430,14 @@ export function CommandPalette() {
       }
     };
 
+    const handleOpen = () => setOpen(true);
+
     document.addEventListener("keydown", down);
-    return () => document.removeEventListener("keydown", down);
+    window.addEventListener("open-command-palette", handleOpen);
+    return () => {
+      document.removeEventListener("keydown", down);
+      window.removeEventListener("open-command-palette", handleOpen);
+    };
   }, []);
 
   const handleSelect = (path: string) => {

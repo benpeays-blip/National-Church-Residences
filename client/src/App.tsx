@@ -4,7 +4,7 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { CommandPalette } from "@/components/command-palette";
+import { CommandPalette, openCommandPalette } from "@/components/command-palette";
 import { FundRazorLogo } from "@/components/FundRazorLogo";
 // Sidebar imports preserved for future use
 // import { AppSidebar } from "@/components/app-sidebar";
@@ -472,9 +472,11 @@ function App() {
                       onClick={() => setHamburgerOpen(!hamburgerOpen)}
                       data-testid="button-hamburger-menu"
                       aria-label="Menu"
-                      className="text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                      className="text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800 relative"
                     >
                       <Menu className="h-5 w-5" />
+                      {/* Notification Badge */}
+                      <span className="absolute top-1 right-1 h-2.5 w-2.5 bg-red-500 rounded-full border-2 border-white dark:border-gray-900" />
                     </Button>
 
                     {/* Hamburger Dropdown */}
@@ -484,20 +486,27 @@ function App() {
                           <div className="py-2 px-1">
                             <button
                               className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                              onClick={() => setHamburgerOpen(false)}
+                              onClick={() => {
+                                setHamburgerOpen(false);
+                                openCommandPalette();
+                              }}
                               data-testid="button-global-search"
                             >
                               <Search className="h-4 w-4" />
                               Search
+                              <span className="ml-auto text-xs text-gray-400">⌘K</span>
                             </button>
-                            <button
-                              className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                              onClick={() => setHamburgerOpen(false)}
-                              data-testid="button-notifications"
-                            >
-                              <Bell className="h-4 w-4" />
-                              Notifications
-                            </button>
+                            <Link href="/notifications">
+                              <a
+                                className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                onClick={() => setHamburgerOpen(false)}
+                                data-testid="button-notifications"
+                              >
+                                <Bell className="h-4 w-4" />
+                                Notifications
+                                <span className="ml-auto bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">3</span>
+                              </a>
+                            </Link>
                             <div className="my-1.5 mx-2 h-px bg-gray-200 dark:bg-gray-700" />
                             <Link href="/settings">
                               <a
@@ -509,14 +518,16 @@ function App() {
                                 Settings
                               </a>
                             </Link>
-                            <button
-                              className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                              onClick={() => setHamburgerOpen(false)}
-                              data-testid="button-account"
-                            >
-                              <User className="h-4 w-4" />
-                              Profile
-                            </button>
+                            <Link href="/profile">
+                              <a
+                                className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                onClick={() => setHamburgerOpen(false)}
+                                data-testid="button-account"
+                              >
+                                <User className="h-4 w-4" />
+                                Profile
+                              </a>
+                            </Link>
                           </div>
                         </div>
                       </div>
