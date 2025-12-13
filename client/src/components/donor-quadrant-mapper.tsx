@@ -103,18 +103,18 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
       {/* Main Quadrant Visualization */}
       <Card className="lg:col-span-3">
-        <CardHeader className="bg-primary/5 border-b">
+        <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="w-5 h-5 text-primary" />
+              <CardTitle className="flex items-center gap-2 text-white">
+                <Users className="w-5 h-5 text-white" />
                 Donor Relationship Quadrant
               </CardTitle>
-              <CardDescription className="mt-1">
+              <CardDescription className="mt-1 text-white/80">
                 Energy increases upward; structure increases to the right. Goal: move every donor toward Partner.
               </CardDescription>
             </div>
-            <Badge variant="outline" className="text-sm">
+            <Badge variant="outline" className="text-sm text-white border-white/50">
               {data.totalDonors} Donors
             </Badge>
           </div>
