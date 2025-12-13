@@ -287,10 +287,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[25%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('acquaintance')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#eef9fb] text-[#395174] w-[120px]"
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary bg-[#eef9fb] text-[#395174] w-[140px] flex flex-col items-center justify-center"
                 data-testid="quadrant-acquaintance"
               >
-                <div className="font-bold text-base">Acquaintance</div>
+                <div className="font-bold text-base text-center">Acquaintance</div>
                 <Badge className="mt-1 bg-[#f4f4f4] text-[#395174]" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
               </button>
             </div>
