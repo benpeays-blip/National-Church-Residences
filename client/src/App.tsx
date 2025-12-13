@@ -385,20 +385,22 @@ function App() {
                         {/* Dropdown Menu */}
                         {activeDropdown === domain && (
                           <div 
-                            className="absolute right-0 top-full mt-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl z-50 min-w-[180px] overflow-hidden"
+                            className="absolute right-0 top-full pt-1 z-50"
                           >
-                            <div className="py-2 px-1">
-                              {navigationDomains[domain].items.map((item, index) => (
-                                <Link key={item.name} href={item.href}>
-                                  <a
-                                    className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                                    onClick={closeDropdown}
-                                    data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
-                                  >
-                                    {item.name}
-                                  </a>
-                                </Link>
-                              ))}
+                            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
+                              <div className="py-2 px-1">
+                                {navigationDomains[domain].items.map((item, index) => (
+                                  <Link key={item.name} href={item.href}>
+                                    <a
+                                      className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                      onClick={closeDropdown}
+                                      data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                    >
+                                      {item.name}
+                                    </a>
+                                  </Link>
+                                ))}
+                              </div>
                             </div>
                           </div>
                         )}
@@ -428,45 +430,45 @@ function App() {
 
                     {/* Hamburger Dropdown */}
                     {hamburgerOpen && (
-                      <div 
-                        className="absolute right-0 top-full mt-2 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl z-50 min-w-[200px] overflow-hidden"
-                      >
-                        <div className="py-2 px-1">
-                          <button
-                            className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                            onClick={() => setHamburgerOpen(false)}
-                            data-testid="button-global-search"
-                          >
-                            <Search className="h-4 w-4" />
-                            Search
-                          </button>
-                          <button
-                            className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                            onClick={() => setHamburgerOpen(false)}
-                            data-testid="button-notifications"
-                          >
-                            <Bell className="h-4 w-4" />
-                            Notifications
-                          </button>
-                          <div className="my-1.5 mx-2 h-px bg-gray-200 dark:bg-gray-700" />
-                          <Link href="/settings">
-                            <a
+                      <div className="absolute right-0 top-full pt-1 z-50">
+                        <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[200px] overflow-hidden">
+                          <div className="py-2 px-1">
+                            <button
                               className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
                               onClick={() => setHamburgerOpen(false)}
-                              data-testid="button-settings"
+                              data-testid="button-global-search"
                             >
-                              <SettingsIcon className="h-4 w-4" />
-                              Settings
-                            </a>
-                          </Link>
-                          <button
-                            className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                            onClick={() => setHamburgerOpen(false)}
-                            data-testid="button-account"
-                          >
-                            <User className="h-4 w-4" />
-                            Profile
-                          </button>
+                              <Search className="h-4 w-4" />
+                              Search
+                            </button>
+                            <button
+                              className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                              onClick={() => setHamburgerOpen(false)}
+                              data-testid="button-notifications"
+                            >
+                              <Bell className="h-4 w-4" />
+                              Notifications
+                            </button>
+                            <div className="my-1.5 mx-2 h-px bg-gray-200 dark:bg-gray-700" />
+                            <Link href="/settings">
+                              <a
+                                className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                onClick={() => setHamburgerOpen(false)}
+                                data-testid="button-settings"
+                              >
+                                <SettingsIcon className="h-4 w-4" />
+                                Settings
+                              </a>
+                            </Link>
+                            <button
+                              className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                              onClick={() => setHamburgerOpen(false)}
+                              data-testid="button-account"
+                            >
+                              <User className="h-4 w-4" />
+                              Profile
+                            </button>
+                          </div>
                         </div>
                       </div>
                     )}
