@@ -6,6 +6,7 @@ FundRazor is an AI-powered, enterprise-grade fundraising CRM designed for nonpro
 The Dashboard Home provides a unified view of the entire fundraising operation, featuring a Donor Relationship Quadrant, key performance metrics, top opportunities, AI-generated Next Best Actions, recent gifts, and an active campaigns overview.
 
 ## Recent Changes (December 13, 2025)
+- **Redesigned Technology Categories Tab**: Improved the Technology Categories tab layout per design guidelines. KPI cards now use vertical icon pattern with mb-4 spacing. Category headers use neutral bg-muted/50 surface with semantic priority badges (red/orange/yellow). Platform cards use p-4 rounded-lg bg-muted/50 without borders. NCR context boxes use p-3 rounded-md bg-muted/50. Removed unused helper functions. **Status: ✅ WORKING**
 - **Redesigned Interviewees Section**: Improved the On Site Interviews tab styling to match the professional ProductCard pattern. Cards now feature colored header sections with person's area color, outline-style badges, background info with italic styling and colored left border, and challenge/capability counts with icons. Uses consistent p-6 padding per design guidelines. **Status: ✅ WORKING**
 - **Unified Tech Products Data Source**: Created shared data module (client/src/data/tech-products.ts) for NCR tech products. Both Tech Stack tab and Technology Categories tab now use the same data source, ensuring consistency. Removed ~250 lines of duplicate code. **Status: ✅ WORKING**
 
