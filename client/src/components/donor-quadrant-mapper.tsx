@@ -263,7 +263,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[25%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('friend')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center"
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-[#ffffff]"
                 style={{ backgroundColor: '#f4f4f4' }}
                 data-testid="quadrant-friend"
               >
@@ -326,7 +326,6 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
           <span>Goal: move every donor toward <strong className="text-foreground">Partner</strong> (top-right) with wise effort and structure.</span>
         </CardFooter>
       </Card>
-
       {/* Right Panel - Quadrant Details */}
       <Card className="lg:col-span-2">
         <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
@@ -409,7 +408,6 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
           </div>
         </CardContent>
       </Card>
-      
     </div>
   );
 }
