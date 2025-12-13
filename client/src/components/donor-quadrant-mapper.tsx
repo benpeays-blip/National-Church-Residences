@@ -218,7 +218,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                         <div className="text-2xl font-bold text-primary">
                           ${parseFloat(donor.totalLifetimeGiving || '0').toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
                         </div>
-                        <div className="text-xs text-muted-foreground mt-1">Lifetime</div>
+                        <div className="text-xs text-muted-foreground mt-1">Lifetime Giving</div>
                       </div>
                       <div className="p-4 text-center">
                         <div className="text-2xl font-bold text-primary">{donor.giftCount}</div>
@@ -263,7 +263,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[25%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('friend')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white"
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#eef9fb] text-[#395174]"
                 data-testid="quadrant-friend"
               >
                 <div className="font-bold text-base">Friend</div>
@@ -275,7 +275,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[75%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('partner')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white"
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#eef9fb] text-[#395174]"
                 data-testid="quadrant-partner"
               >
                 <div className="font-bold text-base">Partner</div>
@@ -287,7 +287,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[25%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('acquaintance')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white"
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#eef9fb] text-[#395174]"
                 data-testid="quadrant-acquaintance"
               >
                 <div className="font-bold text-base">Acquaintance</div>
@@ -299,7 +299,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[75%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('colleague')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white"
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#eef9fb] text-[#395174]"
                 data-testid="quadrant-colleague"
               >
                 <div className="font-bold text-base">Colleague</div>
