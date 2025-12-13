@@ -1263,18 +1263,18 @@ function InterviewDetailDialog({ person, open, onOpenChange }: { person: Intervi
         data-testid="dialog-interview-detail"
       >
         <div 
-          className="p-6 border-b shrink-0"
+          className="p-6 pr-12 border-b shrink-0"
           style={{ backgroundColor: `${person.areaColor}10` }}
         >
           <DialogHeader className="space-y-3">
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex-1">
-                <DialogTitle className="text-2xl font-bold">{person.name}</DialogTitle>
-                <DialogDescription className="text-base mt-1">{person.title}</DialogDescription>
-              </div>
+            <div className="space-y-2">
+              <DialogTitle className="text-2xl font-bold" style={{ color: person.areaColor }}>
+                {person.name}
+              </DialogTitle>
+              <DialogDescription className="text-base">{person.title}</DialogDescription>
               <Badge 
-                style={{ backgroundColor: person.areaColor }} 
-                className="text-white shrink-0"
+                variant="outline"
+                style={{ borderColor: person.areaColor, color: person.areaColor }}
               >
                 {person.area}
               </Badge>
