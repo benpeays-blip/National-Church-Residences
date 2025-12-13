@@ -136,59 +136,6 @@ export default function TechStackMapper() {
     }
   };
 
-  const getPopularityBadge = (popularity?: string) => {
-    if (!popularity) return null;
-    switch (popularity) {
-      case "high":
-        return <Badge variant="secondary" className="text-xs">Industry Leader</Badge>;
-      case "growing":
-        return <Badge variant="secondary" className="text-xs">Growing</Badge>;
-      default:
-        return null;
-    }
-  };
-
-  const renderPlatformCard = (platform: Platform) => {
-    const Logo = platform.logo;
-    
-    return (
-      <div 
-        key={platform.name}
-        className="flex items-start gap-3 p-4 rounded-lg border bg-card hover-elevate transition-all"
-        data-testid={`card-platform-${platform.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
-      >
-        <div className="shrink-0">
-          {platform.logoImage ? (
-            <div className="w-10 h-10 rounded-lg overflow-hidden">
-              <img src={platform.logoImage} alt={platform.name} className="w-full h-full object-cover" />
-            </div>
-          ) : Logo ? (
-            <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center p-2" style={platform.logoColor && platform.logoColor.startsWith('#') ? { color: platform.logoColor } : undefined}>
-              <Logo size={24} className="shrink-0" />
-            </div>
-          ) : (
-            <LogoFallback 
-              initials={platform.fallbackInitials || platform.name.substring(0, 2).toUpperCase()} 
-              color={platform.logoColor}
-            />
-          )}
-        </div>
-
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-2 mb-1">
-            <h4 className="font-semibold text-sm" data-testid={`text-platform-name-${platform.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}>
-              {platform.name}
-            </h4>
-            {getPopularityBadge(platform.popularity)}
-          </div>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            {platform.description}
-          </p>
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div className="space-y-6">
       <Tabs defaultValue="architecture" className="w-full">
@@ -213,14 +160,11 @@ export default function TechStackMapper() {
                 key={category.id}
                 className="rounded-lg border overflow-hidden hover-elevate transition-all"
               >
-                <div 
-                  className="flex items-center gap-3 px-4 py-3"
-                  style={{ backgroundColor: '#0284C7' }}
-                >
-                  <div className="w-8 h-8 rounded-lg bg-white/20 flex items-center justify-center shrink-0">
-                    <category.icon className="w-4 h-4 text-white" />
+                <div className="flex items-center gap-3 px-4 py-3 bg-primary">
+                  <div className="w-8 h-8 rounded-lg bg-primary-foreground/20 flex items-center justify-center shrink-0">
+                    <category.icon className="w-4 h-4 text-primary-foreground" />
                   </div>
-                  <h4 className="font-semibold text-sm text-white leading-tight">
+                  <h4 className="font-semibold text-sm text-primary-foreground leading-tight">
                     {category.title.replace(' & ', ' ')}
                   </h4>
                 </div>
@@ -274,8 +218,8 @@ export default function TechStackMapper() {
         <CardContent className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="rounded-lg border overflow-hidden">
-              <div className="px-4 py-3" style={{ backgroundColor: '#0284C7' }}>
-                <h4 className="font-semibold text-sm text-white">Digital Engagement Platforms</h4>
+              <div className="px-4 py-3 bg-primary">
+                <h4 className="font-semibold text-sm text-primary-foreground">Digital Engagement Platforms</h4>
               </div>
               <div className="p-5 space-y-3">
                 <div className="space-y-2">
@@ -320,8 +264,8 @@ export default function TechStackMapper() {
             </div>
 
             <div className="rounded-lg border overflow-hidden">
-              <div className="px-4 py-3" style={{ backgroundColor: '#0284C7' }}>
-                <h4 className="font-semibold text-sm text-white">CRM — Customer Relationship Management</h4>
+              <div className="px-4 py-3 bg-primary">
+                <h4 className="font-semibold text-sm text-primary-foreground">CRM — Customer Relationship Management</h4>
               </div>
               <div className="p-5 space-y-3">
                 <div className="space-y-2">
@@ -366,8 +310,8 @@ export default function TechStackMapper() {
             </div>
 
             <div className="rounded-lg border overflow-hidden">
-              <div className="px-4 py-3" style={{ backgroundColor: '#0284C7' }}>
-                <h4 className="font-semibold text-sm text-white">ERP — Enterprise Resource Planning</h4>
+              <div className="px-4 py-3 bg-primary">
+                <h4 className="font-semibold text-sm text-primary-foreground">ERP — Enterprise Resource Planning</h4>
               </div>
               <div className="p-5 space-y-3">
                 <div className="space-y-2">
@@ -436,106 +380,168 @@ export default function TechStackMapper() {
         </TabsContent>
 
         <TabsContent value="categories" className="space-y-6">
-          <Card>
-            <CardHeader className="pb-4">
-              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                  <CardTitle>NCR Technology Categories</CardTitle>
-                  <CardDescription>
-                    Current software platforms used at National Church Residences organized by function
-                  </CardDescription>
+          {/* KPI Summary Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <Card>
+              <CardContent className="p-6">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <Building2 className="w-6 h-6 text-primary" />
                 </div>
-                <div className="relative w-full md:w-72">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder="Search categories..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-10"
-                    data-testid="input-search-categories"
-                  />
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Total Platforms</p>
+                <p className="text-3xl font-bold" data-testid="kpi-total-platforms">{techProducts.length}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <Database className="w-6 h-6 text-primary" />
                 </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <Accordion type="multiple" className="w-full space-y-3">
-                {filteredData.map((category) => (
-                  <AccordionItem 
-                    key={category.id} 
-                    value={category.id}
-                    className="border rounded-lg overflow-hidden"
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Categories</p>
+                <p className="text-3xl font-bold" data-testid="kpi-categories">{techStackData.length}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <AlertCircle className="w-6 h-6 text-primary" />
+                </div>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">Critical Priority</p>
+                <p className="text-3xl font-bold" data-testid="kpi-critical">{techStackData.filter(c => c.integrationNeed === 'critical').length}</p>
+              </CardContent>
+            </Card>
+            <Card>
+              <CardContent className="p-6">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-6 h-6 text-primary" />
+                </div>
+                <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">High Priority</p>
+                <p className="text-3xl font-bold" data-testid="kpi-high">{techStackData.filter(c => c.integrationNeed === 'high').length}</p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Search Bar */}
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <h2 className="text-xl font-semibold">NCR Technology Categories</h2>
+              <p className="text-sm text-muted-foreground">Current software platforms organized by function</p>
+            </div>
+            <div className="relative w-72">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search categories or platforms..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
+                data-testid="input-search-categories"
+              />
+            </div>
+          </div>
+
+          {/* Category Cards with Nested Platforms */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            {filteredData.map((category) => (
+              <div
+                key={category.id}
+                className="rounded-lg border overflow-hidden hover-elevate transition-all"
+                data-testid={`card-category-${category.id}`}
+              >
+                {/* Category Header */}
+                <div className="flex items-center justify-between gap-3 px-6 py-4 bg-muted/50 border-b">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                      <category.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-sm">{category.title}</h3>
+                      <p className="text-xs text-muted-foreground">{category.platforms.length} platform{category.platforms.length !== 1 ? 's' : ''}</p>
+                    </div>
+                  </div>
+                  <Badge 
+                    variant="outline" 
+                    className={`text-xs ${
+                      category.integrationNeed === "critical" 
+                        ? "bg-red-50 dark:bg-red-950/20 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800" 
+                        : category.integrationNeed === "high"
+                        ? "bg-orange-50 dark:bg-orange-950/20 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-800"
+                        : "bg-yellow-50 dark:bg-yellow-950/20 text-yellow-700 dark:text-yellow-300 border-yellow-200 dark:border-yellow-800"
+                    }`}
                   >
-                    <AccordionTrigger 
-                      className="px-4 py-3 hover:no-underline hover-elevate"
-                      data-testid={`accordion-trigger-${category.id}`}
-                    >
-                      <div className="flex items-center gap-4 flex-1">
-                        <div 
-                          className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                          style={{ backgroundColor: '#0284C7' }}
-                        >
-                          <category.icon className="w-5 h-5 text-white" />
-                        </div>
-                        <div className="text-left flex-1">
-                          <div className="flex items-center gap-2 flex-wrap">
-                            <h3 className="font-semibold text-sm">{category.title}</h3>
-                            <Badge 
-                              variant="outline" 
-                              className={`text-xs ${getIntegrationColor(category.integrationNeed)}`}
-                            >
-                              {category.integrationNeed === "critical" ? (
-                                <><AlertCircle className="w-3 h-3 mr-1" /> Critical</>
-                              ) : category.integrationNeed === "high" ? (
-                                <><AlertCircle className="w-3 h-3 mr-1" /> High Priority</>
-                              ) : (
-                                <><CheckCircle2 className="w-3 h-3 mr-1" /> Medium</>
-                              )}
-                            </Badge>
+                    {category.integrationNeed === "critical" ? "Critical" : 
+                     category.integrationNeed === "high" ? "High" : "Medium"}
+                  </Badge>
+                </div>
+                
+                {/* Category Content */}
+                <div className="p-6 bg-card space-y-4">
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {category.description}
+                  </p>
+                  
+                  {/* Nested Platform Cards */}
+                  <div className="space-y-3">
+                    <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+                      NCR Platform{category.platforms.length !== 1 ? 's' : ''}
+                    </p>
+                    {category.platforms.map((platform) => (
+                      <div 
+                        key={platform.name}
+                        className="flex items-start gap-3 p-4 rounded-lg bg-muted/50"
+                        data-testid={`card-platform-${platform.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                      >
+                        {platform.logoImage ? (
+                          <div className="w-10 h-10 rounded-lg overflow-hidden shrink-0">
+                            <img src={platform.logoImage} alt={platform.name} className="w-full h-full object-cover" />
                           </div>
-                          <p className="text-xs text-muted-foreground mt-0.5">{category.description}</p>
-                        </div>
-                      </div>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-4 pb-4">
-                      <div className="space-y-4 pt-2">
-                        <div className="space-y-2">
-                          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                            NCR Platform{category.platforms.length > 1 ? 's' : ''}
-                          </h4>
-                          <div className="grid grid-cols-1 gap-3">
-                            {category.platforms.map(renderPlatformCard)}
-                          </div>
-                        </div>
-                        
-                        {category.painPoints.length > 0 && (
-                          <div className="space-y-2">
-                            <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                              Key Challenges
-                            </h4>
-                            <ul className="space-y-1.5">
-                              {category.painPoints.map((point, idx) => (
-                                <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                                  <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
-                                  <span>{point}</span>
-                                </li>
-                              ))}
-                            </ul>
+                        ) : (
+                          <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center shrink-0">
+                            <category.icon className="w-5 h-5 text-muted-foreground" />
                           </div>
                         )}
+                        <div className="flex-1 min-w-0">
+                          <h4 className="font-semibold text-sm mb-1">{platform.name}</h4>
+                          <p className="text-xs text-muted-foreground leading-relaxed">
+                            {platform.description}
+                          </p>
+                          {platform.ncrContext && (
+                            <div className="mt-3 p-3 rounded-md bg-muted/50">
+                              <p className="text-xs italic text-muted-foreground leading-relaxed">
+                                {platform.ncrContext}
+                              </p>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-              
-              {filteredData.length === 0 && (
-                <div className="text-center py-12">
-                  <p className="text-muted-foreground">No categories match your search.</p>
+                    ))}
+                  </div>
+                  
+                  {category.painPoints.length > 0 && (
+                    <div className="pt-2">
+                      <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2">Key Challenges</p>
+                      <div className="flex flex-wrap gap-2">
+                        {category.painPoints.slice(0, 2).map((point, idx) => (
+                          <Badge key={idx} variant="secondary" className="text-xs font-normal">
+                            {point.length > 50 ? point.substring(0, 50) + '...' : point}
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </CardContent>
-          </Card>
+              </div>
+            ))}
+          </div>
+
+          {filteredData.length === 0 && (
+            <Card>
+              <CardContent className="p-6 text-center">
+                <Search className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
+                <p className="text-muted-foreground">No categories or platforms found matching "{searchQuery}"</p>
+              </CardContent>
+            </Card>
+          )}
         </TabsContent>
+
       </Tabs>
     </div>
   );
