@@ -11,10 +11,22 @@ import QuadrantTop10 from "@/pages/quadrant-top10";
 
 const quadrantTabs: SectionTab[] = [
   {
-    label: "Donor Quadrant",
+    label: "Dan Orr Quadrant",
     value: "quadrant",
     icon: Grid3x3,
     path: "/quadrant",
+  },
+  {
+    label: "Top 10",
+    value: "top10",
+    icon: ListOrdered,
+    path: "/quadrant/top10",
+  },
+  {
+    label: "Partner Pathway Wizard",
+    value: "wizard",
+    icon: Wand2,
+    path: "/quadrant/wizard",
   },
   {
     label: "Summary",
@@ -39,18 +51,6 @@ const quadrantTabs: SectionTab[] = [
     value: "strategies",
     icon: ArrowRight,
     path: "/quadrant/strategies",
-  },
-  {
-    label: "Top 10",
-    value: "top10",
-    icon: ListOrdered,
-    path: "/quadrant/top10",
-  },
-  {
-    label: "Partner Pathway Wizard",
-    value: "wizard",
-    icon: Wand2,
-    path: "/quadrant/wizard",
   },
 ];
 
