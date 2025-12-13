@@ -18,7 +18,6 @@ const navigationDomains = {
   "Constituents": {
     items: [
       { name: "Donors", href: "/donors" },
-      { name: "Relationships", href: "/relationships" },
       { name: "Corporations", href: "/corporate-partnerships" },
     ]
   },
@@ -418,6 +417,18 @@ function App() {
                         data-testid="button-nav-quadrant"
                       >
                         Quadrant
+                      </Button>
+                    </Link>
+
+                    {/* Relationships - Direct Link (not a dropdown) */}
+                    <Link href="/relationships">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                        data-testid="button-nav-relationships"
+                      >
+                        Relationships
                       </Button>
                     </Link>
 
