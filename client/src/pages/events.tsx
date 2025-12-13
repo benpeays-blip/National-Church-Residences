@@ -10,6 +10,17 @@ import { useLocation } from "wouter";
 
 type EventFilter = "all" | "past" | "upcoming";
 
+// Event type formatting strategy:
+// - Capitalize first letter of each word for multi-word types
+// - Use title case for consistency across all event categories
+// - Categories: Gala, Golf, Ride, Walk, Auction, Concert, Dinner, Virtual, etc.
+function formatEventType(eventType: string): string {
+  return eventType
+    .split(/[\s-_]+/)
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    .join(' ');
+}
+
 interface EventsProps {
   filterType?: "upcoming" | "past";
 }
@@ -149,18 +160,31 @@ export default function Events({ filterType }: EventsProps = {}) {
               : 0;
 
             return (
-              <Card key={event.id} className="border flex flex-col" data-testid={`event-${event.id}`}>
-                <div className="p-4 border-b">
+              <Card key={event.id} className="border flex flex-col overflow-hidden" data-testid={`event-${event.id}`}>
+                <div 
+                  className="p-4 border-b"
+                  style={{ backgroundColor: '#395174' }}
+                >
                   <div className="flex items-start justify-between gap-2 mb-2">
-                    <h3 className="font-semibold text-base line-clamp-1">{event.name}</h3>
+                    <h3 className="font-semibold text-base line-clamp-1 text-white">{event.name}</h3>
                     <Badge 
-                      variant={event.status === "completed" ? "secondary" : "default"}
+                      variant="outline"
                       className="shrink-0 text-xs"
+                      style={{ 
+                        color: event.status === "completed" ? '#a0aec0' : '#e1c47d', 
+                        borderColor: event.status === "completed" ? '#a0aec0' : '#e1c47d' 
+                      }}
                     >
                       {event.status === "completed" ? "Completed" : "Upcoming"}
                     </Badge>
                   </div>
-                  <Badge variant="outline" className="text-xs">{event.eventType}</Badge>
+                  <Badge 
+                    variant="outline" 
+                    className="text-xs"
+                    style={{ color: 'white', borderColor: 'rgba(255,255,255,0.5)' }}
+                  >
+                    {formatEventType(event.eventType)}
+                  </Badge>
                 </div>
                 
                 <div className="p-4 flex-1 space-y-3">
