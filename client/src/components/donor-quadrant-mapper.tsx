@@ -267,7 +267,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-friend"
               >
                 <div className="font-bold text-base">Friend</div>
-                <Badge className="mt-1 bg-[#f4f4f4] text-[#395174]" data-testid="count-friend">{data.counts.friend}</Badge>
+                <Badge className="mt-1 bg-[#ffffff] text-[#395174]" data-testid="count-friend">{data.counts.friend}</Badge>
               </button>
             </div>
 
