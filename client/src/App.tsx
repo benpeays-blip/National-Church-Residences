@@ -290,14 +290,14 @@ function App() {
           <div className="flex flex-col flex-1">
             {/* Top Header Navigation */}
             <header 
-              className="flex items-center gap-6 h-16 px-6 border-b shrink-0 bg-white"
+              className="flex items-center gap-6 h-16 px-6 border-b shrink-0 bg-white dark:bg-gray-900"
             >
-              {/* Sidebar Toggle - Hidden (sidebar functionality preserved) */}
-              {/* <SidebarTrigger 
-                data-testid="button-sidebar-toggle" 
-                className="hover:bg-gray-100 relative z-50" 
-                style={{ color: "#084594" }} 
-              /> */}
+              {/* Logo / Home Link */}
+              <Link href="/">
+                <div className="cursor-pointer hover:opacity-80 transition-opacity" data-testid="link-home">
+                  <FundRazorLogo width={140} height={36} />
+                </div>
+              </Link>
               
               <div className="flex items-center gap-3 ml-auto">
                   {/* Navigation Buttons */}
