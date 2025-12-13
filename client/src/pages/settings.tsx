@@ -33,7 +33,7 @@ import {
   AlertTriangle
 } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-import { SiSalesforce, SiMailchimp, SiSlack, SiGoogle, SiMicrosoft } from "react-icons/si";
+import { SiSalesforce, SiMailchimp, SiSlack, SiGoogle } from "react-icons/si";
 
 export default function Settings() {
   const { user } = useAuth();
@@ -57,7 +57,7 @@ export default function Settings() {
     { name: "Mailchimp", icon: SiMailchimp, connected: true, lastSync: "1 hour ago", color: "#FFE01B" },
     { name: "Slack", icon: SiSlack, connected: false, lastSync: null, color: "#4A154B" },
     { name: "Google Workspace", icon: SiGoogle, connected: true, lastSync: "30 min ago", color: "#4285F4" },
-    { name: "Microsoft 365", icon: SiMicrosoft, connected: false, lastSync: null, color: "#00A4EF" },
+    { name: "Microsoft 365", icon: Monitor, connected: false, lastSync: null, color: "#00A4EF" },
   ];
 
   return (
