@@ -171,10 +171,12 @@ export default function DashboardHome() {
               {data?.topOpportunities.slice(0, 5).map((opp) => (
                 <div
                   key={opp.id}
-                  className="p-3 rounded-lg hover-elevate"
-                  style={{ backgroundColor: 'rgba(247, 251, 255, 1)' }}
+                  className="rounded-lg hover-elevate overflow-hidden border"
                 >
-                  <div className="flex items-start justify-between gap-3 mb-2">
+                  <div 
+                    className="flex items-start justify-between gap-3 p-3"
+                    style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}
+                  >
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate mb-1.5">
                         {opp.person?.firstName} {opp.person?.lastName}
@@ -204,9 +206,11 @@ export default function DashboardHome() {
                     </div>
                   </div>
                   {opp.actionDescription && (
-                    <p className="text-xs text-muted-foreground leading-relaxed">
-                      {opp.actionDescription}
-                    </p>
+                    <div className="p-3 bg-white dark:bg-background">
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {opp.actionDescription}
+                      </p>
+                    </div>
                   )}
                 </div>
               ))}
