@@ -10,10 +10,10 @@ const pipelineData = {
   closeRate: 68,
   avgDealSize: 245000,
   opportunitiesByStage: [
-    { stage: "Prospect", count: 3, value: 450000, probability: 20, color: "bg-gray-500" },
-    { stage: "Cultivation", count: 4, value: 720000, probability: 40, color: "bg-blue-500" },
-    { stage: "Ask", count: 2, value: 850000, probability: 70, color: "bg-purple-500" },
-    { stage: "Steward", count: 1, value: 430000, probability: 90, color: "bg-green-500" },
+    { stage: "Prospect", count: 3, value: 450000, probability: 20, color: "bg-muted-foreground" },
+    { stage: "Cultivation", count: 4, value: 720000, probability: 40, color: "bg-primary/60" },
+    { stage: "Ask", count: 2, value: 850000, probability: 70, color: "bg-primary/80" },
+    { stage: "Steward", count: 1, value: 430000, probability: 90, color: "bg-primary" },
   ],
   opportunities: [
     { id: 1, donor: "Christopher Davis", amount: 500000, stage: "Ask", probability: 70, closeDate: "2024-12-15", nextStep: "Present naming opportunity proposal", daysInStage: 23, priority: "High" },
@@ -164,7 +164,7 @@ export default function MGOPipelineDetail() {
                   </div>
                   <div>
                     <p className="text-xs text-muted-foreground">Optimistic</p>
-                    <p className="text-lg font-semibold text-green-600 dark:text-green-400">
+                    <p className="text-lg font-semibold text-primary">
                       ${(month.optimistic / 1000).toFixed(0)}K
                     </p>
                   </div>
@@ -221,7 +221,7 @@ export default function MGOPipelineDetail() {
                     </div>
                     {opp.daysInStage > 60 && (
                       <div title="Stalled opportunity">
-                        <AlertCircle className="w-5 h-5 text-orange-500" />
+                        <AlertCircle className="w-5 h-5 text-destructive" />
                       </div>
                     )}
                   </div>

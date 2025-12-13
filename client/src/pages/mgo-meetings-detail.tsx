@@ -34,10 +34,10 @@ const meetingsData = {
     { type: "Phone", count: 1, percentage: 5 },
   ],
   meetingsByPurpose: [
-    { purpose: "Cultivation", count: 8, color: "bg-blue-500" },
-    { purpose: "Ask", count: 4, color: "bg-purple-500" },
-    { purpose: "Stewardship", count: 4, color: "bg-green-500" },
-    { purpose: "Discovery", count: 2, color: "bg-gray-500" },
+    { purpose: "Cultivation", count: 8, color: "bg-primary" },
+    { purpose: "Ask", count: 4, color: "bg-primary/80" },
+    { purpose: "Stewardship", count: 4, color: "bg-primary/60" },
+    { purpose: "Discovery", count: 2, color: "bg-muted-foreground" },
   ],
 };
 
@@ -231,7 +231,7 @@ export default function MGOMeetingsDetail() {
                 data-testid={`past-meeting-${meeting.id}`}
               >
                 <div className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  <CheckCircle className="w-5 h-5 text-primary" />
                   <div>
                     <h4 className="font-semibold">{meeting.title}</h4>
                     <p className="text-sm text-muted-foreground">{meeting.donor} • {meeting.date}</p>

@@ -14,10 +14,10 @@ const tasksData = {
     overdue: 3,
   },
   tasksByPriority: [
-    { priority: "Critical", count: 2, completed: 0, color: "bg-red-500" },
-    { priority: "High", count: 5, completed: 3, color: "bg-orange-500" },
-    { priority: "Medium", count: 10, completed: 8, color: "bg-blue-500" },
-    { priority: "Low", count: 7, completed: 6, color: "bg-gray-500" },
+    { priority: "Critical", count: 2, completed: 0, color: "bg-destructive" },
+    { priority: "High", count: 5, completed: 3, color: "bg-primary" },
+    { priority: "Medium", count: 10, completed: 8, color: "bg-primary/60" },
+    { priority: "Low", count: 7, completed: 6, color: "bg-muted-foreground" },
   ],
   tasks: [
     { id: 1, title: "Present naming opportunity to Christopher Davis", donor: "Christopher Davis", dueDate: "2024-11-08", priority: "Critical", status: "pending", category: "Ask", estimatedTime: "2 hours", notes: "Prepare comprehensive proposal with facility tour options" },
@@ -262,7 +262,7 @@ export default function MGOTasksDetail() {
                 data-testid={`completed-task-${task.id}`}
               >
                 <div className="flex items-center gap-3">
-                  <CheckCircle className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  <CheckCircle className="w-5 h-5 text-primary" />
                   <div>
                     <p className="font-medium">{task.title}</p>
                     <p className="text-sm text-muted-foreground">{task.donor}</p>

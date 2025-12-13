@@ -22,9 +22,9 @@ const portfolioDonors = [
 ];
 
 const segments = [
-  { name: "Principal ($250K+)", count: 2, totalValue: 1145000, avgGift: 572500, color: "bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300" },
-  { name: "Major Donor ($100K+)", count: 5, totalValue: 1545000, avgGift: 309000, color: "bg-blue-100 text-blue-800 dark:bg-blue-950 dark:text-blue-300" },
-  { name: "Mid-Level ($50K+)", count: 5, totalValue: 775000, avgGift: 155000, color: "bg-green-100 text-green-800 dark:bg-green-950 dark:text-green-300" },
+  { name: "Principal ($250K+)", count: 2, totalValue: 1145000, avgGift: 572500 },
+  { name: "Major Donor ($100K+)", count: 5, totalValue: 1545000, avgGift: 309000 },
+  { name: "Mid-Level ($50K+)", count: 5, totalValue: 775000, avgGift: 155000 },
 ];
 
 export default function MGOPortfolioDetail() {
