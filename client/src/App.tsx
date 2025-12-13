@@ -10,7 +10,7 @@ import { FundRazorLogo } from "@/components/FundRazorLogo";
 // import { AppSidebar } from "@/components/app-sidebar";
 // import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { Button } from "@/components/ui/button";
-import { Search, Settings as SettingsIcon, Bell, User, ChevronDown } from "lucide-react";
+import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Menu } from "lucide-react";
 
 // Navigation dropdown categories
 const navigationDomains = {
@@ -318,6 +318,7 @@ function Router() {
 
 function App() {
   const [activeDropdown, setActiveDropdown] = useState<DomainKey | null>(null);
+  const [hamburgerOpen, setHamburgerOpen] = useState(false);
 
   const handleDropdownClick = (domain: DomainKey) => {
     if (activeDropdown === domain) {
@@ -406,45 +407,67 @@ function App() {
                   {/* Separator */}
                   <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
                   
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    data-testid="button-global-search"
-                    aria-label="Global search (Cmd+K)"
-                    className="text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  {/* Hamburger Menu */}
+                  <div 
+                    className="relative"
+                    onMouseEnter={() => setHamburgerOpen(true)}
+                    onMouseLeave={() => setHamburgerOpen(false)}
                   >
-                    <Search className="h-5 w-5" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    data-testid="button-notifications"
-                    aria-label="Notifications"
-                    className="text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                  >
-                    <Bell className="h-5 w-5" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    asChild
-                    data-testid="button-settings"
-                    aria-label="Settings"
-                    className="text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                  >
-                    <a href="/settings">
-                      <SettingsIcon className="h-5 w-5" />
-                    </a>
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    data-testid="button-account"
-                    aria-label="Account menu"
-                    className="text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                  >
-                    <User className="h-5 w-5" />
-                  </Button>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setHamburgerOpen(!hamburgerOpen)}
+                      data-testid="button-hamburger-menu"
+                      aria-label="Menu"
+                      className="text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                    >
+                      <Menu className="h-5 w-5" />
+                    </Button>
+
+                    {/* Hamburger Dropdown */}
+                    {hamburgerOpen && (
+                      <div 
+                        className="absolute right-0 top-full mt-1 bg-white dark:bg-gray-900 border rounded-md shadow-lg z-50 min-w-[180px]"
+                      >
+                        <div className="py-1">
+                          <button
+                            className="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                            onClick={() => setHamburgerOpen(false)}
+                            data-testid="button-global-search"
+                          >
+                            <Search className="h-4 w-4" />
+                            Search
+                          </button>
+                          <button
+                            className="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                            onClick={() => setHamburgerOpen(false)}
+                            data-testid="button-notifications"
+                          >
+                            <Bell className="h-4 w-4" />
+                            Notifications
+                          </button>
+                          <Link href="/settings">
+                            <a
+                              className="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                              onClick={() => setHamburgerOpen(false)}
+                              data-testid="button-settings"
+                            >
+                              <SettingsIcon className="h-4 w-4" />
+                              Settings
+                            </a>
+                          </Link>
+                          <button
+                            className="flex items-center gap-3 w-full px-4 py-2 text-sm text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                            onClick={() => setHamburgerOpen(false)}
+                            data-testid="button-account"
+                          >
+                            <User className="h-4 w-4" />
+                            Profile
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </header>
               <main className="flex-1 overflow-auto p-6 bg-background">
