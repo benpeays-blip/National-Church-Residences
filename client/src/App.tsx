@@ -347,7 +347,7 @@ function App() {
             {/* Top Header Navigation */}
             <header 
               className="flex items-center gap-6 h-16 px-6 border-b shrink-0"
-              style={{ backgroundColor: '#272757' }}
+              style={{ backgroundColor: '#008080' }}
             >
               {/* Logo / Home Link */}
               <Link href="/">
