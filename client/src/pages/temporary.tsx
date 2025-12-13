@@ -1222,21 +1222,46 @@ const interviewees: InterviewPerson[] = [
 ];
 
 function InterviewCard({ person, onClick }: { person: InterviewPerson; onClick: () => void }) {
+  const challengeCount = person.challenges.reduce((acc, c) => acc + c.items.length, 0);
+  const wantCount = person.wants.reduce((acc, w) => acc + w.items.length, 0);
+  
   return (
     <Card 
-      className="overflow-hidden hover-elevate cursor-pointer transition-all h-[140px] flex flex-col"
+      className="overflow-hidden hover-elevate cursor-pointer transition-all h-full flex flex-col"
       data-testid={`card-interview-${person.id}`}
       onClick={onClick}
     >
-      <div className="p-5 flex flex-col flex-1">
-        <div className="flex-1">
-          <h3 className="font-bold text-lg mb-1">{person.name}</h3>
-          <p className="text-sm text-muted-foreground line-clamp-2">{person.title}</p>
-        </div>
-        <div className="mt-auto pt-3">
-          <Badge style={{ backgroundColor: person.areaColor }} className="text-white text-xs">
+      <div 
+        className="p-6"
+        style={{ backgroundColor: `${person.areaColor}15` }}
+      >
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <h3 
+            className="font-semibold text-base"
+            style={{ color: person.areaColor }}
+            data-testid={`text-interview-name-${person.id}`}
+          >
+            {person.name}
+          </h3>
+          <Badge variant="outline" className="text-xs shrink-0" style={{ borderColor: person.areaColor, color: person.areaColor }}>
             {person.area}
           </Badge>
+        </div>
+        <p className="text-xs text-muted-foreground line-clamp-2">{person.title}</p>
+      </div>
+      <div className="p-6 flex-1 flex flex-col">
+        <p className="text-xs text-muted-foreground mb-3 italic border-l-2 pl-2 line-clamp-2" style={{ borderColor: `${person.areaColor}50` }}>
+          {person.background}
+        </p>
+        <div className="mt-auto space-y-1.5">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <AlertTriangle className="h-3 w-3 text-orange-500 shrink-0" />
+            <span>{challengeCount} challenges identified</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Sparkles className="h-3 w-3 text-green-500 shrink-0" />
+            <span>{wantCount} desired capabilities</span>
+          </div>
         </div>
       </div>
     </Card>
