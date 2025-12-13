@@ -29,7 +29,6 @@ import {
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
-import dnbLogo from "@assets/stock_images/corporate_business_d_5b138894.jpg";
 
 interface CompanyProfile {
   id: string;
@@ -204,9 +203,6 @@ export default function DnBIntelligence() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="h-12 w-12 rounded-lg overflow-hidden bg-white border shadow-sm flex items-center justify-center">
-            <img src={dnbLogo} alt="Dun & Bradstreet" className="h-10 w-10 object-contain" />
-          </div>
           <div>
             <h1 className="text-2xl font-bold" style={{ color: "#084594" }}>
               D&B Corporate Intelligence
