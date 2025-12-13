@@ -84,6 +84,8 @@ import CampaignsWithTabs from "@/pages/campaigns-with-tabs";
 import CampaignDetail from "@/pages/campaign-detail";
 import DataHealth from "@/pages/data-health";
 import Settings from "@/pages/settings";
+import Notifications from "@/pages/notifications";
+import Profile from "@/pages/profile";
 import Integrations from "@/pages/integrations";
 import Integrations2 from "@/pages/integrations-2";
 
@@ -263,6 +265,8 @@ function Router() {
       <Route path="/integrations" component={Integrations} />
       <Route path="/integrations-2" component={Integrations2} />
       <Route path="/settings" component={Settings} />
+      <Route path="/notifications" component={Notifications} />
+      <Route path="/profile" component={Profile} />
       
       {/* AI Intelligence - individual pages */}
       <Route path="/ai/predictive-timing" component={AIPredictiveTiming} />
