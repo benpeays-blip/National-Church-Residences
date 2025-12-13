@@ -119,7 +119,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             </Badge>
           </div>
         </CardHeader>
-        <CardContent className="p-6">
+        <CardContent className="p-6" style={{ backgroundColor: '#f4f4f4' }}>
           <div className="relative w-full pb-10 pl-10">
             <div className="relative w-full aspect-square border-2 border-border rounded-lg overflow-hidden bg-background">
               {/* Grid Lines */}
