@@ -39,9 +39,6 @@ const teamWorkflows = [
     id: "major-gifts",
     name: "Major Gifts Team",
     icon: Users,
-    color: "bg-sky-500/10 border-sky-500/50 dark:bg-sky-500/5",
-    iconBg: "bg-sky-500/20 border-sky-500/50",
-    iconColor: "text-sky-600 dark:text-sky-400",
     primarySystems: ["Salesforce", "WealthEngine", "Outlook"],
     challenges: [
       "Works mainly in Salesforce and WealthEngine",
@@ -54,9 +51,6 @@ const teamWorkflows = [
     id: "grants",
     name: "Grants Team",
     icon: FileText,
-    color: "bg-emerald-500/10 border-emerald-500/50 dark:bg-emerald-500/5",
-    iconBg: "bg-emerald-500/20 border-emerald-500/50",
-    iconColor: "text-emerald-600 dark:text-emerald-400",
     primarySystems: ["Word", "Excel", "Foundant", "SharePoint"],
     challenges: [
       "Works in Word/Excel, Foundant, and SharePoint",
@@ -68,9 +62,6 @@ const teamWorkflows = [
     id: "marketing",
     name: "Marketing / Communications",
     icon: Mail,
-    color: "bg-violet-500/10 border-violet-500/50 dark:bg-violet-500/5",
-    iconBg: "bg-violet-500/20 border-violet-500/50",
-    iconColor: "text-violet-600 dark:text-violet-400",
     primarySystems: ["Mailchimp", "Salesforce"],
     challenges: [
       "Runs Mailchimp campaigns with outdated segmentation lists exported from Salesforce",
@@ -82,9 +73,6 @@ const teamWorkflows = [
     id: "finance",
     name: "Finance / Accounting",
     icon: DollarSign,
-    color: "bg-amber-500/10 border-amber-500/50 dark:bg-amber-500/5",
-    iconBg: "bg-amber-500/20 border-amber-500/50",
-    iconColor: "text-amber-600 dark:text-amber-400",
     primarySystems: ["Salesforce", "Financial Edge"],
     challenges: [
       "Receives batch reports from Salesforce for reconciliation",
@@ -96,9 +84,6 @@ const teamWorkflows = [
     id: "leadership",
     name: "Executive Leadership",
     icon: TrendingUp,
-    color: "bg-indigo-500/10 border-indigo-500/50 dark:bg-indigo-500/5",
-    iconBg: "bg-indigo-500/20 border-indigo-500/50",
-    iconColor: "text-indigo-600 dark:text-indigo-400",
     primarySystems: ["Power BI", "Excel"],
     challenges: [
       "Gets quarterly reports from Power BI or manually assembled Excel summaries",
@@ -167,13 +152,13 @@ export default function WorkflowTemplatesPage() {
                 <AccordionItem 
                   key={team.id} 
                   value={team.id}
-                  className={`border-2 rounded-lg ${team.color}`}
+                  className="border rounded-lg bg-muted/50"
                   data-testid={`accordion-team-${team.id}`}
                 >
                   <AccordionTrigger className="hover:no-underline px-6 py-4">
                     <div className="flex items-center gap-4 text-left w-full">
-                      <div className={`w-12 h-12 rounded-lg border-2 flex items-center justify-center shrink-0 ${team.iconBg}`}>
-                        <TeamIcon className={`w-6 h-6 ${team.iconColor}`} />
+                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                        <TeamIcon className="w-6 h-6 text-primary" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-base mb-1" data-testid={`text-team-${team.id}`}>
@@ -230,9 +215,9 @@ export default function WorkflowTemplatesPage() {
 
       {/* Success Notice */}
       {templates.length > 0 && (
-        <Card className="border-green-500/50 bg-green-500/5">
+        <Card className="border-primary/50 bg-primary/5">
           <CardHeader>
-            <CardTitle className="text-lg">✅ Templates Ready</CardTitle>
+            <CardTitle className="text-lg">Templates Ready</CardTitle>
             <CardDescription>
               {templates.length} industry-standard fundraising workflow templates are available. 
               Each includes pre-configured blocks and connections for common fundraising processes.

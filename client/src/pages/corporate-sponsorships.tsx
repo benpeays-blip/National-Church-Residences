@@ -142,18 +142,18 @@ const mockSponsorships: Sponsorship[] = [
   },
 ];
 
-const sponsorshipTypeLabels: Record<string, { label: string; color: string }> = {
-  event: { label: "Event Sponsor", color: "bg-purple-100 text-purple-700" },
-  program: { label: "Program Sponsor", color: "bg-blue-100 text-blue-700" },
-  naming: { label: "Naming Rights", color: "bg-amber-100 text-amber-700" },
-  media: { label: "Media Sponsor", color: "bg-green-100 text-green-700" },
+const sponsorshipTypeLabels: Record<string, { label: string; variant: "default" | "secondary" | "outline" }> = {
+  event: { label: "Event Sponsor", variant: "default" },
+  program: { label: "Program Sponsor", variant: "secondary" },
+  naming: { label: "Naming Rights", variant: "default" },
+  media: { label: "Media Sponsor", variant: "outline" },
 };
 
-const statusLabels: Record<string, { label: string; color: string }> = {
-  active: { label: "Active", color: "bg-green-100 text-green-700" },
-  pending: { label: "Pending", color: "bg-yellow-100 text-yellow-700" },
-  expired: { label: "Expired", color: "bg-gray-100 text-gray-600" },
-  renewed: { label: "Renewed", color: "bg-blue-100 text-blue-700" },
+const statusLabels: Record<string, { label: string; variant: "default" | "secondary" | "outline" }> = {
+  active: { label: "Active", variant: "default" },
+  pending: { label: "Pending", variant: "secondary" },
+  expired: { label: "Expired", variant: "outline" },
+  renewed: { label: "Renewed", variant: "secondary" },
 };
 
 export default function CorporateSponsorships() {
@@ -306,10 +306,10 @@ export default function CorporateSponsorships() {
                   </div>
                 </div>
                 <div className="flex flex-col gap-1 items-end">
-                  <Badge className={sponsorshipTypeLabels[sponsorship.sponsorshipType].color}>
+                  <Badge variant={sponsorshipTypeLabels[sponsorship.sponsorshipType].variant}>
                     {sponsorshipTypeLabels[sponsorship.sponsorshipType].label}
                   </Badge>
-                  <Badge className={statusLabels[sponsorship.status].color}>
+                  <Badge variant={statusLabels[sponsorship.status].variant}>
                     {statusLabels[sponsorship.status].label}
                   </Badge>
                 </div>

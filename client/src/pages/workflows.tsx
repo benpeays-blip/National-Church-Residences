@@ -78,9 +78,9 @@ export default function WorkflowsPage() {
       </div>
 
       {/* Builder Ready Banner */}
-      <Card className="border-green-500/50 bg-green-500/5">
+      <Card className="border-primary/50 bg-primary/5">
         <CardHeader>
-          <CardTitle className="text-lg">✅ Visual Workflow Builder is Ready!</CardTitle>
+          <CardTitle className="text-lg">Visual Workflow Builder is Ready</CardTitle>
           <CardDescription>
             Build and visualize your fundraising workflows with our drag-and-drop canvas. Choose from 15 pre-built templates or create your own from scratch.
           </CardDescription>

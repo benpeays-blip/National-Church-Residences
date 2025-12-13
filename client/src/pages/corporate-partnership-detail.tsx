@@ -26,11 +26,11 @@ import {
 } from "lucide-react";
 import type { CorporatePartnership } from "@shared/schema";
 
-const partnershipTypeLabels: Record<string, { label: string; icon: typeof Heart; color: string; bgColor: string }> = {
-  volunteer: { label: "Volunteer Program", icon: Users, color: "text-green-700", bgColor: "bg-green-100" },
-  donate: { label: "Financial Donor", icon: DollarSign, color: "text-blue-700", bgColor: "bg-blue-100" },
-  sponsor: { label: "Event Sponsor", icon: Trophy, color: "text-purple-700", bgColor: "bg-purple-100" },
-  goods_services: { label: "In-Kind Donations", icon: Package, color: "text-orange-700", bgColor: "bg-orange-100" },
+const partnershipTypeLabels: Record<string, { label: string; icon: typeof Heart }> = {
+  volunteer: { label: "Volunteer Program", icon: Users },
+  donate: { label: "Financial Donor", icon: DollarSign },
+  sponsor: { label: "Event Sponsor", icon: Trophy },
+  goods_services: { label: "In-Kind Donations", icon: Package },
 };
 
 export default function CorporatePartnershipDetail() {
@@ -113,7 +113,6 @@ export default function CorporatePartnershipDetail() {
                 <h1 className="text-3xl font-bold" data-testid="text-partner-name">{partner.companyName}</h1>
                 <Badge 
                   variant={partner.partnershipStatus === 'active' ? 'default' : 'secondary'}
-                  className={partner.partnershipStatus === 'active' ? 'bg-green-100 text-green-700' : ''}
                 >
                   {partner.partnershipStatus}
                 </Badge>
@@ -240,10 +239,10 @@ export default function CorporatePartnershipDetail() {
                 return (
                   <div 
                     key={type} 
-                    className={`p-4 rounded-lg ${config.bgColor} flex items-center gap-3`}
+                    className="p-4 rounded-lg bg-primary/5 flex items-center gap-3"
                   >
-                    <Icon className={`w-5 h-5 ${config.color}`} />
-                    <span className={`font-medium text-sm ${config.color}`}>{config.label}</span>
+                    <Icon className="w-5 h-5 text-primary" />
+                    <span className="font-medium text-sm">{config.label}</span>
                   </div>
                 );
               })}

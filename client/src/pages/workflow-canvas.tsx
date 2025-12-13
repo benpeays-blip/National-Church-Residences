@@ -17,26 +17,36 @@ import { useCallback, useEffect, useState } from "react";
 
 // Custom node component for workflow blocks
 function WorkflowNodeComponent({ data }: { data: { label: string; type: string; subtype: string } }) {
-  const getCategoryInfo = (type: string) => {
-    const categories = {
-      system: { label: "System", color: "bg-blue-500", textColor: "text-blue-50" },
-      human: { label: "Person", color: "bg-purple-500", textColor: "text-purple-50" },
-      data: { label: "Data", color: "bg-green-500", textColor: "text-green-50" },
-      action: { label: "Action", color: "bg-orange-500", textColor: "text-orange-50" },
-      organization: { label: "Organization", color: "bg-teal-500", textColor: "text-teal-50" },
-      logic: { label: "Logic", color: "bg-pink-500", textColor: "text-pink-50" },
+  const getCategoryVariant = (type: string): "default" | "secondary" | "outline" | "destructive" => {
+    const variants: Record<string, "default" | "secondary" | "outline" | "destructive"> = {
+      system: "default",
+      human: "secondary",
+      data: "default",
+      action: "secondary",
+      organization: "outline",
+      logic: "outline",
     };
-    return categories[type as keyof typeof categories] || { label: "Other", color: "bg-gray-500", textColor: "text-gray-50" };
+    return variants[type] || "outline";
   };
 
-  const categoryInfo = getCategoryInfo(data.type);
+  const getCategoryLabel = (type: string): string => {
+    const labels: Record<string, string> = {
+      system: "System",
+      human: "Person",
+      data: "Data",
+      action: "Action",
+      organization: "Organization",
+      logic: "Logic",
+    };
+    return labels[type] || "Other";
+  };
 
   return (
     <div className="px-4 py-3 rounded-lg border-2 bg-card shadow-md min-w-[180px]">
       <Handle type="target" position={Position.Left} className="w-3 h-3 !bg-primary" />
       <div className="flex items-center justify-between mb-2">
-        <Badge className={`${categoryInfo.color} ${categoryInfo.textColor} text-xs px-2 py-0.5`}>
-          {categoryInfo.label}
+        <Badge variant={getCategoryVariant(data.type)} className="text-xs">
+          {getCategoryLabel(data.type)}
         </Badge>
       </div>
       <div className="font-semibold text-sm">{data.label}</div>

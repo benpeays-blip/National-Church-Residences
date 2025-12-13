@@ -206,17 +206,17 @@ const mockFoundations: CorporateFoundation[] = [
   },
 ];
 
-const statusLabels: Record<string, { label: string; color: string }> = {
-  active: { label: "Active", color: "bg-green-100 text-green-700" },
-  prospect: { label: "Prospect", color: "bg-blue-100 text-blue-700" },
-  lapsed: { label: "Lapsed", color: "bg-orange-100 text-orange-700" },
-  declined: { label: "Declined", color: "bg-red-100 text-red-700" },
+const statusLabels: Record<string, { label: string; variant: "default" | "secondary" | "outline" | "destructive" }> = {
+  active: { label: "Active", variant: "default" },
+  prospect: { label: "Prospect", variant: "secondary" },
+  lapsed: { label: "Lapsed", variant: "outline" },
+  declined: { label: "Declined", variant: "destructive" },
 };
 
-const grantStatusLabels: Record<string, { label: string; color: string; icon: typeof CheckCircle }> = {
-  active: { label: "Active", color: "bg-green-100 text-green-700", icon: CheckCircle },
-  pending: { label: "Pending Approval", color: "bg-yellow-100 text-yellow-700", icon: Clock },
-  reporting: { label: "Reporting Due", color: "bg-orange-100 text-orange-700", icon: AlertCircle },
+const grantStatusLabels: Record<string, { label: string; variant: "default" | "secondary" | "outline"; icon: typeof CheckCircle }> = {
+  active: { label: "Active", variant: "default", icon: CheckCircle },
+  pending: { label: "Pending Approval", variant: "secondary", icon: Clock },
+  reporting: { label: "Reporting Due", variant: "outline", icon: AlertCircle },
 };
 
 export default function CorporateFoundations() {
@@ -353,7 +353,7 @@ export default function CorporateFoundations() {
                     <p className="text-sm text-muted-foreground">{foundation.parentCompany}</p>
                   </div>
                 </div>
-                <Badge className={statusLabels[foundation.relationshipStatus].color}>
+                <Badge variant={statusLabels[foundation.relationshipStatus].variant}>
                   {statusLabels[foundation.relationshipStatus].label}
                 </Badge>
               </div>
@@ -380,7 +380,7 @@ export default function CorporateFoundations() {
                 <div className="bg-muted/50 p-3 rounded-lg">
                   <div className="flex items-center justify-between mb-2">
                     <p className="text-sm font-medium">{foundation.currentGrant.purpose}</p>
-                    <Badge className={grantStatusLabels[foundation.currentGrant.status].color}>
+                    <Badge variant={grantStatusLabels[foundation.currentGrant.status].variant}>
                       {grantStatusLabels[foundation.currentGrant.status].label}
                     </Badge>
                   </div>
@@ -412,7 +412,7 @@ export default function CorporateFoundations() {
               )}
 
               {foundation.notes && (
-                <p className="text-sm text-muted-foreground italic bg-yellow-50 p-2 rounded">
+                <p className="text-sm text-muted-foreground italic bg-muted/50 p-2 rounded">
                   {foundation.notes}
                 </p>
               )}

@@ -144,12 +144,12 @@ const mockGifts: CorporateGift[] = [
   },
 ];
 
-const giftTypeLabels: Record<string, { label: string; color: string }> = {
-  annual: { label: "Annual Gift", color: "bg-blue-100 text-blue-700" },
-  matching: { label: "Matching Gift", color: "bg-green-100 text-green-700" },
-  capital: { label: "Capital Gift", color: "bg-purple-100 text-purple-700" },
-  pledge: { label: "Pledge", color: "bg-amber-100 text-amber-700" },
-  recurring: { label: "Recurring", color: "bg-teal-100 text-teal-700" },
+const giftTypeLabels: Record<string, { label: string; variant: "default" | "secondary" | "outline" }> = {
+  annual: { label: "Annual Gift", variant: "secondary" },
+  matching: { label: "Matching Gift", variant: "default" },
+  capital: { label: "Capital Gift", variant: "default" },
+  pledge: { label: "Pledge", variant: "secondary" },
+  recurring: { label: "Recurring", variant: "outline" },
 };
 
 export default function CorporateGiving() {
@@ -302,7 +302,7 @@ export default function CorporateGiving() {
                     </div>
                   </TableCell>
                   <TableCell>
-                    <Badge className={giftTypeLabels[gift.giftType].color}>
+                    <Badge variant={giftTypeLabels[gift.giftType].variant}>
                       {giftTypeLabels[gift.giftType].label}
                     </Badge>
                     {gift.matchRatio && (

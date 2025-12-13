@@ -133,7 +133,7 @@ export default function Stewardship() {
                     </div>
 
                     <div className="flex items-center gap-2 text-sm">
-                      <Clock className="w-4 h-4 text-orange-600" />
+                      <Clock className="w-4 h-4 text-muted-foreground" />
                       <span className="text-muted-foreground">
                         Next: {item.workflow.nextActionType} on {format(new Date(item.workflow.nextActionDate), "MMM d, yyyy")}
                       </span>
@@ -181,7 +181,7 @@ export default function Stewardship() {
           <Card>
             <CardHeader>
               <CardTitle className="text-lg flex items-center gap-2">
-                <CheckCircle2 className="w-5 h-5 text-green-600" />
+                <CheckCircle2 className="w-5 h-5 text-primary" />
                 Completed Workflows ({completedWorkflows.length})
               </CardTitle>
             </CardHeader>
@@ -195,7 +195,7 @@ export default function Stewardship() {
                         {item.person.firstName} {item.person.lastName} • Completed {format(new Date(item.workflow.completedAt!), "MMM d, yyyy")}
                       </div>
                     </div>
-                    <Badge variant="outline" className="bg-green-50">Done</Badge>
+                    <Badge variant="outline">Done</Badge>
                   </div>
                 </div>
               ))}

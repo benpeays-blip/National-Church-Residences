@@ -168,17 +168,17 @@ const mockDonations: InKindDonation[] = [
   },
 ];
 
-const donationTypeLabels: Record<string, { label: string; color: string; icon: typeof Package }> = {
-  goods: { label: "Goods", color: "bg-green-100 text-green-700", icon: Package },
-  services: { label: "Services", color: "bg-blue-100 text-blue-700", icon: Wrench },
-  pro_bono: { label: "Pro Bono", color: "bg-purple-100 text-purple-700", icon: Briefcase },
-  equipment: { label: "Equipment", color: "bg-amber-100 text-amber-700", icon: Truck },
+const donationTypeLabels: Record<string, { label: string; variant: "default" | "secondary" | "outline"; icon: typeof Package }> = {
+  goods: { label: "Goods", variant: "default", icon: Package },
+  services: { label: "Services", variant: "secondary", icon: Wrench },
+  pro_bono: { label: "Pro Bono", variant: "secondary", icon: Briefcase },
+  equipment: { label: "Equipment", variant: "outline", icon: Truck },
 };
 
-const statusLabels: Record<string, { label: string; color: string }> = {
-  received: { label: "Received", color: "bg-green-100 text-green-700" },
-  pending: { label: "Pending", color: "bg-yellow-100 text-yellow-700" },
-  scheduled: { label: "Scheduled", color: "bg-blue-100 text-blue-700" },
+const statusLabels: Record<string, { label: string; variant: "default" | "secondary" | "outline" }> = {
+  received: { label: "Received", variant: "default" },
+  pending: { label: "Pending", variant: "secondary" },
+  scheduled: { label: "Scheduled", variant: "outline" },
 };
 
 export default function CorporateInKind() {
@@ -345,7 +345,7 @@ export default function CorporateInKind() {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge className={donationTypeLabels[donation.donationType].color}>
+                      <Badge variant={donationTypeLabels[donation.donationType].variant}>
                         <TypeIcon className="w-3 h-3 mr-1" />
                         {donationTypeLabels[donation.donationType].label}
                       </Badge>
@@ -379,7 +379,7 @@ export default function CorporateInKind() {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge className={statusLabels[donation.status].color}>
+                      <Badge variant={statusLabels[donation.status].variant}>
                         {donation.status === "received" && <CheckCircle className="w-3 h-3 mr-1" />}
                         {statusLabels[donation.status].label}
                       </Badge>

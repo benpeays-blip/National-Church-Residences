@@ -184,18 +184,18 @@ const mockProspects: CorporateProspect[] = [
   },
 ];
 
-const stageLabels: Record<string, { label: string; color: string; step: number }> = {
-  research: { label: "Research", color: "bg-gray-100 text-gray-700", step: 1 },
-  qualification: { label: "Qualification", color: "bg-blue-100 text-blue-700", step: 2 },
-  cultivation: { label: "Cultivation", color: "bg-purple-100 text-purple-700", step: 3 },
-  solicitation: { label: "Solicitation", color: "bg-orange-100 text-orange-700", step: 4 },
-  negotiation: { label: "Negotiation", color: "bg-green-100 text-green-700", step: 5 },
+const stageLabels: Record<string, { label: string; variant: "default" | "secondary" | "outline"; step: number }> = {
+  research: { label: "Research", variant: "outline", step: 1 },
+  qualification: { label: "Qualification", variant: "secondary", step: 2 },
+  cultivation: { label: "Cultivation", variant: "secondary", step: 3 },
+  solicitation: { label: "Solicitation", variant: "default", step: 4 },
+  negotiation: { label: "Negotiation", variant: "default", step: 5 },
 };
 
-const strengthColors: Record<string, string> = {
-  strong: "bg-green-100 text-green-700",
-  medium: "bg-yellow-100 text-yellow-700",
-  weak: "bg-gray-100 text-gray-600",
+const strengthVariants: Record<string, "default" | "secondary" | "outline"> = {
+  strong: "default",
+  medium: "secondary",
+  weak: "outline",
 };
 
 export default function CorporateProspects() {
@@ -329,7 +329,7 @@ export default function CorporateProspects() {
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-1">
                       <h3 className="text-xl font-bold">{prospect.companyName}</h3>
-                      <Badge className={stageLabels[prospect.prospectStage].color}>
+                      <Badge variant={stageLabels[prospect.prospectStage].variant}>
                         {stageLabels[prospect.prospectStage].label}
                       </Badge>
                     </div>
@@ -360,7 +360,7 @@ export default function CorporateProspects() {
                       <div className="flex items-center gap-2 mb-2">
                         <span className="text-xs text-muted-foreground">Connections:</span>
                         {prospect.connections.map((conn, idx) => (
-                          <Badge key={idx} className={`text-xs ${strengthColors[conn.strength]}`}>
+                          <Badge key={idx} variant={strengthVariants[conn.strength]} className="text-xs">
                             {conn.name.split(":")[0]}
                           </Badge>
                         ))}
@@ -403,7 +403,7 @@ export default function CorporateProspects() {
                   </div>
 
                   {prospect.nextStep && (
-                    <div className="bg-blue-50 p-3 rounded-lg">
+                    <div className="bg-muted/50 p-3 rounded-lg">
                       <p className="text-xs text-muted-foreground mb-1">Next Step</p>
                       <p className="text-sm font-medium">{prospect.nextStep}</p>
                       {prospect.nextStepDate && (

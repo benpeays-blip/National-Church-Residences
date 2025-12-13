@@ -113,7 +113,7 @@ export default function SmartCalendar() {
                     </Badge>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
-                    <TrendingUp className="w-4 h-4 text-green-600" />
+                    <TrendingUp className="w-4 h-4 text-primary" />
                     <span className="text-muted-foreground">
                       Est. Impact: ${parseFloat(event.estimatedImpact).toLocaleString()}
                     </span>
@@ -146,7 +146,7 @@ export default function SmartCalendar() {
                         {format(new Date(event.scheduledAt), "MMM d, yyyy")}
                       </div>
                     </div>
-                    <Badge variant="outline" className="bg-green-50">
+                    <Badge variant="outline">
                       Done
                     </Badge>
                   </div>

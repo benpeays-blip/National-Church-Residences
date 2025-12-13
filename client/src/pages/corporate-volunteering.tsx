@@ -147,17 +147,17 @@ const mockPrograms: VolunteerProgram[] = [
   },
 ];
 
-const programTypeLabels: Record<string, { label: string; color: string; icon: typeof Heart }> = {
-  days_of_service: { label: "Days of Service", color: "bg-purple-100 text-purple-700", icon: CalendarDays },
-  skills_based: { label: "Skills-Based", color: "bg-blue-100 text-blue-700", icon: Briefcase },
-  ongoing: { label: "Ongoing Program", color: "bg-green-100 text-green-700", icon: Heart },
-  board_service: { label: "Board Service", color: "bg-amber-100 text-amber-700", icon: Award },
+const programTypeLabels: Record<string, { label: string; variant: "default" | "secondary" | "outline"; icon: typeof Heart }> = {
+  days_of_service: { label: "Days of Service", variant: "default", icon: CalendarDays },
+  skills_based: { label: "Skills-Based", variant: "secondary", icon: Briefcase },
+  ongoing: { label: "Ongoing Program", variant: "outline", icon: Heart },
+  board_service: { label: "Board Service", variant: "secondary", icon: Award },
 };
 
-const statusLabels: Record<string, { label: string; color: string }> = {
-  active: { label: "Active", color: "bg-green-100 text-green-700" },
-  planning: { label: "Planning", color: "bg-yellow-100 text-yellow-700" },
-  completed: { label: "Completed", color: "bg-gray-100 text-gray-600" },
+const statusLabels: Record<string, { label: string; variant: "default" | "secondary" | "outline" }> = {
+  active: { label: "Active", variant: "default" },
+  planning: { label: "Planning", variant: "secondary" },
+  completed: { label: "Completed", variant: "outline" },
 };
 
 export default function CorporateVolunteering() {
@@ -292,11 +292,11 @@ export default function CorporateVolunteering() {
                     </div>
                   </div>
                   <div className="flex flex-col gap-1 items-end">
-                    <Badge className={programTypeLabels[program.programType].color}>
+                    <Badge variant={programTypeLabels[program.programType].variant}>
                       <TypeIcon className="w-3 h-3 mr-1" />
                       {programTypeLabels[program.programType].label}
                     </Badge>
-                    <Badge className={statusLabels[program.status].color}>
+                    <Badge variant={statusLabels[program.status].variant}>
                       {statusLabels[program.status].label}
                     </Badge>
                   </div>
@@ -336,7 +336,7 @@ export default function CorporateVolunteering() {
                 </div>
 
                 {program.nextEvent && (
-                  <div className="flex items-center gap-2 text-sm bg-blue-50 p-2 rounded">
+                  <div className="flex items-center gap-2 text-sm bg-muted/50 p-2 rounded">
                     <Calendar className="w-4 h-4" style={{ color: "#084594" }} />
                     <span>Next event: {new Date(program.nextEvent).toLocaleDateString()}</span>
                     {program.upcomingEvents > 1 && (
