@@ -7,59 +7,41 @@ import {
   Bell, 
   Settings, 
   User,
-  Users,
-  TrendingUp,
-  Gift,
-  Target,
-  Calendar,
-  Megaphone,
-  Brain,
-  Network,
-  Building2,
-  Folder,
-  Lightbulb,
-  FileText,
-  ChevronDown,
-  X
+  ChevronDown
 } from "lucide-react";
 
 // Domain categories with their items
 const navigationDomains = {
   "Constituents": {
-    description: "People and organizations in your fundraising network",
     items: [
-      { name: "Donors", href: "/donors", icon: Users, description: "View and manage all donors" },
-      { name: "Relationships", href: "/relationships", icon: Network, description: "Network and connection mapping" },
-      { name: "Corporations", href: "/corporate-partnerships", icon: Building2, description: "Corporate partnership management" },
-      { name: "Quadrant", href: "/quadrant", icon: Target, description: "Donor relationship matrix" },
+      { name: "Donors", href: "/donors" },
+      { name: "Relationships", href: "/relationships" },
+      { name: "Corporations", href: "/corporate-partnerships" },
+      { name: "Quadrant", href: "/quadrant" },
     ]
   },
   "Pipeline": {
-    description: "Manage donor opportunities through the fundraising lifecycle",
     items: [
-      { name: "Pipeline", href: "/pipeline", icon: TrendingUp, description: "Track and manage fundraising opportunities" },
+      { name: "Pipeline", href: "/pipeline" },
     ]
   },
   "Revenue": {
-    description: "Track incoming donations and funding",
     items: [
-      { name: "Gifts", href: "/gifts", icon: Gift, description: "Record and analyze donations" },
-      { name: "Grants", href: "/grants", icon: FileText, description: "Grant tracking and proposals" },
+      { name: "Gifts", href: "/gifts" },
+      { name: "Grants", href: "/grants" },
     ]
   },
   "Campaigns & Events": {
-    description: "Fundraising initiatives and gatherings",
     items: [
-      { name: "Campaigns", href: "/campaigns", icon: Megaphone, description: "Campaign performance metrics" },
-      { name: "Events", href: "/events", icon: Calendar, description: "Fundraising events calendar" },
+      { name: "Campaigns", href: "/campaigns" },
+      { name: "Events", href: "/events" },
     ]
   },
   "Operations & Strategy": {
-    description: "Tools, infrastructure, and special projects",
     items: [
-      { name: "AI Tools", href: "/ai-tools", icon: Brain, description: "AI-powered fundraising assistance" },
-      { name: "Infrastructure", href: "/other", icon: Folder, description: "System tools and settings" },
-      { name: "Special Projects", href: "/temporary", icon: Lightbulb, description: "Development and testing" },
+      { name: "AI Tools", href: "/ai-tools" },
+      { name: "Infrastructure", href: "/other" },
+      { name: "Special Projects", href: "/temporary" },
     ]
   }
 };
@@ -84,17 +66,16 @@ export default function NavigationMegaMenuPreview() {
   return (
     <div className="space-y-8">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold mb-2">Navigation Preview: Mega Menu by Domain</h1>
+        <h1 className="text-2xl font-bold mb-2">Navigation Preview: Dropdown Menu</h1>
         <p className="text-muted-foreground">
-          This preview shows how the navigation would look with a mega menu approach. 
-          Click on the domain buttons to toggle the expanded menu.
+          Hover or click on the category buttons to see the dropdown menu.
         </p>
       </div>
 
       {/* Preview Container */}
       <Card>
         <CardHeader>
-          <CardTitle>Mega Menu Navigation Preview</CardTitle>
+          <CardTitle>Dropdown Navigation Preview</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           {/* Simulated Header */}
@@ -105,23 +86,49 @@ export default function NavigationMegaMenuPreview() {
                 <FundRazorLogo width={140} height={36} />
               </div>
               
-              {/* Mega Menu Navigation */}
+              {/* Dropdown Navigation */}
               <nav className="flex items-center gap-0.5 ml-4">
                 {(Object.keys(navigationDomains) as DomainKey[]).map((domain) => (
-                  <Button
+                  <div
                     key={domain}
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleClick(domain)}
-                    className={`font-semibold gap-1 text-sm ${
-                      activeDropdown === domain 
-                        ? "bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400" 
-                        : "text-blue-800 dark:text-blue-300"
-                    } hover:bg-gray-100 dark:hover:bg-gray-800`}
+                    className="relative"
+                    onMouseEnter={() => setActiveDropdown(domain)}
+                    onMouseLeave={() => setActiveDropdown(null)}
                   >
-                    {domain}
-                    <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === domain ? "rotate-180" : ""}`} />
-                  </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleClick(domain)}
+                      className={`font-semibold gap-1 text-sm ${
+                        activeDropdown === domain 
+                          ? "bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400" 
+                          : "text-blue-800 dark:text-blue-300"
+                      } hover:bg-gray-100 dark:hover:bg-gray-800`}
+                    >
+                      {domain}
+                      <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === domain ? "rotate-180" : ""}`} />
+                    </Button>
+
+                    {/* Dropdown Menu - positioned directly below button */}
+                    {activeDropdown === domain && (
+                      <div 
+                        className="absolute left-0 top-full mt-1 bg-white dark:bg-gray-900 border rounded-md shadow-lg z-50 min-w-[160px]"
+                      >
+                        <div className="py-1">
+                          {navigationDomains[domain].items.map((item) => (
+                            <a
+                              key={item.name}
+                              href={item.href}
+                              className="block px-4 py-2 text-sm text-foreground hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                              onClick={closeDropdown}
+                            >
+                              {item.name}
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 ))}
               </nav>
               
@@ -142,61 +149,6 @@ export default function NavigationMegaMenuPreview() {
                 </Button>
               </div>
             </header>
-
-            {/* Mega Menu Dropdown */}
-            {activeDropdown && (
-              <>
-                {/* Backdrop to close on click outside */}
-                <div 
-                  className="fixed inset-0 z-40"
-                  onClick={closeDropdown}
-                />
-                <div 
-                  className="absolute left-0 right-0 top-16 bg-white dark:bg-gray-900 border-b shadow-lg z-50"
-                >
-                  <div className="max-w-4xl mx-auto p-6">
-                    <div className="flex items-start justify-between mb-4">
-                      <div>
-                        <h3 className="text-lg font-semibold text-foreground">{activeDropdown}</h3>
-                        <p className="text-sm text-muted-foreground">{navigationDomains[activeDropdown].description}</p>
-                      </div>
-                      <Button 
-                        variant="ghost" 
-                        size="icon" 
-                        onClick={closeDropdown}
-                        className="text-muted-foreground hover:text-foreground"
-                      >
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
-                    <div className={`grid gap-4 ${
-                      navigationDomains[activeDropdown].items.length === 1 
-                        ? "grid-cols-1 max-w-md" 
-                        : navigationDomains[activeDropdown].items.length === 2 
-                          ? "grid-cols-2 max-w-2xl"
-                          : "grid-cols-3"
-                    }`}>
-                      {navigationDomains[activeDropdown].items.map((item) => (
-                        <a
-                          key={item.name}
-                          href={item.href}
-                          className="flex items-start gap-3 p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors group"
-                          onClick={closeDropdown}
-                        >
-                          <div className="p-2 rounded-md bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 group-hover:bg-blue-100 dark:group-hover:bg-blue-900/50">
-                            <item.icon className="h-5 w-5" />
-                          </div>
-                          <div>
-                            <div className="font-medium text-foreground">{item.name}</div>
-                            <div className="text-sm text-muted-foreground">{item.description}</div>
-                          </div>
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
 
             {/* Placeholder content area */}
             <div className="h-64 bg-muted/30 flex items-center justify-center">
@@ -227,21 +179,19 @@ export default function NavigationMegaMenuPreview() {
           
           <div className="grid md:grid-cols-2 gap-4 mt-6">
             <div className="p-4 rounded-lg border border-green-200 dark:border-green-800 bg-green-50 dark:bg-green-900/20">
-              <h4 className="font-semibold text-green-700 dark:text-green-400 mb-2">Pros</h4>
+              <h4 className="font-semibold text-green-700 dark:text-green-400 mb-2">Features</h4>
               <ul className="text-sm space-y-1 text-green-800 dark:text-green-300">
-                <li>• Reduces visible items from 12 to 5</li>
-                <li>• Clear mental model: People → Process → Money → Activities → Tools</li>
-                <li>• Click-based interaction (mobile-friendly)</li>
-                <li>• Room for future expansion</li>
-                <li>• Each category has distinct purpose</li>
+                <li>• Hover or click to open dropdown</li>
+                <li>• Compact dropdown positioned below button</li>
+                <li>• Simple text-only menu items</li>
+                <li>• 5 categories instead of 12 buttons</li>
               </ul>
             </div>
             <div className="p-4 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-900/20">
               <h4 className="font-semibold text-amber-700 dark:text-amber-400 mb-2">Considerations</h4>
               <ul className="text-sm space-y-1 text-amber-800 dark:text-amber-300">
-                <li>• Pipeline has only one item (could be direct link instead)</li>
+                <li>• Pipeline has only one item (could be direct link)</li>
                 <li>• Users need to learn new groupings</li>
-                <li>• Adds one click to reach destinations</li>
               </ul>
             </div>
           </div>
