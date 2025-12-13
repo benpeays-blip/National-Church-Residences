@@ -103,19 +103,22 @@ export default function GrantProposals() {
       {proposals && proposals.length > 0 ? (
         <div className="grid gap-4">
           {proposals.map((item) => (
-            <Card key={item.proposal.id} data-testid={`card-proposal-${item.proposal.id}`}>
-              <CardHeader>
-                <div className="flex items-start justify-between">
+            <Card key={item.proposal.id} className="overflow-hidden" data-testid={`card-proposal-${item.proposal.id}`}>
+              <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
+                <div className="flex items-start justify-between gap-2">
                   <div className="space-y-1">
-                    <CardTitle className="text-lg flex items-center gap-2">
+                    <CardTitle className="text-lg flex items-center gap-2 text-white">
                       {getStatusIcon(item.proposal.status)}
                       {item.grant.funderName}
                     </CardTitle>
-                    <div className="text-sm text-muted-foreground mt-1">
+                    <div className="text-sm text-white/80 mt-1">
                       Requested: ${parseFloat(item.grant.askAmount).toLocaleString()} • Created {format(new Date(item.proposal.createdAt), "MMM d, yyyy")}
                     </div>
                   </div>
-                  <Badge variant={getStatusVariant(item.proposal.status)}>
+                  <Badge 
+                    variant="outline"
+                    style={{ color: '#e1c47d', borderColor: '#e1c47d' }}
+                  >
                     {item.proposal.status.replace("_", " ")}
                   </Badge>
                 </div>
