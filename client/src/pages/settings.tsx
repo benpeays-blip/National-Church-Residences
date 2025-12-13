@@ -458,7 +458,7 @@ export default function Settings() {
                   </div>
                   <div className="flex items-center gap-2">
                     {integration.connected && (
-                      <Badge variant="outline" className="text-green-600 border-green-600">
+                      <Badge variant="outline" className="text-primary border-primary">
                         <Check className="w-3 h-3 mr-1" />
                         Connected
                       </Badge>

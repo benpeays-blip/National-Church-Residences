@@ -163,10 +163,10 @@ export default function Profile() {
         {/* Overview Tab */}
         <TabsContent value="overview" className="space-y-6 mt-6">
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <Card className="p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900/30">
-                  <Gift className="w-5 h-5 text-green-600" />
+            <Card className="p-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <Gift className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Total Gifts</p>
@@ -174,10 +174,10 @@ export default function Profile() {
                 </div>
               </div>
             </Card>
-            <Card className="p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/30">
-                  <TrendingUp className="w-5 h-5 text-blue-600" />
+            <Card className="p-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <TrendingUp className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Total Raised</p>
@@ -185,10 +185,10 @@ export default function Profile() {
                 </div>
               </div>
             </Card>
-            <Card className="p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/30">
-                  <Users className="w-5 h-5 text-purple-600" />
+            <Card className="p-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <Users className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Portfolio Size</p>
@@ -196,36 +196,36 @@ export default function Profile() {
                 </div>
               </div>
             </Card>
-            <Card className="p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 rounded-lg bg-orange-100 dark:bg-orange-900/30">
-                  <Calendar className="w-5 h-5 text-orange-600" />
+            <Card className="p-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <Calendar className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Meetings This Month</p>
-                  <p className="text-2xl font-bold">{mockStats.meetingsThisMonth}</p>
+                  <p className="text-2xl font-bold" data-testid="text-meetings-count">{mockStats.meetingsThisMonth}</p>
                 </div>
               </div>
             </Card>
-            <Card className="p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 rounded-lg bg-teal-100 dark:bg-teal-900/30">
-                  <FileText className="w-5 h-5 text-teal-600" />
+            <Card className="p-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <FileText className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Tasks Completed</p>
-                  <p className="text-2xl font-bold">{mockStats.tasksCompleted}</p>
+                  <p className="text-2xl font-bold" data-testid="text-tasks-completed">{mockStats.tasksCompleted}</p>
                 </div>
               </div>
             </Card>
-            <Card className="p-4">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="p-2 rounded-lg bg-pink-100 dark:bg-pink-900/30">
-                  <Target className="w-5 h-5 text-pink-600" />
+            <Card className="p-6">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <Target className="w-5 h-5 text-primary" />
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">Conversion Rate</p>
-                  <p className="text-2xl font-bold">{mockStats.conversionRate}%</p>
+                  <p className="text-2xl font-bold" data-testid="text-conversion-rate">{mockStats.conversionRate}%</p>
                 </div>
               </div>
             </Card>
@@ -269,12 +269,13 @@ export default function Profile() {
                 <div 
                   key={activity.id}
                   className="flex items-start gap-4 p-4 rounded-lg bg-muted/50"
+                  data-testid={`activity-item-${activity.id}`}
                 >
-                  <div className="p-2 rounded-lg bg-background">
-                    {activity.type === "gift" && <Gift className="w-4 h-4 text-green-600" />}
-                    {activity.type === "meeting" && <Calendar className="w-4 h-4 text-blue-600" />}
-                    {activity.type === "task" && <FileText className="w-4 h-4 text-purple-600" />}
-                    {activity.type === "note" && <FileText className="w-4 h-4 text-orange-600" />}
+                  <div className="p-2 rounded-lg bg-primary/10">
+                    {activity.type === "gift" && <Gift className="w-4 h-4 text-primary" />}
+                    {activity.type === "meeting" && <Calendar className="w-4 h-4 text-primary" />}
+                    {activity.type === "task" && <FileText className="w-4 h-4 text-primary" />}
+                    {activity.type === "note" && <FileText className="w-4 h-4 text-primary" />}
                   </div>
                   <div className="flex-1">
                     <p className="font-medium">{activity.title}</p>
@@ -292,25 +293,25 @@ export default function Profile() {
           <Card className="p-6">
             <h3 className="text-lg font-semibold mb-4">Performance Metrics</h3>
             <div className="grid gap-6 sm:grid-cols-2">
-              <div>
+              <div data-testid="metric-avg-gift">
                 <p className="text-sm text-muted-foreground mb-1">Avg Gift Size</p>
                 <p className="text-3xl font-bold">$18,897</p>
-                <p className="text-sm text-green-600">+12% vs last year</p>
+                <p className="text-sm text-primary">+12% vs last year</p>
               </div>
-              <div>
+              <div data-testid="metric-retention">
                 <p className="text-sm text-muted-foreground mb-1">Donor Retention</p>
                 <p className="text-3xl font-bold">89%</p>
-                <p className="text-sm text-green-600">+5% vs last year</p>
+                <p className="text-sm text-primary">+5% vs last year</p>
               </div>
-              <div>
+              <div data-testid="metric-visits">
                 <p className="text-sm text-muted-foreground mb-1">Visits per Month</p>
                 <p className="text-3xl font-bold">14</p>
                 <p className="text-sm text-muted-foreground">Target: 15</p>
               </div>
-              <div>
+              <div data-testid="metric-response">
                 <p className="text-sm text-muted-foreground mb-1">Response Time</p>
                 <p className="text-3xl font-bold">1.2 days</p>
-                <p className="text-sm text-green-600">Excellent</p>
+                <p className="text-sm text-primary">Excellent</p>
               </div>
             </div>
           </Card>
@@ -344,8 +345,12 @@ export default function Profile() {
             <h3 className="text-lg font-semibold mb-4">Achievements & Recognition</h3>
             <div className="grid gap-4 sm:grid-cols-3">
               {mockAchievements.map((achievement) => (
-                <Card key={achievement.name} className="p-4 text-center border-2 border-yellow-200 bg-yellow-50/50 dark:bg-yellow-900/10">
-                  <achievement.icon className="w-10 h-10 mx-auto mb-3 text-yellow-600" />
+                <Card 
+                  key={achievement.name} 
+                  className="p-6 text-center border-2 border-primary/20 bg-primary/5"
+                  data-testid={`achievement-${achievement.name.toLowerCase().replace(/\s+/g, '-')}`}
+                >
+                  <achievement.icon className="w-10 h-10 mx-auto mb-3 text-primary" />
                   <p className="font-semibold">{achievement.name}</p>
                   <p className="text-sm text-muted-foreground">{achievement.date}</p>
                 </Card>
@@ -356,15 +361,19 @@ export default function Profile() {
           <Card className="p-6">
             <h3 className="text-lg font-semibold mb-4">Certifications</h3>
             <div className="space-y-3">
-              <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                <Award className="w-5 h-5 text-blue-600" />
+              <div className="flex items-center gap-3 p-4 rounded-lg bg-muted/50" data-testid="certification-cfre">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <Award className="w-5 h-5 text-primary" />
+                </div>
                 <div>
                   <p className="font-medium">Certified Fund Raising Executive (CFRE)</p>
                   <p className="text-sm text-muted-foreground">Expires Dec 2026</p>
                 </div>
               </div>
-              <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
-                <Award className="w-5 h-5 text-green-600" />
+              <div className="flex items-center gap-3 p-4 rounded-lg bg-muted/50" data-testid="certification-salesforce">
+                <div className="p-2 rounded-lg bg-primary/10">
+                  <Award className="w-5 h-5 text-primary" />
+                </div>
                 <div>
                   <p className="font-medium">Salesforce Administrator</p>
                   <p className="text-sm text-muted-foreground">Earned Mar 2024</p>

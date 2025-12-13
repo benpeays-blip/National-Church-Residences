@@ -111,32 +111,20 @@ const mockNotifications: Notification[] = [
 const getTypeIcon = (type: Notification["type"]) => {
   switch (type) {
     case "gift":
-      return <Gift className="w-5 h-5 text-green-600" />;
+      return <Gift className="w-5 h-5 text-primary" />;
     case "meeting":
-      return <Calendar className="w-5 h-5 text-blue-600" />;
+      return <Calendar className="w-5 h-5 text-primary" />;
     case "task":
-      return <CheckCircle2 className="w-5 h-5 text-purple-600" />;
+      return <CheckCircle2 className="w-5 h-5 text-primary" />;
     case "mention":
-      return <MessageSquare className="w-5 h-5 text-orange-600" />;
+      return <MessageSquare className="w-5 h-5 text-primary" />;
     case "system":
-      return <Info className="w-5 h-5 text-gray-600" />;
+      return <Info className="w-5 h-5 text-muted-foreground" />;
     case "alert":
-      return <AlertCircle className="w-5 h-5 text-red-600" />;
+      return <AlertCircle className="w-5 h-5 text-destructive" />;
     default:
       return <Bell className="w-5 h-5" />;
   }
-};
-
-const getTypeBadge = (type: Notification["type"]) => {
-  const styles: Record<string, string> = {
-    gift: "bg-green-100 text-green-700 border-green-200",
-    meeting: "bg-blue-100 text-blue-700 border-blue-200",
-    task: "bg-purple-100 text-purple-700 border-purple-200",
-    mention: "bg-orange-100 text-orange-700 border-orange-200",
-    system: "bg-gray-100 text-gray-700 border-gray-200",
-    alert: "bg-red-100 text-red-700 border-red-200",
-  };
-  return styles[type] || "bg-gray-100 text-gray-700";
 };
 
 export default function Notifications() {
@@ -173,7 +161,7 @@ export default function Notifications() {
           <div className="flex items-center gap-3">
             <h1 className="text-3xl font-bold" data-testid="text-notifications-title">Notifications</h1>
             {unreadCount > 0 && (
-              <Badge className="bg-red-500 text-white" data-testid="badge-unread-count">
+              <Badge variant="destructive" data-testid="badge-unread-count">
                 {unreadCount} unread
               </Badge>
             )}
@@ -241,8 +229,8 @@ export default function Notifications() {
                 {filteredNotifications.map((notification) => (
                   <Card 
                     key={notification.id}
-                    className={`p-4 transition-colors cursor-pointer hover:bg-muted/50 ${
-                      !notification.read ? "bg-blue-50/50 dark:bg-blue-950/20 border-l-4 border-l-blue-500" : ""
+                    className={`p-6 transition-colors cursor-pointer hover:bg-muted/50 ${
+                      !notification.read ? "bg-primary/5 ring-1 ring-primary/30" : ""
                     }`}
                     onClick={() => markAsRead(notification.id)}
                     data-testid={`notification-item-${notification.id}`}
@@ -256,10 +244,7 @@ export default function Notifications() {
                           <h3 className={`font-semibold ${!notification.read ? "text-foreground" : "text-muted-foreground"}`}>
                             {notification.title}
                           </h3>
-                          <Badge 
-                            variant="outline" 
-                            className={`text-xs ${getTypeBadge(notification.type)}`}
-                          >
+                          <Badge variant="outline" className="text-xs">
                             {notification.type}
                           </Badge>
                         </div>
@@ -278,20 +263,25 @@ export default function Notifications() {
                               size="icon" 
                               className="h-8 w-8"
                               onClick={(e) => e.stopPropagation()}
+                              data-testid={`button-notification-menu-${notification.id}`}
                             >
                               <MoreHorizontal className="w-4 h-4" />
                             </Button>
                           </DropdownMenuTrigger>
                           <DropdownMenuContent align="end">
                             {!notification.read && (
-                              <DropdownMenuItem onClick={() => markAsRead(notification.id)}>
+                              <DropdownMenuItem 
+                                onClick={() => markAsRead(notification.id)}
+                                data-testid={`dropdown-mark-read-${notification.id}`}
+                              >
                                 <Check className="w-4 h-4 mr-2" />
                                 Mark as read
                               </DropdownMenuItem>
                             )}
                             <DropdownMenuItem 
                               onClick={() => deleteNotification(notification.id)}
-                              className="text-red-600"
+                              className="text-destructive"
+                              data-testid={`dropdown-delete-${notification.id}`}
                             >
                               <Trash2 className="w-4 h-4 mr-2" />
                               Delete
