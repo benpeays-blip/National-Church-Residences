@@ -47,10 +47,10 @@ export default function Pipeline() {
         <TrendingUp className="w-8 h-8 text-muted-foreground" />
       </div>
 
-      <div className="flex-1 min-h-0 overflow-x-auto">
-        <div className="flex gap-4 h-full pb-2">
+      <div className="flex-1 min-h-0">
+        <div className="flex gap-4 h-full">
           {stages.map((stage) => (
-            <Card key={stage} className="w-80 shrink-0 overflow-hidden border flex flex-col">
+            <Card key={stage} className="flex-1 min-w-0 overflow-hidden border flex flex-col">
               <div 
                 className="p-4 pb-3 shrink-0"
                 style={{ backgroundColor: "rgba(222, 235, 247, 0.5)" }}
