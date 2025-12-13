@@ -329,17 +329,17 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
 
       {/* Right Panel - Quadrant Details */}
       <Card className="lg:col-span-2">
-        <CardHeader className="bg-muted/30 border-b">
+        <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>
+              <CardTitle className="text-white">
                 {quadrantConfig[selectedQuadrant].label}
               </CardTitle>
-              <CardDescription className="text-xs mt-1">
+              <CardDescription className="text-xs mt-1 text-white/80">
                 {quadrantConfig[selectedQuadrant].description}
               </CardDescription>
             </div>
-            <Badge variant="outline" className="text-sm">
+            <Badge variant="outline" className="text-sm" style={{ color: '#e1c47d', borderColor: '#e1c47d' }}>
               {selectedDonors.length} {selectedDonors.length === 1 ? 'donor' : 'donors'}
             </Badge>
           </div>
