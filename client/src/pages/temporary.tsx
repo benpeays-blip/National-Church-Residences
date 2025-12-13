@@ -1483,16 +1483,20 @@ function InterviewCard({ person }: { person: InterviewPerson }) {
   
   return (
     <Card 
-      className="overflow-hidden hover-elevate cursor-pointer transition-all"
+      className="overflow-hidden hover-elevate cursor-pointer transition-all h-[140px] flex flex-col"
       data-testid={`card-interview-${person.id}`}
       onClick={() => navigate(`/temporary/interviews/${person.id}`)}
     >
-      <div className="p-5">
-        <h3 className="font-bold text-lg mb-1">{person.name}</h3>
-        <p className="text-sm text-muted-foreground mb-3">{person.title}</p>
-        <Badge style={{ backgroundColor: person.areaColor }} className="text-white text-xs">
-          {person.area}
-        </Badge>
+      <div className="p-5 flex flex-col flex-1">
+        <div className="flex-1">
+          <h3 className="font-bold text-lg mb-1">{person.name}</h3>
+          <p className="text-sm text-muted-foreground line-clamp-2">{person.title}</p>
+        </div>
+        <div className="mt-auto pt-3">
+          <Badge style={{ backgroundColor: person.areaColor }} className="text-white text-xs">
+            {person.area}
+          </Badge>
+        </div>
       </div>
     </Card>
   );
