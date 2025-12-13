@@ -263,11 +263,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[25%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('friend')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-[#ffffff]"
-                style={{ backgroundColor: '#f4f4f4' }}
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white"
                 data-testid="quadrant-friend"
               >
-                <div className="font-bold text-base text-foreground">Friend</div>
+                <div className="font-bold text-base">Friend</div>
                 <Badge className="mt-1" data-testid="count-friend">{data.counts.friend}</Badge>
               </button>
             </div>
@@ -276,11 +275,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[75%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('partner')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center"
-                style={{ backgroundColor: '#f4f4f4' }}
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white"
                 data-testid="quadrant-partner"
               >
-                <div className="font-bold text-base text-foreground">Partner</div>
+                <div className="font-bold text-base">Partner</div>
                 <Badge className="mt-1" data-testid="count-partner">{data.counts.partner}</Badge>
               </button>
             </div>
@@ -289,11 +287,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[25%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('acquaintance')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center"
-                style={{ backgroundColor: '#f4f4f4' }}
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white"
                 data-testid="quadrant-acquaintance"
               >
-                <div className="font-bold text-base text-foreground">Acquaintance</div>
+                <div className="font-bold text-base">Acquaintance</div>
                 <Badge className="mt-1" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
               </button>
             </div>
@@ -302,11 +299,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[75%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('colleague')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center"
-                style={{ backgroundColor: '#f4f4f4' }}
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white"
                 data-testid="quadrant-colleague"
               >
-                <div className="font-bold text-base text-foreground">Colleague</div>
+                <div className="font-bold text-base">Colleague</div>
                 <Badge className="mt-1" data-testid="count-colleague">{data.counts.colleague}</Badge>
               </button>
             </div>
