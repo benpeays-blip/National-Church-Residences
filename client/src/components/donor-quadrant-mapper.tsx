@@ -114,7 +114,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 Energy increases upward; structure increases to the right. Goal: move every donor toward Partner.
               </CardDescription>
             </div>
-            <Badge variant="outline" className="text-sm text-white border-white/50">
+            <Badge variant="outline" className="text-sm border-white/50" style={{ color: '#e1c47d' }}>
               {data.totalDonors} Donors
             </Badge>
           </div>
