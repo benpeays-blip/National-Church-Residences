@@ -188,26 +188,27 @@ export default function OutreachGenerator() {
       ) : filteredTemplates && filteredTemplates.length > 0 ? (
         <div className="grid grid-cols-1 gap-4">
           {filteredTemplates.map((item) => (
-            <Card key={item.template.id} data-testid={`template-${item.template.id}`}>
-              <CardHeader>
-                <div className="flex items-start justify-between">
+            <Card key={item.template.id} className="overflow-hidden" data-testid={`template-${item.template.id}`}>
+              <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
+                <div className="flex items-start justify-between gap-2">
                   <div className="flex-1">
-                    <CardTitle className="text-lg">
+                    <CardTitle className="text-lg text-white">
                       {item.person.firstName} {item.person.lastName}
                     </CardTitle>
-                    <CardDescription>{item.template.purpose}</CardDescription>
+                    <CardDescription className="text-white/80">{item.template.purpose}</CardDescription>
                   </div>
                   <div className="flex gap-2 flex-wrap">
                     <Badge 
-                      variant={getTypeVariant(item.template.templateType)}
+                      variant="outline"
                       className="flex items-center gap-1"
+                      style={{ color: '#e1c47d', borderColor: '#e1c47d' }}
                       data-testid={`type-badge-${item.template.templateType}`}
                     >
                       {getTypeIcon(item.template.templateType)}
                       {getTypeLabel(item.template.templateType)}
                     </Badge>
-                    <Badge variant="secondary">{item.template.tone}</Badge>
-                    {item.template.used === 1 && <Badge variant="default">Sent</Badge>}
+                    <Badge variant="outline" style={{ color: 'white', borderColor: 'rgba(255,255,255,0.5)' }}>{item.template.tone}</Badge>
+                    {item.template.used === 1 && <Badge variant="outline" style={{ color: '#4ade80', borderColor: '#4ade80' }}>Sent</Badge>}
                   </div>
                 </div>
               </CardHeader>
