@@ -1229,22 +1229,20 @@ function InterviewCard({ person, onClick }: { person: InterviewPerson; onClick: 
       onClick={onClick}
     >
       <div 
-        className="p-6"
+        className="p-6 space-y-2"
         style={{ backgroundColor: `${person.areaColor}15` }}
       >
-        <div className="flex items-center justify-between gap-2 mb-2">
-          <h3 
-            className="font-semibold text-base"
-            style={{ color: person.areaColor }}
-            data-testid={`text-interview-name-${person.id}`}
-          >
-            {person.name}
-          </h3>
-          <Badge variant="outline" className="text-xs shrink-0" style={{ borderColor: person.areaColor, color: person.areaColor }}>
-            {person.area}
-          </Badge>
-        </div>
+        <h3 
+          className="font-semibold text-base"
+          style={{ color: person.areaColor }}
+          data-testid={`text-interview-name-${person.id}`}
+        >
+          {person.name}
+        </h3>
         <p className="text-xs text-muted-foreground">{person.title}</p>
+        <Badge variant="outline" className="text-xs" style={{ borderColor: person.areaColor, color: person.areaColor }}>
+          {person.area}
+        </Badge>
       </div>
       <div className="p-6 flex-1">
         <p className="text-sm text-muted-foreground italic border-l-2 pl-3" style={{ borderColor: `${person.areaColor}50` }}>
