@@ -306,8 +306,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
+                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         data-testid="button-quadrant"
                       >
                         Quadrant
@@ -318,8 +317,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
+                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         data-testid="button-events"
                       >
                         Events
@@ -330,8 +328,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
+                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         data-testid="button-grants"
                       >
                         Grants
@@ -342,8 +339,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
+                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         data-testid="button-gifts"
                       >
                         Gifts
@@ -354,8 +350,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
+                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         data-testid="button-campaigns"
                       >
                         Campaigns
@@ -366,8 +361,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
+                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         data-testid="button-ai-tools"
                       >
                         AI Tools
@@ -378,8 +372,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
+                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         data-testid="button-relationships"
                       >
                         Relationships
@@ -390,8 +383,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
+                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         data-testid="button-corporate-partnerships"
                       >
                         Corporations
@@ -402,8 +394,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
+                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         data-testid="button-donors"
                       >
                         Donors
@@ -414,8 +405,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
+                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         data-testid="button-pipeline"
                       >
                         Pipeline
@@ -426,8 +416,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
+                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         data-testid="button-other"
                       >
                         Other
@@ -438,8 +427,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold hover:bg-gray-100"
-                        style={{ color: "#084594" }}
+                        className="font-semibold text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                         data-testid="button-temporary"
                       >
                         Temporary
@@ -448,15 +436,14 @@ function App() {
                   </nav>
                   
                   {/* Separator */}
-                  <div className="h-6 w-px bg-gray-200" />
+                  <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
                   
                   <Button
                     variant="ghost"
                     size="icon"
                     data-testid="button-global-search"
                     aria-label="Global search (Cmd+K)"
-                    className="hover:bg-gray-100"
-                    style={{ color: "#084594" }}
+                    className="text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     <Search className="h-5 w-5" />
                   </Button>
@@ -465,8 +452,7 @@ function App() {
                     size="icon"
                     data-testid="button-notifications"
                     aria-label="Notifications"
-                    className="hover:bg-gray-100"
-                    style={{ color: "#084594" }}
+                    className="text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     <Bell className="h-5 w-5" />
                   </Button>
@@ -476,8 +462,7 @@ function App() {
                     asChild
                     data-testid="button-settings"
                     aria-label="Settings"
-                    className="hover:bg-gray-100"
-                    style={{ color: "#084594" }}
+                    className="text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     <a href="/settings">
                       <SettingsIcon className="h-5 w-5" />
@@ -488,8 +473,7 @@ function App() {
                     size="icon"
                     data-testid="button-account"
                     aria-label="Account menu"
-                    className="hover:bg-gray-100"
-                    style={{ color: "#084594" }}
+                    className="text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
                   >
                     <User className="h-5 w-5" />
                   </Button>
