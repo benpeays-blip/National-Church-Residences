@@ -111,7 +111,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 Donor Relationship Quadrant
               </CardTitle>
               <CardDescription className="mt-1 text-white/80">
-                Energy increases upward; structure increases to the right. Goal: move every donor toward Partner.
+                Energy increases upward; structure increases to the right.<br />Goal: move every donor toward Partner.
               </CardDescription>
             </div>
             <Badge variant="outline" className="text-sm" style={{ color: '#e1c47d', borderColor: '#e1c47d' }}>
