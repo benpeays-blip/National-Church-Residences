@@ -267,7 +267,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-friend"
               >
                 <div className="font-bold text-base">Friend</div>
-                <Badge className="mt-1" data-testid="count-friend">{data.counts.friend}</Badge>
+                <Badge className="mt-1 bg-[#f4f4f4] text-[#395174]" data-testid="count-friend">{data.counts.friend}</Badge>
               </button>
             </div>
 
@@ -279,7 +279,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-partner"
               >
                 <div className="font-bold text-base">Partner</div>
-                <Badge className="mt-1" data-testid="count-partner">{data.counts.partner}</Badge>
+                <Badge className="mt-1 bg-[#f4f4f4] text-[#395174]" data-testid="count-partner">{data.counts.partner}</Badge>
               </button>
             </div>
 
@@ -291,7 +291,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-acquaintance"
               >
                 <div className="font-bold text-base">Acquaintance</div>
-                <Badge className="mt-1" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
+                <Badge className="mt-1 bg-[#f4f4f4] text-[#395174]" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
               </button>
             </div>
 
@@ -303,7 +303,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-colleague"
               >
                 <div className="font-bold text-base">Colleague</div>
-                <Badge className="mt-1" data-testid="count-colleague">{data.counts.colleague}</Badge>
+                <Badge className="mt-1 bg-[#f4f4f4] text-[#395174]" data-testid="count-colleague">{data.counts.colleague}</Badge>
               </button>
             </div>
             </div>
