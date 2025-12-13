@@ -89,9 +89,9 @@ export default function QuadrantExplained() {
                 </div>
               </div>
 
-              <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900 rounded-lg p-4">
+              <div className="bg-muted/50 border rounded-lg p-4">
                 <h4 className="font-semibold text-lg mb-3 flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                  <AlertTriangle className="w-5 h-5 text-muted-foreground" />
                   Risks
                 </h4>
                 <ul className="space-y-1.5 text-sm ml-6">
@@ -161,9 +161,9 @@ export default function QuadrantExplained() {
                 </div>
               </div>
 
-              <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900 rounded-lg p-4">
+              <div className="bg-muted/50 border rounded-lg p-4">
                 <h4 className="font-semibold text-lg mb-3 flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                  <AlertTriangle className="w-5 h-5 text-muted-foreground" />
                   Risks
                 </h4>
                 <ul className="space-y-1.5 text-sm ml-6">
@@ -228,9 +228,9 @@ export default function QuadrantExplained() {
                 </div>
               </div>
 
-              <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900 rounded-lg p-4">
+              <div className="bg-muted/50 border rounded-lg p-4">
                 <h4 className="font-semibold text-lg mb-3 flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                  <AlertTriangle className="w-5 h-5 text-muted-foreground" />
                   Risks
                 </h4>
                 <ul className="space-y-1.5 text-sm ml-6">
@@ -296,9 +296,9 @@ export default function QuadrantExplained() {
                 </div>
               </div>
 
-              <div className="bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-900 rounded-lg p-4">
+              <div className="bg-muted/50 border rounded-lg p-4">
                 <h4 className="font-semibold text-lg mb-3 flex items-center gap-2">
-                  <AlertTriangle className="w-5 h-5 text-yellow-600" />
+                  <AlertTriangle className="w-5 h-5 text-muted-foreground" />
                   Risks
                 </h4>
                 <ul className="space-y-1.5 text-sm ml-6">

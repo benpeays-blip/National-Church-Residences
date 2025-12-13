@@ -99,9 +99,9 @@ export default function QuadrantStrategies() {
                 </div>
               </div>
 
-              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900 rounded-lg p-4">
+              <div className="bg-primary/5 border rounded-lg p-4">
                 <h4 className="font-semibold text-lg mb-2 flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-green-600" />
+                  <CheckCircle2 className="w-5 h-5 text-primary" />
                   Outcome
                 </h4>
                 <p className="text-sm">They become Friends, then Colleagues, then Partners.</p>
@@ -178,9 +178,9 @@ export default function QuadrantStrategies() {
                 </div>
               </div>
 
-              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900 rounded-lg p-4">
+              <div className="bg-primary/5 border rounded-lg p-4">
                 <h4 className="font-semibold text-lg mb-2 flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-green-600" />
+                  <CheckCircle2 className="w-5 h-5 text-primary" />
                   Outcome
                 </h4>
                 <p className="text-sm">Friendship + structure becomes Partnership.</p>
@@ -259,9 +259,9 @@ export default function QuadrantStrategies() {
                 </div>
               </div>
 
-              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900 rounded-lg p-4">
+              <div className="bg-primary/5 border rounded-lg p-4">
                 <h4 className="font-semibold text-lg mb-2 flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-green-600" />
+                  <CheckCircle2 className="w-5 h-5 text-primary" />
                   Outcome
                 </h4>
                 <p className="text-sm">Colleague → relational warmth → structured major gift pathway → Partner.</p>
@@ -338,9 +338,9 @@ export default function QuadrantStrategies() {
                 </div>
               </div>
 
-              <div className="bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900 rounded-lg p-4">
+              <div className="bg-primary/5 border rounded-lg p-4">
                 <h4 className="font-semibold text-lg mb-2 flex items-center gap-2">
-                  <Lightbulb className="w-5 h-5 text-blue-600" />
+                  <Lightbulb className="w-5 h-5 text-primary" />
                   Key Principle
                 </h4>
                 <p className="text-sm">
