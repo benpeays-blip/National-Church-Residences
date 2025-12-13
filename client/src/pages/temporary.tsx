@@ -5,6 +5,9 @@ import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import TechStackMapper from "@/pages/tech-stack-mapper";
 
 import raisersEdgeLogo from "@assets/stock_images/raiser's_edge_nxt_bl_dec6c4f9.jpg";
@@ -1478,14 +1481,12 @@ const interviewees: InterviewPerson[] = [
   }
 ];
 
-function InterviewCard({ person }: { person: InterviewPerson }) {
-  const [, navigate] = useLocation();
-  
+function InterviewCard({ person, onClick }: { person: InterviewPerson; onClick: () => void }) {
   return (
     <Card 
       className="overflow-hidden hover-elevate cursor-pointer transition-all h-[140px] flex flex-col"
       data-testid={`card-interview-${person.id}`}
-      onClick={() => navigate(`/temporary/interviews/${person.id}`)}
+      onClick={onClick}
     >
       <div className="p-5 flex flex-col flex-1">
         <div className="flex-1">
@@ -1502,141 +1503,191 @@ function InterviewCard({ person }: { person: InterviewPerson }) {
   );
 }
 
-function InterviewDetailPage({ personId }: { personId: string }) {
-  const [, navigate] = useLocation();
-  const person = interviewees.find(p => p.id === personId);
-
-  if (!person) {
-    return (
-      <div className="p-6">
-        <Card className="p-6 text-center">
-          <p className="text-muted-foreground">Interview not found</p>
-          <Button className="mt-4" onClick={() => navigate("/temporary")}>
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-        </Card>
-      </div>
-    );
-  }
+function InterviewDetailSheet({ person, open, onOpenChange }: { person: InterviewPerson | null; open: boolean; onOpenChange: (open: boolean) => void }) {
+  if (!person) return null;
 
   return (
-    <div className="p-6 space-y-6">
-      <Button 
-        variant="ghost" 
-        className="mb-2"
-        onClick={() => navigate("/temporary")}
-        data-testid="button-back"
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent 
+        side="right" 
+        className="w-full sm:max-w-xl md:max-w-2xl lg:max-w-3xl p-0 flex flex-col"
+        data-testid="sheet-interview-detail"
       >
-        <ArrowLeft className="w-4 h-4 mr-2" />
-        Back
-      </Button>
-
-      <Card>
-        <div className="p-6">
-          <div className="flex items-start justify-between gap-4 flex-wrap">
-            <div>
-              <h1 className="text-2xl font-bold mb-1">{person.name}</h1>
-              <p className="text-lg text-muted-foreground mb-3">{person.title}</p>
-              <Badge style={{ backgroundColor: person.areaColor }} className="text-white">
+        <div 
+          className="p-6 border-b"
+          style={{ backgroundColor: `${person.areaColor}10` }}
+        >
+          <SheetHeader className="space-y-3">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1">
+                <SheetTitle className="text-2xl font-bold">{person.name}</SheetTitle>
+                <SheetDescription className="text-base mt-1">{person.title}</SheetDescription>
+              </div>
+              <Badge 
+                style={{ backgroundColor: person.areaColor }} 
+                className="text-white shrink-0"
+              >
                 {person.area}
               </Badge>
             </div>
+            <p className="text-sm text-muted-foreground italic border-l-2 pl-3" style={{ borderColor: person.areaColor }}>
+              {person.background}
+            </p>
+          </SheetHeader>
+        </div>
+
+        <ScrollArea className="flex-1">
+          <div className="p-6">
+            <Accordion type="multiple" defaultValue={["challenges", "wants", "tech", "observations", "summary"]} className="space-y-2">
+              <AccordionItem value="challenges" className="border rounded-lg px-4">
+                <AccordionTrigger className="hover:no-underline py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-md bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
+                      <AlertTriangle className="h-4 w-4 text-orange-600" />
+                    </div>
+                    <span className="font-semibold">Current Challenges</span>
+                    <Badge variant="secondary" className="ml-2 text-xs">{person.challenges.length}</Badge>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-4 pb-2">
+                    {person.challenges.map((challenge, idx) => (
+                      <div key={idx} className="border-l-2 border-orange-200 dark:border-orange-800 pl-3">
+                        <h4 className="font-medium text-sm mb-2">{challenge.title}</h4>
+                        <ul className="space-y-1.5">
+                          {challenge.items.map((item, itemIdx) => (
+                            <li key={itemIdx} className="text-sm text-muted-foreground flex items-start gap-2">
+                              <span className="text-orange-500 mt-1 shrink-0">•</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="wants" className="border rounded-lg px-4">
+                <AccordionTrigger className="hover:no-underline py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-md bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                      <Sparkles className="h-4 w-4 text-green-600" />
+                    </div>
+                    <span className="font-semibold">Desired Capabilities</span>
+                    <Badge variant="secondary" className="ml-2 text-xs">{person.wants.length}</Badge>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-4 pb-2">
+                    {person.wants.map((want, idx) => (
+                      <div key={idx} className="border-l-2 border-green-200 dark:border-green-800 pl-3">
+                        <h4 className="font-medium text-sm mb-2">{want.title}</h4>
+                        <ul className="space-y-1.5">
+                          {want.items.map((item, itemIdx) => (
+                            <li key={itemIdx} className="text-sm text-muted-foreground flex items-start gap-2">
+                              <span className="text-green-500 mt-1 shrink-0">+</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="tech" className="border rounded-lg px-4">
+                <AccordionTrigger className="hover:no-underline py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-md bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
+                      <Server className="h-4 w-4 text-blue-600" />
+                    </div>
+                    <span className="font-semibold">Tech Stack</span>
+                    <Badge variant="secondary" className="ml-2 text-xs">{person.techStack.length}</Badge>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-3 pb-2">
+                    {person.techStack.map((tech, idx) => (
+                      <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                        <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0" />
+                        <div>
+                          <h4 className="font-medium text-sm">{tech.name}</h4>
+                          <p className="text-sm text-muted-foreground mt-0.5">{tech.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="observations" className="border rounded-lg px-4">
+                <AccordionTrigger className="hover:no-underline py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-md bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
+                      <Users className="h-4 w-4 text-purple-600" />
+                    </div>
+                    <span className="font-semibold">Observations</span>
+                    <Badge variant="secondary" className="ml-2 text-xs">{person.observations.length}</Badge>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <ul className="space-y-2 pb-2">
+                    {person.observations.map((obs, idx) => (
+                      <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <span className="text-purple-500 mt-1 shrink-0">→</span>
+                        <span>{obs}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="summary" className="border rounded-lg px-4 border-blue-200 dark:border-blue-800" style={{ backgroundColor: "rgba(8, 69, 148, 0.03)" }}>
+                <AccordionTrigger className="hover:no-underline py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: "rgba(8, 69, 148, 0.15)" }}>
+                      <Building2 className="h-4 w-4" style={{ color: "#084594" }} />
+                    </div>
+                    <span className="font-semibold" style={{ color: "#084594" }}>Summary Insight</span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <p className="text-sm text-muted-foreground leading-relaxed pb-2">{person.summaryInsight}</p>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
           </div>
-          <p className="text-sm text-muted-foreground mt-4 italic">{person.background}</p>
-        </div>
-      </Card>
-
-      <div>
-        <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
-          <AlertTriangle className="h-5 w-5 text-orange-600" />
-          Current Challenges
-        </h2>
-        <div className="grid md:grid-cols-2 gap-4">
-          {person.challenges.map((challenge, idx) => (
-            <Card key={idx} className="p-4">
-              <h3 className="font-medium text-sm mb-3">{challenge.title}</h3>
-              <ul className="space-y-2">
-                {challenge.items.map((item, itemIdx) => (
-                  <li key={itemIdx} className="text-xs text-muted-foreground flex items-start gap-2">
-                    <span className="text-orange-600 mt-0.5 shrink-0">•</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
-          <Server className="h-5 w-5 text-blue-600" />
-          Current Tech Stack
-        </h2>
-        <Card>
-          <div className="divide-y">
-            {person.techStack.map((tech, idx) => (
-              <div key={idx} className="p-4">
-                <h3 className="font-medium text-sm">{tech.name}</h3>
-                <p className="text-xs text-muted-foreground mt-1">{tech.description}</p>
-              </div>
-            ))}
-          </div>
-        </Card>
-      </div>
-
-      <div>
-        <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
-          <Sparkles className="h-5 w-5 text-green-600" />
-          Desired Capabilities
-        </h2>
-        <div className="grid md:grid-cols-2 gap-4">
-          {person.wants.map((want, idx) => (
-            <Card key={idx} className="p-4">
-              <h3 className="font-medium text-sm mb-3">{want.title}</h3>
-              <ul className="space-y-2">
-                {want.items.map((item, itemIdx) => (
-                  <li key={itemIdx} className="text-xs text-muted-foreground flex items-start gap-2">
-                    <span className="text-green-600 mt-0.5 shrink-0">+</span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          ))}
-        </div>
-      </div>
-
-      <div>
-        <h2 className="font-semibold text-lg mb-4 flex items-center gap-2">
-          <Users className="h-5 w-5 text-purple-600" />
-          Additional Observations
-        </h2>
-        <Card className="p-4">
-          <ul className="space-y-2">
-            {person.observations.map((obs, idx) => (
-              <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                <span className="text-purple-600 mt-0.5 shrink-0">→</span>
-                <span>{obs}</span>
-              </li>
-            ))}
-          </ul>
-        </Card>
-      </div>
-
-      <Card className="p-6" style={{ backgroundColor: "rgba(8, 69, 148, 0.05)" }}>
-        <div className="flex items-center gap-2 mb-4">
-          <Building2 className="h-5 w-5" style={{ color: "#084594" }} />
-          <h2 className="font-semibold text-lg" style={{ color: "#084594" }}>Summary Insight</h2>
-        </div>
-        <p className="text-muted-foreground">{person.summaryInsight}</p>
-      </Card>
-    </div>
+        </ScrollArea>
+      </SheetContent>
+    </Sheet>
   );
 }
 
-function OnSiteInterviews() {
+function OnSiteInterviews({ initialPersonId }: { initialPersonId?: string }) {
+  const [, navigate] = useLocation();
+  const [selectedPerson, setSelectedPerson] = useState<InterviewPerson | null>(() => {
+    if (initialPersonId) {
+      return interviewees.find(p => p.id === initialPersonId) || null;
+    }
+    return null;
+  });
+  const [sheetOpen, setSheetOpen] = useState(!!initialPersonId);
+
+  const handleCardClick = (person: InterviewPerson) => {
+    setSelectedPerson(person);
+    setSheetOpen(true);
+    navigate(`/temporary/interviews/${person.id}`);
+  };
+
+  const handleSheetClose = (open: boolean) => {
+    setSheetOpen(open);
+    if (!open) {
+      navigate("/temporary");
+    }
+  };
+
   return (
     <div className="space-y-6">
       <Card>
@@ -1653,9 +1704,19 @@ function OnSiteInterviews() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {interviewees.map((person) => (
-          <InterviewCard key={person.id} person={person} />
+          <InterviewCard 
+            key={person.id} 
+            person={person} 
+            onClick={() => handleCardClick(person)}
+          />
         ))}
       </div>
+
+      <InterviewDetailSheet 
+        person={selectedPerson} 
+        open={sheetOpen} 
+        onOpenChange={handleSheetClose}
+      />
     </div>
   );
 }
@@ -2426,18 +2487,9 @@ export default function Temporary() {
     );
   }
 
-  if (interviewDetailMatch) {
-    const personId = interviewDetailMatch[1];
-    return (
-      <div className="flex flex-col h-full">
-        <div className="flex-1 overflow-auto">
-          <InterviewDetailPage personId={personId} />
-        </div>
-      </div>
-    );
-  }
+  const initialPersonId = interviewDetailMatch ? interviewDetailMatch[1] : undefined;
 
-  let ContentComponent: React.ComponentType = OnSiteInterviews;
+  let ContentComponent: React.ComponentType<{ initialPersonId?: string }> = OnSiteInterviews;
   if (location === "/temporary/tech-stack") {
     ContentComponent = TechStack;
   } else if (location === "/temporary/technology-categories") {
@@ -2452,7 +2504,7 @@ export default function Temporary() {
     <div className="flex flex-col h-full">
       <SectionTabs tabs={temporaryTabs} currentPath={location} variant="cards" />
       <div className="flex-1 overflow-auto p-6">
-        <ContentComponent />
+        <ContentComponent initialPersonId={initialPersonId} />
       </div>
     </div>
   );
