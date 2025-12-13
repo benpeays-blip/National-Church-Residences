@@ -345,7 +345,8 @@ function App() {
           <div className="flex flex-col flex-1">
             {/* Top Header Navigation */}
             <header 
-              className="flex items-center gap-6 h-16 px-6 border-b shrink-0 bg-white dark:bg-gray-900"
+              className="flex items-center gap-6 h-16 px-6 border-b shrink-0"
+              style={{ backgroundColor: '#272757' }}
             >
               {/* Logo / Home Link */}
               <Link href="/">
@@ -367,11 +368,9 @@ function App() {
                         variant="ghost"
                         size="sm"
                         onClick={() => handleDropdownClick("Constituents")}
-                        className={`font-semibold gap-1 text-sm ${
-                          activeDropdown === "Constituents" 
-                            ? "bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400" 
-                            : "text-blue-800 dark:text-blue-300"
-                        } hover:bg-gray-100 dark:hover:bg-gray-800`}
+                        className={`font-semibold gap-1 text-sm text-white hover:bg-white/10 ${
+                          activeDropdown === "Constituents" ? "bg-white/10" : ""
+                        }`}
                         data-testid="button-nav-constituents"
                       >
                         Constituents
@@ -403,7 +402,7 @@ function App() {
                       <Button
                         variant="ghost"
                         size="sm"
-                        className="font-semibold text-sm text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                        className="font-semibold text-sm text-white hover:bg-white/10"
                         data-testid="button-nav-pipeline"
                       >
                         Pipeline
@@ -422,11 +421,9 @@ function App() {
                           variant="ghost"
                           size="sm"
                           onClick={() => handleDropdownClick(domain)}
-                          className={`font-semibold gap-1 text-sm ${
-                            activeDropdown === domain 
-                              ? "bg-gray-100 dark:bg-gray-800 text-blue-600 dark:text-blue-400" 
-                              : "text-blue-800 dark:text-blue-300"
-                          } hover:bg-gray-100 dark:hover:bg-gray-800`}
+                          className={`font-semibold gap-1 text-sm text-white hover:bg-white/10 ${
+                            activeDropdown === domain ? "bg-white/10" : ""
+                          }`}
                           data-testid={`button-nav-${domain.toLowerCase().replace(/\s+/g, '-').replace('&', 'and')}`}
                         >
                           {domain}
@@ -460,7 +457,7 @@ function App() {
                   </nav>
                   
                   {/* Separator */}
-                  <div className="h-6 w-px bg-gray-200 dark:bg-gray-700" />
+                  <div className="h-6 w-px bg-white/30" />
                   
                   {/* Hamburger Menu */}
                   <div 
@@ -474,11 +471,11 @@ function App() {
                       onClick={() => setHamburgerOpen(!hamburgerOpen)}
                       data-testid="button-hamburger-menu"
                       aria-label="Menu"
-                      className="text-blue-800 dark:text-blue-300 hover:bg-gray-100 dark:hover:bg-gray-800 relative"
+                      className="text-white hover:bg-white/10 relative"
                     >
                       <Menu className="h-5 w-5" />
                       {/* Notification Badge */}
-                      <span className="absolute top-1 right-1 h-2.5 w-2.5 bg-red-500 rounded-full border-2 border-white dark:border-gray-900" />
+                      <span className="absolute top-1 right-1 h-2.5 w-2.5 bg-red-500 rounded-full border-2 border-[#272757]" />
                     </Button>
 
                     {/* Hamburger Dropdown */}
