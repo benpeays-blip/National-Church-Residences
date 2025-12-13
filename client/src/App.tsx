@@ -20,7 +20,6 @@ const navigationDomains = {
       { name: "Donors", href: "/donors" },
       { name: "Relationships", href: "/relationships" },
       { name: "Corporations", href: "/corporate-partnerships" },
-      { name: "Quadrant", href: "/quadrant" },
     ]
   },
   "Revenue": {
@@ -407,6 +406,18 @@ function App() {
                         data-testid="button-nav-pipeline"
                       >
                         Pipeline
+                      </Button>
+                    </Link>
+
+                    {/* Quadrant - Direct Link (not a dropdown) */}
+                    <Link href="/quadrant">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                        data-testid="button-nav-quadrant"
+                      >
+                        Quadrant
                       </Button>
                     </Link>
 
