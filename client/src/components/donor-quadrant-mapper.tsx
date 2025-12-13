@@ -186,8 +186,9 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                           </div>
                         </div>
                       </div>
-                      <p className="text-sm text-muted-foreground mt-3 line-clamp-2">
-                        {donor.bio}{' '}
+                      <div className="border-t mt-3 pt-3">
+                        <p className="text-sm text-muted-foreground line-clamp-2">
+                          {donor.bio}{' '}
                         <a 
                           href={`/donors/${donor.id}`} 
                           className="text-sky-500 hover:text-sky-600 hover:underline"
@@ -207,6 +208,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                             Generate Action Plan
                           </Button>
                         </Link>
+                      </div>
                       </div>
                     </div>
 
