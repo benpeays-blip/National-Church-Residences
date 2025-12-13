@@ -107,7 +107,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
           <div className="flex items-center justify-between">
             <div>
               <CardTitle className="flex items-center gap-2 text-white">
-                <Users className="w-5 h-5 text-white" />
+                <Users className="w-5 h-5" style={{ color: '#e1c47d' }} />
                 Donor Relationship Quadrant
               </CardTitle>
               <CardDescription className="mt-1 text-white/80">
