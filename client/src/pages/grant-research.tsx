@@ -499,11 +499,10 @@ const mockSavedSearches: SavedSearch[] = [
 ];
 
 function MatchScoreIndicator({ score }: { score: number }) {
-  const getScoreColor = (score: number) => {
-    if (score >= 90) return "text-green-600 bg-green-50 border-green-200";
-    if (score >= 80) return "text-blue-600 bg-blue-50 border-blue-200";
-    if (score >= 70) return "text-yellow-600 bg-yellow-50 border-yellow-200";
-    return "text-gray-600 bg-gray-50 border-gray-200";
+  const getScoreVariant = (score: number): "default" | "secondary" | "outline" | "destructive" => {
+    if (score >= 90) return "default";
+    if (score >= 80) return "secondary";
+    return "outline";
   };
 
   const getScoreLabel = (score: number) => {
@@ -517,10 +516,10 @@ function MatchScoreIndicator({ score }: { score: number }) {
     <TooltipProvider>
       <Tooltip>
         <TooltipTrigger asChild>
-          <div className={`flex items-center gap-1.5 px-2.5 py-1 rounded-full border ${getScoreColor(score)}`}>
+          <Badge variant={getScoreVariant(score)} className="gap-1.5">
             <Target className="w-3.5 h-3.5" />
             <span className="text-sm font-semibold tabular-nums">{score}%</span>
-          </div>
+          </Badge>
         </TooltipTrigger>
         <TooltipContent>
           <div className="text-xs">
@@ -534,17 +533,17 @@ function MatchScoreIndicator({ score }: { score: number }) {
 }
 
 function EligibilityBadge({ status }: { status: GrantOpportunity["eligibilityStatus"] }) {
-  const config = {
-    "Eligible": { icon: CheckCircle, class: "bg-green-50 text-green-700 border-green-200" },
-    "Likely Eligible": { icon: CheckCircle, class: "bg-blue-50 text-blue-700 border-blue-200" },
-    "Needs Review": { icon: AlertCircle, class: "bg-yellow-50 text-yellow-700 border-yellow-200" },
-    "Not Eligible": { icon: X, class: "bg-red-50 text-red-700 border-red-200" },
+  const config: Record<string, { icon: typeof CheckCircle; variant: "default" | "secondary" | "outline" | "destructive" }> = {
+    "Eligible": { icon: CheckCircle, variant: "default" },
+    "Likely Eligible": { icon: CheckCircle, variant: "secondary" },
+    "Needs Review": { icon: AlertCircle, variant: "outline" },
+    "Not Eligible": { icon: X, variant: "destructive" },
   };
-  const { icon: Icon, class: className } = config[status];
+  const { icon: Icon, variant } = config[status];
   
   return (
-    <Badge variant="outline" className={`text-xs ${className}`}>
-      <Icon className="w-3 h-3 mr-1" />
+    <Badge variant={variant} className="text-xs gap-1">
+      <Icon className="w-3 h-3" />
       {status}
     </Badge>
   );

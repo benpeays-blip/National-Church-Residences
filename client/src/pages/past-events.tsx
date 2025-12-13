@@ -108,11 +108,11 @@ const pastEvents: PastEvent[] = [
   }
 ];
 
-const categoryColors = {
-  "run-walk": "bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400",
-  "festival": "bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400",
-  "grant": "bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400",
-  "program": "bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400"
+const categoryVariants: Record<string, "default" | "secondary" | "outline"> = {
+  "run-walk": "secondary",
+  "festival": "default",
+  "grant": "secondary",
+  "program": "outline"
 };
 
 const categoryLabels = {
@@ -173,7 +173,7 @@ export default function PastEvents() {
 
       {/* Events Timeline */}
       <div className="space-y-6">
-        <h2 className="text-2xl font-semibold">Event Highlights</h2>
+        <h2 className="text-xl font-semibold">Event Highlights</h2>
         
         {pastEvents.map((event, index) => (
           <Card key={event.id} className="border hover-elevate overflow-hidden" data-testid={`event-card-${event.id}`}>
@@ -186,7 +186,7 @@ export default function PastEvents() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 flex-wrap mb-2">
                       <CardTitle className="text-xl">{event.title}</CardTitle>
-                      <Badge className={categoryColors[event.category]} variant="secondary">
+                      <Badge variant={categoryVariants[event.category]}>
                         {categoryLabels[event.category]}
                       </Badge>
                     </div>
@@ -288,7 +288,7 @@ export default function PastEvents() {
       {/* Call to Action */}
       <Card className="border bg-primary/5">
         <CardContent className="p-8 text-center">
-          <h3 className="text-2xl font-semibold mb-2" style={{ color: "#084594" }}>
+          <h3 className="text-xl font-semibold mb-2" style={{ color: "#084594" }}>
             Want to Support Our Next Event?
           </h3>
           <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">

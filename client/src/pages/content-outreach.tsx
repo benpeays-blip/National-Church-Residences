@@ -14,16 +14,16 @@ interface OutreachTemplateData {
 
 type FilterType = "all" | "email" | "letter" | "call_script";
 
-const getTypeColor = (type: string | null) => {
+const getTypeVariant = (type: string | null): "default" | "secondary" | "outline" => {
   switch (type) {
     case "email":
-      return "bg-blue-500 text-white hover:bg-blue-600";
+      return "default";
     case "letter":
-      return "bg-purple-500 text-white hover:bg-purple-600";
+      return "secondary";
     case "call_script":
-      return "bg-green-500 text-white hover:bg-green-600";
+      return "outline";
     default:
-      return "bg-gray-500 text-white hover:bg-gray-600";
+      return "secondary";
   }
 };
 
@@ -94,7 +94,6 @@ export default function OutreachGenerator() {
               variant={filter === "email" ? "default" : "outline"}
               size="sm"
               onClick={() => setFilter("email")}
-              className={filter === "email" ? "bg-blue-500 hover:bg-blue-600" : ""}
               data-testid="filter-email"
             >
               <Mail className="w-4 h-4 mr-1" />
@@ -107,7 +106,6 @@ export default function OutreachGenerator() {
               variant={filter === "letter" ? "default" : "outline"}
               size="sm"
               onClick={() => setFilter("letter")}
-              className={filter === "letter" ? "bg-purple-500 hover:bg-purple-600" : ""}
               data-testid="filter-letter"
             >
               <FileText className="w-4 h-4 mr-1" />
@@ -120,7 +118,6 @@ export default function OutreachGenerator() {
               variant={filter === "call_script" ? "default" : "outline"}
               size="sm"
               onClick={() => setFilter("call_script")}
-              className={filter === "call_script" ? "bg-green-500 hover:bg-green-600" : ""}
               data-testid="filter-call-script"
             >
               <Phone className="w-4 h-4 mr-1" />
@@ -140,7 +137,7 @@ export default function OutreachGenerator() {
             <FileText className="w-4 h-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold" data-testid="stat-showing">{filteredTemplates?.length || 0}</div>
+            <div className="text-3xl font-bold" data-testid="stat-showing">{filteredTemplates?.length || 0}</div>
             <p className="text-xs text-muted-foreground">
               of {templates?.length || 0} total
             </p>
@@ -150,10 +147,10 @@ export default function OutreachGenerator() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Emails</CardTitle>
-            <Mail className="w-4 h-4 text-blue-500" />
+            <Mail className="w-4 h-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-blue-500" data-testid="stat-emails">
+            <div className="text-3xl font-bold" data-testid="stat-emails">
               {templates?.filter((t) => t.template.templateType === "email").length || 0}
             </div>
           </CardContent>
@@ -162,10 +159,10 @@ export default function OutreachGenerator() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Letters</CardTitle>
-            <FileText className="w-4 h-4 text-purple-500" />
+            <FileText className="w-4 h-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-purple-500" data-testid="stat-letters">
+            <div className="text-3xl font-bold" data-testid="stat-letters">
               {templates?.filter((t) => t.template.templateType === "letter").length || 0}
             </div>
           </CardContent>
@@ -174,10 +171,10 @@ export default function OutreachGenerator() {
         <Card>
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Call Scripts</CardTitle>
-            <Phone className="w-4 h-4 text-green-500" />
+            <Phone className="w-4 h-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold text-green-500" data-testid="stat-call-scripts">
+            <div className="text-3xl font-bold" data-testid="stat-call-scripts">
               {templates?.filter((t) => t.template.templateType === "call_script").length || 0}
             </div>
           </CardContent>
@@ -202,7 +199,8 @@ export default function OutreachGenerator() {
                   </div>
                   <div className="flex gap-2 flex-wrap">
                     <Badge 
-                      className={`${getTypeColor(item.template.templateType)} flex items-center gap-1`}
+                      variant={getTypeVariant(item.template.templateType)}
+                      className="flex items-center gap-1"
                       data-testid={`type-badge-${item.template.templateType}`}
                     >
                       {getTypeIcon(item.template.templateType)}

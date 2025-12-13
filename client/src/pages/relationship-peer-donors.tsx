@@ -60,7 +60,7 @@ export default function PeerDonors() {
         </Card>
         <Card className="p-6 border">
           <div className="text-sm text-muted-foreground mb-1">Avg Match Score</div>
-          <div className="text-2xl font-semibold tabular-nums text-chart-1">{avgMatchScore.toFixed(0)}%</div>
+          <div className="text-2xl font-semibold tabular-nums text-primary">{avgMatchScore.toFixed(0)}%</div>
         </Card>
         <Card className="p-6 border">
           <div className="text-sm text-muted-foreground mb-1">High Potential</div>
@@ -127,9 +127,10 @@ export default function PeerDonors() {
 
                     {/* Additional Info */}
                     {peer.personNotYetAskedFor && peer.personNotYetAskedFor.length > 0 && (
-                      <div className="mt-3 p-3 bg-blue-50 dark:bg-blue-950/20 rounded-md border border-blue-200 dark:border-blue-900">
-                        <div className="text-xs font-medium text-blue-900 dark:text-blue-100 mb-1">
-                          💡 Opportunity: Your donor hasn't been asked for these programs yet
+                      <div className="mt-3 p-3 bg-primary/5 rounded-md border border-primary/20">
+                        <div className="text-xs font-medium text-foreground mb-1 flex items-center gap-1">
+                          <TrendingUp className="w-3 h-3 text-primary" />
+                          Opportunity: Your donor hasn't been asked for these programs yet
                         </div>
                         <div className="flex flex-wrap gap-2 mt-2">
                           {peer.personNotYetAskedFor.map((program: string, idx: number) => (

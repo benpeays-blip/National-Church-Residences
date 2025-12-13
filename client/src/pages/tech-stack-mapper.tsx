@@ -336,14 +336,8 @@ export default function TechStackMapper() {
                                 {product.category}
                               </Badge>
                               <Badge 
-                                variant="outline" 
-                                className={`text-xs ${
-                                  priority === "critical" 
-                                    ? "bg-red-50 dark:bg-red-950/20 text-red-700 dark:text-red-300 border-red-200 dark:border-red-800" 
-                                    : priority === "high"
-                                    ? "bg-orange-50 dark:bg-orange-950/20 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-800"
-                                    : "bg-yellow-50 dark:bg-yellow-950/20 text-yellow-700 dark:text-yellow-300 border-yellow-200 dark:border-yellow-800"
-                                }`}
+                                variant={priority === "critical" ? "destructive" : priority === "high" ? "secondary" : "outline"}
+                                className="text-xs"
                               >
                                 {priority === "critical" ? "Critical" : priority === "high" ? "High" : "Medium"} Priority
                               </Badge>

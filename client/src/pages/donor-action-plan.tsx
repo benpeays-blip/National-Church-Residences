@@ -50,13 +50,13 @@ interface QuadrantData {
   donors: QuadrantDonor[];
 }
 
-const getQuadrantColor = (quadrant: string) => {
+const getQuadrantVariant = (quadrant: string): "default" | "secondary" | "outline" | "destructive" => {
   switch (quadrant) {
-    case 'partner': return 'bg-green-500';
-    case 'friend': return 'bg-blue-500';
-    case 'colleague': return 'bg-amber-500';
-    case 'acquaintance': return 'bg-gray-500';
-    default: return 'bg-gray-500';
+    case 'partner': return 'default';
+    case 'friend': return 'secondary';
+    case 'colleague': return 'outline';
+    case 'acquaintance': return 'outline';
+    default: return 'outline';
   }
 };
 
@@ -212,7 +212,6 @@ FOLLOW-UP COMMITMENTS:
       week: "Week 1",
       phase: "Initial Outreach",
       icon: Phone,
-      color: "bg-blue-500",
       actions: [
         {
           type: "call",
@@ -228,7 +227,6 @@ FOLLOW-UP COMMITMENTS:
       week: "Week 2",
       phase: "Deepen Connection",
       icon: Coffee,
-      color: "bg-amber-500",
       actions: [
         {
           type: "meeting",
@@ -252,7 +250,6 @@ FOLLOW-UP COMMITMENTS:
       week: "Week 3-4",
       phase: "Meaningful Touch",
       icon: Gift,
-      color: "bg-purple-500",
       actions: [
         {
           type: "mail",
@@ -268,7 +265,6 @@ FOLLOW-UP COMMITMENTS:
       week: "Week 5-6",
       phase: "Strategic Invitation",
       icon: Users,
-      color: "bg-green-500",
       actions: [
         {
           type: "email",
@@ -301,7 +297,6 @@ Warmly,
       week: "Week 8",
       phase: "Cultivation Ask",
       icon: Target,
-      color: "bg-rose-500",
       actions: [
         {
           type: "meeting",
@@ -358,7 +353,7 @@ Close: "Regardless of what you decide, I want you to know how grateful we are fo
             <Sparkles className="w-5 h-5 text-primary" />
             <Badge variant="default" className="text-xs">AI-Generated Action Plan</Badge>
           </div>
-          <h1 className="text-2xl font-bold" data-testid="text-action-plan-title">
+          <h1 className="text-3xl font-bold" data-testid="text-action-plan-title">
             Partner Pathway for {fullName}
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
@@ -378,11 +373,11 @@ Close: "Regardless of what you decide, I want you to know how grateful we are fo
               <div>
                 <h2 className="font-semibold text-lg">{fullName}</h2>
                 <div className="flex items-center gap-2 mt-1">
-                  <Badge className={`${getQuadrantColor(currentQuadrant)} text-white`}>
+                  <Badge variant={getQuadrantVariant(currentQuadrant)}>
                     Current: {getQuadrantLabel(currentQuadrant)}
                   </Badge>
                   <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                  <Badge className="bg-green-500 text-white">
+                  <Badge variant="default">
                     Goal: Partner
                   </Badge>
                 </div>
@@ -457,8 +452,8 @@ Close: "Regardless of what you decide, I want you to know how grateful we are fo
             <Card key={phaseIdx} data-testid={`card-phase-${phaseIdx}`}>
               <CardHeader className="pb-3">
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full ${phase.color} flex items-center justify-center`}>
-                    <PhaseIcon className="w-5 h-5 text-white" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <PhaseIcon className="w-5 h-5 text-primary" />
                   </div>
                   <div>
                     <Badge variant="outline" className="mb-1">{phase.week}</Badge>
