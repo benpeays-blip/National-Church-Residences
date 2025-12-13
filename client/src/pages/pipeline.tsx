@@ -36,8 +36,8 @@ export default function Pipeline() {
   }, {} as Record<string, typeof opportunities>);
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between shrink-0 mb-6">
         <div className="space-y-1">
           <h1 className="text-3xl font-bold">Pipeline</h1>
           <p className="text-sm text-muted-foreground">
@@ -47,12 +47,12 @@ export default function Pipeline() {
         <TrendingUp className="w-8 h-8 text-muted-foreground" />
       </div>
 
-      <div className="overflow-x-auto">
-        <div className="flex gap-4 min-w-max pb-2">
+      <div className="flex-1 min-h-0 overflow-x-auto">
+        <div className="flex gap-4 h-full pb-2">
           {stages.map((stage) => (
-            <Card key={stage} className="w-80 shrink-0 overflow-hidden border">
+            <Card key={stage} className="w-80 shrink-0 overflow-hidden border flex flex-col">
               <div 
-                className="p-4 pb-3"
+                className="p-4 pb-3 shrink-0"
                 style={{ backgroundColor: "rgba(222, 235, 247, 0.5)" }}
               >
                 <div className="flex items-center justify-between">
@@ -62,8 +62,8 @@ export default function Pipeline() {
                   </span>
                 </div>
               </div>
-              <div className="px-6 pb-6">
-                <ScrollArea className="h-[calc(100vh-320px)]">
+              <div className="px-6 pb-6 flex-1 min-h-0">
+                <ScrollArea className="h-full">
                   <div className="space-y-2 pr-2">
                     {grouped?.[stage]?.map((opp) => (
                       <OpportunityCard key={opp.id} opportunity={opp} />
