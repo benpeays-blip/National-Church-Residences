@@ -34,7 +34,6 @@ const navigationDomains = {
   },
   "Operations & Strategy": {
     items: [
-      { name: "AI Tools", href: "/ai-tools" },
       { name: "Infrastructure", href: "/other" },
       { name: "Special Projects", href: "/temporary" },
     ]
@@ -446,51 +445,95 @@ function App() {
                       </Button>
                     </Link>
 
-                    {/* Other Dropdown Menus (excluding NCR Overview which is rendered above) */}
-                    {(Object.keys(navigationDomains) as DomainKey[]).filter(d => d !== "NCR Overview").map((domain) => (
-                      <div
-                        key={domain}
-                        className="relative"
-                        onMouseEnter={() => setActiveDropdown(domain)}
-                        onMouseLeave={() => setActiveDropdown(null)}
+                    {/* Fundraising Dropdown */}
+                    <div
+                      className="relative"
+                      onMouseEnter={() => setActiveDropdown("Fundraising")}
+                      onMouseLeave={() => setActiveDropdown(null)}
+                    >
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDropdownClick("Fundraising")}
+                        className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
+                          activeDropdown === "Fundraising" ? "bg-black/10" : ""
+                        }`}
+                        data-testid="button-nav-fundraising"
                       >
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDropdownClick(domain)}
-                          className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
-                            activeDropdown === domain ? "bg-black/10" : ""
-                          }`}
-                          data-testid={`button-nav-${domain.toLowerCase().replace(/\s+/g, '-').replace('&', 'and')}`}
-                        >
-                          {domain}
-                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === domain ? "rotate-180" : ""}`} />
-                        </Button>
-
-                        {/* Dropdown Menu */}
-                        {activeDropdown === domain && (
-                          <div 
-                            className="absolute right-0 top-full pt-1 z-50"
-                          >
-                            <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
-                              <div className="py-2 px-1">
-                                {navigationDomains[domain].items.map((item) => (
-                                  <Link 
-                                    key={item.name} 
-                                    href={item.href}
-                                    className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                                    onClick={closeDropdown}
-                                    data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
-                                  >
-                                    {item.name}
-                                  </Link>
-                                ))}
-                              </div>
+                        Fundraising
+                        <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Fundraising" ? "rotate-180" : ""}`} />
+                      </Button>
+                      {activeDropdown === "Fundraising" && (
+                        <div className="absolute right-0 top-full pt-1 z-50">
+                          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
+                            <div className="py-2 px-1">
+                              {navigationDomains["Fundraising"].items.map((item) => (
+                                <Link 
+                                  key={item.name} 
+                                  href={item.href}
+                                  className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                  onClick={closeDropdown}
+                                  data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                >
+                                  {item.name}
+                                </Link>
+                              ))}
                             </div>
                           </div>
-                        )}
-                      </div>
-                    ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* AI Tools - Direct Link */}
+                    <Link href="/ai-tools">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                        data-testid="button-nav-ai-tools"
+                      >
+                        AI Tools
+                      </Button>
+                    </Link>
+
+                    {/* Operations & Strategy Dropdown */}
+                    <div
+                      className="relative"
+                      onMouseEnter={() => setActiveDropdown("Operations & Strategy")}
+                      onMouseLeave={() => setActiveDropdown(null)}
+                    >
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDropdownClick("Operations & Strategy")}
+                        className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
+                          activeDropdown === "Operations & Strategy" ? "bg-black/10" : ""
+                        }`}
+                        data-testid="button-nav-operations-and-strategy"
+                      >
+                        Operations & Strategy
+                        <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Operations & Strategy" ? "rotate-180" : ""}`} />
+                      </Button>
+                      {activeDropdown === "Operations & Strategy" && (
+                        <div className="absolute right-0 top-full pt-1 z-50">
+                          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
+                            <div className="py-2 px-1">
+                              {navigationDomains["Operations & Strategy"].items.map((item) => (
+                                <Link 
+                                  key={item.name} 
+                                  href={item.href}
+                                  className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                  onClick={closeDropdown}
+                                  data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                >
+                                  {item.name}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </nav>
                   
                   {/* Separator */}
