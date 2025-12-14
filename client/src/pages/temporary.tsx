@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree, Settings } from "lucide-react";
+import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree, Settings, MessageSquare } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
