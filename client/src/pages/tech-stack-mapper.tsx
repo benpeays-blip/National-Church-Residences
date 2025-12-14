@@ -156,18 +156,9 @@ export default function TechStackMapper() {
                               style={{ backgroundColor: product.brandColor }}
                             />
                             <CardContent className="p-6 space-y-3">
-                              <div className="flex items-start gap-3">
-                                <div className="w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-muted">
-                                  <img 
-                                    src={product.logoImage} 
-                                    alt={product.name} 
-                                    className="w-full h-full object-cover"
-                                  />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <h4 className="font-semibold text-sm leading-tight">{product.name}</h4>
-                                  <p className="text-xs text-muted-foreground mt-0.5">{product.tagline}</p>
-                                </div>
+                              <div>
+                                <h4 className="font-semibold text-sm leading-tight">{product.name}</h4>
+                                <p className="text-xs text-muted-foreground mt-0.5">{product.tagline}</p>
                               </div>
                               <Badge variant="secondary" className="text-xs gap-1">
                                 <CategoryIcon className="w-3 h-3" />
@@ -244,12 +235,9 @@ export default function TechStackMapper() {
                     <CardContent className="p-6">
                       <div className={`grid grid-cols-1 ${products.length > 2 ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
                         {products.map((product) => (
-                          <div key={product.id} className="flex items-start gap-3 p-4 rounded-lg bg-muted/50">
-                            <img src={product.logoImage} alt={product.name} className="w-10 h-10 rounded-lg object-cover shrink-0" />
-                            <div className="min-w-0">
-                              <p className="font-medium text-sm">{product.name}</p>
-                              <p className="text-xs text-muted-foreground">{product.category} — {product.tagline}</p>
-                            </div>
+                          <div key={product.id} className="p-4 rounded-lg bg-muted/50">
+                            <p className="font-medium text-sm">{product.name}</p>
+                            <p className="text-xs text-muted-foreground">{product.category} — {product.tagline}</p>
                           </div>
                         ))}
                       </div>
@@ -319,29 +307,20 @@ export default function TechStackMapper() {
                   <CardContent className="p-6">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                       <div className="lg:col-span-1 space-y-4">
-                        <div className="flex items-start gap-4">
-                          <div className="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-muted">
-                            <img 
-                              src={product.logoImage} 
-                              alt={product.name} 
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-base">{product.name}</h3>
-                            <p className="text-sm text-muted-foreground">{product.tagline}</p>
-                            <div className="flex flex-wrap gap-2 mt-2">
-                              <Badge variant="secondary" className="text-xs gap-1">
-                                <CategoryIcon className="w-3 h-3" />
-                                {product.category}
-                              </Badge>
-                              <Badge 
-                                variant={priority === "critical" ? "destructive" : priority === "high" ? "secondary" : "outline"}
-                                className="text-xs"
-                              >
-                                {priority === "critical" ? "Critical" : priority === "high" ? "High" : "Medium"} Priority
-                              </Badge>
-                            </div>
+                        <div>
+                          <h3 className="font-semibold text-base">{product.name}</h3>
+                          <p className="text-sm text-muted-foreground">{product.tagline}</p>
+                          <div className="flex flex-wrap gap-2 mt-2">
+                            <Badge variant="secondary" className="text-xs gap-1">
+                              <CategoryIcon className="w-3 h-3" />
+                              {product.category}
+                            </Badge>
+                            <Badge 
+                              variant={priority === "critical" ? "destructive" : priority === "high" ? "secondary" : "outline"}
+                              className="text-xs"
+                            >
+                              {priority === "critical" ? "Critical" : priority === "high" ? "High" : "Medium"} Priority
+                            </Badge>
                           </div>
                         </div>
                         
