@@ -223,17 +223,15 @@ function AIChatTab() {
     setIsLoading(true);
 
     try {
-      const response = await apiRequest("/api/impact-intelligence/chat", {
-        method: "POST",
-        body: JSON.stringify({ 
-          message: inputValue,
-          context: "philanthropy_reporting"
-        }),
+      const response = await apiRequest("POST", "/api/impact-intelligence/chat", { 
+        message: inputValue,
+        context: "philanthropy_reporting"
       });
+      const data = await response.json();
 
       const assistantMessage: ChatMessage = {
         role: "assistant",
-        content: response.reply || "I apologize, but I couldn't process that request. Please try again.",
+        content: data.reply || "I apologize, but I couldn't process that request. Please try again.",
         timestamp: new Date(),
       };
 

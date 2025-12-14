@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { db } from "./db";
+import OpenAI from "openai";
 import { 
   persons, opportunities, users, gifts, campaigns, interactions, integrations, integrationSyncRuns, dataQualityIssues, households, tasks,
   predictiveScores, wealthEvents, meetingBriefs, voiceNotes, boardConnections, corporatePartnerships, peerDonors,
@@ -2211,6 +2212,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error deleting organization canvas:", error);
       res.status(500).json({ message: "Failed to delete organization canvas" });
+    }
+  });
+
+  // Impact Intelligence Chat API
+  app.post("/api/impact-intelligence/chat", async (req, res) => {
+    try {
+      const { message, context } = req.body;
+      
+      const openai = new OpenAI({
+        baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
+        apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY
+      });
+      
+      const systemPrompt = `You are an Impact Intelligence Assistant for National Church Residences (NCR), a nonprofit organization serving seniors through affordable housing, healthcare services, and community programs.
+
+Your role is to help staff find impact stories, outcomes data, and metrics for donor communications and grant reports.
+
+NCR's key program areas include:
+- Affordable Housing: 4,200+ units across multiple states
+- Home Health: In-home healthcare services
+- Memory Care: Specialized dementia care programs
+- Chaplaincy: Spiritual care and grief support
+- Volunteer Services: Community engagement programs
+
+When responding:
+- Provide specific, quantifiable outcomes when possible
+- Frame responses for donor communication use
+- Suggest relevant stories or metrics that could strengthen reports
+- Be concise but thorough`;
+
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: message }
+        ],
+        max_tokens: 1024,
+      });
+
+      const reply = completion.choices[0]?.message?.content || "I couldn't generate a response.";
+      res.json({ reply });
+    } catch (error) {
+      console.error("Chat error:", error);
+      res.status(500).json({ error: "Failed to process chat request" });
     }
   });
 

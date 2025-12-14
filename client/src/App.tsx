@@ -20,6 +20,7 @@ const navigationDomains = {
       { name: "Senior Housing", href: "/ncr/senior-housing" },
       { name: "Care Services", href: "/ncr/care-services" },
       { name: "Our Foundation", href: "/ncr/foundation" },
+      { name: "Impact Intelligence", href: "/reporting/impact-intelligence" },
     ]
   },
   "Fundraising": {
@@ -88,6 +89,7 @@ import RelationshipsWithTabs from "@/pages/relationships-with-tabs";
 import AgentValueMap from "@/pages/agent-value-map";
 import OtherWithTabs from "@/pages/other-with-tabs";
 import Temporary from "@/pages/temporary";
+import ImpactIntelligence from "@/pages/impact-intelligence";
 
 // AI Intelligence
 import AIPredictiveTiming from "@/pages/ai-predictive-timing";
@@ -297,6 +299,10 @@ function Router() {
       <Route path="/content/outreach" component={OutreachGenerator} />
       <Route path="/content/grant-proposals" component={GrantProposals} />
       <Route path="/content/impact-reports" component={ImpactReports} />
+      
+      {/* Reporting - Impact Intelligence */}
+      <Route path="/reporting/impact-intelligence/feed" component={ImpactIntelligence} />
+      <Route path="/reporting/impact-intelligence" component={ImpactIntelligence} />
       
       {/* Analytics */}
       <Route path="/analytics/peer-benchmarks" component={AnalyticsWithTabs} />
