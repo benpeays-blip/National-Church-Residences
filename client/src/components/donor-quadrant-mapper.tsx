@@ -359,7 +359,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               >
                 <div className="font-bold text-lg">Friend</div>
                 <div className="text-[10px] text-black/70 mt-0.5">High Energy,<br />Low Structure</div>
-                <Badge className="mt-1.5 bg-[#ffffff] text-black border border-gray-300" data-testid="count-friend">{data.counts.friend}</Badge>
+                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-friend">{data.counts.friend}</Badge>
               </button>
             </div>
 
