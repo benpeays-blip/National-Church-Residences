@@ -1693,6 +1693,44 @@ async function seed() {
       syncedAt: new Date(),
       dataQualityScore: 94,
     },
+    // Awarded - Home Depot Foundation Flooring Grant
+    {
+      funderName: "The Home Depot Foundation",
+      stage: "Awarded",
+      purpose: "Support Ohio Veteran Residents - Flooring Replacement",
+      askAmount: "200000.00",
+      awardedAmount: "200000.00",
+      ownerId: devDirector?.id,
+      loiDueDate: new Date("2023-05-01"),
+      applicationDueDate: new Date("2023-06-15"),
+      decisionDate: new Date("2023-08-01"),
+      reportDueDate: new Date("2024-08-01"),
+      notes: "Grant approved August 2023 to replace flooring in common areas and units at two PSH veteran properties: Commons of Livingston (Columbus) and Commons of Garden Lake (Toledo). The Home Depot Foundation has a history of supporting veterans, with giving to NCR going back over a decade. Residents and staff are loving the newly replaced flooring!",
+      campaignId: campaignsList[0].id, // Annual Fund
+      sourceSystem: "Raiser's Edge",
+      sourceRecordId: "RE-GRANT-97823",
+      syncedAt: new Date(),
+      dataQualityScore: 98,
+    },
+    // Awarded - Home Depot Foundation Flagpole Grant
+    {
+      funderName: "The Home Depot Foundation",
+      stage: "Awarded",
+      purpose: "Walnut Trace Veteran Community Flagpole Installation",
+      askAmount: "3800.00",
+      awardedAmount: "3800.00",
+      ownerId: devDirector?.id,
+      loiDueDate: new Date("2024-02-01"),
+      applicationDueDate: new Date("2024-03-15"),
+      decisionDate: new Date("2024-04-01"),
+      reportDueDate: new Date("2025-04-01"),
+      notes: "Veterans living at Walnut Trace community requested a flagpole through Business Office Manager Gina Grabau. Home Depot Foundation funded the project with a $3,800 grant. With assistance from Admiral Flag Poles and Team Depot, the flagpole was installed October 25, 2024 - just in time for Veteran's Day!",
+      campaignId: campaignsList[0].id, // Annual Fund
+      sourceSystem: "Raiser's Edge",
+      sourceRecordId: "RE-GRANT-100456",
+      syncedAt: new Date(),
+      dataQualityScore: 98,
+    },
     // Submitted - Healthcare grant
     {
       funderName: "Kaiser Permanente Foundation",
