@@ -79,8 +79,11 @@ export default function NcrSeniorHousingWithTabs() {
 
   return (
     <div className="flex flex-col h-full">
-      {/* White Tab Bar with Dark Blue Selected Tab */}
-      <div className="bg-white px-6 flex items-end border-b-0">
+      {/* Dark Blue Tab Bar with White Selected Tab */}
+      <div 
+        className="px-6 flex items-end"
+        style={{ backgroundColor: '#1B3A5A' }}
+      >
         <div className="flex items-end gap-0">
           {seniorHousingTabs.map((tab) => {
             const isSelected = activeTab === tab.value;
@@ -89,10 +92,9 @@ export default function NcrSeniorHousingWithTabs() {
                 <button
                   className={`px-5 py-2.5 text-sm font-medium transition-colors rounded-t-md ${
                     isSelected
-                      ? 'text-white'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                      ? 'bg-white text-[#1B3A5A]'
+                      : 'text-white/80 hover:text-white hover:bg-white/10'
                   }`}
-                  style={isSelected ? { backgroundColor: '#1B3A5A' } : {}}
                   data-testid={`housing-tab-${tab.value}`}
                 >
                   {tab.label}
@@ -103,15 +105,12 @@ export default function NcrSeniorHousingWithTabs() {
         </div>
       </div>
       
-      {/* Dark Blue Header Section that blends with selected tab */}
-      <div 
-        className="px-6 py-6"
-        style={{ backgroundColor: '#1B3A5A' }}
-      >
-        <h1 className="text-3xl font-bold text-white" data-testid="page-title">
+      {/* White Header Section that blends with selected tab */}
+      <div className="px-6 py-6 bg-white border-b">
+        <h1 className="text-3xl font-bold" data-testid="page-title">
           {currentTabInfo.title}
         </h1>
-        <p className="text-white/80 mt-2 max-w-3xl">
+        <p className="text-muted-foreground mt-2 max-w-3xl">
           {currentTabInfo.subtitle}
         </p>
       </div>
