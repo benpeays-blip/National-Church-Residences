@@ -358,7 +358,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-friend"
               >
                 <div className="font-bold text-base">Friend</div>
-                <div className="text-[10px] text-[#395174]/70 mt-0.5">High Energy, Low Structure</div>
+                <div className="text-[10px] text-[#395174]/70 mt-0.5">High Energy,<br />Low Structure</div>
                 <Badge className="mt-1.5 bg-[#ffffff] text-[#395174] border border-gray-300" data-testid="count-friend">{data.counts.friend}</Badge>
               </button>
             </div>
@@ -371,7 +371,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-partner"
               >
                 <div className="font-bold text-base">Partner</div>
-                <div className="text-[10px] text-[#395174]/70 mt-0.5">High Energy, High Structure</div>
+                <div className="text-[10px] text-[#395174]/70 mt-0.5">High Energy,<br />High Structure</div>
                 <Badge className="mt-1.5 bg-[#ffffff] text-[#395174] border border-gray-300" data-testid="count-partner">{data.counts.partner}</Badge>
               </button>
               {isPartnerHovered && draggedDonor && (
@@ -389,7 +389,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-acquaintance"
               >
                 <div className="font-bold text-base text-center">Acquaintance</div>
-                <div className="text-[10px] text-[#395174]/70 mt-0.5">Low Energy, Low Structure</div>
+                <div className="text-[10px] text-[#395174]/70 mt-0.5">Low Energy,<br />Low Structure</div>
                 <Badge className="mt-1.5 bg-[#ffffff] text-[#395174] border border-gray-300" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
               </button>
             </div>
@@ -402,7 +402,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-colleague"
               >
                 <div className="font-bold text-base">Colleague</div>
-                <div className="text-[10px] text-[#395174]/70 mt-0.5">Low Energy, High Structure</div>
+                <div className="text-[10px] text-[#395174]/70 mt-0.5">Low Energy,<br />High Structure</div>
                 <Badge className="mt-1.5 bg-[#ffffff] text-[#395174] border border-gray-300" data-testid="count-colleague">{data.counts.colleague}</Badge>
               </button>
             </div>
