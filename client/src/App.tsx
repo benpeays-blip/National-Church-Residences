@@ -398,18 +398,6 @@ function App() {
                       )}
                     </div>
 
-                    {/* Pipeline - Direct Link (not a dropdown) */}
-                    <Link href="/pipeline">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                        data-testid="button-nav-pipeline"
-                      >
-                        Pipeline
-                      </Button>
-                    </Link>
-
                     {/* Quadrant - Direct Link (not a dropdown) */}
                     <Link href="/quadrant">
                       <Button
