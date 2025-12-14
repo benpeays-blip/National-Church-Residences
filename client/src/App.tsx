@@ -19,7 +19,6 @@ const navigationDomains = {
     items: [
       { name: "Senior Housing", href: "/ncr/senior-housing" },
       { name: "Care Services", href: "/ncr/care-services" },
-      { name: "Our Foundation", href: "/ncr/foundation" },
       { name: "Impact Intelligence", href: "/reporting/impact-intelligence" },
     ]
   },
@@ -348,7 +347,9 @@ function App() {
   const isNavActive = (navItem: string): boolean => {
     switch (navItem) {
       case 'ncr-overview':
-        return location.startsWith('/ncr');
+        return location.startsWith('/ncr') && !location.startsWith('/ncr/foundation');
+      case 'foundation':
+        return location.startsWith('/ncr/foundation');
       case 'corporations':
         return location.startsWith('/corporate-partnerships');
       case 'quadrant':
@@ -506,6 +507,20 @@ function App() {
                         </div>
                       )}
                     </div>
+
+                    {/* Our Foundation - Direct Link */}
+                    <Link href="/ncr/foundation">
+                      <div className={`relative ${isNavActive('foundation') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                          data-testid="button-nav-foundation"
+                        >
+                          Our Foundation
+                        </Button>
+                      </div>
+                    </Link>
 
                     {/* Corporations - Direct Link */}
                     <Link href="/corporate-partnerships">
