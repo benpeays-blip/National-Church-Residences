@@ -350,6 +350,20 @@ async function seed() {
         startDate: new Date("2024-06-01"),
         endDate: new Date("2024-08-31"),
       },
+      {
+        name: "$10 Million 2026-2027 Campaign",
+        type: "Comprehensive",
+        description: "Our flagship two-year comprehensive campaign to transform the organization's impact. Combines major gifts, annual giving, planned giving, and corporate partnerships to fund strategic priorities including new programs, endowment growth, and facility expansion.",
+        status: "active",
+        goal: "10000000.00",
+        raised: "2850000.00",
+        donorCount: 156,
+        avgGiftSize: "18269.23",
+        totalGifts: 189,
+        ownerId: usersList[0].id, // CEO
+        startDate: new Date("2026-01-01"),
+        endDate: new Date("2027-12-31"),
+      },
     ])
     .returning();
   console.log(`✅ Created ${campaignsList.length} campaigns`);
