@@ -71,9 +71,9 @@ export default function CorporatePartnerships() {
         <Skeleton className="h-96 w-full" />
       ) : partnerships && partnerships.length > 0 ? (
         <Card>
-          <CardHeader>
-            <CardTitle>Corporate Partnerships</CardTitle>
-            <CardDescription>Companies with employee donors and matching gift programs</CardDescription>
+          <CardHeader className="rounded-t-xl" style={{ backgroundColor: '#1B3A5A' }}>
+            <CardTitle className="text-white">Corporate Partnerships</CardTitle>
+            <CardDescription className="text-white/80">Companies with employee donors and matching gift programs</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
