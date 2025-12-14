@@ -47,24 +47,24 @@ export default function AgentValueMap() {
 
   // Data Foundation items
   const dataFoundation = [
-    { name: "Company Information", description: "NCR entity master (1,100+ entities), programs, locations, properties, service lines", icon: Building2 },
-    { name: "Business Activity", description: "Resident events, service coordinator activity, case notes, intakes, requalifications, volunteer participation", icon: Briefcase },
-    { name: "Financial Strength", description: "Workday GL, AP/AR, allocations, grants, restricted/unrestricted funds, property-level P&Ls", icon: DollarSign },
-    { name: "Filings & Events", description: "HUD recerts, CMS filings, audits, board packets, incident reporting, compliance attestations", icon: FileText },
-    { name: "Hierarchies", description: "Org structure, property → region → division, legal entity → operating unit mappings", icon: Layers },
-    { name: "Principals & Contacts", description: "Donors, prospects, board, vendors, grant officers, partner contacts, resident emergency contacts", icon: Users },
-    { name: "IP Intelligence", description: "Policies/procedures, templates, program manuals, training content, contracts", icon: BookOpen },
-    { name: "Fraud Insights", description: "Payment anomalies, identity verification flags, benefits eligibility anomalies, duplicate vendor/donor records", icon: AlertTriangle },
+    { name: "Company Information", description: "NCR entity master (1,100+ entities), programs, locations, properties, service lines", icon: Building2, color: "bg-blue-500" },
+    { name: "Business Activity", description: "Resident events, service coordinator activity, case notes, intakes, requalifications, volunteer participation", icon: Briefcase, color: "bg-green-500" },
+    { name: "Financial Strength", description: "Workday GL, AP/AR, allocations, grants, restricted/unrestricted funds, property-level P&Ls", icon: DollarSign, color: "bg-emerald-500" },
+    { name: "Filings & Events", description: "HUD recerts, CMS filings, audits, board packets, incident reporting, compliance attestations", icon: FileText, color: "bg-purple-500" },
+    { name: "Hierarchies", description: "Org structure, property → region → division, legal entity → operating unit mappings", icon: Layers, color: "bg-indigo-500" },
+    { name: "Principals & Contacts", description: "Donors, prospects, board, vendors, grant officers, partner contacts, resident emergency contacts", icon: Users, color: "bg-pink-500" },
+    { name: "IP Intelligence", description: "Policies/procedures, templates, program manuals, training content, contracts", icon: BookOpen, color: "bg-cyan-500" },
+    { name: "Fraud Insights", description: "Payment anomalies, identity verification flags, benefits eligibility anomalies, duplicate vendor/donor records", icon: AlertTriangle, color: "bg-amber-500" },
   ];
 
   // Consumption channels
   const consumptionChannels = [
-    { name: "Platform UIs", description: "NCR Unified App Shell (Donor Hub, Grants Hub, Volunteer Hub, Resident Engagement Hub, Governance Hub, Strategy Hub, Ops/Security Hub)", icon: Monitor },
-    { name: "Bulk Data", description: "Controlled exports, board packs, regulator-ready extracts, property performance snapshots", icon: Database },
-    { name: "Transactional Data", description: "Intake submissions, HUD recerts, billing/claims, gift acknowledgments, volunteer shifts", icon: Zap },
-    { name: "AI-Ready Data", description: "Curated feature stores for forecasting occupancy/staffing, donor propensity, compliance risk", icon: Bot },
-    { name: "Marketplaces", description: "Future: vetted agent marketplace for internal NCR teams (approved automations only)", icon: Globe },
-    { name: "Agents", description: "The agentic teams below, invoked from the UI and governed centrally", icon: Sparkles },
+    { name: "Platform UIs", description: "NCR Unified App Shell (Donor Hub, Grants Hub, Volunteer Hub, Resident Engagement Hub, Governance Hub, Strategy Hub, Ops/Security Hub)", icon: Monitor, color: "bg-blue-500" },
+    { name: "Bulk Data", description: "Controlled exports, board packs, regulator-ready extracts, property performance snapshots", icon: Database, color: "bg-slate-500" },
+    { name: "Transactional Data", description: "Intake submissions, HUD recerts, billing/claims, gift acknowledgments, volunteer shifts", icon: Zap, color: "bg-yellow-500" },
+    { name: "AI-Ready Data", description: "Curated feature stores for forecasting occupancy/staffing, donor propensity, compliance risk", icon: Bot, color: "bg-purple-500" },
+    { name: "Marketplaces", description: "Future: vetted agent marketplace for internal NCR teams (approved automations only)", icon: Globe, color: "bg-green-500" },
+    { name: "Agents", description: "The agentic teams below, invoked from the UI and governed centrally", icon: Sparkles, color: "bg-pink-500" },
   ];
 
   // Agent catalogue
@@ -85,13 +85,13 @@ export default function AgentValueMap() {
 
   // Personas
   const personas = [
-    { role: "Chief Operations Officer / Ops Leaders", benefit: "Gets 'system of work' visibility, staffing forecasts, operational compliance posture", icon: Settings },
-    { role: "Chief Risk Officer / Compliance Leadership", benefit: "Audit trails, filing automation, Purview lineage, bias monitoring, exception handling", icon: AlertTriangle },
-    { role: "Chief Compliance Officer / Legal", benefit: "Evidence packs, policy enforcement, access governance, filing timeliness and accuracy", icon: Scale },
-    { role: "Data Operations", benefit: "OneLake pipelines, canonical objects, model monitoring, quality SLAs", icon: Database },
-    { role: "Finance Leadership", benefit: "Consolidated P&L, entity registry accuracy, close acceleration, anomaly detection", icon: DollarSign },
-    { role: "Development Leadership", benefit: "Pipeline clarity, dedup outreach, rapid reporting, donor confidence through metrics", icon: TrendingUp },
-    { role: "Program Leadership", benefit: "Less paperwork, fewer reworks, more time with residents/patients", icon: Heart },
+    { role: "Chief Operations Officer / Ops Leaders", benefit: "Gets 'system of work' visibility, staffing forecasts, operational compliance posture", icon: Settings, color: "bg-blue-500" },
+    { role: "Chief Risk Officer / Compliance Leadership", benefit: "Audit trails, filing automation, Purview lineage, bias monitoring, exception handling", icon: AlertTriangle, color: "bg-amber-500" },
+    { role: "Chief Compliance Officer / Legal", benefit: "Evidence packs, policy enforcement, access governance, filing timeliness and accuracy", icon: Scale, color: "bg-indigo-500" },
+    { role: "Data Operations", benefit: "OneLake pipelines, canonical objects, model monitoring, quality SLAs", icon: Database, color: "bg-slate-500" },
+    { role: "Finance Leadership", benefit: "Consolidated P&L, entity registry accuracy, close acceleration, anomaly detection", icon: DollarSign, color: "bg-emerald-500" },
+    { role: "Development Leadership", benefit: "Pipeline clarity, dedup outreach, rapid reporting, donor confidence through metrics", icon: TrendingUp, color: "bg-pink-500" },
+    { role: "Program Leadership", benefit: "Less paperwork, fewer reworks, more time with residents/patients", icon: Heart, color: "bg-red-500" },
   ];
 
   // Roadmap phases
@@ -189,12 +189,12 @@ export default function AgentValueMap() {
 
   // Governance non-negotiables
   const governanceItems = [
-    { title: "Human-in-the-loop for high-stakes decisions", description: "Eligibility approvals, adverse actions, filings submission sign-off", icon: UserCheck },
-    { title: "Full audit trails", description: "Every agent action: who, what, when, data touched, output produced", icon: ClipboardCheck },
-    { title: "Purview-enforced access controls", description: "HIPAA/PII boundaries; least-privilege role-based access", icon: Lock },
-    { title: "Bias monitoring & fairness audits", description: "Required for eligibility decisions and any scoring models", icon: Scale },
-    { title: "Model risk management", description: "Versioning, evaluation, drift monitoring, rollback procedures", icon: AlertTriangle },
-    { title: "Data retention & redaction rules", description: "Especially for health/resident data and donor privacy", icon: Eye },
+    { title: "Human-in-the-loop for high-stakes decisions", description: "Eligibility approvals, adverse actions, filings submission sign-off", icon: UserCheck, color: "bg-blue-500" },
+    { title: "Full audit trails", description: "Every agent action: who, what, when, data touched, output produced", icon: ClipboardCheck, color: "bg-green-500" },
+    { title: "Purview-enforced access controls", description: "HIPAA/PII boundaries; least-privilege role-based access", icon: Lock, color: "bg-indigo-500" },
+    { title: "Bias monitoring & fairness audits", description: "Required for eligibility decisions and any scoring models", icon: Scale, color: "bg-amber-500" },
+    { title: "Model risk management", description: "Versioning, evaluation, drift monitoring, rollback procedures", icon: AlertTriangle, color: "bg-red-500" },
+    { title: "Data retention & redaction rules", description: "Especially for health/resident data and donor privacy", icon: Eye, color: "bg-purple-500" },
   ];
 
   // Scorecard metrics
@@ -371,15 +371,22 @@ export default function AgentValueMap() {
               <CardDescription>These are the "atoms" agents rely on. NCR already has most of them—just fragmented.</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {dataFoundation.map((item) => (
-                  <div key={item.name} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
-                    <item.icon className="w-5 h-5 text-muted-foreground mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium">{item.name}</p>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </div>
-                  </div>
+                  <Card key={item.name} className="overflow-hidden">
+                    <div className={`h-2 ${item.color}`} />
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className={`p-2 rounded-md ${item.color}`}>
+                          <item.icon className="w-4 h-4 text-white" />
+                        </div>
+                        <div>
+                          <p className="font-semibold">{item.name}</p>
+                          <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             </CardContent>
@@ -397,13 +404,20 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {consumptionChannels.map((item) => (
-                  <div key={item.name} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
-                    <item.icon className="w-5 h-5 text-muted-foreground mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium">{item.name}</p>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </div>
-                  </div>
+                  <Card key={item.name} className="overflow-hidden">
+                    <div className={`h-2 ${item.color}`} />
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className={`p-2 rounded-md ${item.color}`}>
+                          <item.icon className="w-4 h-4 text-white" />
+                        </div>
+                        <div>
+                          <p className="font-semibold">{item.name}</p>
+                          <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             </CardContent>
@@ -419,15 +433,22 @@ export default function AgentValueMap() {
               <CardDescription>Map diagram personas to NCR roles so adoption is real</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {personas.map((persona) => (
-                  <div key={persona.role} className="flex items-start gap-3 p-3 bg-muted/50 rounded-lg">
-                    <persona.icon className="w-5 h-5 text-muted-foreground mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-medium">{persona.role}</p>
-                      <p className="text-sm text-muted-foreground">{persona.benefit}</p>
-                    </div>
-                  </div>
+                  <Card key={persona.role} className="overflow-hidden">
+                    <div className={`h-2 ${persona.color}`} />
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className={`p-2 rounded-md ${persona.color}`}>
+                          <persona.icon className="w-4 h-4 text-white" />
+                        </div>
+                        <div>
+                          <p className="font-semibold">{persona.role}</p>
+                          <p className="text-sm text-muted-foreground mt-1">{persona.benefit}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             </CardContent>
@@ -589,24 +610,31 @@ export default function AgentValueMap() {
 
         {/* Governance Tab */}
         <TabsContent value="governance" className="space-y-6">
-          <Card className="border-l-4 border-l-indigo-500">
+          <Card>
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Shield className="w-5 h-5 text-indigo-600" />
+                <Shield className="w-5 h-5 text-primary" />
                 Governance: What NCR Can Say to Auditors and Regulators
               </CardTitle>
               <CardDescription>Non-negotiables (these become "design constraints")</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {governanceItems.map((item) => (
-                  <div key={item.title} className="flex items-start gap-3 p-4 bg-muted/50 rounded-lg">
-                    <item.icon className="w-5 h-5 text-indigo-600 mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold">{item.title}</p>
-                      <p className="text-sm text-muted-foreground">{item.description}</p>
-                    </div>
-                  </div>
+                  <Card key={item.title} className="overflow-hidden">
+                    <div className={`h-2 ${item.color}`} />
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-3">
+                        <div className={`p-2 rounded-md ${item.color}`}>
+                          <item.icon className="w-4 h-4 text-white" />
+                        </div>
+                        <div>
+                          <p className="font-semibold">{item.title}</p>
+                          <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
                 ))}
               </div>
             </CardContent>
