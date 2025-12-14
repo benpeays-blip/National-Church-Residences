@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Switch, Route, Link } from "wouter";
+import { Switch, Route, Link, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
@@ -331,9 +331,37 @@ function Router() {
 type TopTab = 'Quadrant' | 'Fundraising' | 'Relationships';
 
 function App() {
+  const [location] = useLocation();
   const [activeDropdown, setActiveDropdown] = useState<DomainKey | null>(null);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [selectedTopTab, setSelectedTopTab] = useState<TopTab>('Quadrant');
+
+  // Helper to check if a nav item is active based on current path
+  const isNavActive = (navItem: string): boolean => {
+    switch (navItem) {
+      case 'ncr-overview':
+        return location.startsWith('/ncr');
+      case 'corporations':
+        return location.startsWith('/corporate-partnerships');
+      case 'quadrant':
+        return location.startsWith('/quadrant') || location === '/donor-quadrant';
+      case 'relationships':
+        return location.startsWith('/relationships');
+      case 'fundraising':
+        return location.startsWith('/donors') || 
+               location.startsWith('/pipeline') || 
+               location.startsWith('/gifts') || 
+               location.startsWith('/grants') || 
+               location.startsWith('/campaigns') || 
+               location.startsWith('/events');
+      case 'ai-tools':
+        return location.startsWith('/ai-tools');
+      case 'special-projects':
+        return location.startsWith('/temporary');
+      default:
+        return false;
+    }
+  };
 
   const handleDropdownClick = (domain: DomainKey) => {
     if (activeDropdown === domain) {
@@ -406,18 +434,20 @@ function App() {
                       onMouseEnter={() => setActiveDropdown("NCR Overview")}
                       onMouseLeave={() => setActiveDropdown(null)}
                     >
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDropdownClick("NCR Overview")}
-                        className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
-                          activeDropdown === "NCR Overview" ? "bg-black/10" : ""
-                        }`}
-                        data-testid="button-nav-ncr-overview"
-                      >
-                        NCR Overview
-                        <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "NCR Overview" ? "rotate-180" : ""}`} />
-                      </Button>
+                      <div className={`relative ${isNavActive('ncr-overview') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDropdownClick("NCR Overview")}
+                          className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
+                            activeDropdown === "NCR Overview" ? "bg-black/10" : ""
+                          }`}
+                          data-testid="button-nav-ncr-overview"
+                        >
+                          NCR Overview
+                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "NCR Overview" ? "rotate-180" : ""}`} />
+                        </Button>
+                      </div>
                       {activeDropdown === "NCR Overview" && (
                         <div className="absolute left-0 top-full pt-1 z-50">
                           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
@@ -441,38 +471,44 @@ function App() {
 
                     {/* Corporations - Direct Link */}
                     <Link href="/corporate-partnerships">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                        data-testid="button-nav-corporations"
-                      >
-                        Corporations
-                      </Button>
+                      <div className={`relative ${isNavActive('corporations') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                          data-testid="button-nav-corporations"
+                        >
+                          Corporations
+                        </Button>
+                      </div>
                     </Link>
 
                     {/* Quadrant - Direct Link */}
                     <Link href="/quadrant">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                        data-testid="button-nav-quadrant"
-                      >
-                        Quadrant
-                      </Button>
+                      <div className={`relative ${isNavActive('quadrant') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                          data-testid="button-nav-quadrant"
+                        >
+                          Quadrant
+                        </Button>
+                      </div>
                     </Link>
 
                     {/* Relationships - Direct Link */}
                     <Link href="/relationships">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                        data-testid="button-nav-relationships"
-                      >
-                        Relationships
-                      </Button>
+                      <div className={`relative ${isNavActive('relationships') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                          data-testid="button-nav-relationships"
+                        >
+                          Relationships
+                        </Button>
+                      </div>
                     </Link>
 
                     {/* Fundraising Dropdown */}
@@ -481,18 +517,20 @@ function App() {
                       onMouseEnter={() => setActiveDropdown("Fundraising")}
                       onMouseLeave={() => setActiveDropdown(null)}
                     >
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => handleDropdownClick("Fundraising")}
-                        className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
-                          activeDropdown === "Fundraising" ? "bg-black/10" : ""
-                        }`}
-                        data-testid="button-nav-fundraising"
-                      >
-                        Fundraising
-                        <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Fundraising" ? "rotate-180" : ""}`} />
-                      </Button>
+                      <div className={`relative ${isNavActive('fundraising') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDropdownClick("Fundraising")}
+                          className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
+                            activeDropdown === "Fundraising" ? "bg-black/10" : ""
+                          }`}
+                          data-testid="button-nav-fundraising"
+                        >
+                          Fundraising
+                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Fundraising" ? "rotate-180" : ""}`} />
+                        </Button>
+                      </div>
                       {activeDropdown === "Fundraising" && (
                         <div className="absolute right-0 top-full pt-1 z-50">
                           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
@@ -516,26 +554,30 @@ function App() {
 
                     {/* AI Tools - Direct Link */}
                     <Link href="/ai-tools">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                        data-testid="button-nav-ai-tools"
-                      >
-                        AI Tools
-                      </Button>
+                      <div className={`relative ${isNavActive('ai-tools') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                          data-testid="button-nav-ai-tools"
+                        >
+                          AI Tools
+                        </Button>
+                      </div>
                     </Link>
 
                     {/* Special Projects - Direct Link */}
                     <Link href="/temporary">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                        data-testid="button-nav-special-projects"
-                      >
-                        Special Projects
-                      </Button>
+                      <div className={`relative ${isNavActive('special-projects') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                          data-testid="button-nav-special-projects"
+                        >
+                          Special Projects
+                        </Button>
+                      </div>
                     </Link>
                   </nav>
                   
