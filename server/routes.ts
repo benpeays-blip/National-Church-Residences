@@ -136,21 +136,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const quadrantAssignments: ('partner' | 'friend' | 'colleague' | 'acquaintance')[] = [];
       const donorCount = allDonors.length;
       
-      // Distribute donors evenly across quadrants
-      const donorsPerQuadrant = Math.floor(donorCount / 4);
-      const remainder = donorCount % 4;
+      // Use weighted distribution for more realistic/varied counts
+      // Partners are typically fewer (top performers), Acquaintances are often more (newer/lapsed)
+      const weights = {
+        partner: 0.18,      // ~18% - Top engaged donors
+        friend: 0.24,       // ~24% - High energy, less formal
+        colleague: 0.22,    // ~22% - Formal but less engaged  
+        acquaintance: 0.36  // ~36% - Largest segment, newer/lapsed
+      };
       
-      // Fill quadrant assignments evenly
-      for (let i = 0; i < donorsPerQuadrant; i++) {
-        quadrantAssignments.push('partner', 'friend', 'colleague', 'acquaintance');
-      }
-      // Distribute remaining donors
-      const extraQuadrants: ('partner' | 'friend' | 'colleague' | 'acquaintance')[] = ['partner', 'friend', 'colleague', 'acquaintance'];
-      for (let i = 0; i < remainder; i++) {
-        quadrantAssignments.push(extraQuadrants[i]);
+      // Assign each donor randomly based on weights
+      const quadrantOptions: ('partner' | 'friend' | 'colleague' | 'acquaintance')[] = ['partner', 'friend', 'colleague', 'acquaintance'];
+      for (let i = 0; i < donorCount; i++) {
+        const rand = Math.random();
+        let cumulative = 0;
+        let assigned: 'partner' | 'friend' | 'colleague' | 'acquaintance' = 'acquaintance';
+        for (const q of quadrantOptions) {
+          cumulative += weights[q];
+          if (rand < cumulative) {
+            assigned = q;
+            break;
+          }
+        }
+        quadrantAssignments.push(assigned);
       }
       
-      // Shuffle the assignments for randomness
+      // Shuffle the assignments for additional randomness
       for (let i = quadrantAssignments.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [quadrantAssignments[i], quadrantAssignments[j]] = [quadrantAssignments[j], quadrantAssignments[i]];
