@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Building2, Award, Gift, Users, Package, Landmark, Target } from "lucide-react";
+import { Building2, Award, Gift, Users, Package, Landmark, Target, TrendingUp } from "lucide-react";
 import CorporatePartnershipsPage from "@/pages/corporate-partnerships";
 import CorporateSponsorships from "@/pages/corporate-sponsorships";
 import CorporateGiving from "@/pages/corporate-giving";
@@ -8,6 +8,7 @@ import CorporateVolunteering from "@/pages/corporate-volunteering";
 import CorporateInKind from "@/pages/corporate-in-kind";
 import CorporateFoundations from "@/pages/corporate-foundations";
 import CorporateProspects from "@/pages/corporate-prospects";
+import EmployeeGivingIntelligence from "@/pages/relationship-corporate-partnerships";
 
 const corporationsTabs: SectionTab[] = [
   {
@@ -15,6 +16,12 @@ const corporationsTabs: SectionTab[] = [
     value: "overview",
     icon: Building2,
     path: "/corporate-partnerships",
+  },
+  {
+    label: "Employee Giving",
+    value: "employee-giving",
+    icon: TrendingUp,
+    path: "/corporate-partnerships/employee-giving",
   },
   {
     label: "Sponsorships",
@@ -60,7 +67,9 @@ export default function CorporationsWithTabs() {
   // Determine which component to render based on route
   let CorporateComponent = CorporatePartnershipsPage;
   
-  if (location === "/corporate-partnerships/sponsorships") {
+  if (location === "/corporate-partnerships/employee-giving") {
+    CorporateComponent = EmployeeGivingIntelligence;
+  } else if (location === "/corporate-partnerships/sponsorships") {
     CorporateComponent = CorporateSponsorships;
   } else if (location === "/corporate-partnerships/giving") {
     CorporateComponent = CorporateGiving;

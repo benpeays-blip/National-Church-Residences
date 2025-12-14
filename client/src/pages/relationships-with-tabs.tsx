@@ -1,9 +1,8 @@
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Network, Users, Building2, UserPlus, Link2, BarChart3 } from "lucide-react";
+import { Network, Users, UserPlus, Link2, BarChart3 } from "lucide-react";
 import BoardNetworkMapper from "@/pages/board-network-mapper";
 import BoardConnections from "@/pages/relationship-board-connections";
-import CorporatePartnerships from "@/pages/relationship-corporate-partnerships";
 import PeerDonors from "@/pages/relationship-peer-donors";
 import RelSciMapping from "@/pages/relsci-mapping";
 import DnBIntelligence from "@/pages/dnb-intelligence";
@@ -20,12 +19,6 @@ const relationshipsTabs: SectionTab[] = [
     value: "connections",
     icon: Users,
     path: "/relationships/connections",
-  },
-  {
-    label: "Corporate Partnerships",
-    value: "corporate",
-    icon: Building2,
-    path: "/relationships/corporate",
   },
   {
     label: "Peer Discovery",
@@ -53,7 +46,6 @@ export default function RelationshipsWithTabs() {
   // Determine active tab from URL path
   const getActiveTab = (): string => {
     if (location.includes('/relationships/connections')) return 'connections';
-    if (location.includes('/relationships/corporate')) return 'corporate';
     if (location.includes('/relationships/peer')) return 'peer';
     if (location.includes('/relationships/relsci')) return 'relsci';
     if (location.includes('/relationships/dnb')) return 'dnb';
@@ -67,8 +59,6 @@ export default function RelationshipsWithTabs() {
   
   if (activeTab === 'connections') {
     RelationshipComponent = BoardConnections;
-  } else if (activeTab === 'corporate') {
-    RelationshipComponent = CorporatePartnerships;
   } else if (activeTab === 'peer') {
     RelationshipComponent = PeerDonors;
   } else if (activeTab === 'relsci') {

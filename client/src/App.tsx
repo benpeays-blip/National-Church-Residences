@@ -226,12 +226,12 @@ function Router() {
       <Route path="/ai-tools/workflows" component={AIToolsWithTabs} />
       <Route path="/ai-tools" component={AIToolsWithTabs} />
       <Route path="/relationships/connections" component={RelationshipsWithTabs} />
-      <Route path="/relationships/corporate" component={RelationshipsWithTabs} />
       <Route path="/relationships/peer" component={RelationshipsWithTabs} />
       <Route path="/relationships/relsci" component={RelationshipsWithTabs} />
       <Route path="/relationships/dnb" component={RelationshipsWithTabs} />
       <Route path="/relationships" component={RelationshipsWithTabs} />
       <Route path="/agent-value-map" component={AgentValueMap} />
+      <Route path="/corporate-partnerships/employee-giving" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/sponsorships" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/giving" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/volunteering" component={CorporationsWithTabs} />
