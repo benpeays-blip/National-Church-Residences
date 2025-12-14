@@ -15,7 +15,7 @@ import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Menu } from 
 
 // Navigation dropdown categories
 const navigationDomains = {
-  "NCR Overview": {
+  "Reporting": {
     items: [
       { name: "Senior Housing", href: "/ncr/senior-housing" },
       { name: "Care Services", href: "/ncr/care-services" },
@@ -460,31 +460,31 @@ function App() {
                       </div>
                     </Link>
 
-                    {/* NCR Overview Dropdown */}
+                    {/* Reporting Dropdown */}
                     <div
                       className="relative"
-                      onMouseEnter={() => setActiveDropdown("NCR Overview")}
+                      onMouseEnter={() => setActiveDropdown("Reporting")}
                       onMouseLeave={() => setActiveDropdown(null)}
                     >
                       <div className={`relative ${isNavActive('ncr-overview') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleDropdownClick("NCR Overview")}
+                          onClick={() => handleDropdownClick("Reporting")}
                           className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
-                            activeDropdown === "NCR Overview" ? "bg-black/10" : ""
+                            activeDropdown === "Reporting" ? "bg-black/10" : ""
                           }`}
                           data-testid="button-nav-ncr-overview"
                         >
-                          NCR Overview
-                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "NCR Overview" ? "rotate-180" : ""}`} />
+                          Reporting
+                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Reporting" ? "rotate-180" : ""}`} />
                         </Button>
                       </div>
-                      {activeDropdown === "NCR Overview" && (
+                      {activeDropdown === "Reporting" && (
                         <div className="absolute left-0 top-full pt-1 z-50">
                           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
                             <div className="py-2 px-1">
-                              {navigationDomains["NCR Overview"].items.map((item) => (
+                              {navigationDomains["Reporting"].items.map((item) => (
                                 <Link 
                                   key={item.name} 
                                   href={item.href}
