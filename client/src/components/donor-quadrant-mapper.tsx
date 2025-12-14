@@ -442,7 +442,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 `}
                 style={{ 
                   ...(isSelected ? { backgroundColor: '#395174' } : {}),
-                  borderRightColor: '#395174'
+                  borderRightColor: 'rgba(57, 81, 116, 0.25)'
                 }}
                 data-testid={`tab-${q}`}
               >
