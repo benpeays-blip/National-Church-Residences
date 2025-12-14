@@ -434,13 +434,16 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 key={q}
                 onClick={() => setSelectedQuadrant(q)}
                 className={`
-                  flex-1 px-3 py-3 text-center transition-all relative
+                  flex-1 px-3 py-3 text-center transition-all relative border-r last:border-r-0
                   ${isSelected 
                     ? 'font-semibold shadow-sm z-10' 
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                   }
                 `}
-                style={isSelected ? { backgroundColor: '#395174' } : {}}
+                style={{ 
+                  ...(isSelected ? { backgroundColor: '#395174' } : {}),
+                  borderRightColor: '#395174'
+                }}
                 data-testid={`tab-${q}`}
               >
                 <div className="text-sm" style={isSelected ? { color: 'white' } : {}}>{quadrantConfig[q].label}</div>
