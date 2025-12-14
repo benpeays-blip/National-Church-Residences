@@ -5,7 +5,10 @@ FundRazor is an AI-powered, enterprise-grade fundraising CRM designed for nonpro
 
 The Dashboard Home provides a unified view of the entire fundraising operation, featuring a Donor Relationship Quadrant, key performance metrics, top opportunities, AI-generated Next Best Actions, recent gifts, and an active campaigns overview.
 
-## Recent Changes (December 13, 2025)
+## Recent Changes (December 14, 2025)
+- **Impact Intelligence Feature**: Added new AI-powered Impact Intelligence page accessible via Reporting dropdown at `/reporting/impact-intelligence`. Features include AI Assistant tab (chatbot using OpenAI via Replit AI Integrations for finding impact stories and outcomes data for donor communications) and Impact Feed tab (browsable stories with filters, save/copy functionality, and metrics overview). Backend route `/api/impact-intelligence/chat` uses GPT-4o model. **Status: ✅ WORKING**
+
+## Previous Changes (December 13, 2025)
 - **Site-Wide Design Uniformity Audit**: Completed comprehensive review of all pages to ensure compliance with design guidelines. Fixed literal Tailwind color classes to use semantic tokens (bg-primary, bg-destructive, text-muted-foreground) across quadrant pages, corporate pages, workflow pages, donor/relationship pages, MGO detail pages, and other utility pages. Ensured consistent typography scale (text-3xl for page titles, text-xl for section headers) and proper Badge variants. **Status: ✅ COMPLETE**
 - **Implemented Dropdown Navigation System**: Replaced 12 individual navigation buttons with 5 compact dropdown menus. Categories: Constituents (Donors, Relationships, Corporations, Quadrant), Pipeline, Revenue (Gifts, Grants), Campaigns & Events, Operations & Strategy (AI Tools, Infrastructure, Special Projects). Dropdowns open on hover or click, positioned right-aligned below each button. **Status: ✅ WORKING**
 - **Redesigned Technology Categories Tab**: Improved the Technology Categories tab layout per design guidelines. KPI cards now use vertical icon pattern with mb-4 spacing. Category headers use neutral bg-muted/50 surface with semantic priority badges (red/orange/yellow). Platform cards use p-4 rounded-lg bg-muted/50 without borders. NCR context boxes use p-3 rounded-md bg-muted/50. Removed unused helper functions. **Status: ✅ WORKING**
