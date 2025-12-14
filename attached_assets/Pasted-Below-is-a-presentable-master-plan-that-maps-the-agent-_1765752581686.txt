@@ -1,0 +1,386 @@
+Below is a “presentable” master plan that maps the **agent value map** (Data → Consumption → Agents → Personas) to **National Church Residences (NCR)** and the problem/solution matrix you provided—so leadership can see *what we automate*, *what we modernize*, *who benefits*, and *how we govern it safely*.
+
+---
+
+## 1) Map the agent value framework to NCR
+
+### A. Data (the foundation NCR must unify)
+
+These are the “atoms” agents rely on. NCR already has most of them—just fragmented.
+
+* Company information
+
+  * NCR entity master (1,100+ entities), programs, locations, properties, service lines
+* Business activity
+
+  * Resident events, service coordinator activity, case notes, intakes, requalifications, volunteer participation
+* Financial strength
+
+  * Workday GL, AP/AR, allocations, grants, restricted/unrestricted funds, property-level P&Ls
+* Filings & events
+
+  * HUD recerts, CMS filings, audits, board packets, incident reporting, compliance attestations
+* Hierarchies
+
+  * Org structure, property → region → division, legal entity → operating unit mappings
+* Principals & contacts
+
+  * Donors, prospects, board, vendors, grant officers, partner contacts, resident emergency contacts
+* IP intelligence
+
+  * Policies/procedures, templates, program manuals, training content, contracts
+* Fraud insights
+
+  * Payment anomalies, identity verification flags, benefits eligibility anomalies, duplicate vendor/donor records
+
+**NCR “Data Backbone” target**
+
+* Microsoft Fabric **OneLake** as the unified data layer
+* Microsoft **Purview** for governance (classification, access policies, lineage, audit)
+* Standardized “canonical objects”: Person, Resident, Donor, Gift, Grant, Property, Entity, Claim, Filing, Vendor, Volunteer, Interaction
+
+---
+
+### B. Consumption (how NCR users experience value)
+
+From the diagram, these are the delivery channels. For NCR, they become a unified **App Shell + role-based hubs**:
+
+* Platform UIs
+
+  * NCR Unified App Shell (Donor Hub, Grants Hub, Volunteer Hub, Resident Engagement Hub, Governance Hub, Strategy Hub, Ops/Security Hub)
+* Bulk data
+
+  * Controlled exports, board packs, regulator-ready extracts, property performance snapshots
+* Transactional data
+
+  * Intake submissions, HUD recerts, billing/claims, gift acknowledgments, volunteer shifts
+* AI-ready data
+
+  * Curated feature stores for forecasting occupancy/staffing, donor propensity, compliance risk
+* Marketplaces
+
+  * Future: vetted “agent marketplace” for internal NCR teams (approved automations only)
+* Agents
+
+  * The agentic teams below, invoked from the UI and governed centrally
+
+---
+
+### C. Agents (NCR’s “agentic teams” catalogue)
+
+These map directly to your matrix. Think of them as *specialized digital staff* with audit trails.
+
+* CareGuide Agent (Healthcare + Housing)
+
+  * Unified intake wizard, de-duplication, validation, routing across systems
+* Housing Agent
+
+  * HUD requalification workflows, document completeness checks, deadline management
+* Healthcare Agent
+
+  * Billing workflow automation, claim validation, Workday integration support
+* Document Agent
+
+  * Donor letters, impact narratives, grant narratives/reports, volunteer recognition
+* Donor Agent
+
+  * ROI dashboards, pipeline hygiene, acquisition funnel, “next best action”
+* Grants Agent
+
+  * Pipeline dashboard, dedup outreach, outcomes reporting, reporting automation
+* Financial Agent
+
+  * Consolidated reporting, double-count detection, entity-level reconciliation flags
+* Compliance Agent
+
+  * HUD/CMS filing prep, entity registry, action logging, evidence packs for audit
+* Bias Monitoring Agent
+
+  * Fairness audits for eligibility decisions + any scoring models; anomaly detection
+* Strategy Agent
+
+  * Forecasting (occupancy/staffing/finance), ROI simulations, system inventory
+* Resident Engagement Agent
+
+  * Accessibility checks, multilingual readiness, adoption prompts, digital divide workflows
+* (Optional) Security Agent
+
+  * Monitors unusual agent activity patterns + data access anomalies; ties to SIEM tooling
+
+---
+
+### D. Personas (who benefits / who sponsors)
+
+Map the diagram’s personas to NCR roles so adoption is real:
+
+* Chief Operations Officer / Ops leaders
+
+  * Gets “system of work” visibility, staffing forecasts, operational compliance posture
+* Chief Risk Officer / Compliance leadership
+
+  * Audit trails, filing automation, Purview lineage, bias monitoring, exception handling
+* Chief Compliance Officer / Legal
+
+  * Evidence packs, policy enforcement, access governance, filing timeliness and accuracy
+* Data Operations
+
+  * OneLake pipelines, canonical objects, model monitoring, quality SLAs
+* Finance leadership
+
+  * Consolidated P&L, entity registry accuracy, close acceleration, anomaly detection
+* Development leadership (donors/grants/volunteers)
+
+  * Pipeline clarity, dedup outreach, rapid reporting, donor confidence through metrics
+* Program leadership (housing/healthcare/resident services)
+
+  * Less paperwork, fewer reworks, more time with residents/patients
+
+---
+
+## 2) NCR “Master Plan” (what we present)
+
+### North Star (simple statement)
+
+Build a **governed NCR Data + Agent platform** where staff, donors, residents, and partners interact through one app layer—while **Purview enforces privacy, auditability, and accountability**.
+
+---
+
+## 3) Phased roadmap (realistic, defensible, high-ROI)
+
+### Phase 0 — Guardrails first (30–45 days)
+
+Goal: enable agents without creating risk.
+
+* Purview foundations
+
+  * Data classification (HIPAA/PII/financial), access policies, lineage turned on
+* Agent governance
+
+  * “Allowed actions” registry, human-in-the-loop approvals, retention rules, logging standard
+* Template & policy library
+
+  * Approved donor letter templates, grant report templates, filing templates, tone/branding rules
+* Success metrics baseline
+
+  * Current cycle times (HUD recerts, donor acknowledgments, month close), error rates, audit findings
+
+Deliverables:
+
+* Governance & Compliance Hub (MVP): audit trail viewer + agent action log + data access rules dashboard
+* “Agent Safety Standard” document NCR can show auditors
+
+---
+
+### Phase 1 — Quick wins that staff *feel* (60–90 days)
+
+Goal: eliminate repetitive work and reduce compliance exposure.
+
+* Document Agent (immediate payoff)
+
+  * Donor letters + volunteer recognition + basic grant narratives
+* Housing Agent (compliance + workload reduction)
+
+  * HUD requalification workflow + completeness validation + resident reminders
+* Financial Agent (visibility + trust)
+
+  * Double-count detection flags + entity reconciliation dashboard (not full close automation yet)
+
+Deliverables:
+
+* Donor letters auto-generated within hours (not weeks)
+* HUD recert “workflow in a box” (tasks, deadlines, validations)
+* Finance transparency pilot: consolidated view for a subset of entities/properties
+
+---
+
+### Phase 2 — Unified intake + measurable impact (90–180 days)
+
+Goal: unify resident/patient “front door” and tie outcomes to funding.
+
+* CareGuide 2.0 (unified intake wizard)
+
+  * Capture once → validate → distribute to downstream systems
+* Donor impact narratives from outcomes
+
+  * Narrative + metrics: what changed, how many served, what improved
+* Grants Workspace (pipeline + reporting)
+
+  * Dedup outreach, unified calendar, outcome reporting tied to metrics
+
+Deliverables:
+
+* CareGuide 2.0 intake wizard (MVP) integrated to OneLake + governed by Purview
+* Donor Hub ROI dashboards (pilot) that tie gifts → programs → outcomes
+* Grants Hub pipeline dashboard + report generator
+
+---
+
+### Phase 3 — Predictive leadership + enterprise scale (180–365 days)
+
+Goal: leadership dashboards that drive decisions, not anecdotes.
+
+* Strategy Agent forecasting
+
+  * Occupancy/staffing projections, finance projections, scenario modeling
+* Compliance Agent at scale
+
+  * Filing prep automation, evidence packs, entity registry automation
+* Resident Engagement Hub maturity
+
+  * Multilingual + accessibility compliance monitoring, digital divide workflows
+
+Deliverables:
+
+* Predictive dashboards in Power BI (forecast overlays + scenario tools)
+* Entity registry system of record (with exceptions workflow)
+* Operational resilience: continuity workflows + security/ops dashboards
+
+---
+
+## 4) “What is handled by agents” vs “what is infrastructure”
+
+This keeps NCR from over-automating and keeps auditors comfortable.
+
+### Agent best-fit (repeatable, compliance-sensitive, data-driven)
+
+* Intake routing + dedup + validation (CareGuide Agent)
+* HUD requals + completeness + deadline mgmt (Housing Agent)
+* Billing workflow assistance + validation (Healthcare Agent)
+* Donor/grant/volunteer documents at scale (Document Agent)
+* Pipeline dedup & outreach coordination (Grants Agent)
+* Consolidation flags + anomaly detection (Financial Agent)
+* Filing prep + evidence packs + audit trails (Compliance Agent)
+* Fairness audits + anomaly monitoring (Bias Monitoring Agent)
+* Forecasting + ROI simulations (Strategy Agent)
+
+### Infrastructure / “alternative solutions” (platform and culture)
+
+* EHR interoperability, Yardi/Workday/Raiser’s Edge integrations
+* OneLake ingestion pipelines + canonical schema
+* Purview governance + identity/role-based access
+* SIEM, incident response, disaster recovery
+* Training, champions, adoption incentives, executive sponsorship
+
+---
+
+## 5) NCR Unified App Shell (how the experience looks)
+
+This is the “Consumption layer” leadership will resonate with.
+
+* Donor Hub
+
+  * ROI dashboards, impact narratives, acknowledgments, pipeline views
+* Grants Hub
+
+  * Pipeline, deadlines, report generator, dedup outreach, outcomes
+* Volunteer Hub
+
+  * Onboarding, scheduling, recognition automation, wishlists integration
+* Resident Engagement Hub
+
+  * Intake, service pathways, multilingual support, accessibility validation
+* Governance & Compliance Hub
+
+  * Agent audit trails, filings, Purview lineage, fairness audit reports
+* Strategy & Sustainability Hub
+
+  * Forecasts, scenario modeling, ROI simulations, sustainability metrics
+* Ops & Security Hub
+
+  * Continuity workflows, system uptime, agent observability, incident playbooks
+
+---
+
+## 6) “Day in the life” demo storyline (for NCR leadership)
+
+Use this in the presentation to make it concrete.
+
+* A resident starts an intake once in CareGuide 2.0
+
+  * CareGuide Agent validates + routes data to the right downstream workflows
+* Housing Agent launches HUD requalification steps automatically
+
+  * Missing docs flagged; reminders sent; staff dashboard shows exceptions only
+* Outcomes (services delivered) flow into OneLake with governance
+
+  * Donor Agent generates ROI dashboard views; Document Agent generates a narrative
+* Grants Agent updates a pipeline board + prevents duplicate outreach
+
+  * Reports are produced with metrics, not anecdotes
+* Compliance Agent prepares an evidence pack for filings
+
+  * Every action logged; Purview lineage shows exactly where data came from
+* Strategy Agent shows leadership a staffing/occupancy forecast
+
+  * Leadership sees scenarios and can make staffing decisions with confidence
+
+---
+
+## 7) Governance: what NCR can say to auditors and regulators
+
+Non-negotiables (these become “design constraints”):
+
+* Human-in-the-loop for high-stakes decisions
+
+  * Eligibility approvals, adverse actions, filings submission sign-off
+* Full audit trails
+
+  * Every agent action: who, what, when, data touched, output produced
+* Purview-enforced access controls
+
+  * HIPAA/PII boundaries; least-privilege role-based access
+* Bias monitoring & fairness audits
+
+  * Required for eligibility decisions and any scoring models
+* Model risk management
+
+  * Versioning, evaluation, drift monitoring, rollback procedures
+* Data retention & redaction rules
+
+  * Especially for health/resident data and donor privacy
+
+---
+
+## 8) Scorecard: how NCR measures success (board-friendly)
+
+Pick a handful per domain:
+
+* Housing
+
+  * HUD recert cycle time ↓, error rate ↓, staff hours saved ↑, compliance exceptions ↓
+* Healthcare
+
+  * Claim rejection rate ↓, billing cycle time ↓, duplicate intake rate ↓
+* Finance
+
+  * Close time ↓, reconciliation exceptions ↓, entity mapping accuracy ↑
+* Fundraising
+
+  * Acknowledgment time ↓, donor retention ↑, pipeline coverage ↑, ROI reporting adoption ↑
+* Grants
+
+  * On-time submissions ↑, duplicate outreach incidents ↓, report turnaround time ↓
+* Compliance & Risk
+
+  * Audit findings ↓, filing timeliness ↑, data access violations ↓, bias flags resolved time ↓
+* Adoption
+
+  * Active users ↑, spreadsheet dependency ↓, “agent tasks completed” ↑
+
+---
+
+## 9) What I would put on the final 1–2 slides as the executive takeaway
+
+* **Agents** do the repetitive, compliance-sensitive work with audit trails: intake, recerts, billing validation, letters/reports, dedup outreach, forecasting, fairness audits.
+* **Platform modernization** (OneLake + Purview + Power BI + App Shell) makes those agents safe, scalable, and measurable.
+* **Governance + human oversight** ensures NCR reduces risk while accelerating service delivery and donor trust.
+
+If you want, I can turn this into a tight “board-deck outline” (10–12 slides) with:
+
+* 1 slide: the mapped framework (Data → Consumption → Agents → Personas) in NCR language
+* 1 slide: phased roadmap
+* 1 slide: agent catalogue
+* 1 slide: governance model
+* 2 slides: domain quick wins + KPIs
+* 1 slide: demo storyline / day-in-the-life
+* 1 slide: investment + resourcing model (lightweight, not numbers-heavy)
