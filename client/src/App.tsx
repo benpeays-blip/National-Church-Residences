@@ -32,10 +32,6 @@ const navigationDomains = {
       { name: "Pipeline", href: "/pipeline" },
       { name: "Quadrant", href: "/quadrant" },
       { name: "Relationships", href: "/relationships" },
-    ]
-  },
-  "Campaigns & Events": {
-    items: [
       { name: "Campaigns", href: "/campaigns" },
       { name: "Events", href: "/events" },
     ]
