@@ -460,7 +460,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
           {quadrantConfig[selectedQuadrant].description}
         </div>
         
-        <CardContent className="p-4 flex flex-col h-[560px]">
+        <CardContent className="p-4 pt-6 flex flex-col h-[560px]">
 
           {/* Donor List - Flexible height scrollable area */}
           <div className="flex-1 space-y-2 overflow-y-auto min-h-0">
