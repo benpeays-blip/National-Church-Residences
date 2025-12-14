@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { useLocation, Link } from "wouter";
-import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree } from "lucide-react";
+import { useLocation } from "wouter";
+import { SectionTabs, SectionTab } from "@/components/section-tabs";
+import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree, Settings } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,56 +13,42 @@ import OtherWithTabs from "@/pages/other-with-tabs";
 
 import { techProducts, TechProduct } from "@/data/tech-products";
 
-interface SpecialProjectsTab {
-  label: string;
-  value: string;
-  path: string;
-  title: string;
-  subtitle: string;
-}
-
-const specialProjectsTabs: SpecialProjectsTab[] = [
+const specialProjectsTabs: SectionTab[] = [
   {
     label: "On Site Interviews",
     value: "interviews",
+    icon: Users,
     path: "/temporary",
-    title: "On Site Interviews",
-    subtitle: "Key stakeholder interviews documenting challenges, tech stacks, and strategic needs across NCR divisions."
   },
   {
     label: "Tech Stack",
     value: "tech-stack",
+    icon: Layers,
     path: "/temporary/tech-stack",
-    title: "Tech Stack Analysis",
-    subtitle: "Comprehensive review of current technology platforms, vendors, and integration opportunities."
   },
   {
     label: "Technology Categories",
     value: "technology-categories",
+    icon: FolderTree,
     path: "/temporary/technology-categories",
-    title: "Technology Categories",
-    subtitle: "Organized view of technology solutions by functional category and strategic priority."
   },
   {
     label: "Optimization Ideas",
     value: "optimization-ideas",
+    icon: Lightbulb,
     path: "/temporary/optimization-ideas",
-    title: "Optimization Ideas",
-    subtitle: "Strategic recommendations for process improvements, system consolidation, and operational efficiency."
   },
   {
     label: "Risk & Compliance",
     value: "risk-compliance",
+    icon: Shield,
     path: "/temporary/risk-compliance",
-    title: "Risk & Compliance",
-    subtitle: "Regulatory landscape and compliance requirements across healthcare, housing, and fundraising operations."
   },
   {
     label: "Infrastructure",
     value: "infrastructure",
+    icon: Settings,
     path: "/temporary/infrastructure",
-    title: "Infrastructure",
-    subtitle: "System architecture, workflow tools, and organizational mapping for NCR operations."
   },
 ];
 
@@ -2258,70 +2245,24 @@ export default function Temporary() {
 
   const initialPersonId = interviewDetailMatch ? interviewDetailMatch[1] : undefined;
 
-  const getActiveTab = (): string => {
-    if (location.includes('/temporary/tech-stack')) return 'tech-stack';
-    if (location.includes('/temporary/technology-categories')) return 'technology-categories';
-    if (location.includes('/temporary/optimization-ideas')) return 'optimization-ideas';
-    if (location.includes('/temporary/risk-compliance')) return 'risk-compliance';
-    if (location.includes('/temporary/infrastructure')) return 'infrastructure';
-    return 'interviews';
-  };
-
-  const activeTab = getActiveTab();
-  const currentTabInfo = specialProjectsTabs.find(t => t.value === activeTab) || specialProjectsTabs[0];
-
+  // Determine which component to render based on route
   let ContentComponent: React.ComponentType<{ initialPersonId?: string }> = OnSiteInterviews;
-  if (activeTab === "tech-stack") {
+  
+  if (location === "/temporary/tech-stack") {
     ContentComponent = TechStack;
-  } else if (activeTab === "technology-categories") {
+  } else if (location === "/temporary/technology-categories") {
     ContentComponent = TechStackMapper;
-  } else if (activeTab === "optimization-ideas") {
+  } else if (location === "/temporary/optimization-ideas") {
     ContentComponent = OptimizationIdeas;
-  } else if (activeTab === "risk-compliance") {
+  } else if (location === "/temporary/risk-compliance") {
     ContentComponent = RiskCompliance;
-  } else if (activeTab === "infrastructure") {
+  } else if (location === "/temporary/infrastructure") {
     ContentComponent = OtherWithTabs;
   }
 
   return (
     <div className="flex flex-col h-full">
-      {/* Dark Blue Tab Bar with White Selected Tab */}
-      <div 
-        className="px-6 flex items-end"
-        style={{ backgroundColor: '#1B3A5A' }}
-      >
-        <div className="flex items-end gap-0">
-          {specialProjectsTabs.map((tab) => {
-            const isSelected = activeTab === tab.value;
-            return (
-              <Link key={tab.value} href={tab.path}>
-                <button
-                  className={`px-5 py-2.5 text-sm font-medium transition-colors rounded-t-md ${
-                    isSelected
-                      ? 'bg-white text-[#1B3A5A]'
-                      : 'text-white/80 hover:text-white hover:bg-white/10'
-                  }`}
-                  data-testid={`special-projects-tab-${tab.value}`}
-                >
-                  {tab.label}
-                </button>
-              </Link>
-            );
-          })}
-        </div>
-      </div>
-      
-      {/* White Header Section that blends with selected tab */}
-      <div className="px-6 py-6 bg-white border-b">
-        <h1 className="text-3xl font-bold" data-testid="page-title">
-          {currentTabInfo.title}
-        </h1>
-        <p className="text-muted-foreground mt-2 max-w-3xl">
-          {currentTabInfo.subtitle}
-        </p>
-      </div>
-      
-      {/* Content Area */}
+      <SectionTabs tabs={specialProjectsTabs} currentPath={location} />
       <div className="flex-1 overflow-auto p-6">
         <ContentComponent initialPersonId={initialPersonId} />
       </div>
