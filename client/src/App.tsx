@@ -327,9 +327,12 @@ function Router() {
 }
 
 
+type TopTab = 'Quadrant' | 'Fundraising' | 'Relationships';
+
 function App() {
   const [activeDropdown, setActiveDropdown] = useState<DomainKey | null>(null);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
+  const [selectedTopTab, setSelectedTopTab] = useState<TopTab>('Quadrant');
 
   const handleDropdownClick = (domain: DomainKey) => {
     if (activeDropdown === domain) {
@@ -343,6 +346,8 @@ function App() {
     setActiveDropdown(null);
   };
 
+  const topTabs: TopTab[] = ['Quadrant', 'Fundraising', 'Relationships'];
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -355,6 +360,29 @@ function App() {
         
         <div className="flex h-screen w-full">
           <div className="flex flex-col flex-1">
+            {/* Top Blue Tab Bar */}
+            <div 
+              className="flex items-center h-10 px-6 shrink-0"
+              style={{ backgroundColor: '#1B3A5A' }}
+            >
+              <div className="flex items-center gap-1">
+                {topTabs.map((tab) => (
+                  <button
+                    key={tab}
+                    onClick={() => setSelectedTopTab(tab)}
+                    className={`px-4 py-1.5 text-sm font-medium rounded-sm transition-colors ${
+                      selectedTopTab === tab
+                        ? 'bg-white text-[#1B3A5A]'
+                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                    }`}
+                    data-testid={`top-tab-${tab.toLowerCase()}`}
+                  >
+                    {tab}
+                  </button>
+                ))}
+              </div>
+            </div>
+            
             {/* Top Header Navigation */}
             <header 
               className="flex items-center gap-6 h-16 px-6 border-b shrink-0"
