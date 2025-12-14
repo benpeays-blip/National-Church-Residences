@@ -446,7 +446,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 }}
                 data-testid={`tab-${q}`}
               >
-                <div className="text-sm" style={isSelected ? { color: 'white' } : {}}>{quadrantConfig[q].label}</div>
+                <div className="text-sm font-bold" style={isSelected ? { color: 'white' } : {}}>{quadrantConfig[q].label}</div>
                 <div 
                   className={`text-xs mt-0.5 ${!isSelected ? 'text-muted-foreground' : ''}`}
                   style={isSelected ? { color: '#e1c47d' } : {}}
