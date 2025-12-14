@@ -359,7 +359,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               >
                 <div className="font-bold text-lg">Friend</div>
                 <div className="text-[10px] text-white/70 mt-0.5">High Energy,<br />Low Structure</div>
-                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-friend">{data.counts.friend}</Badge>
+                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-friend">{data.counts.friend} Donors</Badge>
               </button>
             </div>
 
@@ -367,12 +367,12 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[75%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('partner')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#eef9fb] text-[#395174] w-[140px]"
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white w-[140px]"
                 data-testid="quadrant-partner"
               >
                 <div className="font-bold text-lg">Partner</div>
-                <div className="text-[10px] text-[#395174]/70 mt-0.5">High Energy,<br />High Structure</div>
-                <Badge className="mt-1.5 bg-[#ffffff] text-[#395174] border border-gray-300" data-testid="count-partner">{data.counts.partner}</Badge>
+                <div className="text-[10px] text-white/70 mt-0.5">High Energy,<br />High Structure</div>
+                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-partner">{data.counts.partner} Donors</Badge>
               </button>
               {isPartnerHovered && draggedDonor && (
                 <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow z-40">
@@ -385,12 +385,12 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[25%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('acquaintance')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary bg-[#eef9fb] text-[#395174] w-[140px] flex flex-col items-center justify-center"
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary bg-[#395174] text-white w-[140px] flex flex-col items-center justify-center"
                 data-testid="quadrant-acquaintance"
               >
                 <div className="font-bold text-lg text-center">Acquaintance</div>
-                <div className="text-[10px] text-[#395174]/70 mt-0.5">Low Energy,<br />Low Structure</div>
-                <Badge className="mt-1.5 bg-[#ffffff] text-[#395174] border border-gray-300" data-testid="count-acquaintance">{data.counts.acquaintance}</Badge>
+                <div className="text-[10px] text-white/70 mt-0.5">Low Energy,<br />Low Structure</div>
+                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-acquaintance">{data.counts.acquaintance} Donors</Badge>
               </button>
             </div>
 
@@ -398,12 +398,12 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             <div className="absolute left-[75%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('colleague')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#eef9fb] text-[#395174] w-[140px]"
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white w-[140px]"
                 data-testid="quadrant-colleague"
               >
                 <div className="font-bold text-lg">Colleague</div>
-                <div className="text-[10px] text-[#395174]/70 mt-0.5">Low Energy,<br />High Structure</div>
-                <Badge className="mt-1.5 bg-[#ffffff] text-[#395174] border border-gray-300" data-testid="count-colleague">{data.counts.colleague}</Badge>
+                <div className="text-[10px] text-white/70 mt-0.5">Low Energy,<br />High Structure</div>
+                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-colleague">{data.counts.colleague} Donors</Badge>
               </button>
             </div>
             </div>
