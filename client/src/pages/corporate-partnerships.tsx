@@ -158,13 +158,15 @@ export default function CorporatePartnershipsPage() {
   const breakdown = expandedMetric ? getMetricBreakdown(expandedMetric) : [];
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="space-y-1">
-        <h1 className="text-3xl font-bold">Corporate Partnerships</h1>
-        <p className="text-sm text-muted-foreground">
+    <div className="space-y-6">
+      <div className="px-6 py-8" style={{ backgroundColor: '#395174' }}>
+        <h1 className="text-3xl font-bold text-white">Corporate Partnerships</h1>
+        <p className="text-sm text-white/80">
           Manage and track partnerships with corporate sponsors, volunteers, and donors
         </p>
       </div>
+
+      <div className="px-6 space-y-6">
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card 
@@ -611,6 +613,7 @@ export default function CorporatePartnershipsPage() {
           </p>
         </Card>
       )}
+      </div>
     </div>
   );
 }
