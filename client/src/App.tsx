@@ -432,7 +432,35 @@ function App() {
               <div className="flex items-center gap-3 ml-auto">
                   {/* Dropdown Navigation */}
                   <nav className="flex items-center gap-0.5">
-                    {/* NCR Overview Dropdown - First item */}
+                    {/* Agent Value Map - Direct Link (First item) */}
+                    <Link href="/agent-value-map">
+                      <div className={`relative ${isNavActive('agent-value-map') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                          data-testid="button-nav-agent-value-map"
+                        >
+                          Agent Value Map
+                        </Button>
+                      </div>
+                    </Link>
+
+                    {/* Relationships - Direct Link */}
+                    <Link href="/relationships">
+                      <div className={`relative ${isNavActive('relationships') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                          data-testid="button-nav-relationships"
+                        >
+                          Relationships
+                        </Button>
+                      </div>
+                    </Link>
+
+                    {/* NCR Overview Dropdown */}
                     <div
                       className="relative"
                       onMouseEnter={() => setActiveDropdown("NCR Overview")}
@@ -497,34 +525,6 @@ function App() {
                           data-testid="button-nav-quadrant"
                         >
                           Quadrant
-                        </Button>
-                      </div>
-                    </Link>
-
-                    {/* Relationships - Direct Link */}
-                    <Link href="/relationships">
-                      <div className={`relative ${isNavActive('relationships') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                          data-testid="button-nav-relationships"
-                        >
-                          Relationships
-                        </Button>
-                      </div>
-                    </Link>
-
-                    {/* Agent Value Map - Direct Link */}
-                    <Link href="/agent-value-map">
-                      <div className={`relative ${isNavActive('agent-value-map') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                          data-testid="button-nav-agent-value-map"
-                        >
-                          Agent Value Map
                         </Button>
                       </div>
                     </Link>
