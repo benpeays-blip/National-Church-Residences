@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { useLocation } from 'wouter';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -56,10 +57,70 @@ interface DonorQuadrantMapperProps {
 
 export default function DonorQuadrantMapper({ showEducationalContent = false }: DonorQuadrantMapperProps) {
   const [selectedQuadrant, setSelectedQuadrant] = useState<QuadrantType>('partner');
+  const [draggedDonor, setDraggedDonor] = useState<Donor | null>(null);
+  const [isPartnerHovered, setIsPartnerHovered] = useState(false);
+  const [, navigate] = useLocation();
 
   const { data, isLoading } = useQuery<QuadrantData>({
     queryKey: ['/api/donors/quadrant'],
   });
+
+  // Drag handlers for donor dots
+  const handleDragStart = (e: React.DragEvent, donor: Donor) => {
+    // Only allow dragging from non-partner quadrants
+    if (donor.quadrant === 'partner') {
+      e.preventDefault();
+      return;
+    }
+    setDraggedDonor(donor);
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', donor.id);
+    
+    // Create a custom drag image
+    const dragImage = document.createElement('div');
+    dragImage.innerHTML = `<div style="padding: 8px 16px; background: #395174; color: white; border-radius: 8px; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">${donor.firstName} ${donor.lastName}</div>`;
+    dragImage.style.position = 'absolute';
+    dragImage.style.top = '-1000px';
+    document.body.appendChild(dragImage);
+    e.dataTransfer.setDragImage(dragImage, 50, 20);
+    setTimeout(() => document.body.removeChild(dragImage), 0);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedDonor(null);
+    setIsPartnerHovered(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = 'move';
+  };
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsPartnerHovered(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    // Only set to false if we're actually leaving the drop zone
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX;
+    const y = e.clientY;
+    if (x < rect.left || x > rect.right || y < rect.top || y > rect.bottom) {
+      setIsPartnerHovered(false);
+    }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsPartnerHovered(false);
+    
+    if (draggedDonor && draggedDonor.quadrant !== 'partner') {
+      // Navigate to action plan page
+      navigate(`/donors/${draggedDonor.id}/action-plan`);
+    }
+    setDraggedDonor(null);
+  };
 
   if (isLoading) {
     return (
@@ -128,17 +189,32 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
 
             {/* Quadrants - Clickable */}
             {/* Donor Dots with Hover Cards - rendered first so labels appear on top */}
-            {data.donors.map((donor) => (
+            {data.donors.map((donor) => {
+              const isDraggable = donor.quadrant !== 'partner';
+              const isBeingDragged = draggedDonor?.id === donor.id;
+              
+              return (
               <HoverCard key={donor.id} openDelay={150} closeDelay={50}>
                 <HoverCardTrigger asChild>
                   <button
-                    className="absolute w-2.5 h-2.5 rounded-full bg-primary/80 shadow-sm hover:scale-150 transition-transform cursor-pointer border-0 p-0 z-10"
+                    draggable={isDraggable}
+                    onDragStart={(e) => handleDragStart(e, donor)}
+                    onDragEnd={handleDragEnd}
+                    className={`absolute w-2.5 h-2.5 rounded-full shadow-sm transition-all border-0 p-0 z-10 ${
+                      isDraggable 
+                        ? 'cursor-grab active:cursor-grabbing hover:scale-150 bg-primary/80' 
+                        : 'cursor-pointer hover:scale-150 bg-emerald-600'
+                    } ${isBeingDragged ? 'opacity-50 scale-125' : ''}`}
                     style={{
                       left: `calc(${donor.structure}% - 5px)`,
                       top: `calc(${100 - donor.energy}% - 5px)`,
                     }}
                     data-testid={`dot-donor-${donor.id}`}
-                    aria-label={`View profile for ${donor.firstName} ${donor.lastName}`}
+                    aria-label={isDraggable 
+                      ? `Drag ${donor.firstName} ${donor.lastName} to Partner quadrant to generate action plan`
+                      : `View profile for ${donor.firstName} ${donor.lastName}`
+                    }
+                    title={isDraggable ? 'Drag to Partner quadrant' : undefined}
                   />
                 </HoverCardTrigger>
                 <HoverCardContent className="w-96 p-0 overflow-hidden z-50" side="right" align="start" sideOffset={10}>
@@ -256,7 +332,8 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                   </div>
                 </HoverCardContent>
               </HoverCard>
-            ))}
+              );
+            })}
 
             {/* Quadrant Label Boxes - centered in each quadrant */}
             {/* Top Left - Friend */}
@@ -271,15 +348,30 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               </button>
             </div>
 
-            {/* Top Right - Partner */}
-            <div className="absolute left-[75%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
+            {/* Top Right - Partner (Drop Target) */}
+            <div 
+              className="absolute left-[75%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
+              onDragOver={handleDragOver}
+              onDragEnter={handleDragEnter}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
               <button
                 onClick={() => setSelectedQuadrant('partner')}
-                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#eef9fb] text-[#395174] w-[120px]"
+                className={`relative px-3 py-2 rounded-lg border-2 shadow-sm cursor-pointer transition-all duration-200 text-center w-[120px] ${
+                  isPartnerHovered 
+                    ? 'bg-emerald-100 border-emerald-500 text-emerald-800 scale-110 shadow-lg' 
+                    : 'bg-[#eef9fb] border-border text-[#395174] hover:border-primary'
+                }`}
                 data-testid="quadrant-partner"
               >
                 <div className="font-bold text-base">Partner</div>
-                <Badge className="mt-1 bg-[#f4f4f4] text-[#395174]" data-testid="count-partner">{data.counts.partner}</Badge>
+                <Badge className={`mt-1 ${isPartnerHovered ? 'bg-emerald-200 text-emerald-800' : 'bg-[#f4f4f4] text-[#395174]'}`} data-testid="count-partner">{data.counts.partner}</Badge>
+                {isPartnerHovered && draggedDonor && (
+                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow">
+                    Drop to generate action plan
+                  </div>
+                )}
               </button>
             </div>
 
