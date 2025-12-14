@@ -419,7 +419,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardContent>
         <CardFooter className="bg-muted/30 border-t text-sm text-muted-foreground py-4 flex items-center justify-center">
           <TrendingUp className="w-4 h-4 mr-2 text-primary" />
-          <span>Goal: move every donor toward <strong className="text-foreground">Partner</strong> (top-right) with wise effort and structure.</span>
+          <span>Goal: Move every donor toward <strong className="text-foreground">Partner</strong> (top-right) with wise effort and structure.</span>
         </CardFooter>
       </Card>
       {/* Right Panel - Quadrant Details */}
@@ -496,22 +496,23 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             )}
           </div>
 
-          {/* AI Playbook - Fixed height at bottom */}
-          <div className="pt-4 mt-4 border-t shrink-0">
-            <div className="flex items-center gap-2 text-sm font-semibold mb-3">
-              <Lightbulb className="w-4 h-4 text-primary" />
-              <span>AI Playbook to move towards Partner:</span>
-            </div>
-            <ol className="space-y-2 text-sm">
-              {data.playbooks[selectedQuadrant].map((step, idx) => (
-                <li key={idx} className="flex gap-2">
-                  <span className="text-muted-foreground">{idx + 1}.</span>
-                  <span>{step}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
         </CardContent>
+        
+        {/* AI Playbook - Fixed at bottom aligned with quadrant footer */}
+        <div className="bg-muted/30 border-t px-4 py-4">
+          <div className="flex items-center gap-2 text-sm font-semibold mb-3">
+            <Lightbulb className="w-4 h-4 text-primary" />
+            <span>AI Playbook to Move towards Partner:</span>
+          </div>
+          <ol className="space-y-2 text-sm">
+            {data.playbooks[selectedQuadrant].map((step, idx) => (
+              <li key={idx} className="flex gap-2">
+                <span className="text-muted-foreground">{idx + 1}.</span>
+                <span>{step}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
       </Card>
     </div>
   );
