@@ -139,23 +139,6 @@ export default function NcrAffordableHousing() {
 
   return (
     <div className="p-6 space-y-8">
-      {/* Header with Mission Statement */}
-      <div className="border-b pb-6">
-        <div className="flex items-start justify-between flex-wrap gap-4">
-          <div>
-            <h1 className="text-3xl font-bold" data-testid="page-title">Senior Affordable Housing</h1>
-            <p className="text-muted-foreground mt-2 max-w-3xl">
-              For more than 60 years, National Church Residences has been dedicated to one simple mission: 
-              helping older adults find a welcoming and affordable place to call home.
-            </p>
-          </div>
-          <Badge variant="outline" className="text-sm px-3 py-1.5">
-            <Sparkles className="w-3 h-3 mr-1.5" style={{ color: "#e1c47d" }} />
-            Fundraiser Impact Report
-          </Badge>
-        </div>
-      </div>
-
       {/* Primary Impact Metrics - The Big Numbers */}
       <div>
         <div className="flex items-center gap-2 mb-4">
