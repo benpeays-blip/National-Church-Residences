@@ -32,11 +32,6 @@ const navigationDomains = {
       { name: "Events", href: "/events" },
     ]
   },
-  "Other": {
-    items: [
-      { name: "Special Projects", href: "/temporary" },
-    ]
-  }
 };
 
 type DomainKey = keyof typeof navigationDomains;
@@ -536,44 +531,17 @@ function App() {
                       </Button>
                     </Link>
 
-                    {/* Other Dropdown */}
-                    <div
-                      className="relative"
-                      onMouseEnter={() => setActiveDropdown("Other")}
-                      onMouseLeave={() => setActiveDropdown(null)}
-                    >
+                    {/* Special Projects - Direct Link */}
+                    <Link href="/temporary">
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleDropdownClick("Other")}
-                        className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
-                          activeDropdown === "Other" ? "bg-black/10" : ""
-                        }`}
-                        data-testid="button-nav-other"
+                        className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                        data-testid="button-nav-special-projects"
                       >
-                        Other
-                        <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Other" ? "rotate-180" : ""}`} />
+                        Special Projects
                       </Button>
-                      {activeDropdown === "Other" && (
-                        <div className="absolute right-0 top-full pt-1 z-50">
-                          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
-                            <div className="py-2 px-1">
-                              {navigationDomains["Other"].items.map((item) => (
-                                <Link 
-                                  key={item.name} 
-                                  href={item.href}
-                                  className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                                  onClick={closeDropdown}
-                                  data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
-                                >
-                                  {item.name}
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
+                    </Link>
                   </nav>
                   
                   {/* Separator */}
