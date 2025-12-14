@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TrendingUp, Users, Lightbulb, Phone, Mail, Heart, Award, Calendar, BookOpen, AlertTriangle, ArrowRight, CheckCircle2, Sparkles } from 'lucide-react';
+import { TrendingUp, Users, Lightbulb, Phone, Mail, Heart, Award, Calendar, BookOpen, AlertTriangle, ArrowRight, CheckCircle2, Sparkles, Eye } from 'lucide-react';
 import { Link } from 'wouter';
 
 interface Donor {
@@ -472,27 +472,51 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 No donors in this quadrant yet.
               </div>
             ) : (
-              selectedDonors.map((donor) => (
-                <div
-                  key={donor.id}
-                  className="flex items-start justify-between p-2 border rounded-lg hover-elevate text-sm"
-                  data-testid={`donor-item-${donor.id}`}
-                >
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium truncate">
-                      {donor.firstName} {donor.lastName}
-                    </div>
-                    <div className="text-xs text-muted-foreground">
-                      Energy: {donor.energy} / Structure: {donor.structure}
-                    </div>
-                    {donor.organizationName && (
-                      <div className="text-xs text-muted-foreground truncate">
-                        {donor.organizationName}
+              selectedDonors.map((donor) => {
+                const summaries: Record<QuadrantType, string> = {
+                  partner: 'Highly engaged with strong giving structure',
+                  friend: 'Enthusiastic supporter ready for deeper connection',
+                  colleague: 'Consistent giver seeking more engagement',
+                  acquaintance: 'New relationship with growth potential',
+                };
+                return (
+                  <div
+                    key={donor.id}
+                    className="p-3 border rounded-lg hover-elevate text-sm"
+                    data-testid={`donor-item-${donor.id}`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <div className="font-medium truncate">
+                          {donor.firstName} {donor.lastName}
+                        </div>
+                        <div className="text-xs text-muted-foreground">
+                          Energy: {donor.energy} / Structure: {donor.structure}
+                        </div>
+                        {donor.organizationName && (
+                          <div className="text-xs text-muted-foreground truncate">
+                            {donor.organizationName}
+                          </div>
+                        )}
                       </div>
-                    )}
+                    </div>
+                    <div className="text-xs text-muted-foreground mt-2 italic">
+                      {summaries[donor.quadrant as QuadrantType]}
+                    </div>
+                    <Link href={`/donors/${donor.id}`}>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        className="mt-2 w-full text-xs"
+                        data-testid={`view-donor-${donor.id}`}
+                      >
+                        <Eye className="w-3 h-3 mr-1" />
+                        View Donor Profile
+                      </Button>
+                    </Link>
                   </div>
-                </div>
-              ))
+                );
+              })
             )}
           </div>
 
