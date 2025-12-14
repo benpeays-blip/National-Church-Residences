@@ -208,7 +208,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               const isBeingDragged = draggedDonor?.id === donor.id;
               
               return (
-              <HoverCard key={donor.id} openDelay={150} closeDelay={50}>
+              <HoverCard key={donor.id} openDelay={150} closeDelay={50} open={draggedDonor ? false : undefined}>
                 <HoverCardTrigger asChild>
                   <button
                     draggable={isDraggable}
