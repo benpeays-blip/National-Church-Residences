@@ -85,6 +85,7 @@ import EventsWithTabs from "@/pages/events-with-tabs";
 import GrantsWithTabs from "@/pages/grants-with-tabs";
 import AIToolsWithTabs from "@/pages/ai-tools-with-tabs";
 import RelationshipsWithTabs from "@/pages/relationships-with-tabs";
+import AgentValueMap from "@/pages/agent-value-map";
 import OtherWithTabs from "@/pages/other-with-tabs";
 import Temporary from "@/pages/temporary";
 
@@ -230,6 +231,7 @@ function Router() {
       <Route path="/relationships/relsci" component={RelationshipsWithTabs} />
       <Route path="/relationships/dnb" component={RelationshipsWithTabs} />
       <Route path="/relationships" component={RelationshipsWithTabs} />
+      <Route path="/agent-value-map" component={AgentValueMap} />
       <Route path="/corporate-partnerships/sponsorships" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/giving" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/volunteering" component={CorporationsWithTabs} />
@@ -358,6 +360,8 @@ function App() {
         return location.startsWith('/ai-tools');
       case 'special-projects':
         return location.startsWith('/temporary');
+      case 'agent-value-map':
+        return location.startsWith('/agent-value-map');
       default:
         return false;
     }
@@ -507,6 +511,20 @@ function App() {
                           data-testid="button-nav-relationships"
                         >
                           Relationships
+                        </Button>
+                      </div>
+                    </Link>
+
+                    {/* Agent Value Map - Direct Link */}
+                    <Link href="/agent-value-map">
+                      <div className={`relative ${isNavActive('agent-value-map') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                          data-testid="button-nav-agent-value-map"
+                        >
+                          Agent Value Map
                         </Button>
                       </div>
                     </Link>
