@@ -6,13 +6,16 @@ export default function QuadrantStrategies() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <Card className="border-0 shadow-none">
-        <CardHeader className="bg-primary/5 border-b">
+        <CardHeader 
+          className="p-6 pb-4 flex items-start justify-between"
+          style={{ backgroundColor: "rgba(222, 235, 247, 0.5)" }}
+        >
           <div className="flex items-center gap-2">
             <ArrowRight className="w-5 h-5 text-primary" />
             <div>
               <CardTitle>MOVEMENT STRATEGIES</CardTitle>
               <CardDescription className="mt-1">
-                HOW EACH QUADRANT ADVANCES TO PARTNER
+                How Each Quadrant Advances to Partner
               </CardDescription>
             </div>
           </div>

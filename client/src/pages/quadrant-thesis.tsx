@@ -1,11 +1,23 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Lightbulb } from 'lucide-react';
 
 export default function QuadrantThesis() {
   return (
     <div className="container mx-auto p-6 space-y-6">
       <Card className="border-0 shadow-none">
-        <CardHeader className="bg-primary/5 border-b">
-          <CardTitle>THE CENTRAL THESIS OF THE MODEL</CardTitle>
+        <CardHeader 
+          className="p-6 pb-4 flex items-start justify-between"
+          style={{ backgroundColor: "rgba(222, 235, 247, 0.5)" }}
+        >
+          <div className="flex items-center gap-2">
+            <Lightbulb className="w-5 h-5 text-primary" />
+            <div>
+              <CardTitle>THE CENTRAL THESIS OF THE MODEL</CardTitle>
+              <CardDescription className="mt-1">
+                The Core Principles Driving Donor Movement Toward Partnership
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="pt-6">
           {/* 2-Column Layout */}

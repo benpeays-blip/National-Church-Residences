@@ -381,14 +381,19 @@ export default function PartnerPathwayWizard() {
 
   return (
     <Card>
-      <CardHeader>
+      <CardHeader 
+        className="p-6 pb-4 flex items-start justify-between"
+        style={{ backgroundColor: "rgba(222, 235, 247, 0.5)" }}
+      >
         <div className="flex items-center gap-2">
-          <Wand2 className="h-5 w-5 text-purple-600" />
-          <CardTitle>Partner Pathway Wizard</CardTitle>
+          <Wand2 className="w-5 h-5 text-primary" />
+          <div>
+            <CardTitle>PARTNER PATHWAY WIZARD</CardTitle>
+            <CardDescription className="mt-1">
+              A Guided Workflow to Generate Your Top 5-10 Actionable Moves for the Week
+            </CardDescription>
+          </div>
         </div>
-        <CardDescription>
-          A guided workflow to generate your top 5-10 actionable moves for the week
-        </CardDescription>
       </CardHeader>
       <CardContent>
         {/* Step Indicators */}
