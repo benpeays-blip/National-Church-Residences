@@ -1262,7 +1262,7 @@ function InterviewCard({ person, onClick }: { person: InterviewPerson; onClick: 
           </div>
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <Lightbulb className="h-3 w-3 shrink-0" />
-            <span>{person.capabilities.length} capabilities needed</span>
+            <span>{person.wants.length} capabilities needed</span>
           </div>
         </div>
       </div>
