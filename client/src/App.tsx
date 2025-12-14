@@ -15,6 +15,13 @@ import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Menu } from 
 
 // Navigation dropdown categories
 const navigationDomains = {
+  "NCR Overview": {
+    items: [
+      { name: "Senior Housing", href: "/ncr/senior-housing" },
+      { name: "Care Services", href: "/ncr/care-services" },
+      { name: "Our Foundation", href: "/ncr/foundation" },
+    ]
+  },
   "Fundraising": {
     items: [
       { name: "Donors", href: "/donors" },
@@ -349,6 +356,45 @@ function App() {
               <div className="flex items-center gap-3 ml-auto">
                   {/* Dropdown Navigation */}
                   <nav className="flex items-center gap-0.5">
+                    {/* NCR Overview Dropdown - First item */}
+                    <div
+                      className="relative"
+                      onMouseEnter={() => setActiveDropdown("NCR Overview")}
+                      onMouseLeave={() => setActiveDropdown(null)}
+                    >
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => handleDropdownClick("NCR Overview")}
+                        className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
+                          activeDropdown === "NCR Overview" ? "bg-black/10" : ""
+                        }`}
+                        data-testid="button-nav-ncr-overview"
+                      >
+                        NCR Overview
+                        <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "NCR Overview" ? "rotate-180" : ""}`} />
+                      </Button>
+                      {activeDropdown === "NCR Overview" && (
+                        <div className="absolute left-0 top-full pt-1 z-50">
+                          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
+                            <div className="py-2 px-1">
+                              {navigationDomains["NCR Overview"].items.map((item) => (
+                                <Link 
+                                  key={item.name} 
+                                  href={item.href}
+                                  className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                  onClick={closeDropdown}
+                                  data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                >
+                                  {item.name}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
                     {/* Corporations - Direct Link */}
                     <Link href="/corporate-partnerships">
                       <Button
@@ -385,8 +431,8 @@ function App() {
                       </Button>
                     </Link>
 
-                    {/* Dropdown Menus */}
-                    {(Object.keys(navigationDomains) as DomainKey[]).map((domain) => (
+                    {/* Other Dropdown Menus (excluding NCR Overview which is rendered above) */}
+                    {(Object.keys(navigationDomains) as DomainKey[]).filter(d => d !== "NCR Overview").map((domain) => (
                       <div
                         key={domain}
                         className="relative"
