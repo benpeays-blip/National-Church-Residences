@@ -362,19 +362,20 @@ function App() {
           <div className="flex flex-col flex-1">
             {/* Top Blue Tab Bar */}
             <div 
-              className="flex items-center h-10 px-6 shrink-0"
+              className="flex items-end h-10 px-6 shrink-0"
               style={{ backgroundColor: '#1B3A5A' }}
             >
-              <div className="flex items-center gap-1">
+              <div className="flex items-end gap-0">
                 {topTabs.map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setSelectedTopTab(tab)}
-                    className={`px-4 py-1.5 text-sm font-medium rounded-sm transition-colors ${
+                    className={`px-5 py-2 text-sm font-medium transition-colors ${
                       selectedTopTab === tab
-                        ? 'bg-white text-[#1B3A5A]'
-                        : 'text-white/80 hover:text-white hover:bg-white/10'
+                        ? 'text-[#1B3A5A] rounded-t-md'
+                        : 'text-white/80 hover:text-white hover:bg-white/10 rounded-t-md'
                     }`}
+                    style={selectedTopTab === tab ? { backgroundColor: '#EEF9FB' } : {}}
                     data-testid={`top-tab-${tab.toLowerCase()}`}
                   >
                     {tab}
