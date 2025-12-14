@@ -58,7 +58,7 @@ const pathLabels: Record<string, string> = {
   "organization-mapper": "Organization Mapper",
   "organization-workflow-canvas": "Organization Workflow Canvas",
   "navigation-mockups": "Navigation Mockups",
-  "agent-value-map": "Agent Value Map",
+  "agent-value-map": "Agentic Plan",
 };
 
 // Map segments to their canonical route (when intermediate segments don't have their own page)

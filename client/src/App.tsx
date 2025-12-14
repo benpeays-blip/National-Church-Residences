@@ -432,7 +432,7 @@ function App() {
               <div className="flex items-center gap-3 ml-auto">
                   {/* Dropdown Navigation */}
                   <nav className="flex items-center gap-0.5">
-                    {/* Agent Value Map - Direct Link (First item) */}
+                    {/* Agentic Plan - Direct Link (First item) */}
                     <Link href="/agent-value-map">
                       <div className={`relative ${isNavActive('agent-value-map') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
                         <Button
@@ -441,7 +441,7 @@ function App() {
                           className="font-semibold text-sm text-gray-700 hover:bg-black/10"
                           data-testid="button-nav-agent-value-map"
                         >
-                          Agent Value Map
+                          Agentic Plan
                         </Button>
                       </div>
                     </Link>
