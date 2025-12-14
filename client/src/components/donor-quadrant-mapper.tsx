@@ -423,38 +423,40 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardFooter>
       </Card>
       {/* Right Panel - Quadrant Details */}
-      <Card className="lg:col-span-2">
-        <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="text-white">
-                {quadrantConfig[selectedQuadrant].label}
-              </CardTitle>
-              <CardDescription className="text-xs mt-1 text-white/80">
-                {quadrantConfig[selectedQuadrant].description}
-              </CardDescription>
-            </div>
-            <Badge variant="outline" className="text-sm" style={{ color: '#e1c47d', borderColor: '#e1c47d' }}>
-              {selectedDonors.length} {selectedDonors.length === 1 ? 'donor' : 'donors'}
-            </Badge>
-          </div>
-        </CardHeader>
-        <CardContent className="p-4 flex flex-col h-[600px]">
-          {/* Tab Buttons */}
-          <div className="flex gap-2 flex-wrap mb-4">
-            {(['partner', 'friend', 'colleague', 'acquaintance'] as QuadrantType[]).map((q) => (
-              <Button
+      <Card className="lg:col-span-2 overflow-hidden">
+        {/* Layered Tab Navigation */}
+        <div className="flex border-b bg-muted/30">
+          {(['partner', 'friend', 'colleague', 'acquaintance'] as QuadrantType[]).map((q) => {
+            const isSelected = selectedQuadrant === q;
+            const count = data.donors.filter(d => d.quadrant === q).length;
+            return (
+              <button
                 key={q}
-                variant={selectedQuadrant === q ? 'default' : 'outline'}
-                size="sm"
                 onClick={() => setSelectedQuadrant(q)}
-                className="text-xs"
+                className={`
+                  flex-1 px-3 py-3 text-center transition-all relative
+                  ${isSelected 
+                    ? 'bg-card text-foreground font-semibold border-b-2 border-b-primary shadow-sm z-10' 
+                    : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
+                  }
+                `}
                 data-testid={`tab-${q}`}
               >
-                {quadrantConfig[q].label}
-              </Button>
-            ))}
-          </div>
+                <div className="text-sm">{quadrantConfig[q].label}</div>
+                <div className={`text-xs mt-0.5 ${isSelected ? 'text-primary' : 'text-muted-foreground'}`}>
+                  {count} {count === 1 ? 'donor' : 'donors'}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+        
+        {/* Selected quadrant description */}
+        <div className="px-4 py-2 bg-muted/20 border-b text-sm text-muted-foreground">
+          {quadrantConfig[selectedQuadrant].description}
+        </div>
+        
+        <CardContent className="p-4 flex flex-col h-[560px]">
 
           {/* Donor List - Flexible height scrollable area */}
           <div className="flex-1 space-y-2 overflow-y-auto min-h-0">
