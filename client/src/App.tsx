@@ -6,7 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CommandPalette, openCommandPalette } from "@/components/command-palette";
 import { FundRazorLogo } from "@/components/FundRazorLogo";
-import ncrLogo from "@assets/image_1765636583140.png";
+import ncrLogo from "@assets/Screenshot_2025-12-14_at_1.35.54_PM_1765741001799.png";
 // Sidebar imports preserved for future use
 // import { AppSidebar } from "@/components/app-sidebar";
 // import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
