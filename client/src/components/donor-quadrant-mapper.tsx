@@ -187,6 +187,20 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
               <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
 
+              {/* Partner Quadrant Drop Zone - Top Right */}
+              <div
+                className={`absolute top-0 right-0 w-1/2 h-1/2 transition-all duration-200 ${
+                  isPartnerHovered 
+                    ? 'bg-emerald-200/60 border-2 border-emerald-500' 
+                    : ''
+                }`}
+                onDragOver={handleDragOver}
+                onDragEnter={handleDragEnter}
+                onDragLeave={handleDragLeave}
+                onDrop={handleDrop}
+                data-testid="drop-zone-partner"
+              />
+
             {/* Quadrants - Clickable */}
             {/* Donor Dots with Hover Cards - rendered first so labels appear on top */}
             {data.donors.map((donor) => {
@@ -200,10 +214,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                     draggable={isDraggable}
                     onDragStart={(e) => handleDragStart(e, donor)}
                     onDragEnd={handleDragEnd}
-                    className={`absolute w-2.5 h-2.5 rounded-full shadow-sm transition-all border-0 p-0 z-10 ${
+                    className={`absolute w-2.5 h-2.5 rounded-full shadow-sm transition-all border-0 p-0 z-10 bg-primary/80 ${
                       isDraggable 
-                        ? 'cursor-grab active:cursor-grabbing hover:scale-150 bg-primary/80' 
-                        : 'cursor-pointer hover:scale-150 bg-emerald-600'
+                        ? 'cursor-grab active:cursor-grabbing hover:scale-150' 
+                        : 'cursor-pointer hover:scale-150'
                     } ${isBeingDragged ? 'opacity-50 scale-125' : ''}`}
                     style={{
                       left: `calc(${donor.structure}% - 5px)`,
@@ -348,31 +362,21 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               </button>
             </div>
 
-            {/* Top Right - Partner (Drop Target) */}
-            <div 
-              className="absolute left-[75%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto"
-              onDragOver={handleDragOver}
-              onDragEnter={handleDragEnter}
-              onDragLeave={handleDragLeave}
-              onDrop={handleDrop}
-            >
+            {/* Top Right - Partner */}
+            <div className="absolute left-[75%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('partner')}
-                className={`relative px-3 py-2 rounded-lg border-2 shadow-sm cursor-pointer transition-all duration-200 text-center w-[120px] ${
-                  isPartnerHovered 
-                    ? 'bg-emerald-100 border-emerald-500 text-emerald-800 scale-110 shadow-lg' 
-                    : 'bg-[#eef9fb] border-border text-[#395174] hover:border-primary'
-                }`}
+                className="relative px-3 py-2 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#eef9fb] text-[#395174] w-[120px]"
                 data-testid="quadrant-partner"
               >
                 <div className="font-bold text-base">Partner</div>
-                <Badge className={`mt-1 ${isPartnerHovered ? 'bg-emerald-200 text-emerald-800' : 'bg-[#f4f4f4] text-[#395174]'}`} data-testid="count-partner">{data.counts.partner}</Badge>
-                {isPartnerHovered && draggedDonor && (
-                  <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow">
-                    Drop to generate action plan
-                  </div>
-                )}
+                <Badge className="mt-1 bg-[#f4f4f4] text-[#395174]" data-testid="count-partner">{data.counts.partner}</Badge>
               </button>
+              {isPartnerHovered && draggedDonor && (
+                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow z-40">
+                  Drop to generate action plan
+                </div>
+              )}
             </div>
 
             {/* Bottom Left - Acquaintance */}
