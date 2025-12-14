@@ -27,6 +27,13 @@ const navigationDomains = {
       { name: "Grants", href: "/grants" },
     ]
   },
+  "Fundraising": {
+    items: [
+      { name: "Pipeline", href: "/pipeline" },
+      { name: "Quadrant", href: "/quadrant" },
+      { name: "Relationships", href: "/relationships" },
+    ]
+  },
   "Campaigns & Events": {
     items: [
       { name: "Campaigns", href: "/campaigns" },
