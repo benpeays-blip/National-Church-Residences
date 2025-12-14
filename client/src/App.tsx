@@ -32,7 +32,7 @@ const navigationDomains = {
       { name: "Events", href: "/events" },
     ]
   },
-  "Operations & Strategy": {
+  "Other": {
     items: [
       { name: "Infrastructure", href: "/other" },
       { name: "Special Projects", href: "/temporary" },
@@ -496,29 +496,29 @@ function App() {
                       </Button>
                     </Link>
 
-                    {/* Operations & Strategy Dropdown */}
+                    {/* Other Dropdown */}
                     <div
                       className="relative"
-                      onMouseEnter={() => setActiveDropdown("Operations & Strategy")}
+                      onMouseEnter={() => setActiveDropdown("Other")}
                       onMouseLeave={() => setActiveDropdown(null)}
                     >
                       <Button
                         variant="ghost"
                         size="sm"
-                        onClick={() => handleDropdownClick("Operations & Strategy")}
+                        onClick={() => handleDropdownClick("Other")}
                         className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
-                          activeDropdown === "Operations & Strategy" ? "bg-black/10" : ""
+                          activeDropdown === "Other" ? "bg-black/10" : ""
                         }`}
-                        data-testid="button-nav-operations-and-strategy"
+                        data-testid="button-nav-other"
                       >
-                        Operations & Strategy
-                        <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Operations & Strategy" ? "rotate-180" : ""}`} />
+                        Other
+                        <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Other" ? "rotate-180" : ""}`} />
                       </Button>
-                      {activeDropdown === "Operations & Strategy" && (
+                      {activeDropdown === "Other" && (
                         <div className="absolute right-0 top-full pt-1 z-50">
                           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
                             <div className="py-2 px-1">
-                              {navigationDomains["Operations & Strategy"].items.map((item) => (
+                              {navigationDomains["Other"].items.map((item) => (
                                 <Link 
                                   key={item.name} 
                                   href={item.href}
