@@ -155,11 +155,11 @@ export default function DashboardHome() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Top Opportunities */}
         <Card className="border">
-          <CardHeader style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}>
+          <CardHeader style={{ backgroundColor: '#395174' }}>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-base font-semibold">Top Opportunities</CardTitle>
+              <CardTitle className="text-base font-semibold text-white">Top Opportunities</CardTitle>
               <Link href="/pipeline">
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="text-white hover:text-white hover:bg-white/10">
                   View All
                   <ArrowRight className="h-3 w-3 ml-1" />
                 </Button>
@@ -225,14 +225,14 @@ export default function DashboardHome() {
 
         {/* Next Best Actions */}
         <Card className="border">
-          <CardHeader style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}>
+          <CardHeader style={{ backgroundColor: '#395174' }}>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-base font-semibold flex items-center gap-2">
-                <Sparkles className="h-4 w-4" style={{ color: "#084594" }} />
+              <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
+                <Sparkles className="h-4 w-4" style={{ color: "#e1c47d" }} />
                 Next Best Actions
               </CardTitle>
               <Link href="/workflow/task-priorities">
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="text-white hover:text-white hover:bg-white/10">
                   View All
                   <ArrowRight className="h-3 w-3 ml-1" />
                 </Button>
@@ -290,11 +290,11 @@ export default function DashboardHome() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Gifts */}
         <Card className="border">
-          <CardHeader style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}>
+          <CardHeader style={{ backgroundColor: '#395174' }}>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-base font-semibold">Recent Gifts</CardTitle>
+              <CardTitle className="text-base font-semibold text-white">Recent Gifts</CardTitle>
               <Link href="/gifts">
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="text-white hover:text-white hover:bg-white/10">
                   View All
                   <ArrowRight className="h-3 w-3 ml-1" />
                 </Button>
@@ -341,11 +341,11 @@ export default function DashboardHome() {
 
         {/* Top Campaigns */}
         <Card className="border">
-          <CardHeader style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}>
+          <CardHeader style={{ backgroundColor: '#395174' }}>
             <div className="flex items-center justify-between">
-              <CardTitle className="text-base font-semibold">Active Campaigns</CardTitle>
+              <CardTitle className="text-base font-semibold text-white">Active Campaigns</CardTitle>
               <Link href="/campaigns">
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" className="text-white hover:text-white hover:bg-white/10">
                   View All
                   <ArrowRight className="h-3 w-3 ml-1" />
                 </Button>
