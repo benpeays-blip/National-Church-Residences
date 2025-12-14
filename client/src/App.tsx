@@ -256,6 +256,7 @@ function Router() {
       <Route path="/temporary/technology-categories" component={Temporary} />
       <Route path="/temporary/optimization-ideas" component={Temporary} />
       <Route path="/temporary/risk-compliance" component={Temporary} />
+      <Route path="/temporary/infrastructure" component={Temporary} />
       
       <Route path="/campaigns/active" component={CampaignsWithTabs} />
       <Route path="/campaigns/planned" component={CampaignsWithTabs} />
@@ -516,18 +517,6 @@ function App() {
                         data-testid="button-nav-ai-tools"
                       >
                         AI Tools
-                      </Button>
-                    </Link>
-
-                    {/* Infrastructure - Direct Link */}
-                    <Link href="/other">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                        data-testid="button-nav-infrastructure"
-                      >
-                        Infrastructure
                       </Button>
                     </Link>
 

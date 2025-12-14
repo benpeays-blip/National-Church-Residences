@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import TechStackMapper from "@/pages/tech-stack-mapper";
+import OtherWithTabs from "@/pages/other-with-tabs";
 
 import { techProducts, TechProduct } from "@/data/tech-products";
 
@@ -54,6 +55,13 @@ const specialProjectsTabs: SpecialProjectsTab[] = [
     path: "/temporary/risk-compliance",
     title: "Risk & Compliance",
     subtitle: "Regulatory landscape and compliance requirements across healthcare, housing, and fundraising operations."
+  },
+  {
+    label: "Infrastructure",
+    value: "infrastructure",
+    path: "/temporary/infrastructure",
+    title: "Infrastructure",
+    subtitle: "System architecture, workflow tools, and organizational mapping for NCR operations."
   },
 ];
 
@@ -2255,6 +2263,7 @@ export default function Temporary() {
     if (location.includes('/temporary/technology-categories')) return 'technology-categories';
     if (location.includes('/temporary/optimization-ideas')) return 'optimization-ideas';
     if (location.includes('/temporary/risk-compliance')) return 'risk-compliance';
+    if (location.includes('/temporary/infrastructure')) return 'infrastructure';
     return 'interviews';
   };
 
@@ -2270,6 +2279,8 @@ export default function Temporary() {
     ContentComponent = OptimizationIdeas;
   } else if (activeTab === "risk-compliance") {
     ContentComponent = RiskCompliance;
+  } else if (activeTab === "infrastructure") {
+    ContentComponent = OtherWithTabs;
   }
 
   return (
