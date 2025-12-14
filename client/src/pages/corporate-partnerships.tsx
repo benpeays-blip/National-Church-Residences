@@ -159,9 +159,9 @@ export default function CorporatePartnershipsPage() {
 
   return (
     <div className="space-y-6">
-      <div className="px-6 py-8" style={{ backgroundColor: '#395174' }}>
-        <h1 className="text-3xl font-bold text-white">Corporate Partnerships</h1>
-        <p className="text-sm text-white/80">
+      <div className="px-6 py-8" style={{ backgroundColor: '#d4e6f1' }}>
+        <h1 className="text-3xl font-bold text-gray-800">Corporate Partnerships</h1>
+        <p className="text-sm text-gray-600">
           Manage and track partnerships with corporate sponsors, volunteers, and donors
         </p>
       </div>
