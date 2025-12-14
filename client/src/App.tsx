@@ -34,7 +34,6 @@ const navigationDomains = {
   },
   "Other": {
     items: [
-      { name: "Infrastructure", href: "/other" },
       { name: "Special Projects", href: "/temporary" },
     ]
   }
@@ -522,6 +521,18 @@ function App() {
                         data-testid="button-nav-ai-tools"
                       >
                         AI Tools
+                      </Button>
+                    </Link>
+
+                    {/* Infrastructure - Direct Link */}
+                    <Link href="/other">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                        data-testid="button-nav-infrastructure"
+                      >
+                        Infrastructure
                       </Button>
                     </Link>
 
