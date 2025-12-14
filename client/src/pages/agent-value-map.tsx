@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { AccentCard, getAccentBgClass, AccentColor } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
@@ -39,63 +40,64 @@ import {
   CircleDot,
   Gauge,
   Network,
-  BookOpen
+  BookOpen,
+  LucideIcon
 } from "lucide-react";
 
 export default function AgentValueMap() {
   const [activeTab, setActiveTab] = useState("overview");
 
-  // Data Foundation items
-  const dataFoundation = [
-    { name: "Company Information", description: "NCR entity master (1,100+ entities), programs, locations, properties, service lines", icon: Building2, color: "bg-blue-500" },
-    { name: "Business Activity", description: "Resident events, service coordinator activity, case notes, intakes, requalifications, volunteer participation", icon: Briefcase, color: "bg-green-500" },
-    { name: "Financial Strength", description: "Workday GL, AP/AR, allocations, grants, restricted/unrestricted funds, property-level P&Ls", icon: DollarSign, color: "bg-emerald-500" },
-    { name: "Filings & Events", description: "HUD recerts, CMS filings, audits, board packets, incident reporting, compliance attestations", icon: FileText, color: "bg-purple-500" },
-    { name: "Hierarchies", description: "Org structure, property → region → division, legal entity → operating unit mappings", icon: Layers, color: "bg-indigo-500" },
-    { name: "Principals & Contacts", description: "Donors, prospects, board, vendors, grant officers, partner contacts, resident emergency contacts", icon: Users, color: "bg-pink-500" },
-    { name: "IP Intelligence", description: "Policies/procedures, templates, program manuals, training content, contracts", icon: BookOpen, color: "bg-cyan-500" },
-    { name: "Fraud Insights", description: "Payment anomalies, identity verification flags, benefits eligibility anomalies, duplicate vendor/donor records", icon: AlertTriangle, color: "bg-amber-500" },
+  // Data Foundation items with NCR brand colors
+  const dataFoundation: Array<{ name: string; description: string; icon: LucideIcon; accent: AccentColor }> = [
+    { name: "Company Information", description: "NCR entity master (1,100+ entities), programs, locations, properties, service lines", icon: Building2, accent: "teal" },
+    { name: "Business Activity", description: "Resident events, service coordinator activity, case notes, intakes, requalifications, volunteer participation", icon: Briefcase, accent: "olive" },
+    { name: "Financial Strength", description: "Workday GL, AP/AR, allocations, grants, restricted/unrestricted funds, property-level P&Ls", icon: DollarSign, accent: "lime" },
+    { name: "Filings & Events", description: "HUD recerts, CMS filings, audits, board packets, incident reporting, compliance attestations", icon: FileText, accent: "coral" },
+    { name: "Hierarchies", description: "Org structure, property → region → division, legal entity → operating unit mappings", icon: Layers, accent: "sky" },
+    { name: "Principals & Contacts", description: "Donors, prospects, board, vendors, grant officers, partner contacts, resident emergency contacts", icon: Users, accent: "orange" },
+    { name: "IP Intelligence", description: "Policies/procedures, templates, program manuals, training content, contracts", icon: BookOpen, accent: "tealDark" },
+    { name: "Fraud Insights", description: "Payment anomalies, identity verification flags, benefits eligibility anomalies, duplicate vendor/donor records", icon: AlertTriangle, accent: "coralDark" },
   ];
 
   // Consumption channels
-  const consumptionChannels = [
-    { name: "Platform UIs", description: "NCR Unified App Shell (Donor Hub, Grants Hub, Volunteer Hub, Resident Engagement Hub, Governance Hub, Strategy Hub, Ops/Security Hub)", icon: Monitor, color: "bg-blue-500" },
-    { name: "Bulk Data", description: "Controlled exports, board packs, regulator-ready extracts, property performance snapshots", icon: Database, color: "bg-slate-500" },
-    { name: "Transactional Data", description: "Intake submissions, HUD recerts, billing/claims, gift acknowledgments, volunteer shifts", icon: Zap, color: "bg-yellow-500" },
-    { name: "AI-Ready Data", description: "Curated feature stores for forecasting occupancy/staffing, donor propensity, compliance risk", icon: Bot, color: "bg-purple-500" },
-    { name: "Marketplaces", description: "Future: vetted agent marketplace for internal NCR teams (approved automations only)", icon: Globe, color: "bg-green-500" },
-    { name: "Agents", description: "The agentic teams below, invoked from the UI and governed centrally", icon: Sparkles, color: "bg-pink-500" },
+  const consumptionChannels: Array<{ name: string; description: string; icon: LucideIcon; accent: AccentColor }> = [
+    { name: "Platform UIs", description: "NCR Unified App Shell (Donor Hub, Grants Hub, Volunteer Hub, Resident Engagement Hub, Governance Hub, Strategy Hub, Ops/Security Hub)", icon: Monitor, accent: "sky" },
+    { name: "Bulk Data", description: "Controlled exports, board packs, regulator-ready extracts, property performance snapshots", icon: Database, accent: "teal" },
+    { name: "Transactional Data", description: "Intake submissions, HUD recerts, billing/claims, gift acknowledgments, volunteer shifts", icon: Zap, accent: "orange" },
+    { name: "AI-Ready Data", description: "Curated feature stores for forecasting occupancy/staffing, donor propensity, compliance risk", icon: Bot, accent: "coral" },
+    { name: "Marketplaces", description: "Future: vetted agent marketplace for internal NCR teams (approved automations only)", icon: Globe, accent: "lime" },
+    { name: "Agents", description: "The agentic teams below, invoked from the UI and governed centrally", icon: Sparkles, accent: "olive" },
   ];
 
   // Agent catalogue
-  const agentCatalogue = [
-    { name: "CareGuide Agent", domain: "Healthcare + Housing", description: "Unified intake wizard, de-duplication, validation, routing across systems", icon: Heart, color: "bg-red-500" },
-    { name: "Housing Agent", domain: "Housing", description: "HUD requalification workflows, document completeness checks, deadline management", icon: Home, color: "bg-blue-500" },
-    { name: "Healthcare Agent", domain: "Healthcare", description: "Billing workflow automation, claim validation, Workday integration support", icon: Stethoscope, color: "bg-green-500" },
-    { name: "Document Agent", domain: "Content", description: "Donor letters, impact narratives, grant narratives/reports, volunteer recognition", icon: FileText, color: "bg-purple-500" },
-    { name: "Donor Agent", domain: "Fundraising", description: "ROI dashboards, pipeline hygiene, acquisition funnel, 'next best action'", icon: HandHeart, color: "bg-pink-500" },
-    { name: "Grants Agent", domain: "Grants", description: "Pipeline dashboard, dedup outreach, outcomes reporting, reporting automation", icon: Target, color: "bg-orange-500" },
-    { name: "Financial Agent", domain: "Finance", description: "Consolidated reporting, double-count detection, entity-level reconciliation flags", icon: DollarSign, color: "bg-emerald-500" },
-    { name: "Compliance Agent", domain: "Compliance", description: "HUD/CMS filing prep, entity registry, action logging, evidence packs for audit", icon: Shield, color: "bg-indigo-500" },
-    { name: "Bias Monitoring Agent", domain: "Risk", description: "Fairness audits for eligibility decisions + any scoring models; anomaly detection", icon: Scale, color: "bg-amber-500" },
-    { name: "Strategy Agent", domain: "Strategy", description: "Forecasting (occupancy/staffing/finance), ROI simulations, system inventory", icon: LineChart, color: "bg-cyan-500" },
-    { name: "Resident Engagement Agent", domain: "Engagement", description: "Accessibility checks, multilingual readiness, adoption prompts, digital divide workflows", icon: Users, color: "bg-teal-500" },
-    { name: "Security Agent", domain: "Security", description: "Monitors unusual agent activity patterns + data access anomalies; ties to SIEM tooling", icon: Lock, color: "bg-slate-500" },
+  const agentCatalogue: Array<{ name: string; domain: string; description: string; icon: LucideIcon; accent: AccentColor }> = [
+    { name: "CareGuide Agent", domain: "Healthcare + Housing", description: "Unified intake wizard, de-duplication, validation, routing across systems", icon: Heart, accent: "coral" },
+    { name: "Housing Agent", domain: "Housing", description: "HUD requalification workflows, document completeness checks, deadline management", icon: Home, accent: "sky" },
+    { name: "Healthcare Agent", domain: "Healthcare", description: "Billing workflow automation, claim validation, Workday integration support", icon: Stethoscope, accent: "lime" },
+    { name: "Document Agent", domain: "Content", description: "Donor letters, impact narratives, grant narratives/reports, volunteer recognition", icon: FileText, accent: "coral" },
+    { name: "Donor Agent", domain: "Fundraising", description: "ROI dashboards, pipeline hygiene, acquisition funnel, 'next best action'", icon: HandHeart, accent: "orange" },
+    { name: "Grants Agent", domain: "Grants", description: "Pipeline dashboard, dedup outreach, outcomes reporting, reporting automation", icon: Target, accent: "orangeDark" },
+    { name: "Financial Agent", domain: "Finance", description: "Consolidated reporting, double-count detection, entity-level reconciliation flags", icon: DollarSign, accent: "lime" },
+    { name: "Compliance Agent", domain: "Compliance", description: "HUD/CMS filing prep, entity registry, action logging, evidence packs for audit", icon: Shield, accent: "teal" },
+    { name: "Bias Monitoring Agent", domain: "Risk", description: "Fairness audits for eligibility decisions + any scoring models; anomaly detection", icon: Scale, accent: "olive" },
+    { name: "Strategy Agent", domain: "Strategy", description: "Forecasting (occupancy/staffing/finance), ROI simulations, system inventory", icon: LineChart, accent: "sky" },
+    { name: "Resident Engagement Agent", domain: "Engagement", description: "Accessibility checks, multilingual readiness, adoption prompts, digital divide workflows", icon: Users, accent: "tealDark" },
+    { name: "Security Agent", domain: "Security", description: "Monitors unusual agent activity patterns + data access anomalies; ties to SIEM tooling", icon: Lock, accent: "oliveDark" },
   ];
 
   // Personas
-  const personas = [
-    { role: "Chief Operations Officer / Ops Leaders", benefit: "Gets 'system of work' visibility, staffing forecasts, operational compliance posture", icon: Settings, color: "bg-blue-500" },
-    { role: "Chief Risk Officer / Compliance Leadership", benefit: "Audit trails, filing automation, Purview lineage, bias monitoring, exception handling", icon: AlertTriangle, color: "bg-amber-500" },
-    { role: "Chief Compliance Officer / Legal", benefit: "Evidence packs, policy enforcement, access governance, filing timeliness and accuracy", icon: Scale, color: "bg-indigo-500" },
-    { role: "Data Operations", benefit: "OneLake pipelines, canonical objects, model monitoring, quality SLAs", icon: Database, color: "bg-slate-500" },
-    { role: "Finance Leadership", benefit: "Consolidated P&L, entity registry accuracy, close acceleration, anomaly detection", icon: DollarSign, color: "bg-emerald-500" },
-    { role: "Development Leadership", benefit: "Pipeline clarity, dedup outreach, rapid reporting, donor confidence through metrics", icon: TrendingUp, color: "bg-pink-500" },
-    { role: "Program Leadership", benefit: "Less paperwork, fewer reworks, more time with residents/patients", icon: Heart, color: "bg-red-500" },
+  const personas: Array<{ role: string; benefit: string; icon: LucideIcon; accent: AccentColor }> = [
+    { role: "Chief Operations Officer / Ops Leaders", benefit: "Gets 'system of work' visibility, staffing forecasts, operational compliance posture", icon: Settings, accent: "sky" },
+    { role: "Chief Risk Officer / Compliance Leadership", benefit: "Audit trails, filing automation, Purview lineage, bias monitoring, exception handling", icon: AlertTriangle, accent: "orange" },
+    { role: "Chief Compliance Officer / Legal", benefit: "Evidence packs, policy enforcement, access governance, filing timeliness and accuracy", icon: Scale, accent: "teal" },
+    { role: "Data Operations", benefit: "OneLake pipelines, canonical objects, model monitoring, quality SLAs", icon: Database, accent: "olive" },
+    { role: "Finance Leadership", benefit: "Consolidated P&L, entity registry accuracy, close acceleration, anomaly detection", icon: DollarSign, accent: "lime" },
+    { role: "Development Leadership", benefit: "Pipeline clarity, dedup outreach, rapid reporting, donor confidence through metrics", icon: TrendingUp, accent: "coral" },
+    { role: "Program Leadership", benefit: "Less paperwork, fewer reworks, more time with residents/patients", icon: Heart, accent: "coralDark" },
   ];
 
   // Roadmap phases
-  const roadmapPhases = [
+  const roadmapPhases: Array<{ phase: string; title: string; timeline: string; goal: string; items: string[]; deliverables: string[]; accent: AccentColor }> = [
     {
       phase: "Phase 0",
       title: "Guardrails First",
@@ -111,7 +113,7 @@ export default function AgentValueMap() {
         "Governance & Compliance Hub (MVP): audit trail viewer + agent action log + data access rules dashboard",
         "'Agent Safety Standard' document NCR can show auditors"
       ],
-      color: "border-l-amber-500"
+      accent: "orange"
     },
     {
       phase: "Phase 1",
@@ -128,7 +130,7 @@ export default function AgentValueMap() {
         "HUD recert 'workflow in a box' (tasks, deadlines, validations)",
         "Finance transparency pilot: consolidated view for a subset of entities/properties"
       ],
-      color: "border-l-blue-500"
+      accent: "sky"
     },
     {
       phase: "Phase 2",
@@ -145,7 +147,7 @@ export default function AgentValueMap() {
         "Donor Hub ROI dashboards (pilot) that tie gifts → programs → outcomes",
         "Grants Hub pipeline dashboard + report generator"
       ],
-      color: "border-l-green-500"
+      accent: "lime"
     },
     {
       phase: "Phase 3",
@@ -162,50 +164,50 @@ export default function AgentValueMap() {
         "Entity registry system of record (with exceptions workflow)",
         "Operational resilience: continuity workflows + security/ops dashboards"
       ],
-      color: "border-l-purple-500"
+      accent: "coral"
     }
   ];
 
   // App Shell hubs
-  const appShellHubs = [
-    { name: "Donor Hub", description: "ROI dashboards, impact narratives, acknowledgments, pipeline views", icon: HandHeart, color: "bg-pink-500" },
-    { name: "Grants Hub", description: "Pipeline, deadlines, report generator, dedup outreach, outcomes", icon: Target, color: "bg-orange-500" },
-    { name: "Volunteer Hub", description: "Onboarding, scheduling, recognition automation, wishlists integration", icon: Users, color: "bg-blue-500" },
-    { name: "Resident Engagement Hub", description: "Intake, service pathways, multilingual support, accessibility validation", icon: Heart, color: "bg-red-500" },
-    { name: "Governance & Compliance Hub", description: "Agent audit trails, filings, Purview lineage, fairness audit reports", icon: Shield, color: "bg-indigo-500" },
-    { name: "Strategy & Sustainability Hub", description: "Forecasts, scenario modeling, ROI simulations, sustainability metrics", icon: LineChart, color: "bg-cyan-500" },
-    { name: "Ops & Security Hub", description: "Continuity workflows, system uptime, agent observability, incident playbooks", icon: Lock, color: "bg-slate-500" },
+  const appShellHubs: Array<{ name: string; description: string; icon: LucideIcon; accent: AccentColor }> = [
+    { name: "Donor Hub", description: "ROI dashboards, impact narratives, acknowledgments, pipeline views", icon: HandHeart, accent: "coral" },
+    { name: "Grants Hub", description: "Pipeline, deadlines, report generator, dedup outreach, outcomes", icon: Target, accent: "orange" },
+    { name: "Volunteer Hub", description: "Onboarding, scheduling, recognition automation, wishlists integration", icon: Users, accent: "sky" },
+    { name: "Resident Engagement Hub", description: "Intake, service pathways, multilingual support, accessibility validation", icon: Heart, accent: "coralDark" },
+    { name: "Governance & Compliance Hub", description: "Agent audit trails, filings, Purview lineage, fairness audit reports", icon: Shield, accent: "teal" },
+    { name: "Strategy & Sustainability Hub", description: "Forecasts, scenario modeling, ROI simulations, sustainability metrics", icon: LineChart, accent: "olive" },
+    { name: "Ops & Security Hub", description: "Continuity workflows, system uptime, agent observability, incident playbooks", icon: Lock, accent: "lime" },
   ];
 
   // Day in the life steps
-  const dayInTheLife = [
-    { step: 1, title: "Resident starts intake", description: "A resident starts an intake once in CareGuide 2.0. CareGuide Agent validates + routes data to the right downstream workflows.", icon: UserCheck },
-    { step: 2, title: "Housing Agent activates", description: "Housing Agent launches HUD requalification steps automatically. Missing docs flagged; reminders sent; staff dashboard shows exceptions only.", icon: Home },
-    { step: 3, title: "Outcomes flow to OneLake", description: "Outcomes (services delivered) flow into OneLake with governance. Donor Agent generates ROI dashboard views; Document Agent generates a narrative.", icon: Database },
-    { step: 4, title: "Grants Agent coordinates", description: "Grants Agent updates a pipeline board + prevents duplicate outreach. Reports are produced with metrics, not anecdotes.", icon: Target },
-    { step: 5, title: "Compliance Agent prepares", description: "Compliance Agent prepares an evidence pack for filings. Every action logged; Purview lineage shows exactly where data came from.", icon: Shield },
-    { step: 6, title: "Strategy Agent forecasts", description: "Strategy Agent shows leadership a staffing/occupancy forecast. Leadership sees scenarios and can make staffing decisions with confidence.", icon: LineChart },
+  const dayInTheLife: Array<{ step: number; title: string; description: string; icon: LucideIcon; accent: AccentColor }> = [
+    { step: 1, title: "Resident starts intake", description: "A resident starts an intake once in CareGuide 2.0. CareGuide Agent validates + routes data to the right downstream workflows.", icon: UserCheck, accent: "teal" },
+    { step: 2, title: "Housing Agent activates", description: "Housing Agent launches HUD requalification steps automatically. Missing docs flagged; reminders sent; staff dashboard shows exceptions only.", icon: Home, accent: "sky" },
+    { step: 3, title: "Outcomes flow to OneLake", description: "Outcomes (services delivered) flow into OneLake with governance. Donor Agent generates ROI dashboard views; Document Agent generates a narrative.", icon: Database, accent: "olive" },
+    { step: 4, title: "Grants Agent coordinates", description: "Grants Agent updates a pipeline board + prevents duplicate outreach. Reports are produced with metrics, not anecdotes.", icon: Target, accent: "orange" },
+    { step: 5, title: "Compliance Agent prepares", description: "Compliance Agent prepares an evidence pack for filings. Every action logged; Purview lineage shows exactly where data came from.", icon: Shield, accent: "coral" },
+    { step: 6, title: "Strategy Agent forecasts", description: "Strategy Agent shows leadership a staffing/occupancy forecast. Leadership sees scenarios and can make staffing decisions with confidence.", icon: LineChart, accent: "lime" },
   ];
 
   // Governance non-negotiables
-  const governanceItems = [
-    { title: "Human-in-the-loop for high-stakes decisions", description: "Eligibility approvals, adverse actions, filings submission sign-off", icon: UserCheck, color: "bg-blue-500" },
-    { title: "Full audit trails", description: "Every agent action: who, what, when, data touched, output produced", icon: ClipboardCheck, color: "bg-green-500" },
-    { title: "Purview-enforced access controls", description: "HIPAA/PII boundaries; least-privilege role-based access", icon: Lock, color: "bg-indigo-500" },
-    { title: "Bias monitoring & fairness audits", description: "Required for eligibility decisions and any scoring models", icon: Scale, color: "bg-amber-500" },
-    { title: "Model risk management", description: "Versioning, evaluation, drift monitoring, rollback procedures", icon: AlertTriangle, color: "bg-red-500" },
-    { title: "Data retention & redaction rules", description: "Especially for health/resident data and donor privacy", icon: Eye, color: "bg-purple-500" },
+  const governanceItems: Array<{ title: string; description: string; icon: LucideIcon; accent: AccentColor }> = [
+    { title: "Human-in-the-loop for high-stakes decisions", description: "Eligibility approvals, adverse actions, filings submission sign-off", icon: UserCheck, accent: "sky" },
+    { title: "Full audit trails", description: "Every agent action: who, what, when, data touched, output produced", icon: ClipboardCheck, accent: "lime" },
+    { title: "Purview-enforced access controls", description: "HIPAA/PII boundaries; least-privilege role-based access", icon: Lock, accent: "teal" },
+    { title: "Bias monitoring & fairness audits", description: "Required for eligibility decisions and any scoring models", icon: Scale, accent: "orange" },
+    { title: "Model risk management", description: "Versioning, evaluation, drift monitoring, rollback procedures", icon: AlertTriangle, accent: "coral" },
+    { title: "Data retention & redaction rules", description: "Especially for health/resident data and donor privacy", icon: Eye, accent: "olive" },
   ];
 
   // Scorecard metrics
-  const scorecardMetrics = [
-    { domain: "Housing", metrics: ["HUD recert cycle time ↓", "Error rate ↓", "Staff hours saved ↑", "Compliance exceptions ↓"], color: "bg-blue-500" },
-    { domain: "Healthcare", metrics: ["Claim rejection rate ↓", "Billing cycle time ↓", "Duplicate intake rate ↓"], color: "bg-green-500" },
-    { domain: "Finance", metrics: ["Close time ↓", "Reconciliation exceptions ↓", "Entity mapping accuracy ↑"], color: "bg-emerald-500" },
-    { domain: "Fundraising", metrics: ["Acknowledgment time ↓", "Donor retention ↑", "Pipeline coverage ↑", "ROI reporting adoption ↑"], color: "bg-pink-500" },
-    { domain: "Grants", metrics: ["On-time submissions ↑", "Duplicate outreach incidents ↓", "Report turnaround time ↓"], color: "bg-orange-500" },
-    { domain: "Compliance & Risk", metrics: ["Audit findings ↓", "Filing timeliness ↑", "Data access violations ↓", "Bias flags resolved time ↓"], color: "bg-indigo-500" },
-    { domain: "Adoption", metrics: ["Active users ↑", "Spreadsheet dependency ↓", "Agent tasks completed ↑"], color: "bg-purple-500" },
+  const scorecardMetrics: Array<{ domain: string; metrics: string[]; accent: AccentColor }> = [
+    { domain: "Housing", metrics: ["HUD recert cycle time ↓", "Error rate ↓", "Staff hours saved ↑", "Compliance exceptions ↓"], accent: "sky" },
+    { domain: "Healthcare", metrics: ["Claim rejection rate ↓", "Billing cycle time ↓", "Duplicate intake rate ↓"], accent: "lime" },
+    { domain: "Finance", metrics: ["Close time ↓", "Reconciliation exceptions ↓", "Entity mapping accuracy ↑"], accent: "limeDark" },
+    { domain: "Fundraising", metrics: ["Acknowledgment time ↓", "Donor retention ↑", "Pipeline coverage ↑", "ROI reporting adoption ↑"], accent: "coral" },
+    { domain: "Grants", metrics: ["On-time submissions ↑", "Duplicate outreach incidents ↓", "Report turnaround time ↓"], accent: "orange" },
+    { domain: "Compliance & Risk", metrics: ["Audit findings ↓", "Filing timeliness ↑", "Data access violations ↓", "Bias flags resolved time ↓"], accent: "teal" },
+    { domain: "Adoption", metrics: ["Active users ↑", "Spreadsheet dependency ↓", "Agent tasks completed ↑"], accent: "olive" },
   ];
 
   // Agent vs Infrastructure
@@ -258,10 +260,10 @@ export default function AgentValueMap() {
         {/* Overview Tab */}
         <TabsContent value="overview" className="space-y-6">
           {/* North Star */}
-          <Card className="border-l-4 border-l-primary">
+          <AccentCard accent="teal">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Target className="w-5 h-5 text-primary" />
+                <Target className="w-5 h-5 text-[#7FA3A1]" />
                 North Star
               </CardTitle>
             </CardHeader>
@@ -270,13 +272,13 @@ export default function AgentValueMap() {
                 Build a <strong>governed NCR Data + Agent platform</strong> where staff, donors, residents, and partners interact through one app layer—while <strong>Purview enforces privacy, auditability, and accountability</strong>.
               </p>
             </CardContent>
-          </Card>
+          </AccentCard>
 
           {/* Data Backbone Target */}
-          <Card>
+          <AccentCard accent="olive">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Database className="w-5 h-5 text-primary" />
+                <Database className="w-5 h-5 text-[#A5A033]" />
                 NCR Data Backbone Target
               </CardTitle>
             </CardHeader>
@@ -296,13 +298,13 @@ export default function AgentValueMap() {
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </AccentCard>
 
           {/* Day in the Life */}
-          <Card>
+          <AccentCard accent="orange">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Calendar className="w-5 h-5 text-primary" />
+                <Calendar className="w-5 h-5 text-[#E8923A]" />
                 Day in the Life Demo Storyline
               </CardTitle>
               <CardDescription>How agents work together in practice</CardDescription>
@@ -311,8 +313,8 @@ export default function AgentValueMap() {
               <div className="space-y-4">
                 {dayInTheLife.map((item, index) => (
                   <div key={item.step} className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <span className="font-bold text-primary">{item.step}</span>
+                    <div className={`flex-shrink-0 w-10 h-10 rounded-full ${getAccentBgClass(item.accent)} flex items-center justify-center`}>
+                      <span className="font-bold text-white">{item.step}</span>
                     </div>
                     <div className="flex-1 pb-4 border-b last:border-b-0">
                       <div className="flex items-center gap-2">
@@ -328,44 +330,47 @@ export default function AgentValueMap() {
                 ))}
               </div>
             </CardContent>
-          </Card>
+          </AccentCard>
 
           {/* Executive Takeaway */}
-          <Card className="bg-primary/5">
+          <AccentCard accent="lime">
             <CardHeader>
-              <CardTitle className="text-xl">Executive Takeaway</CardTitle>
+              <CardTitle className="text-xl flex items-center gap-2">
+                <CheckCircle2 className="w-5 h-5 text-[#B5C942]" />
+                Executive Takeaway
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <p>NCR's agentic platform will:</p>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#B5C942] mt-0.5 flex-shrink-0" />
                   <span>Unify fragmented data into a governed, auditable foundation</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#B5C942] mt-0.5 flex-shrink-0" />
                   <span>Deploy specialized agents for repeatable, compliance-sensitive workflows</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#B5C942] mt-0.5 flex-shrink-0" />
                   <span>Deliver measurable ROI through reduced cycle times, fewer errors, and staff empowerment</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-[#B5C942] mt-0.5 flex-shrink-0" />
                   <span>Maintain full audit trails and human oversight for regulatory confidence</span>
                 </li>
               </ul>
             </CardContent>
-          </Card>
+          </AccentCard>
         </TabsContent>
 
         {/* Framework Tab */}
         <TabsContent value="framework" className="space-y-6">
           {/* Data Foundation */}
-          <Card>
+          <AccentCard accent="teal">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Database className="w-5 h-5 text-primary" />
+                <Database className="w-5 h-5 text-[#7FA3A1]" />
                 A. Data (The Foundation NCR Must Unify)
               </CardTitle>
               <CardDescription>These are the "atoms" agents rely on. NCR already has most of them—just fragmented.</CardDescription>
@@ -373,11 +378,10 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 {dataFoundation.map((item) => (
-                  <Card key={item.name} className="overflow-hidden">
-                    <div className={`h-2 ${item.color}`} />
+                  <AccentCard key={item.name} accent={item.accent}>
                     <CardContent className="p-4">
                       <div className="flex items-start gap-3">
-                        <div className={`p-2 rounded-md ${item.color}`}>
+                        <div className={`p-2 rounded-md ${getAccentBgClass(item.accent)}`}>
                           <item.icon className="w-4 h-4 text-white" />
                         </div>
                         <div>
@@ -386,17 +390,17 @@ export default function AgentValueMap() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>
+                  </AccentCard>
                 ))}
               </div>
             </CardContent>
-          </Card>
+          </AccentCard>
 
           {/* Consumption */}
-          <Card>
+          <AccentCard accent="sky">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Monitor className="w-5 h-5 text-primary" />
+                <Monitor className="w-5 h-5 text-[#7BC4DC]" />
                 B. Consumption (How NCR Users Experience Value)
               </CardTitle>
               <CardDescription>Delivery channels become a unified App Shell + role-based hubs</CardDescription>
@@ -404,11 +408,10 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {consumptionChannels.map((item) => (
-                  <Card key={item.name} className="overflow-hidden">
-                    <div className={`h-2 ${item.color}`} />
+                  <AccentCard key={item.name} accent={item.accent}>
                     <CardContent className="p-4">
                       <div className="flex items-start gap-3">
-                        <div className={`p-2 rounded-md ${item.color}`}>
+                        <div className={`p-2 rounded-md ${getAccentBgClass(item.accent)}`}>
                           <item.icon className="w-4 h-4 text-white" />
                         </div>
                         <div>
@@ -417,17 +420,17 @@ export default function AgentValueMap() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>
+                  </AccentCard>
                 ))}
               </div>
             </CardContent>
-          </Card>
+          </AccentCard>
 
           {/* Personas */}
-          <Card>
+          <AccentCard accent="coral">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Users className="w-5 h-5 text-primary" />
+                <Users className="w-5 h-5 text-[#D5636C]" />
                 D. Personas (Who Benefits / Who Sponsors)
               </CardTitle>
               <CardDescription>Map diagram personas to NCR roles so adoption is real</CardDescription>
@@ -435,11 +438,10 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {personas.map((persona) => (
-                  <Card key={persona.role} className="overflow-hidden">
-                    <div className={`h-2 ${persona.color}`} />
+                  <AccentCard key={persona.role} accent={persona.accent}>
                     <CardContent className="p-4">
                       <div className="flex items-start gap-3">
-                        <div className={`p-2 rounded-md ${persona.color}`}>
+                        <div className={`p-2 rounded-md ${getAccentBgClass(persona.accent)}`}>
                           <persona.icon className="w-4 h-4 text-white" />
                         </div>
                         <div>
@@ -448,18 +450,18 @@ export default function AgentValueMap() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>
+                  </AccentCard>
                 ))}
               </div>
             </CardContent>
-          </Card>
+          </AccentCard>
 
           {/* Agent vs Infrastructure */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <Card className="border-l-4 border-l-green-500">
+            <AccentCard accent="lime">
               <CardHeader>
                 <CardTitle className="text-xl flex items-center gap-2">
-                  <Bot className="w-5 h-5 text-green-600" />
+                  <Bot className="w-5 h-5 text-[#B5C942]" />
                   Agent Best-Fit
                 </CardTitle>
                 <CardDescription>Repeatable, compliance-sensitive, data-driven</CardDescription>
@@ -468,18 +470,18 @@ export default function AgentValueMap() {
                 <ul className="space-y-2">
                   {agentBestFit.map((item, index) => (
                     <li key={index} className="flex items-start gap-2 text-sm">
-                      <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                      <CheckCircle2 className="w-4 h-4 text-[#B5C942] mt-0.5 flex-shrink-0" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
-            </Card>
+            </AccentCard>
 
-            <Card className="border-l-4 border-l-blue-500">
+            <AccentCard accent="sky">
               <CardHeader>
                 <CardTitle className="text-xl flex items-center gap-2">
-                  <Network className="w-5 h-5 text-blue-600" />
+                  <Network className="w-5 h-5 text-[#7BC4DC]" />
                   Infrastructure / Alternative Solutions
                 </CardTitle>
                 <CardDescription>Platform and culture foundations</CardDescription>
@@ -488,22 +490,22 @@ export default function AgentValueMap() {
                 <ul className="space-y-2">
                   {infrastructureSolutions.map((item, index) => (
                     <li key={index} className="flex items-start gap-2 text-sm">
-                      <CircleDot className="w-4 h-4 text-blue-600 mt-0.5 flex-shrink-0" />
+                      <CircleDot className="w-4 h-4 text-[#7BC4DC] mt-0.5 flex-shrink-0" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </CardContent>
-            </Card>
+            </AccentCard>
           </div>
         </TabsContent>
 
         {/* Agents Tab */}
         <TabsContent value="agents" className="space-y-6">
-          <Card>
+          <AccentCard accent="orange">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Bot className="w-5 h-5 text-primary" />
+                <Bot className="w-5 h-5 text-[#E8923A]" />
                 C. NCR's Agentic Teams Catalogue
               </CardTitle>
               <CardDescription>Specialized digital staff with audit trails</CardDescription>
@@ -511,11 +513,10 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {agentCatalogue.map((agent) => (
-                  <Card key={agent.name} className="overflow-hidden" data-testid={`card-agent-${agent.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                    <div className={`h-2 ${agent.color}`} />
+                  <AccentCard key={agent.name} accent={agent.accent} data-testid={`card-agent-${agent.name.toLowerCase().replace(/\s+/g, '-')}`}>
                     <CardContent className="p-4">
                       <div className="flex items-start gap-3">
-                        <div className={`p-2 rounded-md ${agent.color}`}>
+                        <div className={`p-2 rounded-md ${getAccentBgClass(agent.accent)}`}>
                           <agent.icon className="w-4 h-4 text-white" />
                         </div>
                         <div className="flex-1">
@@ -525,18 +526,18 @@ export default function AgentValueMap() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>
+                  </AccentCard>
                 ))}
               </div>
             </CardContent>
-          </Card>
+          </AccentCard>
         </TabsContent>
 
         {/* Roadmap Tab */}
         <TabsContent value="roadmap" className="space-y-6">
           <div className="space-y-6">
             {roadmapPhases.map((phase) => (
-              <Card key={phase.phase} className={`border-l-4 ${phase.color}`}>
+              <AccentCard key={phase.phase} accent={phase.accent}>
                 <CardHeader>
                   <div className="flex items-center justify-between flex-wrap gap-2">
                     <div>
@@ -563,24 +564,24 @@ export default function AgentValueMap() {
                     <ul className="space-y-2">
                       {phase.deliverables.map((item, index) => (
                         <li key={index} className="flex items-start gap-2 text-sm">
-                          <CheckCircle2 className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
+                          <CheckCircle2 className="w-4 h-4 text-[#B5C942] mt-0.5 flex-shrink-0" />
                           <span>{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
                 </CardContent>
-              </Card>
+              </AccentCard>
             ))}
           </div>
         </TabsContent>
 
         {/* App Shell Tab */}
         <TabsContent value="appshell" className="space-y-6">
-          <Card>
+          <AccentCard accent="olive">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Monitor className="w-5 h-5 text-primary" />
+                <Monitor className="w-5 h-5 text-[#A5A033]" />
                 NCR Unified App Shell
               </CardTitle>
               <CardDescription>This is the "Consumption layer" leadership will resonate with</CardDescription>
@@ -588,11 +589,10 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {appShellHubs.map((hub) => (
-                  <Card key={hub.name} className="overflow-hidden hover-elevate" data-testid={`card-hub-${hub.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                    <div className={`h-2 ${hub.color}`} />
+                  <AccentCard key={hub.name} accent={hub.accent} className="hover-elevate" data-testid={`card-hub-${hub.name.toLowerCase().replace(/\s+/g, '-')}`}>
                     <CardContent className="p-4">
                       <div className="flex items-start gap-3">
-                        <div className={`p-2 rounded-md ${hub.color}`}>
+                        <div className={`p-2 rounded-md ${getAccentBgClass(hub.accent)}`}>
                           <hub.icon className="w-4 h-4 text-white" />
                         </div>
                         <div>
@@ -601,19 +601,19 @@ export default function AgentValueMap() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>
+                  </AccentCard>
                 ))}
               </div>
             </CardContent>
-          </Card>
+          </AccentCard>
         </TabsContent>
 
         {/* Governance Tab */}
         <TabsContent value="governance" className="space-y-6">
-          <Card>
+          <AccentCard accent="teal">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Shield className="w-5 h-5 text-primary" />
+                <Shield className="w-5 h-5 text-[#7FA3A1]" />
                 Governance: What NCR Can Say to Auditors and Regulators
               </CardTitle>
               <CardDescription>Non-negotiables (these become "design constraints")</CardDescription>
@@ -621,11 +621,10 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {governanceItems.map((item) => (
-                  <Card key={item.title} className="overflow-hidden">
-                    <div className={`h-2 ${item.color}`} />
+                  <AccentCard key={item.title} accent={item.accent}>
                     <CardContent className="p-4">
                       <div className="flex items-start gap-3">
-                        <div className={`p-2 rounded-md ${item.color}`}>
+                        <div className={`p-2 rounded-md ${getAccentBgClass(item.accent)}`}>
                           <item.icon className="w-4 h-4 text-white" />
                         </div>
                         <div>
@@ -634,19 +633,19 @@ export default function AgentValueMap() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>
+                  </AccentCard>
                 ))}
               </div>
             </CardContent>
-          </Card>
+          </AccentCard>
         </TabsContent>
 
         {/* Scorecard Tab */}
         <TabsContent value="scorecard" className="space-y-6">
-          <Card>
+          <AccentCard accent="coral">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Gauge className="w-5 h-5 text-primary" />
+                <Gauge className="w-5 h-5 text-[#D5636C]" />
                 Scorecard: How NCR Measures Success
               </CardTitle>
               <CardDescription>Board-friendly metrics by domain</CardDescription>
@@ -654,8 +653,7 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {scorecardMetrics.map((item) => (
-                  <Card key={item.domain} className="overflow-hidden" data-testid={`card-scorecard-${item.domain.toLowerCase().replace(/\s+/g, '-')}`}>
-                    <div className={`h-2 ${item.color}`} />
+                  <AccentCard key={item.domain} accent={item.accent} data-testid={`card-scorecard-${item.domain.toLowerCase().replace(/\s+/g, '-')}`}>
                     <CardContent className="p-4">
                       <p className="font-semibold mb-3">{item.domain}</p>
                       <ul className="space-y-1">
@@ -667,11 +665,11 @@ export default function AgentValueMap() {
                         ))}
                       </ul>
                     </CardContent>
-                  </Card>
+                  </AccentCard>
                 ))}
               </div>
             </CardContent>
-          </Card>
+          </AccentCard>
         </TabsContent>
       </Tabs>
     </div>
