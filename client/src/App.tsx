@@ -17,7 +17,6 @@ import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Menu } from 
 const navigationDomains = {
   "Constituents": {
     items: [
-      { name: "Donors", href: "/donors" },
       { name: "Corporations", href: "/corporate-partnerships" },
     ]
   },
@@ -29,6 +28,7 @@ const navigationDomains = {
   },
   "Fundraising": {
     items: [
+      { name: "Donors", href: "/donors" },
       { name: "Pipeline", href: "/pipeline" },
       { name: "Quadrant", href: "/quadrant" },
       { name: "Relationships", href: "/relationships" },
