@@ -436,14 +436,18 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 className={`
                   flex-1 px-3 py-3 text-center transition-all relative
                   ${isSelected 
-                    ? 'bg-card text-foreground font-semibold border-b-2 border-b-primary shadow-sm z-10' 
+                    ? 'font-semibold shadow-sm z-10' 
                     : 'text-muted-foreground hover:text-foreground hover:bg-muted/50'
                   }
                 `}
+                style={isSelected ? { backgroundColor: '#395174' } : {}}
                 data-testid={`tab-${q}`}
               >
-                <div className="text-sm">{quadrantConfig[q].label}</div>
-                <div className={`text-xs mt-0.5 ${isSelected ? 'text-primary' : 'text-muted-foreground'}`}>
+                <div className="text-sm" style={isSelected ? { color: 'white' } : {}}>{quadrantConfig[q].label}</div>
+                <div 
+                  className={`text-xs mt-0.5 ${!isSelected ? 'text-muted-foreground' : ''}`}
+                  style={isSelected ? { color: '#e1c47d' } : {}}
+                >
                   {count} {count === 1 ? 'donor' : 'donors'}
                 </div>
               </button>
