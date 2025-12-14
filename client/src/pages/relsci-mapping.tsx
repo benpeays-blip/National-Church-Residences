@@ -29,7 +29,6 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Progress } from "@/components/ui/progress";
-import relsciLogo from "@assets/stock_images/relsci_relationship__78cef93d.jpg";
 
 interface ConnectionPath {
   id: string;
@@ -211,9 +210,6 @@ export default function RelSciMapping() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <div className="h-12 w-12 rounded-lg overflow-hidden bg-white border shadow-sm flex items-center justify-center">
-            <img src={relsciLogo} alt="RelSci" className="h-10 w-10 object-contain" />
-          </div>
           <div>
             <h1 className="text-2xl font-bold" style={{ color: "#084594" }}>
               RelSci Relationship Intelligence
