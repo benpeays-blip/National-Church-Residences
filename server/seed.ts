@@ -1861,8 +1861,8 @@ async function seed() {
 
     for (let i = 0; i < taskCount; i++) {
       const taskType = weightedRandom(
-        ["call", "email", "meeting", "proposal", "follow-up"],
-        [25, 30, 20, 10, 15]
+        ["call", "email", "meeting", "proposal", "follow-up", "thank-you", "tour"],
+        [20, 25, 15, 10, 12, 10, 8]
       );
 
       const priority = weightedRandom(
@@ -1891,6 +1891,12 @@ async function seed() {
       } else if (taskType === "follow-up") {
         title = "Event Follow-up";
         description = `Follow up with ${donor.firstName} ${donor.lastName} after event`;
+      } else if (taskType === "thank-you") {
+        title = "Send Thank You Note";
+        description = `Write and send personalized thank you letter to ${donor.firstName} ${donor.lastName} for recent gift`;
+      } else if (taskType === "tour") {
+        title = "Schedule Facility Tour";
+        description = `Arrange campus or facility tour for ${donor.firstName} ${donor.lastName} to see impact firsthand`;
       }
 
       tasksList.push({
