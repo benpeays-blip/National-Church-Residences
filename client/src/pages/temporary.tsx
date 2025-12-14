@@ -1236,25 +1236,35 @@ function InterviewCard({ person, onClick }: { person: InterviewPerson; onClick: 
       onClick={onClick}
     >
       <div 
-        className="p-6 space-y-2"
+        className="p-4"
         style={{ backgroundColor: `${person.areaColor}15` }}
       >
-        <h3 
-          className="font-semibold text-base"
-          style={{ color: person.areaColor }}
-          data-testid={`text-interview-name-${person.id}`}
-        >
-          {person.name}
-        </h3>
+        <div className="flex items-center justify-between gap-2 mb-2">
+          <h3 
+            className="font-bold text-base"
+            style={{ color: person.areaColor }}
+            data-testid={`text-interview-name-${person.id}`}
+          >
+            {person.name}
+          </h3>
+          <Badge variant="outline" className="text-xs shrink-0" style={{ borderColor: person.areaColor, color: person.areaColor }}>
+            {person.area}
+          </Badge>
+        </div>
         <p className="text-xs text-muted-foreground">{person.title}</p>
-        <Badge variant="outline" className="text-xs" style={{ borderColor: person.areaColor, color: person.areaColor }}>
-          {person.area}
-        </Badge>
       </div>
-      <div className="p-6 flex-1">
-        <p className="text-sm text-muted-foreground italic border-l-2 pl-3" style={{ borderColor: `${person.areaColor}50` }}>
-          {person.background}
-        </p>
+      <div className="p-4 flex-1 flex flex-col">
+        <p className="text-xs text-muted-foreground mb-3 italic">{person.background}</p>
+        <div className="mt-auto space-y-2">
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <MessageSquare className="h-3 w-3 shrink-0" />
+            <span>{person.challenges.length} challenges identified</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+            <Lightbulb className="h-3 w-3 shrink-0" />
+            <span>{person.capabilities.length} capabilities needed</span>
+          </div>
+        </div>
       </div>
     </Card>
   );
