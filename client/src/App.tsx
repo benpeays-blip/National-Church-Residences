@@ -20,16 +20,12 @@ const navigationDomains = {
       { name: "Corporations", href: "/corporate-partnerships" },
     ]
   },
-  "Revenue": {
-    items: [
-      { name: "Gifts", href: "/gifts" },
-      { name: "Grants", href: "/grants" },
-    ]
-  },
   "Fundraising": {
     items: [
       { name: "Donors", href: "/donors" },
       { name: "Pipeline", href: "/pipeline" },
+      { name: "Gifts", href: "/gifts" },
+      { name: "Grants", href: "/grants" },
       { name: "Campaigns", href: "/campaigns" },
       { name: "Events", href: "/events" },
     ]
