@@ -158,6 +158,9 @@ import MGOPipelineDetail from "@/pages/mgo-pipeline-detail";
 import MGOTasksDetail from "@/pages/mgo-tasks-detail";
 import MGOMeetingsDetail from "@/pages/mgo-meetings-detail";
 
+// NCR Pages
+import NcrSeniorHousingWithTabs from "@/pages/ncr-senior-housing-with-tabs";
+
 function Router() {
   return (
     <Switch>
@@ -240,6 +243,12 @@ function Router() {
       <Route path="/corporate-partnerships/prospects" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/:id" component={CorporatePartnershipDetail} />
       <Route path="/corporate-partnerships" component={CorporationsWithTabs} />
+      {/* NCR Pages */}
+      <Route path="/ncr/senior-housing/independent" component={NcrSeniorHousingWithTabs} />
+      <Route path="/ncr/senior-housing/assisted" component={NcrSeniorHousingWithTabs} />
+      <Route path="/ncr/senior-housing/memory" component={NcrSeniorHousingWithTabs} />
+      <Route path="/ncr/senior-housing/ccrc" component={NcrSeniorHousingWithTabs} />
+      <Route path="/ncr/senior-housing" component={NcrSeniorHousingWithTabs} />
       <Route path="/other" component={OtherWithTabs} />
       <Route path="/temporary" component={Temporary} />
       <Route path="/temporary/interviews/:personId" component={Temporary} />
