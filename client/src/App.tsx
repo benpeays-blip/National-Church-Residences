@@ -160,6 +160,7 @@ import MGOMeetingsDetail from "@/pages/mgo-meetings-detail";
 
 // NCR Pages
 import NcrSeniorHousingWithTabs from "@/pages/ncr-senior-housing-with-tabs";
+import NcrCareServicesWithTabs from "@/pages/ncr-care-services-with-tabs";
 
 function Router() {
   return (
@@ -249,6 +250,11 @@ function Router() {
       <Route path="/ncr/senior-housing/memory" component={NcrSeniorHousingWithTabs} />
       <Route path="/ncr/senior-housing/ccrc" component={NcrSeniorHousingWithTabs} />
       <Route path="/ncr/senior-housing" component={NcrSeniorHousingWithTabs} />
+      <Route path="/ncr/care-services/home-health" component={NcrCareServicesWithTabs} />
+      <Route path="/ncr/care-services/aide" component={NcrCareServicesWithTabs} />
+      <Route path="/ncr/care-services/hospice" component={NcrCareServicesWithTabs} />
+      <Route path="/ncr/care-services/chaplaincy" component={NcrCareServicesWithTabs} />
+      <Route path="/ncr/care-services" component={NcrCareServicesWithTabs} />
       <Route path="/other" component={OtherWithTabs} />
       <Route path="/temporary" component={Temporary} />
       <Route path="/temporary/interviews/:personId" component={Temporary} />
