@@ -335,7 +335,7 @@ function Router() {
 }
 
 
-type TopTab = 'Quadrant' | 'Fundraising' | 'Agentic Plan';
+type TopTab = 'Quadrant' | 'Assessment' | 'Agentic Plan';
 
 function App() {
   const [location] = useLocation();
@@ -386,7 +386,7 @@ function App() {
     setActiveDropdown(null);
   };
 
-  const topTabs: TopTab[] = ['Quadrant', 'Fundraising', 'Agentic Plan'];
+  const topTabs: TopTab[] = ['Quadrant', 'Assessment', 'Agentic Plan'];
 
   const agenticPlanNavItems = [
     { name: 'Overview', tab: 'overview' },
