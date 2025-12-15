@@ -399,6 +399,15 @@ function App() {
     { name: 'Tech Stack', tab: 'techstack' },
   ];
 
+  const assessmentNavItems = [
+    { name: 'On Site Interviews', path: '/temporary' },
+    { name: 'Tech Stack', path: '/temporary/tech-stack' },
+    { name: 'Technology Categories', path: '/temporary/technology-categories' },
+    { name: 'Optimization Ideas', path: '/temporary/optimization-ideas' },
+    { name: 'Risk & Compliance', path: '/temporary/risk-compliance' },
+    { name: 'Infrastructure', path: '/temporary/infrastructure' },
+  ];
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -460,6 +469,23 @@ function App() {
                                 size="sm"
                                 className="font-semibold text-sm text-gray-700 hover:bg-black/10"
                                 data-testid={`button-nav-agentic-${item.tab}`}
+                              >
+                                {item.name}
+                              </Button>
+                            </div>
+                          </Link>
+                        ))}
+                      </>
+                    ) : selectedTopTab === 'Assessment' ? (
+                      <>
+                        {assessmentNavItems.map((item) => (
+                          <Link key={item.path} href={item.path}>
+                            <div className={`relative ${location === item.path || (location.startsWith(item.path) && item.path !== '/temporary') || (location === '/temporary' && item.path === '/temporary' && !location.includes('/temporary/')) ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                                data-testid={`button-nav-assessment-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                               >
                                 {item.name}
                               </Button>
