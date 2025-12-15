@@ -335,13 +335,13 @@ function Router() {
 }
 
 
-type TopTab = 'Quadrant' | 'Assessment' | 'Agentic Plan';
+type TopTab = 'Philanthropy' | 'Assessment' | 'Agentic Plan';
 
 function App() {
   const [location, navigate] = useLocation();
   const [activeDropdown, setActiveDropdown] = useState<DomainKey | null>(null);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
-  const [selectedTopTab, setSelectedTopTab] = useState<TopTab>('Quadrant');
+  const [selectedTopTab, setSelectedTopTab] = useState<TopTab>('Philanthropy');
 
   // Helper to check if a nav item is active based on current path
   const isNavActive = (navItem: string): boolean => {
@@ -386,7 +386,7 @@ function App() {
     setActiveDropdown(null);
   };
 
-  const topTabs: TopTab[] = ['Quadrant', 'Assessment', 'Agentic Plan'];
+  const topTabs: TopTab[] = ['Philanthropy', 'Assessment', 'Agentic Plan'];
 
   const agenticPlanNavItems = [
     { name: 'Overview', tab: 'overview' },
