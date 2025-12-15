@@ -3,7 +3,7 @@ import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { AccentCard, getAccentBgClass, AccentColor } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { 
   Bot, 
   Users, 
@@ -264,73 +264,6 @@ export default function AgentValueMap() {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="flex flex-wrap h-auto gap-2 bg-muted/50 p-2 rounded-xl">
-          <TabsTrigger 
-            value="overview" 
-            data-testid="tab-overview"
-            className="data-[state=active]:bg-background data-[state=active]:shadow-sm gap-2 px-4 py-2.5 rounded-lg"
-          >
-            <Target className="w-4 h-4" />
-            Overview
-          </TabsTrigger>
-          <TabsTrigger 
-            value="framework" 
-            data-testid="tab-framework"
-            className="data-[state=active]:bg-background data-[state=active]:shadow-sm gap-2 px-4 py-2.5 rounded-lg"
-          >
-            <Layers className="w-4 h-4" />
-            Framework
-          </TabsTrigger>
-          <TabsTrigger 
-            value="agents" 
-            data-testid="tab-agents"
-            className="data-[state=active]:bg-background data-[state=active]:shadow-sm gap-2 px-4 py-2.5 rounded-lg"
-          >
-            <Bot className="w-4 h-4" />
-            Agents
-          </TabsTrigger>
-          <TabsTrigger 
-            value="roadmap" 
-            data-testid="tab-roadmap"
-            className="data-[state=active]:bg-background data-[state=active]:shadow-sm gap-2 px-4 py-2.5 rounded-lg"
-          >
-            <Calendar className="w-4 h-4" />
-            Roadmap
-          </TabsTrigger>
-          <TabsTrigger 
-            value="appshell" 
-            data-testid="tab-appshell"
-            className="data-[state=active]:bg-background data-[state=active]:shadow-sm gap-2 px-4 py-2.5 rounded-lg"
-          >
-            <Monitor className="w-4 h-4" />
-            App Shell
-          </TabsTrigger>
-          <TabsTrigger 
-            value="governance" 
-            data-testid="tab-governance"
-            className="data-[state=active]:bg-background data-[state=active]:shadow-sm gap-2 px-4 py-2.5 rounded-lg"
-          >
-            <Shield className="w-4 h-4" />
-            Governance
-          </TabsTrigger>
-          <TabsTrigger 
-            value="scorecard" 
-            data-testid="tab-scorecard"
-            className="data-[state=active]:bg-background data-[state=active]:shadow-sm gap-2 px-4 py-2.5 rounded-lg"
-          >
-            <Gauge className="w-4 h-4" />
-            Scorecard
-          </TabsTrigger>
-          <TabsTrigger 
-            value="techstack" 
-            data-testid="tab-techstack"
-            className="data-[state=active]:bg-background data-[state=active]:shadow-sm gap-2 px-4 py-2.5 rounded-lg"
-          >
-            <Server className="w-4 h-4" />
-            Tech Stack
-          </TabsTrigger>
-        </TabsList>
-
         {/* Overview Tab */}
         <TabsContent value="overview" className="space-y-6">
           {/* North Star */}
