@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { AccentCard, getAccentBgClass, AccentColor } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
@@ -47,7 +48,21 @@ import {
 } from "lucide-react";
 
 export default function AgentValueMap() {
-  const [activeTab, setActiveTab] = useState("overview");
+  const [location] = useLocation();
+  
+  // Parse tab from URL query parameter
+  const getTabFromUrl = () => {
+    const searchParams = new URLSearchParams(window.location.search);
+    return searchParams.get('tab') || 'overview';
+  };
+  
+  const [activeTab, setActiveTab] = useState(getTabFromUrl);
+  
+  // Sync tab state when URL changes
+  useEffect(() => {
+    const tab = getTabFromUrl();
+    setActiveTab(tab);
+  }, [location]);
 
   // Data Foundation items with NCR brand colors
   const dataFoundation: Array<{ name: string; description: string; icon: LucideIcon; accent: AccentColor }> = [

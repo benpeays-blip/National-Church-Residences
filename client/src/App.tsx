@@ -388,6 +388,17 @@ function App() {
 
   const topTabs: TopTab[] = ['Quadrant', 'Fundraising', 'Agentic Plan'];
 
+  const agenticPlanNavItems = [
+    { name: 'Overview', tab: 'overview' },
+    { name: 'Framework', tab: 'framework' },
+    { name: 'Agents', tab: 'agents' },
+    { name: 'Roadmap', tab: 'roadmap' },
+    { name: 'App Shell', tab: 'appshell' },
+    { name: 'Governance', tab: 'governance' },
+    { name: 'Scorecard', tab: 'scorecard' },
+    { name: 'Tech Stack', tab: 'techstack' },
+  ];
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
@@ -437,37 +448,42 @@ function App() {
               </Link>
               
               <div className="flex items-center gap-3 ml-auto">
-                  {/* Dropdown Navigation */}
+                  {/* Dropdown Navigation - Conditional based on top tab */}
                   <nav className="flex items-center gap-0.5">
-                    {/* Agentic Plan - Direct Link (First item) */}
-                    <Link href="/agent-value-map">
-                      <div className={`relative ${isNavActive('agent-value-map') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                          data-testid="button-nav-agent-value-map"
-                        >
-                          Agentic Plan
-                        </Button>
-                      </div>
-                    </Link>
+                    {selectedTopTab === 'Agentic Plan' ? (
+                      <>
+                        {agenticPlanNavItems.map((item) => (
+                          <Link key={item.tab} href={`/agent-value-map?tab=${item.tab}`}>
+                            <div className={`relative ${location.includes(`tab=${item.tab}`) || (location === '/agent-value-map' && item.tab === 'overview') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                                data-testid={`button-nav-agentic-${item.tab}`}
+                              >
+                                {item.name}
+                              </Button>
+                            </div>
+                          </Link>
+                        ))}
+                      </>
+                    ) : (
+                      <>
+                        {/* Relationships - Direct Link */}
+                        <Link href="/relationships">
+                          <div className={`relative ${isNavActive('relationships') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                              data-testid="button-nav-relationships"
+                            >
+                              Relationships
+                            </Button>
+                          </div>
+                        </Link>
 
-                    {/* Relationships - Direct Link */}
-                    <Link href="/relationships">
-                      <div className={`relative ${isNavActive('relationships') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                          data-testid="button-nav-relationships"
-                        >
-                          Relationships
-                        </Button>
-                      </div>
-                    </Link>
-
-                    {/* Reporting Dropdown */}
+                        {/* Reporting Dropdown */}
                     <div
                       className="relative"
                       onMouseEnter={() => setActiveDropdown("Reporting")}
@@ -606,18 +622,20 @@ function App() {
                     </Link>
 
                     {/* Special Projects - Direct Link */}
-                    <Link href="/temporary">
-                      <div className={`relative ${isNavActive('special-projects') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                          data-testid="button-nav-special-projects"
-                        >
-                          Special Projects
-                        </Button>
-                      </div>
-                    </Link>
+                        <Link href="/temporary">
+                          <div className={`relative ${isNavActive('special-projects') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                              data-testid="button-nav-special-projects"
+                            >
+                              Special Projects
+                            </Button>
+                          </div>
+                        </Link>
+                      </>
+                    )}
                   </nav>
                   
                   {/* Separator */}
