@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree, Settings, MessageSquare } from "lucide-react";
+import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree, Settings, MessageSquare, User, Briefcase } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { NCR_BRAND_COLORS, AccentColor, getAccentColor } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -204,7 +205,7 @@ interface InterviewPerson {
   name: string;
   title: string;
   area: string;
-  areaColor: string;
+  accent: AccentColor;
   background: string;
   challenges: { title: string; items: string[] }[];
   techStack: { name: string; description: string }[];
@@ -219,7 +220,7 @@ const interviewees: InterviewPerson[] = [
     name: "Sonya Brown",
     title: "Senior Vice President",
     area: "Affordable Housing",
-    areaColor: "#1a5f2a",
+    accent: "teal",
     background: "21 years at NCR; started at age 12; 3 years at HUD with government housing expertise",
     challenges: [
       {
@@ -308,7 +309,7 @@ const interviewees: InterviewPerson[] = [
     name: "Adam Axcell",
     title: "Senior Vice President, Chief Strategy and Growth Officer",
     area: "Strategy & Growth",
-    areaColor: "#084594",
+    accent: "sky",
     background: "Sales & Marketing, Public Policy, M&A Strategy, Technology; 1 year 8 months at NCR; healthcare professional",
     challenges: [
       {
@@ -387,7 +388,7 @@ const interviewees: InterviewPerson[] = [
     name: "JoAnna Freeman",
     title: "Grants Manager",
     area: "Grants Management",
-    areaColor: "#6366f1",
+    accent: "olive",
     background: "Grants management strategy specialist focused on streamlining grant operations and reporting",
     challenges: [
       {
@@ -471,7 +472,7 @@ const interviewees: InterviewPerson[] = [
     name: "Donna Tabbah",
     title: "Foundations Coordinator",
     area: "Foundations & Donor Relations",
-    areaColor: "#ec4899",
+    accent: "coral",
     background: "Foundations and donor relations strategy specialist managing volunteer coordination and donor acknowledgments",
     challenges: [
       {
@@ -561,7 +562,7 @@ const interviewees: InterviewPerson[] = [
     name: "Jake Swint",
     title: "VP Strategic Growth and Operations Support",
     area: "Strategy & Operations",
-    areaColor: "#f59e0b",
+    accent: "orange",
     background: "Strategy and operations support covering healthcare operations, billing, patient engagement, and talent acquisition",
     challenges: [
       {
@@ -636,7 +637,7 @@ const interviewees: InterviewPerson[] = [
     name: "Julie Worley",
     title: "Chief Legal Officer",
     area: "Legal & Governance",
-    areaColor: "#7c3aed",
+    accent: "tealDark",
     background: "Legal and governance strategy overseeing 1,100+ legal entities with focus on compliance and data governance",
     challenges: [
       {
@@ -727,7 +728,7 @@ const interviewees: InterviewPerson[] = [
     name: "Briana Mettlet",
     title: "SVP of Senior Living Facilities",
     area: "Health Services & Senior Living",
-    areaColor: "#0ea5e9",
+    accent: "skyDark",
     background: "20 years of experience in senior services; leads senior living operations",
     challenges: [
       {
@@ -815,7 +816,7 @@ const interviewees: InterviewPerson[] = [
     name: "Susan DiMickele",
     title: "President and CEO",
     area: "AI Strategy & Future Growth",
-    areaColor: "#dc2626",
+    accent: "lime",
     background: "Executive leadership driving AI strategy and organizational transformation for 25,000 residents",
     challenges: [
       {
@@ -887,7 +888,7 @@ const interviewees: InterviewPerson[] = [
     name: "Chel Kissler",
     title: "Event Manager (Contractor)",
     area: "Events & Branding",
-    areaColor: "#14b8a6",
+    accent: "coralDark",
     background: "Contractor managing NCR's major annual golf event and national conference; oversees branding",
     challenges: [
       {
@@ -970,7 +971,7 @@ const interviewees: InterviewPerson[] = [
     name: "Mark Miller",
     title: "VP of Information Technology",
     area: "IT Strategy & Modernization",
-    areaColor: "#0078d4",
+    accent: "sky",
     background: "Leading IT modernization and data strategy; building internal capability after outsourcing to MSP",
     challenges: [
       {
@@ -1060,7 +1061,7 @@ const interviewees: InterviewPerson[] = [
     name: "Suzan Nocella",
     title: "Director of Annual Giving",
     area: "Annual Giving",
-    areaColor: "#be185d",
+    accent: "coral",
     background: "14-15 years with the foundation team; focused on annual giving strategy and donor communications",
     challenges: [
       {
@@ -1150,7 +1151,7 @@ const interviewees: InterviewPerson[] = [
     name: "Sean Alexander",
     title: "Senior VP and CFO",
     area: "Financial Strategy",
-    areaColor: "#059669",
+    accent: "oliveDark",
     background: "Financial strategy and enterprise visibility; overseeing 350 properties with audited P&Ls",
     challenges: [
       {
@@ -1229,40 +1230,70 @@ const interviewees: InterviewPerson[] = [
 ];
 
 function InterviewCard({ person, onClick }: { person: InterviewPerson; onClick: () => void }) {
+  const accentColor = getAccentColor(person.accent);
+  
   return (
     <Card 
-      className="overflow-hidden hover-elevate cursor-pointer transition-all h-full flex flex-col"
+      className="overflow-hidden hover-elevate cursor-pointer transition-all h-full flex flex-col border-l-4"
+      style={{ borderLeftColor: accentColor }}
       data-testid={`card-interview-${person.id}`}
       onClick={onClick}
     >
       <div 
-        className="p-4"
-        style={{ backgroundColor: `${person.areaColor}15` }}
+        className="p-6"
+        style={{ backgroundColor: `${accentColor}15` }}
       >
-        <div className="flex items-center justify-between gap-2 mb-2">
-          <h3 
-            className="font-bold text-base"
-            style={{ color: person.areaColor }}
-            data-testid={`text-interview-name-${person.id}`}
+        <div className="flex items-center gap-3 mb-3">
+          <div 
+            className="w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold text-sm shrink-0"
+            style={{ backgroundColor: accentColor }}
           >
-            {person.name}
-          </h3>
-          <Badge variant="outline" className="text-xs shrink-0" style={{ borderColor: person.areaColor, color: person.areaColor }}>
-            {person.area}
-          </Badge>
-        </div>
-        <p className="text-xs text-muted-foreground">{person.title}</p>
-      </div>
-      <div className="p-4 flex-1 flex flex-col">
-        <p className="text-xs text-muted-foreground mb-3 italic">{person.background}</p>
-        <div className="mt-auto space-y-2">
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <MessageSquare className="h-3 w-3 shrink-0" />
-            <span>{person.challenges.length} challenges identified</span>
+            {person.name.split(' ').map(n => n[0]).join('')}
           </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-            <Lightbulb className="h-3 w-3 shrink-0" />
-            <span>{person.wants.length} capabilities needed</span>
+          <div className="flex-1 min-w-0">
+            <h3 
+              className="font-bold text-base truncate"
+              style={{ color: accentColor }}
+              data-testid={`text-interview-name-${person.id}`}
+            >
+              {person.name}
+            </h3>
+            <p className="text-xs text-muted-foreground truncate">{person.title}</p>
+          </div>
+        </div>
+        <Badge 
+          variant="outline" 
+          className="text-xs"
+          style={{ borderColor: accentColor, color: accentColor }}
+        >
+          {person.area}
+        </Badge>
+      </div>
+      <div className="p-6 flex-1 flex flex-col">
+        <div 
+          className="text-xs text-muted-foreground mb-4 italic pl-3 border-l-2"
+          style={{ borderLeftColor: accentColor }}
+        >
+          {person.background}
+        </div>
+        <div className="mt-auto grid grid-cols-2 gap-3">
+          <div className="flex items-center gap-2 text-xs">
+            <div 
+              className="w-6 h-6 rounded-md flex items-center justify-center shrink-0"
+              style={{ backgroundColor: `${accentColor}20` }}
+            >
+              <AlertTriangle className="h-3 w-3" style={{ color: accentColor }} />
+            </div>
+            <span className="text-muted-foreground">{person.challenges.length} challenges</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs">
+            <div 
+              className="w-6 h-6 rounded-md flex items-center justify-center shrink-0"
+              style={{ backgroundColor: `${accentColor}20` }}
+            >
+              <Sparkles className="h-3 w-3" style={{ color: accentColor }} />
+            </div>
+            <span className="text-muted-foreground">{person.wants.length} needs</span>
           </div>
         </div>
       </div>
@@ -1273,6 +1304,8 @@ function InterviewCard({ person, onClick }: { person: InterviewPerson; onClick: 
 function InterviewDetailDialog({ person, open, onOpenChange }: { person: InterviewPerson | null; open: boolean; onOpenChange: (open: boolean) => void }) {
   if (!person) return null;
 
+  const accentColor = getAccentColor(person.accent);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent 
@@ -1280,23 +1313,31 @@ function InterviewDetailDialog({ person, open, onOpenChange }: { person: Intervi
         data-testid="dialog-interview-detail"
       >
         <div 
-          className="p-6 pr-12 border-b shrink-0"
-          style={{ backgroundColor: `${person.areaColor}10` }}
+          className="p-6 pr-12 border-b shrink-0 border-l-4"
+          style={{ backgroundColor: `${accentColor}10`, borderLeftColor: accentColor }}
         >
           <DialogHeader className="space-y-3">
-            <div className="space-y-2">
-              <DialogTitle className="text-2xl font-bold" style={{ color: person.areaColor }}>
-                {person.name}
-              </DialogTitle>
-              <DialogDescription className="text-base">{person.title}</DialogDescription>
-              <Badge 
-                variant="outline"
-                style={{ borderColor: person.areaColor, color: person.areaColor }}
+            <div className="flex items-center gap-4">
+              <div 
+                className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-base shrink-0"
+                style={{ backgroundColor: accentColor }}
               >
-                {person.area}
-              </Badge>
+                {person.name.split(' ').map(n => n[0]).join('')}
+              </div>
+              <div>
+                <DialogTitle className="text-xl font-bold" style={{ color: accentColor }}>
+                  {person.name}
+                </DialogTitle>
+                <DialogDescription className="text-base">{person.title}</DialogDescription>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground italic border-l-2 pl-3" style={{ borderColor: person.areaColor }}>
+            <Badge 
+              variant="outline"
+              style={{ borderColor: accentColor, color: accentColor }}
+            >
+              {person.area}
+            </Badge>
+            <p className="text-sm text-muted-foreground italic border-l-2 pl-3" style={{ borderColor: accentColor }}>
               {person.background}
             </p>
           </DialogHeader>
