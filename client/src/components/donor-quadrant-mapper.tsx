@@ -498,22 +498,22 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                             {donor.organizationName}
                           </div>
                         )}
+                        <div className="text-xs text-muted-foreground mt-1 italic">
+                          {summaries[donor.quadrant as QuadrantType]}
+                        </div>
                       </div>
+                      <Link href={`/donors/${donor.id}`}>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="text-xs shrink-0"
+                          data-testid={`view-donor-${donor.id}`}
+                        >
+                          <Eye className="w-3 h-3 mr-1" />
+                          View
+                        </Button>
+                      </Link>
                     </div>
-                    <div className="text-xs text-muted-foreground mt-2 italic">
-                      {summaries[donor.quadrant as QuadrantType]}
-                    </div>
-                    <Link href={`/donors/${donor.id}`}>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="mt-2 w-full text-xs"
-                        data-testid={`view-donor-${donor.id}`}
-                      >
-                        <Eye className="w-3 h-3 mr-1" />
-                        View Donor Profile
-                      </Button>
-                    </Link>
                   </div>
                 );
               })
