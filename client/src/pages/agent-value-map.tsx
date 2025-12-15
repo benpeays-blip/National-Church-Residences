@@ -45,7 +45,6 @@ import {
   Server,
   ExternalLink
 } from "lucide-react";
-import { SiMicrosoft, SiMicrosoftazure, SiPowerbi } from "react-icons/si";
 
 export default function AgentValueMap() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -739,7 +738,7 @@ export default function AgentValueMap() {
             <CardHeader>
               <div className="flex items-center gap-3">
                 <div className="p-2 rounded-lg bg-[#00A4EF]/10">
-                  <SiMicrosoft className="w-6 h-6 text-[#00A4EF]" />
+                  <Server className="w-6 h-6 text-[#00A4EF]" />
                 </div>
                 <div>
                   <CardTitle className="text-xl">Microsoft Core Platform</CardTitle>
@@ -818,7 +817,7 @@ export default function AgentValueMap() {
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
                       <div className="p-2 rounded-lg bg-[#F2C811]/10 shrink-0">
-                        <SiPowerbi className="w-5 h-5 text-[#F2C811]" />
+                        <BarChart3 className="w-5 h-5 text-[#F2C811]" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between gap-2 mb-1">
@@ -850,7 +849,7 @@ export default function AgentValueMap() {
                   <CardContent className="p-4">
                     <div className="flex items-start gap-3">
                       <div className="p-2 rounded-lg bg-[#0078D4]/10 shrink-0">
-                        <SiMicrosoftazure className="w-5 h-5 text-[#0078D4]" />
+                        <Globe className="w-5 h-5 text-[#0078D4]" />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between gap-2 mb-1">
