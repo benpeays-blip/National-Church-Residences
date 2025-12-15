@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { SectionTabs, SectionTab } from "@/components/section-tabs";
 import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree, Settings, MessageSquare, User, Briefcase } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { NCR_BRAND_COLORS, AccentColor, getAccentColor } from "@/components/ui/accent-card";
@@ -13,45 +12,6 @@ import TechStackMapper from "@/pages/tech-stack-mapper";
 import OtherWithTabs from "@/pages/other-with-tabs";
 
 import { techProducts, TechProduct } from "@/data/tech-products";
-
-const specialProjectsTabs: SectionTab[] = [
-  {
-    label: "On Site Interviews",
-    value: "interviews",
-    icon: Users,
-    path: "/temporary",
-  },
-  {
-    label: "Tech Stack",
-    value: "tech-stack",
-    icon: Layers,
-    path: "/temporary/tech-stack",
-  },
-  {
-    label: "Technology Categories",
-    value: "technology-categories",
-    icon: FolderTree,
-    path: "/temporary/technology-categories",
-  },
-  {
-    label: "Optimization Ideas",
-    value: "optimization-ideas",
-    icon: Lightbulb,
-    path: "/temporary/optimization-ideas",
-  },
-  {
-    label: "Risk & Compliance",
-    value: "risk-compliance",
-    icon: Shield,
-    path: "/temporary/risk-compliance",
-  },
-  {
-    label: "Infrastructure",
-    value: "infrastructure",
-    icon: Settings,
-    path: "/temporary/infrastructure",
-  },
-];
 
 function ProductCard({ product }: { product: TechProduct }) {
   const [, navigate] = useLocation();
@@ -2313,7 +2273,6 @@ export default function Temporary() {
 
   return (
     <div className="flex flex-col h-full">
-      <SectionTabs tabs={specialProjectsTabs} currentPath={location} />
       <div className="flex-1 overflow-auto p-6">
         <ContentComponent initialPersonId={initialPersonId} />
       </div>
