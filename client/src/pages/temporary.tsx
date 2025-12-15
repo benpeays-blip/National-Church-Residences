@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree, Settings, MessageSquare, User, Briefcase } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { NCR_BRAND_COLORS, AccentColor, getAccentColor } from "@/components/ui/accent-card";
+import { AccentCard, NCR_BRAND_COLORS, AccentColor, getAccentColor, getAccentBgClass } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
@@ -44,11 +44,11 @@ function ProductCard({ product }: { product: TechProduct }) {
         <p className="text-xs text-muted-foreground mb-3">{product.description}</p>
         <div className="mt-auto space-y-2">
           <div className="flex items-start gap-2">
-            <Check className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+            <Check className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("lime") }} />
             <p className="text-xs text-muted-foreground line-clamp-1">{product.strengths[0]}</p>
           </div>
           <div className="flex items-start gap-2">
-            <X className="h-3 w-3 text-red-600 mt-0.5 shrink-0" />
+            <X className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("coral") }} />
             <p className="text-xs text-muted-foreground line-clamp-1">{product.weaknesses[0]}</p>
           </div>
         </div>
@@ -119,13 +119,13 @@ function ProductDetailModal({ product, onClose }: { product: TechProduct | null;
           <div className="grid md:grid-cols-2 gap-0">
             <div className="p-6 border-b md:border-b-0 md:border-r">
               <div className="flex items-center gap-2 mb-3">
-                <Check className="h-4 w-4 text-green-600" />
+                <Check className="h-4 w-4" style={{ color: getAccentColor("lime") }} />
                 <h4 className="font-medium text-sm">Strengths</h4>
               </div>
               <ul className="space-y-2">
                 {product.strengths.map((strength, idx) => (
                   <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="text-green-600 mt-1 shrink-0">+</span>
+                    <span className="mt-1 shrink-0" style={{ color: getAccentColor("lime") }}>+</span>
                     <span>{strength}</span>
                   </li>
                 ))}
@@ -133,13 +133,13 @@ function ProductDetailModal({ product, onClose }: { product: TechProduct | null;
             </div>
             <div className="p-6">
               <div className="flex items-center gap-2 mb-3">
-                <X className="h-4 w-4 text-red-600" />
+                <X className="h-4 w-4" style={{ color: getAccentColor("coral") }} />
                 <h4 className="font-medium text-sm">Weaknesses</h4>
               </div>
               <ul className="space-y-2">
                 {product.weaknesses.map((weakness, idx) => (
                   <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="text-red-600 mt-1 shrink-0">−</span>
+                    <span className="mt-1 shrink-0" style={{ color: getAccentColor("coral") }}>−</span>
                     <span>{weakness}</span>
                   </li>
                 ))}
@@ -147,10 +147,10 @@ function ProductDetailModal({ product, onClose }: { product: TechProduct | null;
             </div>
           </div>
           
-          <div className="p-6 border-t" style={{ backgroundColor: "rgba(8, 69, 148, 0.05)" }}>
+          <div className="p-6 border-t" style={{ backgroundColor: `${getAccentColor("teal")}10` }}>
             <div className="flex items-center gap-2 mb-3">
-              <Building2 className="h-4 w-4" style={{ color: "#084594" }} />
-              <h4 className="font-medium text-sm" style={{ color: "#084594" }}>NCR Context</h4>
+              <Building2 className="h-4 w-4" style={{ color: getAccentColor("teal") }} />
+              <h4 className="font-medium text-sm" style={{ color: getAccentColor("teal") }}>NCR Context</h4>
             </div>
             <p className="text-sm text-muted-foreground">{product.ncrContext}</p>
           </div>
@@ -1309,8 +1309,8 @@ function InterviewDetailDialog({ person, open, onOpenChange }: { person: Intervi
               <AccordionItem value="challenges" className="border rounded-lg px-4">
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-md bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
-                      <AlertTriangle className="h-4 w-4 text-orange-600" />
+                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("coral")}20` }}>
+                      <AlertTriangle className="h-4 w-4" style={{ color: getAccentColor("coral") }} />
                     </div>
                     <span className="font-semibold">Current Challenges</span>
                     <Badge variant="secondary" className="ml-2 text-xs">{person.challenges.length}</Badge>
@@ -1319,12 +1319,12 @@ function InterviewDetailDialog({ person, open, onOpenChange }: { person: Intervi
                 <AccordionContent>
                   <div className="space-y-4 pb-2">
                     {person.challenges.map((challenge, idx) => (
-                      <div key={idx} className="border-l-2 border-orange-200 dark:border-orange-800 pl-3">
+                      <div key={idx} className="border-l-2 pl-3" style={{ borderColor: `${getAccentColor("coral")}40` }}>
                         <h4 className="font-medium text-sm mb-2">{challenge.title}</h4>
                         <ul className="space-y-1.5">
                           {challenge.items.map((item, itemIdx) => (
                             <li key={itemIdx} className="text-sm text-muted-foreground flex items-start gap-2">
-                              <span className="text-orange-500 mt-1 shrink-0">•</span>
+                              <span className="mt-1 shrink-0" style={{ color: getAccentColor("coral") }}>&#8226;</span>
                               <span>{item}</span>
                             </li>
                           ))}
@@ -1338,8 +1338,8 @@ function InterviewDetailDialog({ person, open, onOpenChange }: { person: Intervi
               <AccordionItem value="wants" className="border rounded-lg px-4">
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-md bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                      <Sparkles className="h-4 w-4 text-green-600" />
+                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("lime")}20` }}>
+                      <Sparkles className="h-4 w-4" style={{ color: getAccentColor("lime") }} />
                     </div>
                     <span className="font-semibold">Desired Capabilities</span>
                     <Badge variant="secondary" className="ml-2 text-xs">{person.wants.length}</Badge>
@@ -1348,12 +1348,12 @@ function InterviewDetailDialog({ person, open, onOpenChange }: { person: Intervi
                 <AccordionContent>
                   <div className="space-y-4 pb-2">
                     {person.wants.map((want, idx) => (
-                      <div key={idx} className="border-l-2 border-green-200 dark:border-green-800 pl-3">
+                      <div key={idx} className="border-l-2 pl-3" style={{ borderColor: `${getAccentColor("lime")}40` }}>
                         <h4 className="font-medium text-sm mb-2">{want.title}</h4>
                         <ul className="space-y-1.5">
                           {want.items.map((item, itemIdx) => (
                             <li key={itemIdx} className="text-sm text-muted-foreground flex items-start gap-2">
-                              <span className="text-green-500 mt-1 shrink-0">+</span>
+                              <span className="mt-1 shrink-0" style={{ color: getAccentColor("lime") }}>+</span>
                               <span>{item}</span>
                             </li>
                           ))}
@@ -1367,8 +1367,8 @@ function InterviewDetailDialog({ person, open, onOpenChange }: { person: Intervi
               <AccordionItem value="tech" className="border rounded-lg px-4">
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-md bg-blue-100 dark:bg-blue-900/30 flex items-center justify-center">
-                      <Server className="h-4 w-4 text-blue-600" />
+                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("sky")}20` }}>
+                      <Server className="h-4 w-4" style={{ color: getAccentColor("sky") }} />
                     </div>
                     <span className="font-semibold">Tech Stack</span>
                     <Badge variant="secondary" className="ml-2 text-xs">{person.techStack.length}</Badge>
@@ -1378,7 +1378,7 @@ function InterviewDetailDialog({ person, open, onOpenChange }: { person: Intervi
                   <div className="space-y-3 pb-2">
                     {person.techStack.map((tech, idx) => (
                       <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                        <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 shrink-0" />
+                        <div className="w-2 h-2 rounded-full mt-2 shrink-0" style={{ backgroundColor: getAccentColor("sky") }} />
                         <div>
                           <h4 className="font-medium text-sm">{tech.name}</h4>
                           <p className="text-sm text-muted-foreground mt-0.5">{tech.description}</p>
@@ -1392,8 +1392,8 @@ function InterviewDetailDialog({ person, open, onOpenChange }: { person: Intervi
               <AccordionItem value="observations" className="border rounded-lg px-4">
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-md bg-purple-100 dark:bg-purple-900/30 flex items-center justify-center">
-                      <Users className="h-4 w-4 text-purple-600" />
+                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("orange")}20` }}>
+                      <Users className="h-4 w-4" style={{ color: getAccentColor("orange") }} />
                     </div>
                     <span className="font-semibold">Observations</span>
                     <Badge variant="secondary" className="ml-2 text-xs">{person.observations.length}</Badge>
@@ -1403,7 +1403,7 @@ function InterviewDetailDialog({ person, open, onOpenChange }: { person: Intervi
                   <ul className="space-y-2 pb-2">
                     {person.observations.map((obs, idx) => (
                       <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                        <span className="text-purple-500 mt-1 shrink-0">→</span>
+                        <span className="mt-1 shrink-0" style={{ color: getAccentColor("orange") }}>&#8594;</span>
                         <span>{obs}</span>
                       </li>
                     ))}
@@ -1411,13 +1411,13 @@ function InterviewDetailDialog({ person, open, onOpenChange }: { person: Intervi
                 </AccordionContent>
               </AccordionItem>
 
-              <AccordionItem value="summary" className="border rounded-lg px-4 border-blue-200 dark:border-blue-800" style={{ backgroundColor: "rgba(8, 69, 148, 0.03)" }}>
+              <AccordionItem value="summary" className="border rounded-lg px-4" style={{ backgroundColor: `${getAccentColor("teal")}08`, borderColor: `${getAccentColor("teal")}40` }}>
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: "rgba(8, 69, 148, 0.15)" }}>
-                      <Building2 className="h-4 w-4" style={{ color: "#084594" }} />
+                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("teal")}20` }}>
+                      <Building2 className="h-4 w-4" style={{ color: getAccentColor("teal") }} />
                     </div>
-                    <span className="font-semibold" style={{ color: "#084594" }}>Summary Insight</span>
+                    <span className="font-semibold" style={{ color: getAccentColor("teal") }}>Summary Insight</span>
                   </div>
                 </AccordionTrigger>
                 <AccordionContent>
@@ -1457,17 +1457,17 @@ function OnSiteInterviews({ initialPersonId }: { initialPersonId?: string }) {
 
   return (
     <div className="space-y-6">
-      <Card>
+      <AccentCard accent="olive">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Users className="h-5 w-5 text-blue-600" />
+            <Users className="h-5 w-5" style={{ color: getAccentColor("olive") }} />
             <CardTitle>On Site Interviews</CardTitle>
           </div>
           <CardDescription>
             Key stakeholder interviews conducted at NCR. Click on any card to view detailed insights.
           </CardDescription>
         </CardHeader>
-      </Card>
+      </AccentCard>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {interviewees.map((person) => (
@@ -1491,17 +1491,17 @@ function OnSiteInterviews({ initialPersonId }: { initialPersonId?: string }) {
 function TechStack() {
   return (
     <div className="space-y-6">
-      <Card>
+      <AccentCard accent="teal">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Layers className="h-5 w-5 text-blue-600" />
+            <Layers className="h-5 w-5" style={{ color: getAccentColor("teal") }} />
             <CardTitle>NCR Technology Stack</CardTitle>
           </div>
           <CardDescription>
             Overview of software products used across National Church Residences fundraising and operations. Click any card to view full details.
           </CardDescription>
         </CardHeader>
-      </Card>
+      </AccentCard>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {techProducts.map((product) => (
@@ -1578,44 +1578,44 @@ function ProductDetailPage({ productId }: { productId: string }) {
       </Card>
 
       <div className="grid md:grid-cols-2 gap-6">
-        <Card className="p-6">
+        <AccentCard accent="lime" className="p-6">
           <div className="flex items-center gap-2 mb-4">
-            <Check className="h-5 w-5 text-green-600" />
+            <Check className="h-5 w-5" style={{ color: getAccentColor("lime") }} />
             <h2 className="font-semibold text-lg">Strengths</h2>
           </div>
           <ul className="space-y-3">
             {product.strengths.map((strength, idx) => (
               <li key={idx} className="flex items-start gap-3">
-                <span className="text-green-600 font-bold mt-0.5">+</span>
+                <span className="font-bold mt-0.5" style={{ color: getAccentColor("lime") }}>+</span>
                 <span className="text-sm text-muted-foreground">{strength}</span>
               </li>
             ))}
           </ul>
-        </Card>
+        </AccentCard>
 
-        <Card className="p-6">
+        <AccentCard accent="coral" className="p-6">
           <div className="flex items-center gap-2 mb-4">
-            <X className="h-5 w-5 text-red-600" />
+            <X className="h-5 w-5" style={{ color: getAccentColor("coral") }} />
             <h2 className="font-semibold text-lg">Weaknesses</h2>
           </div>
           <ul className="space-y-3">
             {product.weaknesses.map((weakness, idx) => (
               <li key={idx} className="flex items-start gap-3">
-                <span className="text-red-600 font-bold mt-0.5">−</span>
+                <span className="font-bold mt-0.5" style={{ color: getAccentColor("coral") }}>−</span>
                 <span className="text-sm text-muted-foreground">{weakness}</span>
               </li>
             ))}
           </ul>
-        </Card>
+        </AccentCard>
       </div>
 
-      <Card className="p-6" style={{ backgroundColor: "rgba(8, 69, 148, 0.05)" }}>
+      <AccentCard accent="teal" className="p-6">
         <div className="flex items-center gap-2 mb-4">
-          <Building2 className="h-5 w-5" style={{ color: "#084594" }} />
-          <h2 className="font-semibold text-lg" style={{ color: "#084594" }}>NCR Context</h2>
+          <Building2 className="h-5 w-5" style={{ color: getAccentColor("teal") }} />
+          <h2 className="font-semibold text-lg" style={{ color: getAccentColor("teal") }}>NCR Context</h2>
         </div>
         <p className="text-muted-foreground">{product.ncrContext}</p>
-      </Card>
+      </AccentCard>
     </div>
   );
 }
@@ -1625,7 +1625,7 @@ interface TechComponent {
   name: string;
   role: string;
   icon: typeof Database;
-  color: string;
+  accent: AccentColor;
   aiHelp: string;
   appRole: string;
   owners: string[];
@@ -1639,7 +1639,7 @@ const techComponents: TechComponent[] = [
     name: "Microsoft Fabric OneLake + Purview",
     role: "Enterprise data lakehouse + governance",
     icon: Database,
-    color: "#0078d4",
+    accent: "sky",
     aiHelp: "Cleans duplicates, enforces golden records, flags anomalies, ensures HIPAA/PII compliance.",
     appRole: "Integration Hub module surfaces unified records and lineage; AI queries OneLake directly.",
     owners: ["IT", "Data Governance", "Compliance"],
@@ -1651,7 +1651,7 @@ const techComponents: TechComponent[] = [
     name: "Power BI (with Fabric datasets)",
     role: "Unified reporting and dashboards",
     icon: BarChart3,
-    color: "#f2c811",
+    accent: "lime",
     aiHelp: "Embeds predictive analytics, generates outcome reports, explains anomalies.",
     appRole: "Role-based dashboards (executive, fundraising, housing, healthcare, finance).",
     owners: ["BI Team", "Finance", "Strategy"],
@@ -1663,7 +1663,7 @@ const techComponents: TechComponent[] = [
     name: "SharePoint + Microsoft Search",
     role: "Intranet, document store, enterprise search",
     icon: FileText,
-    color: "#036c5f",
+    accent: "teal",
     aiHelp: "Conversational search across policies, SOPs, filings, donor letters.",
     appRole: "Knowledge & Training Hub with wiki, contextual help, micro-learning.",
     owners: ["IT", "HR", "Legal"],
@@ -1675,7 +1675,7 @@ const techComponents: TechComponent[] = [
     name: "Raiser's Edge + iWave/WealthEngine",
     role: "Donor CRM + enrichment",
     icon: Heart,
-    color: "#00a4e4",
+    accent: "coral",
     aiHelp: "Predict donor likelihood, draft personalized communications, auto-assign leads.",
     appRole: "Donor Hub with funnel, messaging templates, acquisition tracking.",
     owners: ["Annual Giving", "Marketing", "IT CRM"],
@@ -1687,7 +1687,7 @@ const techComponents: TechComponent[] = [
     name: "Yardi (RightSource)",
     role: "Housing management + rent payments",
     icon: Home,
-    color: "#1a5f2a",
+    accent: "tealDark",
     aiHelp: "Auto-validate intake data, flag compliance risks, nudge residents toward online payments.",
     appRole: "Housing Manager Portal with streamlined intake, compliance workflows, payment options.",
     owners: ["Housing Ops", "Property Managers", "IT"],
@@ -1699,7 +1699,7 @@ const techComponents: TechComponent[] = [
     name: "AthenaHealth / Epic",
     role: "Healthcare EHR",
     icon: Heart,
-    color: "#7b2d8e",
+    accent: "coralDark",
     aiHelp: "Auto-summarize intake, generate donor impact stories, streamline billing.",
     appRole: "Healthcare Integration Module linking EHR + Workday + Power BI.",
     owners: ["Health Services", "Finance", "IT"],
@@ -1711,7 +1711,7 @@ const techComponents: TechComponent[] = [
     name: "Workday",
     role: "HR + Finance backbone",
     icon: Users,
-    color: "#0875e1",
+    accent: "skyDark",
     aiHelp: "Predict staffing shortages, auto-generate schedules, streamline billing and expense tracking.",
     appRole: "HR Frontline Mode (mobile 3-button app) + Finance integration with P&L.",
     owners: ["HR", "Finance", "IT"],
@@ -1723,7 +1723,7 @@ const techComponents: TechComponent[] = [
     name: "Instrumentl + Candid",
     role: "Grant discovery and management",
     icon: DollarSign,
-    color: "#6366f1",
+    accent: "olive",
     aiHelp: "Draft narratives, prevent duplicate funder outreach, generate dashboards.",
     appRole: "Grants Workspace with pipeline, expense workflows, grantee portal.",
     owners: ["Grants", "Finance", "IT"],
@@ -1735,7 +1735,7 @@ const techComponents: TechComponent[] = [
     name: "Azure Event Grid / Service Bus",
     role: "Real-time eventing backbone",
     icon: Zap,
-    color: "#0089d6",
+    accent: "orange",
     aiHelp: "Trigger workflows (e.g., donor follow-up, compliance filing reminders, intake updates).",
     appRole: "Integration Hub uses events to keep modules in sync.",
     owners: ["IT Architecture"],
@@ -1747,7 +1747,7 @@ const techComponents: TechComponent[] = [
     name: "Unified App Shell (React/Power Platform)",
     role: "Modular web + mobile app",
     icon: Layout,
-    color: "#084594",
+    accent: "limeDark",
     aiHelp: "Embedded assistants in each module, orchestrating tasks and surfacing 'next best actions.'",
     appRole: "Houses CareGuide 2.0, Grants Workspace, Donor Hub, Volunteer Hub, Compliance Dashboard, Financial Transparency, Strategy Dashboard, Housing Manager Portal.",
     owners: ["IT PMO", "Product Teams"],
@@ -1761,17 +1761,17 @@ interface AgentType {
   name: string;
   description: string;
   icon: typeof Bot;
-  color: string;
+  accent: AccentColor;
 }
 
 const agentTypes: AgentType[] = [
-  { id: "careguide", name: "CareGuide Agent", description: "Conversational intake assistant for families; validates coordinator entries; generates outcome metrics.", icon: UserCheck, color: "#16a34a" },
-  { id: "compliance", name: "Compliance Agent", description: "Automates HUD/CMS filings, assembles evidence, enforces HIPAA/PII rules.", icon: Shield, color: "#dc2626" },
-  { id: "document", name: "Document Agent", description: "Drafts donor letters, grant narratives, board reports, and audit bundles.", icon: FileText, color: "#2563eb" },
-  { id: "engagement", name: "Engagement Agent", description: "Prioritizes donors, volunteers, and funders; prevents cannibalization; schedules outreach.", icon: Heart, color: "#db2777" },
-  { id: "financial", name: "Financial Agent", description: "Consolidates P&L, detects double counting, forecasts cash flow, tracks donor acquisition costs.", icon: DollarSign, color: "#ca8a04" },
-  { id: "orchestration", name: "Orchestration Agent", description: "Coordinates tasks across modules, enforces SLAs, escalates anomalies.", icon: Workflow, color: "#7c3aed" },
-  { id: "training", name: "Training Agent", description: "Provides contextual help, micro-learning, and adoption nudges inside workflows.", icon: BrainCircuit, color: "#0891b2" },
+  { id: "careguide", name: "CareGuide Agent", description: "Conversational intake assistant for families; validates coordinator entries; generates outcome metrics.", icon: UserCheck, accent: "lime" },
+  { id: "compliance", name: "Compliance Agent", description: "Automates HUD/CMS filings, assembles evidence, enforces HIPAA/PII rules.", icon: Shield, accent: "coral" },
+  { id: "document", name: "Document Agent", description: "Drafts donor letters, grant narratives, board reports, and audit bundles.", icon: FileText, accent: "sky" },
+  { id: "engagement", name: "Engagement Agent", description: "Prioritizes donors, volunteers, and funders; prevents cannibalization; schedules outreach.", icon: Heart, accent: "coralDark" },
+  { id: "financial", name: "Financial Agent", description: "Consolidates P&L, detects double counting, forecasts cash flow, tracks donor acquisition costs.", icon: DollarSign, accent: "olive" },
+  { id: "orchestration", name: "Orchestration Agent", description: "Coordinates tasks across modules, enforces SLAs, escalates anomalies.", icon: Workflow, accent: "orange" },
+  { id: "training", name: "Training Agent", description: "Provides contextual help, micro-learning, and adoption nudges inside workflows.", icon: BrainCircuit, accent: "teal" },
 ];
 
 const redundanciesRemoved = [
@@ -1786,14 +1786,14 @@ const redundanciesRemoved = [
 function TechComponentCard({ component }: { component: TechComponent }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const Icon = component.icon;
+  const accentColor = getAccentColor(component.accent);
 
   return (
-    <Card className="overflow-hidden hover-elevate cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
+    <AccentCard accent={component.accent} className="hover-elevate cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
       <div className="p-4 flex items-start justify-between gap-3">
         <div className="flex items-start gap-3">
           <div 
-            className="w-10 h-10 rounded-lg flex items-center justify-center text-white shrink-0"
-            style={{ backgroundColor: component.color }}
+            className={`w-10 h-10 rounded-lg flex items-center justify-center text-white shrink-0 ${getAccentBgClass(component.accent)}`}
           >
             <Icon className="w-5 h-5" />
           </div>
@@ -1812,23 +1812,23 @@ function TechComponentCard({ component }: { component: TechComponent }) {
           <div className="grid md:grid-cols-2 gap-0">
             <div className="p-4 border-b md:border-b-0 md:border-r">
               <div className="flex items-center gap-2 mb-2">
-                <Bot className="h-4 w-4 text-purple-600" />
-                <h4 className="font-medium text-xs text-purple-600">AI Assistance</h4>
+                <Bot className="h-4 w-4" style={{ color: accentColor }} />
+                <h4 className="font-medium text-xs" style={{ color: accentColor }}>AI Assistance</h4>
               </div>
               <p className="text-xs text-muted-foreground">{component.aiHelp}</p>
             </div>
             <div className="p-4">
               <div className="flex items-center gap-2 mb-2">
-                <Layout className="h-4 w-4 text-blue-600" />
-                <h4 className="font-medium text-xs text-blue-600">App Role</h4>
+                <Layout className="h-4 w-4" style={{ color: accentColor }} />
+                <h4 className="font-medium text-xs" style={{ color: accentColor }}>App Role</h4>
               </div>
               <p className="text-xs text-muted-foreground">{component.appRole}</p>
             </div>
           </div>
           <div className="p-4 border-t bg-muted/30">
             <div className="flex items-center gap-2 mb-2">
-              <Clock className="h-4 w-4" />
-              <h4 className="font-medium text-xs">Implementation</h4>
+              <Clock className="h-4 w-4" style={{ color: accentColor }} />
+              <h4 className="font-medium text-xs" style={{ color: accentColor }}>Implementation</h4>
             </div>
             <div className="flex flex-wrap gap-1 mb-2">
               {component.owners.map((owner, idx) => (
@@ -1838,43 +1838,43 @@ function TechComponentCard({ component }: { component: TechComponent }) {
             <ul className="text-xs text-muted-foreground space-y-1">
               {component.steps.map((step, idx) => (
                 <li key={idx} className="flex items-start gap-2">
-                  <span className="text-green-600 mt-0.5">→</span>
+                  <span style={{ color: accentColor }} className="mt-0.5">&#8594;</span>
                   <span>{step}</span>
                 </li>
               ))}
             </ul>
             <div className="mt-2 pt-2 border-t">
-              <Badge style={{ backgroundColor: component.color }} className="text-white text-xs">
+              <Badge className={`text-white text-xs ${getAccentBgClass(component.accent)}`}>
                 {component.timeline}
               </Badge>
             </div>
           </div>
         </div>
       )}
-    </Card>
+    </AccentCard>
   );
 }
 
 function OptimizationIdeas() {
   return (
     <div className="space-y-8">
-      <Card>
+      <AccentCard accent="lime">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Lightbulb className="h-5 w-5 text-blue-600" />
+            <Lightbulb className="h-5 w-5" style={{ color: getAccentColor("lime") }} />
             <CardTitle>NCR Optimized Tech Stack</CardTitle>
           </div>
           <CardDescription>
             A unified ecosystem where existing systems remain the source of record, Fabric + Purview unify data, AI agents handle busywork, and the app provides a single pane of glass.
           </CardDescription>
         </CardHeader>
-      </Card>
+      </AccentCard>
 
-      <Card className="p-4" style={{ backgroundColor: "rgba(8, 69, 148, 0.05)" }}>
+      <AccentCard accent="teal" className="p-4">
         <div className="flex items-start gap-3">
-          <Building2 className="h-5 w-5 mt-0.5 shrink-0" style={{ color: "#084594" }} />
+          <Building2 className="h-5 w-5 mt-0.5 shrink-0" style={{ color: getAccentColor("teal") }} />
           <div>
-            <h4 className="font-medium text-sm" style={{ color: "#084594" }}>Executive Summary</h4>
+            <h4 className="font-medium text-sm" style={{ color: getAccentColor("teal") }}>Executive Summary</h4>
             <p className="text-sm text-muted-foreground mt-1">
               <strong>Tech Stack:</strong> Microsoft Fabric OneLake + Purview, Power BI, SharePoint, Raiser's Edge, Yardi, Athena/Epic, Workday, Instrumentl, Azure Event Grid, unified React/Power Platform app.
             </p>
@@ -1886,11 +1886,11 @@ function OptimizationIdeas() {
             </p>
           </div>
         </div>
-      </Card>
+      </AccentCard>
 
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <Server className="h-5 w-5 text-blue-600" />
+          <Server className="h-5 w-5" style={{ color: getAccentColor("sky") }} />
           <h2 className="font-semibold text-lg">Technology Components</h2>
         </div>
         <div className="grid md:grid-cols-2 gap-4">
@@ -1902,32 +1902,29 @@ function OptimizationIdeas() {
 
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <Bot className="h-5 w-5 text-purple-600" />
+          <Bot className="h-5 w-5" style={{ color: getAccentColor("orange") }} />
           <h2 className="font-semibold text-lg">AI Agent Strategy</h2>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
           {agentTypes.map((agent) => {
             const Icon = agent.icon;
             return (
-              <Card key={agent.id} className="p-4">
+              <AccentCard key={agent.id} accent={agent.accent} className="p-4">
                 <div className="flex items-center gap-3 mb-2">
-                  <div 
-                    className="w-8 h-8 rounded-lg flex items-center justify-center text-white"
-                    style={{ backgroundColor: agent.color }}
-                  >
+                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-white ${getAccentBgClass(agent.accent)}`}>
                     <Icon className="w-4 h-4" />
                   </div>
                   <h3 className="font-medium text-sm">{agent.name}</h3>
                 </div>
                 <p className="text-xs text-muted-foreground">{agent.description}</p>
-              </Card>
+              </AccentCard>
             );
           })}
         </div>
 
-        <Card className="mt-4 p-4">
+        <AccentCard accent="olive" className="mt-4 p-4">
           <h3 className="font-medium text-sm mb-3 flex items-center gap-2">
-            <Workflow className="h-4 w-4 text-blue-600" />
+            <Workflow className="h-4 w-4" style={{ color: getAccentColor("olive") }} />
             Agent Operating Principles
           </h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -1952,70 +1949,70 @@ function OptimizationIdeas() {
               <p className="text-xs text-muted-foreground"><strong>Event-driven:</strong> Agents respond to triggers from Azure Event Grid.</p>
             </div>
           </div>
-        </Card>
+        </AccentCard>
       </div>
 
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <Smartphone className="h-5 w-5 text-green-600" />
+          <Smartphone className="h-5 w-5" style={{ color: getAccentColor("lime") }} />
           <h2 className="font-semibold text-lg">Unified App Strategy</h2>
         </div>
         <div className="grid md:grid-cols-2 gap-4">
-          <Card className="p-4">
+          <AccentCard accent="lime" className="p-4">
             <h3 className="font-medium text-sm mb-3">App Structure</h3>
             <ul className="space-y-2 text-xs text-muted-foreground">
               <li className="flex items-start gap-2">
-                <Check className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+                <Check className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("lime") }} />
                 <span><strong>Modular shell:</strong> React/Power Platform with hubs for CareGuide, Grants, Donor, Volunteer, Compliance, Finance, Strategy, Housing, Healthcare, Knowledge.</span>
               </li>
               <li className="flex items-start gap-2">
-                <Check className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+                <Check className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("lime") }} />
                 <span><strong>Role-based dashboards:</strong> Executives, fundraisers, clinicians, housing managers each see tailored "next best actions."</span>
               </li>
               <li className="flex items-start gap-2">
-                <Check className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+                <Check className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("lime") }} />
                 <span><strong>Global search:</strong> Microsoft Search integration across residents, donors, grants, properties, filings, documents.</span>
               </li>
               <li className="flex items-start gap-2">
-                <Check className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+                <Check className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("lime") }} />
                 <span><strong>Smart notifications:</strong> Context-aware nudges (expiring certifications, donor lapses, lease renewals).</span>
               </li>
               <li className="flex items-start gap-2">
-                <Check className="h-3 w-3 text-green-600 mt-0.5 shrink-0" />
+                <Check className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("lime") }} />
                 <span><strong>Mobile-first:</strong> Simplified frontline views (3–4 primary actions per role).</span>
               </li>
             </ul>
-          </Card>
-          <Card className="p-4">
+          </AccentCard>
+          <AccentCard accent="sky" className="p-4">
             <h3 className="font-medium text-sm mb-3">How the App Supports Agents</h3>
             <ul className="space-y-2 text-xs text-muted-foreground">
               <li className="flex items-start gap-2">
-                <Zap className="h-3 w-3 text-purple-600 mt-0.5 shrink-0" />
+                <Zap className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("sky") }} />
                 <span><strong>Data context:</strong> App modules provide structured data (eligibility rules, donor records, grant pipelines) that agents act on.</span>
               </li>
               <li className="flex items-start gap-2">
-                <Zap className="h-3 w-3 text-purple-600 mt-0.5 shrink-0" />
+                <Zap className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("sky") }} />
                 <span><strong>Workflow orchestration:</strong> App defines steps and approvals; agents automate them.</span>
               </li>
               <li className="flex items-start gap-2">
-                <Zap className="h-3 w-3 text-purple-600 mt-0.5 shrink-0" />
+                <Zap className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("sky") }} />
                 <span><strong>Simplified info searching:</strong> App organizes records into hubs; agents query across hubs to answer questions instantly.</span>
               </li>
               <li className="flex items-start gap-2">
-                <Zap className="h-3 w-3 text-purple-600 mt-0.5 shrink-0" />
+                <Zap className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("sky") }} />
                 <span><strong>User interface:</strong> App is the "face" of the agents—staff interact with dashboards, forms, and portals, while agents handle the heavy lifting behind the scenes.</span>
               </li>
             </ul>
-          </Card>
+          </AccentCard>
         </div>
       </div>
 
       <div>
         <div className="flex items-center gap-2 mb-4">
-          <Trash2 className="h-5 w-5 text-red-600" />
+          <Trash2 className="h-5 w-5" style={{ color: getAccentColor("coral") }} />
           <h2 className="font-semibold text-lg">Redundancies Removed</h2>
         </div>
-        <Card>
+        <AccentCard accent="coral">
           <div className="divide-y">
             {redundanciesRemoved.map((item, idx) => (
               <div key={idx} className="p-4 flex items-start gap-4">
@@ -2023,15 +2020,15 @@ function OptimizationIdeas() {
                   <p className="text-sm text-muted-foreground line-through">{item.old}</p>
                 </div>
                 <div className="text-center shrink-0">
-                  <Badge variant="outline" className="text-xs">→</Badge>
+                  <Badge variant="outline" className="text-xs">&#8594;</Badge>
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm font-medium text-green-700">{item.new}</p>
+                  <p className="text-sm font-medium" style={{ color: getAccentColor("lime") }}>{item.new}</p>
                 </div>
               </div>
             ))}
           </div>
-        </Card>
+        </AccentCard>
       </div>
     </div>
   );
@@ -2041,8 +2038,7 @@ interface RiskCategory {
   id: string;
   title: string;
   icon: typeof Shield;
-  color: string;
-  bgColor: string;
+  accent: AccentColor;
   regulations: { name: string; description: string }[];
 }
 
@@ -2051,8 +2047,7 @@ const riskCategories: RiskCategory[] = [
     id: "healthcare",
     title: "Healthcare & Data Privacy",
     icon: Heart,
-    color: "#dc2626",
-    bgColor: "rgba(220, 38, 38, 0.1)",
+    accent: "coral",
     regulations: [
       { name: "HIPAA", description: "Protects resident health data; violations include unauthorized access, improper sharing, or lack of encryption." },
       { name: "HITECH Act", description: "Expands HIPAA enforcement; requires breach notifications." },
@@ -2065,8 +2060,7 @@ const riskCategories: RiskCategory[] = [
     id: "housing",
     title: "Housing & Resident Rights",
     icon: Home,
-    color: "#2563eb",
-    bgColor: "rgba(37, 99, 235, 0.1)",
+    accent: "sky",
     regulations: [
       { name: "Fair Housing Act", description: "Prohibits discrimination in housing eligibility decisions; violations include biased AI recommendations." },
       { name: "HUD Regulations", description: "Service coordinators must collect accurate data and report compliance." },
@@ -2079,8 +2073,7 @@ const riskCategories: RiskCategory[] = [
     id: "fundraising",
     title: "Donor & Fundraising Compliance",
     icon: DollarSign,
-    color: "#16a34a",
-    bgColor: "rgba(22, 163, 74, 0.1)",
+    accent: "lime",
     regulations: [
       { name: "IRS Form 990", description: "Requires accurate reporting of donations, grants, and expenses." },
       { name: "State Charitable Solicitation Laws", description: "Require registration and disclosure when soliciting donations." },
@@ -2093,8 +2086,7 @@ const riskCategories: RiskCategory[] = [
     id: "legal",
     title: "Legal & Compliance",
     icon: Scale,
-    color: "#7c3aed",
-    bgColor: "rgba(124, 58, 237, 0.1)",
+    accent: "tealDark",
     regulations: [
       { name: "Corporate Entity Tracking", description: "NCR must maintain accurate records for 1,100+ legal entities." },
       { name: "HUD/CMS Filing Requirements", description: "Require timely, accurate compliance filings." },
@@ -2106,8 +2098,7 @@ const riskCategories: RiskCategory[] = [
     id: "finance",
     title: "Finance & Operations",
     icon: DollarSign,
-    color: "#ca8a04",
-    bgColor: "rgba(202, 138, 4, 0.1)",
+    accent: "olive",
     regulations: [
       { name: "IRS & GAAP Standards", description: "Require accurate consolidated financial reporting." },
       { name: "Value-Based Care Models", description: "Require accurate outcome tracking tied to reimbursement." },
@@ -2120,8 +2111,7 @@ const riskCategories: RiskCategory[] = [
     id: "cybersecurity",
     title: "Cybersecurity & Technology",
     icon: Server,
-    color: "#0891b2",
-    bgColor: "rgba(8, 145, 178, 0.1)",
+    accent: "teal",
     regulations: [
       { name: "HIPAA Security Rule", description: "Requires safeguards for electronic health information." },
       { name: "State Data Breach Notification Laws", description: "Require notifying residents and regulators of breaches." },
@@ -2134,8 +2124,7 @@ const riskCategories: RiskCategory[] = [
     id: "ethics",
     title: "Ethics & Trust",
     icon: Sparkles,
-    color: "#db2777",
-    bgColor: "rgba(219, 39, 119, 0.1)",
+    accent: "orange",
     regulations: [
       { name: "Bias in AI Decisions", description: "Housing eligibility, donor scoring, and grant prioritization must be bias-free." },
       { name: "Consent Management", description: "Residents and donors must know how their data is used." },
@@ -2148,22 +2137,20 @@ const riskCategories: RiskCategory[] = [
 function RiskCategoryCard({ category }: { category: RiskCategory }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const Icon = category.icon;
+  const accentColor = getAccentColor(category.accent);
 
   return (
-    <Card 
-      className="overflow-hidden hover-elevate cursor-pointer transition-all"
+    <AccentCard 
+      accent={category.accent}
+      className="hover-elevate cursor-pointer transition-all"
       data-testid={`card-risk-${category.id}`}
     >
       <div 
         className="p-4 flex items-center justify-between gap-3"
-        style={{ backgroundColor: category.bgColor }}
         onClick={() => setIsExpanded(!isExpanded)}
       >
         <div className="flex items-center gap-3">
-          <div 
-            className="w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-sm"
-            style={{ backgroundColor: category.color }}
-          >
+          <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-sm ${getAccentBgClass(category.accent)}`}>
             <Icon className="w-5 h-5" />
           </div>
           <div>
@@ -2180,11 +2167,8 @@ function RiskCategoryCard({ category }: { category: RiskCategory }) {
         <div className="p-4 border-t space-y-3">
           {category.regulations.map((reg, idx) => (
             <div key={idx} className="flex items-start gap-3">
-              <div 
-                className="w-6 h-6 rounded flex items-center justify-center shrink-0 mt-0.5"
-                style={{ backgroundColor: category.bgColor }}
-              >
-                <AlertTriangle className="w-3 h-3" style={{ color: category.color }} />
+              <div className="w-6 h-6 rounded flex items-center justify-center shrink-0 mt-0.5 bg-muted/50">
+                <AlertTriangle className="w-3 h-3" style={{ color: accentColor }} />
               </div>
               <div>
                 <p className="text-sm font-medium">{reg.name}</p>
@@ -2194,30 +2178,30 @@ function RiskCategoryCard({ category }: { category: RiskCategory }) {
           ))}
         </div>
       )}
-    </Card>
+    </AccentCard>
   );
 }
 
 function RiskCompliance() {
   return (
     <div className="space-y-6">
-      <Card>
+      <AccentCard accent="coral">
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Shield className="h-5 w-5 text-blue-600" />
+            <Shield className="h-5 w-5" style={{ color: getAccentColor("coral") }} />
             <CardTitle>NCR Legal & Risk Landscape</CardTitle>
           </div>
           <CardDescription>
             Complete overview of regulatory compliance requirements across healthcare, housing, fundraising, and operations. Click any category to expand details.
           </CardDescription>
         </CardHeader>
-      </Card>
+      </AccentCard>
 
-      <Card className="p-4" style={{ backgroundColor: "rgba(8, 69, 148, 0.05)" }}>
+      <AccentCard accent="sky" className="p-4">
         <div className="flex items-start gap-3">
-          <Building2 className="h-5 w-5 mt-0.5" style={{ color: "#084594" }} />
+          <Building2 className="h-5 w-5 mt-0.5" style={{ color: getAccentColor("sky") }} />
           <div>
-            <h4 className="font-medium text-sm" style={{ color: "#084594" }}>Executive Summary</h4>
+            <h4 className="font-medium text-sm" style={{ color: getAccentColor("sky") }}>Executive Summary</h4>
             <p className="text-sm text-muted-foreground mt-1">
               NCR's risk landscape spans <strong>7 major domains</strong>: Healthcare (HIPAA, HITECH, 42 CFR Part 2, CMS), 
               Housing (Fair Housing Act, HUD, Section 504, ADA), Fundraising (IRS 990, solicitation laws, GAAP/FASB), 
@@ -2226,7 +2210,7 @@ function RiskCompliance() {
             </p>
           </div>
         </div>
-      </Card>
+      </AccentCard>
 
       <div className="grid md:grid-cols-2 gap-4">
         {riskCategories.map((category) => (
