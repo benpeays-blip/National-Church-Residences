@@ -358,7 +358,6 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-friend"
               >
                 <div className="font-bold text-lg">Friend</div>
-                <div className="text-[10px] text-white/70 mt-0.5">High Energy,<br />Low Structure</div>
                 <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-friend">{data.counts.friend} Donors</Badge>
               </button>
             </div>
@@ -371,7 +370,6 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-partner"
               >
                 <div className="font-bold text-lg">Partner</div>
-                <div className="text-[10px] text-white/70 mt-0.5">High Energy,<br />High Structure</div>
                 <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-partner">{data.counts.partner} Donors</Badge>
               </button>
               {isPartnerHovered && draggedDonor && (
@@ -389,7 +387,6 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-acquaintance"
               >
                 <div className="font-bold text-lg text-center">Acquaintance</div>
-                <div className="text-[10px] text-white/70 mt-0.5">Low Energy,<br />Low Structure</div>
                 <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-acquaintance">{data.counts.acquaintance} Donors</Badge>
               </button>
             </div>
@@ -402,7 +399,6 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 data-testid="quadrant-colleague"
               >
                 <div className="font-bold text-lg">Colleague</div>
-                <div className="text-[10px] text-white/70 mt-0.5">Low Energy,<br />High Structure</div>
                 <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-colleague">{data.counts.colleague} Donors</Badge>
               </button>
             </div>
