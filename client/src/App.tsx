@@ -435,6 +435,8 @@ function App() {
                         navigate('/agent-value-map?tab=overview');
                       } else if (tab === 'Assessment') {
                         navigate('/temporary');
+                      } else if (tab === 'Philanthropy') {
+                        navigate('/quadrant');
                       }
                     }}
                     className={`px-5 py-2 text-sm font-medium transition-colors ${
@@ -502,6 +504,20 @@ function App() {
                       </>
                     ) : (
                       <>
+                        {/* Quadrant - Direct Link (First Item) */}
+                        <Link href="/quadrant">
+                          <div className={`relative ${isNavActive('quadrant') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                              data-testid="button-nav-quadrant"
+                            >
+                              Quadrant
+                            </Button>
+                          </div>
+                        </Link>
+
                         {/* Relationships - Direct Link */}
                         <Link href="/relationships">
                           <div className={`relative ${isNavActive('relationships') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
@@ -581,20 +597,6 @@ function App() {
                           data-testid="button-nav-corporations"
                         >
                           Corporations
-                        </Button>
-                      </div>
-                    </Link>
-
-                    {/* Quadrant - Direct Link */}
-                    <Link href="/quadrant">
-                      <div className={`relative ${isNavActive('quadrant') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                          data-testid="button-nav-quadrant"
-                        >
-                          Quadrant
                         </Button>
                       </div>
                     </Link>
