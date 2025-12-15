@@ -58,11 +58,30 @@ export default function AgentValueMap() {
   
   const [activeTab, setActiveTab] = useState(getTabFromUrl);
   
-  // Sync tab state when URL changes
+  // Sync tab state when URL changes (including query string changes)
   useEffect(() => {
     const tab = getTabFromUrl();
     setActiveTab(tab);
+    
+    // Also listen for popstate to catch browser back/forward with query changes
+    const handlePopState = () => {
+      setActiveTab(getTabFromUrl());
+    };
+    
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
   }, [location]);
+  
+  // Additionally sync on every render to catch Link navigation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const currentTab = getTabFromUrl();
+      if (currentTab !== activeTab) {
+        setActiveTab(currentTab);
+      }
+    }, 100);
+    return () => clearInterval(interval);
+  }, [activeTab]);
 
   // Data Foundation items with NCR brand colors
   const dataFoundation: Array<{ name: string; description: string; icon: LucideIcon; accent: AccentColor }> = [
