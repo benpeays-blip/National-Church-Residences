@@ -423,7 +423,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardFooter>
       </Card>
       {/* Right Panel - Quadrant Details */}
-      <Card className="lg:col-span-2 overflow-hidden">
+      <Card className="lg:col-span-2 overflow-hidden flex flex-col">
         {/* Layered Tab Navigation */}
         <div className="flex border-b bg-muted/30">
           {(['partner', 'friend', 'colleague', 'acquaintance'] as QuadrantType[]).map((q) => {
@@ -463,7 +463,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
           {quadrantConfig[selectedQuadrant].description}
         </div>
         
-        <CardContent className="p-4 pt-6 flex flex-col h-[560px]">
+        <CardContent className="p-4 pt-6 flex flex-col flex-1 min-h-0">
 
           {/* Donor List - Flexible height scrollable area */}
           <div className="flex-1 space-y-2 overflow-y-auto min-h-0">
@@ -523,7 +523,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardContent>
         
         {/* AI Playbook - Fixed at bottom aligned with quadrant footer */}
-        <div className="bg-muted/30 border-t px-4 py-4">
+        <div className="bg-muted/30 border-t px-4 py-4 mt-auto">
           <div className="flex items-center gap-2 text-sm font-semibold mb-3">
             <Lightbulb className="w-4 h-4 text-primary" />
             <span>AI Playbook to Move towards Partner:</span>
