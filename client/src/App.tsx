@@ -653,20 +653,6 @@ function App() {
                         </Button>
                       </div>
                     </Link>
-
-                    {/* Special Projects - Direct Link */}
-                        <Link href="/temporary">
-                          <div className={`relative ${isNavActive('special-projects') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                              data-testid="button-nav-special-projects"
-                            >
-                              Special Projects
-                            </Button>
-                          </div>
-                        </Link>
                       </>
                     )}
                   </nav>
