@@ -22,7 +22,7 @@ const navigationDomains = {
       { name: "Impact Intelligence", href: "/reporting/impact-intelligence" },
     ]
   },
-  "Fundraising": {
+  "Assessment": {
     items: [
       { name: "Donors", href: "/donors" },
       { name: "Pipeline", href: "/pipeline" },
@@ -566,31 +566,31 @@ function App() {
                       </div>
                     </Link>
 
-                    {/* Fundraising Dropdown */}
+                    {/* Assessment Dropdown */}
                     <div
                       className="relative"
-                      onMouseEnter={() => setActiveDropdown("Fundraising")}
+                      onMouseEnter={() => setActiveDropdown("Assessment")}
                       onMouseLeave={() => setActiveDropdown(null)}
                     >
-                      <div className={`relative ${isNavActive('fundraising') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                      <div className={`relative ${isNavActive('assessment') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleDropdownClick("Fundraising")}
+                          onClick={() => handleDropdownClick("Assessment")}
                           className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
-                            activeDropdown === "Fundraising" ? "bg-black/10" : ""
+                            activeDropdown === "Assessment" ? "bg-black/10" : ""
                           }`}
-                          data-testid="button-nav-fundraising"
+                          data-testid="button-nav-assessment"
                         >
-                          Fundraising
-                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Fundraising" ? "rotate-180" : ""}`} />
+                          Assessment
+                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Assessment" ? "rotate-180" : ""}`} />
                         </Button>
                       </div>
-                      {activeDropdown === "Fundraising" && (
+                      {activeDropdown === "Assessment" && (
                         <div className="absolute right-0 top-full pt-1 z-50">
                           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
                             <div className="py-2 px-1">
-                              {navigationDomains["Fundraising"].items.map((item) => (
+                              {navigationDomains["Assessment"].items.map((item) => (
                                 <Link 
                                   key={item.name} 
                                   href={item.href}
