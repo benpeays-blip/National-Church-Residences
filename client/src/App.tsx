@@ -338,7 +338,7 @@ function Router() {
 type TopTab = 'Quadrant' | 'Assessment' | 'Agentic Plan';
 
 function App() {
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
   const [activeDropdown, setActiveDropdown] = useState<DomainKey | null>(null);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [selectedTopTab, setSelectedTopTab] = useState<TopTab>('Quadrant');
@@ -429,7 +429,14 @@ function App() {
                 {topTabs.map((tab) => (
                   <button
                     key={tab}
-                    onClick={() => setSelectedTopTab(tab)}
+                    onClick={() => {
+                      setSelectedTopTab(tab);
+                      if (tab === 'Agentic Plan') {
+                        navigate('/agent-value-map?tab=overview');
+                      } else if (tab === 'Assessment') {
+                        navigate('/temporary');
+                      }
+                    }}
                     className={`px-5 py-2 text-sm font-medium transition-colors ${
                       selectedTopTab === tab
                         ? 'text-[#1B3A5A] rounded-t-md'
