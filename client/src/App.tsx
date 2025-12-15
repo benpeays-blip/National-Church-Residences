@@ -335,7 +335,7 @@ function Router() {
 }
 
 
-type TopTab = 'Quadrant' | 'Fundraising' | 'Relationships';
+type TopTab = 'Quadrant' | 'Fundraising' | 'Agentic Plan';
 
 function App() {
   const [location] = useLocation();
@@ -386,7 +386,7 @@ function App() {
     setActiveDropdown(null);
   };
 
-  const topTabs: TopTab[] = ['Quadrant', 'Fundraising', 'Relationships'];
+  const topTabs: TopTab[] = ['Quadrant', 'Fundraising', 'Agentic Plan'];
 
   return (
     <QueryClientProvider client={queryClient}>
