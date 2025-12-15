@@ -734,508 +734,312 @@ export default function AgentValueMap() {
         {/* Tech Stack Tab */}
         <TabsContent value="techstack" className="space-y-6">
           {/* Microsoft Core Platform */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-[#00A4EF]/10">
-                  <Server className="w-6 h-6 text-[#00A4EF]" />
-                </div>
-                <div>
-                  <CardTitle className="text-xl">Microsoft Core Platform</CardTitle>
-                  <CardDescription>Foundation infrastructure powering NCR's data and AI capabilities</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {/* Microsoft Fabric OneLake */}
-                <Card className="border-2 border-[#00A4EF]/20" data-testid="card-tech-fabric">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#0078D4]/10 shrink-0">
-                        <Database className="w-5 h-5 text-[#0078D4]" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-bold text-base">Microsoft Fabric</h3>
-                          <Badge variant="secondary" className="text-xs">Data Platform</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">Unified analytics platform with OneLake as the single source of truth for all NCR data.</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>OneLake unified data layer</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Data pipelines & ETL</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Real-time analytics</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Microsoft Purview */}
-                <Card className="border-2 border-[#00A4EF]/20" data-testid="card-tech-purview">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#5C2D91]/10 shrink-0">
-                        <Shield className="w-5 h-5 text-[#5C2D91]" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-bold text-base">Microsoft Purview</h3>
-                          <Badge variant="secondary" className="text-xs">Governance</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">Data governance platform for classification, access policies, lineage tracking, and compliance.</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>HIPAA/PII classification</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Data lineage & audit trails</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Access policy enforcement</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Power BI */}
-                <Card className="border-2 border-[#00A4EF]/20" data-testid="card-tech-powerbi">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#F2C811]/10 shrink-0">
-                        <BarChart3 className="w-5 h-5 text-[#F2C811]" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-bold text-base">Power BI</h3>
-                          <Badge variant="secondary" className="text-xs">Analytics</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">Business intelligence platform for predictive dashboards, forecasts, and scenario modeling.</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Predictive dashboards</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Forecast overlays</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Board-ready reporting</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Azure */}
-                <Card className="border-2 border-[#00A4EF]/20" data-testid="card-tech-azure">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#0078D4]/10 shrink-0">
-                        <Globe className="w-5 h-5 text-[#0078D4]" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-bold text-base">Microsoft Azure</h3>
-                          <Badge variant="secondary" className="text-xs">Cloud</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">Cloud infrastructure for hosting, compute, storage, and enterprise-grade security.</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Enterprise cloud hosting</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Identity & access management</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Disaster recovery</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Microsoft Copilot */}
-                <Card className="border-2 border-[#00A4EF]/20" data-testid="card-tech-copilot">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#00A4EF]/10 shrink-0">
-                        <Sparkles className="w-5 h-5 text-[#00A4EF]" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-bold text-base">Microsoft Copilot</h3>
-                          <Badge variant="secondary" className="text-xs">AI Assistant</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">AI-powered assistant for document creation, data analysis, and workflow automation.</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Document generation</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Data summarization</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Natural language queries</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Microsoft Elevate */}
-                <Card className="border-2 border-[#00A4EF]/20" data-testid="card-tech-elevate">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#00A4EF]/10 shrink-0">
-                        <TrendingUp className="w-5 h-5 text-[#00A4EF]" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-bold text-base">Microsoft Elevate</h3>
-                          <Badge variant="secondary" className="text-xs">Partnership</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">Strategic nonprofit partnership providing access to technology resources and foundation funding.</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Tech stack modernization</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Foundation funding access</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Expert consulting</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Operational Systems */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-orange-100 dark:bg-orange-900/20">
-                  <Building2 className="w-6 h-6 text-orange-600" />
-                </div>
-                <div>
-                  <CardTitle className="text-xl">Operational Systems</CardTitle>
-                  <CardDescription>Core business platforms managing housing, finance, and fundraising</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {/* Yardi */}
-                <Card className="border-2 border-orange-200 dark:border-orange-800" data-testid="card-tech-yardi">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#005BAC]/10 shrink-0">
-                        <Home className="w-5 h-5 text-[#005BAC]" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-bold text-base">Yardi</h3>
-                          <Badge variant="secondary" className="text-xs">Property Mgmt</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">Property management platform for affordable housing operations, compliance, and resident management.</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Property management</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>HUD compliance workflows</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>RightSource integration</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Workday */}
-                <Card className="border-2 border-orange-200 dark:border-orange-800" data-testid="card-tech-workday">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#F58220]/10 shrink-0">
-                        <DollarSign className="w-5 h-5 text-[#F58220]" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-bold text-base">Workday</h3>
-                          <Badge variant="secondary" className="text-xs">Finance & HR</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">Enterprise financial management for GL, AP/AR, grants tracking, and HR operations.</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>General ledger & reporting</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Gift tag tracking</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Entity-level P&Ls</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Raiser's Edge */}
-                <Card className="border-2 border-orange-200 dark:border-orange-800" data-testid="card-tech-raisersedge">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#00A3E0]/10 shrink-0">
-                        <HandHeart className="w-5 h-5 text-[#00A3E0]" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-bold text-base">Raiser's Edge NXT</h3>
-                          <Badge variant="secondary" className="text-xs">Fundraising</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">Blackbaud fundraising CRM for donor management, gift processing, and campaign tracking.</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Donor database</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Gift acknowledgments</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Campaign management</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* CareGuide */}
-                <Card className="border-2 border-orange-200 dark:border-orange-800" data-testid="card-tech-careguide">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#D5636C]/10 shrink-0">
-                        <Heart className="w-5 h-5 text-[#D5636C]" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-bold text-base">CareGuide</h3>
-                          <Badge variant="outline" className="text-xs border-amber-500 text-amber-600">Legacy - Rebuilding</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">Service coordinator platform connecting residents with property managers and support services.</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Resident intake</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Service coordination</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <AlertTriangle className="w-3 h-3 text-amber-500" />
-                            <span>Modernization in progress</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Instrumentl */}
-                <Card className="border-2 border-orange-200 dark:border-orange-800" data-testid="card-tech-instrumentl">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#6366f1]/10 shrink-0">
-                        <Target className="w-5 h-5 text-[#6366f1]" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-bold text-base">Instrumentl</h3>
-                          <Badge variant="secondary" className="text-xs">Grants</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">Grant discovery and tracking platform for finding funding opportunities and managing applications.</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Grant discovery</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Pipeline tracking</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Deadline management</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* GuideStar */}
-                <Card className="border-2 border-orange-200 dark:border-orange-800" data-testid="card-tech-guidestar">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#00A86B]/10 shrink-0">
-                        <BarChart3 className="w-5 h-5 text-[#00A86B]" />
-                      </div>
-                      <div className="flex-1">
-                        <div className="flex items-center justify-between gap-2 mb-1">
-                          <h3 className="font-bold text-base">GuideStar / Candid</h3>
-                          <Badge variant="secondary" className="text-xs">Research</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground mb-3">Nonprofit research database for funder research, 990 data, and organizational transparency.</p>
-                        <div className="space-y-1.5">
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Funder research</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>990 form data</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-xs">
-                            <CheckCircle2 className="w-3 h-3 text-green-600" />
-                            <span>Transparency profiles</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Integration Layer */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-teal-100 dark:bg-teal-900/20">
-                  <Network className="w-6 h-6 text-teal-600" />
-                </div>
-                <div>
-                  <CardTitle className="text-xl">Integration & Security</CardTitle>
-                  <CardDescription>Systems connecting platforms and ensuring enterprise security</CardDescription>
-                </div>
-              </div>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {/* EHR Systems */}
-                <Card className="border-2 border-teal-200 dark:border-teal-800" data-testid="card-tech-ehr">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#7FA3A1]/10 shrink-0">
-                        <Stethoscope className="w-5 h-5 text-[#7FA3A1]" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-sm mb-1">EHR Systems</h3>
-                        <p className="text-xs text-muted-foreground">Healthcare interoperability for patient records and clinical data exchange.</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* SIEM */}
-                <Card className="border-2 border-teal-200 dark:border-teal-800" data-testid="card-tech-siem">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#A5A033]/10 shrink-0">
-                        <Lock className="w-5 h-5 text-[#A5A033]" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-sm mb-1">SIEM</h3>
-                        <p className="text-xs text-muted-foreground">Security information and event management for threat detection and incident response.</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* RightSource */}
-                <Card className="border-2 border-teal-200 dark:border-teal-800" data-testid="card-tech-rightsource">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#005BAC]/10 shrink-0">
-                        <FileText className="w-5 h-5 text-[#005BAC]" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-sm mb-1">RightSource</h3>
-                        <p className="text-xs text-muted-foreground">Yardi module for HUD compliance, file reviews, and certification workflows.</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* GraceWorks */}
-                <Card className="border-2 border-teal-200 dark:border-teal-800" data-testid="card-tech-graceworks">
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#E8923A]/10 shrink-0">
-                        <Settings className="w-5 h-5 text-[#E8923A]" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-sm mb-1">GraceWorks</h3>
-                        <p className="text-xs text-muted-foreground">NCR 700 systems integration for senior living community operations.</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Tech Stack Summary */}
           <AccentCard accent="sky">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
-                <Layers className="w-5 h-5 text-[#6BA6BC]" />
+                <Server className="w-5 h-5 text-[#7BC4DC]" />
+                Microsoft Core Platform
+              </CardTitle>
+              <CardDescription>Foundation infrastructure powering NCR's data and AI capabilities</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <AccentCard accent="sky" data-testid="card-tech-fabric">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("sky")}`}>
+                        <Database className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-semibold">Microsoft Fabric</p>
+                          <Badge variant="outline" className="text-xs">Data Platform</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Unified analytics platform with OneLake as the single source of truth.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="teal" data-testid="card-tech-purview">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("teal")}`}>
+                        <Shield className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-semibold">Microsoft Purview</p>
+                          <Badge variant="outline" className="text-xs">Governance</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Data governance for classification, access policies, and lineage tracking.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="lime" data-testid="card-tech-powerbi">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("lime")}`}>
+                        <BarChart3 className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-semibold">Power BI</p>
+                          <Badge variant="outline" className="text-xs">Analytics</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Business intelligence for predictive dashboards and scenario modeling.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="olive" data-testid="card-tech-azure">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("olive")}`}>
+                        <Globe className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-semibold">Microsoft Azure</p>
+                          <Badge variant="outline" className="text-xs">Cloud</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Cloud infrastructure for hosting, compute, and enterprise security.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="coral" data-testid="card-tech-copilot">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("coral")}`}>
+                        <Sparkles className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-semibold">Microsoft Copilot</p>
+                          <Badge variant="outline" className="text-xs">AI Assistant</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">AI-powered assistant for document creation and workflow automation.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="orange" data-testid="card-tech-elevate">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("orange")}`}>
+                        <TrendingUp className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-semibold">Microsoft Elevate</p>
+                          <Badge variant="outline" className="text-xs">Partnership</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Strategic nonprofit partnership for technology and foundation funding.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+              </div>
+            </CardContent>
+          </AccentCard>
+
+          {/* Operational Systems */}
+          <AccentCard accent="orange">
+            <CardHeader>
+              <CardTitle className="text-xl flex items-center gap-2">
+                <Building2 className="w-5 h-5 text-[#E8923A]" />
+                Operational Systems
+              </CardTitle>
+              <CardDescription>Core business platforms managing housing, finance, and fundraising</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <AccentCard accent="sky" data-testid="card-tech-yardi">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("sky")}`}>
+                        <Home className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-semibold">Yardi</p>
+                          <Badge variant="outline" className="text-xs">Property Mgmt</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Property management for affordable housing operations and compliance.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="lime" data-testid="card-tech-workday">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("lime")}`}>
+                        <DollarSign className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-semibold">Workday</p>
+                          <Badge variant="outline" className="text-xs">Finance & HR</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Enterprise financial management for GL, AP/AR, and grants tracking.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="coral" data-testid="card-tech-raisersedge">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("coral")}`}>
+                        <HandHeart className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-semibold">Raiser's Edge NXT</p>
+                          <Badge variant="outline" className="text-xs">Fundraising</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Blackbaud fundraising CRM for donor and campaign management.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="coralDark" data-testid="card-tech-careguide">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("coralDark")}`}>
+                        <Heart className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-semibold">CareGuide</p>
+                          <Badge variant="outline" className="text-xs">Legacy</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Service coordinator platform. Modernization in progress.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="olive" data-testid="card-tech-instrumentl">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("olive")}`}>
+                        <Target className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-semibold">Instrumentl</p>
+                          <Badge variant="outline" className="text-xs">Grants</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Grant discovery and tracking for funding opportunities.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="teal" data-testid="card-tech-guidestar">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("teal")}`}>
+                        <BarChart3 className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center justify-between gap-2 mb-1">
+                          <p className="font-semibold">GuideStar / Candid</p>
+                          <Badge variant="outline" className="text-xs">Research</Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground">Nonprofit research database for funder research and 990 data.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+              </div>
+            </CardContent>
+          </AccentCard>
+
+          {/* Integration Layer */}
+          <AccentCard accent="teal">
+            <CardHeader>
+              <CardTitle className="text-xl flex items-center gap-2">
+                <Network className="w-5 h-5 text-[#7FA3A1]" />
+                Integration & Security
+              </CardTitle>
+              <CardDescription>Systems connecting platforms and ensuring enterprise security</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <AccentCard accent="teal" data-testid="card-tech-ehr">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("teal")}`}>
+                        <Stethoscope className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-sm mb-1">EHR Systems</p>
+                        <p className="text-xs text-muted-foreground">Healthcare interoperability for patient records.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="olive" data-testid="card-tech-siem">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("olive")}`}>
+                        <Lock className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-sm mb-1">SIEM</p>
+                        <p className="text-xs text-muted-foreground">Security event management and threat detection.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="sky" data-testid="card-tech-rightsource">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("sky")}`}>
+                        <FileText className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-sm mb-1">RightSource</p>
+                        <p className="text-xs text-muted-foreground">Yardi module for HUD compliance workflows.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+
+                <AccentCard accent="orange" data-testid="card-tech-graceworks">
+                  <CardContent className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className={`p-2 rounded-md ${getAccentBgClass("orange")}`}>
+                        <Settings className="w-4 h-4 text-white" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="font-semibold text-sm mb-1">GraceWorks</p>
+                        <p className="text-xs text-muted-foreground">NCR 700 senior living systems integration.</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </AccentCard>
+              </div>
+            </CardContent>
+          </AccentCard>
+
+          {/* Tech Stack Summary */}
+          <AccentCard accent="lime">
+            <CardHeader>
+              <CardTitle className="text-xl flex items-center gap-2">
+                <Layers className="w-5 h-5 text-[#B5C942]" />
                 How It All Connects
               </CardTitle>
               <CardDescription>The unified NCR technology ecosystem</CardDescription>
@@ -1244,29 +1048,29 @@ export default function AgentValueMap() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-[#00A4EF]/20 flex items-center justify-center text-[#00A4EF] font-bold text-sm">1</div>
+                    <div className={`w-8 h-8 rounded-full ${getAccentBgClass("sky")} flex items-center justify-center text-white font-bold text-sm`}>1</div>
                     <h4 className="font-semibold">Data Layer</h4>
                   </div>
                   <p className="text-sm text-muted-foreground pl-10">
-                    Microsoft Fabric OneLake serves as the unified data layer. All operational systems (Yardi, Workday, Raiser's Edge) feed into OneLake through standardized pipelines.
+                    Microsoft Fabric OneLake serves as the unified data layer. All operational systems feed into OneLake through standardized pipelines.
                   </p>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-[#5C2D91]/20 flex items-center justify-center text-[#5C2D91] font-bold text-sm">2</div>
+                    <div className={`w-8 h-8 rounded-full ${getAccentBgClass("teal")} flex items-center justify-center text-white font-bold text-sm`}>2</div>
                     <h4 className="font-semibold">Governance Layer</h4>
                   </div>
                   <p className="text-sm text-muted-foreground pl-10">
-                    Microsoft Purview enforces data classification (HIPAA/PII), access policies, and provides complete lineage tracking for audit compliance.
+                    Microsoft Purview enforces data classification (HIPAA/PII), access policies, and provides complete lineage tracking.
                   </p>
                 </div>
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-[#F2C811]/20 flex items-center justify-center text-[#F2C811] font-bold text-sm">3</div>
+                    <div className={`w-8 h-8 rounded-full ${getAccentBgClass("lime")} flex items-center justify-center text-white font-bold text-sm`}>3</div>
                     <h4 className="font-semibold">Intelligence Layer</h4>
                   </div>
                   <p className="text-sm text-muted-foreground pl-10">
-                    Power BI dashboards and AI agents consume governed data to deliver insights, automate workflows, and generate predictive forecasts.
+                    Power BI dashboards and AI agents consume governed data to deliver insights and predictive forecasts.
                   </p>
                 </div>
               </div>
