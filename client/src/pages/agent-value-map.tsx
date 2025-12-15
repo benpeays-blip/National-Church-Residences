@@ -431,7 +431,7 @@ export default function AgentValueMap() {
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
                 <Database className="w-5 h-5 text-[#7FA3A1]" />
-                A. Data (The Foundation NCR Must Unify)
+                Data (The Foundation NCR Must Unify)
               </CardTitle>
               <CardDescription>These are the "atoms" agents rely on. NCR already has most of them—just fragmented.</CardDescription>
             </CardHeader>
@@ -461,7 +461,7 @@ export default function AgentValueMap() {
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
                 <Monitor className="w-5 h-5 text-[#7BC4DC]" />
-                B. Consumption (How NCR Users Experience Value)
+                Consumption (How NCR Users Experience Value)
               </CardTitle>
               <CardDescription>Delivery channels become a unified App Shell + role-based hubs</CardDescription>
             </CardHeader>
@@ -491,7 +491,7 @@ export default function AgentValueMap() {
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
                 <Users className="w-5 h-5 text-[#D5636C]" />
-                D. Personas (Who Benefits / Who Sponsors)
+                Personas (Who Benefits / Who Sponsors)
               </CardTitle>
               <CardDescription>Map diagram personas to NCR roles so adoption is real</CardDescription>
             </CardHeader>
@@ -566,7 +566,7 @@ export default function AgentValueMap() {
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
                 <Bot className="w-5 h-5 text-[#E8923A]" />
-                C. NCR's Agentic Teams Catalogue
+                NCR's Agentic Teams Catalogue
               </CardTitle>
               <CardDescription>Specialized digital staff with audit trails</CardDescription>
             </CardHeader>
