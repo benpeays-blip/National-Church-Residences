@@ -215,44 +215,94 @@ export default function PreviewHomepage() {
             {kpiMetrics.map((metric) => {
               const Icon = metric.icon;
               const accentColor = getAccentColor(metric.accent);
+              const circumference = 2 * Math.PI * 36;
+              const strokeDashoffset = circumference - (metric.progress / 100) * circumference;
+              
               return (
-                <AccentCard key={metric.label} accent={metric.accent}>
-                  {/* Header with label and trend */}
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">{metric.label}</p>
-                    <Badge 
-                      variant="outline" 
-                      className="text-xs gap-1 font-medium"
-                      style={{ 
-                        borderColor: metric.trendUp ? '#10b981' : '#ef4444',
-                        color: metric.trendUp ? '#10b981' : '#ef4444'
-                      }}
-                    >
-                      {metric.trendUp ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
-                      {metric.trend}
-                    </Badge>
+                <div 
+                  key={metric.label}
+                  className="relative overflow-hidden rounded-xl border bg-card p-6 hover-elevate transition-all"
+                  style={{ borderColor: `${accentColor}30` }}
+                >
+                  {/* Watermark icon */}
+                  <div 
+                    className="absolute -right-4 -bottom-4 opacity-[0.04]"
+                  >
+                    <Icon className="w-32 h-32" style={{ color: accentColor }} />
                   </div>
                   
-                  {/* Main value with icon */}
-                  <div className="flex items-center gap-4 mb-6">
+                  {/* Content */}
+                  <div className="relative z-10">
+                    {/* Top row: Label */}
+                    <div className="flex items-center gap-2 mb-4">
+                      <div 
+                        className="w-8 h-8 rounded-lg flex items-center justify-center"
+                        style={{ backgroundColor: `${accentColor}15` }}
+                      >
+                        <Icon className="w-4 h-4" style={{ color: accentColor }} />
+                      </div>
+                      <span className="text-sm font-medium text-muted-foreground">{metric.label}</span>
+                    </div>
+                    
+                    {/* Center: Value and Radial Progress */}
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <p className="text-4xl font-bold tracking-tight mb-1">{metric.value}</p>
+                        <div className="flex items-center gap-2">
+                          <Badge 
+                            variant="secondary" 
+                            className="text-xs gap-1 font-medium px-2 py-0.5"
+                            style={{ 
+                              backgroundColor: metric.trendUp ? '#10b98115' : '#ef444415',
+                              color: metric.trendUp ? '#10b981' : '#ef4444'
+                            }}
+                          >
+                            {metric.trendUp ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
+                            {metric.trend}
+                          </Badge>
+                        </div>
+                      </div>
+                      
+                      {/* Radial Progress */}
+                      <div className="relative w-20 h-20">
+                        <svg className="w-20 h-20 -rotate-90" viewBox="0 0 80 80">
+                          <circle
+                            cx="40"
+                            cy="40"
+                            r="36"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="6"
+                            className="text-muted/30"
+                          />
+                          <circle
+                            cx="40"
+                            cy="40"
+                            r="36"
+                            fill="none"
+                            stroke={accentColor}
+                            strokeWidth="6"
+                            strokeLinecap="round"
+                            strokeDasharray={circumference}
+                            strokeDashoffset={strokeDashoffset}
+                            className="transition-all duration-500"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-lg font-bold">{metric.progress}%</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Bottom: Target */}
                     <div 
-                      className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: `${accentColor}15` }}
+                      className="pt-3 border-t text-sm text-muted-foreground"
+                      style={{ borderColor: `${accentColor}20` }}
                     >
-                      <Icon className="w-7 h-7" style={{ color: accentColor }} />
+                      Goal: <span className="font-medium text-foreground">{metric.target}</span>
                     </div>
-                    <p className="text-4xl font-bold tracking-tight" style={{ color: accentColor }}>{metric.value}</p>
                   </div>
-                  
-                  {/* Progress section */}
-                  <div className="space-y-2">
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">{metric.target}</span>
-                      <span className="font-medium">{metric.progress}%</span>
-                    </div>
-                    <Progress value={metric.progress} className="h-2" />
-                  </div>
-                </AccentCard>
+                </div>
               );
             })}
           </div>
