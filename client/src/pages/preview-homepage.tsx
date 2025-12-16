@@ -217,28 +217,40 @@ export default function PreviewHomepage() {
               const accentColor = getAccentColor(metric.accent);
               return (
                 <AccentCard key={metric.label} accent={metric.accent}>
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Icon className="w-6 h-6 text-primary" />
-                    </div>
+                  {/* Header with label and trend */}
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide">{metric.label}</p>
                     <Badge 
-                      variant="secondary" 
-                      className="text-xs gap-1"
+                      variant="outline" 
+                      className="text-xs gap-1 font-medium"
+                      style={{ 
+                        borderColor: metric.trendUp ? '#10b981' : '#ef4444',
+                        color: metric.trendUp ? '#10b981' : '#ef4444'
+                      }}
                     >
-                      {metric.trendUp ? <TrendingUp className="w-3 h-3 text-emerald-500" /> : <TrendingDown className="w-3 h-3 text-red-500" />}
+                      {metric.trendUp ? <TrendingUp className="w-3 h-3" /> : <TrendingDown className="w-3 h-3" />}
                       {metric.trend}
                     </Badge>
                   </div>
-                  <div className="space-y-2">
-                    <p className="text-xs text-muted-foreground uppercase tracking-wide">{metric.label}</p>
-                    <p className="text-5xl font-bold" style={{ color: accentColor }}>{metric.value}</p>
-                    <div className="space-y-1">
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>{metric.target}</span>
-                        <span>{metric.progress}%</span>
-                      </div>
-                      <Progress value={metric.progress} className="h-1.5" />
+                  
+                  {/* Main value with icon */}
+                  <div className="flex items-center gap-4 mb-6">
+                    <div 
+                      className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: `${accentColor}15` }}
+                    >
+                      <Icon className="w-7 h-7" style={{ color: accentColor }} />
                     </div>
+                    <p className="text-4xl font-bold tracking-tight" style={{ color: accentColor }}>{metric.value}</p>
+                  </div>
+                  
+                  {/* Progress section */}
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">{metric.target}</span>
+                      <span className="font-medium">{metric.progress}%</span>
+                    </div>
+                    <Progress value={metric.progress} className="h-2" />
                   </div>
                 </AccentCard>
               );
