@@ -1,26 +1,29 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { CardContent, CardDescription, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { BookOpen, Award, Heart, Users, Mail, AlertTriangle } from 'lucide-react';
+import { AccentCard, getAccentColor } from '@/components/ui/accent-card';
 
 export default function QuadrantExplained() {
+  const accentColor = getAccentColor("sky");
+  
   return (
     <div className="container mx-auto p-6 space-y-6">
-      <Card className="border-0 shadow-none">
-        <CardHeader 
-          className="p-6 pb-4 flex items-start justify-between"
-          style={{ backgroundColor: "rgba(222, 235, 247, 0.5)" }}
-        >
-          <div className="flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-primary" />
-            <div>
-              <CardTitle>QUADRANT EXPLAINED</CardTitle>
-              <CardDescription className="mt-1">
-                A Strategic Model for Understanding and Moving Donors Toward Long-Term Partnership
-              </CardDescription>
-            </div>
+      <AccentCard accent="sky" className="p-0">
+        <div className="p-6 pb-4 flex items-start gap-4">
+          <div 
+            className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+            style={{ backgroundColor: accentColor }}
+          >
+            <BookOpen className="w-5 h-5 text-white" />
           </div>
-        </CardHeader>
-        <CardContent className="pt-6">
+          <div>
+            <CardTitle className="text-xl">Quadrant Explained</CardTitle>
+            <CardDescription className="mt-1">
+              A Strategic Model for Understanding and Moving Donors Toward Long-Term Partnership
+            </CardDescription>
+          </div>
+        </div>
+        <CardContent className="pt-0 px-6 pb-6">
           <Tabs defaultValue="partner" className="w-full">
             <TabsList className="grid w-full grid-cols-4 mb-6">
               <TabsTrigger value="partner" data-testid="tab-framework-partner">Partner</TabsTrigger>
@@ -311,7 +314,7 @@ export default function QuadrantExplained() {
             </TabsContent>
           </Tabs>
         </CardContent>
-      </Card>
+      </AccentCard>
     </div>
   );
 }
