@@ -13,35 +13,62 @@ import OtherWithTabs from "@/pages/other-with-tabs";
 
 import { techProducts, TechProduct } from "@/data/tech-products";
 
+const categoryAccentMap: Record<string, AccentColor> = {
+  "CRM": "teal",
+  "Marketing": "sky",
+  "Finance": "olive",
+  "Analytics": "lime",
+  "Engagement": "coral",
+  "Healthcare": "orange",
+  "Property": "sky",
+  "Platform": "teal",
+  "Integration": "olive",
+};
+
+function getCategoryAccent(category: string): AccentColor {
+  return categoryAccentMap[category] || "teal";
+}
+
 function ProductCard({ product }: { product: TechProduct }) {
   const [, navigate] = useLocation();
+  const accent = getCategoryAccent(product.category);
   
   return (
-    <Card 
-      className="overflow-hidden hover-elevate cursor-pointer transition-all h-full flex flex-col"
+    <AccentCard 
+      accent={accent}
+      className="overflow-visible hover-elevate cursor-pointer transition-all h-full flex flex-col p-0"
       data-testid={`card-product-${product.id}`}
       onClick={() => navigate(`/temporary/tech-stack/${product.id}`)}
     >
-      <div 
-        className="p-4"
-        style={{ backgroundColor: product.brandColorLight }}
-      >
-        <div className="flex items-center justify-between gap-2 mb-2">
-          <h3 
-            className="font-bold text-base"
-            style={{ color: product.brandColor }}
-            data-testid={`text-product-name-${product.id}`}
+      <div className="p-4 border-b">
+        <div className="flex items-center gap-3 mb-2">
+          <div 
+            className="w-8 h-8 rounded-md flex items-center justify-center shrink-0"
+            style={{ backgroundColor: `${product.brandColor}15` }}
           >
-            {product.name}
-          </h3>
-          <Badge variant="outline" className="text-xs shrink-0">
+            <Database className="h-4 w-4" style={{ color: product.brandColor }} />
+          </div>
+          <div className="flex-1 min-w-0">
+            <h3 
+              className="font-bold text-sm truncate"
+              style={{ color: product.brandColor }}
+              data-testid={`text-product-name-${product.id}`}
+            >
+              {product.name}
+            </h3>
+          </div>
+          <Badge 
+            variant="outline" 
+            className="text-xs shrink-0"
+            style={{ borderColor: getAccentColor(accent), color: getAccentColor(accent) }}
+          >
             {product.category}
           </Badge>
         </div>
         <p className="text-xs text-muted-foreground">{product.tagline}</p>
       </div>
       <div className="p-4 flex-1 flex flex-col">
-        <p className="text-xs text-muted-foreground mb-3">{product.description}</p>
+        <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{product.description}</p>
         <div className="mt-auto space-y-2">
           <div className="flex items-start gap-2">
             <Check className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("lime") }} />
@@ -53,35 +80,37 @@ function ProductCard({ product }: { product: TechProduct }) {
           </div>
         </div>
       </div>
-    </Card>
+    </AccentCard>
   );
 }
 
 function ProductDetailModal({ product, onClose }: { product: TechProduct | null; onClose: () => void }) {
   if (!product) return null;
+  const accent = getCategoryAccent(product.category);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={onClose}>
-      <Card 
-        className="w-full max-w-4xl max-h-[90vh] overflow-auto"
-        onClick={(e) => e.stopPropagation()}
+      <AccentCard 
+        accent={accent}
+        className="w-full max-w-4xl max-h-[90vh] overflow-auto p-0"
+        onClick={(e: React.MouseEvent) => e.stopPropagation()}
       >
-        <div 
-          className="p-6 flex items-start justify-between gap-4"
-          style={{ backgroundColor: product.brandColorLight }}
-        >
+        <div className="p-6 border-b flex items-start justify-between gap-4">
           <div className="flex items-center gap-4">
-            <div className="w-16 h-16 rounded-xl overflow-hidden shadow-md bg-white flex items-center justify-center">
-              <img 
-                src={product.logoImage} 
-                alt={`${product.name} logo`}
-                className="w-full h-full object-cover"
-              />
+            <div 
+              className="w-14 h-14 rounded-lg flex items-center justify-center shrink-0"
+              style={{ backgroundColor: `${product.brandColor}15` }}
+            >
+              <Database className="h-6 w-6" style={{ color: product.brandColor }} />
             </div>
             <div className="flex-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="font-semibold text-xl">{product.name}</h3>
-                <Badge variant="outline" className="text-xs">
+                <h3 className="font-semibold text-xl" style={{ color: product.brandColor }}>{product.name}</h3>
+                <Badge 
+                  variant="outline" 
+                  className="text-xs"
+                  style={{ borderColor: getAccentColor(accent), color: getAccentColor(accent) }}
+                >
                   {product.category}
                 </Badge>
               </div>
@@ -111,51 +140,64 @@ function ProductDetailModal({ product, onClose }: { product: TechProduct | null;
           </div>
         </div>
 
-        <div className="p-6 border-t">
+        <div className="p-6 border-b">
           <p className="text-sm text-muted-foreground">{product.description}</p>
         </div>
 
-        <div className="border-t">
-          <div className="grid md:grid-cols-2 gap-0">
-            <div className="p-6 border-b md:border-b-0 md:border-r">
-              <div className="flex items-center gap-2 mb-3">
-                <Check className="h-4 w-4" style={{ color: getAccentColor("lime") }} />
-                <h4 className="font-medium text-sm">Strengths</h4>
-              </div>
-              <ul className="space-y-2">
-                {product.strengths.map((strength, idx) => (
-                  <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="mt-1 shrink-0" style={{ color: getAccentColor("lime") }}>+</span>
-                    <span>{strength}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div className="p-6">
-              <div className="flex items-center gap-2 mb-3">
-                <X className="h-4 w-4" style={{ color: getAccentColor("coral") }} />
-                <h4 className="font-medium text-sm">Weaknesses</h4>
-              </div>
-              <ul className="space-y-2">
-                {product.weaknesses.map((weakness, idx) => (
-                  <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                    <span className="mt-1 shrink-0" style={{ color: getAccentColor("coral") }}>−</span>
-                    <span>{weakness}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-          
-          <div className="p-6 border-t" style={{ backgroundColor: `${getAccentColor("teal")}10` }}>
+        <div className="grid md:grid-cols-2 gap-0">
+          <div className="p-6 border-b md:border-b-0 md:border-r">
             <div className="flex items-center gap-2 mb-3">
-              <Building2 className="h-4 w-4" style={{ color: getAccentColor("teal") }} />
-              <h4 className="font-medium text-sm" style={{ color: getAccentColor("teal") }}>NCR Context</h4>
+              <div 
+                className="w-6 h-6 rounded flex items-center justify-center"
+                style={{ backgroundColor: `${getAccentColor("lime")}20` }}
+              >
+                <Check className="h-3.5 w-3.5" style={{ color: getAccentColor("lime") }} />
+              </div>
+              <h4 className="font-medium text-sm">Strengths</h4>
             </div>
-            <p className="text-sm text-muted-foreground">{product.ncrContext}</p>
+            <ul className="space-y-2">
+              {product.strengths.map((strength, idx) => (
+                <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                  <span className="mt-1 shrink-0" style={{ color: getAccentColor("lime") }}>+</span>
+                  <span>{strength}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="p-6 border-b md:border-b-0">
+            <div className="flex items-center gap-2 mb-3">
+              <div 
+                className="w-6 h-6 rounded flex items-center justify-center"
+                style={{ backgroundColor: `${getAccentColor("coral")}20` }}
+              >
+                <X className="h-3.5 w-3.5" style={{ color: getAccentColor("coral") }} />
+              </div>
+              <h4 className="font-medium text-sm">Weaknesses</h4>
+            </div>
+            <ul className="space-y-2">
+              {product.weaknesses.map((weakness, idx) => (
+                <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                  <span className="mt-1 shrink-0" style={{ color: getAccentColor("coral") }}>&#8722;</span>
+                  <span>{weakness}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-      </Card>
+        
+        <div className="p-6 border-t" style={{ backgroundColor: `${getAccentColor("teal")}10` }}>
+          <div className="flex items-center gap-2 mb-3">
+            <div 
+              className="w-6 h-6 rounded flex items-center justify-center"
+              style={{ backgroundColor: `${getAccentColor("teal")}20` }}
+            >
+              <Building2 className="h-3.5 w-3.5" style={{ color: getAccentColor("teal") }} />
+            </div>
+            <h4 className="font-medium text-sm" style={{ color: getAccentColor("teal") }}>NCR Context</h4>
+          </div>
+          <p className="text-sm text-muted-foreground">{product.ncrContext}</p>
+        </div>
+      </AccentCard>
     </div>
   );
 }
