@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { AccentCard, AccentColor, getAccentColor, getAccentBgClass } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -22,7 +23,8 @@ import {
   Target,
   Shield,
   Layers,
-  Network
+  Network,
+  Check
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -31,6 +33,21 @@ import {
   TechProduct,
   categoryIntegrationNeeds 
 } from "@/data/tech-products";
+
+const categoryAccentMap: Record<string, AccentColor> = {
+  "CRM": "teal",
+  "Prospecting": "sky",
+  "Analytics": "lime",
+  "Grants": "olive",
+  "HR & Finance": "orange",
+  "Clinical EHR": "coral",
+  "Transparency": "sky",
+  "Coordination": "teal"
+};
+
+function getCategoryAccent(category: string): AccentColor {
+  return categoryAccentMap[category] || "teal";
+}
 
 const categoryIcons: Record<string, LucideIcon> = {
   "CRM": Database,
@@ -54,30 +71,29 @@ const layerMapping: Record<string, "core" | "intelligence" | "operations"> = {
   "Coordination": "operations"
 };
 
-const layerInfo = {
+const layerInfo: Record<string, { 
+  label: string; 
+  icon: LucideIcon; 
+  description: string; 
+  accent: AccentColor 
+}> = {
   core: { 
     label: "Core Systems", 
     icon: Layers,
     description: "Primary data sources and systems of record",
-    bgClass: "bg-blue-50 dark:bg-blue-950/30",
-    dotClass: "bg-blue-500",
-    iconBgClass: "bg-blue-500"
+    accent: "teal"
   },
   intelligence: { 
     label: "Intelligence Layer", 
     icon: Zap,
     description: "Analytics, insights, and decision support",
-    bgClass: "bg-purple-50 dark:bg-purple-950/30",
-    dotClass: "bg-purple-500",
-    iconBgClass: "bg-purple-500"
+    accent: "sky"
   },
   operations: { 
     label: "Operations", 
     icon: Network,
     description: "Day-to-day management and coordination",
-    bgClass: "bg-emerald-50 dark:bg-emerald-950/30",
-    dotClass: "bg-emerald-500",
-    iconBgClass: "bg-emerald-500"
+    accent: "lime"
   }
 };
 
@@ -130,12 +146,16 @@ export default function TechStackMapper() {
               {(["core", "intelligence", "operations"] as const).map((layer) => {
                 const info = layerInfo[layer];
                 const products = filteredGroupedByLayer[layer];
+                const accentColor = getAccentColor(info.accent);
                 if (products.length === 0 && searchQuery) return null;
                 
                 return (
                   <div key={layer} className="space-y-4">
                     <div className="flex items-center gap-3">
-                      <div className={`w-3 h-3 rounded-full ${info.dotClass}`} />
+                      <div 
+                        className="w-3 h-3 rounded-full" 
+                        style={{ backgroundColor: accentColor }} 
+                      />
                       <div>
                         <h3 className="font-semibold text-sm">{info.label}</h3>
                         <p className="text-xs text-muted-foreground">{info.description}</p>
@@ -145,30 +165,40 @@ export default function TechStackMapper() {
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                       {(searchQuery ? products : groupedByLayer[layer]).map((product) => {
                         const CategoryIcon = categoryIcons[product.category] || Building2;
+                        const productAccent = getCategoryAccent(product.category);
                         return (
-                          <Card 
+                          <AccentCard 
                             key={product.id}
-                            className="overflow-hidden hover-elevate transition-all"
+                            accent={productAccent}
+                            className="p-0 hover-elevate transition-all"
                             data-testid={`card-ecosystem-${product.id}`}
                           >
-                            <div 
-                              className="h-1 w-full"
-                              style={{ backgroundColor: product.brandColor }}
-                            />
-                            <CardContent className="p-6 space-y-3">
-                              <div>
-                                <h4 className="font-semibold text-sm leading-tight">{product.name}</h4>
-                                <p className="text-xs text-muted-foreground mt-0.5">{product.tagline}</p>
+                            <div className="p-4 space-y-3">
+                              <div className="flex items-start gap-3">
+                                <div 
+                                  className="w-8 h-8 rounded-md flex items-center justify-center shrink-0"
+                                  style={{ backgroundColor: `${product.brandColor}15` }}
+                                >
+                                  <CategoryIcon className="w-4 h-4" style={{ color: product.brandColor }} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-semibold text-sm leading-tight" style={{ color: product.brandColor }}>{product.name}</h4>
+                                  <p className="text-xs text-muted-foreground mt-0.5">{product.tagline}</p>
+                                </div>
                               </div>
-                              <Badge variant="secondary" className="text-xs gap-1">
+                              <Badge 
+                                variant="outline" 
+                                className="text-xs gap-1"
+                                style={{ borderColor: getAccentColor(productAccent), color: getAccentColor(productAccent) }}
+                              >
                                 <CategoryIcon className="w-3 h-3" />
                                 {product.category}
                               </Badge>
                               <p className="text-xs text-muted-foreground line-clamp-2">
                                 {product.strengths[0]}
                               </p>
-                            </CardContent>
-                          </Card>
+                            </div>
+                          </AccentCard>
                         );
                       })}
                     </div>
@@ -176,29 +206,29 @@ export default function TechStackMapper() {
                 );
               })}
 
-              <Card className="border-dashed">
-                <CardContent className="p-6">
+              <AccentCard accent="olive" className="p-0 border-dashed">
+                <div className="p-6">
                   <div className="flex items-center gap-4 justify-center flex-wrap">
                     <div className="flex items-center gap-2 text-sm">
-                      <div className="w-3 h-3 rounded-full bg-blue-500" />
+                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: getAccentColor("teal") }} />
                       <span className="text-muted-foreground">Core Systems</span>
                     </div>
                     <ArrowRight className="w-4 h-4 text-muted-foreground" />
                     <div className="flex items-center gap-2 text-sm">
-                      <div className="w-3 h-3 rounded-full bg-purple-500" />
+                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: getAccentColor("sky") }} />
                       <span className="text-muted-foreground">Intelligence Layer</span>
                     </div>
                     <ArrowRight className="w-4 h-4 text-muted-foreground" />
                     <div className="flex items-center gap-2 text-sm">
-                      <div className="w-3 h-3 rounded-full bg-emerald-500" />
+                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: getAccentColor("lime") }} />
                       <span className="text-muted-foreground">Operations</span>
                     </div>
                   </div>
                   <p className="text-xs text-center text-muted-foreground mt-4">
                     Data flows from core systems through analytics and intelligence layers to power operational decisions
                   </p>
-                </CardContent>
-              </Card>
+                </div>
+              </AccentCard>
             </CardContent>
           </Card>
         </TabsContent>
@@ -218,13 +248,17 @@ export default function TechStackMapper() {
                 const info = layerInfo[layer];
                 const LayerIcon = info.icon;
                 const products = searchQuery ? filteredGroupedByLayer[layer] : groupedByLayer[layer];
+                const accentColor = getAccentColor(info.accent);
                 
                 if (products.length === 0 && searchQuery) return null;
                 
                 return (
-                  <Card key={layer} className="overflow-hidden">
-                    <div className={`px-6 py-4 ${info.bgClass} border-b flex items-center gap-3`}>
-                      <div className={`w-10 h-10 rounded-lg ${info.iconBgClass} flex items-center justify-center`}>
+                  <AccentCard key={layer} accent={info.accent} className="p-0">
+                    <div className="px-6 py-4 border-b flex items-center gap-3">
+                      <div 
+                        className="w-10 h-10 rounded-lg flex items-center justify-center"
+                        style={{ backgroundColor: accentColor }}
+                      >
                         <LayerIcon className="w-5 h-5 text-white" />
                       </div>
                       <div>
@@ -232,25 +266,38 @@ export default function TechStackMapper() {
                         <p className="text-xs text-muted-foreground">{info.description}</p>
                       </div>
                     </div>
-                    <CardContent className="p-6">
+                    <div className="p-6">
                       <div className={`grid grid-cols-1 ${products.length > 2 ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
-                        {products.map((product) => (
-                          <div key={product.id} className="p-4 rounded-lg bg-muted/50">
-                            <p className="font-medium text-sm">{product.name}</p>
-                            <p className="text-xs text-muted-foreground">{product.category} — {product.tagline}</p>
-                          </div>
-                        ))}
+                        {products.map((product) => {
+                          const productAccent = getCategoryAccent(product.category);
+                          return (
+                            <div 
+                              key={product.id} 
+                              className="p-4 rounded-lg border-l-2"
+                              style={{ 
+                                backgroundColor: `${getAccentColor(productAccent)}10`,
+                                borderLeftColor: getAccentColor(productAccent)
+                              }}
+                            >
+                              <p className="font-medium text-sm">{product.name}</p>
+                              <p className="text-xs text-muted-foreground">{product.category} — {product.tagline}</p>
+                            </div>
+                          );
+                        })}
                       </div>
-                    </CardContent>
-                  </Card>
+                    </div>
+                  </AccentCard>
                 );
               })}
 
-              <Card className="border-dashed">
-                <CardContent className="p-6">
+              <AccentCard accent="olive" className="p-0 border-dashed">
+                <div className="p-6">
                   <div className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <Target className="w-5 h-5 text-primary" />
+                    <div 
+                      className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                      style={{ backgroundColor: `${getAccentColor("olive")}20` }}
+                    >
+                      <Target className="w-5 h-5" style={{ color: getAccentColor("olive") }} />
                     </div>
                     <div className="space-y-2">
                       <h4 className="font-semibold">The Integration Imperative</h4>
@@ -263,8 +310,8 @@ export default function TechStackMapper() {
                       </p>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </AccentCard>
             </CardContent>
           </Card>
         </TabsContent>
@@ -292,36 +339,45 @@ export default function TechStackMapper() {
             {filteredProducts.map((product) => {
               const CategoryIcon = categoryIcons[product.category] || Building2;
               const priority = categoryIntegrationNeeds[product.category];
+              const accent = getCategoryAccent(product.category);
               
               return (
-                <Card 
+                <AccentCard 
                   key={product.id} 
-                  className="overflow-hidden"
+                  accent={accent}
+                  className="p-0"
                   data-testid={`card-platform-${product.id}`}
                 >
-                  <div 
-                    className="h-2 w-full"
-                    style={{ backgroundColor: product.brandColor }}
-                  />
-                  
-                  <CardContent className="p-6">
+                  <div className="p-6">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                       <div className="lg:col-span-1 space-y-4">
-                        <div>
-                          <h3 className="font-semibold text-base">{product.name}</h3>
-                          <p className="text-sm text-muted-foreground">{product.tagline}</p>
-                          <div className="flex flex-wrap gap-2 mt-2">
-                            <Badge variant="secondary" className="text-xs gap-1">
-                              <CategoryIcon className="w-3 h-3" />
-                              {product.category}
-                            </Badge>
-                            <Badge 
-                              variant={priority === "critical" ? "destructive" : priority === "high" ? "secondary" : "outline"}
-                              className="text-xs"
-                            >
-                              {priority === "critical" ? "Critical" : priority === "high" ? "High" : "Medium"} Priority
-                            </Badge>
+                        <div className="flex items-start gap-3">
+                          <div 
+                            className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                            style={{ backgroundColor: `${product.brandColor}15` }}
+                          >
+                            <CategoryIcon className="w-5 h-5" style={{ color: product.brandColor }} />
                           </div>
+                          <div>
+                            <h3 className="font-semibold text-base" style={{ color: product.brandColor }}>{product.name}</h3>
+                            <p className="text-sm text-muted-foreground">{product.tagline}</p>
+                          </div>
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                          <Badge 
+                            variant="outline" 
+                            className="text-xs gap-1"
+                            style={{ borderColor: getAccentColor(accent), color: getAccentColor(accent) }}
+                          >
+                            <CategoryIcon className="w-3 h-3" />
+                            {product.category}
+                          </Badge>
+                          <Badge 
+                            variant={priority === "critical" ? "destructive" : priority === "high" ? "secondary" : "outline"}
+                            className="text-xs"
+                          >
+                            {priority === "critical" ? "Critical" : priority === "high" ? "High" : "Medium"} Priority
+                          </Badge>
                         </div>
                         
                         <p className="text-sm text-muted-foreground leading-relaxed">
@@ -342,13 +398,18 @@ export default function TechStackMapper() {
 
                       <div className="lg:col-span-1 space-y-3">
                         <div className="flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+                          <div 
+                            className="w-6 h-6 rounded flex items-center justify-center"
+                            style={{ backgroundColor: `${getAccentColor("lime")}20` }}
+                          >
+                            <Check className="w-3.5 h-3.5" style={{ color: getAccentColor("lime") }} />
+                          </div>
                           <h4 className="font-medium text-sm">Key Strengths</h4>
                         </div>
                         <ul className="space-y-2">
                           {product.strengths.slice(0, 4).map((strength, idx) => (
                             <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
-                              <span className="text-emerald-600 dark:text-emerald-400 mt-1 shrink-0">+</span>
+                              <span className="mt-1 shrink-0" style={{ color: getAccentColor("lime") }}>+</span>
                               <span className="line-clamp-2">{strength}</span>
                             </li>
                           ))}
@@ -357,12 +418,20 @@ export default function TechStackMapper() {
 
                       <div className="lg:col-span-1 space-y-3">
                         <div className="flex items-center gap-2">
-                          <Shield className="w-4 h-4 text-primary" />
-                          <h4 className="font-medium text-sm">NCR Context</h4>
+                          <div 
+                            className="w-6 h-6 rounded flex items-center justify-center"
+                            style={{ backgroundColor: `${getAccentColor("teal")}20` }}
+                          >
+                            <Shield className="w-3.5 h-3.5" style={{ color: getAccentColor("teal") }} />
+                          </div>
+                          <h4 className="font-medium text-sm" style={{ color: getAccentColor("teal") }}>NCR Context</h4>
                         </div>
                         <div 
-                          className="p-4 rounded-lg border-l-4 bg-muted/50"
-                          style={{ borderLeftColor: product.brandColor }}
+                          className="p-4 rounded-lg border-l-2"
+                          style={{ 
+                            backgroundColor: `${getAccentColor("teal")}10`,
+                            borderLeftColor: getAccentColor("teal")
+                          }}
                         >
                           <p className="text-sm leading-relaxed text-muted-foreground">
                             {product.ncrContext}
@@ -370,19 +439,17 @@ export default function TechStackMapper() {
                         </div>
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </AccentCard>
               );
             })}
           </div>
 
           {filteredProducts.length === 0 && (
-            <Card>
-              <CardContent className="p-6 text-center">
-                <Search className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
-                <p className="text-muted-foreground">No platforms found matching "{searchQuery}"</p>
-              </CardContent>
-            </Card>
+            <AccentCard accent="sky" className="p-6 text-center">
+              <Search className="w-8 h-8 text-muted-foreground mx-auto mb-3" />
+              <p className="text-muted-foreground">No platforms found matching "{searchQuery}"</p>
+            </AccentCard>
           )}
         </TabsContent>
 
