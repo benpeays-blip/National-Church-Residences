@@ -162,8 +162,8 @@ import NcrFoundationWithTabs from "@/pages/ncr-foundation-with-tabs";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={DashboardHome} />
-      <Route path="/preview-homepage" component={PreviewHomepage} />
+      <Route path="/" component={PreviewHomepage} />
+      <Route path="/dashboard-old" component={DashboardHome} />
       <Route path="/home-old" component={Home} />
       <Route path="/welcome" component={OtherWithTabs} />
       <Route path="/national-church-residences" component={OtherWithTabs} />
