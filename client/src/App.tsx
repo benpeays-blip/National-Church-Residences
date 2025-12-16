@@ -39,6 +39,7 @@ import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import DashboardHome from "@/pages/dashboard-home";
 import DashboardHomeWithTabs from "@/pages/dashboard-home-with-tabs";
+import PreviewHomepage from "@/pages/preview-homepage";
 import Dashboard from "@/pages/dashboard";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
@@ -162,6 +163,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={DashboardHome} />
+      <Route path="/preview-homepage" component={PreviewHomepage} />
       <Route path="/home-old" component={Home} />
       <Route path="/welcome" component={OtherWithTabs} />
       <Route path="/national-church-residences" component={OtherWithTabs} />
