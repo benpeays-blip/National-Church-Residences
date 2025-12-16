@@ -9,10 +9,22 @@ import DnBIntelligence from "@/pages/dnb-intelligence";
 
 const relationshipsTabs: SectionTab[] = [
   {
+    label: "RelSci Mapping",
+    value: "relsci",
+    icon: Link2,
+    path: "/relationships",
+  },
+  {
+    label: "D&B Intelligence",
+    value: "dnb",
+    icon: BarChart3,
+    path: "/relationships/dnb",
+  },
+  {
     label: "Board Network Mapper",
     value: "network",
     icon: Network,
-    path: "/relationships",
+    path: "/relationships/network",
   },
   {
     label: "Board Connections",
@@ -26,18 +38,6 @@ const relationshipsTabs: SectionTab[] = [
     icon: UserPlus,
     path: "/relationships/peer",
   },
-  {
-    label: "RelSci Mapping",
-    value: "relsci",
-    icon: Link2,
-    path: "/relationships/relsci",
-  },
-  {
-    label: "D&B Intelligence",
-    value: "dnb",
-    icon: BarChart3,
-    path: "/relationships/dnb",
-  },
 ];
 
 export default function RelationshipsWithTabs() {
@@ -45,26 +45,26 @@ export default function RelationshipsWithTabs() {
   
   // Determine active tab from URL path
   const getActiveTab = (): string => {
+    if (location.includes('/relationships/dnb')) return 'dnb';
+    if (location.includes('/relationships/network')) return 'network';
     if (location.includes('/relationships/connections')) return 'connections';
     if (location.includes('/relationships/peer')) return 'peer';
-    if (location.includes('/relationships/relsci')) return 'relsci';
-    if (location.includes('/relationships/dnb')) return 'dnb';
-    return 'network';
+    return 'relsci';
   };
   
   const activeTab = getActiveTab();
 
   // Determine which component to render
-  let RelationshipComponent: React.ComponentType = BoardNetworkMapper;
+  let RelationshipComponent: React.ComponentType = RelSciMapping;
   
-  if (activeTab === 'connections') {
+  if (activeTab === 'dnb') {
+    RelationshipComponent = DnBIntelligence;
+  } else if (activeTab === 'network') {
+    RelationshipComponent = BoardNetworkMapper;
+  } else if (activeTab === 'connections') {
     RelationshipComponent = BoardConnections;
   } else if (activeTab === 'peer') {
     RelationshipComponent = PeerDonors;
-  } else if (activeTab === 'relsci') {
-    RelationshipComponent = RelSciMapping;
-  } else if (activeTab === 'dnb') {
-    RelationshipComponent = DnBIntelligence;
   }
 
   return (
