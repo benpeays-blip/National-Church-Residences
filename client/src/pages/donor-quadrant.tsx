@@ -4,7 +4,7 @@ import { FileText, ArrowRight, Zap, Grid3x3 } from 'lucide-react';
 
 export default function DonorQuadrant() {
   return (
-    <div className="overflow-auto p-6 space-y-6">
+    <div className="overflow-auto p-3 space-y-4">
       <DonorQuadrantMapper />
       
       {/* Framework Summary Section */}
