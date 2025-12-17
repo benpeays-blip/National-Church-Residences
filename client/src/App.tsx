@@ -228,7 +228,6 @@ function Router() {
       <Route path="/intelligence/wealth" component={IntelligenceWithTabs} />
       <Route path="/intelligence/briefs" component={IntelligenceWithTabs} />
       <Route path="/intelligence" component={IntelligenceWithTabs} />
-      <Route path="/quadrant/summary" component={QuadrantWithTabs} />
       <Route path="/quadrant/thesis" component={QuadrantWithTabs} />
       <Route path="/quadrant/explained" component={QuadrantWithTabs} />
       <Route path="/quadrant/strategies" component={QuadrantWithTabs} />
