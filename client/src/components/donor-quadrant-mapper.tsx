@@ -180,9 +180,9 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             </Badge>
           </div>
         </CardHeader>
-        <CardContent className="p-6" style={{ backgroundColor: '#f4f4f4' }}>
-          <div className="relative w-full pb-10 pl-10">
-            <div className="relative w-full aspect-square border-2 border-border rounded-lg overflow-hidden bg-background">
+        <CardContent className="p-6 flex-1 min-h-0 flex flex-col" style={{ backgroundColor: '#f4f4f4' }}>
+          <div className="relative flex-1 min-h-0 pb-8 pl-10">
+            <div className="relative w-full h-full max-h-[calc(100vh-320px)] aspect-square border-2 border-border rounded-lg overflow-hidden bg-background">
               {/* Grid Lines */}
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
               <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
