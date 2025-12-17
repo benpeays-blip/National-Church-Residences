@@ -1,13 +1,14 @@
 import { useLocation } from "wouter";
 import { useMemo, useState, useEffect } from "react";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Mic, MessageSquare, FileText, BarChart3, Workflow, TrendingUp } from "lucide-react";
+import { Mic, MessageSquare, FileText, BarChart3, Workflow, TrendingUp, Bot, Sparkles } from "lucide-react";
 import AIVoiceNotes from "@/pages/ai-voice-notes";
 import OutreachGenerator from "@/pages/content-outreach";
 import GrantProposals from "@/pages/content-grant-proposals";
 import ImpactReports from "@/pages/content-impact-reports";
 import Workflows from "@/pages/workflows";
 import AIPredictiveTiming from "@/pages/ai-predictive-timing";
+import { AIChatTab, ImpactFeedTab } from "@/pages/impact-intelligence";
 
 const aiToolsTabs: SectionTab[] = [
   {
@@ -46,6 +47,18 @@ const aiToolsTabs: SectionTab[] = [
     icon: Workflow,
     path: "/ai-tools/workflows",
   },
+  {
+    label: "AI Assistant",
+    value: "assistant",
+    icon: Bot,
+    path: "/ai-tools/assistant",
+  },
+  {
+    label: "Impact Feed",
+    value: "feed",
+    icon: Sparkles,
+    path: "/ai-tools/feed",
+  },
 ];
 
 export default function AIToolsWithTabs() {
@@ -58,6 +71,8 @@ export default function AIToolsWithTabs() {
     if (location.includes('/ai-tools/grants')) return 'grants';
     if (location.includes('/ai-tools/reports')) return 'reports';
     if (location.includes('/ai-tools/workflows')) return 'workflows';
+    if (location.includes('/ai-tools/assistant')) return 'assistant';
+    if (location.includes('/ai-tools/feed')) return 'feed';
     return 'timing';
   };
   
@@ -75,6 +90,10 @@ export default function AIToolsWithTabs() {
     content = <ImpactReports />;
   } else if (activeTab === 'workflows') {
     content = <Workflows />;
+  } else if (activeTab === 'assistant') {
+    content = <AIChatTab />;
+  } else if (activeTab === 'feed') {
+    content = <ImpactFeedTab />;
   } else {
     content = <AIPredictiveTiming />;
   }

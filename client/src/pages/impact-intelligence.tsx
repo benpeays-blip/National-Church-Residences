@@ -196,7 +196,7 @@ const suggestedQuestions = [
   "Summarize our affordable housing impact for a grant proposal",
 ];
 
-function AIChatTab() {
+export function AIChatTab() {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -425,7 +425,7 @@ function AIChatTab() {
   );
 }
 
-function ImpactFeedTab() {
+export function ImpactFeedTab() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filterCategory, setFilterCategory] = useState<string>("all");
   const [filterProgram, setFilterProgram] = useState<string>("all");
