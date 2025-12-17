@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AccentCard, NCR_BRAND_COLORS, type AccentColor } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
@@ -304,8 +305,9 @@ export default function RelSciMapping() {
                   const accentColors: AccentColor[] = ["teal", "sky", "lime", "coral", "orange", "olive"];
                   const accentColor = accentColors[index % accentColors.length];
                   return (
-                  <AccentCard key={path.id} accent={accentColor} className="hover-elevate cursor-pointer">
-                    <CardContent className="p-4">
+                  <Link key={path.id} href={`/donors/${path.id}`} data-testid={`link-connection-${path.id}`}>
+                    <AccentCard accent={accentColor} className="hover-elevate cursor-pointer hover:shadow-lg transition-shadow">
+                      <CardContent className="p-4">
                       <div className="flex items-start justify-between">
                         <div className="flex items-start gap-4">
                           <Badge 
@@ -350,8 +352,9 @@ export default function RelSciMapping() {
                           <p className="text-xs text-muted-foreground mt-1">Updated {path.lastUpdated}</p>
                         </div>
                       </div>
-                    </CardContent>
-                  </AccentCard>
+                      </CardContent>
+                    </AccentCard>
+                  </Link>
                   );
                 })}
               </div>
