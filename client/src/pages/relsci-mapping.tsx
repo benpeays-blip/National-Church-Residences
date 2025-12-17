@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { AccentCard, NCR_BRAND_COLORS, type AccentColor } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -299,8 +300,11 @@ export default function RelSciMapping() {
 
               <div className="space-y-3">
                 <h4 className="text-sm font-medium text-muted-foreground">Recent Connection Paths</h4>
-                {sampleConnectionPaths.map((path) => (
-                  <Card key={path.id} className="hover-elevate cursor-pointer">
+                {sampleConnectionPaths.map((path, index) => {
+                  const accentColors: AccentColor[] = ["teal", "sky", "lime", "coral", "orange", "olive"];
+                  const accentColor = accentColors[index % accentColors.length];
+                  return (
+                  <AccentCard key={path.id} accent={accentColor} className="hover-elevate cursor-pointer">
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between">
                         <div className="flex items-start gap-4">
@@ -345,8 +349,9 @@ export default function RelSciMapping() {
                         </div>
                       </div>
                     </CardContent>
-                  </Card>
-                ))}
+                  </AccentCard>
+                  );
+                })}
               </div>
             </CardContent>
           </Card>
