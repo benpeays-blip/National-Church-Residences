@@ -379,59 +379,60 @@ export default function PartnerPathwayWizard() {
     }
   };
 
+  const stepLabels = ["Constraints", "Focus", "Review", "Action Plan"];
+  const stepIcons = [Calendar, Target, CheckCircle2, Wand2];
+
   return (
-    <Card>
-      <CardHeader 
-        className="p-6 pb-4 flex items-start justify-between"
-        style={{ backgroundColor: "rgba(222, 235, 247, 0.5)" }}
-      >
-        <div className="flex items-center gap-2">
-          <Wand2 className="w-5 h-5 text-primary" />
-          <div>
-            <CardTitle>PARTNER PATHWAY WIZARD</CardTitle>
-            <CardDescription className="mt-1">
-              A Guided Workflow to Generate Your Top 5-10 Actionable Moves for the Week
-            </CardDescription>
+    <Card className="overflow-hidden">
+      {/* Compact Header with Step Navigation */}
+      <div className="bg-[#395174]">
+        <CardHeader className="pb-0">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
+              <Wand2 className="w-5 h-5 text-[#e1c47d]" />
+            </div>
+            <div>
+              <CardTitle className="text-white text-lg">Partner Pathway Wizard</CardTitle>
+              <CardDescription className="text-white/70">
+                Generate your top actionable moves for the week
+              </CardDescription>
+            </div>
           </div>
-        </div>
-      </CardHeader>
-      <CardContent>
-        {/* Step Indicators */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between">
-            {[1, 2, 3, 4].map((step) => (
-              <div key={step} className="flex items-center">
-                <div
-                  className={`flex h-10 w-10 items-center justify-center rounded-full border-2 font-semibold ${
-                    currentStep >= step
-                      ? "border-blue-600 bg-blue-600 text-white"
-                      : "border-gray-300 bg-white text-gray-400"
-                  }`}
-                  data-testid={`step-indicator-${step}`}
-                >
-                  {currentStep > step ? (
-                    <CheckCircle2 className="h-5 w-5" />
-                  ) : (
-                    step
-                  )}
-                </div>
-                {step < 4 && (
-                  <div
-                    className={`h-1 w-20 ${
-                      currentStep > step ? "bg-blue-600" : "bg-gray-300"
-                    }`}
-                  />
+        </CardHeader>
+        
+        {/* Step Navigation Bar */}
+        <div className="flex mt-4">
+          {stepLabels.map((label, idx) => {
+            const step = idx + 1;
+            const StepIcon = stepIcons[idx];
+            const isActive = currentStep === step;
+            const isCompleted = currentStep > step;
+            return (
+              <div
+                key={step}
+                className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors ${
+                  isActive 
+                    ? "bg-white text-[#395174]" 
+                    : isCompleted
+                      ? "bg-[#2d4163] text-white/90"
+                      : "bg-transparent text-white/50"
+                }`}
+                data-testid={`step-indicator-${step}`}
+              >
+                {isCompleted ? (
+                  <CheckCircle2 className="w-4 h-4 text-[#e1c47d]" />
+                ) : (
+                  <StepIcon className={`w-4 h-4 ${isActive ? "text-[#395174]" : ""}`} />
                 )}
+                <span className="hidden sm:inline">{label}</span>
+                <span className="sm:hidden">{step}</span>
               </div>
-            ))}
-          </div>
-          <div className="mt-2 flex items-center justify-between text-xs font-medium text-muted-foreground">
-            <span className={currentStep === 1 ? "text-blue-600" : ""}>Constraints</span>
-            <span className={currentStep === 2 ? "text-blue-600" : ""}>Focus</span>
-            <span className={currentStep === 3 ? "text-blue-600" : ""}>Review</span>
-            <span className={currentStep === 4 ? "text-blue-600" : ""}>Action Plan</span>
-          </div>
+            );
+          })}
         </div>
+      </div>
+      
+      <CardContent className="p-6">
 
         {/* Step 1: Weekly Constraints */}
         {currentStep === 1 && (
