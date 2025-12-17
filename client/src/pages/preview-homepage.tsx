@@ -764,8 +764,8 @@ export default function PreviewHomepage() {
               </div>
             </div>
             
-            <div className="p-4">
-              <div className="grid grid-cols-2 gap-2">
+            <div className="px-4 py-3">
+              <div className="grid grid-cols-3 gap-1.5">
                 {[
                   { label: "Donors", icon: Users, accent: accentColors.sky },
                   { label: "Pipeline", icon: TrendingUp, accent: accentColors.teal },
@@ -783,21 +783,17 @@ export default function PreviewHomepage() {
                   return (
                     <Link key={idx} href={href}>
                       <div 
-                        className="group flex items-center gap-2 p-3 rounded-lg border hover-elevate transition-all cursor-pointer"
+                        className="group flex flex-col items-center gap-1.5 p-2.5 rounded-lg border hover-elevate transition-all cursor-pointer text-center"
                         style={{ borderColor: `${item.accent}30`, backgroundColor: `${item.accent}05` }}
                         data-testid={`quick-nav-${item.label.toLowerCase()}`}
                       >
                         <div 
-                          className="w-8 h-8 rounded-md flex items-center justify-center shrink-0"
+                          className="w-7 h-7 rounded-md flex items-center justify-center"
                           style={{ backgroundColor: `${item.accent}15` }}
                         >
-                          <Icon className="w-4 h-4" style={{ color: item.accent }} />
+                          <Icon className="w-3.5 h-3.5" style={{ color: item.accent }} />
                         </div>
-                        <span className="font-medium text-sm flex-1">{item.label}</span>
-                        <ArrowUpRight 
-                          className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" 
-                          style={{ color: item.accent }}
-                        />
+                        <span className="font-medium text-xs">{item.label}</span>
                       </div>
                     </Link>
                   );

@@ -426,46 +426,53 @@ export default function UpcomingActionsPage() {
                 
                 const content = (
                   <div 
-                    className="group p-4 rounded-xl border hover-elevate transition-all cursor-pointer hover:shadow-lg"
-                    style={{ borderColor: `${typeColor}25`, backgroundColor: `${typeColor}05` }}
+                    className="group rounded-xl border overflow-hidden hover-elevate transition-all cursor-pointer hover:shadow-lg"
+                    style={{ borderColor: `${typeColor}25` }}
                     data-testid={`action-item-${action.id}`}
                   >
-                    <div className="flex items-start gap-4">
-                      <div 
-                        className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                        style={{ backgroundColor: `${typeColor}15` }}
-                      >
-                        {getTypeIcon(action.type)}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <span className="font-semibold">{action.action}</span>
-                          <Badge 
-                            variant="outline" 
-                            className="text-xs"
-                            style={{ borderColor: typeColor, color: typeColor }}
-                          >
-                            {action.type}
-                          </Badge>
-                          <span 
-                            className="text-xs font-medium px-2 py-0.5 rounded-full"
-                            style={{ backgroundColor: `${priorityColor}15`, color: priorityColor }}
-                          >
-                            {action.priority}
-                          </span>
+                    {/* Accent Header */}
+                    <div 
+                      className="px-4 py-2.5 flex items-center justify-between gap-2"
+                      style={{ background: `linear-gradient(135deg, ${typeColor}15 0%, ${typeColor}05 100%)` }}
+                    >
+                      <div className="flex items-center gap-2">
+                        <div 
+                          className="w-7 h-7 rounded-lg flex items-center justify-center"
+                          style={{ backgroundColor: `${typeColor}20` }}
+                        >
+                          {getTypeIcon(action.type)}
                         </div>
-                        <p className="font-medium" style={{ color: typeColor }}>{action.donor}</p>
-                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{action.notes}</p>
-                        <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+                        <span className="font-semibold text-sm">{action.action}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Badge 
+                          variant="outline" 
+                          className="text-[10px]"
+                          style={{ borderColor: typeColor, color: typeColor }}
+                        >
+                          {action.type}
+                        </Badge>
+                        <span 
+                          className="text-[10px] font-bold px-1.5 py-0.5 rounded-full"
+                          style={{ backgroundColor: `${priorityColor}15`, color: priorityColor }}
+                        >
+                          {action.priority}
+                        </span>
+                      </div>
+                    </div>
+                    {/* Content */}
+                    <div className="px-4 py-3">
+                      <p className="font-medium text-sm" style={{ color: typeColor }}>{action.donor}</p>
+                      <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{action.notes}</p>
+                      <div className="flex items-center justify-between mt-2">
+                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
                           <Clock className="w-3 h-3" />
                           <span>{action.time}</span>
                         </div>
-                      </div>
-                      <div 
-                        className="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shrink-0"
-                        style={{ backgroundColor: `${typeColor}15` }}
-                      >
-                        <ChevronRight className="w-4 h-4" style={{ color: typeColor }} />
+                        <ChevronRight 
+                          className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" 
+                          style={{ color: typeColor }} 
+                        />
                       </div>
                     </div>
                   </div>
