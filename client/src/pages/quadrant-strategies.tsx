@@ -22,11 +22,39 @@ export default function QuadrantStrategies() {
         </CardHeader>
         <CardContent className="pt-6">
           <Tabs defaultValue="acquaintance" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-6">
-              <TabsTrigger value="acquaintance" data-testid="tab-strategy-acquaintance">Acquaintance → Partner</TabsTrigger>
-              <TabsTrigger value="friend" data-testid="tab-strategy-friend">Friend → Partner</TabsTrigger>
-              <TabsTrigger value="colleague" data-testid="tab-strategy-colleague">Colleague → Partner</TabsTrigger>
-              <TabsTrigger value="partner" data-testid="tab-strategy-partner">Maintaining Partner</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-4 gap-1 bg-transparent p-0 mb-8">
+              <TabsTrigger 
+                value="acquaintance" 
+                data-testid="tab-strategy-acquaintance"
+                className="group relative bg-[#A5A033] text-white data-[state=active]:bg-[#A5A033] data-[state=active]:text-white data-[state=active]:shadow-none"
+              >
+                Acquaintance → Partner
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#A5A033] opacity-0 group-data-[state=active]:opacity-100" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="friend" 
+                data-testid="tab-strategy-friend"
+                className="group relative bg-[#D5636C] text-white data-[state=active]:bg-[#D5636C] data-[state=active]:text-white data-[state=active]:shadow-none"
+              >
+                Friend → Partner
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#D5636C] opacity-0 group-data-[state=active]:opacity-100" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="colleague" 
+                data-testid="tab-strategy-colleague"
+                className="group relative bg-[#7BC4DC] text-white data-[state=active]:bg-[#7BC4DC] data-[state=active]:text-white data-[state=active]:shadow-none"
+              >
+                Colleague → Partner
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#7BC4DC] opacity-0 group-data-[state=active]:opacity-100" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="partner" 
+                data-testid="tab-strategy-partner"
+                className="group relative bg-[#7FA3A1] text-white data-[state=active]:bg-[#7FA3A1] data-[state=active]:text-white data-[state=active]:shadow-none"
+              >
+                Maintaining Partner
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#7FA3A1] opacity-0 group-data-[state=active]:opacity-100" />
+              </TabsTrigger>
             </TabsList>
 
             {/* Acquaintance → Partner */}
