@@ -764,8 +764,8 @@ export default function PreviewHomepage() {
               </div>
             </div>
             
-            <div className="px-4 py-3">
-              <div className="grid grid-cols-3 gap-1.5">
+            <div className="p-4 flex flex-col justify-center h-[calc(100%-88px)]">
+              <div className="grid grid-cols-2 gap-2">
                 {[
                   { label: "Donors", icon: Users, accent: accentColors.sky },
                   { label: "Pipeline", icon: TrendingUp, accent: accentColors.teal },
@@ -783,17 +783,17 @@ export default function PreviewHomepage() {
                   return (
                     <Link key={idx} href={href}>
                       <div 
-                        className="group flex flex-col items-center gap-1.5 p-2.5 rounded-lg border hover-elevate transition-all cursor-pointer text-center"
+                        className="group flex items-center gap-2.5 px-3 py-2.5 rounded-lg border hover-elevate transition-all cursor-pointer"
                         style={{ borderColor: `${item.accent}30`, backgroundColor: `${item.accent}05` }}
                         data-testid={`quick-nav-${item.label.toLowerCase()}`}
                       >
                         <div 
-                          className="w-7 h-7 rounded-md flex items-center justify-center"
+                          className="w-8 h-8 rounded-md flex items-center justify-center shrink-0"
                           style={{ backgroundColor: `${item.accent}15` }}
                         >
-                          <Icon className="w-3.5 h-3.5" style={{ color: item.accent }} />
+                          <Icon className="w-4 h-4" style={{ color: item.accent }} />
                         </div>
-                        <span className="font-medium text-xs">{item.label}</span>
+                        <span className="font-medium text-sm">{item.label}</span>
                       </div>
                     </Link>
                   );
