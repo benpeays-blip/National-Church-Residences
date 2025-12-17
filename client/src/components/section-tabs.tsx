@@ -1,7 +1,7 @@
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useLocation } from "wouter";
 import { LucideIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { AccentTabs, AccentTabsList, AccentTabsTrigger, ACCENT_TAB_COLORS } from "@/components/ui/accent-tabs";
 
 export interface SectionTab {
   label: string;
@@ -14,10 +14,10 @@ export interface SectionTab {
 interface SectionTabsProps {
   tabs: SectionTab[];
   currentPath: string;
-  variant?: "default" | "cards";
+  variant?: "default" | "cards" | "accent";
 }
 
-export function SectionTabs({ tabs, currentPath, variant = "default" }: SectionTabsProps) {
+export function SectionTabs({ tabs, currentPath, variant = "accent" }: SectionTabsProps) {
   const [, setLocation] = useLocation();
 
   const handleTabChange = (value: string) => {
@@ -27,28 +27,17 @@ export function SectionTabs({ tabs, currentPath, variant = "default" }: SectionT
     }
   };
 
-  // Determine active tab by matching path with or without query params
   const getActiveTab = () => {
-    // Get the full URL path with query params
     const fullPath = window.location.pathname + window.location.search;
-    
-    // Try exact match first
     let matchedTab = tabs.find(t => t.path === fullPath);
-    
-    // If no exact match, try matching just the pathname
     if (!matchedTab) {
       matchedTab = tabs.find(t => t.path === currentPath);
     }
-    
-    // If still no match, try prefix matching for nested routes
-    // E.g., /pipeline/value should match /pipeline tab
     if (!matchedTab) {
       matchedTab = tabs.find(t => 
         t.path !== '/' && currentPath.startsWith(t.path)
       );
     }
-    
-    // Fall back to first tab
     return matchedTab?.value || tabs[0]?.value;
   };
 
@@ -88,25 +77,27 @@ export function SectionTabs({ tabs, currentPath, variant = "default" }: SectionT
 
   return (
     <div className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="px-6">
-        <Tabs value={activeTab} onValueChange={handleTabChange}>
-          <TabsList className="h-12 bg-transparent border-0 rounded-none gap-1 w-auto inline-flex">
-            {tabs.map((tab) => {
+      <div className="px-6 py-3">
+        <AccentTabs value={activeTab} onValueChange={handleTabChange}>
+          <AccentTabsList className="flex flex-wrap gap-1 mb-0">
+            {tabs.map((tab, index) => {
               const Icon = tab.icon;
+              const accent = ACCENT_TAB_COLORS[index % ACCENT_TAB_COLORS.length];
               return (
-                <TabsTrigger
+                <AccentTabsTrigger
                   key={tab.value}
                   value={tab.value}
+                  accent={accent}
                   data-testid={`tab-${tab.value}`}
-                  className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-12 gap-2"
+                  className="gap-2"
                 >
                   {Icon && <Icon className="w-4 h-4" />}
                   {tab.label}
-                </TabsTrigger>
+                </AccentTabsTrigger>
               );
             })}
-          </TabsList>
-        </Tabs>
+          </AccentTabsList>
+        </AccentTabs>
       </div>
     </div>
   );
