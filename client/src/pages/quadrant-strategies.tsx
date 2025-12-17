@@ -297,49 +297,44 @@ const journeyConfigs: Record<string, JourneyConfig> = {
   }
 };
 
-function StrategyStepCard({ step, color }: { step: StrategyStep; color: string }) {
+function StrategyStepCard({ step }: { step: StrategyStep }) {
   const IconComponent = step.icon;
   
   return (
-    <div className="relative">
-      <Card className="h-full transition-all duration-200 hover:shadow-lg hover:scale-[1.01] group border-l-4" style={{ borderLeftColor: color }}>
-        <CardContent className="p-5">
-          <div className="flex items-start gap-4">
-            <div 
-              className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center text-white font-bold text-lg shadow-md transition-transform group-hover:scale-110"
-              style={{ backgroundColor: color }}
-            >
-              {step.number}
-            </div>
-            <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 mb-2">
-                <IconComponent className="w-4 h-4 text-muted-foreground flex-shrink-0" />
-                <h4 className="font-semibold text-base leading-tight">{step.title}</h4>
-              </div>
-              <p className="text-sm text-muted-foreground mb-3">{step.description}</p>
-              
-              {step.details && step.details.length > 0 && (
-                <ul className="space-y-1.5 mb-3">
-                  {step.details.map((detail, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-sm">
-                      <CheckCircle2 className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color }} />
-                      <span>{detail}</span>
-                    </li>
-                  ))}
-                </ul>
-              )}
-              
-              {step.tip && (
-                <div className="flex items-start gap-2 p-2.5 rounded-lg bg-muted/50 text-sm">
-                  <Lightbulb className="w-4 h-4 mt-0.5 flex-shrink-0 text-amber-500" />
-                  <span className="italic text-muted-foreground">{step.tip}</span>
-                </div>
-              )}
-            </div>
+    <Card className="h-full hover-elevate">
+      <CardContent className="p-5">
+        <div className="flex items-start gap-3">
+          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-muted flex items-center justify-center font-semibold text-sm">
+            {step.number}
           </div>
-        </CardContent>
-      </Card>
-    </div>
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center gap-2 mb-2">
+              <IconComponent className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+              <h4 className="font-semibold text-sm leading-tight">{step.title}</h4>
+            </div>
+            <p className="text-sm text-muted-foreground mb-3">{step.description}</p>
+            
+            {step.details && step.details.length > 0 && (
+              <ul className="space-y-1.5 mb-3">
+                {step.details.map((detail, idx) => (
+                  <li key={idx} className="flex items-start gap-2 text-sm text-muted-foreground">
+                    <span className="mt-1.5">•</span>
+                    <span>{detail}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            
+            {step.tip && (
+              <div className="flex items-start gap-2 p-2.5 rounded-lg bg-muted/50 text-sm">
+                <Lightbulb className="w-4 h-4 mt-0.5 flex-shrink-0 text-amber-500" />
+                <span className="italic text-muted-foreground">{step.tip}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 }
 
@@ -408,7 +403,7 @@ function StrategyContent({ configKey }: { configKey: string }) {
         
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
           {config.steps.map((step) => (
-            <StrategyStepCard key={step.number} step={step} color={config.fromColor} />
+            <StrategyStepCard key={step.number} step={step} />
           ))}
         </div>
       </div>
