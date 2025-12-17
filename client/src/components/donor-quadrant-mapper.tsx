@@ -353,7 +353,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             {/* Top Left - Friend */}
             <button
               onClick={() => setSelectedQuadrant('friend')}
-              className="absolute left-0 top-0 w-[calc(50%-1px)] h-7 z-30 pointer-events-auto flex items-center justify-between px-3 cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
+              className="absolute left-0 top-0 w-[calc(50%-1px)] h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
               data-testid="quadrant-friend"
             >
               <span className="font-semibold text-sm text-white">Friend</span>
@@ -363,14 +363,14 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             {/* Top Right - Partner */}
             <button
               onClick={() => setSelectedQuadrant('partner')}
-              className="absolute left-1/2 top-0 w-1/2 h-7 z-30 pointer-events-auto flex items-center justify-between px-3 cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
+              className="absolute left-1/2 top-0 w-1/2 h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
               data-testid="quadrant-partner"
             >
               <span className="font-semibold text-sm text-white">Partner</span>
               <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-partner">{data.counts.partner} Donors</span>
             </button>
             {isPartnerHovered && draggedDonor && (
-              <div className="absolute left-3/4 top-9 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow z-40">
+              <div className="absolute left-3/4 top-14 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow z-40">
                 Drop to generate action plan
               </div>
             )}
@@ -378,7 +378,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             {/* Bottom Left - Acquaintance */}
             <button
               onClick={() => setSelectedQuadrant('acquaintance')}
-              className="absolute left-0 top-1/2 w-[calc(50%-1px)] h-7 z-30 pointer-events-auto flex items-center justify-between px-3 cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
+              className="absolute left-0 top-1/2 w-[calc(50%-1px)] h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
               data-testid="quadrant-acquaintance"
             >
               <span className="font-semibold text-sm text-white">Acquaintance</span>
@@ -388,7 +388,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             {/* Bottom Right - Colleague */}
             <button
               onClick={() => setSelectedQuadrant('colleague')}
-              className="absolute left-1/2 top-1/2 w-1/2 h-7 z-30 pointer-events-auto flex items-center justify-between px-3 cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
+              className="absolute left-1/2 top-1/2 w-1/2 h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
               data-testid="quadrant-colleague"
             >
               <span className="font-semibold text-sm text-white">Colleague</span>
