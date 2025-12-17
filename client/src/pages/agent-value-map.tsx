@@ -336,27 +336,24 @@ export default function AgentValueMap() {
               <CardDescription>How agents work together in practice</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="space-y-4">
+              <div className="space-y-2">
                 {dayInTheLife.map((item, index) => (
                   <Link key={item.step} href={`/agent-value-map/workflow/${item.step}`}>
-                    <div className="flex items-start gap-4 cursor-pointer p-3 -mx-3 rounded-lg transition-all duration-200 hover:bg-muted/50 group">
-                      <div className={`flex-shrink-0 w-10 h-10 rounded-full ${getAccentBgClass(item.accent)} flex items-center justify-center transition-transform group-hover:scale-110`}>
+                    <div className="flex items-center gap-4 cursor-pointer p-3 rounded-lg transition-colors duration-200 hover:bg-muted/50 group">
+                      <div className={`flex-shrink-0 w-10 h-10 rounded-full ${getAccentBgClass(item.accent)} flex items-center justify-center`}>
                         <span className="font-bold text-white">{item.step}</span>
                       </div>
-                      <div className="flex-1 pb-4 border-b last:border-b-0">
+                      <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2">
-                          <item.icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors" />
-                          <p className="font-semibold group-hover:text-primary transition-colors">{item.title}</p>
+                          <item.icon className="w-4 h-4 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0" />
+                          <p className="font-semibold group-hover:text-primary transition-colors truncate">{item.title}</p>
                         </div>
-                        <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
-                        <div className="mt-2 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
-                          <span>View details</span>
-                          <ArrowRight className="h-4 w-4" />
-                        </div>
+                        <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{item.description}</p>
                       </div>
-                      {index < dayInTheLife.length - 1 && (
-                        <ChevronRight className="w-4 h-4 text-muted-foreground mt-3 hidden md:block" />
-                      )}
+                      <div className="flex items-center gap-1 text-sm text-primary flex-shrink-0 invisible group-hover:visible">
+                        <span>View details</span>
+                        <ArrowRight className="h-4 w-4" />
+                      </div>
                     </div>
                   </Link>
                 ))}
