@@ -127,27 +127,30 @@ export default function TechStackMapper() {
   return (
     <div className="space-y-6">
       <Tabs defaultValue="architecture" className="w-full">
-        <TabsList className="grid w-full grid-cols-3 gap-1 bg-transparent p-0" data-testid="tabs-tech-stack">
+        <TabsList className="grid w-full grid-cols-3 gap-1 bg-transparent p-0 mb-4" data-testid="tabs-tech-stack">
           <TabsTrigger 
             value="architecture" 
             data-testid="tab-architecture"
-            className="bg-[#7FA3A1] text-white data-[state=active]:opacity-100 data-[state=inactive]:opacity-70 hover:opacity-90"
+            className="group relative bg-[#7FA3A1] text-white data-[state=active]:bg-[#7FA3A1] data-[state=active]:text-white data-[state=active]:shadow-none"
           >
             Tech Ecosystem
+            <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#7FA3A1] opacity-0 group-data-[state=active]:opacity-100" />
           </TabsTrigger>
           <TabsTrigger 
             value="layers" 
             data-testid="tab-layers"
-            className="bg-[#7BC4DC] text-white data-[state=active]:opacity-100 data-[state=inactive]:opacity-70 hover:opacity-90"
+            className="group relative bg-[#7BC4DC] text-white data-[state=active]:bg-[#7BC4DC] data-[state=active]:text-white data-[state=active]:shadow-none"
           >
             Stack Architecture
+            <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#7BC4DC] opacity-0 group-data-[state=active]:opacity-100" />
           </TabsTrigger>
           <TabsTrigger 
             value="categories" 
             data-testid="tab-categories"
-            className="bg-[#E8923A] text-white data-[state=active]:opacity-100 data-[state=inactive]:opacity-70 hover:opacity-90"
+            className="group relative bg-[#E8923A] text-white data-[state=active]:bg-[#E8923A] data-[state=active]:text-white data-[state=active]:shadow-none"
           >
             Platform Details
+            <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#E8923A] opacity-0 group-data-[state=active]:opacity-100" />
           </TabsTrigger>
         </TabsList>
 
