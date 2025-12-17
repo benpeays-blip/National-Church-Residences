@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { Link } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { AccentCard, AccentColor, getAccentColor } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -50,6 +51,12 @@ const partnershipTypeLabels: Record<string, { label: string; icon: typeof Heart;
   sponsor: { label: "Sponsor", icon: Trophy, color: "bg-primary/10 text-primary" },
   goods_services: { label: "Goods & Services", icon: Package, color: "bg-primary/10 text-primary" },
 };
+
+const accentColors: AccentColor[] = ["teal", "sky", "lime", "olive", "orange", "coral"];
+
+function getPartnerAccent(index: number): AccentColor {
+  return accentColors[index % accentColors.length];
+}
 
 type MetricType = 'active' | 'contributions' | 'hours' | 'volunteers' | null;
 type ViewMode = 'gallery' | 'list';
@@ -411,14 +418,17 @@ export default function CorporatePartnershipsPage() {
       ) : filteredPartnerships.length > 0 ? (
         partnersViewMode === 'gallery' ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPartnerships.map((partner) => (
-              <Link key={partner.id} href={`/corporate-partnerships/${partner.id}`}>
-                <Card 
-                  className="h-full border cursor-pointer transition-all hover:shadow-lg hover:border-primary/50"
-                  data-testid={`card-partner-${partner.id}`}
-                >
-                  <CardHeader className="pb-3" style={{ backgroundColor: 'rgba(222, 235, 247, 0.3)' }}>
-                    <div className="flex items-start justify-between gap-3">
+            {filteredPartnerships.map((partner, index) => {
+              const accent = getPartnerAccent(index);
+              const accentColor = getAccentColor(accent);
+              return (
+                <Link key={partner.id} href={`/corporate-partnerships/${partner.id}`}>
+                  <AccentCard 
+                    accent={accent}
+                    className="h-full p-0 cursor-pointer hover-elevate transition-all"
+                    data-testid={`card-partner-${partner.id}`}
+                  >
+                    <div className="p-4 border-b flex items-start justify-between gap-3">
                       <div className="flex items-center gap-3">
                         {partner.logoUrl ? (
                           <img 
@@ -433,85 +443,102 @@ export default function CorporatePartnershipsPage() {
                           />
                         ) : null}
                         <div 
-                          className={`w-12 h-12 rounded-lg bg-primary/10 items-center justify-center ${partner.logoUrl ? 'hidden' : 'flex'}`}
-                          style={{ display: partner.logoUrl ? 'none' : 'flex' }}
+                          className={`w-12 h-12 rounded-lg items-center justify-center ${partner.logoUrl ? 'hidden' : 'flex'}`}
+                          style={{ 
+                            display: partner.logoUrl ? 'none' : 'flex',
+                            backgroundColor: `${accentColor}15`
+                          }}
                         >
-                          <Building2 className="w-6 h-6 text-primary" />
+                          <Building2 className="w-6 h-6" style={{ color: accentColor }} />
                         </div>
                         <div>
-                          <CardTitle className="text-lg leading-tight">{partner.companyName}</CardTitle>
+                          <h3 className="font-semibold text-lg leading-tight" style={{ color: accentColor }}>
+                            {partner.companyName}
+                          </h3>
                           <p className="text-xs text-muted-foreground">{partner.industry}</p>
                         </div>
                       </div>
                       <Badge 
-                        variant={partner.partnershipStatus === 'active' ? 'default' : 'secondary'}
+                        variant="outline"
+                        style={{ 
+                          borderColor: partner.partnershipStatus === 'active' ? accentColor : undefined,
+                          color: partner.partnershipStatus === 'active' ? accentColor : undefined
+                        }}
                       >
                         {partner.partnershipStatus}
                       </Badge>
                     </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-sm text-muted-foreground line-clamp-2">
-                      {partner.description || "No description available."}
-                    </p>
+                    <div className="p-4 space-y-4">
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        {partner.description || "No description available."}
+                      </p>
 
-                    <div className="flex flex-wrap gap-1.5">
-                      {partner.partnershipTypes?.map((type) => {
-                        const config = partnershipTypeLabels[type];
-                        if (!config) return null;
-                        const Icon = config.icon;
-                        return (
-                          <Badge key={type} variant="outline" className={`text-xs ${config.color}`}>
-                            <Icon className="w-3 h-3 mr-1" />
-                            {config.label}
-                          </Badge>
-                        );
-                      })}
-                    </div>
-
-                    <div className="grid grid-cols-2 gap-3 pt-2 border-t">
-                      <div>
-                        <p className="text-xs text-muted-foreground">Contributions</p>
-                        <p className="font-semibold" style={{ color: "#084594" }}>
-                          ${Number(partner.totalContributions || 0).toLocaleString()}
-                        </p>
+                      <div className="flex flex-wrap gap-1.5">
+                        {partner.partnershipTypes?.map((type) => {
+                          const config = partnershipTypeLabels[type];
+                          if (!config) return null;
+                          const Icon = config.icon;
+                          return (
+                            <Badge 
+                              key={type} 
+                              variant="outline" 
+                              className="text-xs"
+                              style={{ borderColor: accentColor, color: accentColor }}
+                            >
+                              <Icon className="w-3 h-3 mr-1" />
+                              {config.label}
+                            </Badge>
+                          );
+                        })}
                       </div>
-                      <div>
-                        <p className="text-xs text-muted-foreground">Volunteer Hours</p>
-                        <p className="font-semibold" style={{ color: "#084594" }}>
-                          {(partner.volunteerHours || 0).toLocaleString()}
-                        </p>
-                      </div>
-                    </div>
 
-                    {partner.contactName && (
-                      <div className="flex items-center gap-2 text-sm pt-2 border-t">
-                        <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
-                          <Users className="w-4 h-4 text-muted-foreground" />
+                      <div className="grid grid-cols-2 gap-3 pt-2 border-t">
+                        <div>
+                          <p className="text-xs text-muted-foreground">Contributions</p>
+                          <p className="font-semibold" style={{ color: accentColor }}>
+                            ${Number(partner.totalContributions || 0).toLocaleString()}
+                          </p>
                         </div>
                         <div>
-                          <p className="font-medium text-sm">{partner.contactName}</p>
-                          <p className="text-xs text-muted-foreground">{partner.contactTitle}</p>
+                          <p className="text-xs text-muted-foreground">Volunteer Hours</p>
+                          <p className="font-semibold" style={{ color: accentColor }}>
+                            {(partner.volunteerHours || 0).toLocaleString()}
+                          </p>
                         </div>
                       </div>
-                    )}
 
-                    <div className="flex items-center justify-between pt-2">
-                      {partner.partnershipStartYear && (
-                        <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                          <Calendar className="w-3 h-3" />
-                          Partner since {partner.partnershipStartYear}
+                      {partner.contactName && (
+                        <div className="flex items-center gap-2 text-sm pt-2 border-t">
+                          <div 
+                            className="w-8 h-8 rounded-full flex items-center justify-center"
+                            style={{ backgroundColor: `${accentColor}15` }}
+                          >
+                            <Users className="w-4 h-4" style={{ color: accentColor }} />
+                          </div>
+                          <div>
+                            <p className="font-medium text-sm">{partner.contactName}</p>
+                            <p className="text-xs text-muted-foreground">{partner.contactTitle}</p>
+                          </div>
                         </div>
                       )}
-                      <Button variant="ghost" size="sm" className="ml-auto">
-                        View Details
-                        <ArrowRight className="w-3 h-3 ml-1" />
-                      </Button>
+
+                      <div className="flex items-center justify-between pt-2">
+                        {partner.partnershipStartYear && (
+                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                            <Calendar className="w-3 h-3" />
+                            Partner since {partner.partnershipStartYear}
+                          </div>
+                        )}
+                        <Button variant="ghost" size="sm" className="ml-auto">
+                          View Details
+                          <ArrowRight className="w-3 h-3 ml-1" />
+                        </Button>
+                      </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
+                  </AccentCard>
+                </Link>
+              );
+            })}
           </div>
         ) : (
           <Card className="border">
