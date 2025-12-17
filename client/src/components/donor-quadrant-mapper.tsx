@@ -163,7 +163,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 h-full min-h-0">
       {/* Main Quadrant Visualization */}
-      <Card className="lg:col-span-3 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 120px)', minHeight: '520px' }}>
+      <Card className="lg:col-span-3 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 80px)', minHeight: '420px' }}>
         <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
           <div className="flex items-center justify-between">
             <div>
@@ -182,7 +182,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardHeader>
         <CardContent className="p-6 flex-1 min-h-0 flex flex-col" style={{ backgroundColor: '#f4f4f4' }}>
           <div className="relative flex-1 min-h-0 pb-8 pl-10">
-            <div className="relative w-full h-full min-h-[520px] max-h-[calc(100vh-120px)] aspect-square rounded-lg overflow-hidden bg-background" style={{ border: '3px solid #395174' }}>
+            <div className="relative w-full h-full min-h-[360px] max-h-[calc(100vh-80px)] aspect-square rounded-lg overflow-hidden bg-background" style={{ border: '3px solid #395174' }}>
               {/* Grid Lines */}
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
               <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
@@ -438,7 +438,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardContent>
       </Card>
       {/* Right Panel - Quadrant Details */}
-      <Card className="lg:col-span-2 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 120px)', minHeight: '520px' }}>
+      <Card className="lg:col-span-2 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 80px)', minHeight: '420px' }}>
         {/* Layered Tab Navigation */}
         <div className="flex border-b bg-muted/30 shrink-0">
           {(['partner', 'friend', 'colleague', 'acquaintance'] as QuadrantType[]).map((q) => {
