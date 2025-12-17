@@ -497,15 +497,59 @@ function getTrendIcon(trend: "up" | "down" | "stable") {
   }
 }
 
+// Unified NCR Brand Color Badge System
+const STATUS_BADGE_COLORS = {
+  available: { bg: NCR_BRAND_COLORS.teal, label: "Available" },
+  "coming-soon": { bg: NCR_BRAND_COLORS.orange, label: "Coming Soon" },
+  planned: { bg: NCR_BRAND_COLORS.sky, label: "Planned" }
+};
+
+const PHASE_BADGE_COLORS: Record<string, string> = {
+  "Phase 1": NCR_BRAND_COLORS.teal,
+  "Phase 2": NCR_BRAND_COLORS.olive,
+  "Phase 3": NCR_BRAND_COLORS.coral
+};
+
 function getStatusBadge(status: "available" | "coming-soon" | "planned") {
-  switch (status) {
-    case "available":
-      return <Badge className="bg-green-500/10 text-green-600 border-green-500/20">Available</Badge>;
-    case "coming-soon":
-      return <Badge className="bg-amber-500/10 text-amber-600 border-amber-500/20">Coming Soon</Badge>;
-    case "planned":
-      return <Badge className="bg-blue-500/10 text-blue-600 border-blue-500/20">Planned</Badge>;
-  }
+  const { bg, label } = STATUS_BADGE_COLORS[status];
+  return (
+    <Badge 
+      className="border"
+      style={{ 
+        backgroundColor: `${bg}15`,
+        color: bg,
+        borderColor: `${bg}40`
+      }}
+    >
+      {label}
+    </Badge>
+  );
+}
+
+function getPhaseBadge(phase: string) {
+  const phaseKey = phase.split(" ")[0] + " " + phase.split(" ")[1];
+  const color = PHASE_BADGE_COLORS[phaseKey] || NCR_BRAND_COLORS.teal;
+  return (
+    <Badge 
+      variant="outline"
+      className="mb-2"
+      style={{ 
+        backgroundColor: `${color}15`,
+        color: color,
+        borderColor: `${color}40`
+      }}
+    >
+      {phase}
+    </Badge>
+  );
+}
+
+function getAccentCardHeader(accent: AccentColor) {
+  const color = NCR_BRAND_COLORS[accent];
+  return {
+    backgroundColor: color,
+    color: "white"
+  };
 }
 
 export default function HubDetail() {
@@ -565,7 +609,7 @@ export default function HubDetail() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <Card className="lg:col-span-2">
-          <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardHeader className="rounded-t-xl" style={getAccentCardHeader(hubData.accent)}>
             <CardTitle className="text-white flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5" />
               Key Benefits
@@ -575,7 +619,7 @@ export default function HubDetail() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {hubData.keyBenefits.map((benefit, index) => (
                 <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                  <CheckCircle2 className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5" style={{ color: brandColor }} />
                   <span className="text-sm">{benefit}</span>
                 </div>
               ))}
@@ -584,7 +628,7 @@ export default function HubDetail() {
         </Card>
 
         <Card>
-          <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardHeader className="rounded-t-xl" style={getAccentCardHeader(hubData.accent)}>
             <CardTitle className="text-white flex items-center gap-2">
               <Gauge className="w-5 h-5" />
               Key Metrics
@@ -609,7 +653,7 @@ export default function HubDetail() {
       </div>
 
       <Card>
-        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+        <CardHeader className="rounded-t-xl" style={getAccentCardHeader(hubData.accent)}>
           <CardTitle className="text-white flex items-center gap-2">
             <Layers className="w-5 h-5" />
             Features
@@ -633,7 +677,7 @@ export default function HubDetail() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
-          <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardHeader className="rounded-t-xl" style={getAccentCardHeader(hubData.accent)}>
             <CardTitle className="text-white flex items-center gap-2">
               <Bot className="w-5 h-5" />
               AI Agents
@@ -664,7 +708,7 @@ export default function HubDetail() {
         </Card>
 
         <Card>
-          <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardHeader className="rounded-t-xl" style={getAccentCardHeader(hubData.accent)}>
             <CardTitle className="text-white flex items-center gap-2">
               <Network className="w-5 h-5" />
               System Integrations
@@ -697,7 +741,7 @@ export default function HubDetail() {
       </div>
 
       <Card>
-        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+        <CardHeader className="rounded-t-xl" style={getAccentCardHeader(hubData.accent)}>
           <CardTitle className="text-white flex items-center gap-2">
             <Calendar className="w-5 h-5" />
             Roadmap
@@ -706,16 +750,20 @@ export default function HubDetail() {
         </CardHeader>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {hubData.roadmapItems.map((item, index) => (
-              <div 
-                key={index} 
-                className="p-4 rounded-lg border-l-4"
-                style={{ borderLeftColor: brandColor, backgroundColor: `${brandColor}10` }}
-              >
-                <Badge variant="outline" className="mb-2">{item.phase}</Badge>
-                <p className="text-sm">{item.item}</p>
-              </div>
-            ))}
+            {hubData.roadmapItems.map((item, index) => {
+              const phaseKey = item.phase.split(" ")[0] + " " + item.phase.split(" ")[1];
+              const phaseColor = PHASE_BADGE_COLORS[phaseKey] || brandColor;
+              return (
+                <div 
+                  key={index} 
+                  className="p-4 rounded-lg border-l-4"
+                  style={{ borderLeftColor: phaseColor, backgroundColor: `${phaseColor}10` }}
+                >
+                  {getPhaseBadge(item.phase)}
+                  <p className="text-sm">{item.item}</p>
+                </div>
+              );
+            })}
           </div>
         </CardContent>
       </Card>
