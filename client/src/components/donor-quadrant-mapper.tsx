@@ -207,6 +207,29 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               const isDraggable = donor.quadrant !== 'partner';
               const isBeingDragged = draggedDonor?.id === donor.id;
               
+              // Calculate adjusted top position to avoid header overlap
+              // Headers are h-12 (48px) tall at top of each quadrant half
+              // Add 52px offset to keep dots below headers
+              const headerOffset = 52;
+              const isTopHalf = donor.energy > 50;
+              const isBottomHalf = donor.energy <= 50;
+              
+              // Scale energy to fit within the visible area (excluding headers)
+              // Top half: energy 51-100 maps to 52px - 50%
+              // Bottom half: energy 0-50 maps to 50%+52px - 100%
+              let adjustedTop: string;
+              if (isTopHalf) {
+                // Map energy 100->51 to position just below header -> just above middle
+                const energyInRange = (donor.energy - 50) / 50; // 0 to 1
+                const topPercent = (1 - energyInRange) * 44; // 44% range (6% to 50%)
+                adjustedTop = `calc(${topPercent}% + ${headerOffset}px - 5px)`;
+              } else {
+                // Map energy 50->0 to position just below middle header -> bottom
+                const energyInRange = donor.energy / 50; // 0 to 1
+                const topPercent = 50 + (1 - energyInRange) * 44; // 50% to 94%
+                adjustedTop = `calc(${topPercent}% + ${headerOffset}px - 5px)`;
+              }
+              
               return (
               <HoverCard key={donor.id} openDelay={150} closeDelay={50} open={draggedDonor ? false : undefined}>
                 <HoverCardTrigger asChild>
@@ -221,7 +244,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                     } ${isBeingDragged ? 'opacity-50 scale-125' : ''}`}
                     style={{
                       left: `calc(${donor.structure}% - 5px)`,
-                      top: `calc(${100 - donor.energy}% - 5px)`,
+                      top: adjustedTop,
                     }}
                     data-testid={`dot-donor-${donor.id}`}
                     aria-label={isDraggable 
