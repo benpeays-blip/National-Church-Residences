@@ -316,39 +316,42 @@ export default function PreviewHomepage() {
           {/* Next Best Actions - AI Recommendations */}
           <div className="lg:col-span-2">
             <AccentCard accent="sky" className="h-full">
-              <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+              {/* Header */}
+              <div className="flex items-start justify-between gap-4 mb-6">
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
                     <Lightbulb className="w-6 h-6 text-primary" />
                   </div>
-                  <div>
+                  <div className="space-y-1">
                     <h2 className="text-xl font-semibold">AI Next Best Actions</h2>
                     <CardDescription>Personalized recommendations to maximize impact</CardDescription>
                   </div>
                 </div>
-                <Badge variant="outline" className="gap-1 text-xs uppercase tracking-wide">
+                <Badge variant="outline" className="gap-1 text-xs uppercase tracking-wide shrink-0">
                   <Sparkles className="w-3 h-3" />
                   AI Powered
                 </Badge>
               </div>
-              <div className="space-y-3">
+              
+              {/* Action Items */}
+              <div className="space-y-4">
                 {nextBestActions.map((action, idx) => {
                   const accentColor = getAccentColor(action.accent);
                   return (
                     <div 
                       key={idx}
-                      className="flex items-start gap-4 p-4 rounded-lg bg-muted/50 hover-elevate transition-all cursor-pointer"
+                      className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 hover-elevate transition-all cursor-pointer"
                       data-testid={`action-item-${idx}`}
                     >
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                        {action.type === "call" && <Phone className="w-6 h-6 text-primary" />}
-                        {action.type === "email" && <Mail className="w-6 h-6 text-primary" />}
-                        {action.type === "prep" && <FileText className="w-6 h-6 text-primary" />}
-                        {action.type === "letter" && <Gift className="w-6 h-6 text-primary" />}
+                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                        {action.type === "call" && <Phone className="w-5 h-5 text-primary" />}
+                        {action.type === "email" && <Mail className="w-5 h-5 text-primary" />}
+                        {action.type === "prep" && <FileText className="w-5 h-5 text-primary" />}
+                        {action.type === "letter" && <Gift className="w-5 h-5 text-primary" />}
                       </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1 flex-wrap">
-                          <span className="text-base font-medium">{action.action}</span>
+                      <div className="flex-1 min-w-0 space-y-1">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="font-medium">{action.action}</span>
                           <Badge 
                             variant={action.priority === "High" ? "destructive" : "secondary"}
                             className="text-xs"
@@ -356,8 +359,8 @@ export default function PreviewHomepage() {
                             {action.priority}
                           </Badge>
                         </div>
-                        <p className="text-sm font-medium" style={{ color: accentColor }}>{action.donor}</p>
-                        <p className="text-sm text-muted-foreground mt-0.5">{action.context}</p>
+                        <p className="text-sm" style={{ color: accentColor }}>{action.donor}</p>
+                        <p className="text-sm text-muted-foreground line-clamp-1">{action.context}</p>
                       </div>
                       <Button variant="ghost" size="icon" className="shrink-0">
                         <ArrowRight className="w-4 h-4" />
