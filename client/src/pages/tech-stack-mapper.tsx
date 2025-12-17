@@ -128,9 +128,27 @@ export default function TechStackMapper() {
     <div className="space-y-6">
       <Tabs defaultValue="architecture" className="w-full">
         <TabsList className="grid w-full grid-cols-3" data-testid="tabs-tech-stack">
-          <TabsTrigger value="architecture" data-testid="tab-architecture">Tech Ecosystem</TabsTrigger>
-          <TabsTrigger value="layers" data-testid="tab-layers">Stack Architecture</TabsTrigger>
-          <TabsTrigger value="categories" data-testid="tab-categories">Platform Details</TabsTrigger>
+          <TabsTrigger 
+            value="architecture" 
+            data-testid="tab-architecture"
+            className="data-[state=active]:bg-[#7FA3A1] data-[state=active]:text-white"
+          >
+            Tech Ecosystem
+          </TabsTrigger>
+          <TabsTrigger 
+            value="layers" 
+            data-testid="tab-layers"
+            className="data-[state=active]:bg-[#7BC4DC] data-[state=active]:text-white"
+          >
+            Stack Architecture
+          </TabsTrigger>
+          <TabsTrigger 
+            value="categories" 
+            data-testid="tab-categories"
+            className="data-[state=active]:bg-[#B5C942] data-[state=active]:text-white"
+          >
+            Platform Details
+          </TabsTrigger>
         </TabsList>
 
         {/* TAB 1: Tech Ecosystem - Visual overview of all platforms */}
