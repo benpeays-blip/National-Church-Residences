@@ -178,14 +178,14 @@ export default function NcrFoundation() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Target className="h-5 w-5 text-primary" />
+          <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+            <CardTitle className="flex items-center gap-2 text-white">
+              <Target className="h-5 w-5" />
               Funding Priorities
             </CardTitle>
-            <CardDescription>How philanthropic dollars make an impact</CardDescription>
+            <CardDescription className="text-white/80">How philanthropic dollars make an impact</CardDescription>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-6 pt-6">
             {fundingAreas.map((area) => (
               <div key={area.name} className="space-y-2" data-testid={`funding-area-${area.name.toLowerCase().replace(/\s+/g, '-')}`}>
                 <div className="flex items-center justify-between">
@@ -200,14 +200,14 @@ export default function NcrFoundation() {
         </Card>
 
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Gift className="h-5 w-5 text-primary" />
+          <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+            <CardTitle className="flex items-center gap-2 text-white">
+              <Gift className="h-5 w-5" />
               Recent Foundation Grants
             </CardTitle>
-            <CardDescription>Major grants supporting our mission</CardDescription>
+            <CardDescription className="text-white/80">Major grants supporting our mission</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <div className="space-y-4">
               {recentGrants.map((grant, index) => (
                 <div 
@@ -233,14 +233,14 @@ export default function NcrFoundation() {
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Star className="h-5 w-5 text-primary" />
+        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardTitle className="flex items-center gap-2 text-white">
+            <Star className="h-5 w-5" />
             Impact Stories
           </CardTitle>
-          <CardDescription>How your support makes a difference</CardDescription>
+          <CardDescription className="text-white/80">How your support makes a difference</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {impactStories.map((story, index) => (
               <div 
