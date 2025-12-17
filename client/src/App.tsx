@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Switch, Route, Link, useLocation } from "wouter";
 import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
@@ -357,9 +357,27 @@ function App() {
   const [selectedTopTab, setSelectedTopTab] = useState<TopTab>('Philanthropy');
   
   // Get the current tab from URL query params for Agentic Plan navigation
-  const currentTabParam = typeof window !== 'undefined' 
-    ? new URLSearchParams(window.location.search).get('tab') || 'overview'
-    : 'overview';
+  const getTabFromUrl = () => {
+    if (typeof window === 'undefined') return 'overview';
+    return new URLSearchParams(window.location.search).get('tab') || 'overview';
+  };
+  
+  const [currentTabParam, setCurrentTabParam] = useState(getTabFromUrl);
+  
+  // Sync tab state when location or URL changes
+  useEffect(() => {
+    const updateTab = () => setCurrentTabParam(getTabFromUrl());
+    updateTab();
+    
+    // Poll for query string changes since wouter doesn't track them
+    const interval = setInterval(updateTab, 100);
+    window.addEventListener('popstate', updateTab);
+    
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('popstate', updateTab);
+    };
+  }, [location]);
 
   // Helper to check if a nav item is active based on current path
   const isNavActive = (navItem: string): boolean => {
