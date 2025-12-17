@@ -206,7 +206,17 @@ const sampleProspects: ProspectProfile[] = [
 
 export default function RelSciMapping() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [prospectSearch, setProspectSearch] = useState("");
   const [selectedProspect, setSelectedProspect] = useState<ProspectProfile | null>(null);
+
+  // Filter prospects based on search
+  const filteredProspects = prospectSearch 
+    ? sampleProspects.filter(p => 
+        p.name.toLowerCase().includes(prospectSearch.toLowerCase()) ||
+        p.organization.toLowerCase().includes(prospectSearch.toLowerCase()) ||
+        p.title.toLowerCase().includes(prospectSearch.toLowerCase())
+      )
+    : sampleProspects;
 
   return (
     <div className="space-y-6">
@@ -363,15 +373,47 @@ export default function RelSciMapping() {
         </TabsContent>
 
         <TabsContent value="prospects" className="space-y-4 mt-4">
+          {/* Prospect Search Bar */}
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex gap-2">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+                  <Input
+                    placeholder="Search prospects by name, organization, or title..."
+                    value={prospectSearch}
+                    onChange={(e) => setProspectSearch(e.target.value)}
+                    className="pl-9"
+                    data-testid="input-prospect-search"
+                  />
+                </div>
+                <Button style={{ backgroundColor: "#7BC4DC" }} data-testid="button-search-prospects">
+                  <Search className="h-4 w-4 mr-2" />
+                  Search
+                </Button>
+              </div>
+              {prospectSearch && (
+                <p className="text-sm text-muted-foreground mt-2">
+                  Showing results for "{prospectSearch}" • {filteredProspects.length} prospect{filteredProspects.length !== 1 ? 's' : ''} found
+                </p>
+              )}
+            </CardContent>
+          </Card>
+
           <div className="grid lg:grid-cols-3 gap-4">
             <div className="lg:col-span-1 space-y-3">
               <Card>
                 <CardHeader className="pb-2">
-                  <CardTitle className="text-lg">High-Value Prospects</CardTitle>
-                  <CardDescription>Sorted by connection score</CardDescription>
+                  <CardTitle className="text-lg">{prospectSearch ? "Search Results" : "High-Value Prospects"}</CardTitle>
+                  <CardDescription>{prospectSearch ? `Filtered by "${prospectSearch}"` : "Sorted by connection score"}</CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-2 p-3">
-                  {sampleProspects.map((prospect) => (
+                  {filteredProspects.length === 0 ? (
+                    <div className="text-center py-6 text-muted-foreground">
+                      <Users className="h-8 w-8 mx-auto mb-2 opacity-50" />
+                      <p className="text-sm">No prospects found matching "{prospectSearch}"</p>
+                    </div>
+                  ) : filteredProspects.map((prospect) => (
                     <div
                       key={prospect.id}
                       className={`p-3 rounded-lg cursor-pointer transition-colors ${
