@@ -36,6 +36,7 @@ type Opportunity = {
 const STAGE_BADGE_COLORS: Record<string, string> = {
   "Prospect": "bg-[#4A90A4] text-white border-0",
   "Cultivation": "bg-[#2A9D8F] text-white border-0",
+  "Ask": "bg-[#E76F51] text-white border-0",
   "Solicitation": "bg-[#E76F51] text-white border-0",
   "Negotiation": "bg-[#E07A5F] text-white border-0",
   "Stewardship": "bg-[#6B8E23] text-white border-0",
