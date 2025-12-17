@@ -25,11 +25,39 @@ export default function QuadrantExplained() {
         </div>
         <CardContent className="pt-0 px-6 pb-6">
           <Tabs defaultValue="partner" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-6">
-              <TabsTrigger value="partner" data-testid="tab-framework-partner">Partner</TabsTrigger>
-              <TabsTrigger value="friend" data-testid="tab-framework-friend">Friend</TabsTrigger>
-              <TabsTrigger value="colleague" data-testid="tab-framework-colleague">Colleague</TabsTrigger>
-              <TabsTrigger value="acquaintance" data-testid="tab-framework-acquaintance">Acquaintance</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-4 gap-1 bg-transparent p-0 mb-8">
+              <TabsTrigger 
+                value="partner" 
+                data-testid="tab-framework-partner"
+                className="group relative bg-[#7FA3A1] text-white data-[state=active]:bg-[#7FA3A1] data-[state=active]:text-white data-[state=active]:shadow-none"
+              >
+                Partner
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#7FA3A1] opacity-0 group-data-[state=active]:opacity-100" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="friend" 
+                data-testid="tab-framework-friend"
+                className="group relative bg-[#D5636C] text-white data-[state=active]:bg-[#D5636C] data-[state=active]:text-white data-[state=active]:shadow-none"
+              >
+                Friend
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#D5636C] opacity-0 group-data-[state=active]:opacity-100" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="colleague" 
+                data-testid="tab-framework-colleague"
+                className="group relative bg-[#7BC4DC] text-white data-[state=active]:bg-[#7BC4DC] data-[state=active]:text-white data-[state=active]:shadow-none"
+              >
+                Colleague
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#7BC4DC] opacity-0 group-data-[state=active]:opacity-100" />
+              </TabsTrigger>
+              <TabsTrigger 
+                value="acquaintance" 
+                data-testid="tab-framework-acquaintance"
+                className="group relative bg-[#A5A033] text-white data-[state=active]:bg-[#A5A033] data-[state=active]:text-white data-[state=active]:shadow-none"
+              >
+                Acquaintance
+                <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#A5A033] opacity-0 group-data-[state=active]:opacity-100" />
+              </TabsTrigger>
             </TabsList>
 
             {/* Partner Tab */}
