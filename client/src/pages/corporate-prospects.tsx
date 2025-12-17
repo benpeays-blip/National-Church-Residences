@@ -305,72 +305,75 @@ export default function CorporateProspects() {
         {filteredProspects.map((prospect) => (
           <Card
             key={prospect.id}
-            className="border hover:shadow-lg transition-shadow cursor-pointer"
+            className="border hover:shadow-lg transition-shadow cursor-pointer overflow-hidden"
             data-testid={`card-prospect-${prospect.id}`}
           >
+            {/* Header with light blue background */}
+            <div className="p-4 flex items-center gap-4" style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}>
+              {prospect.logoUrl ? (
+                <img
+                  src={prospect.logoUrl}
+                  alt={`${prospect.companyName} logo`}
+                  className="w-14 h-14 object-contain rounded-lg bg-white p-2 border"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = "none";
+                  }}
+                />
+              ) : (
+                <div className="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Building2 className="w-7 h-7 text-primary" />
+                </div>
+              )}
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-1">
+                  <h3 className="text-xl font-bold">{prospect.companyName}</h3>
+                  <Badge variant={stageLabels[prospect.prospectStage].variant}>
+                    {stageLabels[prospect.prospectStage].label}
+                  </Badge>
+                </div>
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
+                  <span className="flex items-center gap-1">
+                    <Briefcase className="w-3 h-3" />
+                    {prospect.industry}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <MapPin className="w-3 h-3" />
+                    {prospect.headquarters}
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Users className="w-3 h-3" />
+                    {prospect.employees.toLocaleString()} employees
+                  </span>
+                </div>
+              </div>
+            </div>
+
             <CardContent className="p-6">
               <div className="flex items-start gap-6">
-                {/* Logo and Basic Info */}
-                <div className="flex items-start gap-4 flex-1">
-                  {prospect.logoUrl ? (
-                    <img
-                      src={prospect.logoUrl}
-                      alt={`${prospect.companyName} logo`}
-                      className="w-16 h-16 object-contain rounded-lg bg-white p-2 border"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = "none";
-                      }}
-                    />
-                  ) : (
-                    <div className="w-16 h-16 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Building2 className="w-8 h-8 text-primary" />
-                    </div>
-                  )}
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-1">
-                      <h3 className="text-xl font-bold">{prospect.companyName}</h3>
-                      <Badge variant={stageLabels[prospect.prospectStage].variant}>
-                        {stageLabels[prospect.prospectStage].label}
+                {/* Partnership Interests and Connections */}
+                <div className="flex-1 space-y-3">
+                  <div className="flex flex-wrap gap-1">
+                    {prospect.partnershipInterests.map((interest, idx) => (
+                      <Badge key={idx} variant="outline" className="text-xs">
+                        {interest}
                       </Badge>
-                    </div>
-                    <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
-                      <span className="flex items-center gap-1">
-                        <Briefcase className="w-3 h-3" />
-                        {prospect.industry}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="w-3 h-3" />
-                        {prospect.headquarters}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Users className="w-3 h-3" />
-                        {prospect.employees.toLocaleString()} employees
-                      </span>
-                    </div>
+                    ))}
+                  </div>
 
-                    <div className="flex flex-wrap gap-1 mb-3">
-                      {prospect.partnershipInterests.map((interest, idx) => (
-                        <Badge key={idx} variant="outline" className="text-xs">
-                          {interest}
+                  {prospect.connections.length > 0 && (
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-muted-foreground">Connections:</span>
+                      {prospect.connections.map((conn, idx) => (
+                        <Badge key={idx} variant={strengthVariants[conn.strength]} className="text-xs">
+                          {conn.name.split(":")[0]}
                         </Badge>
                       ))}
                     </div>
+                  )}
 
-                    {prospect.connections.length > 0 && (
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-xs text-muted-foreground">Connections:</span>
-                        {prospect.connections.map((conn, idx) => (
-                          <Badge key={idx} variant={strengthVariants[conn.strength]} className="text-xs">
-                            {conn.name.split(":")[0]}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-
-                    {prospect.notes && (
-                      <p className="text-sm text-muted-foreground italic">{prospect.notes}</p>
-                    )}
-                  </div>
+                  {prospect.notes && (
+                    <p className="text-sm text-muted-foreground italic">{prospect.notes}</p>
+                  )}
                 </div>
 
                 {/* Metrics and Actions */}
