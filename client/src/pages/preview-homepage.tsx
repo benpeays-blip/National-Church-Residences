@@ -201,7 +201,7 @@ export default function PreviewHomepage() {
 
           {/* Alert Strip */}
           <div className="flex items-center gap-4 mb-6 flex-wrap">
-            <Link href="/gifts/planned">
+            <Link href="/gifts/planned?filter=expiring">
               <Badge variant="secondary" className="gap-1.5 py-1.5 cursor-pointer hover:bg-secondary/80 transition-colors" data-testid="alert-pledges">
                 <AlertTriangle className="w-3 h-3 text-orange-500" />
                 <span className="text-xs uppercase tracking-wide">3 pledges expiring</span>
@@ -215,10 +215,13 @@ export default function PreviewHomepage() {
                 <ChevronRight className="w-3 h-3 ml-1 opacity-50" />
               </Badge>
             </Link>
-            <Badge variant="secondary" className="gap-1.5 py-1.5" data-testid="alert-tasks">
-              <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-              <span className="text-xs uppercase tracking-wide">12 tasks completed</span>
-            </Badge>
+            <Link href="/upcoming-actions?filter=completed">
+              <Badge variant="secondary" className="gap-1.5 py-1.5 cursor-pointer hover:bg-secondary/80 transition-colors" data-testid="alert-tasks">
+                <CheckCircle2 className="w-3 h-3 text-emerald-500" />
+                <span className="text-xs uppercase tracking-wide">12 tasks completed</span>
+                <ChevronRight className="w-3 h-3 ml-1 opacity-50" />
+              </Badge>
+            </Link>
           </div>
 
           {/* Executive KPI Grid */}

@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Link } from "wouter";
+import { Link, useSearch } from "wouter";
 import { getAccentColor } from "@/components/ui/accent-card";
 import { 
   Calendar, 
@@ -13,7 +13,8 @@ import {
   Clock,
   ChevronRight,
   Filter,
-  Plus
+  Plus,
+  CheckCircle2
 } from "lucide-react";
 
 const accentColors = {
@@ -26,6 +27,145 @@ const accentColors = {
 };
 
 export default function UpcomingActionsPage() {
+  const searchString = useSearch();
+  const params = new URLSearchParams(searchString);
+  const filterType = params.get("filter");
+
+  const completedActions = [
+    { 
+      id: 101,
+      date: "Dec 14", 
+      time: "3:00 PM",
+      donor: "Margaret Chen", 
+      donorId: "0cc9580d-c975-4222-890b-b6ceebe8bb3a",
+      action: "Thank you call completed", 
+      type: "call",
+      priority: "High",
+      notes: "Expressed gratitude for $15K year-end gift. Confirmed interest in capital campaign update."
+    },
+    { 
+      id: 102,
+      date: "Dec 13", 
+      time: "11:00 AM",
+      donor: "Anderson Foundation", 
+      donorId: "261d8446-ce7c-4cee-977e-31347f162b2c",
+      action: "Grant report submitted", 
+      type: "email",
+      priority: "High",
+      notes: "Submitted Q4 progress report for $50K education grant. Positive feedback received."
+    },
+    { 
+      id: 103,
+      date: "Dec 12", 
+      time: "2:00 PM",
+      donor: "Dr. James Morrison", 
+      donorId: "a275b91a-5634-4114-9cfb-e5a52f0d1c46",
+      action: "Stewardship meeting held", 
+      type: "meeting",
+      priority: "Medium",
+      notes: "Discussed scholarship fund impact. 12 students supported this year. Very engaged."
+    },
+    { 
+      id: 104,
+      date: "Dec 11", 
+      time: "10:00 AM",
+      donor: "Robert Martinez", 
+      donorId: "5ab76a44-f492-4dd7-b3ea-bfcfaf5ff141",
+      action: "Gift acknowledgment sent", 
+      type: "email",
+      priority: "Medium",
+      notes: "Personalized thank you for $10K contribution with impact photos attached."
+    },
+    { 
+      id: 105,
+      date: "Dec 10", 
+      time: "1:00 PM",
+      donor: "Community Outreach", 
+      donorId: null,
+      action: "Newsletter distributed", 
+      type: "campaign",
+      priority: "Medium",
+      notes: "December newsletter sent to 2,400 subscribers. 38% open rate achieved."
+    },
+    { 
+      id: 106,
+      date: "Dec 9", 
+      time: "4:00 PM",
+      donor: "Jennifer Johnson", 
+      donorId: "261d8446-ce7c-4cee-977e-31347f162b2c",
+      action: "Proposal review completed", 
+      type: "meeting",
+      priority: "High",
+      notes: "Reviewed $250K grant proposal internally. Ready for board presentation."
+    },
+    { 
+      id: 107,
+      date: "Dec 8", 
+      time: "9:30 AM",
+      donor: "Linda Chen", 
+      donorId: "0cc9580d-c975-4222-890b-b6ceebe8bb3a",
+      action: "Site visit coordinated", 
+      type: "visit",
+      priority: "High",
+      notes: "Confirmed site visit details for Dec 18. Prepared briefing materials."
+    },
+    { 
+      id: 108,
+      date: "Dec 7", 
+      time: "11:30 AM",
+      donor: "Patricia Brown", 
+      donorId: "ec82c940-c513-4656-bc66-e8c618c6dcdd",
+      action: "Holiday card sent", 
+      type: "email",
+      priority: "Low",
+      notes: "Sent personalized holiday greeting with year-in-review highlights."
+    },
+    { 
+      id: 109,
+      date: "Dec 6", 
+      time: "2:30 PM",
+      donor: "Susan Taylor", 
+      donorId: "fa9dbe3b-9972-49d6-9722-b26725db3e1c",
+      action: "Donor profile updated", 
+      type: "email",
+      priority: "Low",
+      notes: "Updated contact preferences and communication history in CRM."
+    },
+    { 
+      id: 110,
+      date: "Dec 5", 
+      time: "10:00 AM",
+      donor: "David Thompson", 
+      donorId: "8b11e5ac-0e35-4c95-b220-7cc58e9636bd",
+      action: "Re-engagement email sent", 
+      type: "email",
+      priority: "High",
+      notes: "Sent personalized outreach to at-risk donor. Awaiting response."
+    },
+    { 
+      id: 111,
+      date: "Dec 4", 
+      time: "3:00 PM",
+      donor: "Board Update", 
+      donorId: null,
+      action: "Monthly report compiled", 
+      type: "campaign",
+      priority: "Medium",
+      notes: "Prepared December fundraising progress report for board review."
+    },
+    { 
+      id: 112,
+      date: "Dec 3", 
+      time: "9:00 AM",
+      donor: "Year-End Appeal", 
+      donorId: null,
+      action: "Segmentation completed", 
+      type: "campaign",
+      priority: "High",
+      notes: "Finalized donor segments for year-end appeal. 1,847 donors in active cohort."
+    },
+  ];
+
   const upcomingActions = [
     { 
       id: 1,
@@ -143,8 +283,12 @@ export default function UpcomingActionsPage() {
     return priority === "High" ? "#ef4444" : accentColors.olive;
   };
 
+  // Determine which actions to show based on filter
+  const isShowingCompleted = filterType === "completed";
+  const actionsToShow = isShowingCompleted ? completedActions : upcomingActions;
+
   // Group actions by date
-  const groupedActions = upcomingActions.reduce((acc, action) => {
+  const groupedActions = actionsToShow.reduce((acc, action) => {
     if (!acc[action.date]) {
       acc[action.date] = [];
     }
@@ -157,16 +301,31 @@ export default function UpcomingActionsPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl font-bold">Upcoming Actions</h1>
+          <h1 className="text-3xl font-bold">
+            {isShowingCompleted ? "Completed Tasks" : "Upcoming Actions"}
+          </h1>
           <p className="text-muted-foreground mt-1">
-            Your scheduled tasks and donor touchpoints
+            {isShowingCompleted 
+              ? "Recently completed tasks and touchpoints" 
+              : "Your scheduled tasks and donor touchpoints"}
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <Button variant="outline" className="gap-2">
-            <Filter className="w-4 h-4" />
-            Filter
-          </Button>
+          {isShowingCompleted ? (
+            <Link href="/upcoming-actions">
+              <Button variant="outline" className="gap-2">
+                <Calendar className="w-4 h-4" />
+                View Upcoming
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/upcoming-actions?filter=completed">
+              <Button variant="outline" className="gap-2">
+                <CheckCircle2 className="w-4 h-4" />
+                View Completed
+              </Button>
+            </Link>
+          )}
           <Button className="gap-2" style={{ backgroundColor: accentColors.olive }}>
             <Plus className="w-4 h-4" />
             Add Action
@@ -181,13 +340,16 @@ export default function UpcomingActionsPage() {
             <div className="flex items-center gap-3">
               <div 
                 className="w-10 h-10 rounded-lg flex items-center justify-center"
-                style={{ backgroundColor: `${accentColors.coral}15` }}
+                style={{ backgroundColor: isShowingCompleted ? "#10b98115" : `${accentColors.coral}15` }}
               >
-                <Clock className="w-5 h-5" style={{ color: accentColors.coral }} />
+                {isShowingCompleted 
+                  ? <CheckCircle2 className="w-5 h-5" style={{ color: "#10b981" }} />
+                  : <Clock className="w-5 h-5" style={{ color: accentColors.coral }} />
+                }
               </div>
               <div>
-                <p className="text-2xl font-bold">8</p>
-                <p className="text-sm text-muted-foreground">Total Actions</p>
+                <p className="text-2xl font-bold">{actionsToShow.length}</p>
+                <p className="text-sm text-muted-foreground">{isShowingCompleted ? "Completed" : "Total Actions"}</p>
               </div>
             </div>
           </CardContent>
@@ -202,7 +364,7 @@ export default function UpcomingActionsPage() {
                 <Phone className="w-5 h-5" style={{ color: accentColors.sky }} />
               </div>
               <div>
-                <p className="text-2xl font-bold">3</p>
+                <p className="text-2xl font-bold">{actionsToShow.filter(a => a.type === "call").length}</p>
                 <p className="text-sm text-muted-foreground">Calls</p>
               </div>
             </div>
@@ -218,7 +380,7 @@ export default function UpcomingActionsPage() {
                 <Users className="w-5 h-5" style={{ color: accentColors.teal }} />
               </div>
               <div>
-                <p className="text-2xl font-bold">1</p>
+                <p className="text-2xl font-bold">{actionsToShow.filter(a => a.type === "meeting").length}</p>
                 <p className="text-sm text-muted-foreground">Meetings</p>
               </div>
             </div>
@@ -234,7 +396,7 @@ export default function UpcomingActionsPage() {
                 <Calendar className="w-5 h-5" style={{ color: "#ef4444" }} />
               </div>
               <div>
-                <p className="text-2xl font-bold">5</p>
+                <p className="text-2xl font-bold">{actionsToShow.filter(a => a.priority === "High").length}</p>
                 <p className="text-sm text-muted-foreground">High Priority</p>
               </div>
             </div>
