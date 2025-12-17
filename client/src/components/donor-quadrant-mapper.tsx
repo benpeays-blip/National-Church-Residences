@@ -163,7 +163,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 h-full min-h-0">
       {/* Main Quadrant Visualization */}
-      <Card className="lg:col-span-3 flex flex-col h-full overflow-hidden">
+      <Card className="lg:col-span-3 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 200px)', minHeight: '520px' }}>
         <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
           <div className="flex items-center justify-between">
             <div>
@@ -438,9 +438,9 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardContent>
       </Card>
       {/* Right Panel - Quadrant Details */}
-      <Card className="lg:col-span-2 overflow-hidden flex flex-col lg:h-full">
+      <Card className="lg:col-span-2 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 200px)', minHeight: '520px' }}>
         {/* Layered Tab Navigation */}
-        <div className="flex border-b bg-muted/30">
+        <div className="flex border-b bg-muted/30 shrink-0">
           {(['partner', 'friend', 'colleague', 'acquaintance'] as QuadrantType[]).map((q) => {
             const isSelected = selectedQuadrant === q;
             const count = data.donors.filter(d => d.quadrant === q).length;
@@ -474,11 +474,11 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </div>
         
         {/* Selected quadrant description */}
-        <div className="px-4 py-2 bg-muted/20 border-b text-sm text-muted-foreground">
+        <div className="px-4 py-2 bg-muted/20 border-b text-sm text-muted-foreground shrink-0">
           {quadrantConfig[selectedQuadrant].description}
         </div>
         
-        <CardContent className="p-4 pt-6 flex flex-col flex-1 min-h-0">
+        <CardContent className="p-4 pt-4 flex flex-col flex-1 min-h-0 overflow-hidden">
 
           {/* Donor List - Flexible height scrollable area */}
           <div className="flex-1 space-y-2 overflow-y-auto min-h-0">
@@ -538,7 +538,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardContent>
         
         {/* AI Playbook - Fixed at bottom aligned with quadrant footer */}
-        <div className="bg-muted/30 border-t px-4 py-4 mt-auto">
+        <div className="bg-muted/30 border-t px-4 py-4 shrink-0">
           <div className="flex items-center gap-2 text-sm font-semibold mb-3">
             <Lightbulb className="w-4 h-4 text-primary" />
             <span>AI Playbook to Move towards Partner:</span>
