@@ -333,16 +333,18 @@ export default function QuadrantTop10() {
 
   const visibleOpportunities = filteredOpportunities.slice(0, visibleCount);
 
-  const getImpactVariant = (impact: string): "destructive" | "secondary" | "outline" | "default" => {
+  const getImpactStyle = (impact: string): { backgroundColor: string; color: string; borderColor: string } => {
     switch (impact) {
       case "High":
-        return "destructive";
+        return { backgroundColor: "#22c55e15", color: "#16a34a", borderColor: "#22c55e40" };
       case "Med-High":
-        return "secondary";
+        return { backgroundColor: "#84cc1615", color: "#65a30d", borderColor: "#84cc1640" };
       case "Medium":
-        return "outline";
+        return { backgroundColor: "#eab30815", color: "#ca8a04", borderColor: "#eab30840" };
+      case "Low":
+        return { backgroundColor: "#ef444415", color: "#dc2626", borderColor: "#ef444440" };
       default:
-        return "outline";
+        return { backgroundColor: "#71717a15", color: "#71717a", borderColor: "#71717a40" };
     }
   };
 
@@ -416,7 +418,10 @@ export default function QuadrantTop10() {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Badge variant={getImpactVariant(opp.estimatedImpact)}>
+                      <Badge 
+                        variant="outline"
+                        style={getImpactStyle(opp.estimatedImpact)}
+                      >
                         {opp.estimatedImpact}
                       </Badge>
                     </TableCell>
