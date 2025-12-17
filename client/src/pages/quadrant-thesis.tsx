@@ -61,7 +61,7 @@ export default function QuadrantThesis() {
     <div className="space-y-6">
       {/* Header Card */}
       <Card>
-        <CardHeader className="bg-[#7BC4DC] text-white rounded-t-lg">
+        <CardHeader className="bg-[#395174] text-white rounded-t-lg">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
               <Lightbulb className="w-5 h-5" />
