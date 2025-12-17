@@ -161,7 +161,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
     .sort((a, b) => (b.energy + b.structure) - (a.energy + a.structure));
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:h-[calc(100vh-180px)]">
       {/* Main Quadrant Visualization */}
       <Card className="lg:col-span-3">
         <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
@@ -419,7 +419,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardFooter>
       </Card>
       {/* Right Panel - Quadrant Details */}
-      <Card className="lg:col-span-2 overflow-hidden flex flex-col">
+      <Card className="lg:col-span-2 overflow-hidden flex flex-col lg:h-full">
         {/* Layered Tab Navigation */}
         <div className="flex border-b bg-muted/30">
           {(['partner', 'friend', 'colleague', 'acquaintance'] as QuadrantType[]).map((q) => {
