@@ -355,6 +355,11 @@ function App() {
   const [activeDropdown, setActiveDropdown] = useState<DomainKey | null>(null);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [selectedTopTab, setSelectedTopTab] = useState<TopTab>('Philanthropy');
+  
+  // Get the current tab from URL query params for Agentic Plan navigation
+  const currentTabParam = typeof window !== 'undefined' 
+    ? new URLSearchParams(window.location.search).get('tab') || 'overview'
+    : 'overview';
 
   // Helper to check if a nav item is active based on current path
   const isNavActive = (navItem: string): boolean => {
@@ -483,20 +488,23 @@ function App() {
                   <nav className="flex items-center gap-0.5">
                     {selectedTopTab === 'Agentic Plan' ? (
                       <>
-                        {agenticPlanNavItems.map((item) => (
-                          <Link key={item.tab} href={`/agent-value-map?tab=${item.tab}`}>
-                            <div className={`relative ${location.includes(`tab=${item.tab}`) || (location === '/agent-value-map' && item.tab === 'overview') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                                data-testid={`button-nav-agentic-${item.tab}`}
-                              >
-                                {item.name}
-                              </Button>
-                            </div>
-                          </Link>
-                        ))}
+                        {agenticPlanNavItems.map((item) => {
+                          const isActive = location.startsWith('/agent-value-map') && currentTabParam === item.tab;
+                          return (
+                            <Link key={item.tab} href={`/agent-value-map?tab=${item.tab}`}>
+                              <div className={`relative ${isActive ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                                  data-testid={`button-nav-agentic-${item.tab}`}
+                                >
+                                  {item.name}
+                                </Button>
+                              </div>
+                            </Link>
+                          );
+                        })}
                       </>
                     ) : selectedTopTab === 'Fundraising' ? (
                       <>
