@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { Separator } from "@/components/ui/separator";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Accordion,
   AccordionContent,
@@ -439,243 +438,194 @@ export default function DonorDetail() {
           </Card>
         </div>
 
-        {/* Right Column - Tabs */}
-        <div className="lg:col-span-2">
-          <Tabs defaultValue="overview" className="space-y-6">
-            <TabsList>
-              <TabsTrigger value="overview">Overview</TabsTrigger>
-              <TabsTrigger value="gifts">Gifts</TabsTrigger>
-              <TabsTrigger value="opportunities">Opportunities</TabsTrigger>
-              <TabsTrigger value="activities">Activities</TabsTrigger>
-            </TabsList>
-
-            {/* Overview Tab */}
-            <TabsContent value="overview" className="space-y-6">
-              {/* Next Best Actions */}
-              {donor.nextBestActions.length > 0 && (
-                <Card>
-                  <CardHeader className="bg-[#395174] text-white rounded-t-xl">
-                    <CardTitle className="flex items-center gap-2 text-white">
-                      <Target className="w-5 h-5" />
-                      Next Best Actions
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <div className="space-y-3">
-                      {donor.nextBestActions.slice(0, 3).map((action) => (
-                        <div key={action.id} className="p-4 border rounded-lg space-y-2">
-                          <div className="flex items-start justify-between gap-2">
-                            <Badge
-                              variant={
-                                action.priority === "High"
-                                  ? "default"
-                                  : action.priority === "Medium"
-                                  ? "secondary"
-                                  : "outline"
-                              }
-                            >
-                              {action.priority} Priority
-                            </Badge>
-                            <span className="text-xs text-muted-foreground">
-                              {format(new Date(action.createdAt), "MMM d")}
-                            </span>
-                          </div>
-                          <p className="font-medium text-sm">{action.suggestedAction}</p>
-                          <p className="text-sm text-muted-foreground">{action.reason}</p>
-                        </div>
-                      ))}
+        {/* Right Column - All Sections */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Next Best Actions */}
+          {donor.nextBestActions.length > 0 && (
+            <Card>
+              <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <Target className="w-5 h-5" />
+                  Next Best Actions
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="p-6">
+                <div className="space-y-3">
+                  {donor.nextBestActions.slice(0, 3).map((action) => (
+                    <div key={action.id} className="p-4 border rounded-lg space-y-2">
+                      <div className="flex items-start justify-between gap-2">
+                        <Badge
+                          variant={
+                            action.priority === "High"
+                              ? "default"
+                              : action.priority === "Medium"
+                              ? "secondary"
+                              : "outline"
+                          }
+                        >
+                          {action.priority} Priority
+                        </Badge>
+                        <span className="text-xs text-muted-foreground">
+                          {format(new Date(action.createdAt), "MMM d")}
+                        </span>
+                      </div>
+                      <p className="font-medium text-sm">{action.suggestedAction}</p>
+                      <p className="text-sm text-muted-foreground">{action.reason}</p>
                     </div>
-                  </CardContent>
-                </Card>
-              )}
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
 
-              {/* Active Opportunities */}
-              {donor.opportunities.length > 0 && (
-                <Card>
-                  <CardHeader className="bg-[#395174] text-white rounded-t-xl">
-                    <CardTitle className="text-white">Active Opportunities</CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-6">
-                    <div className="space-y-3">
-                      {donor.opportunities.map((opp) => (
-                        <div key={opp.id} className="p-4 border rounded-lg">
-                          <div className="flex items-start justify-between gap-2 mb-2">
-                            <Badge variant="secondary">{opp.stage}</Badge>
-                            <span className="text-sm font-semibold">
-                              {formatCurrency(parseFloat(opp.askAmount || "0"))}
+          {/* Gift History */}
+          <Card>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+              <CardTitle className="text-white">Gift History</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              {donor.gifts.length > 0 ? (
+                <Table data-testid="table-gifts">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Date</TableHead>
+                      <TableHead>Amount</TableHead>
+                      <TableHead>Campaign</TableHead>
+                      <TableHead>Source</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {donor.gifts
+                      .sort((a, b) => new Date(b.receivedAt).getTime() - new Date(a.receivedAt).getTime())
+                      .map((gift) => (
+                        <TableRow key={gift.id}>
+                          <TableCell>{format(new Date(gift.receivedAt), "MMM d, yyyy")}</TableCell>
+                          <TableCell className="font-semibold">
+                            {formatCurrency(parseFloat(gift.amount))}
+                          </TableCell>
+                          <TableCell>
+                            {gift.campaign ? (
+                              <Link href={`/campaigns/${gift.campaignId}`} className="hover:underline">
+                                {gift.campaign.name}
+                              </Link>
+                            ) : (
+                              <span className="text-muted-foreground">No campaign</span>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {gift.sourceSystem ? (
+                              <DataProvenanceBadge
+                                sourceSystem={gift.sourceSystem}
+                                variant="compact"
+                              />
+                            ) : (
+                              <span className="text-muted-foreground">-</span>
+                            )}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                  </TableBody>
+                </Table>
+              ) : (
+                <div className="text-center py-8">
+                  <p className="text-muted-foreground">No gifts recorded</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Opportunities */}
+          <Card>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+              <CardTitle className="text-white">Opportunities</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              {donor.opportunities.length > 0 ? (
+                <Table data-testid="table-opportunities">
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Stage</TableHead>
+                      <TableHead>Ask Amount</TableHead>
+                      <TableHead>Probability</TableHead>
+                      <TableHead>Close Date</TableHead>
+                      <TableHead>Owner</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {donor.opportunities.map((opp) => (
+                      <TableRow key={opp.id}>
+                        <TableCell>
+                          <Badge variant="secondary">{opp.stage}</Badge>
+                        </TableCell>
+                        <TableCell className="font-semibold">
+                          {formatCurrency(parseFloat(opp.askAmount || "0"))}
+                        </TableCell>
+                        <TableCell>{opp.probability}%</TableCell>
+                        <TableCell>
+                          {opp.closeDate
+                            ? format(new Date(opp.closeDate), "MMM d, yyyy")
+                            : "Not set"}
+                        </TableCell>
+                        <TableCell>
+                          {opp.owner
+                            ? `${opp.owner.firstName} ${opp.owner.lastName}`
+                            : "Unassigned"}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              ) : (
+                <div className="text-center py-8">
+                  <AlertCircle className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
+                  <p className="text-muted-foreground">No active opportunities</p>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Recent Activities */}
+          <Card>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+              <CardTitle className="text-white">Recent Activities</CardTitle>
+            </CardHeader>
+            <CardContent className="p-6">
+              {donor.interactions.length > 0 ? (
+                <div className="space-y-4">
+                  {donor.interactions
+                    .sort((a, b) => new Date(b.occurredAt).getTime() - new Date(a.occurredAt).getTime())
+                    .map((interaction) => (
+                      <div key={interaction.id} className="flex gap-4 pb-4 border-b last:border-0">
+                        <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center shrink-0">
+                          <Clock className="w-5 h-5 text-muted-foreground" />
+                        </div>
+                        <div className="flex-1">
+                          <div className="flex items-start justify-between gap-2 mb-1">
+                            <p className="font-medium text-sm">{interaction.type}</p>
+                            <span className="text-xs text-muted-foreground">
+                              {format(new Date(interaction.occurredAt), "MMM d, yyyy")}
                             </span>
                           </div>
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                            <span>Probability: {opp.probability}%</span>
-                            {opp.closeDate && (
-                              <span>Close: {format(new Date(opp.closeDate), "MMM d, yyyy")}</span>
-                            )}
-                            {opp.owner && (
-                              <span>
-                                Major Gifts Officer: {opp.owner.firstName} {opp.owner.lastName}
-                              </span>
-                            )}
-                          </div>
-                          {opp.notes && (
-                            <p className="text-sm text-muted-foreground mt-2">{opp.notes}</p>
+                          {interaction.notes && (
+                            <p className="text-sm text-muted-foreground">{interaction.notes}</p>
+                          )}
+                          {interaction.user && (
+                            <p className="text-xs text-muted-foreground mt-1">
+                              by {interaction.user.firstName} {interaction.user.lastName}
+                            </p>
                           )}
                         </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+                      </div>
+                    ))}
+                </div>
+              ) : (
+                <div className="text-center py-8">
+                  <Clock className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
+                  <p className="text-muted-foreground">No recent activities</p>
+                </div>
               )}
-            </TabsContent>
-
-            {/* Gifts Tab */}
-            <TabsContent value="gifts">
-              <Card>
-                <CardHeader className="bg-[#395174] text-white rounded-t-xl">
-                  <CardTitle className="text-white">Gift History</CardTitle>
-                </CardHeader>
-                <CardContent className="p-6">
-                  <Table data-testid="table-gifts">
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead>Date</TableHead>
-                        <TableHead>Amount</TableHead>
-                        <TableHead>Campaign</TableHead>
-                        <TableHead>Source</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {donor.gifts
-                        .sort((a, b) => new Date(b.receivedAt).getTime() - new Date(a.receivedAt).getTime())
-                        .map((gift) => (
-                          <TableRow key={gift.id}>
-                            <TableCell>{format(new Date(gift.receivedAt), "MMM d, yyyy")}</TableCell>
-                            <TableCell className="font-semibold">
-                              {formatCurrency(parseFloat(gift.amount))}
-                            </TableCell>
-                            <TableCell>
-                              {gift.campaign ? (
-                                <Link href={`/campaigns/${gift.campaignId}`} className="hover:underline">
-                                  {gift.campaign.name}
-                                </Link>
-                              ) : (
-                                <span className="text-muted-foreground">No campaign</span>
-                              )}
-                            </TableCell>
-                            <TableCell>
-                              {gift.sourceSystem ? (
-                                <DataProvenanceBadge
-                                  sourceSystem={gift.sourceSystem}
-                                  variant="compact"
-                                />
-                              ) : (
-                                <span className="text-muted-foreground">-</span>
-                              )}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                    </TableBody>
-                  </Table>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Opportunities Tab */}
-            <TabsContent value="opportunities">
-              <Card>
-                <CardHeader className="bg-[#395174] text-white rounded-t-xl">
-                  <CardTitle className="text-white">All Opportunities</CardTitle>
-                </CardHeader>
-                <CardContent className="p-6">
-                  {donor.opportunities.length > 0 ? (
-                    <Table data-testid="table-opportunities">
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>Stage</TableHead>
-                          <TableHead>Ask Amount</TableHead>
-                          <TableHead>Probability</TableHead>
-                          <TableHead>Close Date</TableHead>
-                          <TableHead>Owner</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {donor.opportunities.map((opp) => (
-                          <TableRow key={opp.id}>
-                            <TableCell>
-                              <Badge variant="secondary">{opp.stage}</Badge>
-                            </TableCell>
-                            <TableCell className="font-semibold">
-                              {formatCurrency(parseFloat(opp.askAmount || "0"))}
-                            </TableCell>
-                            <TableCell>{opp.probability}%</TableCell>
-                            <TableCell>
-                              {opp.closeDate
-                                ? format(new Date(opp.closeDate), "MMM d, yyyy")
-                                : "Not set"}
-                            </TableCell>
-                            <TableCell>
-                              {opp.owner
-                                ? `${opp.owner.firstName} ${opp.owner.lastName}`
-                                : "Unassigned"}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  ) : (
-                    <div className="text-center py-12">
-                      <AlertCircle className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-                      <p className="text-muted-foreground">No active opportunities</p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Activities Tab */}
-            <TabsContent value="activities">
-              <Card>
-                <CardHeader className="bg-[#395174] text-white rounded-t-xl">
-                  <CardTitle className="text-white">Recent Activities</CardTitle>
-                </CardHeader>
-                <CardContent className="p-6">
-                  {donor.interactions.length > 0 ? (
-                    <div className="space-y-4">
-                      {donor.interactions
-                        .sort((a, b) => new Date(b.occurredAt).getTime() - new Date(a.occurredAt).getTime())
-                        .map((interaction) => (
-                          <div key={interaction.id} className="flex gap-4 pb-4 border-b last:border-0">
-                            <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center shrink-0">
-                              <Clock className="w-5 h-5 text-muted-foreground" />
-                            </div>
-                            <div className="flex-1">
-                              <div className="flex items-start justify-between gap-2 mb-1">
-                                <p className="font-medium text-sm">{interaction.type}</p>
-                                <span className="text-xs text-muted-foreground">
-                                  {format(new Date(interaction.occurredAt), "MMM d, yyyy")}
-                                </span>
-                              </div>
-                              {interaction.notes && (
-                                <p className="text-sm text-muted-foreground">{interaction.notes}</p>
-                              )}
-                              {interaction.user && (
-                                <p className="text-xs text-muted-foreground mt-1">
-                                  by {interaction.user.firstName} {interaction.user.lastName}
-                                </p>
-                              )}
-                            </div>
-                          </div>
-                        ))}
-                    </div>
-                  ) : (
-                    <div className="text-center py-12">
-                      <Clock className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-                      <p className="text-muted-foreground">No recent activities</p>
-                    </div>
-                  )}
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </div>
