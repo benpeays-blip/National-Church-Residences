@@ -10,7 +10,7 @@ export default function DonorQuadrant() {
       </div>
       
       {/* Framework Summary Section */}
-      <div className="p-6 pt-0">
+      <div className="p-6 pt-6">
         <Card>
           <CardHeader className="bg-[#7BC4DC] text-white rounded-t-lg">
             <div className="flex items-center gap-3">
