@@ -308,15 +308,17 @@ export default function RelSciMapping() {
                     <CardContent className="p-4">
                       <div className="flex items-start justify-between">
                         <div className="flex items-start gap-4">
-                          <div className="flex flex-col items-center">
-                            <div 
-                              className="h-10 w-10 rounded-full flex items-center justify-center text-white font-semibold"
-                              style={{ backgroundColor: path.degrees === 1 ? "#2ca02c" : path.degrees === 2 ? "#084594" : "#6b7280" }}
-                            >
-                              {path.degrees}°
-                            </div>
-                            <span className="text-xs text-muted-foreground mt-1">degrees</span>
-                          </div>
+                          <Badge 
+                            variant="outline"
+                            className="shrink-0 px-2 py-1"
+                            style={{ 
+                              backgroundColor: path.degrees === 1 ? "#dcfce7" : path.degrees === 2 ? "#dbeafe" : "#f3f4f6",
+                              borderColor: path.degrees === 1 ? "#2ca02c" : path.degrees === 2 ? "#084594" : "#6b7280",
+                              color: path.degrees === 1 ? "#166534" : path.degrees === 2 ? "#1e40af" : "#374151"
+                            }}
+                          >
+                            {path.degrees === 1 ? "Direct" : path.degrees === 2 ? "2nd connection" : "3rd connection"}
+                          </Badge>
                           <div>
                             <h4 className="font-semibold">{path.targetName}</h4>
                             <p className="text-sm text-muted-foreground">{path.targetTitle}</p>
