@@ -756,8 +756,8 @@ export default function PreviewHomepage() {
               </div>
             </div>
             
-            <div className="p-6">
-              <div className="grid grid-cols-2 gap-3">
+            <div className="p-4">
+              <div className="grid grid-cols-2 gap-2">
                 {[
                   { label: "Donors", icon: Users, accent: accentColors.sky },
                   { label: "Pipeline", icon: TrendingUp, accent: accentColors.teal },
@@ -775,19 +775,19 @@ export default function PreviewHomepage() {
                   return (
                     <Link key={idx} href={href}>
                       <div 
-                        className="group flex items-center gap-3 p-4 rounded-xl border hover-elevate transition-all cursor-pointer"
+                        className="group flex items-center gap-2 p-3 rounded-lg border hover-elevate transition-all cursor-pointer"
                         style={{ borderColor: `${item.accent}30`, backgroundColor: `${item.accent}05` }}
                         data-testid={`quick-nav-${item.label.toLowerCase()}`}
                       >
                         <div 
-                          className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                          className="w-8 h-8 rounded-md flex items-center justify-center shrink-0"
                           style={{ backgroundColor: `${item.accent}15` }}
                         >
-                          <Icon className="w-5 h-5" style={{ color: item.accent }} />
+                          <Icon className="w-4 h-4" style={{ color: item.accent }} />
                         </div>
-                        <span className="font-medium flex-1">{item.label}</span>
+                        <span className="font-medium text-sm flex-1">{item.label}</span>
                         <ArrowUpRight 
-                          className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" 
+                          className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity" 
                           style={{ color: item.accent }}
                         />
                       </div>
