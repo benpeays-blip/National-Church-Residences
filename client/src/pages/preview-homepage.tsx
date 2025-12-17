@@ -765,8 +765,8 @@ export default function PreviewHomepage() {
               </div>
             </div>
             
-            <div className="p-3 flex-1 flex flex-col justify-center">
-              <div className="grid grid-cols-2 gap-1.5">
+            <div className="p-4 flex-1 flex flex-col">
+              <div className="grid grid-cols-2 gap-2 flex-1">
                 {[
                   { label: "Donors", icon: Users, accent: accentColors.sky },
                   { label: "Pipeline", icon: TrendingUp, accent: accentColors.teal },
@@ -782,19 +782,19 @@ export default function PreviewHomepage() {
                                item.label === "Relationships" ? "/relationships" :
                                item.label === "AI Tools" ? "/ai-tools" : "/reporting/impact-intelligence";
                   return (
-                    <Link key={idx} href={href}>
+                    <Link key={idx} href={href} className="flex">
                       <div 
-                        className="group flex items-center gap-2 px-2.5 py-2 rounded-lg border hover-elevate transition-all cursor-pointer"
+                        className="group flex items-center gap-3 px-4 py-3 rounded-lg border hover-elevate transition-all cursor-pointer flex-1"
                         style={{ borderColor: `${item.accent}30`, backgroundColor: `${item.accent}05` }}
                         data-testid={`quick-nav-${item.label.toLowerCase()}`}
                       >
                         <div 
-                          className="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
+                          className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
                           style={{ backgroundColor: `${item.accent}15` }}
                         >
-                          <Icon className="w-3.5 h-3.5" style={{ color: item.accent }} />
+                          <Icon className="w-5 h-5" style={{ color: item.accent }} />
                         </div>
-                        <span className="font-medium text-xs">{item.label}</span>
+                        <span className="font-semibold text-sm">{item.label}</span>
                       </div>
                     </Link>
                   );
