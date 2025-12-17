@@ -4,14 +4,11 @@ import { FileText, ArrowRight, Zap, Grid3x3 } from 'lucide-react';
 
 export default function DonorQuadrant() {
   return (
-    <div className="h-full flex flex-col overflow-auto">
-      <div className="min-h-0 p-6">
-        <DonorQuadrantMapper />
-      </div>
+    <div className="overflow-auto p-6 space-y-6">
+      <DonorQuadrantMapper />
       
       {/* Framework Summary Section */}
-      <div className="p-6 pt-6">
-        <Card>
+      <Card>
           <CardHeader className="bg-[#7BC4DC] text-white rounded-t-lg">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
@@ -109,7 +106,6 @@ export default function DonorQuadrant() {
             </div>
           </CardContent>
         </Card>
-      </div>
     </div>
   );
 }
