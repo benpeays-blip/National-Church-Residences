@@ -131,21 +131,21 @@ export default function TechStackMapper() {
           <TabsTrigger 
             value="architecture" 
             data-testid="tab-architecture"
-            className="data-[state=active]:bg-[#7FA3A1] data-[state=active]:text-white"
+            className="border-b-2 border-[#7FA3A1] text-[#7FA3A1] data-[state=active]:bg-[#7FA3A1] data-[state=active]:text-white data-[state=active]:border-[#7FA3A1]"
           >
             Tech Ecosystem
           </TabsTrigger>
           <TabsTrigger 
             value="layers" 
             data-testid="tab-layers"
-            className="data-[state=active]:bg-[#7BC4DC] data-[state=active]:text-white"
+            className="border-b-2 border-[#7BC4DC] text-[#7BC4DC] data-[state=active]:bg-[#7BC4DC] data-[state=active]:text-white data-[state=active]:border-[#7BC4DC]"
           >
             Stack Architecture
           </TabsTrigger>
           <TabsTrigger 
             value="categories" 
             data-testid="tab-categories"
-            className="data-[state=active]:bg-[#B5C942] data-[state=active]:text-white"
+            className="border-b-2 border-[#B5C942] text-[#B5C942] data-[state=active]:bg-[#B5C942] data-[state=active]:text-white data-[state=active]:border-[#B5C942]"
           >
             Platform Details
           </TabsTrigger>
