@@ -427,41 +427,41 @@ export default function PreviewHomepage() {
               </div>
             </div>
             
-            <div className="px-4 py-3 space-y-1.5">
-              {atRiskDonors.map((donor, idx) => {
-                const riskColor = donor.risk === "High" ? "#ef4444" : accentColors.orange;
-                return (
-                  <Link key={idx} href={`/donors/${donor.donorId}`}>
-                    <div 
-                      className="group flex items-center gap-3 px-2.5 py-2 rounded-lg border hover-elevate transition-all cursor-pointer"
-                      style={{ borderColor: `${riskColor}25`, backgroundColor: `${riskColor}05` }}
-                      data-testid={`at-risk-donor-${idx}`}
-                    >
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2">
-                          <span className="font-medium text-sm truncate">{donor.name}</span>
-                          <span 
-                            className="text-[10px] font-bold px-1.5 py-0.5 rounded-full shrink-0"
-                            style={{ backgroundColor: `${riskColor}15`, color: riskColor }}
-                          >
-                            {donor.risk}
-                          </span>
+            <div className="p-4 flex flex-col h-[calc(100%-88px)]">
+              <div className="flex-1 flex flex-col justify-between gap-2">
+                {atRiskDonors.map((donor, idx) => {
+                  const riskColor = donor.risk === "High" ? "#ef4444" : accentColors.orange;
+                  return (
+                    <Link key={idx} href={`/donors/${donor.donorId}`}>
+                      <div 
+                        className="group flex items-center gap-4 p-3 rounded-xl border hover-elevate transition-all cursor-pointer"
+                        style={{ borderColor: `${riskColor}25`, backgroundColor: `${riskColor}05` }}
+                        data-testid={`at-risk-donor-${idx}`}
+                      >
+                        <div className="flex-1 min-w-0">
+                          <p className="font-semibold truncate">{donor.name}</p>
+                          <div className="flex items-center gap-2 text-sm text-muted-foreground mt-0.5">
+                            <span>{donor.lastGift}</span>
+                            <span>•</span>
+                            <span className="font-bold" style={{ color: accentColors.coral }}>{donor.amount}</span>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-                          <span>{donor.lastGift}</span>
-                          <span>•</span>
-                          <span className="font-semibold" style={{ color: accentColors.coral }}>{donor.amount}</span>
-                        </div>
+                        <Badge 
+                          variant="outline"
+                          className="shrink-0 text-xs font-bold"
+                          style={{ borderColor: riskColor, color: riskColor, backgroundColor: `${riskColor}10` }}
+                        >
+                          {donor.risk}
+                        </Badge>
                       </div>
-                      <ChevronRight className="w-3.5 h-3.5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
-                    </div>
-                  </Link>
-                );
-              })}
+                    </Link>
+                  );
+                })}
+              </div>
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="w-full gap-2 mt-2"
+                className="w-full gap-2 mt-3"
                 style={{ borderColor: `${accentColors.coral}40`, color: accentColors.coral }}
               >
                 View All At-Risk
