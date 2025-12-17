@@ -1,11 +1,8 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
-import { AccentCard } from '@/components/ui/accent-card';
 import { 
-  ArrowRight, 
   Award, 
-  CheckCircle2, 
   Lightbulb,
   Heart,
   Users,
@@ -338,175 +335,92 @@ function StrategyStepCard({ step }: { step: StrategyStep }) {
   );
 }
 
-function JourneyHeader({ config, isPartner }: { config: JourneyConfig; isPartner: boolean }) {
-  return (
-    <div className="mb-8">
-      <div className="flex items-center gap-4 mb-4 flex-wrap">
-        <div 
-          className="px-5 py-2.5 rounded-xl text-white font-bold text-lg shadow-md"
-          style={{ backgroundColor: config.fromColor }}
-        >
-          {config.from}
-        </div>
-        {!isPartner && (
-          <>
-            <div className="flex items-center gap-1">
-              <div className="w-8 h-0.5 bg-gradient-to-r" style={{ background: `linear-gradient(to right, ${config.fromColor}, ${config.toColor})` }} />
-              <ArrowRight className="w-6 h-6" style={{ color: config.toColor }} />
-              <div className="w-8 h-0.5 bg-gradient-to-r" style={{ background: `linear-gradient(to right, ${config.toColor}, ${config.toColor})` }} />
-            </div>
-            <div 
-              className="px-5 py-2.5 rounded-xl text-white font-bold text-lg shadow-md"
-              style={{ backgroundColor: config.toColor }}
-            >
-              {config.to}
-            </div>
-          </>
-        )}
-        {isPartner && (
-          <Badge variant="outline" className="text-base px-3 py-1 border-2" style={{ borderColor: config.toColor, color: config.toColor }}>
-            <Star className="w-4 h-4 mr-1" />
-            Maintain & Nurture
-          </Badge>
-        )}
-      </div>
-      
-      <Card className="bg-gradient-to-r from-muted/30 to-muted/10 border-none">
-        <CardContent className="p-4">
-          <div className="flex items-start gap-3">
-            <Target className="w-5 h-5 mt-0.5 flex-shrink-0" style={{ color: config.fromColor }} />
-            <div>
-              <p className="text-sm font-medium text-muted-foreground uppercase tracking-wide mb-1">Primary Goal</p>
-              <p className="font-medium">{config.goal}</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
-  );
-}
-
 function StrategyContent({ configKey }: { configKey: string }) {
   const config = journeyConfigs[configKey];
-  const isPartner = configKey === 'partner';
   
   return (
-    <div className="space-y-6">
-      <JourneyHeader config={config} isPartner={isPartner} />
-      
-      <div>
-        <div className="flex items-center gap-2 mb-5">
-          <Sparkles className="w-5 h-5" style={{ color: config.fromColor }} />
-          <h3 className="text-lg font-semibold">Strategy Steps</h3>
-          <Badge variant="secondary" className="ml-2">{config.steps.length} steps</Badge>
+    <div className="space-y-4">
+      {/* Compact inline header */}
+      <div className="flex items-center justify-between flex-wrap gap-2 pb-3 border-b">
+        <div className="flex items-center gap-2">
+          <Target className="w-4 h-4 text-muted-foreground" />
+          <span className="text-sm font-medium text-muted-foreground">Goal:</span>
+          <span className="text-sm">{config.goal}</span>
         </div>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-4">
-          {config.steps.map((step) => (
-            <StrategyStepCard key={step.number} step={step} />
-          ))}
-        </div>
+        <Badge variant="secondary">{config.steps.length} steps</Badge>
       </div>
       
-      <Card className="border-2 bg-gradient-to-br from-muted/20 to-transparent" style={{ borderColor: config.toColor }}>
-        <CardContent className="p-5">
-          <div className="flex items-start gap-3">
-            <div className="p-2 rounded-lg" style={{ backgroundColor: `${config.toColor}20` }}>
-              <CheckCircle2 className="w-6 h-6" style={{ color: config.toColor }} />
-            </div>
-            <div>
-              <h4 className="font-semibold text-lg mb-1 flex items-center gap-2">
-                {isPartner ? 'Key Principle' : 'Expected Outcome'}
-              </h4>
-              <p className="text-muted-foreground">
-                {isPartner 
-                  ? "Partners are not a destination but a relationship to be nurtured. Like a garden, partnership requires constant attention, care, and cultivation. The goal is not to maintain status quo, but to deepen engagement and co-create transformational impact together."
-                  : config.outcome
-                }
-              </p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-3">
+        {config.steps.map((step) => (
+          <StrategyStepCard key={step.number} step={step} />
+        ))}
+      </div>
     </div>
   );
 }
 
 export default function QuadrantStrategies() {
   return (
-    <div className="container mx-auto p-6 space-y-6">
-      <Card className="border-0 shadow-none">
-        <CardHeader className="p-6 pb-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-primary/10">
-              <TrendingUp className="w-6 h-6 text-primary" />
-            </div>
-            <div>
-              <CardTitle className="text-2xl">Movement Strategies</CardTitle>
-              <CardDescription className="mt-1 text-base">
-                How Each Quadrant Advances to Partner
-              </CardDescription>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="pt-2">
-          <Tabs defaultValue="acquaintance" className="w-full">
-            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2 bg-transparent p-0 mb-8 h-auto">
-              <TabsTrigger 
-                value="acquaintance" 
-                data-testid="tab-strategy-acquaintance"
-                className="group relative flex flex-col items-center gap-1 py-3 px-4 bg-[#A5A033]/10 border-2 border-[#A5A033]/30 text-[#A5A033] data-[state=active]:bg-[#A5A033] data-[state=active]:text-white data-[state=active]:border-[#A5A033] rounded-xl transition-all duration-200 hover:border-[#A5A033]/60"
-              >
-                <span className="font-semibold text-sm">Acquaintance</span>
-                <ArrowRight className="w-4 h-4 hidden md:block" />
-                <span className="font-semibold text-sm hidden md:block">Partner</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="friend" 
-                data-testid="tab-strategy-friend"
-                className="group relative flex flex-col items-center gap-1 py-3 px-4 bg-[#D5636C]/10 border-2 border-[#D5636C]/30 text-[#D5636C] data-[state=active]:bg-[#D5636C] data-[state=active]:text-white data-[state=active]:border-[#D5636C] rounded-xl transition-all duration-200 hover:border-[#D5636C]/60"
-              >
-                <span className="font-semibold text-sm">Friend</span>
-                <ArrowRight className="w-4 h-4 hidden md:block" />
-                <span className="font-semibold text-sm hidden md:block">Partner</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="colleague" 
-                data-testid="tab-strategy-colleague"
-                className="group relative flex flex-col items-center gap-1 py-3 px-4 bg-[#7BC4DC]/10 border-2 border-[#7BC4DC]/30 text-[#7BC4DC] data-[state=active]:bg-[#7BC4DC] data-[state=active]:text-white data-[state=active]:border-[#7BC4DC] rounded-xl transition-all duration-200 hover:border-[#7BC4DC]/60"
-              >
-                <span className="font-semibold text-sm">Colleague</span>
-                <ArrowRight className="w-4 h-4 hidden md:block" />
-                <span className="font-semibold text-sm hidden md:block">Partner</span>
-              </TabsTrigger>
-              <TabsTrigger 
-                value="partner" 
-                data-testid="tab-strategy-partner"
-                className="group relative flex flex-col items-center gap-1 py-3 px-4 bg-[#7FA3A1]/10 border-2 border-[#7FA3A1]/30 text-[#7FA3A1] data-[state=active]:bg-[#7FA3A1] data-[state=active]:text-white data-[state=active]:border-[#7FA3A1] rounded-xl transition-all duration-200 hover:border-[#7FA3A1]/60"
-              >
-                <Star className="w-4 h-4" />
-                <span className="font-semibold text-sm">Maintain Partner</span>
-              </TabsTrigger>
-            </TabsList>
+    <div className="space-y-4">
+      {/* Compact header */}
+      <div className="flex items-center gap-3">
+        <div className="w-10 h-10 rounded-lg bg-[#7BC4DC]/10 flex items-center justify-center">
+          <TrendingUp className="w-5 h-5 text-[#7BC4DC]" />
+        </div>
+        <div>
+          <h1 className="text-xl font-semibold">Movement Strategies</h1>
+          <p className="text-sm text-muted-foreground">How Each Quadrant Advances to Partner</p>
+        </div>
+      </div>
 
-            <TabsContent value="acquaintance" className="mt-0">
-              <StrategyContent configKey="acquaintance" />
-            </TabsContent>
+      <Tabs defaultValue="acquaintance" className="w-full">
+        <TabsList className="w-full justify-start bg-transparent p-0 h-auto gap-2 mb-4">
+          <TabsTrigger 
+            value="acquaintance" 
+            data-testid="tab-strategy-acquaintance"
+            className="px-3 py-1.5 text-sm rounded-md data-[state=active]:bg-[#A5A033] data-[state=active]:text-white"
+          >
+            Acquaintance → Partner
+          </TabsTrigger>
+          <TabsTrigger 
+            value="friend" 
+            data-testid="tab-strategy-friend"
+            className="px-3 py-1.5 text-sm rounded-md data-[state=active]:bg-[#D5636C] data-[state=active]:text-white"
+          >
+            Friend → Partner
+          </TabsTrigger>
+          <TabsTrigger 
+            value="colleague" 
+            data-testid="tab-strategy-colleague"
+            className="px-3 py-1.5 text-sm rounded-md data-[state=active]:bg-[#7BC4DC] data-[state=active]:text-white"
+          >
+            Colleague → Partner
+          </TabsTrigger>
+          <TabsTrigger 
+            value="partner" 
+            data-testid="tab-strategy-partner"
+            className="px-3 py-1.5 text-sm rounded-md data-[state=active]:bg-[#7FA3A1] data-[state=active]:text-white"
+          >
+            Maintain Partner
+          </TabsTrigger>
+        </TabsList>
 
-            <TabsContent value="friend" className="mt-0">
-              <StrategyContent configKey="friend" />
-            </TabsContent>
+        <TabsContent value="acquaintance" className="mt-0">
+          <StrategyContent configKey="acquaintance" />
+        </TabsContent>
 
-            <TabsContent value="colleague" className="mt-0">
-              <StrategyContent configKey="colleague" />
-            </TabsContent>
+        <TabsContent value="friend" className="mt-0">
+          <StrategyContent configKey="friend" />
+        </TabsContent>
 
-            <TabsContent value="partner" className="mt-0">
-              <StrategyContent configKey="partner" />
-            </TabsContent>
-          </Tabs>
-        </CardContent>
-      </Card>
+        <TabsContent value="colleague" className="mt-0">
+          <StrategyContent configKey="colleague" />
+        </TabsContent>
+
+        <TabsContent value="partner" className="mt-0">
+          <StrategyContent configKey="partner" />
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
