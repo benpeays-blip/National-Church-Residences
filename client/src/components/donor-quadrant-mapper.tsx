@@ -504,8 +504,8 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         
         <CardContent className="p-4 pt-6 flex flex-col flex-1 min-h-0">
 
-          {/* Donor List - Flexible height scrollable area */}
-          <div className="flex-1 space-y-2 overflow-y-auto min-h-0">
+          {/* Donor List - Fixed height showing ~9 items, scrollable */}
+          <div className="space-y-2 overflow-y-auto max-h-[540px]">
             {selectedDonors.length === 0 ? (
               <div className="text-sm text-muted-foreground text-center py-8">
                 No donors in this quadrant yet.
