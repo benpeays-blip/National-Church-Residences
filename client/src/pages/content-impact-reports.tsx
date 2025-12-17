@@ -89,33 +89,33 @@ export default function ImpactReports() {
         <div className="grid gap-4">
           {reports.map((item) => (
             <Card key={item.report.id} className="overflow-hidden" data-testid={`card-report-${item.report.id}`}>
-              <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
+              <CardHeader className="border-b" style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}>
                 <div className="flex items-start justify-between gap-2">
                   <div className="space-y-1">
-                    <CardTitle className="text-lg flex items-center gap-2 text-white">
-                      <Heart className="w-5 h-5" style={{ color: '#e1c47d' }} />
+                    <CardTitle className="text-lg flex items-center gap-2" style={{ color: '#084594' }}>
+                      <Heart className="w-5 h-5" style={{ color: '#084594' }} />
                       Impact Report - {item.report.reportingPeriod}
                     </CardTitle>
-                    <div className="text-sm text-white/80 mt-1">
+                    <div className="text-sm text-muted-foreground mt-1">
                       Donor: {item.person.firstName} {item.person.lastName}
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
                     {item.report.sentAt ? (
                       <>
-                        <Badge variant="outline" style={{ color: '#4ade80', borderColor: '#4ade80' }}>
+                        <Badge variant="outline" style={{ color: '#22c55e', borderColor: '#22c55e' }}>
                           <Mail className="w-3 h-3 mr-1" />
                           Sent
                         </Badge>
                         {item.report.opened > 0 && (
-                          <Badge variant="outline" style={{ color: 'white', borderColor: 'rgba(255,255,255,0.5)' }}>
+                          <Badge variant="outline" style={{ color: '#084594', borderColor: '#084594' }}>
                             <Eye className="w-3 h-3 mr-1" />
                             Opened {item.report.opened}x
                           </Badge>
                         )}
                       </>
                     ) : (
-                      <Badge variant="outline" style={{ color: '#e1c47d', borderColor: '#e1c47d' }}>Draft</Badge>
+                      <Badge variant="outline" style={{ color: '#084594', borderColor: '#084594' }}>Draft</Badge>
                     )}
                   </div>
                 </div>
