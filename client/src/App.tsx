@@ -167,6 +167,7 @@ import NcrSeniorHousingWithTabs from "@/pages/ncr-senior-housing-with-tabs";
 import NcrCareServicesWithTabs from "@/pages/ncr-care-services-with-tabs";
 import NcrFoundationWithTabs from "@/pages/ncr-foundation-with-tabs";
 import FoundationMetricDetail from "@/pages/foundation-metric-detail";
+import ScorecardDetail from "@/pages/scorecard-detail";
 
 function Router() {
   return (
@@ -242,6 +243,7 @@ function Router() {
       <Route path="/relationships/connections" component={RelationshipsWithTabs} />
       <Route path="/relationships/peer" component={RelationshipsWithTabs} />
       <Route path="/relationships" component={RelationshipsWithTabs} />
+      <Route path="/agent-value-map/scorecard/:domainId" component={ScorecardDetail} />
       <Route path="/agent-value-map" component={AgentValueMap} />
       <Route path="/corporate-partnerships/employee-giving" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/sponsorships" component={CorporationsWithTabs} />

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "wouter";
+import { useLocation, Link } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { AccentCard, getAccentBgClass, AccentColor } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
@@ -679,24 +679,29 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {scorecardMetrics.map((item) => (
-                  <AccentCard 
-                    key={item.domain} 
-                    accent={item.accent} 
-                    className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group"
-                    data-testid={`card-scorecard-${item.domain.toLowerCase().replace(/\s+/g, '-')}`}
-                  >
-                    <CardContent className="p-4">
-                      <p className="font-semibold mb-3 group-hover:text-primary transition-colors">{item.domain}</p>
-                      <ul className="space-y-1">
-                        {item.metrics.map((metric, index) => (
-                          <li key={index} className="flex items-center gap-2 text-sm">
-                            <CircleDot className="w-3 h-3 text-muted-foreground flex-shrink-0 group-hover:text-primary transition-colors" />
-                            <span>{metric}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </CardContent>
-                  </AccentCard>
+                  <Link key={item.domain} href={`/agent-value-map/scorecard/${item.domain.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <AccentCard 
+                      accent={item.accent} 
+                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group"
+                      data-testid={`card-scorecard-${item.domain.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      <CardContent className="p-4">
+                        <p className="font-semibold mb-3 group-hover:text-primary transition-colors">{item.domain}</p>
+                        <ul className="space-y-1">
+                          {item.metrics.map((metric, index) => (
+                            <li key={index} className="flex items-center gap-2 text-sm">
+                              <CircleDot className="w-3 h-3 text-muted-foreground flex-shrink-0 group-hover:text-primary transition-colors" />
+                              <span>{metric}</span>
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
+                          <span>View full scorecard</span>
+                          <ChevronRight className="h-4 w-4" />
+                        </div>
+                      </CardContent>
+                    </AccentCard>
+                  </Link>
                 ))}
               </div>
             </CardContent>
