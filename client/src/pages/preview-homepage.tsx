@@ -360,7 +360,7 @@ export default function PreviewHomepage() {
               </div>
               
               {/* Action Items */}
-              <div className="p-6 space-y-3">
+              <div className="p-6 space-y-4">
                 {nextBestActions.map((action, idx) => {
                   const accentColor = getAccentColor(action.accent);
                   const priorityColor = action.priority === "High" ? "#ef4444" : accentColors.olive;
