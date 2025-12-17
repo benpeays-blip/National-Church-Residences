@@ -182,7 +182,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardHeader>
         <CardContent className="p-6 flex-1 min-h-0 flex flex-col" style={{ backgroundColor: '#f4f4f4' }}>
           <div className="relative flex-1 min-h-0 pb-8 pl-10">
-            <div className="relative w-full h-full max-h-[calc(100vh-320px)] aspect-square rounded-lg overflow-hidden bg-background" style={{ border: '3px solid #395174' }}>
+            <div className="relative w-full h-full min-h-[520px] max-h-[calc(100vh-200px)] aspect-square rounded-lg overflow-hidden bg-background" style={{ border: '3px solid #395174' }}>
               {/* Grid Lines */}
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
               <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
