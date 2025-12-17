@@ -315,147 +315,201 @@ export default function PreviewHomepage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Next Best Actions - AI Recommendations */}
           <div className="lg:col-span-2">
-            <AccentCard accent="sky" className="h-full">
-              {/* Header */}
-              <div className="flex items-start justify-between gap-4 mb-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                    <Lightbulb className="w-6 h-6 text-primary" />
+            <div className="rounded-xl border bg-card overflow-hidden h-full">
+              {/* Gradient Header */}
+              <div 
+                className="px-6 py-5"
+                style={{ background: `linear-gradient(135deg, ${accentColors.sky}15 0%, ${accentColors.sky}05 100%)` }}
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div 
+                      className="w-12 h-12 rounded-xl flex items-center justify-center"
+                      style={{ backgroundColor: `${accentColors.sky}20` }}
+                    >
+                      <Lightbulb className="w-6 h-6" style={{ color: accentColors.sky }} />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold">AI Next Best Actions</h2>
+                      <p className="text-sm text-muted-foreground">Personalized recommendations</p>
+                    </div>
                   </div>
-                  <div className="space-y-1">
-                    <h2 className="text-xl font-semibold">AI Next Best Actions</h2>
-                    <CardDescription>Personalized recommendations to maximize impact</CardDescription>
-                  </div>
+                  <Badge 
+                    className="gap-1.5 text-xs uppercase tracking-wide border-0"
+                    style={{ backgroundColor: `${accentColors.sky}20`, color: accentColors.sky }}
+                  >
+                    <Sparkles className="w-3 h-3" />
+                    AI Powered
+                  </Badge>
                 </div>
-                <Badge variant="outline" className="gap-1 text-xs uppercase tracking-wide shrink-0">
-                  <Sparkles className="w-3 h-3" />
-                  AI Powered
-                </Badge>
               </div>
               
               {/* Action Items */}
-              <div className="space-y-4">
+              <div className="p-6 space-y-3">
                 {nextBestActions.map((action, idx) => {
                   const accentColor = getAccentColor(action.accent);
+                  const priorityColor = action.priority === "High" ? "#ef4444" : accentColors.olive;
                   return (
                     <div 
                       key={idx}
-                      className="flex items-center gap-4 p-4 rounded-lg bg-muted/50 hover-elevate transition-all cursor-pointer"
+                      className="group flex items-center gap-4 p-4 rounded-xl border hover-elevate transition-all cursor-pointer"
+                      style={{ borderColor: `${accentColor}30`, backgroundColor: `${accentColor}05` }}
                       data-testid={`action-item-${idx}`}
                     >
-                      <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                        {action.type === "call" && <Phone className="w-5 h-5 text-primary" />}
-                        {action.type === "email" && <Mail className="w-5 h-5 text-primary" />}
-                        {action.type === "prep" && <FileText className="w-5 h-5 text-primary" />}
-                        {action.type === "letter" && <Gift className="w-5 h-5 text-primary" />}
+                      <div 
+                        className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                        style={{ backgroundColor: `${accentColor}15` }}
+                      >
+                        {action.type === "call" && <Phone className="w-5 h-5" style={{ color: accentColor }} />}
+                        {action.type === "email" && <Mail className="w-5 h-5" style={{ color: accentColor }} />}
+                        {action.type === "prep" && <FileText className="w-5 h-5" style={{ color: accentColor }} />}
+                        {action.type === "letter" && <Gift className="w-5 h-5" style={{ color: accentColor }} />}
                       </div>
-                      <div className="flex-1 min-w-0 space-y-1">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <span className="font-medium">{action.action}</span>
-                          <Badge 
-                            variant={action.priority === "High" ? "destructive" : "secondary"}
-                            className="text-xs"
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="font-semibold">{action.action}</span>
+                          <span 
+                            className="text-xs font-medium px-2 py-0.5 rounded-full"
+                            style={{ backgroundColor: `${priorityColor}15`, color: priorityColor }}
                           >
                             {action.priority}
-                          </Badge>
+                          </span>
                         </div>
-                        <p className="text-sm" style={{ color: accentColor }}>{action.donor}</p>
-                        <p className="text-sm text-muted-foreground line-clamp-1">{action.context}</p>
+                        <p className="text-sm font-medium" style={{ color: accentColor }}>{action.donor}</p>
+                        <p className="text-sm text-muted-foreground line-clamp-1 mt-0.5">{action.context}</p>
                       </div>
-                      <Button variant="ghost" size="icon" className="shrink-0">
-                        <ArrowRight className="w-4 h-4" />
-                      </Button>
+                      <div 
+                        className="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                        style={{ backgroundColor: `${accentColor}15` }}
+                      >
+                        <ArrowRight className="w-4 h-4" style={{ color: accentColor }} />
+                      </div>
                     </div>
                   );
                 })}
               </div>
-            </AccentCard>
+            </div>
           </div>
 
           {/* At-Risk Donors Watchlist */}
-          <AccentCard accent="coral">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                <AlertTriangle className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold">At-Risk Watchlist</h2>
-                <CardDescription>Donors needing attention</CardDescription>
-              </div>
-            </div>
-            <div className="space-y-3">
-              {atRiskDonors.map((donor, idx) => (
+          <div className="rounded-xl border bg-card overflow-hidden">
+            {/* Coral Header */}
+            <div 
+              className="px-6 py-5"
+              style={{ background: `linear-gradient(135deg, ${accentColors.coral}15 0%, ${accentColors.coral}05 100%)` }}
+            >
+              <div className="flex items-center gap-4">
                 <div 
-                  key={idx}
-                  className="p-3 rounded-lg bg-muted/50 hover-elevate transition-all cursor-pointer"
-                  data-testid={`at-risk-donor-${idx}`}
+                  className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  style={{ backgroundColor: `${accentColors.coral}20` }}
                 >
-                  <div className="flex items-center justify-between mb-1 gap-2">
-                    <span className="text-base font-medium">{donor.name}</span>
-                    <Badge 
-                      variant={donor.risk === "High" ? "destructive" : "secondary"}
-                      className="text-xs"
-                    >
-                      {donor.risk}
-                    </Badge>
-                  </div>
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <span>{donor.lastGift}</span>
-                    <span className="font-medium">{donor.amount}</span>
-                  </div>
+                  <AlertTriangle className="w-6 h-6" style={{ color: accentColors.coral }} />
                 </div>
-              ))}
+                <div>
+                  <h2 className="text-xl font-semibold">At-Risk Watchlist</h2>
+                  <p className="text-sm text-muted-foreground">Donors needing attention</p>
+                </div>
+              </div>
             </div>
-            <Button variant="outline" size="sm" className="w-full mt-4 gap-2">
-              View All At-Risk
-              <ArrowRight className="w-3 h-3" />
-            </Button>
-          </AccentCard>
+            
+            <div className="p-6 space-y-3">
+              {atRiskDonors.map((donor, idx) => {
+                const riskColor = donor.risk === "High" ? "#ef4444" : accentColors.orange;
+                return (
+                  <div 
+                    key={idx}
+                    className="p-4 rounded-xl border hover-elevate transition-all cursor-pointer"
+                    style={{ borderColor: `${riskColor}25`, backgroundColor: `${riskColor}05` }}
+                    data-testid={`at-risk-donor-${idx}`}
+                  >
+                    <div className="flex items-center justify-between mb-2 gap-2">
+                      <span className="font-semibold">{donor.name}</span>
+                      <span 
+                        className="text-xs font-bold px-2.5 py-1 rounded-full"
+                        style={{ backgroundColor: `${riskColor}15`, color: riskColor }}
+                      >
+                        {donor.risk} Risk
+                      </span>
+                    </div>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">{donor.lastGift}</span>
+                      <span className="font-semibold" style={{ color: accentColors.coral }}>{donor.amount}</span>
+                    </div>
+                  </div>
+                );
+              })}
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="w-full mt-2 gap-2"
+                style={{ borderColor: `${accentColors.coral}40`, color: accentColors.coral }}
+              >
+                View All At-Risk
+                <ArrowRight className="w-3 h-3" />
+              </Button>
+            </div>
+          </div>
         </div>
 
         {/* Operational Workspace */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
           {/* Pipeline Overview */}
           <div className="lg:col-span-5">
-            <AccentCard accent="teal" className="h-full">
-              <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <TrendingUp className="w-6 h-6 text-primary" />
+            <div className="rounded-xl border bg-card overflow-hidden h-full">
+              {/* Teal Header */}
+              <div 
+                className="px-6 py-5"
+                style={{ background: `linear-gradient(135deg, ${accentColors.teal}15 0%, ${accentColors.teal}05 100%)` }}
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div 
+                      className="w-12 h-12 rounded-xl flex items-center justify-center"
+                      style={{ backgroundColor: `${accentColors.teal}20` }}
+                    >
+                      <TrendingUp className="w-6 h-6" style={{ color: accentColors.teal }} />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold">Pipeline Overview</h2>
+                      <p className="text-sm" style={{ color: accentColors.teal }}>$8.7M total value</p>
+                    </div>
                   </div>
-                  <div>
-                    <h2 className="text-xl font-semibold">Pipeline Overview</h2>
-                    <CardDescription>$8.7M total pipeline value</CardDescription>
-                  </div>
+                  <Link href="/pipeline">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="gap-1" 
+                      data-testid="link-pipeline"
+                      style={{ color: accentColors.teal }}
+                    >
+                      Details
+                      <ChevronRight className="w-4 h-4" />
+                    </Button>
+                  </Link>
                 </div>
-                <Link href="/pipeline">
-                  <Button variant="ghost" size="sm" className="gap-1" data-testid="link-pipeline">
-                    Details
-                    <ChevronRight className="w-4 h-4" />
-                  </Button>
-                </Link>
               </div>
-              <div className="space-y-4">
+              
+              <div className="p-6 space-y-4">
                 {pipelineStages.map((stage, idx) => (
-                  <div key={idx}>
-                    <div className="flex items-center justify-between mb-2 flex-wrap gap-2">
-                      <div className="flex items-center gap-2">
+                  <div key={idx} className="group">
+                    <div className="flex items-center justify-between mb-2">
+                      <div className="flex items-center gap-3">
                         <div 
-                          className="w-3 h-3 rounded-full"
+                          className="w-2.5 h-2.5 rounded-full"
                           style={{ backgroundColor: stage.color }}
                         />
-                        <span className="text-base font-medium">{stage.stage}</span>
+                        <span className="font-medium">{stage.stage}</span>
                       </div>
                       <div className="flex items-center gap-3 text-sm">
-                        <span className="text-muted-foreground">{stage.count} opportunities</span>
-                        <span className="font-semibold" style={{ color: stage.color }}>{stage.value}</span>
+                        <span className="text-muted-foreground">{stage.count}</span>
+                        <span className="font-bold" style={{ color: stage.color }}>{stage.value}</span>
                       </div>
                     </div>
-                    <div className="h-2 rounded-full bg-muted overflow-hidden">
+                    <div className="h-2.5 rounded-full bg-muted/50 overflow-hidden">
                       <div 
                         className="h-full rounded-full transition-all"
                         style={{ 
-                          backgroundColor: stage.color,
+                          background: `linear-gradient(90deg, ${stage.color} 0%, ${stage.color}cc 100%)`,
                           width: `${(parseFloat(stage.value.replace(/[$M,]/g, '')) / 8.7) * 100}%`
                         }}
                       />
@@ -463,156 +517,246 @@ export default function PreviewHomepage() {
                   </div>
                 ))}
               </div>
-            </AccentCard>
+            </div>
           </div>
 
           {/* Upcoming Actions Calendar */}
           <div className="lg:col-span-4">
-            <AccentCard accent="olive" className="h-full">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h2 className="text-xl font-semibold">Upcoming Actions</h2>
-                  <CardDescription>Your schedule this week</CardDescription>
+            <div className="rounded-xl border bg-card overflow-hidden h-full">
+              {/* Olive Header */}
+              <div 
+                className="px-6 py-5"
+                style={{ background: `linear-gradient(135deg, ${accentColors.olive}15 0%, ${accentColors.olive}05 100%)` }}
+              >
+                <div className="flex items-center gap-4">
+                  <div 
+                    className="w-12 h-12 rounded-xl flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.olive}20` }}
+                  >
+                    <Calendar className="w-6 h-6" style={{ color: accentColors.olive }} />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-semibold">Upcoming Actions</h2>
+                    <p className="text-sm text-muted-foreground">Your schedule this week</p>
+                  </div>
                 </div>
               </div>
-              <div className="space-y-3">
+              
+              <div className="p-6 space-y-3">
                 {upcomingActions.map((action, idx) => (
                   <div 
                     key={idx}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover-elevate transition-all cursor-pointer"
+                    className="flex items-center gap-4 p-3 rounded-xl border hover-elevate transition-all cursor-pointer"
+                    style={{ borderColor: `${accentColors.olive}25`, backgroundColor: `${accentColors.olive}05` }}
                     data-testid={`upcoming-action-${idx}`}
                   >
-                    <div className="text-center min-w-[50px]">
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">{action.date}</p>
+                    <div 
+                      className="text-center px-3 py-2 rounded-lg shrink-0"
+                      style={{ backgroundColor: `${accentColors.olive}15` }}
+                    >
+                      <p className="text-xs font-bold uppercase" style={{ color: accentColors.olive }}>{action.date}</p>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-base font-medium truncate">{action.action}</p>
+                      <p className="font-medium truncate">{action.action}</p>
                       <p className="text-sm text-muted-foreground truncate">{action.donor}</p>
                     </div>
-                    <Badge variant="secondary" className="text-xs shrink-0">
+                    <span 
+                      className="text-xs font-medium px-2 py-1 rounded-full shrink-0"
+                      style={{ backgroundColor: `${accentColors.olive}15`, color: accentColors.olive }}
+                    >
                       {action.type}
-                    </Badge>
+                    </span>
                   </div>
                 ))}
               </div>
-            </AccentCard>
+            </div>
           </div>
 
           {/* Recent Gifts */}
           <div className="lg:col-span-3">
-            <AccentCard accent="lime" className="h-full">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Gift className="w-6 h-6 text-primary" />
-                </div>
-                <div>
-                  <h2 className="text-xl font-semibold">Recent Gifts</h2>
-                  <CardDescription>Latest contributions</CardDescription>
+            <div className="rounded-xl border bg-card overflow-hidden h-full">
+              {/* Lime Header */}
+              <div 
+                className="px-6 py-5"
+                style={{ background: `linear-gradient(135deg, ${accentColors.lime}15 0%, ${accentColors.lime}05 100%)` }}
+              >
+                <div className="flex items-center gap-4">
+                  <div 
+                    className="w-12 h-12 rounded-xl flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.lime}20` }}
+                  >
+                    <Gift className="w-6 h-6" style={{ color: accentColors.lime }} />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-semibold">Recent Gifts</h2>
+                    <p className="text-sm text-muted-foreground">Latest contributions</p>
+                  </div>
                 </div>
               </div>
-              <div className="space-y-3">
+              
+              <div className="p-6 space-y-3">
                 {recentGifts.map((gift, idx) => (
                   <div 
                     key={idx}
-                    className="p-3 rounded-lg bg-muted/50"
+                    className="p-4 rounded-xl border"
+                    style={{ borderColor: `${accentColors.lime}25`, backgroundColor: `${accentColors.lime}05` }}
                     data-testid={`recent-gift-${idx}`}
                   >
-                    <div className="flex items-center justify-between mb-1 gap-2">
-                      <span className="text-base font-medium truncate">{gift.donor}</span>
-                      <span className="text-sm font-bold" style={{ color: accentColors.lime }}>{gift.amount}</span>
+                    <div className="flex items-center justify-between mb-2 gap-2">
+                      <span className="font-semibold truncate">{gift.donor}</span>
+                      <span className="text-lg font-bold" style={{ color: accentColors.lime }}>{gift.amount}</span>
                     </div>
-                    <div className="flex items-center justify-between text-sm text-muted-foreground gap-2">
-                      <span>{gift.date}</span>
-                      <Badge variant="outline" className="text-xs">{gift.type}</Badge>
+                    <div className="flex items-center justify-between text-sm gap-2">
+                      <span className="text-muted-foreground">{gift.date}</span>
+                      <span 
+                        className="text-xs font-medium px-2 py-0.5 rounded-full"
+                        style={{ backgroundColor: `${accentColors.lime}15`, color: accentColors.lime }}
+                      >
+                        {gift.type}
+                      </span>
                     </div>
                   </div>
                 ))}
               </div>
-            </AccentCard>
+            </div>
           </div>
         </div>
 
         {/* Campaign Performance Row */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Active Campaigns */}
-          <AccentCard accent="orange">
-            <div className="flex items-center justify-between mb-6 flex-wrap gap-3">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Target className="w-6 h-6 text-primary" />
+          <div className="rounded-xl border bg-card overflow-hidden">
+            {/* Orange Header */}
+            <div 
+              className="px-6 py-5"
+              style={{ background: `linear-gradient(135deg, ${accentColors.orange}15 0%, ${accentColors.orange}05 100%)` }}
+            >
+              <div className="flex items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div 
+                    className="w-12 h-12 rounded-xl flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.orange}20` }}
+                  >
+                    <Target className="w-6 h-6" style={{ color: accentColors.orange }} />
+                  </div>
+                  <div>
+                    <h2 className="text-xl font-semibold">Active Campaigns</h2>
+                    <p className="text-sm text-muted-foreground">Goal progress and momentum</p>
+                  </div>
                 </div>
-                <div>
-                  <h2 className="text-xl font-semibold">Active Campaigns</h2>
-                  <CardDescription>Goal progress and momentum</CardDescription>
-                </div>
+                <Link href="/campaigns">
+                  <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="gap-1" 
+                    data-testid="link-campaigns"
+                    style={{ color: accentColors.orange }}
+                  >
+                    All Campaigns
+                    <ChevronRight className="w-4 h-4" />
+                  </Button>
+                </Link>
               </div>
-              <Link href="/campaigns">
-                <Button variant="ghost" size="sm" className="gap-1" data-testid="link-campaigns">
-                  All Campaigns
-                  <ChevronRight className="w-4 h-4" />
-                </Button>
-              </Link>
             </div>
-            <div className="space-y-4">
+            
+            <div className="p-6 space-y-4">
               {campaigns.map((campaign, idx) => (
-                <div key={idx} className="space-y-2">
-                  <div className="flex items-center justify-between flex-wrap gap-2">
-                    <span className="text-base font-medium">{campaign.name}</span>
+                <div 
+                  key={idx} 
+                  className="p-4 rounded-xl border"
+                  style={{ borderColor: `${accentColors.orange}20`, backgroundColor: `${accentColors.orange}03` }}
+                >
+                  <div className="flex items-center justify-between mb-3 gap-2">
+                    <span className="font-semibold">{campaign.name}</span>
                     <div className="flex items-center gap-2 text-sm">
-                      <span className="font-semibold" style={{ color: accentColors.orange }}>{campaign.raised}</span>
+                      <span className="font-bold" style={{ color: accentColors.orange }}>{campaign.raised}</span>
                       <span className="text-muted-foreground">/ {campaign.goal}</span>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <Progress value={campaign.progress} className="flex-1 h-2" />
-                    <span className="text-xs text-muted-foreground uppercase tracking-wide w-12 text-right">{campaign.progress}%</span>
+                    <div className="flex-1 h-3 rounded-full bg-muted/50 overflow-hidden">
+                      <div 
+                        className="h-full rounded-full transition-all"
+                        style={{ 
+                          background: `linear-gradient(90deg, ${accentColors.orange} 0%, ${accentColors.coral} 100%)`,
+                          width: `${campaign.progress}%`
+                        }}
+                      />
+                    </div>
+                    <span 
+                      className="text-sm font-bold min-w-[3rem] text-right"
+                      style={{ color: accentColors.orange }}
+                    >
+                      {campaign.progress}%
+                    </span>
                   </div>
                 </div>
               ))}
             </div>
-          </AccentCard>
+          </div>
 
           {/* Quick Navigation */}
-          <AccentCard accent="sky">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Zap className="w-6 h-6 text-primary" />
-              </div>
-              <div>
-                <h2 className="text-xl font-semibold">Quick Access</h2>
-                <CardDescription>Navigate to key sections</CardDescription>
+          <div className="rounded-xl border bg-card overflow-hidden">
+            {/* Teal Header */}
+            <div 
+              className="px-6 py-5"
+              style={{ background: `linear-gradient(135deg, ${accentColors.teal}15 0%, ${accentColors.teal}05 100%)` }}
+            >
+              <div className="flex items-center gap-4">
+                <div 
+                  className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  style={{ backgroundColor: `${accentColors.teal}20` }}
+                >
+                  <Zap className="w-6 h-6" style={{ color: accentColors.teal }} />
+                </div>
+                <div>
+                  <h2 className="text-xl font-semibold">Quick Access</h2>
+                  <p className="text-sm text-muted-foreground">Navigate to key sections</p>
+                </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { label: "Donors", icon: Users, href: "/donors" },
-                { label: "Pipeline", icon: TrendingUp, href: "/pipeline" },
-                { label: "Grants", icon: FileText, href: "/grants" },
-                { label: "Relationships", icon: Handshake, href: "/relationships" },
-                { label: "AI Tools", icon: Sparkles, href: "/ai-tools" },
-                { label: "Reports", icon: BarChart3, href: "/reporting/impact-intelligence" },
-              ].map((item, idx) => {
-                const Icon = item.icon;
-                return (
-                  <Link key={idx} href={item.href}>
-                    <div 
-                      className="flex items-center gap-3 p-3 rounded-lg bg-muted/50 hover-elevate active-elevate-2 transition-all cursor-pointer"
-                      data-testid={`quick-nav-${item.label.toLowerCase()}`}
-                    >
-                      <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                        <Icon className="w-6 h-6 text-primary" />
+            
+            <div className="p-6">
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { label: "Donors", icon: Users, accent: accentColors.sky },
+                  { label: "Pipeline", icon: TrendingUp, accent: accentColors.teal },
+                  { label: "Grants", icon: FileText, accent: accentColors.olive },
+                  { label: "Relationships", icon: Handshake, accent: accentColors.coral },
+                  { label: "AI Tools", icon: Sparkles, accent: accentColors.orange },
+                  { label: "Reports", icon: BarChart3, accent: accentColors.lime },
+                ].map((item, idx) => {
+                  const Icon = item.icon;
+                  const href = item.label === "Donors" ? "/donors" : 
+                               item.label === "Pipeline" ? "/pipeline" :
+                               item.label === "Grants" ? "/grants" :
+                               item.label === "Relationships" ? "/relationships" :
+                               item.label === "AI Tools" ? "/ai-tools" : "/reporting/impact-intelligence";
+                  return (
+                    <Link key={idx} href={href}>
+                      <div 
+                        className="group flex items-center gap-3 p-4 rounded-xl border hover-elevate transition-all cursor-pointer"
+                        style={{ borderColor: `${item.accent}30`, backgroundColor: `${item.accent}05` }}
+                        data-testid={`quick-nav-${item.label.toLowerCase()}`}
+                      >
+                        <div 
+                          className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                          style={{ backgroundColor: `${item.accent}15` }}
+                        >
+                          <Icon className="w-5 h-5" style={{ color: item.accent }} />
+                        </div>
+                        <span className="font-medium flex-1">{item.label}</span>
+                        <ArrowUpRight 
+                          className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" 
+                          style={{ color: item.accent }}
+                        />
                       </div>
-                      <span className="text-base font-medium">{item.label}</span>
-                      <ArrowUpRight className="w-3 h-3 text-muted-foreground ml-auto" />
-                    </div>
-                  </Link>
-                );
-              })}
+                    </Link>
+                  );
+                })}
+              </div>
             </div>
-          </AccentCard>
+          </div>
         </div>
       </div>
     </div>
