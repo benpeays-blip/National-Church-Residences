@@ -134,6 +134,7 @@ export default function PreviewHomepage() {
     { name: "David Thompson", donorId: "8b11e5ac-0e35-4c95-b220-7cc58e9636bd", lastGift: "8 months ago", amount: "$25,000", risk: "High" },
     { name: "Patricia Brown", donorId: "ec82c940-c513-4656-bc66-e8c618c6dcdd", lastGift: "6 months ago", amount: "$50,000", risk: "Medium" },
     { name: "Susan Taylor", donorId: "fa9dbe3b-9972-49d6-9722-b26725db3e1c", lastGift: "5 months ago", amount: "$15,000", risk: "Medium" },
+    { name: "James Wilson", donorId: "a275b91a-5634-4114-9cfb-e5a52f0d1c46", lastGift: "4 months ago", amount: "$30,000", risk: "Medium" },
   ];
 
   const upcomingActions = [
@@ -423,37 +424,41 @@ export default function PreviewHomepage() {
               </div>
             </div>
             
-            <div className="p-6 space-y-3">
+            <div className="p-4 space-y-2">
               {atRiskDonors.map((donor, idx) => {
                 const riskColor = donor.risk === "High" ? "#ef4444" : accentColors.orange;
                 return (
                   <Link key={idx} href={`/donors/${donor.donorId}`}>
                     <div 
-                      className="group p-4 rounded-xl border hover-elevate transition-all cursor-pointer hover:shadow-lg"
+                      className="group p-3 rounded-lg border hover-elevate transition-all cursor-pointer hover:shadow-lg"
                       style={{ borderColor: `${riskColor}25`, backgroundColor: `${riskColor}05` }}
                       data-testid={`at-risk-donor-${idx}`}
                     >
-                      <div className="flex items-center justify-between mb-2 gap-2">
-                        <span className="font-semibold">{donor.name}</span>
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <span className="font-semibold text-sm">{donor.name}</span>
+                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                            <span>{donor.lastGift}</span>
+                            <span className="font-semibold" style={{ color: accentColors.coral }}>{donor.amount}</span>
+                          </div>
+                        </div>
                         <span 
-                          className="text-xs font-bold px-2.5 py-1 rounded-full"
+                          className="text-xs font-bold px-2 py-0.5 rounded-full shrink-0"
                           style={{ backgroundColor: `${riskColor}15`, color: riskColor }}
                         >
-                          {donor.risk} Risk
+                          {donor.risk}
                         </span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">{donor.lastGift}</span>
-                        <span className="font-semibold" style={{ color: accentColors.coral }}>{donor.amount}</span>
                       </div>
                     </div>
                   </Link>
                 );
               })}
+            </div>
+            <div className="px-4 pb-4">
               <Button 
                 variant="outline" 
                 size="sm" 
-                className="w-full mt-2 gap-2"
+                className="w-full gap-2"
                 style={{ borderColor: `${accentColors.coral}40`, color: accentColors.coral }}
               >
                 View All At-Risk
