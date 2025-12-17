@@ -540,17 +540,31 @@ export default function PreviewHomepage() {
                 className="px-6 py-5"
                 style={{ background: `linear-gradient(135deg, ${accentColors.olive}15 0%, ${accentColors.olive}05 100%)` }}
               >
-                <div className="flex items-center gap-4">
-                  <div 
-                    className="w-12 h-12 rounded-xl flex items-center justify-center"
-                    style={{ backgroundColor: `${accentColors.olive}20` }}
-                  >
-                    <Calendar className="w-6 h-6" style={{ color: accentColors.olive }} />
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div 
+                      className="w-12 h-12 rounded-xl flex items-center justify-center"
+                      style={{ backgroundColor: `${accentColors.olive}20` }}
+                    >
+                      <Calendar className="w-6 h-6" style={{ color: accentColors.olive }} />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold">Upcoming Actions</h2>
+                      <p className="text-sm text-muted-foreground">Your schedule this week</p>
+                    </div>
                   </div>
-                  <div>
-                    <h2 className="text-xl font-semibold">Upcoming Actions</h2>
-                    <p className="text-sm text-muted-foreground">Your schedule this week</p>
-                  </div>
+                  <Link href="/upcoming-actions">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="gap-1" 
+                      data-testid="link-upcoming-actions"
+                      style={{ color: accentColors.olive }}
+                    >
+                      View All
+                      <ChevronRight className="w-4 h-4" />
+                    </Button>
+                  </Link>
                 </div>
               </div>
               

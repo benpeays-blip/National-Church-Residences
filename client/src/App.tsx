@@ -69,6 +69,7 @@ import Donor360 from "@/pages/donor-360";
 import DonorDetail from "@/pages/donor-detail";
 import DonorActionPlan from "@/pages/donor-action-plan";
 import DonorCardShowcase from "@/pages/donor-card-showcase";
+import UpcomingActionsPage from "@/pages/upcoming-actions";
 import DonorQuadrant from "@/pages/donor-quadrant";
 import DonorQuadrantWithTabs from "@/pages/donor-quadrant-with-tabs";
 import Pipeline from "@/pages/pipeline";
@@ -211,6 +212,7 @@ function Router() {
       <Route path="/pipeline/forecast" component={PipelineWithTabs} />
       <Route path="/pipeline/analytics" component={PipelineWithTabs} />
       <Route path="/pipeline" component={PipelineWithTabs} />
+      <Route path="/upcoming-actions" component={UpcomingActionsPage} />
       
       {/* Tab-based landing pages */}
       <Route path="/intelligence/wealth" component={IntelligenceWithTabs} />
