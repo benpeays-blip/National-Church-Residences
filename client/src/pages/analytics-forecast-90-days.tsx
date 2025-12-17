@@ -33,6 +33,16 @@ type Opportunity = {
   };
 };
 
+const STAGE_BADGE_COLORS: Record<string, string> = {
+  "Prospect": "bg-[#4A90A4] text-white border-0",
+  "Cultivation": "bg-[#2A9D8F] text-white border-0",
+  "Solicitation": "bg-[#E76F51] text-white border-0",
+  "Negotiation": "bg-[#E07A5F] text-white border-0",
+  "Stewardship": "bg-[#6B8E23] text-white border-0",
+  "Steward": "bg-[#6B8E23] text-white border-0",
+  "Renewal": "bg-[#84a98c] text-white border-0",
+};
+
 export default function Forecast90Days() {
   const { data: opportunities, isLoading } = useQuery<Opportunity[]>({
     queryKey: ["/api/opportunities"],
@@ -249,7 +259,7 @@ export default function Forecast90Days() {
                       )}
                     </TableCell>
                     <TableCell>
-                      <Badge variant="secondary">{opp.stage}</Badge>
+                      <Badge className={STAGE_BADGE_COLORS[opp.stage] || "bg-muted"}>{opp.stage}</Badge>
                     </TableCell>
                     <TableCell className="text-sm text-muted-foreground">
                       {opp.owner ? `${opp.owner.firstName} ${opp.owner.lastName}` : 'Unassigned'}
