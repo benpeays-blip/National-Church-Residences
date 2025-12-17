@@ -441,19 +441,18 @@ export default function PreviewHomepage() {
                       >
                         <div className="flex-1 min-w-0">
                           <p className="font-semibold truncate">{donor.name}</p>
-                          <div className="flex items-center gap-2 text-sm text-muted-foreground mt-0.5">
-                            <span>{donor.lastGift}</span>
-                            <span>•</span>
-                            <span className="font-bold" style={{ color: accentColors.coral }}>{donor.amount}</span>
-                          </div>
+                          <p className="text-sm text-muted-foreground mt-0.5">{donor.lastGift}</p>
                         </div>
-                        <Badge 
-                          variant="outline"
-                          className="shrink-0 text-xs font-bold"
-                          style={{ borderColor: riskColor, color: riskColor, backgroundColor: `${riskColor}10` }}
-                        >
-                          {donor.risk}
-                        </Badge>
+                        <div className="flex flex-col items-end gap-1 shrink-0">
+                          <Badge 
+                            variant="outline"
+                            className="text-xs font-bold"
+                            style={{ borderColor: riskColor, color: riskColor, backgroundColor: `${riskColor}10` }}
+                          >
+                            {donor.risk}
+                          </Badge>
+                          <span className="text-sm font-bold" style={{ color: accentColors.coral }}>{donor.amount}</span>
+                        </div>
                       </div>
                     </Link>
                   );
