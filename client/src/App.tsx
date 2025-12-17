@@ -17,6 +17,7 @@ import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Menu } from 
 const navigationDomains = {
   "Reporting": {
     items: [
+      { name: "Impact Overview", href: "/impact/overview" },
       { name: "Visuals", href: "/reporting/visuals" },
       { name: "Senior Housing", href: "/ncr/senior-housing" },
       { name: "Care Services", href: "/ncr/care-services" },
@@ -173,6 +174,13 @@ import HubDetail from "@/pages/hub-detail";
 import GovernanceDetail from "@/pages/governance-detail";
 import WorkflowStepDetail from "@/pages/workflow-step-detail";
 
+// Impact Drill-Down Pages
+import ImpactOverview from "@/pages/impact-overview";
+import ImpactBuildingFacilities from "@/pages/impact-building-facilities";
+import ImpactHomeHealth from "@/pages/impact-home-health";
+import ImpactVolunteerHours from "@/pages/impact-volunteer-hours";
+import ImpactAffordableUnits from "@/pages/impact-affordable-units";
+
 function Router() {
   return (
     <Switch>
@@ -282,6 +290,14 @@ function Router() {
       <Route path="/ncr/foundation/endowment" component={NcrFoundationWithTabs} />
       <Route path="/ncr/foundation/impact" component={NcrFoundationWithTabs} />
       <Route path="/ncr/foundation" component={NcrFoundationWithTabs} />
+      
+      {/* Impact Drill-Down Pages */}
+      <Route path="/impact/building-facilities" component={ImpactBuildingFacilities} />
+      <Route path="/impact/home-health" component={ImpactHomeHealth} />
+      <Route path="/impact/volunteer-hours" component={ImpactVolunteerHours} />
+      <Route path="/impact/affordable-units" component={ImpactAffordableUnits} />
+      <Route path="/impact/overview" component={ImpactOverview} />
+      
       <Route path="/other" component={OtherWithTabs} />
       <Route path="/temporary" component={Temporary} />
       <Route path="/temporary/interviews/:personId" component={Temporary} />

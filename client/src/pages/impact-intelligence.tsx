@@ -266,14 +266,14 @@ export function AIChatTab() {
       <div className="flex gap-6 flex-1 min-h-0">
         {/* Chat Area */}
         <Card className="flex-1 flex flex-col">
-          <CardHeader className="pb-3 border-b" style={{ backgroundColor: '#1e3a5f' }}>
+          <CardHeader className="pb-3 border-b bg-primary text-primary-foreground rounded-t-lg">
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                <Bot className="w-5 h-5 text-white" />
+              <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center">
+                <Bot className="w-5 h-5" />
               </div>
               <div>
-                <CardTitle className="text-lg text-white">Impact Assistant</CardTitle>
-                <CardDescription className="text-white/70">Powered by AI to help you find the right stories and data</CardDescription>
+                <CardTitle className="text-xl">Impact Assistant</CardTitle>
+                <CardDescription className="text-primary-foreground/70">Powered by AI to help you find the right stories and data</CardDescription>
               </div>
             </div>
           </CardHeader>
@@ -284,7 +284,7 @@ export function AIChatTab() {
                 <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center mb-4">
                   <Sparkles className="w-8 h-8 text-primary" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">Welcome to Impact Intelligence</h3>
+                <h3 className="text-xl font-semibold mb-2">Welcome to Impact Intelligence</h3>
                 <p className="text-muted-foreground max-w-md mb-6">
                   I can help you find impact stories, outcomes data, and metrics for your donor communications and grant reports.
                 </p>
@@ -484,7 +484,7 @@ export function ImpactFeedTab() {
           <Card key={metric.id} className="hover-elevate cursor-pointer" data-testid={`metric-card-${metric.id}`}>
             <CardContent className="pt-4">
               <p className="text-xs text-muted-foreground">{metric.label}</p>
-              <p className="text-2xl font-bold">{metric.value}</p>
+              <p className="text-3xl font-bold">{metric.value}</p>
               <Badge 
                 variant={metric.trend === "up" ? "default" : "secondary"}
                 className="mt-1"
@@ -546,21 +546,21 @@ export function ImpactFeedTab() {
           
           return (
             <Card key={story.id} className="hover-elevate overflow-hidden" data-testid={`story-card-${story.id}`}>
-              <CardHeader className="bg-[#7BC4DC] text-white">
+              <CardHeader className="bg-primary/80 text-primary-foreground">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
-                      <CategoryIcon className="w-5 h-5 text-white" />
+                    <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center flex-shrink-0">
+                      <CategoryIcon className="w-5 h-5" />
                     </div>
                     <div>
-                      <CardTitle className="text-lg text-white">{story.title}</CardTitle>
+                      <CardTitle className="text-xl">{story.title}</CardTitle>
                       <div className="flex items-center gap-2 mt-1 flex-wrap">
-                        <Badge className="bg-white/20 text-white border-white/30 hover:bg-white/30">{story.programArea}</Badge>
-                        <span className="text-xs text-white/80 flex items-center gap-1">
+                        <Badge variant="secondary">{story.programArea}</Badge>
+                        <span className="text-xs text-primary-foreground/80 flex items-center gap-1">
                           <Calendar className="w-3 h-3" />
                           {new Date(story.date).toLocaleDateString()}
                         </span>
-                        <span className="text-xs text-white/80 flex items-center gap-1">
+                        <span className="text-xs text-primary-foreground/80 flex items-center gap-1">
                           <Building2 className="w-3 h-3" />
                           {story.location}
                         </span>
@@ -571,7 +571,7 @@ export function ImpactFeedTab() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-white hover:bg-white/20"
+                      className="hover:bg-primary-foreground/20"
                       onClick={() => toggleSave(story.id)}
                       data-testid={`save-story-${story.id}`}
                     >
@@ -584,7 +584,7 @@ export function ImpactFeedTab() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="text-white hover:bg-white/20"
+                      className="hover:bg-primary-foreground/20"
                       onClick={() => copyToClipboard(story)}
                       data-testid={`copy-story-${story.id}`}
                     >
@@ -611,7 +611,7 @@ export function ImpactFeedTab() {
                   <div className="grid grid-cols-3 gap-4 pt-2">
                     {story.metrics.map((metric, idx) => (
                       <div key={idx} className="text-center p-3 bg-muted/30 rounded-lg">
-                        <p className="text-2xl font-bold text-primary">{metric.value}</p>
+                        <p className="text-3xl font-bold text-primary">{metric.value}</p>
                         <p className="text-xs text-muted-foreground">{metric.label}</p>
                       </div>
                     ))}
@@ -634,7 +634,7 @@ export function ImpactFeedTab() {
           <Card>
             <CardContent className="py-12 text-center">
               <BookOpen className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold">No Stories Found</h3>
+              <h3 className="text-xl font-semibold">No Stories Found</h3>
               <p className="text-sm text-muted-foreground">Try adjusting your search or filters</p>
             </CardContent>
           </Card>
