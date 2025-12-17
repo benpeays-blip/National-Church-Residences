@@ -88,8 +88,8 @@ export default function PreviewHomepage() {
     {
       priority: "High",
       action: "Schedule stewardship call",
-      donor: "Margaret Chen",
-      donorId: "1",
+      donor: "Linda Chen",
+      donorId: "0cc9580d-c975-4222-890b-b6ceebe8bb3a",
       context: "Last major gift was 90+ days ago, engagement declining",
       type: "call",
       accent: "coral" as const,
@@ -97,8 +97,8 @@ export default function PreviewHomepage() {
     {
       priority: "High",
       action: "Send proposal follow-up",
-      donor: "Anderson Foundation",
-      donorId: "2",
+      donor: "Jennifer Johnson",
+      donorId: "261d8446-ce7c-4cee-977e-31347f162b2c",
       context: "$250K grant proposal pending review since 12/1",
       type: "email",
       accent: "olive" as const,
@@ -106,8 +106,8 @@ export default function PreviewHomepage() {
     {
       priority: "Medium",
       action: "Prepare meeting brief",
-      donor: "Dr. James Morrison",
-      donorId: "3",
+      donor: "James Wilson",
+      donorId: "a275b91a-5634-4114-9cfb-e5a52f0d1c46",
       context: "Site visit scheduled for Dec 19th - prepare impact report",
       type: "prep",
       accent: "sky" as const,
@@ -115,8 +115,8 @@ export default function PreviewHomepage() {
     {
       priority: "Medium",
       action: "Acknowledge planned gift intent",
-      donor: "Robert & Linda Hayes",
-      donorId: "4",
+      donor: "Robert Martinez",
+      donorId: "5ab76a44-f492-4dd7-b3ea-bfcfaf5ff141",
       context: "Indicated estate planning interest at Nov gala",
       type: "letter",
       accent: "teal" as const,
@@ -131,9 +131,9 @@ export default function PreviewHomepage() {
   ];
 
   const atRiskDonors = [
-    { name: "David Patterson", donorId: "5", lastGift: "8 months ago", amount: "$25,000", risk: "High" },
-    { name: "The Wilson Trust", donorId: "6", lastGift: "6 months ago", amount: "$50,000", risk: "Medium" },
-    { name: "Elizabeth Moore", donorId: "7", lastGift: "5 months ago", amount: "$15,000", risk: "Medium" },
+    { name: "David Thompson", donorId: "8b11e5ac-0e35-4c95-b220-7cc58e9636bd", lastGift: "8 months ago", amount: "$25,000", risk: "High" },
+    { name: "Patricia Brown", donorId: "ec82c940-c513-4656-bc66-e8c618c6dcdd", lastGift: "6 months ago", amount: "$50,000", risk: "Medium" },
+    { name: "Susan Taylor", donorId: "fa9dbe3b-9972-49d6-9722-b26725db3e1c", lastGift: "5 months ago", amount: "$15,000", risk: "Medium" },
   ];
 
   const upcomingActions = [
