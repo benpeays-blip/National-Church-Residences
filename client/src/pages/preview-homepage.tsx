@@ -177,7 +177,7 @@ export default function PreviewHomepage() {
                   Live Dashboard
                 </Badge>
               </div>
-              <h1 className="text-3xl font-bold mb-1">Good morning, Karla</h1>
+              <h1 className="text-3xl font-bold mb-1">Good Morning, Karla</h1>
               <p className="text-sm text-muted-foreground">
                 Your fundraising command center • December 16, 2024
               </p>
