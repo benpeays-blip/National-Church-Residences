@@ -100,6 +100,7 @@ import OtherWithTabs from "@/pages/other-with-tabs";
 import Temporary from "@/pages/temporary";
 import ImpactIntelligence from "@/pages/impact-intelligence";
 import ReportingVisuals from "@/pages/reporting-visuals";
+import PledgesExpiring from "@/pages/pledges-expiring";
 
 // AI Intelligence
 import AIPredictiveTiming from "@/pages/ai-predictive-timing";
@@ -241,6 +242,7 @@ function Router() {
       <Route path="/grants/submitted" component={GrantsWithTabs} />
       <Route path="/grants/awarded" component={GrantsWithTabs} />
       <Route path="/grants" component={GrantsWithTabs} />
+      <Route path="/pledges-expiring" component={PledgesExpiring} />
       <Route path="/gifts/major" component={GiftsWithTabs} />
       <Route path="/gifts/recurring" component={GiftsWithTabs} />
       <Route path="/gifts/planned" component={GiftsWithTabs} />

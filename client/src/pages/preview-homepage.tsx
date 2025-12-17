@@ -202,7 +202,7 @@ export default function PreviewHomepage() {
 
           {/* Alert Strip */}
           <div className="flex items-center gap-4 mb-6 flex-wrap">
-            <Link href="/gifts/planned?filter=expiring">
+            <Link href="/pledges-expiring">
               <Badge variant="secondary" className="gap-1.5 py-1.5 cursor-pointer hover:bg-secondary/80 transition-colors" data-testid="alert-pledges">
                 <AlertTriangle className="w-3 h-3 text-orange-500" />
                 <span className="text-xs uppercase tracking-wide">3 pledges expiring</span>
