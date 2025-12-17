@@ -196,15 +196,21 @@ export default function PreviewHomepage() {
 
           {/* Alert Strip */}
           <div className="flex items-center gap-4 mb-6 flex-wrap">
-            <Badge variant="secondary" className="gap-1.5 py-1.5">
-              <AlertTriangle className="w-3 h-3 text-orange-500" />
-              <span className="text-xs uppercase tracking-wide">3 pledges expiring</span>
-            </Badge>
-            <Badge variant="secondary" className="gap-1.5 py-1.5">
-              <Clock className="w-3 h-3 text-sky-500" />
-              <span className="text-xs uppercase tracking-wide">5 opportunities need attention</span>
-            </Badge>
-            <Badge variant="secondary" className="gap-1.5 py-1.5">
+            <Link href="/gifts/planned">
+              <Badge variant="secondary" className="gap-1.5 py-1.5 cursor-pointer hover:bg-secondary/80 transition-colors" data-testid="alert-pledges">
+                <AlertTriangle className="w-3 h-3 text-orange-500" />
+                <span className="text-xs uppercase tracking-wide">3 pledges expiring</span>
+                <ChevronRight className="w-3 h-3 ml-1 opacity-50" />
+              </Badge>
+            </Link>
+            <Link href="/pipeline">
+              <Badge variant="secondary" className="gap-1.5 py-1.5 cursor-pointer hover:bg-secondary/80 transition-colors" data-testid="alert-opportunities">
+                <Clock className="w-3 h-3 text-sky-500" />
+                <span className="text-xs uppercase tracking-wide">5 opportunities need attention</span>
+                <ChevronRight className="w-3 h-3 ml-1 opacity-50" />
+              </Badge>
+            </Link>
+            <Badge variant="secondary" className="gap-1.5 py-1.5" data-testid="alert-tasks">
               <CheckCircle2 className="w-3 h-3 text-emerald-500" />
               <span className="text-xs uppercase tracking-wide">12 tasks completed</span>
             </Badge>
