@@ -39,7 +39,7 @@ export default function PipelineWithTabs() {
   return (
     <div className="flex flex-col h-full">
       <SectionTabs tabs={pipelineTabs} currentPath={location} />
-      <div className="flex-1 overflow-hidden p-6">
+      <div className="flex-1 overflow-auto p-6">
         <PipelineComponent />
       </div>
     </div>
