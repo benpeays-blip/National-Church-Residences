@@ -606,17 +606,31 @@ export default function PreviewHomepage() {
                 className="px-6 py-5"
                 style={{ background: `linear-gradient(135deg, ${accentColors.lime}15 0%, ${accentColors.lime}05 100%)` }}
               >
-                <div className="flex items-center gap-4">
-                  <div 
-                    className="w-12 h-12 rounded-xl flex items-center justify-center"
-                    style={{ backgroundColor: `${accentColors.lime}20` }}
-                  >
-                    <Gift className="w-6 h-6" style={{ color: accentColors.lime }} />
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <div 
+                      className="w-12 h-12 rounded-xl flex items-center justify-center"
+                      style={{ backgroundColor: `${accentColors.lime}20` }}
+                    >
+                      <Gift className="w-6 h-6" style={{ color: accentColors.lime }} />
+                    </div>
+                    <div>
+                      <h2 className="text-xl font-semibold">Recent Gifts</h2>
+                      <p className="text-sm text-muted-foreground">Latest contributions</p>
+                    </div>
                   </div>
-                  <div>
-                    <h2 className="text-xl font-semibold">Recent Gifts</h2>
-                    <p className="text-sm text-muted-foreground">Latest contributions</p>
-                  </div>
+                  <Link href="/gifts">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="gap-1" 
+                      data-testid="link-recent-gifts"
+                      style={{ color: accentColors.lime }}
+                    >
+                      View All
+                      <ChevronRight className="w-4 h-4" />
+                    </Button>
+                  </Link>
                 </div>
               </div>
               
