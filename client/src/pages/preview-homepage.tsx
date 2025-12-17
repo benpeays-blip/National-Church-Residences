@@ -131,9 +131,9 @@ export default function PreviewHomepage() {
   ];
 
   const atRiskDonors = [
-    { name: "David Patterson", lastGift: "8 months ago", amount: "$25,000", risk: "High" },
-    { name: "The Wilson Trust", lastGift: "6 months ago", amount: "$50,000", risk: "Medium" },
-    { name: "Elizabeth Moore", lastGift: "5 months ago", amount: "$15,000", risk: "Medium" },
+    { name: "David Patterson", donorId: "5", lastGift: "8 months ago", amount: "$25,000", risk: "High" },
+    { name: "The Wilson Trust", donorId: "6", lastGift: "6 months ago", amount: "$50,000", risk: "Medium" },
+    { name: "Elizabeth Moore", donorId: "7", lastGift: "5 months ago", amount: "$15,000", risk: "Medium" },
   ];
 
   const upcomingActions = [
@@ -427,26 +427,27 @@ export default function PreviewHomepage() {
               {atRiskDonors.map((donor, idx) => {
                 const riskColor = donor.risk === "High" ? "#ef4444" : accentColors.orange;
                 return (
-                  <div 
-                    key={idx}
-                    className="p-4 rounded-xl border hover-elevate transition-all cursor-pointer"
-                    style={{ borderColor: `${riskColor}25`, backgroundColor: `${riskColor}05` }}
-                    data-testid={`at-risk-donor-${idx}`}
-                  >
-                    <div className="flex items-center justify-between mb-2 gap-2">
-                      <span className="font-semibold">{donor.name}</span>
-                      <span 
-                        className="text-xs font-bold px-2.5 py-1 rounded-full"
-                        style={{ backgroundColor: `${riskColor}15`, color: riskColor }}
-                      >
-                        {donor.risk} Risk
-                      </span>
+                  <Link key={idx} href={`/donors/${donor.donorId}`}>
+                    <div 
+                      className="group p-4 rounded-xl border hover-elevate transition-all cursor-pointer hover:shadow-lg"
+                      style={{ borderColor: `${riskColor}25`, backgroundColor: `${riskColor}05` }}
+                      data-testid={`at-risk-donor-${idx}`}
+                    >
+                      <div className="flex items-center justify-between mb-2 gap-2">
+                        <span className="font-semibold">{donor.name}</span>
+                        <span 
+                          className="text-xs font-bold px-2.5 py-1 rounded-full"
+                          style={{ backgroundColor: `${riskColor}15`, color: riskColor }}
+                        >
+                          {donor.risk} Risk
+                        </span>
+                      </div>
+                      <div className="flex items-center justify-between text-sm">
+                        <span className="text-muted-foreground">{donor.lastGift}</span>
+                        <span className="font-semibold" style={{ color: accentColors.coral }}>{donor.amount}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between text-sm">
-                      <span className="text-muted-foreground">{donor.lastGift}</span>
-                      <span className="font-semibold" style={{ color: accentColors.coral }}>{donor.amount}</span>
-                    </div>
-                  </div>
+                  </Link>
                 );
               })}
               <Button 
