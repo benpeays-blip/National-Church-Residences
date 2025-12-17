@@ -168,6 +168,7 @@ import NcrCareServicesWithTabs from "@/pages/ncr-care-services-with-tabs";
 import NcrFoundationWithTabs from "@/pages/ncr-foundation-with-tabs";
 import FoundationMetricDetail from "@/pages/foundation-metric-detail";
 import ScorecardDetail from "@/pages/scorecard-detail";
+import WorkflowStepDetail from "@/pages/workflow-step-detail";
 
 function Router() {
   return (
@@ -244,6 +245,7 @@ function Router() {
       <Route path="/relationships/peer" component={RelationshipsWithTabs} />
       <Route path="/relationships" component={RelationshipsWithTabs} />
       <Route path="/agent-value-map/scorecard/:domainId" component={ScorecardDetail} />
+      <Route path="/agent-value-map/workflow/:stepId" component={WorkflowStepDetail} />
       <Route path="/agent-value-map" component={AgentValueMap} />
       <Route path="/corporate-partnerships/employee-giving" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/sponsorships" component={CorporationsWithTabs} />
