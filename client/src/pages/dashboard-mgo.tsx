@@ -174,7 +174,7 @@ export default function DashboardMGO() {
                     </div>
                   </div>
                   <ScrollArea className="h-96">
-                    <div className="space-y-2 pr-2">
+                    <div className="space-y-2 pr-2 pt-2">
                       {groupedOpportunities?.[stage]?.map((opp) => (
                         <OpportunityCard key={opp.id} opportunity={opp} />
                       )) ?? (
