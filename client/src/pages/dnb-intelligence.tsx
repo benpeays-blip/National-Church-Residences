@@ -232,18 +232,33 @@ export default function DnBIntelligence() {
       </Card>
 
       <Tabs defaultValue="research" className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="research" className="gap-2" data-testid="tab-research">
+        <TabsList className="grid w-full grid-cols-3 gap-1 bg-transparent p-0 mb-4">
+          <TabsTrigger 
+            value="research" 
+            className="group relative gap-2 bg-[#7FA3A1] text-white data-[state=active]:bg-[#7FA3A1] data-[state=active]:text-white data-[state=active]:shadow-none" 
+            data-testid="tab-research"
+          >
             <Building2 className="h-4 w-4" />
             Company Research
+            <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#7FA3A1] opacity-0 group-data-[state=active]:opacity-100" />
           </TabsTrigger>
-          <TabsTrigger value="prospects" className="gap-2" data-testid="tab-corp-prospects">
+          <TabsTrigger 
+            value="prospects" 
+            className="group relative gap-2 bg-[#B5C942] text-white data-[state=active]:bg-[#B5C942] data-[state=active]:text-white data-[state=active]:shadow-none" 
+            data-testid="tab-corp-prospects"
+          >
             <Target className="h-4 w-4" />
             Corporate Prospects
+            <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#B5C942] opacity-0 group-data-[state=active]:opacity-100" />
           </TabsTrigger>
-          <TabsTrigger value="risk" className="gap-2" data-testid="tab-risk">
+          <TabsTrigger 
+            value="risk" 
+            className="group relative gap-2 bg-[#D5636C] text-white data-[state=active]:bg-[#D5636C] data-[state=active]:text-white data-[state=active]:shadow-none" 
+            data-testid="tab-risk"
+          >
             <Shield className="h-4 w-4" />
             Risk Assessment
+            <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#D5636C] opacity-0 group-data-[state=active]:opacity-100" />
           </TabsTrigger>
         </TabsList>
 
