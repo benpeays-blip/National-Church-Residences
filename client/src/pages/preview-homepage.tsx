@@ -89,6 +89,7 @@ export default function PreviewHomepage() {
       priority: "High",
       action: "Schedule stewardship call",
       donor: "Margaret Chen",
+      donorId: "1",
       context: "Last major gift was 90+ days ago, engagement declining",
       type: "call",
       accent: "coral" as const,
@@ -97,6 +98,7 @@ export default function PreviewHomepage() {
       priority: "High",
       action: "Send proposal follow-up",
       donor: "Anderson Foundation",
+      donorId: "2",
       context: "$250K grant proposal pending review since 12/1",
       type: "email",
       accent: "olive" as const,
@@ -105,6 +107,7 @@ export default function PreviewHomepage() {
       priority: "Medium",
       action: "Prepare meeting brief",
       donor: "Dr. James Morrison",
+      donorId: "3",
       context: "Site visit scheduled for Dec 19th - prepare impact report",
       type: "prep",
       accent: "sky" as const,
@@ -113,6 +116,7 @@ export default function PreviewHomepage() {
       priority: "Medium",
       action: "Acknowledge planned gift intent",
       donor: "Robert & Linda Hayes",
+      donorId: "4",
       context: "Indicated estate planning interest at Nov gala",
       type: "letter",
       accent: "teal" as const,
@@ -356,41 +360,42 @@ export default function PreviewHomepage() {
                   const accentColor = getAccentColor(action.accent);
                   const priorityColor = action.priority === "High" ? "#ef4444" : accentColors.olive;
                   return (
-                    <div 
-                      key={idx}
-                      className="group flex items-center gap-4 p-4 rounded-xl border hover-elevate transition-all cursor-pointer"
-                      style={{ borderColor: `${accentColor}30`, backgroundColor: `${accentColor}05` }}
-                      data-testid={`action-item-${idx}`}
-                    >
+                    <Link key={idx} href={`/donors/${action.donorId}/action-plan`}>
                       <div 
-                        className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
-                        style={{ backgroundColor: `${accentColor}15` }}
+                        className="group flex items-center gap-4 p-4 rounded-xl border hover-elevate transition-all cursor-pointer hover:shadow-lg"
+                        style={{ borderColor: `${accentColor}30`, backgroundColor: `${accentColor}05` }}
+                        data-testid={`action-item-${idx}`}
                       >
-                        {action.type === "call" && <Phone className="w-5 h-5" style={{ color: accentColor }} />}
-                        {action.type === "email" && <Mail className="w-5 h-5" style={{ color: accentColor }} />}
-                        {action.type === "prep" && <FileText className="w-5 h-5" style={{ color: accentColor }} />}
-                        {action.type === "letter" && <Gift className="w-5 h-5" style={{ color: accentColor }} />}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-semibold">{action.action}</span>
-                          <span 
-                            className="text-xs font-medium px-2 py-0.5 rounded-full"
-                            style={{ backgroundColor: `${priorityColor}15`, color: priorityColor }}
-                          >
-                            {action.priority}
-                          </span>
+                        <div 
+                          className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0"
+                          style={{ backgroundColor: `${accentColor}15` }}
+                        >
+                          {action.type === "call" && <Phone className="w-5 h-5" style={{ color: accentColor }} />}
+                          {action.type === "email" && <Mail className="w-5 h-5" style={{ color: accentColor }} />}
+                          {action.type === "prep" && <FileText className="w-5 h-5" style={{ color: accentColor }} />}
+                          {action.type === "letter" && <Gift className="w-5 h-5" style={{ color: accentColor }} />}
                         </div>
-                        <p className="text-sm font-medium" style={{ color: accentColor }}>{action.donor}</p>
-                        <p className="text-sm text-muted-foreground line-clamp-1 mt-0.5">{action.context}</p>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="font-semibold">{action.action}</span>
+                            <span 
+                              className="text-xs font-medium px-2 py-0.5 rounded-full"
+                              style={{ backgroundColor: `${priorityColor}15`, color: priorityColor }}
+                            >
+                              {action.priority}
+                            </span>
+                          </div>
+                          <p className="text-sm font-medium" style={{ color: accentColor }}>{action.donor}</p>
+                          <p className="text-sm text-muted-foreground line-clamp-1 mt-0.5">{action.context}</p>
+                        </div>
+                        <div 
+                          className="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                          style={{ backgroundColor: `${accentColor}15` }}
+                        >
+                          <ArrowRight className="w-4 h-4" style={{ color: accentColor }} />
+                        </div>
                       </div>
-                      <div 
-                        className="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                        style={{ backgroundColor: `${accentColor}15` }}
-                      >
-                        <ArrowRight className="w-4 h-4" style={{ color: accentColor }} />
-                      </div>
-                    </div>
+                    </Link>
                   );
                 })}
               </div>
