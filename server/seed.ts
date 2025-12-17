@@ -2354,50 +2354,71 @@ async function seed() {
   const corporatePartnershipsList: any[] = [];
   
   const companies = [
-    { name: "Google", domain: "google.com" },
-    { name: "Microsoft", domain: "microsoft.com" },
-    { name: "Amazon", domain: "amazon.com" },
-    { name: "Salesforce", domain: "salesforce.com" },
-    { name: "Meta", domain: "meta.com" },
-    { name: "Apple", domain: "apple.com" },
-    { name: "Oracle", domain: "oracle.com" },
-    { name: "Adobe", domain: "adobe.com" },
-    { name: "Cisco", domain: "cisco.com" },
-    { name: "Intel", domain: "intel.com" },
-    { name: "IBM", domain: "ibm.com" },
-    { name: "Tesla", domain: "tesla.com" },
-    { name: "Netflix", domain: "netflix.com" },
-    { name: "Airbnb", domain: "airbnb.com" },
-    { name: "Uber", domain: "uber.com" },
+    { name: "Google", domain: "google.com", industry: "Technology", description: "Leading technology company supporting senior housing innovation and digital inclusion programs.", contactName: "Sarah Chen", contactTitle: "Corporate Giving Director", contributions: 285000, volunteerHours: 1240, volunteerCount: 78, startYear: 2019 },
+    { name: "Microsoft", domain: "microsoft.com", industry: "Technology", description: "Long-standing partner providing technology grants and employee volunteer programs for digital literacy.", contactName: "David Park", contactTitle: "Community Affairs Manager", contributions: 425000, volunteerHours: 2150, volunteerCount: 125, startYear: 2017 },
+    { name: "Amazon", domain: "amazon.com", industry: "Technology", description: "Strategic partner supporting affordable housing and community development initiatives.", contactName: "Jennifer Wu", contactTitle: "Social Impact Lead", contributions: 350000, volunteerHours: 890, volunteerCount: 56, startYear: 2020 },
+    { name: "Salesforce", domain: "salesforce.com", industry: "Technology", description: "Committed partner providing CRM technology and volunteer hours for resident engagement.", contactName: "Marcus Johnson", contactTitle: "Philanthropy Manager", contributions: 175000, volunteerHours: 680, volunteerCount: 42, startYear: 2021 },
+    { name: "Meta", domain: "meta.com", industry: "Technology", description: "Supporting digital connection programs for seniors and intergenerational engagement.", contactName: "Emily Rodriguez", contactTitle: "Social Good Director", contributions: 125000, volunteerHours: 420, volunteerCount: 28, startYear: 2022 },
+    { name: "Apple", domain: "apple.com", industry: "Technology", description: "Partner in accessibility technology and community health monitoring initiatives.", contactName: "Michael Lee", contactTitle: "Community Investment Lead", contributions: 520000, volunteerHours: 560, volunteerCount: 35, startYear: 2018 },
+    { name: "Oracle", domain: "oracle.com", industry: "Technology", description: "Database and analytics partner supporting data-driven health outcomes research.", contactName: "Patricia Brown", contactTitle: "Foundation Relations", contributions: 95000, volunteerHours: 320, volunteerCount: 18, startYear: 2021 },
+    { name: "Adobe", domain: "adobe.com", industry: "Technology", description: "Creative tools partner supporting resident storytelling and community documentation.", contactName: "James Wilson", contactTitle: "CSR Program Manager", contributions: 68000, volunteerHours: 280, volunteerCount: 22, startYear: 2023 },
+    { name: "Cisco", domain: "cisco.com", industry: "Technology", description: "Networking partner enabling telehealth and smart community infrastructure.", contactName: "Linda Martinez", contactTitle: "Community Affairs Director", contributions: 145000, volunteerHours: 450, volunteerCount: 32, startYear: 2020 },
+    { name: "Intel", domain: "intel.com", industry: "Technology", description: "Hardware partner supporting smart home technology for aging in place.", contactName: "Robert Taylor", contactTitle: "Corporate Giving Manager", contributions: 110000, volunteerHours: 380, volunteerCount: 24, startYear: 2019 },
+    { name: "IBM", domain: "ibm.com", industry: "Technology", description: "AI and analytics partner supporting predictive health monitoring systems.", contactName: "Susan Anderson", contactTitle: "Social Impact Director", contributions: 185000, volunteerHours: 620, volunteerCount: 38, startYear: 2018 },
+    { name: "Home Depot", domain: "homedepot.com", industry: "Retail", description: "Building materials and volunteer construction support for affordable housing.", contactName: "Thomas Garcia", contactTitle: "Community Impact Manager", contributions: 275000, volunteerHours: 3200, volunteerCount: 180, startYear: 2016 },
+    { name: "Kroger", domain: "kroger.com", industry: "Retail", description: "Food security partner supporting resident nutrition and meal programs.", contactName: "Nancy White", contactTitle: "Community Relations", contributions: 95000, volunteerHours: 840, volunteerCount: 65, startYear: 2020 },
+    { name: "CVS Health", domain: "cvshealth.com", industry: "Healthcare", description: "Healthcare partner supporting pharmacy services and health screenings.", contactName: "Christopher Harris", contactTitle: "Foundation Director", contributions: 310000, volunteerHours: 1420, volunteerCount: 95, startYear: 2017 },
+    { name: "Humana", domain: "humana.com", industry: "Healthcare", description: "Insurance partner supporting wellness programs and preventive care initiatives.", contactName: "Elizabeth Clark", contactTitle: "Community Investment Lead", contributions: 245000, volunteerHours: 980, volunteerCount: 72, startYear: 2019 },
   ];
   
-  for (let i = 0; i < 15; i++) {
+  const partnershipTypeOptions = ["sponsorship", "corporate_giving", "volunteering", "in_kind", "foundation_grant"] as const;
+  
+  for (let i = 0; i < companies.length; i++) {
     const company = companies[i];
     const hasMatching = Math.random() > 0.3;
-    const employeeCount = Math.floor(Math.random() * 45) + 5; // 5-50 employee donors per company
-    const avgGift = Math.floor(Math.random() * 3000) + 500; // $500-$3500 average gift
+    const employeeCount = Math.floor(Math.random() * 45) + 5;
+    const avgGift = Math.floor(Math.random() * 3000) + 500;
     const totalEmployeeGiving = (employeeCount * avgGift).toString();
     const matchingRatio = hasMatching ? ["1:1", "2:1", "1:2", "0.5:1"][Math.floor(Math.random() * 4)] : null;
     
-    // Calculate matching potential
     let estimatedMatchingPotential = null;
     if (hasMatching && matchingRatio) {
       const ratioMultiplier = matchingRatio === "2:1" ? 2 : matchingRatio === "1:1" ? 1 : matchingRatio === "1:2" ? 0.5 : 0.5;
       estimatedMatchingPotential = (parseFloat(totalEmployeeGiving) * ratioMultiplier).toString();
     }
     
-    // Select some employees as decision makers
     const potentialDecisionMakers = personsList.filter(p => p.organizationName && p.organizationName.includes(company.name.split(' ')[0]));
     const decisionMakers = potentialDecisionMakers.slice(0, Math.min(2, potentialDecisionMakers.length)).map(p => p.id);
+    
+    // Randomly assign 2-4 partnership types
+    const numTypes = Math.floor(Math.random() * 3) + 2;
+    const shuffledTypes = [...partnershipTypeOptions].sort(() => Math.random() - 0.5);
+    const selectedTypes = shuffledTypes.slice(0, numTypes);
     
     corporatePartnershipsList.push({
       companyName: company.name,
       domain: company.domain,
+      logoUrl: `https://logo.clearbit.com/${company.domain}`,
+      description: company.description,
+      industry: company.industry,
+      location: i % 3 === 0 ? "Columbus, OH" : i % 3 === 1 ? "San Francisco, CA" : "New York, NY",
       employeeCount,
       totalEmployeeGiving,
+      totalContributions: company.contributions.toString(),
       hasMatchingProgram: hasMatching ? 1 : 0,
       matchingRatio,
       estimatedMatchingPotential,
+      contactName: company.contactName,
+      contactTitle: company.contactTitle,
+      contactEmail: `${company.contactName.toLowerCase().replace(' ', '.')}@${company.domain}`,
+      contactPhone: `(${Math.floor(Math.random() * 900) + 100}) ${Math.floor(Math.random() * 900) + 100}-${Math.floor(Math.random() * 9000) + 1000}`,
+      partnershipTypes: selectedTypes,
+      partnershipGoals: "Support affordable senior housing, community wellness, and resident quality of life.",
+      pastActivities: ["Annual Gala Sponsorship", "Employee Volunteer Day", "Technology Donation", "Matching Gift Campaign"].slice(0, Math.floor(Math.random() * 3) + 2),
+      partnershipStatus: i < 12 ? "active" : "prospect",
+      partnershipStartYear: company.startYear,
+      volunteerHours: company.volunteerHours,
+      volunteerCount: company.volunteerCount,
       decisionMakers: decisionMakers.length > 0 ? decisionMakers : null,
       foundationUrl: hasMatching ? `https://${company.name.toLowerCase().replace(/\s/g, '')}.org/foundation` : null,
       notes: hasMatching ? `Active matching gift program. ${employeeCount} employee donors contributing.` : `${employeeCount} employee donors. No formal matching program yet.`,
