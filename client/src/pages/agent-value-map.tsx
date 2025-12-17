@@ -621,19 +621,29 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {appShellHubs.map((hub) => (
-                  <AccentCard key={hub.name} accent={hub.accent} className="hover-elevate" data-testid={`card-hub-${hub.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-3">
-                        <div className={`p-2 rounded-md ${getAccentBgClass(hub.accent)}`}>
-                          <hub.icon className="w-4 h-4 text-white" />
+                  <Link key={hub.name} href={`/agent-value-map/hub/${hub.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <AccentCard 
+                      accent={hub.accent} 
+                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group"
+                      data-testid={`card-hub-${hub.name.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className={`p-2 rounded-md ${getAccentBgClass(hub.accent)}`}>
+                            <hub.icon className="w-4 h-4 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-semibold group-hover:text-primary transition-colors">{hub.name}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{hub.description}</p>
+                            <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
+                              <span>View hub details</span>
+                              <ChevronRight className="h-4 w-4" />
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-semibold">{hub.name}</p>
-                          <p className="text-sm text-muted-foreground mt-1">{hub.description}</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </AccentCard>
+                      </CardContent>
+                    </AccentCard>
+                  </Link>
                 ))}
               </div>
             </CardContent>
