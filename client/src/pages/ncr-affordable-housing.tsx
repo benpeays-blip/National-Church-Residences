@@ -301,12 +301,12 @@ export default function NcrAffordableHousing() {
 
       {/* Featured Communities */}
       <Card className="border">
-        <CardHeader style={{ backgroundColor: '#395174' }}>
-          <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
+        <CardHeader style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}>
+          <CardTitle className="text-base font-semibold flex items-center gap-2" style={{ color: '#084594' }}>
             <Home className="w-4 h-4" />
             Featured Communities
           </CardTitle>
-          <CardDescription className="text-white/80 text-xs">
+          <CardDescription className="text-xs">
             Highlighting the variety and quality of NCR affordable housing
           </CardDescription>
         </CardHeader>
