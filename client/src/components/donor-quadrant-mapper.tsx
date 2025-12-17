@@ -349,59 +349,51 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               );
             })}
 
-            {/* Quadrant Label Boxes - centered in each quadrant */}
+            {/* Quadrant Header Bars - at top of each quadrant */}
             {/* Top Left - Friend */}
-            <div className="absolute left-[25%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
-              <button
-                onClick={() => setSelectedQuadrant('friend')}
-                className="relative px-3 pt-2 pb-3 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white w-[140px]"
-                data-testid="quadrant-friend"
-              >
-                <div className="font-bold text-lg">Friend</div>
-                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-friend">{data.counts.friend} Donors</Badge>
-              </button>
-            </div>
+            <button
+              onClick={() => setSelectedQuadrant('friend')}
+              className="absolute left-0 top-0 w-[calc(50%-1px)] h-7 z-30 pointer-events-auto flex items-center justify-between px-3 cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
+              data-testid="quadrant-friend"
+            >
+              <span className="font-semibold text-sm text-white">Friend</span>
+              <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-friend">{data.counts.friend} Donors</span>
+            </button>
 
             {/* Top Right - Partner */}
-            <div className="absolute left-[75%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
-              <button
-                onClick={() => setSelectedQuadrant('partner')}
-                className="relative px-3 pt-2 pb-3 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white w-[140px]"
-                data-testid="quadrant-partner"
-              >
-                <div className="font-bold text-lg">Partner</div>
-                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-partner">{data.counts.partner} Donors</Badge>
-              </button>
-              {isPartnerHovered && draggedDonor && (
-                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow z-40">
-                  Drop to generate action plan
-                </div>
-              )}
-            </div>
+            <button
+              onClick={() => setSelectedQuadrant('partner')}
+              className="absolute left-1/2 top-0 w-1/2 h-7 z-30 pointer-events-auto flex items-center justify-between px-3 cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
+              data-testid="quadrant-partner"
+            >
+              <span className="font-semibold text-sm text-white">Partner</span>
+              <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-partner">{data.counts.partner} Donors</span>
+            </button>
+            {isPartnerHovered && draggedDonor && (
+              <div className="absolute left-3/4 top-9 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow z-40">
+                Drop to generate action plan
+              </div>
+            )}
 
             {/* Bottom Left - Acquaintance */}
-            <div className="absolute left-[25%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
-              <button
-                onClick={() => setSelectedQuadrant('acquaintance')}
-                className="relative px-3 pt-2 pb-3 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary bg-[#395174] text-white w-[140px] flex flex-col items-center justify-center"
-                data-testid="quadrant-acquaintance"
-              >
-                <div className="font-bold text-lg text-center">Acquaintance</div>
-                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-acquaintance">{data.counts.acquaintance} Donors</Badge>
-              </button>
-            </div>
+            <button
+              onClick={() => setSelectedQuadrant('acquaintance')}
+              className="absolute left-0 top-1/2 w-[calc(50%-1px)] h-7 z-30 pointer-events-auto flex items-center justify-between px-3 cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
+              data-testid="quadrant-acquaintance"
+            >
+              <span className="font-semibold text-sm text-white">Acquaintance</span>
+              <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-acquaintance">{data.counts.acquaintance} Donors</span>
+            </button>
 
             {/* Bottom Right - Colleague */}
-            <div className="absolute left-[75%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
-              <button
-                onClick={() => setSelectedQuadrant('colleague')}
-                className="relative px-3 pt-2 pb-3 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white w-[140px]"
-                data-testid="quadrant-colleague"
-              >
-                <div className="font-bold text-lg">Colleague</div>
-                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-colleague">{data.counts.colleague} Donors</Badge>
-              </button>
-            </div>
+            <button
+              onClick={() => setSelectedQuadrant('colleague')}
+              className="absolute left-1/2 top-1/2 w-1/2 h-7 z-30 pointer-events-auto flex items-center justify-between px-3 cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
+              data-testid="quadrant-colleague"
+            >
+              <span className="font-semibold text-sm text-white">Colleague</span>
+              <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-colleague">{data.counts.colleague} Donors</span>
+            </button>
             </div>
 
             {/* Axis Labels - outside overflow-hidden container */}
