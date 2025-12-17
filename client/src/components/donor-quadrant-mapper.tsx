@@ -161,9 +161,9 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
     .sort((a, b) => (b.energy + b.structure) - (a.energy + a.structure));
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 lg:h-[calc(100vh-180px)]">
+    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 h-full min-h-0">
       {/* Main Quadrant Visualization */}
-      <Card className="lg:col-span-3">
+      <Card className="lg:col-span-3 flex flex-col h-full overflow-hidden">
         <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
           <div className="flex items-center justify-between">
             <div>
