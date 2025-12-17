@@ -184,11 +184,32 @@ export class DatabaseStorage implements IStorage {
     return result[0];
   }
 
-  async getOpportunities(ownerId?: string): Promise<Opportunity[]> {
-    if (ownerId) {
-      return db.select().from(opportunities).where(eq(opportunities.ownerId, ownerId));
-    }
-    return db.select().from(opportunities);
+  async getOpportunities(ownerId?: string): Promise<any[]> {
+    const baseQuery = db
+      .select({
+        opportunity: opportunities,
+        person: {
+          firstName: persons.firstName,
+          lastName: persons.lastName,
+        },
+        owner: {
+          firstName: users.firstName,
+          lastName: users.lastName,
+        },
+      })
+      .from(opportunities)
+      .leftJoin(persons, eq(opportunities.personId, persons.id))
+      .leftJoin(users, eq(opportunities.ownerId, users.id));
+    
+    const results = ownerId
+      ? await baseQuery.where(eq(opportunities.ownerId, ownerId))
+      : await baseQuery;
+    
+    return results.map((row) => ({
+      ...row.opportunity,
+      person: row.person,
+      owner: row.owner,
+    }));
   }
 
   async getOpportunity(id: string): Promise<Opportunity | undefined> {
