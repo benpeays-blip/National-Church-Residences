@@ -501,13 +501,13 @@ export default function PreviewHomepage() {
                 </div>
               </div>
               
-              <div className="p-6 space-y-4">
+              <div className="p-6 space-y-5 flex flex-col justify-between h-[calc(100%-88px)]">
                 {pipelineStages.map((stage, idx) => (
-                  <div key={idx} className="group">
-                    <div className="flex items-center justify-between mb-2">
+                  <div key={idx} className="group flex-1 flex flex-col justify-center">
+                    <div className="flex items-center justify-between mb-3">
                       <div className="flex items-center gap-3">
                         <div 
-                          className="w-2.5 h-2.5 rounded-full"
+                          className="w-3 h-3 rounded-full"
                           style={{ backgroundColor: stage.color }}
                         />
                         <span className="font-medium">{stage.stage}</span>
@@ -517,7 +517,7 @@ export default function PreviewHomepage() {
                         <span className="font-bold" style={{ color: stage.color }}>{stage.value}</span>
                       </div>
                     </div>
-                    <div className="h-2.5 rounded-full bg-muted/50 overflow-hidden">
+                    <div className="h-3 rounded-full bg-muted/50 overflow-hidden">
                       <div 
                         className="h-full rounded-full transition-all"
                         style={{ 
