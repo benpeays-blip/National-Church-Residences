@@ -127,25 +127,25 @@ export default function TechStackMapper() {
   return (
     <div className="space-y-6">
       <Tabs defaultValue="architecture" className="w-full">
-        <TabsList className="grid w-full grid-cols-3" data-testid="tabs-tech-stack">
+        <TabsList className="grid w-full grid-cols-3 gap-1 bg-transparent p-0" data-testid="tabs-tech-stack">
           <TabsTrigger 
             value="architecture" 
             data-testid="tab-architecture"
-            className="border-b-2 border-[#7FA3A1] text-[#7FA3A1] data-[state=active]:bg-[#7FA3A1] data-[state=active]:text-white data-[state=active]:border-[#7FA3A1]"
+            className="bg-[#7FA3A1] text-white data-[state=active]:opacity-100 data-[state=inactive]:opacity-70 hover:opacity-90"
           >
             Tech Ecosystem
           </TabsTrigger>
           <TabsTrigger 
             value="layers" 
             data-testid="tab-layers"
-            className="border-b-2 border-[#7BC4DC] text-[#7BC4DC] data-[state=active]:bg-[#7BC4DC] data-[state=active]:text-white data-[state=active]:border-[#7BC4DC]"
+            className="bg-[#7BC4DC] text-white data-[state=active]:opacity-100 data-[state=inactive]:opacity-70 hover:opacity-90"
           >
             Stack Architecture
           </TabsTrigger>
           <TabsTrigger 
             value="categories" 
             data-testid="tab-categories"
-            className="border-b-2 border-[#B5C942] text-[#B5C942] data-[state=active]:bg-[#B5C942] data-[state=active]:text-white data-[state=active]:border-[#B5C942]"
+            className="bg-[#E8923A] text-white data-[state=active]:opacity-100 data-[state=inactive]:opacity-70 hover:opacity-90"
           >
             Platform Details
           </TabsTrigger>
