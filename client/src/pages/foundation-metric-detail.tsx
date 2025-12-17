@@ -314,15 +314,15 @@ export default function FoundationMetricDetail() {
         </Card>
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Award className="h-5 w-5" style={{ color: metric.color }} />
+      <Card className="overflow-hidden">
+        <CardHeader className="bg-[#7BC4DC] text-white">
+          <CardTitle className="flex items-center gap-2 text-white">
+            <Award className="h-5 w-5" />
             Goals & Progress
           </CardTitle>
-          <CardDescription>Tracking our targets for this fiscal year</CardDescription>
+          <CardDescription className="text-white/80">Tracking our targets for this fiscal year</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="grid md:grid-cols-3 gap-6">
             {metric.goals.map((goal, index) => {
               const percentage = Math.min(100, Math.round((goal.current / goal.target) * 100));
