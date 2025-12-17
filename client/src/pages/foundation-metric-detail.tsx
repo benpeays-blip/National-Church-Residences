@@ -294,7 +294,7 @@ export default function FoundationMetricDetail() {
               {metric.recentActivity.map((activity, index) => (
                 <div 
                   key={index} 
-                  className="flex items-start gap-3 p-3 rounded-lg bg-muted/50"
+                  className="flex items-start gap-3 p-3 rounded-lg border"
                   data-testid={`activity-${index}`}
                 >
                   <CheckCircle2 className="h-5 w-5 mt-0.5 shrink-0" style={{ color: metric.color }} />
@@ -329,7 +329,7 @@ export default function FoundationMetricDetail() {
               return (
                 <div 
                   key={goal.name} 
-                  className="p-4 rounded-lg border bg-muted/30"
+                  className="p-4 rounded-lg border"
                   data-testid={`goal-${index}`}
                 >
                   <h4 className="font-medium mb-3">{goal.name}</h4>
