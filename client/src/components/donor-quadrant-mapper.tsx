@@ -209,39 +209,33 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               
               // Calculate adjusted top position to avoid header overlap
               // Headers are h-12 (48px) tall at top of each quadrant half
-              // We need to position dots in the usable area below each header
-              const headerHeight = 48; // h-12 = 48px
-              const dotSize = 10; // w-2.5 h-2.5 = 10px
-              const padding = 8; // Extra padding below headers
+              // Top half header: 0% to ~10% (48px in 520px container)
+              // Bottom half header: 50% to ~60% (50% + 48px)
+              // We need to position dots only in the WHITE areas below each header
               
-              // For top half (Friend/Partner): energy 51-100
-              // For bottom half (Acquaintance/Colleague): energy 0-50
-              // Each quadrant half is 50% of the container height
-              // Usable area in each half: from (headerHeight + padding)px to 50% - padding
+              // Usable WHITE areas (approximate percentages for 520px min-height):
+              // Top half white area: 12% to 48%
+              // Bottom half white area: 62% to 96%
               
               let adjustedTop: string;
               if (donor.energy > 50) {
-                // Top half: energy 100 -> near top header, energy 51 -> near middle
+                // Top half: energy 100 -> near top (but below header), energy 51 -> near middle
                 const energyInRange = (donor.energy - 50) / 50; // 0 to 1 (51->0, 100->1)
-                // Map to percentage within the top half, avoiding header
-                // High energy (100) = closer to top (but below header)
-                // Low energy (51) = closer to middle (50%)
-                const usableStartPx = headerHeight + padding; // Start below header
-                const usableEndPercent = 48; // End just before middle (50%)
-                // Higher energy = lower percentage (closer to top)
-                const topPercent = usableEndPercent - (energyInRange * (usableEndPercent - 12));
-                adjustedTop = `max(${usableStartPx}px, calc(${topPercent}% - ${dotSize/2}px))`;
+                // Map to usable white area: 12% (high energy) to 46% (low energy)
+                const usableStart = 14; // Start well below header
+                const usableEnd = 46; // End before middle divider
+                // Higher energy = closer to top = lower percentage
+                const topPercent = usableEnd - (energyInRange * (usableEnd - usableStart));
+                adjustedTop = `${topPercent}%`;
               } else {
-                // Bottom half: energy 50 -> near middle header, energy 0 -> near bottom
+                // Bottom half: energy 50 -> near middle (below header), energy 0 -> near bottom
                 const energyInRange = donor.energy / 50; // 0 to 1 (0->0, 50->1)
-                // Map to percentage within the bottom half, avoiding header
-                // High energy (50) = closer to middle header
-                // Low energy (0) = closer to bottom
-                const usableStartPercent = 52; // Start just after middle + header
-                const usableEndPercent = 94; // End near bottom with padding
-                // Higher energy = lower percentage (closer to middle)
-                const topPercent = usableEndPercent - (energyInRange * (usableEndPercent - usableStartPercent));
-                adjustedTop = `calc(${topPercent}% - ${dotSize/2}px)`;
+                // Map to usable white area: 64% (high energy near middle) to 94% (low energy near bottom)
+                const usableStart = 64; // Start well below middle header
+                const usableEnd = 94; // End near bottom with padding
+                // Higher energy = closer to middle = lower percentage
+                const topPercent = usableEnd - (energyInRange * (usableEnd - usableStart));
+                adjustedTop = `${topPercent}%`;
               }
               
               return (
