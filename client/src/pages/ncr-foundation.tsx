@@ -212,7 +212,7 @@ export default function NcrFoundation() {
               {recentGrants.map((grant, index) => (
                 <div 
                   key={index} 
-                  className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
+                  className="flex items-center justify-between p-3 rounded-lg border"
                   data-testid={`grant-${grant.funder.toLowerCase().replace(/\s+/g, '-')}`}
                 >
                   <div>
