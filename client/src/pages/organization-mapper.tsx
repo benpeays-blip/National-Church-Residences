@@ -405,13 +405,13 @@ export default function OrganizationMapper() {
 
       {/* Typical Fundraising Workflow - Detailed Sequence */}
       <Card>
-        <CardHeader>
-          <CardTitle>Typical Fundraising Workflow</CardTitle>
-          <CardDescription>
+        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardTitle className="text-white">Typical Fundraising Workflow</CardTitle>
+          <CardDescription className="text-white/80">
             Example sequence showing how teams move through the tech ecosystem
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-6">
+        <CardContent className="p-6 pt-6">
           <div className="grid grid-cols-1 gap-4">
             {/* Stage 1 - Prospect Identification */}
             <Card className="border-2 border-sky-200 dark:border-sky-900">
@@ -638,13 +638,13 @@ export default function OrganizationMapper() {
 
       {/* Roles and Workflows */}
       <Card>
-        <CardHeader>
-          <CardTitle>Organizational Roles & Workflows</CardTitle>
-          <CardDescription>
+        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardTitle className="text-white">Organizational Roles & Workflows</CardTitle>
+          <CardDescription className="text-white/80">
             {filteredRoles.length} {filteredRoles.length === 1 ? 'role' : 'roles'} found
           </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <Accordion type="single" collapsible className="space-y-4">
             {filteredRoles.map((role) => {
               const RoleIcon = role.icon;

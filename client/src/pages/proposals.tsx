@@ -37,10 +37,10 @@ export default function Proposals() {
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Areas of Focus</CardTitle>
+        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardTitle className="text-white">Areas of Focus</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <Accordion type="single" collapsible className="space-y-4">
             {/* Focus Area 1 */}
             <AccordionItem value="focus-1" className="border rounded-lg px-6 py-2" data-testid="accordion-focus-1">
@@ -461,10 +461,10 @@ export default function Proposals() {
       </Card>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Implementation Roadmap</CardTitle>
+        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardTitle className="text-white">Implementation Roadmap</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <Accordion type="single" collapsible className="space-y-4">
             {/* Phase 1 */}
             <AccordionItem value="phase-1" className="border rounded-lg px-6 py-2" data-testid="accordion-phase-1">

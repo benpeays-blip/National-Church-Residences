@@ -137,11 +137,11 @@ function CampaignPerformance() {
 
       {/* Performance by Campaign Type */}
       <Card>
-        <CardHeader>
-          <CardTitle>Performance by Campaign Type</CardTitle>
-          <CardDescription>Average performance across different campaign types</CardDescription>
+        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardTitle className="text-white">Performance by Campaign Type</CardTitle>
+          <CardDescription className="text-white/80">Average performance across different campaign types</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="space-y-4">
             {typePerformance.map((type) => (
               <div key={type.type} className="space-y-2">
@@ -172,11 +172,11 @@ function CampaignPerformance() {
 
       {/* Top Performing Campaigns */}
       <Card>
-        <CardHeader>
-          <CardTitle>Top Performing Campaigns</CardTitle>
-          <CardDescription>Ranked by percentage of goal achieved</CardDescription>
+        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardTitle className="text-white">Top Performing Campaigns</CardTitle>
+          <CardDescription className="text-white/80">Ranked by percentage of goal achieved</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="space-y-3">
             {topPerformers.map((campaign, index) => (
               <div key={campaign.id} className="flex items-center gap-4">
@@ -310,11 +310,11 @@ function CampaignGoals() {
 
       {/* Goal Achievement Breakdown */}
       <Card>
-        <CardHeader>
-          <CardTitle>Goal Achievement Breakdown</CardTitle>
-          <CardDescription>Campaign performance against goals</CardDescription>
+        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardTitle className="text-white">Goal Achievement Breakdown</CardTitle>
+          <CardDescription className="text-white/80">Campaign performance against goals</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
@@ -354,11 +354,11 @@ function CampaignGoals() {
 
       {/* All Campaigns Goal Tracking */}
       <Card>
-        <CardHeader>
-          <CardTitle>Campaign Goal Tracking</CardTitle>
-          <CardDescription>All campaigns ordered by goal size</CardDescription>
+        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardTitle className="text-white">Campaign Goal Tracking</CardTitle>
+          <CardDescription className="text-white/80">All campaigns ordered by goal size</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="space-y-4">
             {campaignsByGoal.map((campaign) => {
               const goal = parseFloat(campaign.goal || "0");
@@ -532,11 +532,11 @@ function CampaignTrends() {
 
       {/* Campaign Type Trends */}
       <Card>
-        <CardHeader>
-          <CardTitle>Fundraising by Campaign Type</CardTitle>
-          <CardDescription>Historical performance across campaign categories</CardDescription>
+        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardTitle className="text-white">Fundraising by Campaign Type</CardTitle>
+          <CardDescription className="text-white/80">Historical performance across campaign categories</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="space-y-4">
             {trendsByType.map((type) => (
               <div key={type.type} className="space-y-2">
@@ -573,11 +573,11 @@ function CampaignTrends() {
 
       {/* Historical Averages */}
       <Card>
-        <CardHeader>
-          <CardTitle>Completed Campaign Benchmarks</CardTitle>
-          <CardDescription>Average performance of completed campaigns</CardDescription>
+        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardTitle className="text-white">Completed Campaign Benchmarks</CardTitle>
+          <CardDescription className="text-white/80">Average performance of completed campaigns</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <div className="flex items-center gap-2 text-muted-foreground">
@@ -606,11 +606,11 @@ function CampaignTrends() {
 
       {/* Active Campaign Forecast */}
       <Card>
-        <CardHeader>
-          <CardTitle>Active Campaign Forecast</CardTitle>
-          <CardDescription>Projected outcomes based on current performance</CardDescription>
+        <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+          <CardTitle className="text-white">Active Campaign Forecast</CardTitle>
+          <CardDescription className="text-white/80">Projected outcomes based on current performance</CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="pt-6">
           <div className="space-y-4">
             {activeCampaigns.map((campaign) => {
               const goal = parseFloat(campaign.goal || "0");

@@ -199,10 +199,10 @@ export default function CampaignDetail() {
           <div className="grid gap-6 md:grid-cols-2">
             {/* Campaign Info */}
             <Card>
-              <CardHeader>
-                <CardTitle>Campaign Information</CardTitle>
+              <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+                <CardTitle className="text-white">Campaign Information</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 pt-6">
                 <div className="space-y-1">
                   <p className="text-sm font-medium">Description</p>
                   <p className="text-sm text-muted-foreground" data-testid="text-campaign-description">
@@ -234,10 +234,10 @@ export default function CampaignDetail() {
 
             {/* Performance Snapshot */}
             <Card>
-              <CardHeader>
-                <CardTitle>Performance Snapshot</CardTitle>
+              <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+                <CardTitle className="text-white">Performance Snapshot</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-4 pt-6">
                 <div className="flex items-center justify-between">
                   <span className="text-sm">Goal Completion</span>
                   <span className="text-sm font-medium" data-testid="text-goal-completion">
@@ -274,10 +274,10 @@ export default function CampaignDetail() {
 
           {/* Recent Activity */}
           <Card>
-            <CardHeader>
-              <CardTitle>Recent Activity</CardTitle>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+              <CardTitle className="text-white">Recent Activity</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               <div className="space-y-4">
                 <p className="text-sm text-muted-foreground text-center py-8" data-testid="text-no-activity">
                   No recent activity to display
@@ -289,10 +289,10 @@ export default function CampaignDetail() {
 
         <TabsContent value="donors" className="space-y-6">
           <Card>
-            <CardHeader>
-              <CardTitle>Campaign Donors</CardTitle>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+              <CardTitle className="text-white">Campaign Donors</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               <p className="text-sm text-muted-foreground text-center py-8" data-testid="text-no-donors">
                 Donor segmentation and analysis coming soon
               </p>
@@ -302,10 +302,10 @@ export default function CampaignDetail() {
 
         <TabsContent value="timeline" className="space-y-6">
           <Card>
-            <CardHeader>
-              <CardTitle>Campaign Timeline</CardTitle>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+              <CardTitle className="text-white">Campaign Timeline</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               <p className="text-sm text-muted-foreground text-center py-8" data-testid="text-no-timeline">
                 Timeline visualization coming soon
               </p>
@@ -315,10 +315,10 @@ export default function CampaignDetail() {
 
         <TabsContent value="communications" className="space-y-6">
           <Card>
-            <CardHeader>
-              <CardTitle>Communications Hub</CardTitle>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+              <CardTitle className="text-white">Communications Hub</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               <p className="text-sm text-muted-foreground text-center py-8" data-testid="text-no-communications">
                 Communication tracking coming soon
               </p>
@@ -328,10 +328,10 @@ export default function CampaignDetail() {
 
         <TabsContent value="team" className="space-y-6">
           <Card>
-            <CardHeader>
-              <CardTitle>Campaign Team</CardTitle>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+              <CardTitle className="text-white">Campaign Team</CardTitle>
             </CardHeader>
-            <CardContent>
+            <CardContent className="pt-6">
               <p className="text-sm text-muted-foreground text-center py-8" data-testid="text-no-team">
                 Team management coming soon
               </p>

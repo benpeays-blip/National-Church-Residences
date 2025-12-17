@@ -300,14 +300,14 @@ export default function DonorDetail() {
         {/* Left Column - Contact & Giving Summary */}
         <div className="space-y-6">
           {/* Contact Information */}
-          <Card className="p-6">
-            <CardHeader className="px-0 pt-0">
-              <CardTitle className="flex items-center gap-2">
+          <Card>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <User className="w-5 h-5" />
                 Contact Information
               </CardTitle>
             </CardHeader>
-            <CardContent className="px-0 pb-0">
+            <CardContent className="p-6">
               <div className="space-y-4">
                 {donor.person.primaryEmail ? (
                   <div className="flex items-start gap-3">
@@ -376,14 +376,14 @@ export default function DonorDetail() {
           </Card>
 
           {/* Giving Summary */}
-          <Card className="p-6">
-            <CardHeader className="px-0 pt-0">
-              <CardTitle className="flex items-center gap-2">
+          <Card>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+              <CardTitle className="flex items-center gap-2 text-white">
                 <DollarSign className="w-5 h-5" />
                 Giving Summary
               </CardTitle>
             </CardHeader>
-            <CardContent className="px-0 pb-0">
+            <CardContent className="p-6">
               <div className="space-y-4">
                 <div>
                   <p className="text-sm text-muted-foreground">Lifetime Giving</p>
@@ -453,14 +453,14 @@ export default function DonorDetail() {
             <TabsContent value="overview" className="space-y-6">
               {/* Next Best Actions */}
               {donor.nextBestActions.length > 0 && (
-                <Card className="p-6">
-                  <CardHeader className="px-0 pt-0">
-                    <CardTitle className="flex items-center gap-2">
-                      <Target className="w-5 h-5 text-chart-1" />
+                <Card>
+                  <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+                    <CardTitle className="flex items-center gap-2 text-white">
+                      <Target className="w-5 h-5" />
                       Next Best Actions
                     </CardTitle>
                   </CardHeader>
-                  <CardContent className="px-0 pb-0">
+                  <CardContent className="p-6">
                     <div className="space-y-3">
                       {donor.nextBestActions.slice(0, 3).map((action) => (
                         <div key={action.id} className="p-4 border rounded-lg space-y-2">
@@ -491,11 +491,11 @@ export default function DonorDetail() {
 
               {/* Active Opportunities */}
               {donor.opportunities.length > 0 && (
-                <Card className="p-6">
-                  <CardHeader className="px-0 pt-0">
-                    <CardTitle>Active Opportunities</CardTitle>
+                <Card>
+                  <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+                    <CardTitle className="text-white">Active Opportunities</CardTitle>
                   </CardHeader>
-                  <CardContent className="px-0 pb-0">
+                  <CardContent className="p-6">
                     <div className="space-y-3">
                       {donor.opportunities.map((opp) => (
                         <div key={opp.id} className="p-4 border rounded-lg">
@@ -529,11 +529,11 @@ export default function DonorDetail() {
 
             {/* Gifts Tab */}
             <TabsContent value="gifts">
-              <Card className="p-6">
-                <CardHeader className="px-0 pt-0">
-                  <CardTitle>Gift History</CardTitle>
+              <Card>
+                <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+                  <CardTitle className="text-white">Gift History</CardTitle>
                 </CardHeader>
-                <CardContent className="px-0 pb-0">
+                <CardContent className="p-6">
                   <Table data-testid="table-gifts">
                     <TableHeader>
                       <TableRow>
@@ -581,11 +581,11 @@ export default function DonorDetail() {
 
             {/* Opportunities Tab */}
             <TabsContent value="opportunities">
-              <Card className="p-6">
-                <CardHeader className="px-0 pt-0">
-                  <CardTitle>All Opportunities</CardTitle>
+              <Card>
+                <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+                  <CardTitle className="text-white">All Opportunities</CardTitle>
                 </CardHeader>
-                <CardContent className="px-0 pb-0">
+                <CardContent className="p-6">
                   {donor.opportunities.length > 0 ? (
                     <Table data-testid="table-opportunities">
                       <TableHeader>
@@ -633,11 +633,11 @@ export default function DonorDetail() {
 
             {/* Activities Tab */}
             <TabsContent value="activities">
-              <Card className="p-6">
-                <CardHeader className="px-0 pt-0">
-                  <CardTitle>Recent Activities</CardTitle>
+              <Card>
+                <CardHeader className="bg-[#395174] text-white rounded-t-xl">
+                  <CardTitle className="text-white">Recent Activities</CardTitle>
                 </CardHeader>
-                <CardContent className="px-0 pb-0">
+                <CardContent className="p-6">
                   {donor.interactions.length > 0 ? (
                     <div className="space-y-4">
                       {donor.interactions
