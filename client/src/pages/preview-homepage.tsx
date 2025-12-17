@@ -745,28 +745,28 @@ export default function PreviewHomepage() {
           </div>
 
           {/* Quick Navigation */}
-          <div className="rounded-xl border bg-card overflow-hidden">
+          <div className="rounded-xl border bg-card overflow-hidden flex flex-col">
             {/* Teal Header */}
             <div 
-              className="px-6 py-5"
+              className="px-6 py-4"
               style={{ background: `linear-gradient(135deg, ${accentColors.teal}15 0%, ${accentColors.teal}05 100%)` }}
             >
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <div 
-                  className="w-12 h-12 rounded-xl flex items-center justify-center"
+                  className="w-10 h-10 rounded-lg flex items-center justify-center"
                   style={{ backgroundColor: `${accentColors.teal}20` }}
                 >
-                  <Zap className="w-6 h-6" style={{ color: accentColors.teal }} />
+                  <Zap className="w-5 h-5" style={{ color: accentColors.teal }} />
                 </div>
                 <div>
-                  <h2 className="text-xl font-semibold">Quick Access</h2>
-                  <p className="text-sm text-muted-foreground">Navigate to key sections</p>
+                  <h2 className="text-lg font-semibold">Quick Access</h2>
+                  <p className="text-xs text-muted-foreground">Navigate to key sections</p>
                 </div>
               </div>
             </div>
             
-            <div className="p-4 flex flex-col justify-center h-[calc(100%-88px)]">
-              <div className="grid grid-cols-2 gap-2">
+            <div className="p-3 flex-1 flex flex-col justify-center">
+              <div className="grid grid-cols-2 gap-1.5">
                 {[
                   { label: "Donors", icon: Users, accent: accentColors.sky },
                   { label: "Pipeline", icon: TrendingUp, accent: accentColors.teal },
@@ -784,17 +784,17 @@ export default function PreviewHomepage() {
                   return (
                     <Link key={idx} href={href}>
                       <div 
-                        className="group flex items-center gap-2.5 px-3 py-2.5 rounded-lg border hover-elevate transition-all cursor-pointer"
+                        className="group flex items-center gap-2 px-2.5 py-2 rounded-lg border hover-elevate transition-all cursor-pointer"
                         style={{ borderColor: `${item.accent}30`, backgroundColor: `${item.accent}05` }}
                         data-testid={`quick-nav-${item.label.toLowerCase()}`}
                       >
                         <div 
-                          className="w-8 h-8 rounded-md flex items-center justify-center shrink-0"
+                          className="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
                           style={{ backgroundColor: `${item.accent}15` }}
                         >
-                          <Icon className="w-4 h-4" style={{ color: item.accent }} />
+                          <Icon className="w-3.5 h-3.5" style={{ color: item.accent }} />
                         </div>
-                        <span className="font-medium text-sm">{item.label}</span>
+                        <span className="font-medium text-xs">{item.label}</span>
                       </div>
                     </Link>
                   );
