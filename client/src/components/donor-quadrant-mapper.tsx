@@ -8,7 +8,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TrendingUp, Users, Lightbulb, Phone, Mail, Heart, Award, Calendar, BookOpen, AlertTriangle, ArrowRight, CheckCircle2, Sparkles, Eye, Star } from 'lucide-react';
+import { TrendingUp, Users, Lightbulb, Phone, Mail, Heart, Award, Calendar, BookOpen, AlertTriangle, ArrowRight, CheckCircle2, Sparkles, Eye } from 'lucide-react';
 import { Link } from 'wouter';
 
 interface Donor {
@@ -349,51 +349,28 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               );
             })}
 
-            {/* Quadrant Label Boxes - NCR Accent Gradient Design */}
-            {/* Top Left - Friend (Sky) */}
+            {/* Quadrant Label Boxes - centered in each quadrant */}
+            {/* Top Left - Friend */}
             <div className="absolute left-[25%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('friend')}
-                className="group relative w-[150px] rounded-xl overflow-hidden cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
-                style={{ 
-                  background: 'linear-gradient(135deg, #7BC4DC 0%, #5BA8C0 100%)',
-                  boxShadow: '0 4px 20px rgba(123, 196, 220, 0.3)'
-                }}
+                className="relative px-3 pt-2 pb-3 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white w-[140px]"
                 data-testid="quadrant-friend"
               >
-                <div className="px-4 py-3 text-center">
-                  <div className="text-white font-bold text-lg tracking-wide">Friend</div>
-                  <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm">
-                    <Users className="w-3.5 h-3.5 text-white" />
-                    <span className="text-white text-sm font-semibold" data-testid="count-friend">{data.counts.friend}</span>
-                  </div>
-                </div>
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="font-bold text-lg">Friend</div>
+                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-friend">{data.counts.friend} Donors</Badge>
               </button>
             </div>
 
-            {/* Top Right - Partner (Teal) */}
+            {/* Top Right - Partner */}
             <div className="absolute left-[75%] top-[25%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('partner')}
-                className="group relative w-[150px] rounded-xl overflow-hidden cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
-                style={{ 
-                  background: 'linear-gradient(135deg, #008080 0%, #006666 100%)',
-                  boxShadow: '0 4px 20px rgba(0, 128, 128, 0.3)'
-                }}
+                className="relative px-3 pt-2 pb-3 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white w-[140px]"
                 data-testid="quadrant-partner"
               >
-                <div className="px-4 py-3 text-center">
-                  <div className="text-white font-bold text-lg tracking-wide flex items-center justify-center gap-1.5">
-                    Partner
-                    <Star className="w-4 h-4 text-yellow-300 fill-yellow-300" />
-                  </div>
-                  <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm">
-                    <Users className="w-3.5 h-3.5 text-white" />
-                    <span className="text-white text-sm font-semibold" data-testid="count-partner">{data.counts.partner}</span>
-                  </div>
-                </div>
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="font-bold text-lg">Partner</div>
+                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-partner">{data.counts.partner} Donors</Badge>
               </button>
               {isPartnerHovered && draggedDonor && (
                 <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow z-40">
@@ -402,47 +379,27 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               )}
             </div>
 
-            {/* Bottom Left - Acquaintance (Coral) */}
+            {/* Bottom Left - Acquaintance */}
             <div className="absolute left-[25%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('acquaintance')}
-                className="group relative w-[150px] rounded-xl overflow-hidden cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
-                style={{ 
-                  background: 'linear-gradient(135deg, #E07A5F 0%, #C4634A 100%)',
-                  boxShadow: '0 4px 20px rgba(224, 122, 95, 0.3)'
-                }}
+                className="relative px-3 pt-2 pb-3 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary bg-[#395174] text-white w-[140px] flex flex-col items-center justify-center"
                 data-testid="quadrant-acquaintance"
               >
-                <div className="px-4 py-3 text-center">
-                  <div className="text-white font-bold text-base tracking-wide">Acquaintance</div>
-                  <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm">
-                    <Users className="w-3.5 h-3.5 text-white" />
-                    <span className="text-white text-sm font-semibold" data-testid="count-acquaintance">{data.counts.acquaintance}</span>
-                  </div>
-                </div>
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="font-bold text-lg text-center">Acquaintance</div>
+                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-acquaintance">{data.counts.acquaintance} Donors</Badge>
               </button>
             </div>
 
-            {/* Bottom Right - Colleague (Olive) */}
+            {/* Bottom Right - Colleague */}
             <div className="absolute left-[75%] top-[75%] -translate-x-1/2 -translate-y-1/2 z-30 pointer-events-auto">
               <button
                 onClick={() => setSelectedQuadrant('colleague')}
-                className="group relative w-[150px] rounded-xl overflow-hidden cursor-pointer transition-all hover:scale-105 hover:shadow-lg"
-                style={{ 
-                  background: 'linear-gradient(135deg, #8B8B00 0%, #6E6E00 100%)',
-                  boxShadow: '0 4px 20px rgba(139, 139, 0, 0.3)'
-                }}
+                className="relative px-3 pt-2 pb-3 rounded-lg border border-border shadow-sm cursor-pointer transition-colors hover:border-primary text-center bg-[#395174] text-white w-[140px]"
                 data-testid="quadrant-colleague"
               >
-                <div className="px-4 py-3 text-center">
-                  <div className="text-white font-bold text-lg tracking-wide">Colleague</div>
-                  <div className="mt-2 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/20 backdrop-blur-sm">
-                    <Users className="w-3.5 h-3.5 text-white" />
-                    <span className="text-white text-sm font-semibold" data-testid="count-colleague">{data.counts.colleague}</span>
-                  </div>
-                </div>
-                <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="font-bold text-lg">Colleague</div>
+                <Badge className="mt-1.5 bg-[#e1c47d] text-black border border-gray-300" data-testid="count-colleague">{data.counts.colleague} Donors</Badge>
               </button>
             </div>
             </div>
@@ -504,8 +461,8 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         
         <CardContent className="p-4 pt-6 flex flex-col flex-1 min-h-0">
 
-          {/* Donor List - Fixed height showing ~9 items, scrollable */}
-          <div className="space-y-2 overflow-y-auto max-h-[540px]">
+          {/* Donor List - Flexible height scrollable area */}
+          <div className="flex-1 space-y-2 overflow-y-auto min-h-0">
             {selectedDonors.length === 0 ? (
               <div className="text-sm text-muted-foreground text-center py-8">
                 No donors in this quadrant yet.
