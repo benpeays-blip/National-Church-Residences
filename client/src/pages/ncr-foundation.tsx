@@ -259,29 +259,6 @@ export default function NcrFoundation() {
           </div>
         </CardContent>
       </Card>
-
-      <Card className="bg-primary/5 border-primary/20">
-        <CardContent className="pt-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-bold">Support Our Mission</h3>
-              <p className="text-muted-foreground mt-1">
-                Your gift helps seniors live with dignity, purpose, and security.
-              </p>
-            </div>
-            <div className="flex gap-3">
-              <Badge variant="secondary" className="px-4 py-2 text-base">
-                <Heart className="h-4 w-4 mr-2" />
-                Make a Gift
-              </Badge>
-              <Badge variant="outline" className="px-4 py-2 text-base">
-                <Calendar className="h-4 w-4 mr-2" />
-                Planned Giving
-              </Badge>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
     </div>
   );
 }
