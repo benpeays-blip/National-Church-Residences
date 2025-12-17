@@ -139,10 +139,10 @@ export default function PreviewHomepage() {
   ];
 
   const upcomingActions = [
-    { date: "Today", donor: "Margaret Chen", action: "Follow-up call", type: "call" },
-    { date: "Tomorrow", donor: "Anderson Foundation", action: "Grant review meeting", type: "meeting" },
-    { date: "Dec 18", donor: "Dr. James Morrison", action: "Site visit", type: "visit" },
-    { date: "Dec 20", donor: "Year-End Appeal", action: "Campaign launch", type: "campaign" },
+    { id: 1, date: "Today", donor: "Margaret Chen", action: "Follow-up call", type: "call" },
+    { id: 2, date: "Tomorrow", donor: "Anderson Foundation", action: "Grant review meeting", type: "meeting" },
+    { id: 3, date: "Dec 18", donor: "Dr. James Morrison", action: "Site visit", type: "visit" },
+    { id: 4, date: "Dec 20", donor: "Year-End Appeal", action: "Campaign launch", type: "campaign" },
   ];
 
   const recentGifts = [
@@ -578,29 +578,30 @@ export default function PreviewHomepage() {
               
               <div className="p-6 space-y-3">
                 {upcomingActions.map((action, idx) => (
-                  <div 
-                    key={idx}
-                    className="flex items-center gap-4 p-3 rounded-xl border hover-elevate transition-all cursor-pointer"
-                    style={{ borderColor: `${accentColors.olive}25`, backgroundColor: `${accentColors.olive}05` }}
-                    data-testid={`upcoming-action-${idx}`}
-                  >
+                  <Link key={action.id} href={`/actions/${action.id}`}>
                     <div 
-                      className="text-center px-3 py-2 rounded-lg shrink-0"
-                      style={{ backgroundColor: `${accentColors.olive}15` }}
+                      className="flex items-center gap-4 p-3 rounded-xl border hover-elevate transition-all cursor-pointer"
+                      style={{ borderColor: `${accentColors.olive}25`, backgroundColor: `${accentColors.olive}05` }}
+                      data-testid={`upcoming-action-${idx}`}
                     >
-                      <p className="text-xs font-bold uppercase" style={{ color: accentColors.olive }}>{action.date}</p>
+                      <div 
+                        className="text-center px-3 py-2 rounded-lg shrink-0"
+                        style={{ backgroundColor: `${accentColors.olive}15` }}
+                      >
+                        <p className="text-xs font-bold uppercase" style={{ color: accentColors.olive }}>{action.date}</p>
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium truncate">{action.action}</p>
+                        <p className="text-sm text-muted-foreground truncate">{action.donor}</p>
+                      </div>
+                      <span 
+                        className="text-xs font-medium px-2 py-1 rounded-full shrink-0"
+                        style={{ backgroundColor: `${accentColors.olive}15`, color: accentColors.olive }}
+                      >
+                        {action.type}
+                      </span>
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium truncate">{action.action}</p>
-                      <p className="text-sm text-muted-foreground truncate">{action.donor}</p>
-                    </div>
-                    <span 
-                      className="text-xs font-medium px-2 py-1 rounded-full shrink-0"
-                      style={{ backgroundColor: `${accentColors.olive}15`, color: accentColors.olive }}
-                    >
-                      {action.type}
-                    </span>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>
