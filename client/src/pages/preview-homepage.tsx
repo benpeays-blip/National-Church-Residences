@@ -135,6 +135,7 @@ export default function PreviewHomepage() {
     { name: "Patricia Brown", donorId: "ec82c940-c513-4656-bc66-e8c618c6dcdd", lastGift: "6 months ago", amount: "$50,000", risk: "Medium" },
     { name: "Susan Taylor", donorId: "fa9dbe3b-9972-49d6-9722-b26725db3e1c", lastGift: "5 months ago", amount: "$15,000", risk: "Medium" },
     { name: "James Wilson", donorId: "a275b91a-5634-4114-9cfb-e5a52f0d1c46", lastGift: "4 months ago", amount: "$30,000", risk: "Medium" },
+    { name: "Robert Martinez", donorId: "5ab76a44-f492-4dd7-b3ea-bfcfaf5ff141", lastGift: "7 months ago", amount: "$40,000", risk: "High" },
   ];
 
   const upcomingActions = [
