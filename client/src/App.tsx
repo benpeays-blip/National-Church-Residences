@@ -17,6 +17,7 @@ import { Search, Settings as SettingsIcon, Bell, User, ChevronDown, Menu } from 
 const navigationDomains = {
   "Reporting": {
     items: [
+      { name: "Visuals", href: "/reporting/visuals" },
       { name: "Senior Housing", href: "/ncr/senior-housing" },
       { name: "Care Services", href: "/ncr/care-services" },
       { name: "Impact Intelligence", href: "/reporting/impact-intelligence" },
@@ -90,6 +91,7 @@ import AgentValueMap from "@/pages/agent-value-map";
 import OtherWithTabs from "@/pages/other-with-tabs";
 import Temporary from "@/pages/temporary";
 import ImpactIntelligence from "@/pages/impact-intelligence";
+import ReportingVisuals from "@/pages/reporting-visuals";
 
 // AI Intelligence
 import AIPredictiveTiming from "@/pages/ai-predictive-timing";
@@ -302,6 +304,7 @@ function Router() {
       <Route path="/content/impact-reports" component={ImpactReports} />
       
       {/* Reporting - Impact Intelligence */}
+      <Route path="/reporting/visuals" component={ReportingVisuals} />
       <Route path="/reporting/impact-intelligence/feed" component={ImpactIntelligence} />
       <Route path="/reporting/impact-intelligence" component={ImpactIntelligence} />
       
