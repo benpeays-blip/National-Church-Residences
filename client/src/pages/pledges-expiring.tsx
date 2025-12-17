@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { 
   AlertTriangle, 
   Calendar, 
@@ -13,9 +15,12 @@ import {
   User,
   Building2,
   CheckCircle2,
-  Sparkles
+  Sparkles,
+  Copy,
+  ExternalLink
 } from "lucide-react";
 import { Link } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 
 const accentColors = {
   teal: "#2A9D8F",
@@ -26,7 +31,33 @@ const accentColors = {
   lime: "#84a98c",
 };
 
-const expiringPledges = [
+interface NextStep {
+  action: string;
+  type: string;
+  priority: string;
+  dueDate: string;
+}
+
+interface Pledge {
+  id: number;
+  donorName: string;
+  donorId: string;
+  pledgeAmount: string;
+  pledgeRemaining: string;
+  pledgeDate: string;
+  expirationDate: string;
+  daysUntilExpiration: number;
+  campaign: string;
+  paymentSchedule: string;
+  lastPayment: string;
+  lastPaymentAmount: string;
+  contactPhone: string;
+  contactEmail: string;
+  urgency: string;
+  nextSteps: NextStep[];
+}
+
+const expiringPledges: Pledge[] = [
   {
     id: 1,
     donorName: "Margaret Thompson",
@@ -100,7 +131,266 @@ const summaryStats = {
   highUrgency: 1,
 };
 
+function getActionGuidance(step: NextStep, pledge: Pledge) {
+  const firstName = pledge.donorName.split(" ")[0];
+  
+  switch (step.type) {
+    case "call":
+      return {
+        title: "Phone Call Guidance",
+        sections: [
+          {
+            heading: "Contact Information",
+            content: `${pledge.donorName}\n${pledge.contactPhone}`,
+            copyable: pledge.contactPhone,
+          },
+          {
+            heading: "Call Objective",
+            content: `Remind ${firstName} about their pledge commitment and discuss fulfillment timeline. Their pledge of ${pledge.pledgeAmount} to the ${pledge.campaign} expires on ${pledge.expirationDate}, with ${pledge.pledgeRemaining} remaining.`,
+          },
+          {
+            heading: "Suggested Talking Points",
+            bullets: [
+              `Thank ${firstName} for their generous commitment to the ${pledge.campaign}`,
+              `Share a brief impact update on what their previous payments have helped accomplish`,
+              `Gently remind them that ${pledge.pledgeRemaining} remains on their pledge`,
+              `Ask if their current ${pledge.paymentSchedule.toLowerCase()} payment schedule still works`,
+              `Offer to discuss alternative payment arrangements if needed`,
+              `Confirm the best way to send payment reminders`,
+            ],
+          },
+          {
+            heading: "Key Details to Reference",
+            bullets: [
+              `Last payment: ${pledge.lastPaymentAmount} on ${pledge.lastPayment}`,
+              `Payment schedule: ${pledge.paymentSchedule}`,
+              `Days until expiration: ${pledge.daysUntilExpiration}`,
+            ],
+          },
+        ],
+      };
+    
+    case "email":
+      return {
+        title: "Email Reminder Guidance",
+        sections: [
+          {
+            heading: "Recipient",
+            content: `${pledge.donorName}\n${pledge.contactEmail}`,
+            copyable: pledge.contactEmail,
+          },
+          {
+            heading: "Suggested Subject Line",
+            content: `Thank you for your commitment to ${pledge.campaign}`,
+            copyable: `Thank you for your commitment to ${pledge.campaign}`,
+          },
+          {
+            heading: "Email Should Include",
+            bullets: [
+              `Personal greeting using "${firstName}"`,
+              `Gratitude for their commitment to the ${pledge.campaign}`,
+              `Brief impact statement about what their giving has accomplished`,
+              `Gentle reminder of remaining pledge balance: ${pledge.pledgeRemaining}`,
+              `Pledge expiration date: ${pledge.expirationDate}`,
+              `Clear call-to-action with payment options`,
+              `Offer to discuss if circumstances have changed`,
+            ],
+          },
+          {
+            heading: "Tone Guidelines",
+            content: "Keep the tone warm and appreciative, not demanding. Focus on partnership and impact rather than obligation. Make it easy for them to respond with questions.",
+          },
+        ],
+      };
+    
+    case "mail":
+      return {
+        title: "Pledge Fulfillment Letter",
+        sections: [
+          {
+            heading: "Recipient",
+            content: pledge.donorName,
+          },
+          {
+            heading: "Letter Should Include",
+            bullets: [
+              `Personalized salutation to ${firstName}`,
+              `Thank you for their ${pledge.pledgeAmount} commitment`,
+              `Summary of impact from their previous contributions`,
+              `Clear statement of remaining balance: ${pledge.pledgeRemaining}`,
+              `Pledge expiration reminder: ${pledge.expirationDate}`,
+              `Payment remittance envelope or online payment instructions`,
+              `Contact information for questions`,
+            ],
+          },
+          {
+            heading: "Recommended Enclosures",
+            bullets: [
+              "Pre-addressed return envelope",
+              "One-page impact summary specific to their campaign",
+              "Payment options card with online giving URL",
+            ],
+          },
+        ],
+      };
+    
+    case "meeting":
+      return {
+        title: "Stewardship Meeting Guidance",
+        sections: [
+          {
+            heading: "Contact to Schedule",
+            content: `${pledge.donorName}\n${pledge.contactPhone}\n${pledge.contactEmail}`,
+            copyable: pledge.contactEmail,
+          },
+          {
+            heading: "Meeting Objectives",
+            bullets: [
+              `Strengthen relationship with ${firstName}`,
+              `Share comprehensive impact report from their giving`,
+              `Discuss their vision for continued partnership`,
+              `Address any questions about pledge fulfillment`,
+              `Explore potential for future giving beyond current pledge`,
+            ],
+          },
+          {
+            heading: "Agenda Topics",
+            bullets: [
+              `Welcome and personal check-in (5 min)`,
+              `Impact presentation: How their ${pledge.pledgeAmount} commitment has made a difference (15 min)`,
+              `Pledge status discussion: ${pledge.pledgeRemaining} remaining, expires ${pledge.expirationDate} (10 min)`,
+              `Future vision and engagement opportunities (10 min)`,
+              `Next steps and follow-up (5 min)`,
+            ],
+          },
+          {
+            heading: "Preparation Checklist",
+            bullets: [
+              "Prepare personalized impact report",
+              "Review their complete giving history",
+              "Identify 2-3 specific outcomes from their support",
+              "Have pledge fulfillment options ready",
+              "Prepare thank-you gift if appropriate",
+            ],
+          },
+        ],
+      };
+    
+    case "document":
+      if (step.action.toLowerCase().includes("payment options")) {
+        return {
+          title: "Payment Options Memo",
+          sections: [
+            {
+              heading: "Purpose",
+              content: `Prepare a memo outlining flexible payment options for ${pledge.donorName} to fulfill their remaining ${pledge.pledgeRemaining} commitment before ${pledge.expirationDate}.`,
+            },
+            {
+              heading: "Payment Options to Include",
+              bullets: [
+                `Lump sum payment of ${pledge.pledgeRemaining}`,
+                `Continue current ${pledge.paymentSchedule.toLowerCase()} schedule`,
+                `Accelerated payment plan (e.g., monthly payments)`,
+                `Stock transfer or appreciated securities`,
+                `Donor-advised fund distribution`,
+                `Credit card or ACH recurring payments`,
+              ],
+            },
+            {
+              heading: "Document Should Include",
+              bullets: [
+                "Current pledge summary and payment history",
+                "Clear deadline reminder",
+                "All available payment methods",
+                "Contact information for questions",
+                "Tax deductibility information",
+              ],
+            },
+          ],
+        };
+      } else if (step.action.toLowerCase().includes("impact report")) {
+        return {
+          title: "Impact Report Preparation",
+          sections: [
+            {
+              heading: "Purpose",
+              content: `Create a personalized impact report for ${pledge.donorName} showing how their ${pledge.pledgeAmount} commitment to ${pledge.campaign} has made a difference.`,
+            },
+            {
+              heading: "Report Should Include",
+              bullets: [
+                "Executive summary of their giving impact",
+                "Specific programs or projects funded",
+                "Beneficiary stories or testimonials",
+                "Key metrics and outcomes achieved",
+                "Photos or visuals of impact",
+                "Future plans for their remaining contribution",
+              ],
+            },
+            {
+              heading: "Personalization Tips",
+              bullets: [
+                `Reference their specific ${pledge.campaign} commitment`,
+                `Include a personal thank-you message`,
+                `Highlight outcomes aligned with their interests`,
+                `Show timeline of their payments and impact`,
+              ],
+            },
+          ],
+        };
+      } else {
+        return {
+          title: "Review Giving History",
+          sections: [
+            {
+              heading: "Purpose",
+              content: `Review ${pledge.donorName}'s complete giving history to prepare for engagement and identify patterns.`,
+            },
+            {
+              heading: "Key Areas to Review",
+              bullets: [
+                "Total lifetime giving amount",
+                "Giving frequency and consistency",
+                "Campaign preferences and designations",
+                "Payment method preferences",
+                "Response to previous communications",
+                "Event attendance history",
+              ],
+            },
+            {
+              heading: "Current Pledge Details",
+              bullets: [
+                `Pledge amount: ${pledge.pledgeAmount}`,
+                `Remaining: ${pledge.pledgeRemaining}`,
+                `Last payment: ${pledge.lastPaymentAmount} on ${pledge.lastPayment}`,
+                `Payment schedule: ${pledge.paymentSchedule}`,
+              ],
+            },
+          ],
+        };
+      }
+    
+    default:
+      return {
+        title: "Action Guidance",
+        sections: [
+          {
+            heading: "Action Required",
+            content: step.action,
+          },
+          {
+            heading: "Donor Information",
+            content: `${pledge.donorName}\n${pledge.contactPhone}\n${pledge.contactEmail}`,
+          },
+        ],
+      };
+  }
+}
+
 export default function PledgesExpiring() {
+  const [selectedStep, setSelectedStep] = useState<{ step: NextStep; pledge: Pledge } | null>(null);
+  const { toast } = useToast();
+
   const getUrgencyColor = (urgency: string) => {
     switch (urgency) {
       case "high": return accentColors.coral;
@@ -120,8 +410,112 @@ export default function PledgesExpiring() {
     }
   };
 
+  const copyToClipboard = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({
+      title: "Copied to clipboard",
+      description: text,
+    });
+  };
+
+  const guidance = selectedStep ? getActionGuidance(selectedStep.step, selectedStep.pledge) : null;
+
   return (
     <div className="p-6 space-y-6 overflow-auto">
+      {/* Action Guidance Dialog */}
+      <Dialog open={!!selectedStep} onOpenChange={() => setSelectedStep(null)}>
+        <DialogContent className="max-w-2xl max-h-[85vh] overflow-y-auto">
+          {guidance && selectedStep && (
+            <>
+              <DialogHeader>
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-10 h-10 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.sky}15` }}
+                  >
+                    {(() => {
+                      const Icon = getActionIcon(selectedStep.step.type);
+                      return <Icon className="w-5 h-5" style={{ color: accentColors.sky }} />;
+                    })()}
+                  </div>
+                  <div>
+                    <DialogTitle className="text-xl">{guidance.title}</DialogTitle>
+                    <DialogDescription>
+                      {selectedStep.step.action} for {selectedStep.pledge.donorName}
+                    </DialogDescription>
+                  </div>
+                </div>
+              </DialogHeader>
+              
+              <div className="space-y-6 mt-4">
+                {guidance.sections.map((section, idx) => (
+                  <div key={idx} className="space-y-2">
+                    <h3 className="font-semibold text-sm uppercase tracking-wide text-muted-foreground">
+                      {section.heading}
+                    </h3>
+                    
+                    {section.content && (
+                      <div className="flex items-start justify-between gap-2">
+                        <p className="text-sm whitespace-pre-line">{section.content}</p>
+                        {section.copyable && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="shrink-0"
+                            onClick={() => copyToClipboard(section.copyable!)}
+                            data-testid={`copy-${idx}`}
+                          >
+                            <Copy className="w-4 h-4" />
+                          </Button>
+                        )}
+                      </div>
+                    )}
+                    
+                    {section.bullets && (
+                      <ul className="space-y-2">
+                        {section.bullets.map((bullet, bulletIdx) => (
+                          <li key={bulletIdx} className="flex items-start gap-2 text-sm">
+                            <CheckCircle2 className="w-4 h-4 text-primary shrink-0 mt-0.5" />
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+                
+                <div className="flex gap-3 pt-4 border-t">
+                  {selectedStep.step.type === "call" && (
+                    <Button 
+                      className="gap-2"
+                      onClick={() => window.open(`tel:${selectedStep.pledge.contactPhone}`)}
+                    >
+                      <Phone className="w-4 h-4" />
+                      Call Now
+                    </Button>
+                  )}
+                  {selectedStep.step.type === "email" && (
+                    <Button 
+                      className="gap-2"
+                      onClick={() => window.open(`mailto:${selectedStep.pledge.contactEmail}`)}
+                    >
+                      <Mail className="w-4 h-4" />
+                      Open Email
+                    </Button>
+                  )}
+                  <Link href={`/donors/${selectedStep.pledge.donorId}`}>
+                    <Button variant="outline" className="gap-2">
+                      <User className="w-4 h-4" />
+                      View Donor Profile
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
       {/* Page Header */}
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-4">
@@ -346,9 +740,10 @@ export default function PledgesExpiring() {
                         const priorityColor = step.priority === "High" ? accentColors.coral : 
                                               step.priority === "Medium" ? accentColors.orange : accentColors.olive;
                         return (
-                          <div 
+                          <button 
                             key={idx}
-                            className="flex items-center gap-3 p-3 rounded-lg border hover-elevate transition-all cursor-pointer"
+                            onClick={() => setSelectedStep({ step, pledge })}
+                            className="w-full flex items-center gap-3 p-3 rounded-lg border hover-elevate transition-all cursor-pointer text-left"
                             style={{ borderColor: `${priorityColor}30`, backgroundColor: `${priorityColor}05` }}
                             data-testid={`next-step-${pledge.id}-${idx}`}
                           >
@@ -369,7 +764,7 @@ export default function PledgesExpiring() {
                             >
                               {step.priority}
                             </Badge>
-                          </div>
+                          </button>
                         );
                       })}
                     </div>
