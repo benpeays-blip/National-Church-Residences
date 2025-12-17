@@ -300,43 +300,37 @@ export default function DonorDetail() {
         <div className="space-y-6">
           {/* Contact Information */}
           <Card>
-            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
-              <CardTitle className="flex items-center gap-2 text-white">
-                <User className="w-5 h-5" />
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl py-3 px-4">
+              <CardTitle className="flex items-center gap-2 text-white text-base">
+                <User className="w-4 h-4" />
                 Contact Information
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                {donor.person.primaryEmail ? (
-                  <div className="flex items-start gap-3">
-                    <Mail className="w-4 h-4 mt-1 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm font-medium">Email</p>
+            <CardContent className="p-4">
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <Mail className="w-4 h-4 text-muted-foreground shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs text-muted-foreground">Email</p>
+                    {donor.person.primaryEmail ? (
                       <a
                         href={`mailto:${donor.person.primaryEmail}`}
-                        className="text-sm text-primary hover:underline"
+                        className="text-sm text-primary hover:underline truncate block"
                         data-testid="link-email"
                       >
                         {donor.person.primaryEmail}
                       </a>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex items-start gap-3">
-                    <Mail className="w-4 h-4 mt-1 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm font-medium">Email</p>
+                    ) : (
                       <p className="text-sm text-muted-foreground">Not available</p>
-                    </div>
+                    )}
                   </div>
-                )}
+                </div>
 
-                {donor.person.primaryPhone ? (
-                  <div className="flex items-start gap-3">
-                    <Phone className="w-4 h-4 mt-1 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm font-medium">Phone</p>
+                <div className="flex items-center gap-3">
+                  <Phone className="w-4 h-4 text-muted-foreground shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-xs text-muted-foreground">Phone</p>
+                    {donor.person.primaryPhone ? (
                       <a
                         href={`tel:${donor.person.primaryPhone}`}
                         className="text-sm text-primary hover:underline"
@@ -344,28 +338,19 @@ export default function DonorDetail() {
                       >
                         {donor.person.primaryPhone}
                       </a>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex items-start gap-3">
-                    <Phone className="w-4 h-4 mt-1 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm font-medium">Phone</p>
+                    ) : (
                       <p className="text-sm text-muted-foreground">Not available</p>
-                    </div>
+                    )}
                   </div>
-                )}
+                </div>
 
                 {donor.household && (
-                  <div className="flex items-start gap-3">
-                    <Home className="w-4 h-4 mt-1 text-muted-foreground" />
-                    <div>
-                      <p className="text-sm font-medium">Household</p>
-                      <p className="text-sm text-primary hover:underline cursor-pointer">
+                  <div className="flex items-center gap-3">
+                    <Home className="w-4 h-4 text-muted-foreground shrink-0" />
+                    <div className="min-w-0">
+                      <p className="text-xs text-muted-foreground">Household</p>
+                      <p className="text-sm text-primary hover:underline cursor-pointer truncate">
                         {donor.household.name}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {donor.household.totalMembers} member(s)
                       </p>
                     </div>
                   </div>
@@ -376,61 +361,57 @@ export default function DonorDetail() {
 
           {/* Giving Summary */}
           <Card>
-            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
-              <CardTitle className="flex items-center gap-2 text-white">
-                <DollarSign className="w-5 h-5" />
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl py-3 px-4">
+              <CardTitle className="flex items-center gap-2 text-white text-base">
+                <DollarSign className="w-4 h-4" />
                 Giving Summary
               </CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
-              <div className="space-y-4">
-                <div>
-                  <p className="text-sm text-muted-foreground">Lifetime Giving</p>
-                  <p className="text-2xl font-bold" data-testid="text-lifetime-giving">
+            <CardContent className="p-4">
+              <div className="space-y-3">
+                <div className="text-center py-2 bg-muted/30 rounded-lg">
+                  <p className="text-xs text-muted-foreground">Lifetime Giving</p>
+                  <p className="text-xl font-bold" data-testid="text-lifetime-giving">
                     {formatCurrency(parseFloat(donor.person.totalLifetimeGiving || "0"))}
                   </p>
                 </div>
-                <Separator />
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-muted-foreground">Total Gifts</p>
-                    <p className="text-lg font-semibold" data-testid="text-total-gifts">
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="text-center p-2 bg-muted/20 rounded-lg">
+                    <p className="text-xs text-muted-foreground">Total Gifts</p>
+                    <p className="text-base font-semibold" data-testid="text-total-gifts">
                       {donor.stats.totalGifts}
                     </p>
                   </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Avg Gift</p>
-                    <p className="text-lg font-semibold" data-testid="text-avg-gift">
+                  <div className="text-center p-2 bg-muted/20 rounded-lg">
+                    <p className="text-xs text-muted-foreground">Avg Gift</p>
+                    <p className="text-base font-semibold" data-testid="text-avg-gift">
                       {formatCurrency(donor.stats.avgGiftSize)}
                     </p>
                   </div>
                 </div>
-                <Separator />
-                <div>
-                  <p className="text-sm text-muted-foreground">Last Gift</p>
-                  <p className="text-lg font-semibold" data-testid="text-last-gift-amount">
-                    {formatCurrency(parseFloat(donor.person.lastGiftAmount || "0"))}
-                  </p>
-                  <p className="text-xs text-muted-foreground">
-                    {donor.person.lastGiftDate
-                      ? format(new Date(donor.person.lastGiftDate), "MMM d, yyyy")
-                      : "Never"}
-                    {donor.stats.daysSinceLastGift && (
-                      <span> ({donor.stats.daysSinceLastGift} days ago)</span>
-                    )}
-                  </p>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="p-2 bg-muted/20 rounded-lg">
+                    <p className="text-xs text-muted-foreground">Last Gift</p>
+                    <p className="text-sm font-semibold" data-testid="text-last-gift-amount">
+                      {formatCurrency(parseFloat(donor.person.lastGiftAmount || "0"))}
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      {donor.person.lastGiftDate
+                        ? format(new Date(donor.person.lastGiftDate), "MMM d, yyyy")
+                        : "Never"}
+                    </p>
+                  </div>
+                  <div className="p-2 bg-muted/20 rounded-lg">
+                    <p className="text-xs text-muted-foreground">First Gift</p>
+                    <p className="text-sm font-semibold">
+                      {donor.stats.firstGiftDate
+                        ? format(new Date(donor.stats.firstGiftDate), "MMM d, yyyy")
+                        : "None"}
+                    </p>
+                  </div>
                 </div>
-                <Separator />
-                <div>
-                  <p className="text-sm text-muted-foreground">First Gift</p>
-                  <p className="text-sm">
-                    {donor.stats.firstGiftDate
-                      ? format(new Date(donor.stats.firstGiftDate), "MMM d, yyyy")
-                      : "No gifts recorded"}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Giving Pattern</p>
+                <div className="p-2 bg-muted/20 rounded-lg">
+                  <p className="text-xs text-muted-foreground">Giving Pattern</p>
                   <p className="text-sm font-medium">{donor.stats.giftFrequency}</p>
                 </div>
               </div>
@@ -439,20 +420,20 @@ export default function DonorDetail() {
         </div>
 
         {/* Right Column - All Sections */}
-        <div className="lg:col-span-2 space-y-6">
+        <div className="lg:col-span-2 space-y-4">
           {/* Next Best Actions */}
           {donor.nextBestActions.length > 0 && (
             <Card>
-              <CardHeader className="bg-[#395174] text-white rounded-t-xl">
-                <CardTitle className="flex items-center gap-2 text-white">
-                  <Target className="w-5 h-5" />
+              <CardHeader className="bg-[#395174] text-white rounded-t-xl py-3 px-4">
+                <CardTitle className="flex items-center gap-2 text-white text-base">
+                  <Target className="w-4 h-4" />
                   Next Best Actions
                 </CardTitle>
               </CardHeader>
-              <CardContent className="p-6">
-                <div className="space-y-3">
+              <CardContent className="p-4">
+                <div className="space-y-2">
                   {donor.nextBestActions.slice(0, 3).map((action) => (
-                    <div key={action.id} className="p-4 border rounded-lg space-y-2">
+                    <div key={action.id} className="p-3 border rounded-lg space-y-1.5">
                       <div className="flex items-start justify-between gap-2">
                         <Badge
                           variant={
@@ -462,15 +443,16 @@ export default function DonorDetail() {
                               ? "secondary"
                               : "outline"
                           }
+                          className="text-xs"
                         >
-                          {action.priority} Priority
+                          {action.priority}
                         </Badge>
                         <span className="text-xs text-muted-foreground">
                           {format(new Date(action.createdAt), "MMM d")}
                         </span>
                       </div>
                       <p className="font-medium text-sm">{action.suggestedAction}</p>
-                      <p className="text-sm text-muted-foreground">{action.reason}</p>
+                      <p className="text-xs text-muted-foreground">{action.reason}</p>
                     </div>
                   ))}
                 </div>
@@ -480,10 +462,10 @@ export default function DonorDetail() {
 
           {/* Gift History */}
           <Card>
-            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
-              <CardTitle className="text-white">Gift History</CardTitle>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl py-3 px-4">
+              <CardTitle className="text-white text-base">Gift History</CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
+            <CardContent className="p-4">
               {donor.gifts.length > 0 ? (
                 <Table data-testid="table-gifts">
                   <TableHeader>
@@ -527,8 +509,8 @@ export default function DonorDetail() {
                   </TableBody>
                 </Table>
               ) : (
-                <div className="text-center py-8">
-                  <p className="text-muted-foreground">No gifts recorded</p>
+                <div className="text-center py-6">
+                  <p className="text-sm text-muted-foreground">No gifts recorded</p>
                 </div>
               )}
             </CardContent>
@@ -536,10 +518,10 @@ export default function DonorDetail() {
 
           {/* Opportunities */}
           <Card>
-            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
-              <CardTitle className="text-white">Opportunities</CardTitle>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl py-3 px-4">
+              <CardTitle className="text-white text-base">Opportunities</CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
+            <CardContent className="p-4">
               {donor.opportunities.length > 0 ? (
                 <Table data-testid="table-opportunities">
                   <TableHeader>
@@ -576,9 +558,9 @@ export default function DonorDetail() {
                   </TableBody>
                 </Table>
               ) : (
-                <div className="text-center py-8">
-                  <AlertCircle className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground">No active opportunities</p>
+                <div className="text-center py-6">
+                  <AlertCircle className="w-10 h-10 mx-auto text-muted-foreground mb-2" />
+                  <p className="text-sm text-muted-foreground">No active opportunities</p>
                 </div>
               )}
             </CardContent>
@@ -586,42 +568,38 @@ export default function DonorDetail() {
 
           {/* Recent Activities */}
           <Card>
-            <CardHeader className="bg-[#395174] text-white rounded-t-xl">
-              <CardTitle className="text-white">Recent Activities</CardTitle>
+            <CardHeader className="bg-[#395174] text-white rounded-t-xl py-3 px-4">
+              <CardTitle className="text-white text-base">Recent Activities</CardTitle>
             </CardHeader>
-            <CardContent className="p-6">
+            <CardContent className="p-4">
               {donor.interactions.length > 0 ? (
-                <div className="space-y-4">
+                <div className="space-y-2">
                   {donor.interactions
                     .sort((a, b) => new Date(b.occurredAt).getTime() - new Date(a.occurredAt).getTime())
+                    .slice(0, 5)
                     .map((interaction) => (
-                      <div key={interaction.id} className="flex gap-4 pb-4 border-b last:border-0">
-                        <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center shrink-0">
-                          <Clock className="w-5 h-5 text-muted-foreground" />
+                      <div key={interaction.id} className="flex gap-3 p-2 rounded-lg bg-muted/20">
+                        <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center shrink-0">
+                          <Clock className="w-4 h-4 text-muted-foreground" />
                         </div>
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between gap-2 mb-1">
-                            <p className="font-medium text-sm">{interaction.type}</p>
-                            <span className="text-xs text-muted-foreground">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-start justify-between gap-2">
+                            <p className="font-medium text-sm truncate">{interaction.type}</p>
+                            <span className="text-xs text-muted-foreground shrink-0">
                               {format(new Date(interaction.occurredAt), "MMM d, yyyy")}
                             </span>
                           </div>
                           {interaction.notes && (
-                            <p className="text-sm text-muted-foreground">{interaction.notes}</p>
-                          )}
-                          {interaction.user && (
-                            <p className="text-xs text-muted-foreground mt-1">
-                              by {interaction.user.firstName} {interaction.user.lastName}
-                            </p>
+                            <p className="text-xs text-muted-foreground truncate">{interaction.notes}</p>
                           )}
                         </div>
                       </div>
                     ))}
                 </div>
               ) : (
-                <div className="text-center py-8">
-                  <Clock className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-                  <p className="text-muted-foreground">No recent activities</p>
+                <div className="text-center py-6">
+                  <Clock className="w-10 h-10 mx-auto text-muted-foreground mb-2" />
+                  <p className="text-sm text-muted-foreground">No recent activities</p>
                 </div>
               )}
             </CardContent>
