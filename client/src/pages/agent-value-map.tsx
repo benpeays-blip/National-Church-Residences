@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { AccentCard, getAccentBgClass, AccentColor } from "@/components/ui/accent-card";
+import { AccentCard, getAccentBgClass, AccentColor, NCR_BRAND_COLORS } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { 
@@ -663,19 +663,32 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {governanceItems.map((item) => (
-                  <AccentCard key={item.title} accent={item.accent}>
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-3">
-                        <div className={`p-2 rounded-md ${getAccentBgClass(item.accent)}`}>
-                          <item.icon className="w-4 h-4 text-white" />
+                  <Link key={item.title} href={`/agent-value-map/governance/${item.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <Card 
+                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group overflow-hidden"
+                      data-testid={`card-governance-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      <div 
+                        className="h-2 w-full"
+                        style={{ backgroundColor: NCR_BRAND_COLORS[item.accent] }}
+                      />
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className={`p-2 rounded-md ${getAccentBgClass(item.accent)}`}>
+                            <item.icon className="w-4 h-4 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-semibold group-hover:text-primary transition-colors">{item.title}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                            <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
+                              <span>View details</span>
+                              <ChevronRight className="h-4 w-4" />
+                            </div>
+                          </div>
                         </div>
-                        <div>
-                          <p className="font-semibold">{item.title}</p>
-                          <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </AccentCard>
+                      </CardContent>
+                    </Card>
+                  </Link>
                 ))}
               </div>
             </CardContent>
