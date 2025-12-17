@@ -281,15 +281,15 @@ export default function FoundationMetricDetail() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Sparkles className="h-5 w-5" style={{ color: metric.color }} />
+        <Card className="overflow-hidden">
+          <CardHeader className="bg-[#7BC4DC] text-white">
+            <CardTitle className="flex items-center gap-2 text-white">
+              <Sparkles className="h-5 w-5" />
               Recent Activity
             </CardTitle>
-            <CardDescription>Latest updates and milestones</CardDescription>
+            <CardDescription className="text-white/80">Latest updates and milestones</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <div className="space-y-4">
               {metric.recentActivity.map((activity, index) => (
                 <div 
