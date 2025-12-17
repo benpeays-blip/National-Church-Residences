@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -405,10 +405,6 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             </div>
           </div>
         </CardContent>
-        <CardFooter className="bg-muted/30 border-t text-sm text-muted-foreground py-4 flex items-center justify-center">
-          <TrendingUp className="w-4 h-4 mr-2 text-primary" />
-          <span>Goal: Move every donor toward <strong className="text-foreground">Partner</strong> (top-right) with wise effort and structure.</span>
-        </CardFooter>
       </Card>
       {/* Right Panel - Quadrant Details */}
       <Card className="lg:col-span-2 overflow-hidden flex flex-col lg:h-full">
