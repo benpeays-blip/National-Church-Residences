@@ -679,13 +679,18 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {scorecardMetrics.map((item) => (
-                  <AccentCard key={item.domain} accent={item.accent} data-testid={`card-scorecard-${item.domain.toLowerCase().replace(/\s+/g, '-')}`}>
+                  <AccentCard 
+                    key={item.domain} 
+                    accent={item.accent} 
+                    className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group"
+                    data-testid={`card-scorecard-${item.domain.toLowerCase().replace(/\s+/g, '-')}`}
+                  >
                     <CardContent className="p-4">
-                      <p className="font-semibold mb-3">{item.domain}</p>
+                      <p className="font-semibold mb-3 group-hover:text-primary transition-colors">{item.domain}</p>
                       <ul className="space-y-1">
                         {item.metrics.map((metric, index) => (
                           <li key={index} className="flex items-center gap-2 text-sm">
-                            <CircleDot className="w-3 h-3 text-muted-foreground flex-shrink-0" />
+                            <CircleDot className="w-3 h-3 text-muted-foreground flex-shrink-0 group-hover:text-primary transition-colors" />
                             <span>{metric}</span>
                           </li>
                         ))}
