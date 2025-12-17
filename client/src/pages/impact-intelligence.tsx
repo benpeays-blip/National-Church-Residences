@@ -546,7 +546,7 @@ export function ImpactFeedTab() {
           
           return (
             <Card key={story.id} className="hover-elevate overflow-hidden" data-testid={`story-card-${story.id}`}>
-              <CardHeader className="bg-primary/80 text-primary-foreground">
+              <CardHeader className="bg-[#7BC4DC] text-white">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
                     <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center flex-shrink-0">

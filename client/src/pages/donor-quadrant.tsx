@@ -10,8 +10,7 @@ export default function DonorQuadrant() {
       </div>
       
       {/* Framework Summary Section */}
-      <div className="p-6 pt-0 space-y-6">
-        {/* Main Summary Card */}
+      <div className="p-6 pt-0">
         <Card>
           <CardHeader className="bg-[#7BC4DC] text-white rounded-t-lg">
             <div className="flex items-center gap-3">
@@ -27,6 +26,7 @@ export default function DonorQuadrant() {
             </div>
           </CardHeader>
           <CardContent className="pt-6 space-y-6">
+            {/* Movement Table */}
             <div>
               <p className="text-sm mb-4 font-semibold">To reach the Partner quadrant:</p>
               
@@ -64,59 +64,51 @@ export default function DonorQuadrant() {
                 </table>
               </div>
             </div>
+
+            {/* Framework Axes */}
+            <div className="grid md:grid-cols-2 gap-4 pt-2 border-t">
+              <div className="p-4 rounded-lg bg-muted/50">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Zap className="w-4 h-4 text-primary" />
+                  </div>
+                  <span className="font-semibold">Y-Axis: ENERGY</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-2">
+                  The relational energy and emotional investment exchanged between the organization and the donor.
+                </p>
+                <div className="flex items-center gap-2 text-sm mb-2">
+                  <span className="text-muted-foreground">Low</span>
+                  <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                  <span className="font-medium">High</span>
+                </div>
+                <p className="text-xs text-muted-foreground pt-2 border-t">
+                  Energy = attention, personal connection, affinity, and sense of shared mission.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-lg bg-muted/50">
+                <div className="flex items-center gap-2 mb-3">
+                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                    <Grid3x3 className="w-4 h-4 text-primary" />
+                  </div>
+                  <span className="font-semibold">X-Axis: STRUCTURE</span>
+                </div>
+                <p className="text-sm text-muted-foreground mb-2">
+                  The systems, processes, touchpoints, and formalized pathways that define how donors engage.
+                </p>
+                <div className="flex items-center gap-2 text-sm mb-2">
+                  <span className="text-muted-foreground">Low</span>
+                  <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                  <span className="font-medium">High</span>
+                </div>
+                <p className="text-xs text-muted-foreground pt-2 border-t">
+                  Structure = cadence, planning, communication channels, intentional movement, strategic invitations.
+                </p>
+              </div>
+            </div>
           </CardContent>
         </Card>
-
-        {/* Framework Axes Cards */}
-        <div className="grid md:grid-cols-2 gap-4">
-          <Card>
-            <CardHeader className="pb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-[#7BC4DC]/10 flex items-center justify-center">
-                  <Zap className="w-4 h-4 text-[#7BC4DC]" />
-                </div>
-                <CardTitle className="text-base">Y-Axis: ENERGY</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <p className="text-sm text-muted-foreground">
-                The relational energy and emotional investment exchanged between the organization and the donor.
-              </p>
-              <div className="flex items-center gap-2 text-sm">
-                <span className="text-muted-foreground">Low</span>
-                <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                <span className="font-medium">High</span>
-              </div>
-              <p className="text-xs text-muted-foreground pt-2 border-t">
-                Energy = attention, personal connection, affinity, and sense of shared mission.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="pb-3">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-lg bg-[#7BC4DC]/10 flex items-center justify-center">
-                  <Grid3x3 className="w-4 h-4 text-[#7BC4DC]" />
-                </div>
-                <CardTitle className="text-base">X-Axis: STRUCTURE</CardTitle>
-              </div>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <p className="text-sm text-muted-foreground">
-                The systems, processes, touchpoints, and formalized pathways that define how donors engage.
-              </p>
-              <div className="flex items-center gap-2 text-sm">
-                <span className="text-muted-foreground">Low</span>
-                <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                <span className="font-medium">High</span>
-              </div>
-              <p className="text-xs text-muted-foreground pt-2 border-t">
-                Structure = cadence, planning, communication channels, intentional movement, strategic invitations.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </div>
   );
