@@ -61,7 +61,7 @@ const expiringPledges: Pledge[] = [
   {
     id: 1,
     donorName: "Margaret Thompson",
-    donorId: "donor-1",
+    donorId: "1",
     pledgeAmount: "$50,000",
     pledgeRemaining: "$15,000",
     pledgeDate: "Jan 15, 2023",
@@ -83,7 +83,7 @@ const expiringPledges: Pledge[] = [
   {
     id: 2,
     donorName: "Robert Chen",
-    donorId: "donor-2",
+    donorId: "2",
     pledgeAmount: "$25,000",
     pledgeRemaining: "$10,000",
     pledgeDate: "Mar 1, 2023",
@@ -104,7 +104,7 @@ const expiringPledges: Pledge[] = [
   {
     id: 3,
     donorName: "Patricia Williams",
-    donorId: "donor-3",
+    donorId: "3",
     pledgeAmount: "$100,000",
     pledgeRemaining: "$35,000",
     pledgeDate: "Jun 15, 2022",
