@@ -245,7 +245,7 @@ export default function NcrFoundation() {
             {impactStories.map((story, index) => (
               <div 
                 key={index} 
-                className="p-4 rounded-lg bg-muted/50"
+                className="p-4 rounded-lg border"
                 data-testid={`impact-story-${index}`}
               >
                 <div className="flex items-center gap-2 mb-3">
