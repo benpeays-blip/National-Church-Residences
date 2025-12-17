@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -11,38 +12,48 @@ import {
   Target,
   Gift,
   Star,
-  HandHeart
+  HandHeart,
+  ArrowRight
 } from "lucide-react";
+import { NCR_BRAND_COLORS, type AccentColor } from "@/components/ui/accent-card";
 
 export default function NcrFoundation() {
   const foundationMetrics = [
     { 
+      id: "annual-giving",
       label: "Annual Giving", 
       value: "$12.4M", 
       icon: DollarSign, 
       description: "Total philanthropic support",
-      color: "#084594"
+      color: "#084594",
+      accentColor: "teal" as AccentColor
     },
     { 
+      id: "active-donors",
       label: "Active Donors", 
       value: "8,500+", 
       icon: Users, 
       description: "Individual supporters",
-      color: "#2171b5"
+      color: "#2171b5",
+      accentColor: "sky" as AccentColor
     },
     { 
+      id: "programs-funded",
       label: "Programs Funded", 
       value: "45", 
       icon: Heart, 
       description: "Direct impact initiatives",
-      color: "#4292c6"
+      color: "#4292c6",
+      accentColor: "coral" as AccentColor
     },
     { 
+      id: "endowment",
       label: "Endowment", 
       value: "$42M", 
       icon: TrendingUp, 
       description: "Long-term sustainability",
-      color: "#6baed6"
+      color: "#6baed6",
+      accentColor: "lime" as AccentColor
     },
   ];
 
@@ -130,26 +141,38 @@ export default function NcrFoundation() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {foundationMetrics.map((metric) => (
-          <Card key={metric.label} data-testid={`metric-card-${metric.label.toLowerCase().replace(/\s+/g, '-')}`}>
-            <CardContent className="pt-6">
-              <div className="flex flex-col items-center text-center">
-                <div 
-                  className="p-3 rounded-full mb-4"
-                  style={{ backgroundColor: `${metric.color}15` }}
-                >
-                  <metric.icon 
-                    className="h-6 w-6" 
-                    style={{ color: metric.color }} 
-                  />
+          <Link key={metric.id} href={`/ncr/foundation/metric/${metric.id}`}>
+            <Card 
+              className="cursor-pointer transition-all duration-200 hover:shadow-lg group border-l-4"
+              style={{ 
+                borderLeftColor: NCR_BRAND_COLORS[metric.accentColor]
+              }}
+              data-testid={`metric-card-${metric.label.toLowerCase().replace(/\s+/g, '-')}`}
+            >
+              <CardContent className="pt-6">
+                <div className="flex flex-col items-center text-center">
+                  <div 
+                    className="p-3 rounded-full mb-4 transition-all duration-200 group-hover:scale-110"
+                    style={{ backgroundColor: `${metric.color}15` }}
+                  >
+                    <metric.icon 
+                      className="h-6 w-6" 
+                      style={{ color: metric.color }} 
+                    />
+                  </div>
+                  <div className="text-3xl font-bold transition-colors duration-200 group-hover:opacity-90" style={{ color: metric.color }}>
+                    {metric.value}
+                  </div>
+                  <div className="font-medium mt-1">{metric.label}</div>
+                  <div className="text-sm text-muted-foreground mt-1">{metric.description}</div>
+                  <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200" style={{ color: metric.color }}>
+                    <span>View details</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </div>
                 </div>
-                <div className="text-3xl font-bold" style={{ color: metric.color }}>
-                  {metric.value}
-                </div>
-                <div className="font-medium mt-1">{metric.label}</div>
-                <div className="text-sm text-muted-foreground mt-1">{metric.description}</div>
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Link>
         ))}
       </div>
 

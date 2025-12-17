@@ -166,6 +166,7 @@ import MGOMeetingsDetail from "@/pages/mgo-meetings-detail";
 import NcrSeniorHousingWithTabs from "@/pages/ncr-senior-housing-with-tabs";
 import NcrCareServicesWithTabs from "@/pages/ncr-care-services-with-tabs";
 import NcrFoundationWithTabs from "@/pages/ncr-foundation-with-tabs";
+import FoundationMetricDetail from "@/pages/foundation-metric-detail";
 
 function Router() {
   return (
@@ -262,6 +263,7 @@ function Router() {
       <Route path="/ncr/care-services/hospice" component={NcrCareServicesWithTabs} />
       <Route path="/ncr/care-services/chaplaincy" component={NcrCareServicesWithTabs} />
       <Route path="/ncr/care-services" component={NcrCareServicesWithTabs} />
+      <Route path="/ncr/foundation/metric/:metricId" component={FoundationMetricDetail} />
       <Route path="/ncr/foundation/donors" component={NcrFoundationWithTabs} />
       <Route path="/ncr/foundation/grants" component={NcrFoundationWithTabs} />
       <Route path="/ncr/foundation/endowment" component={NcrFoundationWithTabs} />
