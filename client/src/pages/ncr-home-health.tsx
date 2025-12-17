@@ -66,16 +66,16 @@ export default function NcrHomeHealth() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl">Conditions We Treat</CardTitle>
-            <CardDescription>Our home health team has expertise in managing a wide range of conditions</CardDescription>
+        <Card className="overflow-hidden">
+          <CardHeader className="bg-[#7BC4DC] text-white">
+            <CardTitle className="text-xl text-white">Conditions We Treat</CardTitle>
+            <CardDescription className="text-white/80">Our home health team has expertise in managing a wide range of conditions</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <div className="grid grid-cols-2 gap-2">
               {conditions.map((condition) => (
                 <div key={condition} className="flex items-center gap-2 text-sm">
-                  <div className="w-1.5 h-1.5 rounded-full bg-primary" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#7BC4DC]" />
                   {condition}
                 </div>
               ))}
@@ -83,11 +83,11 @@ export default function NcrHomeHealth() {
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-xl">Medicare Certified</CardTitle>
+        <Card className="overflow-hidden">
+          <CardHeader className="bg-[#7BC4DC] text-white">
+            <CardTitle className="text-xl text-white">Medicare Certified</CardTitle>
           </CardHeader>
-          <CardContent className="prose prose-sm max-w-none text-muted-foreground">
+          <CardContent className="prose prose-sm max-w-none text-muted-foreground pt-6">
             <p>
               NCR Home Health is Medicare certified and participates in most major insurance plans. 
               Our services are typically covered when ordered by a physician and when you meet 
