@@ -794,7 +794,7 @@ export default function PreviewHomepage() {
                         >
                           <Icon className="w-5 h-5" style={{ color: item.accent }} />
                         </div>
-                        <span className="font-semibold text-sm">{item.label}</span>
+                        <span className="font-semibold text-base">{item.label}</span>
                       </div>
                     </Link>
                   );
