@@ -219,48 +219,92 @@ export default function ForceNetworkGraph() {
     return { nodes, links };
   }, []);
 
-  // Configure d3 forces for shell layout: orgs outside, people inside
+  // Calculate polygon positions for organizations
+  const orgPolygonPositions = useMemo(() => {
+    const orgNodes = graphData.nodes.filter(n => n.type === 'org');
+    const numOrgs = orgNodes.length;
+    const radius = 250; // Distance from center
+    const positions: Record<string, { x: number; y: number }> = {};
+    
+    orgNodes.forEach((org, index) => {
+      // Calculate angle for regular polygon (starting from top, going clockwise)
+      const angle = (index / numOrgs) * 2 * Math.PI - Math.PI / 2;
+      positions[org.id] = {
+        x: Math.cos(angle) * radius,
+        y: Math.sin(angle) * radius
+      };
+    });
+    
+    return positions;
+  }, [graphData]);
+
+  // Configure d3 forces for shell layout: orgs in polygon, people in center
   useEffect(() => {
     if (fgRef.current) {
       // Add collision force to prevent node overlap - account for larger nodes + labels
       fgRef.current.d3Force('collision', d3.forceCollide((node: any) => {
         const baseRadius = node.type === 'org' ? Math.sqrt(node.val) * 4.5 : Math.sqrt(node.val) * 3;
         // Extra space for person labels below nodes
-        return baseRadius + (node.type === 'person' ? 30 : 20);
+        return baseRadius + (node.type === 'person' ? 25 : 15);
       }));
 
-      // Repulsion force - orgs repel more strongly
+      // Repulsion force - only for people nodes
       fgRef.current.d3Force('charge', d3.forceManyBody()
         .strength((node: any) => {
-          return node.type === 'org' ? -300 : -80;
+          return node.type === 'org' ? 0 : -60; // Orgs don't repel (they're fixed)
         })
-        .distanceMax(500)
+        .distanceMax(300)
       );
 
-      // Link distance - longer between people and orgs
+      // Link distance - shorter for person-to-person
       fgRef.current.d3Force('link')
         ?.distance((link: any) => {
           const source = link.source;
           const target = link.target;
-          // Longer distance for person-to-org links to push orgs outward
+          // Longer distance for person-to-org links
           if ((source.type === 'person' && target.type === 'org') ||
               (source.type === 'org' && target.type === 'person')) {
-            return 150;
+            return 120;
           }
           // Shorter distance for person-to-person links
-          return 60;
+          return 40;
+        })
+        ?.strength((link: any) => {
+          const source = link.source;
+          const target = link.target;
+          // Weaker links to orgs so people stay more centered
+          if ((source.type === 'person' && target.type === 'org') ||
+              (source.type === 'org' && target.type === 'person')) {
+            return 0.1;
+          }
+          return 0.3;
         });
 
-      // Custom radial force to push orgs to the outside
-      fgRef.current.d3Force('radial', d3.forceRadial(
-        (node: any) => node.type === 'org' ? 200 : 0, // Orgs at radius 200, people at center
-        0, 0 // Center point
-      ).strength((node: any) => node.type === 'org' ? 0.8 : 0.1));
+      // Remove radial force - we'll use fixed positions instead
+      fgRef.current.d3Force('radial', null);
+
+      // Custom force to fix organizations to polygon positions
+      fgRef.current.d3Force('polygonPositions', (alpha: number) => {
+        graphData.nodes.forEach((node: any) => {
+          if (node.type === 'org') {
+            const targetPos = orgPolygonPositions[node.id];
+            if (targetPos) {
+              // Strong pull to fixed position
+              const strength = 0.5;
+              node.vx = (node.vx || 0) + (targetPos.x - node.x) * strength;
+              node.vy = (node.vy || 0) + (targetPos.y - node.y) * strength;
+            }
+          }
+        });
+      });
+
+      // Center force only for people
+      fgRef.current.d3Force('center', d3.forceCenter(0, 0).strength(0.05));
 
       // Reheat simulation
       fgRef.current.d3ReheatSimulation();
     }
-  }, [graphData]);
+  }, [graphData, orgPolygonPositions]);
 
   const getPersonConnections = (personName: string) => {
     const person = samplePeople.find(p => p.name === personName);
