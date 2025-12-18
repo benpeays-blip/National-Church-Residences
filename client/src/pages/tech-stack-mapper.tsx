@@ -24,7 +24,10 @@ import {
   Shield,
   Layers,
   Network,
-  Check
+  Check,
+  ChevronDown,
+  ChevronUp,
+  X
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -99,6 +102,7 @@ const layerInfo: Record<string, {
 
 export default function TechStackMapper() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [expandedCardId, setExpandedCardId] = useState<string | null>(null);
   
   const filteredProducts = techProducts.filter(product => 
     product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -187,25 +191,32 @@ export default function TechStackMapper() {
                       {(searchQuery ? products : groupedByLayer[layer]).map((product) => {
                         const CategoryIcon = categoryIcons[product.category] || Building2;
                         const productAccent = getCategoryAccent(product.category);
+                        const isExpanded = expandedCardId === product.id;
                         return (
                           <AccentCard 
                             key={product.id}
                             accent={productAccent}
-                            className="p-0 hover-elevate transition-all"
+                            className={`p-0 hover-elevate transition-all cursor-pointer ${isExpanded ? 'col-span-1 md:col-span-2 lg:col-span-4' : ''}`}
                             data-testid={`card-ecosystem-${product.id}`}
+                            onClick={() => setExpandedCardId(isExpanded ? null : product.id)}
                           >
                             <div className="p-4 space-y-3">
-                              <div className="flex items-start gap-3">
-                                <div 
-                                  className="w-8 h-8 rounded-md flex items-center justify-center shrink-0"
-                                  style={{ backgroundColor: `${product.brandColor}15` }}
-                                >
-                                  <CategoryIcon className="w-4 h-4" style={{ color: product.brandColor }} />
+                              <div className="flex items-start justify-between gap-3">
+                                <div className="flex items-start gap-3 flex-1">
+                                  <div 
+                                    className="w-8 h-8 rounded-md flex items-center justify-center shrink-0"
+                                    style={{ backgroundColor: `${product.brandColor}15` }}
+                                  >
+                                    <CategoryIcon className="w-4 h-4" style={{ color: product.brandColor }} />
+                                  </div>
+                                  <div className="flex-1 min-w-0">
+                                    <h4 className="font-semibold text-sm leading-tight" style={{ color: product.brandColor }}>{product.name}</h4>
+                                    <p className="text-xs text-muted-foreground mt-0.5">{product.tagline}</p>
+                                  </div>
                                 </div>
-                                <div className="flex-1 min-w-0">
-                                  <h4 className="font-semibold text-sm leading-tight" style={{ color: product.brandColor }}>{product.name}</h4>
-                                  <p className="text-xs text-muted-foreground mt-0.5">{product.tagline}</p>
-                                </div>
+                                <Button variant="ghost" size="icon" className="shrink-0 h-6 w-6">
+                                  {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+                                </Button>
                               </div>
                               <Badge 
                                 variant="outline" 
@@ -215,9 +226,80 @@ export default function TechStackMapper() {
                                 <CategoryIcon className="w-3 h-3" />
                                 {product.category}
                               </Badge>
-                              <p className="text-xs text-muted-foreground line-clamp-2">
-                                {product.strengths[0]}
-                              </p>
+                              {!isExpanded && (
+                                <p className="text-xs text-muted-foreground line-clamp-2">
+                                  {product.strengths[0]}
+                                </p>
+                              )}
+                              
+                              {isExpanded && (
+                                <div className="pt-3 border-t space-y-4">
+                                  <p className="text-sm text-muted-foreground">{product.description}</p>
+                                  
+                                  <div className="grid md:grid-cols-2 gap-4">
+                                    <div className="space-y-2">
+                                      <div className="flex items-center gap-2">
+                                        <div className="w-5 h-5 rounded flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("lime")}20` }}>
+                                          <Check className="w-3 h-3" style={{ color: getAccentColor("lime") }} />
+                                        </div>
+                                        <h5 className="font-medium text-xs">Strengths</h5>
+                                      </div>
+                                      <ul className="space-y-1">
+                                        {product.strengths.map((strength, idx) => (
+                                          <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
+                                            <span style={{ color: getAccentColor("lime") }}>+</span>
+                                            <span>{strength}</span>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                    
+                                    <div className="space-y-2">
+                                      <div className="flex items-center gap-2">
+                                        <div className="w-5 h-5 rounded flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("coral")}20` }}>
+                                          <X className="w-3 h-3" style={{ color: getAccentColor("coral") }} />
+                                        </div>
+                                        <h5 className="font-medium text-xs">Weaknesses</h5>
+                                      </div>
+                                      <ul className="space-y-1">
+                                        {product.weaknesses.map((weakness, idx) => (
+                                          <li key={idx} className="flex items-start gap-2 text-xs text-muted-foreground">
+                                            <span style={{ color: getAccentColor("coral") }}>−</span>
+                                            <span>{weakness}</span>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </div>
+                                  </div>
+                                  
+                                  <div 
+                                    className="p-3 rounded-lg border-l-2"
+                                    style={{ 
+                                      backgroundColor: `${getAccentColor("teal")}10`,
+                                      borderLeftColor: getAccentColor("teal")
+                                    }}
+                                  >
+                                    <div className="flex items-center gap-2 mb-1">
+                                      <Shield className="w-3.5 h-3.5" style={{ color: getAccentColor("teal") }} />
+                                      <h5 className="font-medium text-xs" style={{ color: getAccentColor("teal") }}>NCR Context</h5>
+                                    </div>
+                                    <p className="text-xs text-muted-foreground">{product.ncrContext}</p>
+                                  </div>
+                                  
+                                  <Button 
+                                    variant="outline" 
+                                    size="sm" 
+                                    className="gap-2"
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      window.open(product.website, '_blank');
+                                    }}
+                                  >
+                                    <ExternalLink className="w-3.5 h-3.5" />
+                                    Visit Website
+                                  </Button>
+                                </div>
+                              )}
                             </div>
                           </AccentCard>
                         );
