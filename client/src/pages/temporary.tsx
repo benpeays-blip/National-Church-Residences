@@ -5,9 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { AccentCard, NCR_BRAND_COLORS, AccentColor, getAccentColor, getAccentBgClass } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import TechStackMapper from "@/pages/tech-stack-mapper";
 import OtherWithTabs from "@/pages/other-with-tabs";
 
@@ -1303,38 +1301,61 @@ function InterviewCard({ person, onClick }: { person: InterviewPerson; onClick: 
   );
 }
 
-function InterviewDetailDialog({ person, open, onOpenChange }: { person: InterviewPerson | null; open: boolean; onOpenChange: (open: boolean) => void }) {
-  if (!person) return null;
+function InterviewDetailPage({ personId }: { personId: string }) {
+  const [, navigate] = useLocation();
+  const person = interviewees.find(p => p.id === personId);
+
+  if (!person) {
+    return (
+      <div className="p-6">
+        <Card className="p-6 text-center">
+          <p className="text-muted-foreground">Person not found</p>
+          <Button className="mt-4" onClick={() => navigate("/temporary")}>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Interviews
+          </Button>
+        </Card>
+      </div>
+    );
+  }
 
   const accentColor = getAccentColor(person.accent);
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent 
-        className="max-w-4xl max-h-[90vh] p-0 flex flex-col overflow-hidden"
-        data-testid="dialog-interview-detail"
+    <div className="p-6 space-y-6">
+      <Button 
+        variant="ghost" 
+        className="mb-2"
+        onClick={() => navigate("/temporary")}
+        data-testid="button-back"
       >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back to Interviews
+      </Button>
+
+      <Card className="overflow-hidden">
         <div 
-          className="p-6 pr-12 border-b shrink-0 border-l-4"
+          className="p-6 border-b border-l-4"
           style={{ backgroundColor: `${accentColor}10`, borderLeftColor: accentColor }}
         >
-          <DialogHeader className="space-y-3">
+          <div className="space-y-3">
             <div className="flex items-center gap-4">
               <div 
-                className="w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-base shrink-0"
+                className="w-14 h-14 rounded-full flex items-center justify-center text-white font-bold text-lg shrink-0"
                 style={{ backgroundColor: accentColor }}
               >
                 {person.name.split(' ').map(n => n[0]).join('')}
               </div>
               <div>
-                <DialogTitle className="text-xl font-bold" style={{ color: accentColor }}>
+                <h1 className="text-2xl font-bold" style={{ color: accentColor }}>
                   {person.name}
-                </DialogTitle>
-                <DialogDescription className="text-base">{person.title}</DialogDescription>
+                </h1>
+                <p className="text-base text-muted-foreground">{person.title}</p>
               </div>
             </div>
             <Badge 
               variant="outline"
+              className="text-sm"
               style={{ borderColor: accentColor, color: accentColor }}
             >
               {person.area}
@@ -1342,159 +1363,141 @@ function InterviewDetailDialog({ person, open, onOpenChange }: { person: Intervi
             <p className="text-sm text-muted-foreground italic border-l-2 pl-3" style={{ borderColor: accentColor }}>
               {person.background}
             </p>
-          </DialogHeader>
+          </div>
         </div>
 
-        <ScrollArea className="flex-1 overflow-auto">
-          <div className="p-6">
-            <Accordion type="multiple" defaultValue={["challenges", "wants", "tech", "observations", "summary"]} className="space-y-2">
-              <AccordionItem value="challenges" className="border rounded-lg px-4">
-                <AccordionTrigger className="hover:no-underline py-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("coral")}20` }}>
-                      <AlertTriangle className="h-4 w-4" style={{ color: getAccentColor("coral") }} />
-                    </div>
-                    <span className="font-semibold">Current Challenges</span>
-                    <Badge variant="secondary" className="ml-2 text-xs">{person.challenges.length}</Badge>
+        <div className="p-6">
+          <Accordion type="multiple" defaultValue={["challenges", "wants", "tech", "observations", "summary"]} className="space-y-2">
+            <AccordionItem value="challenges" className="border rounded-lg px-4">
+              <AccordionTrigger className="hover:no-underline py-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("coral")}20` }}>
+                    <AlertTriangle className="h-4 w-4" style={{ color: getAccentColor("coral") }} />
                   </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="space-y-4 pb-2">
-                    {person.challenges.map((challenge, idx) => (
-                      <div key={idx} className="border-l-2 pl-3" style={{ borderColor: `${getAccentColor("coral")}40` }}>
-                        <h4 className="font-medium text-sm mb-2">{challenge.title}</h4>
-                        <ul className="space-y-1.5">
-                          {challenge.items.map((item, itemIdx) => (
-                            <li key={itemIdx} className="text-sm text-muted-foreground flex items-start gap-2">
-                              <span className="mt-1 shrink-0" style={{ color: getAccentColor("coral") }}>&#8226;</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
+                  <span className="font-semibold">Current Challenges</span>
+                  <Badge variant="secondary" className="ml-2 text-xs">{person.challenges.length}</Badge>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-4 pb-2">
+                  {person.challenges.map((challenge, idx) => (
+                    <div key={idx} className="border-l-2 pl-3" style={{ borderColor: `${getAccentColor("coral")}40` }}>
+                      <h4 className="font-medium text-sm mb-2">{challenge.title}</h4>
+                      <ul className="space-y-1.5">
+                        {challenge.items.map((item, itemIdx) => (
+                          <li key={itemIdx} className="text-sm text-muted-foreground flex items-start gap-2">
+                            <span className="mt-1 shrink-0" style={{ color: getAccentColor("coral") }}>&#8226;</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="wants" className="border rounded-lg px-4">
+              <AccordionTrigger className="hover:no-underline py-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("lime")}20` }}>
+                    <Sparkles className="h-4 w-4" style={{ color: getAccentColor("lime") }} />
+                  </div>
+                  <span className="font-semibold">Desired Capabilities</span>
+                  <Badge variant="secondary" className="ml-2 text-xs">{person.wants.length}</Badge>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-4 pb-2">
+                  {person.wants.map((want, idx) => (
+                    <div key={idx} className="border-l-2 pl-3" style={{ borderColor: `${getAccentColor("lime")}40` }}>
+                      <h4 className="font-medium text-sm mb-2">{want.title}</h4>
+                      <ul className="space-y-1.5">
+                        {want.items.map((item, itemIdx) => (
+                          <li key={itemIdx} className="text-sm text-muted-foreground flex items-start gap-2">
+                            <span className="mt-1 shrink-0" style={{ color: getAccentColor("lime") }}>+</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
+
+            <AccordionItem value="tech" className="border rounded-lg px-4">
+              <AccordionTrigger className="hover:no-underline py-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("sky")}20` }}>
+                    <Server className="h-4 w-4" style={{ color: getAccentColor("sky") }} />
+                  </div>
+                  <span className="font-semibold">Tech Stack</span>
+                  <Badge variant="secondary" className="ml-2 text-xs">{person.techStack.length}</Badge>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <div className="space-y-3 pb-2">
+                  {person.techStack.map((tech, idx) => (
+                    <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                      <div className="w-2 h-2 rounded-full mt-2 shrink-0" style={{ backgroundColor: getAccentColor("sky") }} />
+                      <div>
+                        <h4 className="font-medium text-sm">{tech.name}</h4>
+                        <p className="text-sm text-muted-foreground mt-0.5">{tech.description}</p>
                       </div>
-                    ))}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="wants" className="border rounded-lg px-4">
-                <AccordionTrigger className="hover:no-underline py-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("lime")}20` }}>
-                      <Sparkles className="h-4 w-4" style={{ color: getAccentColor("lime") }} />
                     </div>
-                    <span className="font-semibold">Desired Capabilities</span>
-                    <Badge variant="secondary" className="ml-2 text-xs">{person.wants.length}</Badge>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="space-y-4 pb-2">
-                    {person.wants.map((want, idx) => (
-                      <div key={idx} className="border-l-2 pl-3" style={{ borderColor: `${getAccentColor("lime")}40` }}>
-                        <h4 className="font-medium text-sm mb-2">{want.title}</h4>
-                        <ul className="space-y-1.5">
-                          {want.items.map((item, itemIdx) => (
-                            <li key={itemIdx} className="text-sm text-muted-foreground flex items-start gap-2">
-                              <span className="mt-1 shrink-0" style={{ color: getAccentColor("lime") }}>+</span>
-                              <span>{item}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
+                  ))}
+                </div>
+              </AccordionContent>
+            </AccordionItem>
 
-              <AccordionItem value="tech" className="border rounded-lg px-4">
-                <AccordionTrigger className="hover:no-underline py-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("sky")}20` }}>
-                      <Server className="h-4 w-4" style={{ color: getAccentColor("sky") }} />
-                    </div>
-                    <span className="font-semibold">Tech Stack</span>
-                    <Badge variant="secondary" className="ml-2 text-xs">{person.techStack.length}</Badge>
+            <AccordionItem value="observations" className="border rounded-lg px-4">
+              <AccordionTrigger className="hover:no-underline py-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("orange")}20` }}>
+                    <Users className="h-4 w-4" style={{ color: getAccentColor("orange") }} />
                   </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="space-y-3 pb-2">
-                    {person.techStack.map((tech, idx) => (
-                      <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                        <div className="w-2 h-2 rounded-full mt-2 shrink-0" style={{ backgroundColor: getAccentColor("sky") }} />
-                        <div>
-                          <h4 className="font-medium text-sm">{tech.name}</h4>
-                          <p className="text-sm text-muted-foreground mt-0.5">{tech.description}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
+                  <span className="font-semibold">Observations</span>
+                  <Badge variant="secondary" className="ml-2 text-xs">{person.observations.length}</Badge>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <ul className="space-y-2 pb-2">
+                  {person.observations.map((obs, idx) => (
+                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                      <span className="mt-1 shrink-0" style={{ color: getAccentColor("orange") }}>&#8594;</span>
+                      <span>{obs}</span>
+                    </li>
+                  ))}
+                </ul>
+              </AccordionContent>
+            </AccordionItem>
 
-              <AccordionItem value="observations" className="border rounded-lg px-4">
-                <AccordionTrigger className="hover:no-underline py-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("orange")}20` }}>
-                      <Users className="h-4 w-4" style={{ color: getAccentColor("orange") }} />
-                    </div>
-                    <span className="font-semibold">Observations</span>
-                    <Badge variant="secondary" className="ml-2 text-xs">{person.observations.length}</Badge>
+            <AccordionItem value="summary" className="border rounded-lg px-4" style={{ backgroundColor: `${getAccentColor("teal")}08`, borderColor: `${getAccentColor("teal")}40` }}>
+              <AccordionTrigger className="hover:no-underline py-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("teal")}20` }}>
+                    <Building2 className="h-4 w-4" style={{ color: getAccentColor("teal") }} />
                   </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <ul className="space-y-2 pb-2">
-                    {person.observations.map((obs, idx) => (
-                      <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                        <span className="mt-1 shrink-0" style={{ color: getAccentColor("orange") }}>&#8594;</span>
-                        <span>{obs}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="summary" className="border rounded-lg px-4" style={{ backgroundColor: `${getAccentColor("teal")}08`, borderColor: `${getAccentColor("teal")}40` }}>
-                <AccordionTrigger className="hover:no-underline py-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("teal")}20` }}>
-                      <Building2 className="h-4 w-4" style={{ color: getAccentColor("teal") }} />
-                    </div>
-                    <span className="font-semibold" style={{ color: getAccentColor("teal") }}>Summary Insight</span>
-                  </div>
-                </AccordionTrigger>
-                <AccordionContent>
-                  <p className="text-sm text-muted-foreground leading-relaxed pb-2">{person.summaryInsight}</p>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
-        </ScrollArea>
-      </DialogContent>
-    </Dialog>
+                  <span className="font-semibold" style={{ color: getAccentColor("teal") }}>Summary Insight</span>
+                </div>
+              </AccordionTrigger>
+              <AccordionContent>
+                <p className="text-sm text-muted-foreground leading-relaxed pb-2">{person.summaryInsight}</p>
+              </AccordionContent>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </Card>
+    </div>
   );
 }
 
-function OnSiteInterviews({ initialPersonId }: { initialPersonId?: string }) {
+function OnSiteInterviews() {
   const [, navigate] = useLocation();
-  const [selectedPerson, setSelectedPerson] = useState<InterviewPerson | null>(() => {
-    if (initialPersonId) {
-      return interviewees.find(p => p.id === initialPersonId) || null;
-    }
-    return null;
-  });
-  const [dialogOpen, setDialogOpen] = useState(!!initialPersonId);
 
   const handleCardClick = (person: InterviewPerson) => {
-    setSelectedPerson(person);
-    setDialogOpen(true);
     navigate(`/temporary/interviews/${person.id}`);
-  };
-
-  const handleDialogClose = (open: boolean) => {
-    setDialogOpen(open);
-    if (!open) {
-      navigate("/temporary");
-    }
   };
 
   return (
@@ -1520,12 +1523,6 @@ function OnSiteInterviews({ initialPersonId }: { initialPersonId?: string }) {
           />
         ))}
       </div>
-
-      <InterviewDetailDialog 
-        person={selectedPerson} 
-        open={dialogOpen} 
-        onOpenChange={handleDialogClose}
-      />
     </div>
   );
 }
@@ -2280,10 +2277,19 @@ export default function Temporary() {
     );
   }
 
-  const initialPersonId = interviewDetailMatch ? interviewDetailMatch[1] : undefined;
+  if (interviewDetailMatch) {
+    const personId = interviewDetailMatch[1];
+    return (
+      <div className="flex flex-col h-full">
+        <div className="flex-1 overflow-auto">
+          <InterviewDetailPage personId={personId} />
+        </div>
+      </div>
+    );
+  }
 
   // Determine which component to render based on route
-  let ContentComponent: React.ComponentType<{ initialPersonId?: string }> = OnSiteInterviews;
+  let ContentComponent: React.ComponentType = OnSiteInterviews;
   
   if (location === "/temporary/tech-stack") {
     ContentComponent = TechStack;
@@ -2300,7 +2306,7 @@ export default function Temporary() {
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 overflow-auto p-6">
-        <ContentComponent initialPersonId={initialPersonId} />
+        <ContentComponent />
       </div>
     </div>
   );
