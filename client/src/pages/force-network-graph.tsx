@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useMemo } from "react";
+import { useState, useRef, useCallback, useMemo, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -81,7 +81,16 @@ export default function ForceNetworkGraph() {
   const [selectedNode, setSelectedNode] = useState<GraphNode | null>(null);
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [showLabels, setShowLabels] = useState(true);
+  const [isInitialized, setIsInitialized] = useState(false);
   const fgRef = useRef<any>();
+
+  // Center the graph when the simulation settles on initial load
+  const handleEngineStop = useCallback(() => {
+    if (!isInitialized && fgRef.current) {
+      fgRef.current.zoomToFit(400, 60);
+      setIsInitialized(true);
+    }
+  }, [isInitialized]);
 
   const graphData = useMemo(() => {
     const nodes: GraphNode[] = [];
@@ -164,9 +173,14 @@ export default function ForceNetworkGraph() {
 
   const handleNodeClick = useCallback((node: any) => {
     setSelectedNode(node as GraphNode);
-    if (fgRef.current) {
-      fgRef.current.centerAt(node.x, node.y, 500);
-      fgRef.current.zoom(2, 500);
+    if (fgRef.current && node.x !== undefined && node.y !== undefined) {
+      // First center on the node, then zoom after centering completes
+      fgRef.current.centerAt(node.x, node.y, 400);
+      setTimeout(() => {
+        if (fgRef.current) {
+          fgRef.current.zoom(2.5, 400);
+        }
+      }, 450);
     }
   }, []);
 
@@ -298,6 +312,7 @@ export default function ForceNetworkGraph() {
                 linkCanvasObject={linkCanvasObject}
                 onNodeClick={handleNodeClick}
                 onNodeHover={(node: any) => setHoveredNode(node?.id || null)}
+                onEngineStop={handleEngineStop}
                 nodeRelSize={6}
                 linkWidth={1}
                 linkColor={() => "rgba(100, 100, 100, 0.3)"}
