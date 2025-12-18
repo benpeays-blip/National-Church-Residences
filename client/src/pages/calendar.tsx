@@ -53,6 +53,8 @@ const eventTypeConfig: Record<string, { icon: any; color: string; label: string 
   meeting: { icon: Users, color: accentColors.sky, label: "Meeting" },
   task: { icon: FileText, color: accentColors.teal, label: "Task" },
   follow_up: { icon: Target, color: accentColors.orange, label: "Follow-up" },
+  campaign: { icon: FileText, color: accentColors.orange, label: "Campaign" },
+  visit: { icon: Users, color: accentColors.coral, label: "Site Visit" },
 };
 
 const priorityColors: Record<string, string> = {
@@ -95,13 +97,10 @@ export default function CalendarPage() {
 
   const createEventMutation = useMutation({
     mutationFn: async (event: typeof newEvent) => {
-      return apiRequest("/api/calendar-events", {
-        method: "POST",
-        body: JSON.stringify({
-          ...event,
-          userId: "demo-user",
-          scheduledAt: new Date(event.scheduledAt).toISOString(),
-        }),
+      return apiRequest("POST", "/api/calendar-events", {
+        ...event,
+        userId: "demo-user",
+        scheduledAt: new Date(event.scheduledAt).toISOString(),
       });
     },
     onSuccess: () => {
@@ -132,9 +131,7 @@ export default function CalendarPage() {
 
   const deleteEventMutation = useMutation({
     mutationFn: async (eventId: string) => {
-      return apiRequest(`/api/calendar-events/${eventId}`, {
-        method: "DELETE",
-      });
+      return apiRequest("DELETE", `/api/calendar-events/${eventId}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/calendar-events"] });
@@ -147,10 +144,7 @@ export default function CalendarPage() {
 
   const completeEventMutation = useMutation({
     mutationFn: async (eventId: string) => {
-      return apiRequest(`/api/calendar-events/${eventId}`, {
-        method: "PATCH",
-        body: JSON.stringify({ completed: 1 }),
-      });
+      return apiRequest("PATCH", `/api/calendar-events/${eventId}`, { completed: 1 });
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/calendar-events"] });

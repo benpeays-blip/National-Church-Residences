@@ -681,7 +681,7 @@ export const calendarEvents = pgTable("calendar_events", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").references(() => users.id).notNull(),
   personId: varchar("person_id").references(() => persons.id),
-  title: varchar("title").notNull(),
+  title: varchar("title").notNull().default("Untitled Event"),
   description: text("description"),
   eventType: varchar("event_type"), // "call", "email", "meeting", "task", etc.
   scheduledAt: timestamp("scheduled_at").notNull(),

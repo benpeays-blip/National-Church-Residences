@@ -6,6 +6,7 @@ import { getAccentColor } from "@/components/ui/accent-card";
 import { useToast } from "@/hooks/use-toast";
 import { 
   Calendar, 
+  CalendarPlus,
   Phone, 
   Mail, 
   Users, 
@@ -17,6 +18,8 @@ import {
   Plus,
   CheckCircle2
 } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { queryClient, apiRequest } from "@/lib/queryClient";
 
 const accentColors = {
   teal: getAccentColor("teal"),
@@ -39,6 +42,59 @@ export default function UpcomingActionsPage() {
       description: "Action creation form coming soon. This feature is under development.",
     });
   };
+
+  const addToCalendarMutation = useMutation({
+    mutationFn: async (action: { donor: string; action: string; date: string; time: string; type: string; priority: string; notes: string }) => {
+      const scheduledAt = new Date();
+      if (action.date === "Today") {
+        // Keep today's date
+      } else if (action.date === "Tomorrow") {
+        scheduledAt.setDate(scheduledAt.getDate() + 1);
+      } else {
+        // Parse dates like "Dec 18"
+        const year = new Date().getFullYear();
+        const parsed = new Date(`${action.date}, ${year}`);
+        if (!isNaN(parsed.getTime())) {
+          scheduledAt.setMonth(parsed.getMonth());
+          scheduledAt.setDate(parsed.getDate());
+        }
+      }
+      // Parse time like "10:00 AM"
+      const timeParts = action.time.match(/(\d+):(\d+)\s*(AM|PM)/i);
+      if (timeParts) {
+        let hours = parseInt(timeParts[1]);
+        const minutes = parseInt(timeParts[2]);
+        const isPM = timeParts[3].toUpperCase() === "PM";
+        if (isPM && hours !== 12) hours += 12;
+        if (!isPM && hours === 12) hours = 0;
+        scheduledAt.setHours(hours, minutes, 0, 0);
+      }
+
+      return apiRequest("POST", "/api/calendar-events", {
+        userId: "demo-user",
+        title: `${action.action} - ${action.donor}`,
+        description: action.notes,
+        eventType: action.type === "visit" ? "meeting" : action.type,
+        scheduledAt: scheduledAt.toISOString(),
+        duration: 30,
+        priority: action.priority.toLowerCase(),
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/calendar-events"] });
+      toast({
+        title: "Added to Calendar",
+        description: "This action has been added to your calendar.",
+      });
+    },
+    onError: () => {
+      toast({
+        title: "Error",
+        description: "Failed to add to calendar. Please try again.",
+        variant: "destructive",
+      });
+    },
+  });
 
   const completedActions = [
     { 
@@ -320,6 +376,12 @@ export default function UpcomingActionsPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
+          <Link href="/calendar">
+            <Button variant="outline" className="gap-2" data-testid="button-view-calendar">
+              <CalendarPlus className="w-4 h-4" />
+              Calendar
+            </Button>
+          </Link>
           {isShowingCompleted ? (
             <Link href="/upcoming-actions">
               <Button variant="outline" className="gap-2">
@@ -478,10 +540,30 @@ export default function UpcomingActionsPage() {
                           <Clock className="w-3 h-3" />
                           <span>{action.time}</span>
                         </div>
-                        <ChevronRight 
-                          className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" 
-                          style={{ color: typeColor }} 
-                        />
+                        <div className="flex items-center gap-1">
+                          {!isShowingCompleted && (
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              className="h-7 px-2 gap-1"
+                              style={{ borderColor: `${accentColors.olive}50`, color: accentColors.olive }}
+                              onClick={(e) => {
+                                e.preventDefault();
+                                e.stopPropagation();
+                                addToCalendarMutation.mutate(action);
+                              }}
+                              disabled={addToCalendarMutation.isPending}
+                              data-testid={`button-add-to-calendar-${action.id}`}
+                            >
+                              <CalendarPlus className="w-3 h-3" />
+                              <span className="text-[10px]">Calendar</span>
+                            </Button>
+                          )}
+                          <ChevronRight 
+                            className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" 
+                            style={{ color: typeColor }} 
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

@@ -122,6 +122,7 @@ import AIMeetingBriefs from "@/pages/ai-meeting-briefs";
 import AIVoiceNotes from "@/pages/ai-voice-notes";
 import AIWithTabs from "@/pages/ai-with-tabs";
 import MeetingNotes from "@/pages/meeting-notes";
+import CalendarPage from "@/pages/calendar";
 
 // Relationship Intelligence
 import BoardConnections from "@/pages/relationship-board-connections";
@@ -332,6 +333,7 @@ function Router() {
       <Route path="/pipeline" component={PipelineWithTabs} />
       <Route path="/upcoming-actions" component={UpcomingActionsPage} />
       <Route path="/actions/:id" component={ActionDetail} />
+      <Route path="/calendar" component={CalendarPage} />
       
       {/* Tab-based landing pages */}
       <Route path="/intelligence/wealth" component={IntelligenceWithTabs} />

@@ -24,8 +24,9 @@ import {
   outreachTemplates, grantProposals, impactReports, sentimentAnalysis, peerBenchmarks, portfolioOptimizations,
   calendarEvents, stewardshipWorkflows, taskPriorityScores, giftRegistries, grants, boardMemberships,
   fundraisingEvents, portalUsers, boardRoster, donorRoster, inviteTokens, portalSessions,
-  insertBoardMembershipSchema, insertOrganizationCanvasSchema
+  insertBoardMembershipSchema, insertOrganizationCanvasSchema, insertCalendarEventSchema
 } from "@shared/schema";
+import { z } from "zod";
 import crypto from "crypto";
 import bcrypt from "bcryptjs";
 import { eq, sql, desc, gte, and, inArray } from "drizzle-orm";
@@ -1071,6 +1072,118 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error generating next best actions:", error);
       res.status(500).json({ message: "Failed to generate next best actions" });
+    }
+  });
+
+  // Calendar Events endpoints
+  app.get("/api/calendar-events", async (req, res) => {
+    try {
+      const userId = req.query.userId as string | undefined;
+      const events = await db
+        .select({
+          id: calendarEvents.id,
+          userId: calendarEvents.userId,
+          personId: calendarEvents.personId,
+          title: calendarEvents.title,
+          description: calendarEvents.description,
+          eventType: calendarEvents.eventType,
+          scheduledAt: calendarEvents.scheduledAt,
+          duration: calendarEvents.duration,
+          priority: calendarEvents.priority,
+          estimatedImpact: calendarEvents.estimatedImpact,
+          taskId: calendarEvents.taskId,
+          completed: calendarEvents.completed,
+          outcome: calendarEvents.outcome,
+          createdAt: calendarEvents.createdAt,
+          personName: sql<string>`CONCAT(${persons.firstName}, ' ', ${persons.lastName})`,
+        })
+        .from(calendarEvents)
+        .leftJoin(persons, eq(calendarEvents.personId, persons.id))
+        .orderBy(calendarEvents.scheduledAt);
+      res.json(events);
+    } catch (error) {
+      console.error("Error fetching calendar events:", error);
+      res.status(500).json({ message: "Failed to fetch calendar events" });
+    }
+  });
+
+  // Validation schema for calendar event creation
+  const calendarEventInputSchema = z.object({
+    userId: z.string().default("demo-user"),
+    personId: z.string().nullable().optional(),
+    title: z.string().min(1, "Title is required"),
+    description: z.string().nullable().optional(),
+    eventType: z.enum(["call", "email", "meeting", "task", "follow_up", "campaign", "visit"]).default("task"),
+    scheduledAt: z.string().or(z.date()),
+    duration: z.number().int().positive().default(30),
+    priority: z.enum(["high", "medium", "low"]).default("medium"),
+    taskId: z.string().nullable().optional(),
+  });
+
+  app.post("/api/calendar-events", async (req, res) => {
+    try {
+      // Validate input
+      const parsed = calendarEventInputSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ 
+          message: "Validation failed", 
+          errors: parsed.error.flatten().fieldErrors 
+        });
+      }
+
+      const validData = parsed.data;
+      const [newEvent] = await db
+        .insert(calendarEvents)
+        .values({
+          userId: validData.userId,
+          personId: validData.personId || null,
+          title: validData.title,
+          description: validData.description || null,
+          eventType: validData.eventType,
+          scheduledAt: new Date(validData.scheduledAt),
+          duration: validData.duration,
+          priority: validData.priority,
+          taskId: validData.taskId || null,
+          completed: 0,
+        })
+        .returning();
+      res.json(newEvent);
+    } catch (error) {
+      console.error("Error creating calendar event:", error);
+      res.status(500).json({ message: "Failed to create calendar event" });
+    }
+  });
+
+  app.patch("/api/calendar-events/:id", async (req, res) => {
+    try {
+      const [updatedEvent] = await db
+        .update(calendarEvents)
+        .set(req.body)
+        .where(eq(calendarEvents.id, req.params.id))
+        .returning();
+      if (!updatedEvent) {
+        return res.status(404).json({ message: "Calendar event not found" });
+      }
+      res.json(updatedEvent);
+    } catch (error) {
+      console.error("Error updating calendar event:", error);
+      res.status(500).json({ message: "Failed to update calendar event" });
+    }
+  });
+
+  app.delete("/api/calendar-events/:id", async (req, res) => {
+    try {
+      const [deletedEvent] = await db
+        .delete(calendarEvents)
+        .where(eq(calendarEvents.id, req.params.id))
+        .returning();
+      if (!deletedEvent) {
+        return res.status(404).json({ message: "Calendar event not found" });
+      }
+      res.json({ message: "Calendar event deleted", id: deletedEvent.id });
+    } catch (error) {
+      console.error("Error deleting calendar event:", error);
+      res.status(500).json({ message: "Failed to delete calendar event" });
     }
   });
 
