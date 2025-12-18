@@ -529,17 +529,9 @@ export default function TechStackMapper() {
                           </div>
                           <h4 className="font-medium text-sm" style={{ color: getAccentColor("teal") }}>NCR Context</h4>
                         </div>
-                        <div 
-                          className="p-4 rounded-lg border-l-2"
-                          style={{ 
-                            backgroundColor: `${getAccentColor("teal")}10`,
-                            borderLeftColor: getAccentColor("teal")
-                          }}
-                        >
-                          <p className="text-sm leading-relaxed text-muted-foreground">
-                            {product.ncrContext}
-                          </p>
-                        </div>
+                        <p className="text-sm leading-relaxed text-muted-foreground">
+                          {product.ncrContext}
+                        </p>
                       </div>
                     </div>
                   </div>
