@@ -223,6 +223,16 @@ export const inviteTokens = pgTable("invite_tokens", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Portal Sessions (for server-side session validation)
+export const portalSessions = pgTable("portal_sessions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull(),
+  token: varchar("token").notNull().unique(),
+  role: portalUserRoleEnum("role").notNull(),
+  expiresAt: timestamp("expires_at").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 // Households
 export const households = pgTable("households", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),

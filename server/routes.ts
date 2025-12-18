@@ -23,10 +23,60 @@ import {
   predictiveScores, wealthEvents, meetingBriefs, voiceNotes, boardConnections, corporatePartnerships, peerDonors,
   outreachTemplates, grantProposals, impactReports, sentimentAnalysis, peerBenchmarks, portfolioOptimizations,
   calendarEvents, stewardshipWorkflows, taskPriorityScores, giftRegistries, grants, boardMemberships,
-  fundraisingEvents,
+  fundraisingEvents, portalUsers, boardRoster, donorRoster, inviteTokens, portalSessions,
   insertBoardMembershipSchema, insertOrganizationCanvasSchema
 } from "@shared/schema";
+import crypto from "crypto";
+import bcrypt from "bcryptjs";
 import { eq, sql, desc, gte, and, inArray } from "drizzle-orm";
+import { Request, Response, NextFunction } from "express";
+
+// Portal session middleware - validates session token and role
+async function requirePortalAuth(allowedRoles?: string[]) {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(401).json({ message: "Authentication required" });
+      }
+      
+      const token = authHeader.split(' ')[1];
+      
+      // Handle demo token
+      if (token === 'demo-token') {
+        (req as any).portalUser = { id: 'demo', role: 'demo' };
+        return next();
+      }
+      
+      // Validate token against session store
+      const [session] = await db
+        .select()
+        .from(portalSessions)
+        .where(eq(portalSessions.token, token));
+      
+      if (!session) {
+        return res.status(401).json({ message: "Invalid session" });
+      }
+      
+      // Check if session is expired
+      if (new Date(session.expiresAt) < new Date()) {
+        await db.delete(portalSessions).where(eq(portalSessions.id, session.id));
+        return res.status(401).json({ message: "Session expired" });
+      }
+      
+      // Check role authorization
+      if (allowedRoles && !allowedRoles.includes(session.role)) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+      
+      (req as any).portalUser = { id: session.userId, role: session.role };
+      next();
+    } catch (error) {
+      console.error("Portal auth error:", error);
+      res.status(500).json({ message: "Authentication error" });
+    }
+  };
+}
 
 export async function registerRoutes(app: Express): Promise<Server> {
   await setupAuth(app);
@@ -39,6 +89,304 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error fetching user:", error);
       res.status(500).json({ message: "Failed to fetch user" });
+    }
+  });
+
+  // Bcrypt password hashing with proper salting
+  const BCRYPT_ROUNDS = 10;
+
+  async function hashPassword(password: string): Promise<string> {
+    return bcrypt.hash(password, BCRYPT_ROUNDS);
+  }
+
+  async function verifyPassword(password: string, hash: string): Promise<boolean> {
+    return bcrypt.compare(password, hash);
+  }
+
+  // Portal User Login
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const { username, password, role } = req.body;
+      
+      if (!username || !password) {
+        return res.status(400).json({ message: "Username and password are required" });
+      }
+
+      const [user] = await db
+        .select()
+        .from(portalUsers)
+        .where(eq(portalUsers.username, username));
+
+      if (!user) {
+        // Use same message to prevent username enumeration
+        return res.status(401).json({ message: "Invalid username or password" });
+      }
+
+      const isValidPassword = await verifyPassword(password, user.passwordHash);
+      if (!isValidPassword) {
+        return res.status(401).json({ message: "Invalid username or password" });
+      }
+
+      if (user.verificationStatus !== "approved") {
+        return res.status(403).json({ 
+          message: "Your account is pending verification. Please contact the administrator.",
+          verificationStatus: user.verificationStatus
+        });
+      }
+
+      // Update last login
+      await db
+        .update(portalUsers)
+        .set({ lastLoginAt: new Date() })
+        .where(eq(portalUsers.id, user.id));
+
+      // Generate secure session token
+      const token = crypto.randomBytes(32).toString('hex');
+      
+      // Store session in database (expires in 24 hours)
+      const expiresAt = new Date();
+      expiresAt.setHours(expiresAt.getHours() + 24);
+      
+      await db.insert(portalSessions).values({
+        userId: user.id,
+        token,
+        role: user.role,
+        expiresAt
+      });
+
+      res.json({
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          verificationStatus: user.verificationStatus
+        },
+        token
+      });
+    } catch (error) {
+      console.error("Error during login:", error);
+      res.status(500).json({ message: "Login failed" });
+    }
+  });
+
+  // Portal User Registration
+  app.post("/api/auth/register", async (req, res) => {
+    try {
+      const { username, email, password, role, firstName, lastName, verificationCode } = req.body;
+      
+      if (!username || !email || !password || !role) {
+        return res.status(400).json({ message: "All fields are required" });
+      }
+
+      if (password.length < 8) {
+        return res.status(400).json({ message: "Password must be at least 8 characters" });
+      }
+
+      // Check if username or email already exists
+      const [existingUser] = await db
+        .select()
+        .from(portalUsers)
+        .where(eq(portalUsers.username, username));
+
+      if (existingUser) {
+        return res.status(400).json({ message: "Username already taken" });
+      }
+
+      const [existingEmail] = await db
+        .select()
+        .from(portalUsers)
+        .where(eq(portalUsers.email, email));
+
+      if (existingEmail) {
+        return res.status(400).json({ message: "Email already registered" });
+      }
+
+      // Verify the user based on role and roster membership + invite token
+      let verificationStatus: "pending" | "approved" | "rejected" = "pending";
+      
+      if (role === "board_member") {
+        // Check if email is in board roster (primary verification)
+        const [boardMember] = await db
+          .select()
+          .from(boardRoster)
+          .where(and(
+            eq(boardRoster.email, email.toLowerCase()),
+            eq(boardRoster.isActive, true)
+          ));
+        
+        // Must be in roster AND have valid invite token
+        if (boardMember && verificationCode) {
+          const [invite] = await db
+            .select()
+            .from(inviteTokens)
+            .where(and(
+              eq(inviteTokens.token, verificationCode),
+              eq(inviteTokens.email, email.toLowerCase()),
+              eq(inviteTokens.role, "board_member")
+            ));
+
+          if (invite && !invite.consumedAt && new Date(invite.expiresAt) > new Date()) {
+            verificationStatus = "approved";
+            await db
+              .update(inviteTokens)
+              .set({ consumedAt: new Date() })
+              .where(eq(inviteTokens.id, invite.id));
+          }
+        }
+      } else if (role === "donor") {
+        // Check if email is in donor roster (primary verification)
+        const [donor] = await db
+          .select()
+          .from(donorRoster)
+          .where(and(
+            eq(donorRoster.email, email.toLowerCase()),
+            eq(donorRoster.isActive, true)
+          ));
+        
+        // Must be in roster AND have valid invite token
+        if (donor && verificationCode) {
+          const [invite] = await db
+            .select()
+            .from(inviteTokens)
+            .where(and(
+              eq(inviteTokens.token, verificationCode),
+              eq(inviteTokens.email, email.toLowerCase()),
+              eq(inviteTokens.role, "donor")
+            ));
+
+          if (invite && !invite.consumedAt && new Date(invite.expiresAt) > new Date()) {
+            verificationStatus = "approved";
+            await db
+              .update(inviteTokens)
+              .set({ consumedAt: new Date() })
+              .where(eq(inviteTokens.id, invite.id));
+          }
+        }
+      }
+
+      const passwordHash = await hashPassword(password);
+
+      const [newUser] = await db
+        .insert(portalUsers)
+        .values({
+          username,
+          email: email.toLowerCase(),
+          passwordHash,
+          role,
+          firstName,
+          lastName,
+          verificationStatus,
+          verifiedAt: verificationStatus === "approved" ? new Date() : null
+        })
+        .returning();
+
+      if (verificationStatus === "approved") {
+        const token = crypto.randomBytes(32).toString('hex');
+        res.json({
+          user: {
+            id: newUser.id,
+            username: newUser.username,
+            email: newUser.email,
+            role: newUser.role,
+            firstName: newUser.firstName,
+            lastName: newUser.lastName,
+            verificationStatus: newUser.verificationStatus
+          },
+          token
+        });
+      } else {
+        res.json({
+          verificationStatus: "pending",
+          message: "Your registration is pending verification. You will be notified when approved."
+        });
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      res.status(500).json({ message: "Registration failed" });
+    }
+  });
+
+  // Check portal auth status with server-side validation
+  app.get("/api/auth/portal-status", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.json({ authenticated: false });
+      }
+      
+      const token = authHeader.split(' ')[1];
+      
+      // Handle demo token
+      if (token === 'demo-token') {
+        return res.json({ 
+          authenticated: true, 
+          role: 'demo',
+          user: { id: 'demo', username: 'demo', role: 'demo' }
+        });
+      }
+      
+      // Validate token against session store
+      const [session] = await db
+        .select()
+        .from(portalSessions)
+        .where(eq(portalSessions.token, token));
+      
+      if (!session) {
+        return res.json({ authenticated: false });
+      }
+      
+      // Check if session is expired
+      if (new Date(session.expiresAt) < new Date()) {
+        // Clean up expired session
+        await db.delete(portalSessions).where(eq(portalSessions.id, session.id));
+        return res.json({ authenticated: false, reason: 'Session expired' });
+      }
+      
+      // Get user info
+      const [user] = await db
+        .select()
+        .from(portalUsers)
+        .where(eq(portalUsers.id, session.userId));
+      
+      if (!user) {
+        return res.json({ authenticated: false });
+      }
+      
+      res.json({ 
+        authenticated: true, 
+        role: session.role,
+        user: {
+          id: user.id,
+          username: user.username,
+          email: user.email,
+          role: user.role,
+          firstName: user.firstName,
+          lastName: user.lastName
+        }
+      });
+    } catch (error) {
+      console.error("Error checking portal status:", error);
+      res.json({ authenticated: false });
+    }
+  });
+  
+  // Logout endpoint
+  app.post("/api/auth/logout", async (req, res) => {
+    try {
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        const token = authHeader.split(' ')[1];
+        if (token !== 'demo-token') {
+          await db.delete(portalSessions).where(eq(portalSessions.token, token));
+        }
+      }
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error during logout:", error);
+      res.json({ success: false });
     }
   });
 
