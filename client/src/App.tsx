@@ -476,10 +476,12 @@ function App() {
     { name: 'App Shell', tab: 'appshell' },
     { name: 'Governance', tab: 'governance' },
     { name: 'Scorecard', tab: 'scorecard' },
+    { name: 'Tech Stack', tab: 'techstack' },
   ];
 
   const assessmentNavItems = [
     { name: 'On Site Interviews', path: '/temporary' },
+    { name: 'Tech Stack', path: '/temporary/tech-stack' },
     { name: 'Technology Categories', path: '/temporary/technology-categories' },
     { name: 'Optimization Ideas', path: '/temporary/optimization-ideas' },
     { name: 'Risk & Compliance', path: '/temporary/risk-compliance' },
