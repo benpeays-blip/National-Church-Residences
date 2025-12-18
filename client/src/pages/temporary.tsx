@@ -1354,9 +1354,9 @@ function InterviewDetailPage({ personId }: { personId: string }) {
         </div>
 
         <div className="p-6 space-y-4">
-          <div className="grid md:grid-cols-2 gap-4">
-            <Accordion type="multiple" defaultValue={["challenges"]} className="space-y-0">
-              <AccordionItem value="challenges" className="border rounded-lg px-4">
+          <div className="grid md:grid-cols-2 gap-4 items-stretch">
+            <Accordion type="multiple" defaultValue={["challenges"]} className="space-y-0 h-full">
+              <AccordionItem value="challenges" className="border rounded-lg px-4 h-full flex flex-col">
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("coral")}20` }}>
@@ -1366,7 +1366,7 @@ function InterviewDetailPage({ personId }: { personId: string }) {
                     <Badge variant="secondary" className="ml-2 text-xs">{person.challenges.length}</Badge>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="flex-1">
                   <div className="space-y-4 pb-2">
                     {person.challenges.map((challenge, idx) => (
                       <div key={idx} className="border-l-2 pl-3" style={{ borderColor: `${getAccentColor("coral")}40` }}>
@@ -1386,8 +1386,8 @@ function InterviewDetailPage({ personId }: { personId: string }) {
               </AccordionItem>
             </Accordion>
 
-            <Accordion type="multiple" defaultValue={["wants"]} className="space-y-0">
-              <AccordionItem value="wants" className="border rounded-lg px-4">
+            <Accordion type="multiple" defaultValue={["wants"]} className="space-y-0 h-full">
+              <AccordionItem value="wants" className="border rounded-lg px-4 h-full flex flex-col">
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("lime")}20` }}>
@@ -1397,7 +1397,7 @@ function InterviewDetailPage({ personId }: { personId: string }) {
                     <Badge variant="secondary" className="ml-2 text-xs">{person.wants.length}</Badge>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="flex-1">
                   <div className="space-y-4 pb-2">
                     {person.wants.map((want, idx) => (
                       <div key={idx} className="border-l-2 pl-3" style={{ borderColor: `${getAccentColor("lime")}40` }}>
@@ -1418,9 +1418,9 @@ function InterviewDetailPage({ personId }: { personId: string }) {
             </Accordion>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-4">
-            <Accordion type="multiple" defaultValue={["tech"]} className="space-y-0">
-              <AccordionItem value="tech" className="border rounded-lg px-4">
+          <div className="grid md:grid-cols-2 gap-4 items-stretch">
+            <Accordion type="multiple" defaultValue={["tech"]} className="space-y-0 h-full">
+              <AccordionItem value="tech" className="border rounded-lg px-4 h-full flex flex-col">
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("sky")}20` }}>
@@ -1430,7 +1430,7 @@ function InterviewDetailPage({ personId }: { personId: string }) {
                     <Badge variant="secondary" className="ml-2 text-xs">{person.techStack.length}</Badge>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="flex-1">
                   <div className="space-y-3 pb-2">
                     {person.techStack.map((tech, idx) => (
                       <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
@@ -1446,8 +1446,8 @@ function InterviewDetailPage({ personId }: { personId: string }) {
               </AccordionItem>
             </Accordion>
 
-            <Accordion type="multiple" defaultValue={["observations"]} className="space-y-0">
-              <AccordionItem value="observations" className="border rounded-lg px-4">
+            <Accordion type="multiple" defaultValue={["observations"]} className="space-y-0 h-full">
+              <AccordionItem value="observations" className="border rounded-lg px-4 h-full flex flex-col">
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("orange")}20` }}>
@@ -1457,7 +1457,7 @@ function InterviewDetailPage({ personId }: { personId: string }) {
                     <Badge variant="secondary" className="ml-2 text-xs">{person.observations.length}</Badge>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent>
+                <AccordionContent className="flex-1">
                   <ul className="space-y-2 pb-2">
                     {person.observations.map((obs, idx) => (
                       <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
