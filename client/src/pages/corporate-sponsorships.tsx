@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
+import { Link } from "wouter";
 import {
   Trophy,
   Building2,
@@ -371,10 +372,12 @@ export default function CorporateSponsorships() {
                     <p className="text-xs text-muted-foreground">{sponsorship.contactTitle}</p>
                   </div>
                 </div>
-                <Button variant="ghost" size="sm">
-                  View Details
-                  <ArrowRight className="w-3 h-3 ml-1" />
-                </Button>
+                <Link href={`/corporate-partnerships/sponsorships/${sponsorship.id}`}>
+                  <Button variant="ghost" size="sm" data-testid={`button-view-details-${sponsorship.id}`}>
+                    View Details
+                    <ArrowRight className="w-3 h-3 ml-1" />
+                  </Button>
+                </Link>
               </div>
             </CardContent>
           </Card>

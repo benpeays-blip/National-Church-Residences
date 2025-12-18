@@ -118,6 +118,7 @@ import BoardNetworkMapper from "@/pages/board-network-mapper";
 // Corporate Partnerships (top-level section)
 import CorporatePartnershipsPage from "@/pages/corporate-partnerships";
 import CorporatePartnershipDetail from "@/pages/corporate-partnership-detail";
+import SponsorshipDetail from "@/pages/sponsorship-detail";
 import CorporationsWithTabs from "@/pages/corporations-with-tabs";
 
 // AI Content
@@ -270,6 +271,7 @@ function Router() {
       <Route path="/agent-value-map/workflow/:stepId" component={WorkflowStepDetail} />
       <Route path="/agent-value-map" component={AgentValueMap} />
       <Route path="/corporate-partnerships/employee-giving" component={CorporationsWithTabs} />
+      <Route path="/corporate-partnerships/sponsorships/:id" component={SponsorshipDetail} />
       <Route path="/corporate-partnerships/sponsorships" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/giving" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/volunteering" component={CorporationsWithTabs} />
