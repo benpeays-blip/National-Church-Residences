@@ -67,7 +67,7 @@ export default function NcrHomeHealth() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="overflow-hidden">
-          <CardHeader style={{ backgroundColor: '#395174' }}>
+          <CardHeader style={{ backgroundColor: '#7BC4DC' }}>
             <CardTitle className="text-xl text-white">Conditions We Treat</CardTitle>
             <CardDescription className="text-white/80">Our home health team has expertise in managing a wide range of conditions</CardDescription>
           </CardHeader>
@@ -84,7 +84,7 @@ export default function NcrHomeHealth() {
         </Card>
 
         <Card className="overflow-hidden">
-          <CardHeader style={{ backgroundColor: '#395174' }}>
+          <CardHeader style={{ backgroundColor: '#7BC4DC' }}>
             <CardTitle className="text-xl text-white">Medicare Certified</CardTitle>
           </CardHeader>
           <CardContent className="prose prose-sm max-w-none text-muted-foreground pt-6">
