@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation, Link } from "wouter";
-import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, ChevronRight, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree, Settings, MessageSquare, User, Briefcase } from "lucide-react";
+import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, ChevronRight, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree, Settings, MessageSquare, User, Briefcase, Target } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AccentCard, NCR_BRAND_COLORS, AccentColor, getAccentColor, getAccentBgClass } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
