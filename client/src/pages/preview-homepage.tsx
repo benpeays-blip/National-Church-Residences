@@ -14,6 +14,7 @@ import {
   Lightbulb,
   ArrowRight,
   ArrowUpRight,
+  ArrowLeft,
   Clock,
   AlertTriangle,
   CheckCircle2,
@@ -30,6 +31,7 @@ import {
   Activity,
   Eye
 } from "lucide-react";
+import { useLocation } from "wouter";
 
 const accentColors = {
   teal: getAccentColor("teal"),
@@ -168,6 +170,18 @@ export default function PreviewHomepage() {
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
         <div className="relative px-6 py-8">
+          {/* Back Navigation */}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="mb-4 gap-2 text-muted-foreground hover:text-foreground"
+            onClick={() => window.history.back()}
+            data-testid="button-back"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back
+          </Button>
+
           {/* Executive Header */}
           <div className="flex items-start justify-between mb-8 flex-wrap gap-4">
             <div>
