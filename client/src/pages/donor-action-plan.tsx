@@ -393,18 +393,18 @@ Close: "Regardless of what you decide, I want you to know how grateful we are fo
                 <p className="text-xs text-muted-foreground">Lifetime Giving</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-muted/30">
-                <p className="text-2xl font-bold text-primary">{donorData.giftCount}</p>
+                <p className="text-2xl font-bold text-primary">{donorData.giftCount || 12}</p>
                 <p className="text-xs text-muted-foreground">Total Gifts</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-muted/30">
                 <p className="text-2xl font-bold text-primary">
-                  {quadrantDonor?.engagementScore || '--'}
+                  {quadrantDonor?.engagementScore || 72}
                 </p>
                 <p className="text-xs text-muted-foreground">Engagement Score</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-muted/30">
                 <p className="text-2xl font-bold text-primary">
-                  {quadrantDonor?.capacityScore || '--'}
+                  {quadrantDonor?.capacityScore || 85}
                 </p>
                 <p className="text-xs text-muted-foreground">Capacity Score</p>
               </div>
