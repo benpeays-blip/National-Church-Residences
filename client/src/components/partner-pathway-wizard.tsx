@@ -975,7 +975,7 @@ export default function PartnerPathwayWizard() {
   ];
 
   return (
-    <Card className="overflow-hidden">
+    <Card className="overflow-hidden flex flex-col h-full">
       {/* Compact Header with Step Navigation */}
       <div className="bg-[#395174]">
         <CardHeader className="pb-0">
@@ -1025,7 +1025,7 @@ export default function PartnerPathwayWizard() {
         </div>
       </div>
       
-      <CardContent className="p-6">
+      <CardContent className="p-6 flex-1 overflow-auto">
 
         {/* Step 1: Weekly Constraints */}
         {currentStep === 1 && (
