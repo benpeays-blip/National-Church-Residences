@@ -301,8 +301,8 @@ export default function NcrAffordableHousing() {
 
       {/* Featured Communities */}
       <Card className="border">
-        <CardHeader style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}>
-          <CardTitle className="text-base font-semibold flex items-center gap-2" style={{ color: '#084594' }}>
+        <CardHeader>
+          <CardTitle className="text-base font-semibold flex items-center gap-2" style={{ color: '#395174' }}>
             <Home className="w-4 h-4" />
             Featured Communities
           </CardTitle>
