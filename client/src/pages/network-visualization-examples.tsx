@@ -73,7 +73,8 @@ const sampleOrgs: Organization[] = [
 ];
 
 export default function NetworkVisualizationExamples() {
-  const [sankeyHovered, setSankeyHovered] = useState<string | null>(null);
+  const [sankeySelected, setSankeySelected] = useState<string | null>(null);
+  const sankeyHovered = sankeySelected; // Use selected as the active state
   const [positions, setPositions] = useState<{
     people: { [key: number]: number };
     orgs: { [key: number]: number };
@@ -236,8 +237,7 @@ export default function NetworkVisualizationExamples() {
                             key={person.id}
                             ref={el => { peopleRefs.current[person.id] = el; }}
                             className="relative text-left transition-all duration-300 w-full"
-                            onMouseEnter={() => setSankeyHovered(person.name)}
-                            onMouseLeave={() => setSankeyHovered(null)}
+                            onClick={() => setSankeySelected(sankeySelected === person.name ? null : person.name)}
                             data-testid={`sankey-person-${person.id}`}
                           >
                             <div 
@@ -338,8 +338,7 @@ export default function NetworkVisualizationExamples() {
                             key={org.id}
                             ref={el => { orgRefs.current[org.id] = el; }}
                             className="relative text-right transition-all duration-300 w-full"
-                            onMouseEnter={() => setSankeyHovered(org.name)}
-                            onMouseLeave={() => setSankeyHovered(null)}
+                            onClick={() => setSankeySelected(sankeySelected === org.name ? null : org.name)}
                             data-testid={`sankey-org-${org.id}`}
                           >
                             <div 
@@ -427,10 +426,10 @@ export default function NetworkVisualizationExamples() {
                     <div className="flex flex-col items-center justify-center h-48 text-center">
                       <GitBranch className="w-8 h-8 text-muted-foreground/30 mb-2" />
                       <p className="text-sm text-muted-foreground">
-                        Hover over names to see animated flows
+                        Click a name to see animated flows
                       </p>
                       <p className="text-xs text-muted-foreground mt-2">
-                        Connections show shared memberships
+                        Click again to deselect
                       </p>
                     </div>
                   )}
