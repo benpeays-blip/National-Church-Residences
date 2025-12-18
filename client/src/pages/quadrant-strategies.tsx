@@ -948,32 +948,32 @@ export default function QuadrantStrategies() {
       </div>
 
       <Tabs defaultValue="acquaintance" className="w-full">
-        <TabsList className="h-12 bg-transparent border-0 rounded-none gap-1 w-auto inline-flex border-b">
+        <TabsList className="grid w-full grid-cols-4 gap-1 bg-transparent p-0 mb-4">
           <TabsTrigger 
             value="acquaintance" 
             data-testid="tab-strategy-acquaintance"
-            className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-12 gap-2"
+            className="group relative gap-2 bg-[#4FA6A6] text-white data-[state=active]:bg-[#4FA6A6] data-[state=active]:text-white data-[state=active]:shadow-none"
           >
             Acquaintance → Partner
           </TabsTrigger>
           <TabsTrigger 
             value="friend" 
             data-testid="tab-strategy-friend"
-            className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-12 gap-2"
+            className="group relative gap-2 bg-[#92A05A] text-white data-[state=active]:bg-[#92A05A] data-[state=active]:text-white data-[state=active]:shadow-none"
           >
             Friend → Partner
           </TabsTrigger>
           <TabsTrigger 
             value="colleague" 
             data-testid="tab-strategy-colleague"
-            className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-12 gap-2"
+            className="group relative gap-2 bg-[#E8A54B] text-white data-[state=active]:bg-[#E8A54B] data-[state=active]:text-white data-[state=active]:shadow-none"
           >
             Colleague → Partner
           </TabsTrigger>
           <TabsTrigger 
             value="partner" 
             data-testid="tab-strategy-partner"
-            className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-12 gap-2"
+            className="group relative gap-2 bg-[#7BC4DC] text-white data-[state=active]:bg-[#7BC4DC] data-[state=active]:text-white data-[state=active]:shadow-none"
           >
             Maintain Partner
           </TabsTrigger>
