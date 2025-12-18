@@ -320,8 +320,10 @@ export default function ForceNetworkGraph() {
         </CardHeader>
         <CardContent className="p-0">
           <div className="grid grid-cols-1 lg:grid-cols-5">
-            <div className="lg:col-span-4 relative bg-white" style={{ height: 550 }}>
+            <div className="lg:col-span-4 relative bg-white overflow-hidden" style={{ height: 500 }}>
               <ForceGraph2D
+                width={800}
+                height={500}
                 ref={fgRef}
                 graphData={graphData}
                 nodeCanvasObject={nodeCanvasObject}
