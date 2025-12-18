@@ -29,12 +29,11 @@ function getCategoryAccent(category: string): AccentColor {
 
 function ProductCard({ product }: { product: TechProduct }) {
   const [, navigate] = useLocation();
-  const accent = getCategoryAccent(product.category);
   
   return (
-    <AccentCard 
-      accent={accent}
-      className="overflow-visible hover-elevate cursor-pointer transition-all h-full flex flex-col p-0"
+    <Card 
+      className="overflow-hidden hover-elevate cursor-pointer transition-all h-full flex flex-col p-0 border-l-4"
+      style={{ borderLeftColor: product.brandColor }}
       data-testid={`card-product-${product.id}`}
       onClick={() => navigate(`/temporary/tech-stack/${product.id}`)}
     >
@@ -57,7 +56,7 @@ function ProductCard({ product }: { product: TechProduct }) {
             <Badge 
               variant="outline" 
               className="text-sm px-3 py-1 mt-2"
-              style={{ borderColor: getAccentColor(accent), color: getAccentColor(accent) }}
+              style={{ borderColor: product.brandColor, color: product.brandColor }}
             >
               {product.category}
             </Badge>
@@ -66,7 +65,7 @@ function ProductCard({ product }: { product: TechProduct }) {
         <p className="text-sm font-medium text-muted-foreground">{product.tagline}</p>
         <p className="text-sm text-muted-foreground mt-3 line-clamp-4">{product.description}</p>
       </div>
-    </AccentCard>
+    </Card>
   );
 }
 
