@@ -313,7 +313,7 @@ export default function PhilanthropyDashboard() {
                     const total = quadrantSnapshot.reduce((sum, i) => sum + i.count, 0);
                     const percentage = Math.round((q.count / total) * 100);
                     return (
-                      <Link key={index} href="/quadrant" data-testid={`link-quadrant-${q.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                      <Link key={index} href="/quadrant" data-testid={`link-quadrant-${q.quadrant.toLowerCase().replace(/\s+/g, '-')}`}>
                         <div 
                           className="group relative p-4 rounded-xl cursor-pointer transition-all hover:scale-[1.02] hover:shadow-lg"
                           style={{ 
