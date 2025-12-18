@@ -527,248 +527,7 @@ export default function AgentValueMap() {
               </CardContent>
             </AccentCard>
           </div>
-        </TabsContent>
 
-        {/* Agents Tab */}
-        <TabsContent value="agents" className="space-y-6">
-          <AccentCard accent="orange">
-            <CardHeader>
-              <CardTitle className="text-xl flex items-center gap-2">
-                <Bot className="w-5 h-5 text-[#E8923A]" />
-                NCR's Agentic Teams Catalogue
-              </CardTitle>
-              <CardDescription>Specialized digital staff with audit trails</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {agentCatalogue.map((agent) => (
-                  <Link key={agent.name} href={`/agent-value-map/agent/${agent.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                    <AccentCard 
-                      accent={agent.accent} 
-                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group h-full"
-                      data-testid={`card-agent-${agent.name.toLowerCase().replace(/\s+/g, '-')}`}
-                    >
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
-                          <div className={`p-3 rounded-lg ${getAccentBgClass(agent.accent)}`}>
-                            <agent.icon className="w-5 h-5 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <p className="text-lg font-semibold group-hover:text-primary transition-colors">{agent.name}</p>
-                            <Badge variant="outline" className="text-xs mt-1">{agent.domain}</Badge>
-                            <p className="text-base text-muted-foreground mt-2">{agent.description}</p>
-                            <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
-                              <span>View agent details</span>
-                              <ChevronRight className="h-4 w-4" />
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </AccentCard>
-                  </Link>
-                ))}
-              </div>
-            </CardContent>
-          </AccentCard>
-        </TabsContent>
-
-        {/* Roadmap Tab */}
-        <TabsContent value="roadmap" className="space-y-6">
-          <div className="space-y-6">
-            {roadmapPhases.map((phase) => (
-              <AccentCard key={phase.phase} accent={phase.accent}>
-                <CardHeader>
-                  <div className="flex items-center justify-between flex-wrap gap-2">
-                    <div>
-                      <Badge variant="outline" className="mb-2">{phase.timeline}</Badge>
-                      <CardTitle className="text-xl">{phase.phase}: {phase.title}</CardTitle>
-                    </div>
-                  </div>
-                  <CardDescription className="text-base font-medium">Goal: {phase.goal}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div>
-                    <p className="font-semibold text-sm text-muted-foreground uppercase tracking-wide mb-2">Key Activities</p>
-                    <ul className="space-y-2">
-                      {phase.items.map((item, index) => (
-                        <li key={index} className="flex items-start gap-2 text-sm">
-                          <ChevronRight className="w-4 h-4 text-muted-foreground mt-0.5 flex-shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="pt-4 border-t">
-                    <p className="font-semibold text-sm text-muted-foreground uppercase tracking-wide mb-2">Deliverables</p>
-                    <ul className="space-y-2">
-                      {phase.deliverables.map((item, index) => (
-                        <li key={index} className="flex items-start gap-2 text-sm">
-                          <CheckCircle2 className="w-4 h-4 text-[#B5C942] mt-0.5 flex-shrink-0" />
-                          <span>{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </CardContent>
-              </AccentCard>
-            ))}
-          </div>
-        </TabsContent>
-
-        {/* App Shell Tab */}
-        <TabsContent value="appshell" className="space-y-6">
-          <AccentCard accent="olive">
-            <CardHeader>
-              <CardTitle className="text-xl flex items-center gap-2">
-                <Monitor className="w-5 h-5 text-[#A5A033]" />
-                NCR Unified App Shell
-              </CardTitle>
-              <CardDescription>This is the "Consumption layer" leadership will resonate with</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {appShellHubs.map((hub) => (
-                  <Link key={hub.name} href={`/agent-value-map/hub/${hub.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                    <AccentCard 
-                      accent={hub.accent} 
-                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group"
-                      data-testid={`card-hub-${hub.name.toLowerCase().replace(/\s+/g, '-')}`}
-                    >
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
-                          <div className={`p-3 rounded-lg ${getAccentBgClass(hub.accent)}`}>
-                            <hub.icon className="w-5 h-5 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <p className="text-lg font-semibold group-hover:text-primary transition-colors">{hub.name}</p>
-                            <p className="text-base text-muted-foreground mt-1">{hub.description}</p>
-                            <ul className="mt-3 space-y-1">
-                              {hub.features.map((feature, idx) => (
-                                <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
-                                  <CircleDot className="w-3 h-3 flex-shrink-0" style={{ color: NCR_BRAND_COLORS[hub.accent] }} />
-                                  <span>{feature}</span>
-                                </li>
-                              ))}
-                            </ul>
-                            <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
-                              <span>View hub details</span>
-                              <ChevronRight className="h-4 w-4" />
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </AccentCard>
-                  </Link>
-                ))}
-              </div>
-            </CardContent>
-          </AccentCard>
-        </TabsContent>
-
-        {/* Governance Tab */}
-        <TabsContent value="governance" className="space-y-6">
-          <AccentCard accent="teal">
-            <CardHeader>
-              <CardTitle className="text-xl flex items-center gap-2">
-                <Shield className="w-5 h-5 text-[#7FA3A1]" />
-                Governance: What NCR Can Say to Auditors and Regulators
-              </CardTitle>
-              <CardDescription>Non-negotiables (these become "design constraints")</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {governanceItems.map((item) => (
-                  <Link key={item.title} href={`/agent-value-map/governance/${item.title.toLowerCase().replace(/\s+/g, '-')}`}>
-                    <Card 
-                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group overflow-hidden h-full"
-                      data-testid={`card-governance-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
-                    >
-                      <div 
-                        className="h-2 w-full"
-                        style={{ backgroundColor: NCR_BRAND_COLORS[item.accent] }}
-                      />
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
-                          <div className={`p-3 rounded-lg ${getAccentBgClass(item.accent)}`}>
-                            <item.icon className="w-5 h-5 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <p className="text-lg font-semibold group-hover:text-primary transition-colors">{item.title}</p>
-                            <p className="text-base text-muted-foreground mt-1">{item.description}</p>
-                            <ul className="mt-3 space-y-1">
-                              {item.features.map((feature, idx) => (
-                                <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
-                                  <CircleDot className="w-3 h-3 flex-shrink-0" style={{ color: NCR_BRAND_COLORS[item.accent] }} />
-                                  <span>{feature}</span>
-                                </li>
-                              ))}
-                            </ul>
-                            <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
-                              <span>View details</span>
-                              <ChevronRight className="h-4 w-4" />
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            </CardContent>
-          </AccentCard>
-        </TabsContent>
-
-        {/* Scorecard Tab */}
-        <TabsContent value="scorecard" className="space-y-6">
-          <AccentCard accent="coral">
-            <CardHeader>
-              <CardTitle className="text-xl flex items-center gap-2">
-                <Gauge className="w-5 h-5 text-[#D5636C]" />
-                Scorecard: How NCR Measures Success
-              </CardTitle>
-              <CardDescription>Board-friendly metrics by domain</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {scorecardMetrics.map((item) => (
-                  <Link key={item.domain} href={`/agent-value-map/scorecard/${item.domain.toLowerCase().replace(/\s+/g, '-')}`}>
-                    <AccentCard 
-                      accent={item.accent} 
-                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group h-full"
-                      data-testid={`card-scorecard-${item.domain.toLowerCase().replace(/\s+/g, '-')}`}
-                    >
-                      <CardContent className="p-4">
-                        <div className="flex items-start gap-3">
-                          <div className={`p-3 rounded-lg ${getAccentBgClass(item.accent)}`}>
-                            <item.icon className="w-5 h-5 text-white" />
-                          </div>
-                          <div className="flex-1">
-                            <p className="text-lg font-semibold mb-2" style={{ color: NCR_BRAND_COLORS[item.accent] }}>{item.domain}</p>
-                            <ul className="space-y-1">
-                              {item.metrics.map((metric, index) => (
-                                <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
-                                  <CircleDot className="w-3 h-3 flex-shrink-0" style={{ color: NCR_BRAND_COLORS[item.accent] }} />
-                                  <span>{metric}</span>
-                                </li>
-                              ))}
-                            </ul>
-                            <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
-                              <span>View full scorecard</span>
-                              <ChevronRight className="h-4 w-4" />
-                            </div>
-                          </div>
-                        </div>
-                      </CardContent>
-                    </AccentCard>
-                  </Link>
-                ))}
-              </div>
-            </CardContent>
-          </AccentCard>
-        </TabsContent>
-
-        {/* Tech Stack Tab */}
-        <TabsContent value="techstack" className="space-y-6">
           {/* Microsoft Core Platform */}
           <AccentCard accent="sky">
             <CardHeader>
@@ -1071,7 +830,7 @@ export default function AgentValueMap() {
             </CardContent>
           </AccentCard>
 
-          {/* Tech Stack Summary */}
+          {/* How It All Connects */}
           <AccentCard accent="lime">
             <CardHeader>
               <CardTitle className="text-xl flex items-center gap-2">
@@ -1109,6 +868,244 @@ export default function AgentValueMap() {
                     Power BI dashboards and AI agents consume governed data to deliver insights and predictive forecasts.
                   </p>
                 </div>
+              </div>
+            </CardContent>
+          </AccentCard>
+        </TabsContent>
+
+        {/* Agents Tab */}
+        <TabsContent value="agents" className="space-y-6">
+          <AccentCard accent="orange">
+            <CardHeader>
+              <CardTitle className="text-xl flex items-center gap-2">
+                <Bot className="w-5 h-5 text-[#E8923A]" />
+                NCR's Agentic Teams Catalogue
+              </CardTitle>
+              <CardDescription>Specialized digital staff with audit trails</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {agentCatalogue.map((agent) => (
+                  <Link key={agent.name} href={`/agent-value-map/agent/${agent.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <AccentCard 
+                      accent={agent.accent} 
+                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group h-full"
+                      data-testid={`card-agent-${agent.name.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className={`p-3 rounded-lg ${getAccentBgClass(agent.accent)}`}>
+                            <agent.icon className="w-5 h-5 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-lg font-semibold group-hover:text-primary transition-colors">{agent.name}</p>
+                            <Badge variant="outline" className="text-xs mt-1">{agent.domain}</Badge>
+                            <p className="text-base text-muted-foreground mt-2">{agent.description}</p>
+                            <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
+                              <span>View agent details</span>
+                              <ChevronRight className="h-4 w-4" />
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </AccentCard>
+                  </Link>
+                ))}
+              </div>
+            </CardContent>
+          </AccentCard>
+        </TabsContent>
+
+        {/* Roadmap Tab */}
+        <TabsContent value="roadmap" className="space-y-6">
+          <div className="space-y-6">
+            {roadmapPhases.map((phase) => (
+              <AccentCard key={phase.phase} accent={phase.accent}>
+                <CardHeader>
+                  <div className="flex items-center justify-between flex-wrap gap-2">
+                    <div>
+                      <Badge variant="outline" className="mb-2">{phase.timeline}</Badge>
+                      <CardTitle className="text-xl">{phase.phase}: {phase.title}</CardTitle>
+                    </div>
+                  </div>
+                  <CardDescription className="text-base font-medium">Goal: {phase.goal}</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div>
+                    <p className="font-semibold text-sm text-muted-foreground uppercase tracking-wide mb-2">Key Activities</p>
+                    <ul className="space-y-2">
+                      {phase.items.map((item, index) => (
+                        <li key={index} className="flex items-start gap-2 text-sm">
+                          <ChevronRight className="w-4 h-4 text-muted-foreground mt-0.5 flex-shrink-0" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="pt-4 border-t">
+                    <p className="font-semibold text-sm text-muted-foreground uppercase tracking-wide mb-2">Deliverables</p>
+                    <ul className="space-y-2">
+                      {phase.deliverables.map((item, index) => (
+                        <li key={index} className="flex items-start gap-2 text-sm">
+                          <CheckCircle2 className="w-4 h-4 text-[#B5C942] mt-0.5 flex-shrink-0" />
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </CardContent>
+              </AccentCard>
+            ))}
+          </div>
+        </TabsContent>
+
+        {/* App Shell Tab */}
+        <TabsContent value="appshell" className="space-y-6">
+          <AccentCard accent="olive">
+            <CardHeader>
+              <CardTitle className="text-xl flex items-center gap-2">
+                <Monitor className="w-5 h-5 text-[#A5A033]" />
+                NCR Unified App Shell
+              </CardTitle>
+              <CardDescription>This is the "Consumption layer" leadership will resonate with</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {appShellHubs.map((hub) => (
+                  <Link key={hub.name} href={`/agent-value-map/hub/${hub.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <AccentCard 
+                      accent={hub.accent} 
+                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group"
+                      data-testid={`card-hub-${hub.name.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className={`p-3 rounded-lg ${getAccentBgClass(hub.accent)}`}>
+                            <hub.icon className="w-5 h-5 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-lg font-semibold group-hover:text-primary transition-colors">{hub.name}</p>
+                            <p className="text-base text-muted-foreground mt-1">{hub.description}</p>
+                            <ul className="mt-3 space-y-1">
+                              {hub.features.map((feature, idx) => (
+                                <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                                  <CircleDot className="w-3 h-3 flex-shrink-0" style={{ color: NCR_BRAND_COLORS[hub.accent] }} />
+                                  <span>{feature}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
+                              <span>View hub details</span>
+                              <ChevronRight className="h-4 w-4" />
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </AccentCard>
+                  </Link>
+                ))}
+              </div>
+            </CardContent>
+          </AccentCard>
+        </TabsContent>
+
+        {/* Governance Tab */}
+        <TabsContent value="governance" className="space-y-6">
+          <AccentCard accent="teal">
+            <CardHeader>
+              <CardTitle className="text-xl flex items-center gap-2">
+                <Shield className="w-5 h-5 text-[#7FA3A1]" />
+                Governance: What NCR Can Say to Auditors and Regulators
+              </CardTitle>
+              <CardDescription>Non-negotiables (these become "design constraints")</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {governanceItems.map((item) => (
+                  <Link key={item.title} href={`/agent-value-map/governance/${item.title.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <Card 
+                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group overflow-hidden h-full"
+                      data-testid={`card-governance-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      <div 
+                        className="h-2 w-full"
+                        style={{ backgroundColor: NCR_BRAND_COLORS[item.accent] }}
+                      />
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className={`p-3 rounded-lg ${getAccentBgClass(item.accent)}`}>
+                            <item.icon className="w-5 h-5 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-lg font-semibold group-hover:text-primary transition-colors">{item.title}</p>
+                            <p className="text-base text-muted-foreground mt-1">{item.description}</p>
+                            <ul className="mt-3 space-y-1">
+                              {item.features.map((feature, idx) => (
+                                <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                                  <CircleDot className="w-3 h-3 flex-shrink-0" style={{ color: NCR_BRAND_COLORS[item.accent] }} />
+                                  <span>{feature}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
+                              <span>View details</span>
+                              <ChevronRight className="h-4 w-4" />
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </Link>
+                ))}
+              </div>
+            </CardContent>
+          </AccentCard>
+        </TabsContent>
+
+        {/* Scorecard Tab */}
+        <TabsContent value="scorecard" className="space-y-6">
+          <AccentCard accent="coral">
+            <CardHeader>
+              <CardTitle className="text-xl flex items-center gap-2">
+                <Gauge className="w-5 h-5 text-[#D5636C]" />
+                Scorecard: How NCR Measures Success
+              </CardTitle>
+              <CardDescription>Board-friendly metrics by domain</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {scorecardMetrics.map((item) => (
+                  <Link key={item.domain} href={`/agent-value-map/scorecard/${item.domain.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <AccentCard 
+                      accent={item.accent} 
+                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group h-full"
+                      data-testid={`card-scorecard-${item.domain.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className={`p-3 rounded-lg ${getAccentBgClass(item.accent)}`}>
+                            <item.icon className="w-5 h-5 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-lg font-semibold mb-2" style={{ color: NCR_BRAND_COLORS[item.accent] }}>{item.domain}</p>
+                            <ul className="space-y-1">
+                              {item.metrics.map((metric, index) => (
+                                <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+                                  <CircleDot className="w-3 h-3 flex-shrink-0" style={{ color: NCR_BRAND_COLORS[item.accent] }} />
+                                  <span>{metric}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
+                              <span>View full scorecard</span>
+                              <ChevronRight className="h-4 w-4" />
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </AccentCard>
+                  </Link>
+                ))}
               </div>
             </CardContent>
           </AccentCard>
