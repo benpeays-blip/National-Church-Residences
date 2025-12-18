@@ -110,7 +110,8 @@ export default function NcrFoundationImpact() {
               {annualReports.map((report) => (
                 <div 
                   key={report.year} 
-                  className="flex items-center justify-between p-4 rounded-lg bg-muted/50"
+                  className="flex items-center justify-between p-4 rounded-lg bg-card border border-border shadow-sm"
+                  style={{ borderLeftWidth: '4px', borderLeftColor: '#4FA6A6' }}
                   data-testid={`report-${report.year}`}
                 >
                   <div>
