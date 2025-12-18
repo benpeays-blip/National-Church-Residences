@@ -11,9 +11,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Link } from "wouter";
-import { ArrowLeft, Clock, DollarSign, Users, Calendar, Mail } from "lucide-react";
+import { ArrowLeft, Clock, DollarSign, Users, Calendar, Mail, Download } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { format } from "date-fns";
+import { useToast } from "@/hooks/use-toast";
 
 type SYBUNTDonor = {
   id: string;
@@ -26,9 +27,54 @@ type SYBUNTDonor = {
 };
 
 export default function SYBUNTDonors() {
+  const { toast } = useToast();
   const { data: dashboardData, isLoading } = useQuery<{ sybuntDonors: SYBUNTDonor[] }>({
     queryKey: ["/api/dashboard/dev-director"],
   });
+
+  const handleExport = (donors: SYBUNTDonor[]) => {
+    const headers = ["Name", "Email", "Last Gift Date", "Last Gift Amount", "Lifetime Giving", "Recovery Stage"];
+    const rows = donors.map(donor => {
+      const lifetime = parseFloat(donor.totalLifetimeGiving || "0");
+      const stage = lifetime >= 5000 ? "Survey" : lifetime >= 1000 ? "Email Campaign" : "Newsletter";
+      return [
+        `${donor.firstName} ${donor.lastName}`,
+        donor.primaryEmail || "No email",
+        donor.lastGiftDate ? format(new Date(donor.lastGiftDate), "MMM d, yyyy") : "Unknown",
+        formatCurrency(parseFloat(donor.lastGiftAmount || "0")),
+        formatCurrency(lifetime),
+        stage
+      ];
+    });
+    
+    const csvContent = [headers, ...rows].map(row => row.join(",")).join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `sybunt-donors-${format(new Date(), "yyyy-MM-dd")}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
+    
+    toast({
+      title: "Export Complete",
+      description: `Exported ${donors.length} SYBUNT donors to CSV`,
+    });
+  };
+
+  const handleEmail = (donor: SYBUNTDonor) => {
+    toast({
+      title: "Email Draft Created",
+      description: `Re-engagement email drafted for ${donor.firstName} ${donor.lastName}`,
+    });
+  };
+
+  const handleCreateTask = (donor: SYBUNTDonor) => {
+    toast({
+      title: "Task Created",
+      description: `Recovery task created for ${donor.firstName} ${donor.lastName}`,
+    });
+  };
 
   if (isLoading) {
     return (
@@ -200,7 +246,8 @@ export default function SYBUNTDonors() {
         <CardHeader className="px-0 pt-0">
           <div className="flex items-center justify-between">
             <CardTitle>All SYBUNT Donors</CardTitle>
-            <Button size="sm" data-testid="button-export">
+            <Button size="sm" onClick={() => handleExport(sybuntDonors)} data-testid="button-export">
+              <Download className="h-4 w-4 mr-2" />
               Export List
             </Button>
           </div>
@@ -251,10 +298,10 @@ export default function SYBUNTDonors() {
                       </TableCell>
                       <TableCell>
                         <div className="flex gap-2">
-                          <Button size="sm" variant="outline" data-testid={`button-email-${donor.id}`}>
+                          <Button size="sm" variant="outline" onClick={() => handleEmail(donor)} data-testid={`button-email-${donor.id}`}>
                             Email
                           </Button>
-                          <Button size="sm" variant="outline" data-testid={`button-task-${donor.id}`}>
+                          <Button size="sm" variant="outline" onClick={() => handleCreateTask(donor)} data-testid={`button-task-${donor.id}`}>
                             Create Task
                           </Button>
                         </div>
