@@ -436,48 +436,56 @@ export default function CorporateProspects() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-pipeline-value">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#4A9B8C" }} data-testid="metric-pipeline-value">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Pipeline Value</CardTitle>
-            <DollarSign className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#4A9B8C15" }}>
+              <DollarSign className="w-4 h-4" style={{ color: "#4A9B8C" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>
+            <div className="text-3xl font-bold" style={{ color: "#4A9B8C" }}>
               ${totalPipeline.toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground mt-1">Estimated capacity</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-active-prospects">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#8B9A5C" }} data-testid="metric-active-prospects">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Prospects</CardTitle>
-            <Target className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#8B9A5C15" }}>
+              <Target className="w-4 h-4" style={{ color: "#8B9A5C" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{activeProspects}</div>
+            <div className="text-3xl font-bold" style={{ color: "#8B9A5C" }}>{activeProspects}</div>
             <p className="text-xs text-muted-foreground mt-1">In pipeline</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-high-score">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#D4884A" }} data-testid="metric-high-score">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">High Score</CardTitle>
-            <Star className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#D4884A15" }}>
+              <Star className="w-4 h-4" style={{ color: "#D4884A" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{highScoreProspects}</div>
+            <div className="text-3xl font-bold" style={{ color: "#D4884A" }}>{highScoreProspects}</div>
             <p className="text-xs text-muted-foreground mt-1">Score 80+</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-negotiation">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#5BA3C6" }} data-testid="metric-negotiation">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">In Negotiation</CardTitle>
-            <TrendingUp className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#5BA3C615" }}>
+              <TrendingUp className="w-4 h-4" style={{ color: "#5BA3C6" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{inNegotiation}</div>
+            <div className="text-3xl font-bold" style={{ color: "#5BA3C6" }}>{inNegotiation}</div>
             <p className="text-xs text-muted-foreground mt-1">Close to closing</p>
           </CardContent>
         </Card>

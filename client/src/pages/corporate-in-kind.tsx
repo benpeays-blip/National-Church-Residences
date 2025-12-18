@@ -214,52 +214,60 @@ export default function CorporateInKind() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-total-value">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#4A9B8C" }} data-testid="metric-total-value">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total In-Kind Value</CardTitle>
-            <DollarSign className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#4A9B8C15" }}>
+              <DollarSign className="w-4 h-4" style={{ color: "#4A9B8C" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>
+            <div className="text-3xl font-bold" style={{ color: "#4A9B8C" }}>
               ${totalValue.toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground mt-1">FY2024 to date</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-goods-value">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#8B9A5C" }} data-testid="metric-goods-value">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Goods & Equipment</CardTitle>
-            <Package className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#8B9A5C15" }}>
+              <Package className="w-4 h-4" style={{ color: "#8B9A5C" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>
+            <div className="text-3xl font-bold" style={{ color: "#8B9A5C" }}>
               ${goodsValue.toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground mt-1">Physical donations</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-services-value">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#D4884A" }} data-testid="metric-services-value">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Services & Pro Bono</CardTitle>
-            <Briefcase className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#D4884A15" }}>
+              <Briefcase className="w-4 h-4" style={{ color: "#D4884A" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>
+            <div className="text-3xl font-bold" style={{ color: "#D4884A" }}>
               ${servicesValue.toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground mt-1">Professional services</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-donor-count">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#5BA3C6" }} data-testid="metric-donor-count">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">In-Kind Donors</CardTitle>
-            <Users className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#5BA3C615" }}>
+              <Users className="w-4 h-4" style={{ color: "#5BA3C6" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{donorCount}</div>
+            <div className="text-3xl font-bold" style={{ color: "#5BA3C6" }}>{donorCount}</div>
             <p className="text-xs text-muted-foreground mt-1">Corporate partners</p>
           </CardContent>
         </Card>

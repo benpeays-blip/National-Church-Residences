@@ -190,50 +190,58 @@ export default function CorporateSponsorships() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-total-sponsorship-value">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#4A9B8C" }} data-testid="metric-total-sponsorship-value">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Sponsorship Value</CardTitle>
-            <DollarSign className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#4A9B8C15" }}>
+              <DollarSign className="w-4 h-4" style={{ color: "#4A9B8C" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>
+            <div className="text-3xl font-bold" style={{ color: "#4A9B8C" }}>
               ${totalValue.toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground mt-1">Active commitments</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-active-sponsorships">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#8B9A5C" }} data-testid="metric-active-sponsorships">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Sponsorships</CardTitle>
-            <Trophy className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#8B9A5C15" }}>
+              <Trophy className="w-4 h-4" style={{ color: "#8B9A5C" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{activeCount}</div>
+            <div className="text-3xl font-bold" style={{ color: "#8B9A5C" }}>{activeCount}</div>
             <p className="text-xs text-muted-foreground mt-1">Current sponsors</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-naming-rights">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#D4884A" }} data-testid="metric-naming-rights">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Naming Rights Value</CardTitle>
-            <Star className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#D4884A15" }}>
+              <Star className="w-4 h-4" style={{ color: "#D4884A" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>
+            <div className="text-3xl font-bold" style={{ color: "#D4884A" }}>
               ${namingRightsValue.toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground mt-1">Premium partnerships</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-upcoming-renewals">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#5BA3C6" }} data-testid="metric-upcoming-renewals">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Upcoming Renewals</CardTitle>
-            <Clock className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#5BA3C615" }}>
+              <Clock className="w-4 h-4" style={{ color: "#5BA3C6" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{upcomingRenewals}</div>
+            <div className="text-3xl font-bold" style={{ color: "#5BA3C6" }}>{upcomingRenewals}</div>
             <p className="text-xs text-muted-foreground mt-1">Next 90 days</p>
           </CardContent>
         </Card>

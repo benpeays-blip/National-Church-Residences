@@ -422,48 +422,56 @@ export default function CorporateGiving() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-total-giving">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#4A9B8C" }} data-testid="metric-total-giving">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Corporate Giving</CardTitle>
-            <DollarSign className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#4A9B8C15" }}>
+              <DollarSign className="w-4 h-4" style={{ color: "#4A9B8C" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>
+            <div className="text-3xl font-bold" style={{ color: "#4A9B8C" }}>
               ${totalGiving.toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground mt-1">FY2024 to date</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-matching-programs">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#8B9A5C" }} data-testid="metric-matching-programs">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Matching Programs</CardTitle>
-            <RefreshCw className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#8B9A5C15" }}>
+              <RefreshCw className="w-4 h-4" style={{ color: "#8B9A5C" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{matchingPrograms}</div>
+            <div className="text-3xl font-bold" style={{ color: "#8B9A5C" }}>{matchingPrograms}</div>
             <p className="text-xs text-muted-foreground mt-1">Active matching partners</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-recurring-givers">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#D4884A" }} data-testid="metric-recurring-givers">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Recurring Givers</CardTitle>
-            <Repeat className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#D4884A15" }}>
+              <Repeat className="w-4 h-4" style={{ color: "#D4884A" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{recurringGivers}</div>
+            <div className="text-3xl font-bold" style={{ color: "#D4884A" }}>{recurringGivers}</div>
             <p className="text-xs text-muted-foreground mt-1">Annual commitments</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-capital-gifts">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#5BA3C6" }} data-testid="metric-capital-gifts">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Capital Gifts</CardTitle>
-            <Target className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#5BA3C615" }}>
+              <Target className="w-4 h-4" style={{ color: "#5BA3C6" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>
+            <div className="text-3xl font-bold" style={{ color: "#5BA3C6" }}>
               ${capitalGifts.toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground mt-1">Building fund contributions</p>

@@ -432,48 +432,56 @@ export default function CorporateVolunteering() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-total-volunteers">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#4A9B8C" }} data-testid="metric-total-volunteers">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Volunteers</CardTitle>
-            <Users className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#4A9B8C15" }}>
+              <Users className="w-4 h-4" style={{ color: "#4A9B8C" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{totalVolunteers}</div>
+            <div className="text-3xl font-bold" style={{ color: "#4A9B8C" }}>{totalVolunteers}</div>
             <p className="text-xs text-muted-foreground mt-1">Across all programs</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-total-hours">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#8B9A5C" }} data-testid="metric-total-hours">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Volunteer Hours</CardTitle>
-            <Clock className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#8B9A5C15" }}>
+              <Clock className="w-4 h-4" style={{ color: "#8B9A5C" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{totalHours.toLocaleString()}</div>
+            <div className="text-3xl font-bold" style={{ color: "#8B9A5C" }}>{totalHours.toLocaleString()}</div>
             <p className="text-xs text-muted-foreground mt-1">YTD contributed</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-dollar-value">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#D4884A" }} data-testid="metric-dollar-value">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Dollar Value</CardTitle>
-            <Heart className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#D4884A15" }}>
+              <Heart className="w-4 h-4" style={{ color: "#D4884A" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>
+            <div className="text-3xl font-bold" style={{ color: "#D4884A" }}>
               ${totalValue.toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground mt-1">In-kind service value</p>
           </CardContent>
         </Card>
 
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }} data-testid="metric-active-programs">
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#5BA3C6" }} data-testid="metric-active-programs">
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Programs</CardTitle>
-            <Award className="w-4 h-4" style={{ color: "#084594" }} />
+            <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: "#5BA3C615" }}>
+              <Award className="w-4 h-4" style={{ color: "#5BA3C6" }} />
+            </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{activePrograms}</div>
+            <div className="text-3xl font-bold" style={{ color: "#5BA3C6" }}>{activePrograms}</div>
             <p className="text-xs text-muted-foreground mt-1">Ongoing partnerships</p>
           </CardContent>
         </Card>
