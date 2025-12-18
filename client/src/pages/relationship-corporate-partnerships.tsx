@@ -21,47 +21,55 @@ export default function CorporatePartnerships() {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Companies</CardTitle>
-            <Building2 className="w-4 h-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{partnerships?.length || 0}</div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">With Matching</CardTitle>
-            <TrendingUp className="w-4 h-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {partnerships?.filter((p) => p.hasMatchingProgram === 1).length || 0}
+          <CardContent className="pt-6">
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-xl bg-[#4FA6A6]/10 flex items-center justify-center mb-4">
+                <Building2 className="w-6 h-6 text-[#4FA6A6]" />
+              </div>
+              <div className="text-2xl font-bold">{partnerships?.length || 0}</div>
+              <p className="text-sm text-muted-foreground">Companies</p>
             </div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Employees</CardTitle>
-            <Users className="w-4 h-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              {partnerships?.reduce((sum, p) => sum + (p.employeeCount || 0), 0) || 0}
+          <CardContent className="pt-6">
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-xl bg-[#92A05A]/10 flex items-center justify-center mb-4">
+                <TrendingUp className="w-6 h-6 text-[#92A05A]" />
+              </div>
+              <div className="text-2xl font-bold">
+                {partnerships?.filter((p) => p.hasMatchingProgram === 1).length || 0}
+              </div>
+              <p className="text-sm text-muted-foreground">With Matching</p>
             </div>
           </CardContent>
         </Card>
 
         <Card>
-          <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Matching Potential</CardTitle>
-            <DollarSign className="w-4 h-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
-              ${partnerships?.reduce((sum, p) => sum + Number(p.estimatedMatchingPotential || 0), 0).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+          <CardContent className="pt-6">
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-xl bg-[#7BC4DC]/10 flex items-center justify-center mb-4">
+                <Users className="w-6 h-6 text-[#7BC4DC]" />
+              </div>
+              <div className="text-2xl font-bold">
+                {partnerships?.reduce((sum, p) => sum + (p.employeeCount || 0), 0) || 0}
+              </div>
+              <p className="text-sm text-muted-foreground">Total Employees</p>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex flex-col items-center text-center">
+              <div className="w-12 h-12 rounded-xl bg-[#E8A54B]/10 flex items-center justify-center mb-4">
+                <DollarSign className="w-6 h-6 text-[#E8A54B]" />
+              </div>
+              <div className="text-2xl font-bold">
+                ${partnerships?.reduce((sum, p) => sum + Number(p.estimatedMatchingPotential || 0), 0).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+              </div>
+              <p className="text-sm text-muted-foreground">Matching Potential</p>
             </div>
           </CardContent>
         </Card>
@@ -71,7 +79,7 @@ export default function CorporatePartnerships() {
         <Skeleton className="h-96 w-full" />
       ) : partnerships && partnerships.length > 0 ? (
         <Card>
-          <CardHeader className="rounded-t-xl" style={{ backgroundColor: '#1B3A5A' }}>
+          <CardHeader className="rounded-t-xl" style={{ backgroundColor: '#395174' }}>
             <CardTitle className="text-white">Corporate Partnerships</CardTitle>
             <CardDescription className="text-white/80">Companies with employee donors and matching gift programs</CardDescription>
           </CardHeader>
