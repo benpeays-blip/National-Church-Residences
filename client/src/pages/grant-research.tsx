@@ -811,7 +811,7 @@ export default function GrantResearchPage() {
   return (
     <div className="flex flex-col h-full" data-testid="grant-research-page">
       <div className="grid grid-cols-12 gap-6 p-6 bg-background flex-1 overflow-hidden">
-        <div className="col-span-12 md:col-span-3 space-y-6">
+        <div className="col-span-12 md:col-span-3 space-y-6 overflow-y-auto">
           <Card className="p-6">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
