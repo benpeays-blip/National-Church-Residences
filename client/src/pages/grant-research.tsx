@@ -737,6 +737,7 @@ export default function GrantResearchPage() {
   const [openToNewOnly, setOpenToNewOnly] = useState(false);
   const [selectedOpportunity, setSelectedOpportunity] = useState<GrantOpportunity | null>(null);
   const [activeTab, setActiveTab] = useState<"opportunities" | "funders" | "peers">("opportunities");
+  const [savedSearches, setSavedSearches] = useState<SavedSearch[]>(mockSavedSearches);
 
   const handleSaveOpportunity = (title: string) => {
     toast({
@@ -760,6 +761,37 @@ export default function GrantResearchPage() {
   };
 
   const handleSaveSearch = () => {
+    const hasFilters = searchQuery || selectedFocusAreas.length > 0 || selectedFundingTypes.length > 0 || selectedGeographies.length > 0;
+    
+    if (!hasFilters) {
+      toast({
+        title: "No Search Criteria",
+        description: "Please enter a search term or select some filters first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const searchName = searchQuery || 
+      (selectedFocusAreas.length > 0 ? FOCUS_AREAS.find(f => f.id === selectedFocusAreas[0])?.label : "") ||
+      (selectedGeographies.length > 0 ? selectedGeographies[0] : "Custom Search");
+    
+    const newSearch: SavedSearch = {
+      id: `search-${Date.now()}`,
+      name: searchName + (selectedGeographies.length > 0 && searchQuery ? ` - ${selectedGeographies[0]}` : ""),
+      query: searchQuery,
+      filters: { 
+        focusAreas: selectedFocusAreas, 
+        fundingTypes: selectedFundingTypes,
+        geography: selectedGeographies 
+      },
+      alertEnabled: false,
+      lastRun: new Date(),
+      resultsCount: filteredOpportunities.length,
+    };
+    
+    setSavedSearches(prev => [...prev, newSearch]);
+    
     toast({
       title: "Search Saved",
       description: "Your search criteria has been saved. You can access it anytime from the Saved Searches panel.",
@@ -971,7 +1003,7 @@ export default function GrantResearchPage() {
               <h3 className="font-semibold text-sm">Saved Searches</h3>
             </div>
             <div className="space-y-2">
-              {mockSavedSearches.map((search) => (
+              {savedSearches.map((search) => (
                 <div 
                   key={search.id} 
                   className="flex items-center justify-between p-2 rounded-md hover:bg-muted/50 cursor-pointer"
