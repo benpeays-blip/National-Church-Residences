@@ -2289,7 +2289,7 @@ function RiskCompliance() {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {riskCategories.map((category) => {
           const Icon = category.icon;
           const accentColor = getAccentColor(category.accent);
