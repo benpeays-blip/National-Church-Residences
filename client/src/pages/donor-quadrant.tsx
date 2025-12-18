@@ -61,7 +61,6 @@ export default function DonorQuadrant() {
   return (
     <div className="overflow-auto p-2 space-y-3">
       <DonorQuadrantMapper />
-      
       {/* Framework Summary Section */}
       <Card>
           <CardHeader className="bg-[#395174] text-white rounded-t-lg">
@@ -167,72 +166,71 @@ export default function DonorQuadrant() {
             </div>
           </CardContent>
         </Card>
-
-        {/* Central Thesis Section */}
-        <Card>
-          <CardHeader className="bg-[#395174] text-white rounded-t-lg">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
-                <Lightbulb className="w-5 h-5" />
-              </div>
-              <div>
-                <CardTitle className="text-white">The Central Thesis</CardTitle>
-                <CardDescription className="text-white/80">
-                  The Core Principles Driving Donor Movement Toward Partnership
-                </CardDescription>
-              </div>
+      {/* Central Thesis Section */}
+      <Card>
+        <CardHeader className="bg-[#395174] text-white rounded-t-lg">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
+              <Lightbulb className="w-5 h-5" />
             </div>
-          </CardHeader>
-        </Card>
-
-        {/* Thesis Points Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {thesisPoints.map((point) => {
-            const Icon = point.icon;
-            return (
-              <Card key={point.number} className="flex flex-col">
-                <CardHeader className="pb-3">
-                  <div className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#395174] text-white flex items-center justify-center font-bold text-sm">
-                      {point.number}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-1">
-                        <Icon className="w-4 h-4 text-[#7BC4DC] flex-shrink-0" />
-                        <CardTitle className="text-sm leading-tight">{point.title}</CardTitle>
-                      </div>
+            <div>
+              <CardTitle className="text-white">Core Principles
+</CardTitle>
+              <CardDescription className="text-white/80">
+                The Core Principles Driving Donor Movement Toward Partnership
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+      </Card>
+      {/* Thesis Points Grid */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {thesisPoints.map((point) => {
+          const Icon = point.icon;
+          return (
+            <Card key={point.number} className="flex flex-col">
+              <CardHeader className="pb-3">
+                <div className="flex items-start gap-3">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#395174] text-white flex items-center justify-center font-bold text-sm">
+                    {point.number}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Icon className="w-4 h-4 text-[#7BC4DC] flex-shrink-0" />
+                      <CardTitle className="text-sm leading-tight">{point.title}</CardTitle>
                     </div>
                   </div>
-                </CardHeader>
-                <CardContent className="flex-1 pt-0">
-                  {point.content && (
-                    <p className="text-sm text-muted-foreground mb-2">{point.content}</p>
-                  )}
-                  {point.highlight && (
-                    <p className="text-sm font-medium italic text-[#395174] dark:text-[#7BC4DC] mb-2">
-                      {point.highlight}
-                    </p>
-                  )}
-                  {point.bullets && (
-                    <ul className="space-y-1 text-sm text-muted-foreground">
-                      {point.bullets.map((bullet, idx) => (
-                        <li key={idx} className="flex items-start gap-2">
-                          <span className="text-[#7BC4DC] mt-1.5">•</span>
-                          <span>{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {point.footer && (
-                    <p className="text-xs text-muted-foreground mt-3 pt-3 border-t">
-                      {point.footer}
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
+                </div>
+              </CardHeader>
+              <CardContent className="flex-1 pt-0">
+                {point.content && (
+                  <p className="text-sm text-muted-foreground mb-2">{point.content}</p>
+                )}
+                {point.highlight && (
+                  <p className="text-sm font-medium italic text-[#395174] dark:text-[#7BC4DC] mb-2">
+                    {point.highlight}
+                  </p>
+                )}
+                {point.bullets && (
+                  <ul className="space-y-1 text-sm text-muted-foreground">
+                    {point.bullets.map((bullet, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="text-[#7BC4DC] mt-1.5">•</span>
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {point.footer && (
+                  <p className="text-xs text-muted-foreground mt-3 pt-3 border-t">
+                    {point.footer}
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
     </div>
   );
 }
