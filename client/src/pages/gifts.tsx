@@ -810,26 +810,36 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             </p>
           </div>
 
-          <div className="grid gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Cash Gifts */}
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <DollarSign className="w-6 h-6 text-primary" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <DollarSign className="w-5 h-5 text-primary" />
                   </div>
-                  <div>
-                    <CardTitle>Cash Gifts</CardTitle>
-                  </div>
+                  <CardTitle className="text-base">Cash Gifts</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  The majority of gifts to the Foundation are gifts of cash. You may give through a check made out to National Church Residences Foundation, or online via credit card at:{" "}
-                  <a href="https://www.NationalChurchResidences.org/donate" className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
-                    www.NationalChurchResidences.org/donate
-                  </a>
-                </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Give by check payable to NCR Foundation</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Donate online via credit card</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Immediate tax deduction in year of gift</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Most common form of giving</span>
+                  </li>
+                </ul>
               </CardContent>
             </Card>
 
@@ -837,18 +847,31 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <FileText className="w-6 h-6 text-primary" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <FileText className="w-5 h-5 text-primary" />
                   </div>
-                  <div>
-                    <CardTitle>Wills & Bequests</CardTitle>
-                  </div>
+                  <CardTitle className="text-base">Wills & Bequests</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  A charitable bequest (gift by will) is a beautiful expression of your life as it reaches forward to help others. You can arrange a charitable bequest to the Foundation through your will and be certain that the bequest is carried out according to your wishes. This is a great way to leave a legacy while not impacting your day-to-day finances. Changing your will is a simple process, and the Foundation team can provide the specific language to ensure your gift is properly directed.
-                </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Leave a lasting legacy through your estate</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>No impact on current finances</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Simple process to update your will</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Foundation provides specific bequest language</span>
+                  </li>
+                </ul>
               </CardContent>
             </Card>
 
@@ -856,18 +879,31 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <TrendingUp className="w-6 h-6 text-primary" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-5 h-5 text-primary" />
                   </div>
-                  <div>
-                    <CardTitle>IRA Qualified Charitable Distribution</CardTitle>
-                  </div>
+                  <CardTitle className="text-base">IRA Charitable Distribution</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Rolling over your IRA's "required minimum distribution" (or RMD) to a charity like National Church Residences Foundation can help reduce your tax bill while supporting your community.
-                </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Donate your Required Minimum Distribution</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Reduce your taxable income</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Available for donors age 70½ or older</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Up to $100,000 per year tax-free</span>
+                  </li>
+                </ul>
               </CardContent>
             </Card>
 
@@ -875,18 +911,31 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Repeat className="w-6 h-6 text-primary" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Repeat className="w-5 h-5 text-primary" />
                   </div>
-                  <div>
-                    <CardTitle>Charitable Gift Annuities</CardTitle>
-                  </div>
+                  <CardTitle className="text-base">Charitable Gift Annuities</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  With a minimum gift of $10,000, you can receive a tax deduction in the year of your gift, plus set primarily tax free annuity payments for life. After all payments have been made, the Foundation receives the balance to use for its mission.
-                </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Minimum gift of $10,000</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Receive fixed annuity payments for life</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Partially tax-free income stream</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Immediate charitable tax deduction</span>
+                  </li>
+                </ul>
               </CardContent>
             </Card>
 
@@ -894,18 +943,31 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Heart className="w-6 h-6 text-primary" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Heart className="w-5 h-5 text-primary" />
                   </div>
-                  <div>
-                    <CardTitle>Memorial Gifts</CardTitle>
-                  </div>
+                  <CardTitle className="text-base">Memorial Gifts</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Is your heart called to honor a loved one? Consider a gift to the Foundation as a way to remember someone dear to you. Donating in recognition of a loved one can be a beautiful tribute and can create an enduring legacy.
-                </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Honor a loved one's memory</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Create an enduring tribute</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Notification sent to family members</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Option for recurring memorial giving</span>
+                  </li>
+                </ul>
               </CardContent>
             </Card>
 
@@ -913,18 +975,31 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Calendar className="w-6 h-6 text-primary" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Calendar className="w-5 h-5 text-primary" />
                   </div>
-                  <div>
-                    <CardTitle>Refundable Entrance Fees</CardTitle>
-                  </div>
+                  <CardTitle className="text-base">Refundable Entrance Fees</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Supporting the Foundation with a gift made from a Refundable Entrance Fee (associated with your Senior Living community) allows you to earmark a contribution from funds that are currently idle and to leave a legacy of support. You may choose to allocate all or a portion of your Refundable Entry Fee as a gift.
-                </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>For Senior Living community residents</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Utilize currently idle funds</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Allocate all or a portion as a gift</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Leave a legacy of support</span>
+                  </li>
+                </ul>
               </CardContent>
             </Card>
 
@@ -932,18 +1007,95 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Card>
               <CardHeader>
                 <div className="flex items-start gap-3">
-                  <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Users className="w-6 h-6 text-primary" />
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Users className="w-5 h-5 text-primary" />
                   </div>
-                  <div>
-                    <CardTitle>Donor Advised Funds</CardTitle>
-                  </div>
+                  <CardTitle className="text-base">Donor Advised Funds</CardTitle>
                 </div>
               </CardHeader>
               <CardContent>
-                <p className="text-sm text-muted-foreground">
-                  Do you have a relationship with a donor advised fund that might add the National Church Residences Foundation to their charities of choice? You can contribute cash, stocks or other assets to a donor advised fund and receive a tax deduction in the year of the donation.
-                </p>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Contribute cash, stocks, or other assets</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Immediate tax deduction at contribution</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Recommend grants over time</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Simplify your charitable giving</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Stock & Securities */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-5 h-5 text-primary" />
+                  </div>
+                  <CardTitle className="text-base">Stock & Securities</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Donate appreciated stocks or mutual funds</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Avoid capital gains taxes on appreciation</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Deduct full fair market value</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Electronic transfer for convenience</span>
+                  </li>
+                </ul>
+              </CardContent>
+            </Card>
+
+            {/* Real Estate */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Home className="w-5 h-5 text-primary" />
+                  </div>
+                  <CardTitle className="text-base">Real Estate Gifts</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <ul className="text-sm text-muted-foreground space-y-2">
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Donate residential or commercial property</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Avoid capital gains on appreciated property</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Retain life estate option available</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-primary mt-1">•</span>
+                    <span>Deduct fair market value</span>
+                  </li>
+                </ul>
               </CardContent>
             </Card>
           </div>
