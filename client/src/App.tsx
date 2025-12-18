@@ -707,38 +707,137 @@ function App() {
                   <nav className="flex items-center gap-0.5">
                     {selectedTopTab === 'Agentic Plan' ? (
                       <>
-                        {agenticPlanNavItems.map((item) => {
-                          const isActive = location.startsWith('/agent-value-map') && currentTabParam === item.tab;
-                          return (
-                            <Link key={item.tab} href={`/agent-value-map?tab=${item.tab}`}>
-                              <div className={`relative ${isActive ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
-                                <Button
-                                  variant="ghost"
-                                  size="sm"
-                                  className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                                  data-testid={`button-nav-agentic-${item.tab}`}
-                                >
-                                  {item.name}
-                                </Button>
+                        {/* Overview - Direct Link */}
+                        <Link href="/agent-value-map?tab=overview">
+                          <div className={`relative ${location.startsWith('/agent-value-map') && currentTabParam === 'overview' ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                              data-testid="button-nav-agentic-overview"
+                            >
+                              Overview
+                            </Button>
+                          </div>
+                        </Link>
+
+                        {/* Strategy Dropdown (Framework, Governance, Scorecard) */}
+                        <div
+                          className="relative"
+                          onMouseEnter={() => setActiveDropdown("AgenticStrategy")}
+                          onMouseLeave={() => setActiveDropdown(null)}
+                        >
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDropdownClick("AgenticStrategy")}
+                            className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${activeDropdown === "AgenticStrategy" ? "bg-black/10" : ""}`}
+                            data-testid="button-nav-agentic-strategy"
+                          >
+                            Strategy
+                            <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "AgenticStrategy" ? "rotate-180" : ""}`} />
+                          </Button>
+                          {activeDropdown === "AgenticStrategy" && (
+                            <div className="absolute left-0 top-full pt-1 z-50">
+                              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[160px] overflow-hidden">
+                                <div className="py-2 px-1">
+                                  {[
+                                    { name: 'Framework', tab: 'framework' },
+                                    { name: 'Governance', tab: 'governance' },
+                                    { name: 'Scorecard', tab: 'scorecard' },
+                                  ].map((item) => (
+                                    <Link 
+                                      key={item.tab} 
+                                      href={`/agent-value-map?tab=${item.tab}`}
+                                      className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                      onClick={closeDropdown}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  ))}
+                                </div>
                               </div>
-                            </Link>
-                          );
-                        })}
-                        <div className="h-4 w-px bg-gray-300 mx-1" />
-                        {assessmentNavItems.map((item) => (
-                          <Link key={item.path} href={item.path}>
-                            <div className={`relative ${location === item.path || (location.startsWith(item.path) && item.path !== '/temporary') || (location === '/temporary' && item.path === '/temporary' && !location.includes('/temporary/')) ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                                data-testid={`button-nav-assessment-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
-                              >
-                                {item.name}
-                              </Button>
                             </div>
-                          </Link>
-                        ))}
+                          )}
+                        </div>
+
+                        {/* Implementation Dropdown (Agents, Roadmap, App Shell) */}
+                        <div
+                          className="relative"
+                          onMouseEnter={() => setActiveDropdown("AgenticImpl")}
+                          onMouseLeave={() => setActiveDropdown(null)}
+                        >
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDropdownClick("AgenticImpl")}
+                            className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${activeDropdown === "AgenticImpl" ? "bg-black/10" : ""}`}
+                            data-testid="button-nav-agentic-implementation"
+                          >
+                            Implementation
+                            <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "AgenticImpl" ? "rotate-180" : ""}`} />
+                          </Button>
+                          {activeDropdown === "AgenticImpl" && (
+                            <div className="absolute left-0 top-full pt-1 z-50">
+                              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[160px] overflow-hidden">
+                                <div className="py-2 px-1">
+                                  {[
+                                    { name: 'Agents', tab: 'agents' },
+                                    { name: 'Roadmap', tab: 'roadmap' },
+                                    { name: 'App Shell', tab: 'appshell' },
+                                  ].map((item) => (
+                                    <Link 
+                                      key={item.tab} 
+                                      href={`/agent-value-map?tab=${item.tab}`}
+                                      className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                      onClick={closeDropdown}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+
+                        <div className="h-4 w-px bg-gray-300 mx-1" />
+
+                        {/* Assessment Dropdown */}
+                        <div
+                          className="relative"
+                          onMouseEnter={() => setActiveDropdown("Assessment")}
+                          onMouseLeave={() => setActiveDropdown(null)}
+                        >
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDropdownClick("Assessment")}
+                            className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${activeDropdown === "Assessment" ? "bg-black/10" : ""}`}
+                            data-testid="button-nav-assessment"
+                          >
+                            Assessment
+                            <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Assessment" ? "rotate-180" : ""}`} />
+                          </Button>
+                          {activeDropdown === "Assessment" && (
+                            <div className="absolute left-0 top-full pt-1 z-50">
+                              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[200px] overflow-hidden">
+                                <div className="py-2 px-1">
+                                  {assessmentNavItems.map((item) => (
+                                    <Link 
+                                      key={item.path} 
+                                      href={item.path}
+                                      className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                      onClick={closeDropdown}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </>
                     ) : selectedTopTab === 'Fundraising' ? (
                       <>
