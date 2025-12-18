@@ -574,9 +574,9 @@ export default function PreviewHomepage() {
                 </div>
               </div>
               
-              <div className="p-6 space-y-3">
+              <div className="p-6 flex flex-col gap-3">
                 {upcomingActions.map((action, idx) => (
-                  <Link key={action.id} href={`/actions/${action.id}`}>
+                  <Link key={action.id} href={`/actions/${action.id}`} className="block">
                     <div 
                       className="flex items-center gap-4 p-3 rounded-xl border hover-elevate transition-all cursor-pointer"
                       style={{ borderColor: `${accentColors.olive}25`, backgroundColor: `${accentColors.olive}05` }}
