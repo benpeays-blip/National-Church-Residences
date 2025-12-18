@@ -20,7 +20,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import { getAccentColor } from "@/components/ui/accent-card";
-import { FundRazorLogo } from "@/components/FundRazorLogo";
+import { NationalChurchResidencesLogo } from "@/components/NationalChurchResidencesLogo";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -221,13 +221,13 @@ export default function Login() {
   const roleInfo = getRoleInfo();
 
   return (
-    <div className="h-screen overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4 z-50">
       <div className="w-full max-w-md">
         {step === "select-role" && (
-          <div className="space-y-6">
+          <div className="space-y-4">
             <div className="text-center space-y-2">
-              <div className="flex items-center justify-center gap-2 mb-4">
-                <FundRazorLogo width={200} height={56} />
+              <div className="flex items-center justify-center mb-4">
+                <NationalChurchResidencesLogo />
               </div>
               <h1 className="text-3xl font-bold text-foreground" data-testid="text-login-title">
                 Welcome to FundRazor
