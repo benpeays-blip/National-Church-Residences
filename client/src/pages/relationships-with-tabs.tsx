@@ -47,7 +47,7 @@ const relationshipsTabs: SectionTab[] = [
     path: "/relationships/force",
   },
   {
-    label: "Network Visualization",
+    label: "Sankey Flow",
     value: "visualization",
     icon: Share2,
     path: "/relationships/visualization",
