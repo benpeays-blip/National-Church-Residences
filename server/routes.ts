@@ -172,6 +172,56 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Send Verification Code for Registration
+  const pendingVerifications = new Map<string, { code: string; expiresAt: Date; role: string; firstName: string; lastName: string }>();
+  
+  app.post("/api/auth/send-verification", async (req, res) => {
+    try {
+      const { email, role, firstName, lastName } = req.body;
+      
+      if (!email) {
+        return res.status(400).json({ message: "Email is required" });
+      }
+
+      // Check if email already registered
+      const [existingEmail] = await db
+        .select()
+        .from(portalUsers)
+        .where(eq(portalUsers.email, email));
+
+      if (existingEmail) {
+        return res.status(400).json({ message: "Email already registered" });
+      }
+
+      // Generate 6-digit verification code
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      const expiresAt = new Date();
+      expiresAt.setMinutes(expiresAt.getMinutes() + 15); // Code expires in 15 minutes
+
+      // Store the pending verification
+      pendingVerifications.set(email.toLowerCase(), {
+        code,
+        expiresAt,
+        role,
+        firstName,
+        lastName
+      });
+
+      // In production, this would send an actual email
+      // For demo purposes, we'll log the code and accept any 6-digit code
+      console.log(`[DEMO] Verification code for ${email}: ${code}`);
+
+      res.json({ 
+        message: "Verification code sent",
+        // For demo: include the code in development
+        demoCode: process.env.NODE_ENV !== 'production' ? code : undefined
+      });
+    } catch (error) {
+      console.error("Error sending verification:", error);
+      res.status(500).json({ message: "Failed to send verification code" });
+    }
+  });
+
   // Portal User Registration
   app.post("/api/auth/register", async (req, res) => {
     try {
@@ -183,6 +233,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (password.length < 8) {
         return res.status(400).json({ message: "Password must be at least 8 characters" });
+      }
+
+      // Verify the email verification code from the send-verification step
+      const pending = pendingVerifications.get(email.toLowerCase());
+      if (pending) {
+        if (new Date() > pending.expiresAt) {
+          pendingVerifications.delete(email.toLowerCase());
+          return res.status(400).json({ message: "Verification code has expired. Please request a new one." });
+        }
+        if (pending.code !== verificationCode) {
+          return res.status(400).json({ message: "Invalid verification code" });
+        }
+        // Code is valid, clear it from pending
+        pendingVerifications.delete(email.toLowerCase());
       }
 
       // Check if username or email already exists

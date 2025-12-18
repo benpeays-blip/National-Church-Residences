@@ -25,7 +25,7 @@ import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
-type LoginStep = "select-role" | "login" | "register";
+type LoginStep = "select-role" | "login" | "register" | "verify-code";
 type UserRole = "board_member" | "donor" | "data_ops" | null;
 
 export default function Login() {
@@ -68,6 +68,29 @@ export default function Login() {
     },
     onError: (err: Error) => {
       setError(err.message || "Login failed. Please check your credentials.");
+    }
+  });
+
+  const sendCodeMutation = useMutation({
+    mutationFn: async (data: { 
+      email: string; 
+      role: string;
+      firstName: string;
+      lastName: string;
+    }) => {
+      const res = await apiRequest("POST", "/api/auth/send-verification", data);
+      return res.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Verification Code Sent",
+        description: `A 6-digit code has been sent to ${formData.email}`,
+      });
+      setStep("verify-code");
+      setError("");
+    },
+    onError: (err: Error) => {
+      setError(err.message || "Failed to send verification code. Please try again.");
     }
   });
 
@@ -158,8 +181,21 @@ export default function Login() {
       setError("Password must be at least 8 characters");
       return;
     }
+
+    sendCodeMutation.mutate({
+      email: formData.email,
+      role: selectedRole || "donor",
+      firstName: formData.firstName,
+      lastName: formData.lastName
+    });
+  };
+
+  const handleVerifyCode = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
     if (!formData.verificationCode) {
-      setError("Please enter your verification code to confirm your role");
+      setError("Please enter the verification code sent to your email");
       return;
     }
 
@@ -175,7 +211,12 @@ export default function Login() {
   };
 
   const handleBack = () => {
-    if (step === "login" || step === "register") {
+    if (step === "verify-code") {
+      setStep("login");
+      setFormData({ ...formData, verificationCode: "" });
+      setError("");
+      setIsLogin(false);
+    } else if (step === "login" || step === "register") {
       setStep("select-role");
       setSelectedRole(null);
       setFormData({
@@ -437,57 +478,31 @@ export default function Login() {
                   </div>
 
                   {!isLogin && (
-                    <>
-                      <div className="space-y-2">
-                        <Label htmlFor="confirmPassword">Confirm Password</Label>
-                        <div className="relative">
-                          <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input
-                            id="confirmPassword"
-                            type="password"
-                            placeholder="Confirm your password"
-                            className="pl-10"
-                            value={formData.confirmPassword}
-                            onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-                            data-testid="input-confirm-password"
-                          />
-                        </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="confirmPassword">Confirm Password</Label>
+                      <div className="relative">
+                        <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          id="confirmPassword"
+                          type="password"
+                          placeholder="Confirm your password"
+                          className="pl-10"
+                          value={formData.confirmPassword}
+                          onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
+                          data-testid="input-confirm-password"
+                        />
                       </div>
-
-                      <div className="space-y-2">
-                        <Label htmlFor="verificationCode">
-                          Verification Code
-                          <Badge variant="outline" className="ml-2 text-xs">Required</Badge>
-                        </Label>
-                        <div className="relative">
-                          <Shield className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                          <Input
-                            id="verificationCode"
-                            placeholder="Enter your verification code"
-                            className="pl-10"
-                            value={formData.verificationCode}
-                            onChange={(e) => setFormData({ ...formData, verificationCode: e.target.value })}
-                            data-testid="input-verification-code"
-                          />
-                        </div>
-                        <p className="text-xs text-muted-foreground">
-                          {selectedRole === "board_member" 
-                            ? "Your board verification code was provided by the organization" 
-                            : "Your donor verification code was sent to your registered email"
-                          }
-                        </p>
-                      </div>
-                    </>
+                    </div>
                   )}
 
                   <Button 
                     type="submit" 
                     className="w-full"
-                    disabled={loginMutation.isPending || registerMutation.isPending}
+                    disabled={loginMutation.isPending || sendCodeMutation.isPending}
                     style={{ backgroundColor: roleInfo.color }}
                     data-testid="button-submit"
                   >
-                    {(loginMutation.isPending || registerMutation.isPending) ? (
+                    {(loginMutation.isPending || sendCodeMutation.isPending) ? (
                       "Please wait..."
                     ) : isLogin ? (
                       <>
@@ -496,8 +511,8 @@ export default function Login() {
                       </>
                     ) : (
                       <>
-                        <CheckCircle className="h-4 w-4 mr-2" />
-                        Create Account
+                        <Mail className="h-4 w-4 mr-2" />
+                        Send Verification Code
                       </>
                     )}
                   </Button>
@@ -531,6 +546,119 @@ export default function Login() {
                     </button>
                   </div>
                 )}
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {/* Step 3: Verify Code */}
+        {step === "verify-code" && (
+          <div className="space-y-6">
+            <div className="flex items-center gap-3">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleBack}
+                className="shrink-0"
+                data-testid="button-back-verify"
+              >
+                <ArrowLeft className="h-5 w-5" />
+              </Button>
+              <div>
+                <h2 className="text-xl font-semibold">Verify Your Email</h2>
+                <p className="text-sm text-muted-foreground">
+                  Enter the code sent to {formData.email}
+                </p>
+              </div>
+            </div>
+
+            <Card>
+              <CardHeader className="pb-4">
+                <div className="flex items-center gap-4">
+                  <div 
+                    className="w-16 h-16 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: `${roleInfo.color}20` }}
+                  >
+                    <Mail className="h-8 w-8" style={{ color: roleInfo.color }} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-xl">Check Your Inbox</CardTitle>
+                    <CardDescription>
+                      We sent a 6-digit verification code to your email
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                {error && (
+                  <div className="p-3 rounded-lg bg-destructive/10 border border-destructive/20 flex items-center gap-2 text-sm text-destructive">
+                    <AlertCircle className="h-4 w-4" />
+                    {error}
+                  </div>
+                )}
+
+                <form onSubmit={handleVerifyCode} className="space-y-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="verificationCode">
+                      Verification Code
+                      <Badge variant="outline" className="ml-2 text-xs">Required</Badge>
+                    </Label>
+                    <div className="relative">
+                      <Shield className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                      <Input
+                        id="verificationCode"
+                        placeholder="Enter 6-digit code"
+                        className="pl-10 text-center text-lg tracking-widest"
+                        maxLength={6}
+                        value={formData.verificationCode}
+                        onChange={(e) => setFormData({ ...formData, verificationCode: e.target.value.replace(/\D/g, '') })}
+                        data-testid="input-verification-code"
+                      />
+                    </div>
+                    <p className="text-xs text-muted-foreground">
+                      {selectedRole === "board_member" 
+                        ? "Enter the code provided by your organization or sent to your email" 
+                        : "Enter the code we sent to verify your email address"
+                      }
+                    </p>
+                  </div>
+
+                  <Button 
+                    type="submit" 
+                    className="w-full"
+                    disabled={registerMutation.isPending}
+                    style={{ backgroundColor: roleInfo.color }}
+                    data-testid="button-verify"
+                  >
+                    {registerMutation.isPending ? (
+                      "Verifying..."
+                    ) : (
+                      <>
+                        <CheckCircle className="h-4 w-4 mr-2" />
+                        Verify & Create Account
+                      </>
+                    )}
+                  </Button>
+                </form>
+
+                <div className="text-center pt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      sendCodeMutation.mutate({
+                        email: formData.email,
+                        role: selectedRole || "donor",
+                        firstName: formData.firstName,
+                        lastName: formData.lastName
+                      });
+                    }}
+                    disabled={sendCodeMutation.isPending}
+                    className="text-sm text-primary hover:underline disabled:opacity-50"
+                    data-testid="button-resend-code"
+                  >
+                    {sendCodeMutation.isPending ? "Sending..." : "Didn't receive the code? Resend"}
+                  </button>
+                </div>
               </CardContent>
             </Card>
           </div>
