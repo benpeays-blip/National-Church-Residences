@@ -133,6 +133,161 @@ const sampleConnectionPaths: ConnectionPath[] = [
     ],
     connectionStrength: 62,
     lastUpdated: "3 weeks ago"
+  },
+  {
+    id: "4",
+    targetName: "Dr. Richard Holloway",
+    targetTitle: "Chief Medical Officer",
+    targetOrg: "OhioHealth",
+    degrees: 2,
+    pathNodes: [
+      {
+        name: "Linda Morrison",
+        title: "NCR VP of Health Services",
+        org: "National Church Residences",
+        connectionType: "Healthcare conference"
+      },
+      {
+        name: "Dr. James Wright",
+        title: "Department Chair",
+        org: "Ohio State Wexner Medical Center",
+        connectionType: "Medical school classmate"
+      }
+    ],
+    connectionStrength: 78,
+    lastUpdated: "4 days ago"
+  },
+  {
+    id: "5",
+    targetName: "Catherine Brennan",
+    targetTitle: "Executive Director",
+    targetOrg: "Columbus Community Foundation",
+    degrees: 1,
+    pathNodes: [
+      {
+        name: "Susan Parker",
+        title: "NCR Board Member",
+        org: "National Church Residences",
+        connectionType: "Nonprofit alliance"
+      }
+    ],
+    connectionStrength: 91,
+    lastUpdated: "1 day ago"
+  },
+  {
+    id: "6",
+    targetName: "Thomas Fitzgerald",
+    targetTitle: "Chairman",
+    targetOrg: "Fitzgerald Holdings Group",
+    degrees: 2,
+    pathNodes: [
+      {
+        name: "Mark Henderson",
+        title: "NCR CEO",
+        org: "National Church Residences",
+        connectionType: "Rotary club"
+      },
+      {
+        name: "Victoria Adams",
+        title: "CFO",
+        org: "KeyBank Columbus",
+        connectionType: "Business advisory"
+      }
+    ],
+    connectionStrength: 83,
+    lastUpdated: "5 days ago"
+  },
+  {
+    id: "7",
+    targetName: "Jennifer Liu",
+    targetTitle: "Partner",
+    targetOrg: "Baker & McKenzie",
+    degrees: 3,
+    pathNodes: [
+      {
+        name: "Robert Mills",
+        title: "General Counsel",
+        org: "National Church Residences",
+        connectionType: "Legal association"
+      },
+      {
+        name: "Christopher Jones",
+        title: "Senior Associate",
+        org: "Squire Patton Boggs",
+        connectionType: "Law school alumni"
+      },
+      {
+        name: "Amanda Richards",
+        title: "Partner",
+        org: "Jones Day",
+        connectionType: "Bar association"
+      }
+    ],
+    connectionStrength: 58,
+    lastUpdated: "2 weeks ago"
+  },
+  {
+    id: "8",
+    targetName: "Harrison Wells",
+    targetTitle: "President",
+    targetOrg: "Wells Family Trust",
+    degrees: 1,
+    pathNodes: [
+      {
+        name: "Nancy Thompson",
+        title: "NCR Foundation Director",
+        org: "National Church Residences Foundation",
+        connectionType: "Philanthropic network"
+      }
+    ],
+    connectionStrength: 96,
+    lastUpdated: "Today"
+  },
+  {
+    id: "9",
+    targetName: "Maria Gonzalez",
+    targetTitle: "Vice President",
+    targetOrg: "JPMorgan Chase Foundation",
+    degrees: 2,
+    pathNodes: [
+      {
+        name: "William Chen",
+        title: "NCR Board Member",
+        org: "National Church Residences",
+        connectionType: "Banking relationship"
+      },
+      {
+        name: "David Rodriguez",
+        title: "Community Affairs Director",
+        org: "JPMorgan Chase",
+        connectionType: "Corporate giving"
+      }
+    ],
+    connectionStrength: 72,
+    lastUpdated: "1 week ago"
+  },
+  {
+    id: "10",
+    targetName: "Dr. Angela Foster",
+    targetTitle: "Dean of Medicine",
+    targetOrg: "Case Western Reserve University",
+    degrees: 2,
+    pathNodes: [
+      {
+        name: "Dr. Patricia Hayes",
+        title: "Trustee",
+        org: "Ohio State University Foundation",
+        connectionType: "Academic conference"
+      },
+      {
+        name: "Dr. Michael Barnes",
+        title: "Professor",
+        org: "Cleveland Clinic Lerner College",
+        connectionType: "Research collaboration"
+      }
+    ],
+    connectionStrength: 69,
+    lastUpdated: "10 days ago"
   }
 ];
 
