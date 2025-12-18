@@ -1353,113 +1353,125 @@ function InterviewDetailPage({ personId }: { personId: string }) {
           </div>
         </div>
 
-        <div className="p-6">
-          <Accordion type="multiple" defaultValue={["challenges", "wants", "tech", "observations", "summary"]} className="space-y-2">
-            <AccordionItem value="challenges" className="border rounded-lg px-4">
-              <AccordionTrigger className="hover:no-underline py-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("coral")}20` }}>
-                    <AlertTriangle className="h-4 w-4" style={{ color: getAccentColor("coral") }} />
-                  </div>
-                  <span className="font-semibold">Current Challenges</span>
-                  <Badge variant="secondary" className="ml-2 text-xs">{person.challenges.length}</Badge>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="space-y-4 pb-2">
-                  {person.challenges.map((challenge, idx) => (
-                    <div key={idx} className="border-l-2 pl-3" style={{ borderColor: `${getAccentColor("coral")}40` }}>
-                      <h4 className="font-medium text-sm mb-2">{challenge.title}</h4>
-                      <ul className="space-y-1.5">
-                        {challenge.items.map((item, itemIdx) => (
-                          <li key={itemIdx} className="text-sm text-muted-foreground flex items-start gap-2">
-                            <span className="mt-1 shrink-0" style={{ color: getAccentColor("coral") }}>&#8226;</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
+        <div className="p-6 space-y-4">
+          <div className="grid md:grid-cols-2 gap-4">
+            <Accordion type="multiple" defaultValue={["challenges"]} className="space-y-0">
+              <AccordionItem value="challenges" className="border rounded-lg px-4">
+                <AccordionTrigger className="hover:no-underline py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("coral")}20` }}>
+                      <AlertTriangle className="h-4 w-4" style={{ color: getAccentColor("coral") }} />
                     </div>
-                  ))}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="wants" className="border rounded-lg px-4">
-              <AccordionTrigger className="hover:no-underline py-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("lime")}20` }}>
-                    <Sparkles className="h-4 w-4" style={{ color: getAccentColor("lime") }} />
+                    <span className="font-semibold">Current Challenges</span>
+                    <Badge variant="secondary" className="ml-2 text-xs">{person.challenges.length}</Badge>
                   </div>
-                  <span className="font-semibold">Desired Capabilities</span>
-                  <Badge variant="secondary" className="ml-2 text-xs">{person.wants.length}</Badge>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="space-y-4 pb-2">
-                  {person.wants.map((want, idx) => (
-                    <div key={idx} className="border-l-2 pl-3" style={{ borderColor: `${getAccentColor("lime")}40` }}>
-                      <h4 className="font-medium text-sm mb-2">{want.title}</h4>
-                      <ul className="space-y-1.5">
-                        {want.items.map((item, itemIdx) => (
-                          <li key={itemIdx} className="text-sm text-muted-foreground flex items-start gap-2">
-                            <span className="mt-1 shrink-0" style={{ color: getAccentColor("lime") }}>+</span>
-                            <span>{item}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="tech" className="border rounded-lg px-4">
-              <AccordionTrigger className="hover:no-underline py-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("sky")}20` }}>
-                    <Server className="h-4 w-4" style={{ color: getAccentColor("sky") }} />
-                  </div>
-                  <span className="font-semibold">Tech Stack</span>
-                  <Badge variant="secondary" className="ml-2 text-xs">{person.techStack.length}</Badge>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <div className="space-y-3 pb-2">
-                  {person.techStack.map((tech, idx) => (
-                    <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
-                      <div className="w-2 h-2 rounded-full mt-2 shrink-0" style={{ backgroundColor: getAccentColor("sky") }} />
-                      <div>
-                        <h4 className="font-medium text-sm">{tech.name}</h4>
-                        <p className="text-sm text-muted-foreground mt-0.5">{tech.description}</p>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-4 pb-2">
+                    {person.challenges.map((challenge, idx) => (
+                      <div key={idx} className="border-l-2 pl-3" style={{ borderColor: `${getAccentColor("coral")}40` }}>
+                        <h4 className="font-medium text-sm mb-2">{challenge.title}</h4>
+                        <ul className="space-y-1.5">
+                          {challenge.items.map((item, itemIdx) => (
+                            <li key={itemIdx} className="text-sm text-muted-foreground flex items-start gap-2">
+                              <span className="mt-1 shrink-0" style={{ color: getAccentColor("coral") }}>&#8226;</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            <AccordionItem value="observations" className="border rounded-lg px-4">
-              <AccordionTrigger className="hover:no-underline py-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("orange")}20` }}>
-                    <Users className="h-4 w-4" style={{ color: getAccentColor("orange") }} />
+                    ))}
                   </div>
-                  <span className="font-semibold">Observations</span>
-                  <Badge variant="secondary" className="ml-2 text-xs">{person.observations.length}</Badge>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent>
-                <ul className="space-y-2 pb-2">
-                  {person.observations.map((obs, idx) => (
-                    <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                      <span className="mt-1 shrink-0" style={{ color: getAccentColor("orange") }}>&#8594;</span>
-                      <span>{obs}</span>
-                    </li>
-                  ))}
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
 
+            <Accordion type="multiple" defaultValue={["wants"]} className="space-y-0">
+              <AccordionItem value="wants" className="border rounded-lg px-4">
+                <AccordionTrigger className="hover:no-underline py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("lime")}20` }}>
+                      <Sparkles className="h-4 w-4" style={{ color: getAccentColor("lime") }} />
+                    </div>
+                    <span className="font-semibold">Desired Capabilities</span>
+                    <Badge variant="secondary" className="ml-2 text-xs">{person.wants.length}</Badge>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-4 pb-2">
+                    {person.wants.map((want, idx) => (
+                      <div key={idx} className="border-l-2 pl-3" style={{ borderColor: `${getAccentColor("lime")}40` }}>
+                        <h4 className="font-medium text-sm mb-2">{want.title}</h4>
+                        <ul className="space-y-1.5">
+                          {want.items.map((item, itemIdx) => (
+                            <li key={itemIdx} className="text-sm text-muted-foreground flex items-start gap-2">
+                              <span className="mt-1 shrink-0" style={{ color: getAccentColor("lime") }}>+</span>
+                              <span>{item}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <Accordion type="multiple" defaultValue={["tech"]} className="space-y-0">
+              <AccordionItem value="tech" className="border rounded-lg px-4">
+                <AccordionTrigger className="hover:no-underline py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("sky")}20` }}>
+                      <Server className="h-4 w-4" style={{ color: getAccentColor("sky") }} />
+                    </div>
+                    <span className="font-semibold">Tech Stack</span>
+                    <Badge variant="secondary" className="ml-2 text-xs">{person.techStack.length}</Badge>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="space-y-3 pb-2">
+                    {person.techStack.map((tech, idx) => (
+                      <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                        <div className="w-2 h-2 rounded-full mt-2 shrink-0" style={{ backgroundColor: getAccentColor("sky") }} />
+                        <div>
+                          <h4 className="font-medium text-sm">{tech.name}</h4>
+                          <p className="text-sm text-muted-foreground mt-0.5">{tech.description}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+
+            <Accordion type="multiple" defaultValue={["observations"]} className="space-y-0">
+              <AccordionItem value="observations" className="border rounded-lg px-4">
+                <AccordionTrigger className="hover:no-underline py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("orange")}20` }}>
+                      <Users className="h-4 w-4" style={{ color: getAccentColor("orange") }} />
+                    </div>
+                    <span className="font-semibold">Observations</span>
+                    <Badge variant="secondary" className="ml-2 text-xs">{person.observations.length}</Badge>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent>
+                  <ul className="space-y-2 pb-2">
+                    {person.observations.map((obs, idx) => (
+                      <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                        <span className="mt-1 shrink-0" style={{ color: getAccentColor("orange") }}>&#8594;</span>
+                        <span>{obs}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+
+          <Accordion type="multiple" defaultValue={["summary"]} className="space-y-0">
             <AccordionItem value="summary" className="border rounded-lg px-4" style={{ backgroundColor: `${getAccentColor("teal")}08`, borderColor: `${getAccentColor("teal")}40` }}>
               <AccordionTrigger className="hover:no-underline py-3">
                 <div className="flex items-center gap-2">
