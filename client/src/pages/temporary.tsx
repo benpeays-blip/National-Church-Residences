@@ -38,17 +38,17 @@ function ProductCard({ product }: { product: TechProduct }) {
       data-testid={`card-product-${product.id}`}
       onClick={() => navigate(`/temporary/tech-stack/${product.id}`)}
     >
-      <div className="p-4">
-        <div className="flex items-start gap-3 mb-2">
+      <div className="p-6">
+        <div className="flex items-start gap-4 mb-4">
           <div 
-            className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+            className="w-14 h-14 rounded-xl flex items-center justify-center shrink-0"
             style={{ backgroundColor: `${product.brandColor}15` }}
           >
-            <Database className="h-5 w-5" style={{ color: product.brandColor }} />
+            <Database className="h-7 w-7" style={{ color: product.brandColor }} />
           </div>
           <div className="flex-1 min-w-0">
             <h3 
-              className="font-bold text-sm leading-tight"
+              className="font-bold text-lg leading-tight"
               style={{ color: product.brandColor }}
               data-testid={`text-product-name-${product.id}`}
             >
@@ -56,15 +56,15 @@ function ProductCard({ product }: { product: TechProduct }) {
             </h3>
             <Badge 
               variant="outline" 
-              className="text-xs px-2 py-0.5 mt-1"
+              className="text-sm px-3 py-1 mt-2"
               style={{ borderColor: getAccentColor(accent), color: getAccentColor(accent) }}
             >
               {product.category}
             </Badge>
           </div>
         </div>
-        <p className="text-xs text-muted-foreground mt-2">{product.tagline}</p>
-        <p className="text-xs text-muted-foreground mt-2 line-clamp-3">{product.description}</p>
+        <p className="text-sm font-medium text-muted-foreground">{product.tagline}</p>
+        <p className="text-sm text-muted-foreground mt-3 line-clamp-4">{product.description}</p>
       </div>
     </AccentCard>
   );
