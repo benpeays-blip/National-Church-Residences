@@ -2272,7 +2272,7 @@ function RiskCompliance() {
         </div>
       </div>
 
-      <div className="border-t pt-6">
+      <Card className="p-6">
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${getAccentColor("sky")}15` }}>
             <Building2 className="h-6 w-6" style={{ color: getAccentColor("sky") }} />
@@ -2287,7 +2287,7 @@ function RiskCompliance() {
             </p>
           </div>
         </div>
-      </div>
+      </Card>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {riskCategories.map((category) => {
