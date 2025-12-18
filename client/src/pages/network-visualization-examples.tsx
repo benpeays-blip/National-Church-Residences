@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { GitBranch } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { GitBranch, Search, User, Building2 } from "lucide-react";
 
 interface Person {
   id: number;
@@ -74,7 +75,18 @@ const sampleOrgs: Organization[] = [
 
 export default function NetworkVisualizationExamples() {
   const [sankeySelected, setSankeySelected] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const sankeyHovered = sankeySelected; // Use selected as the active state
+
+  // Filter search results
+  const searchResults = searchQuery.trim() ? [
+    ...samplePeople
+      .filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()))
+      .map(p => ({ type: 'person' as const, name: p.name, subtitle: p.title })),
+    ...sampleOrgs
+      .filter(o => o.name.toLowerCase().includes(searchQuery.toLowerCase()))
+      .map(o => ({ type: 'org' as const, name: o.name, subtitle: o.sector, color: o.color }))
+  ].slice(0, 6) : [];
   const [positions, setPositions] = useState<{
     people: { [key: number]: number };
     orgs: { [key: number]: number };
@@ -368,8 +380,43 @@ export default function NetworkVisualizationExamples() {
               </div>
             </div>
 
-            <div>
-              <Card className="h-full">
+            <div className="space-y-3">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <Input
+                  placeholder="Search people or organizations..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-9 h-9"
+                  data-testid="input-search-network"
+                />
+                {searchResults.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-background border rounded-md shadow-lg z-10 overflow-hidden">
+                    {searchResults.map((result) => (
+                      <button
+                        key={result.name}
+                        className="w-full flex items-center gap-2 p-2 hover-elevate text-left transition-colors"
+                        onClick={() => {
+                          setSankeySelected(result.name);
+                          setSearchQuery("");
+                        }}
+                        data-testid={`search-result-${result.name}`}
+                      >
+                        {result.type === 'person' ? (
+                          <User className="w-4 h-4 text-cyan-500" />
+                        ) : (
+                          <Building2 className="w-4 h-4" style={{ color: (result as any).color }} />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm font-medium truncate">{result.name}</p>
+                          <p className="text-xs text-muted-foreground truncate">{result.subtitle}</p>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <Card className="flex-1">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm flex items-center gap-2">
                     <GitBranch className="w-4 h-4" style={{ color: "#395174" }} />
