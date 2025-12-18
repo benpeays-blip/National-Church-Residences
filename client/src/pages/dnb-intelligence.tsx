@@ -269,16 +269,13 @@ export default function DnBIntelligence() {
                 <Search className="h-5 w-5" style={{ color: "#084594" }} />
                 Company Lookup
               </CardTitle>
-              <CardDescription>
-                Search by company name, D-U-N-S number, or industry
-              </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex gap-2">
                 <div className="relative flex-1">
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
-                    placeholder="Enter company name, D-U-N-S number, or industry..."
+                    placeholder="Search by company name, D-U-N-S number, or industry..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-9"
