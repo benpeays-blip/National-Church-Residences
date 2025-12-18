@@ -2728,6 +2728,12 @@ Action items from our conversation: Send the capital campaign brochure by end of
 
 ${donorNameForDemo} also mentioned their daughter recently joined the alumni board, which could be a great connection for our young alumni engagement efforts.`;
 
+      // Initialize OpenAI client for insight extraction
+      const openai = new OpenAI({
+        baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
+        apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY
+      });
+
       // Step 2: Extract insights using GPT-4o
       const extractionPrompt = `Analyze this meeting transcription and extract key information. Respond in JSON format only.
 
