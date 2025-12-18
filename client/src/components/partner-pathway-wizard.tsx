@@ -1007,14 +1007,12 @@ export default function PartnerPathwayWizard() {
                   backgroundColor: isActive 
                     ? color.bg 
                     : color.light,
-                  color: isActive 
-                    ? "white" 
-                    : color.text
+                  color: "white"
                 }}
                 data-testid={`step-indicator-${step}`}
               >
                 {isCompleted ? (
-                  <CheckCircle2 className="w-4 h-4" style={{ color: color.text }} />
+                  <CheckCircle2 className="w-4 h-4 text-white" />
                 ) : (
                   <StepIcon className="w-4 h-4" />
                 )}
