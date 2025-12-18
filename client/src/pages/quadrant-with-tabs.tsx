@@ -1,8 +1,7 @@
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Grid3x3, BookOpen, ArrowRight, Target, Wand2, ListOrdered } from "lucide-react";
+import { Grid3x3, ArrowRight, Target, Wand2, ListOrdered } from "lucide-react";
 import DonorQuadrant from "@/pages/donor-quadrant";
-import QuadrantThesis from "@/pages/quadrant-thesis";
 import QuadrantExplained from "@/pages/quadrant-explained";
 import QuadrantStrategies from "@/pages/quadrant-strategies";
 import QuadrantWizard from "@/pages/quadrant-wizard";
@@ -28,12 +27,6 @@ const quadrantTabs: SectionTab[] = [
     path: "/quadrant/wizard",
   },
   {
-    label: "Thesis",
-    value: "thesis",
-    icon: BookOpen,
-    path: "/quadrant/thesis",
-  },
-  {
     label: "Quadrant Explained",
     value: "explained",
     icon: Target,
@@ -53,9 +46,7 @@ export default function QuadrantWithTabs() {
   // Determine which component to render based on route
   let QuadrantComponent = DonorQuadrant;
   
-  if (location === "/quadrant/thesis") {
-    QuadrantComponent = QuadrantThesis;
-  } else if (location === "/quadrant/explained") {
+  if (location === "/quadrant/explained") {
     QuadrantComponent = QuadrantExplained;
   } else if (location === "/quadrant/strategies") {
     QuadrantComponent = QuadrantStrategies;
