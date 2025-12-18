@@ -181,6 +181,20 @@ import AgentDetail from "@/pages/agent-detail";
 // Impact Drill-Down Pages
 import ImpactOverview from "@/pages/impact-overview";
 
+// New Feature Pages
+import MatchingGifts from "@/pages/matching-gifts";
+import RetentionRisk from "@/pages/retention-risk";
+import SmsFundraising from "@/pages/sms-fundraising";
+import PeerToPeer from "@/pages/peer-to-peer";
+import TributeGiving from "@/pages/tribute-giving";
+import DonorPortal from "@/pages/donor-portal";
+import Benchmarks from "@/pages/benchmarks";
+import EmailTracking from "@/pages/email-tracking";
+import DuplicateDetection from "@/pages/duplicate-detection";
+import AddressVerification from "@/pages/address-verification";
+import GivingAnniversaries from "@/pages/giving-anniversaries";
+import BoardDashboard from "@/pages/board-dashboard";
+
 // Network Visualization Examples
 import NetworkVisualizationExamples from "@/pages/network-visualization-examples";
 import ImpactBuildingFacilities from "@/pages/impact-building-facilities";
@@ -385,6 +399,20 @@ function Router() {
       
       {/* Navigation Previews */}
       <Route path="/navigation-mega-menu-preview" component={NavigationMegaMenuPreview} />
+      
+      {/* New Feature Pages */}
+      <Route path="/matching-gifts" component={MatchingGifts} />
+      <Route path="/retention-risk" component={RetentionRisk} />
+      <Route path="/sms-fundraising" component={SmsFundraising} />
+      <Route path="/peer-to-peer" component={PeerToPeer} />
+      <Route path="/tribute-giving" component={TributeGiving} />
+      <Route path="/donor-portal" component={DonorPortal} />
+      <Route path="/benchmarks" component={Benchmarks} />
+      <Route path="/email-tracking" component={EmailTracking} />
+      <Route path="/duplicate-detection" component={DuplicateDetection} />
+      <Route path="/address-verification" component={AddressVerification} />
+      <Route path="/giving-anniversaries" component={GivingAnniversaries} />
+      <Route path="/board-dashboard" component={BoardDashboard} />
       
       <Route component={NotFound} />
     </Switch>

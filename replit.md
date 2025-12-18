@@ -49,6 +49,18 @@ FundRazor is an AI-powered, enterprise-grade fundraising CRM designed for nonpro
 - **Gift Tracking System**: Production-ready pages for All Gifts, Major Gifts, Recurring Gifts, and Planned Gifts, with educational content and hybrid filtering.
 - **Corporations Section**: Comprehensive tabs for Overview, Sponsorships, Corporate Giving, Volunteering, In-Kind, Foundations, and Prospects, featuring KPI metrics, search/filter, and Clearbit logos.
 - **Relationship Intelligence**: Integration of RelSci Mapping (Path Finder, Prospect Research, NCR Connections) and D&B Intelligence (Company Research, Corporate Prospects, Risk Assessment).
+- **Matching Gift Automation**: Corporate match eligibility screening with employer database lookup (Double the Donation integration pattern).
+- **Donor Retention Risk Scoring**: AI-powered churn prediction with at-risk donor alerts and recommended interventions.
+- **Text/SMS Fundraising**: Text-to-give keywords, SMS stewardship sequences, and mobile donor engagement.
+- **Peer-to-Peer Fundraising**: Personal fundraising pages for supporters with leaderboards and campaign tracking.
+- **Tribute & Memorial Giving**: "In Honor Of" and "In Memory Of" donation tracking with automatic notifications.
+- **Donor Portal**: Self-service access for donors to view giving history, update info, and manage recurring gifts.
+- **Benchmark Comparisons**: KPI comparisons against peer organizations by size and mission type.
+- **Email Engagement Tracking**: Open/click analytics for email campaigns with top engager identification.
+- **Duplicate Detection**: Fuzzy matching algorithm to identify and merge potential duplicate donor records.
+- **Address Verification**: USPS validation for accurate direct mail campaigns with auto-fix suggestions.
+- **Giving Anniversary Alerts**: Automated milestone celebrations for donor anniversaries and giving achievements.
+- **Board Member Dashboard**: Simplified prospect view for board members with assigned prospects and key metrics.
 
 ## External Dependencies
 - **Database Hosting**: Neon (for PostgreSQL)
