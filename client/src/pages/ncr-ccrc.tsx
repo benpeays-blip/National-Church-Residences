@@ -116,9 +116,6 @@ export default function NcrCcrc() {
                     <p className="text-sm text-muted-foreground mt-2">{level.description}</p>
                   </CardContent>
                 </Card>
-                {index < careLevels.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-2 w-4 h-0.5 bg-muted-foreground/30" />
-                )}
               </div>
             ))}
           </div>
