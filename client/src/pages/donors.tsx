@@ -7,18 +7,43 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Users, Plus, Search, LayoutGrid, List } from "lucide-react";
+import { Users, Plus, Search, LayoutGrid, List, DollarSign } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import type { Person } from "@shared/schema";
 
 type ViewMode = "gallery" | "list";
+type GiftFilter = "all" | "1000" | "5000" | "10000" | "25000" | "50000" | "100000";
+
+const giftFilterOptions: { value: GiftFilter; label: string }[] = [
+  { value: "all", label: "All Donors" },
+  { value: "1000", label: "$1,000+" },
+  { value: "5000", label: "$5,000+" },
+  { value: "10000", label: "$10,000+" },
+  { value: "25000", label: "$25,000+" },
+  { value: "50000", label: "$50,000+" },
+  { value: "100000", label: "$100,000+" },
+];
 
 export default function Donors() {
   const [searchQuery, setSearchQuery] = useState("");
   const [viewMode, setViewMode] = useState<ViewMode>("gallery");
+  const [giftFilter, setGiftFilter] = useState<GiftFilter>("all");
   const [, setLocation] = useLocation();
   const { data: donors, isLoading } = useQuery<Person[]>({
     queryKey: ["/api/persons", searchQuery],
+  });
+
+  const filteredDonors = donors?.filter((donor) => {
+    if (giftFilter === "all") return true;
+    const minAmount = parseInt(giftFilter);
+    return (donor.totalLifetimeGiving || 0) >= minAmount;
   });
 
   return (
@@ -37,15 +62,30 @@ export default function Donors() {
       </div>
 
       <div className="flex items-center justify-between gap-4">
-        <div className="relative max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-          <Input
-            placeholder="Search donors..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-9 w-80"
-            data-testid="input-search-donors"
-          />
+        <div className="flex items-center gap-3">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Search donors..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9 w-80"
+              data-testid="input-search-donors"
+            />
+          </div>
+          <Select value={giftFilter} onValueChange={(value: GiftFilter) => setGiftFilter(value)}>
+            <SelectTrigger className="w-40" data-testid="select-gift-filter">
+              <DollarSign className="w-4 h-4 mr-1 text-muted-foreground" />
+              <SelectValue placeholder="Filter by amount" />
+            </SelectTrigger>
+            <SelectContent>
+              {giftFilterOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value} data-testid={`option-gift-${option.value}`}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
         <div className="flex items-center gap-1 border rounded-lg p-1">
           <Button
@@ -83,10 +123,10 @@ export default function Donors() {
             ))}
           </div>
         )
-      ) : donors && donors.length > 0 ? (
+      ) : filteredDonors && filteredDonors.length > 0 ? (
         viewMode === "gallery" ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {donors.map((donor) => (
+            {filteredDonors.map((donor) => (
               <DonorCard
                 key={donor.id}
                 donor={donor}
@@ -98,7 +138,7 @@ export default function Donors() {
           <Card>
             <CardContent className="p-0">
               <div className="divide-y">
-                {donors.map((donor) => (
+                {filteredDonors.map((donor) => (
                   <div
                     key={donor.id}
                     className="p-4 hover-elevate active-elevate-2 cursor-pointer flex items-center justify-between gap-4"

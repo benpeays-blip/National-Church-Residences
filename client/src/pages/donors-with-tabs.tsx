@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Users, TrendingUp, AlertCircle, Clock, UserPlus } from "lucide-react";
+import { Users, AlertCircle, Clock, UserPlus } from "lucide-react";
 import Donors from "@/pages/donors";
 import LYBUNTDonors from "@/pages/analytics-lybunt-donors";
 import SYBUNTDonors from "@/pages/analytics-sybunt-donors";
@@ -11,12 +11,6 @@ const donorTabs: SectionTab[] = [
     value: "all",
     icon: Users,
     path: "/donors",
-  },
-  {
-    label: "Major Gifts",
-    value: "major",
-    icon: TrendingUp,
-    path: "/donors/major-gifts",
   },
   {
     label: "LYBUNT",
@@ -42,10 +36,7 @@ export default function DonorsWithTabs() {
   const [location] = useLocation();
 
   let DonorComponent = Donors;
-  if (location === "/donors/major-gifts") {
-    // For now, use the main Donors component - we'll filter later
-    DonorComponent = Donors;
-  } else if (location === "/donors/lybunt") {
+  if (location === "/donors/lybunt") {
     DonorComponent = LYBUNTDonors;
   } else if (location === "/donors/sybunt") {
     DonorComponent = SYBUNTDonors;
