@@ -183,8 +183,8 @@ export default function ForceNetworkGraph() {
       const nodeId = `person-${person.id}`;
       if (!nodeSet.has(nodeId)) {
         const relCount = relationshipCounts[nodeId] || 1;
-        // Scale size: min 3, max 12 based on relationship count
-        const nodeSize = 3 + (relCount / maxRelationships) * 9;
+        // Scale size: min 4, max 20 based on relationship count - more dramatic difference
+        const nodeSize = 4 + (relCount / maxRelationships) * 16;
         nodes.push({
           id: nodeId,
           name: person.name,
