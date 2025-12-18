@@ -108,6 +108,7 @@ import AIWealthEvents from "@/pages/ai-wealth-events";
 import AIMeetingBriefs from "@/pages/ai-meeting-briefs";
 import AIVoiceNotes from "@/pages/ai-voice-notes";
 import AIWithTabs from "@/pages/ai-with-tabs";
+import MeetingNotes from "@/pages/meeting-notes";
 
 // Relationship Intelligence
 import BoardConnections from "@/pages/relationship-board-connections";
@@ -259,6 +260,7 @@ function Router() {
       <Route path="/ai-tools/workflows" component={AIToolsWithTabs} />
       <Route path="/ai-tools/assistant" component={AIToolsWithTabs} />
       <Route path="/ai-tools/feed" component={AIToolsWithTabs} />
+      <Route path="/ai-tools/meeting-notes" component={MeetingNotes} />
       <Route path="/ai-tools" component={AIToolsWithTabs} />
       <Route path="/relationships/dnb" component={RelationshipsWithTabs} />
       <Route path="/relationships/network" component={RelationshipsWithTabs} />

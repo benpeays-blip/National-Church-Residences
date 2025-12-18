@@ -4,6 +4,20 @@ import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
 import { db } from "./db";
 import OpenAI from "openai";
+import multer from "multer";
+import fs from "fs";
+import path from "path";
+
+// Ensure upload directory exists
+const uploadDir = '/tmp/uploads';
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+const upload = multer({ 
+  dest: uploadDir,
+  limits: { fileSize: 25 * 1024 * 1024 } // 25MB limit
+});
 import { 
   persons, opportunities, users, gifts, campaigns, interactions, integrations, integrationSyncRuns, dataQualityIssues, households, tasks,
   predictiveScores, wealthEvents, meetingBriefs, voiceNotes, boardConnections, corporatePartnerships, peerDonors,
@@ -2256,6 +2270,116 @@ When responding:
     } catch (error) {
       console.error("Chat error:", error);
       res.status(500).json({ error: "Failed to process chat request" });
+    }
+  });
+
+  // In-memory storage for meeting notes (would normally be in database)
+  const meetingNotesStore: any[] = [];
+
+  // Meeting Notes API endpoints
+  app.get("/api/meeting-notes", async (req, res) => {
+    try {
+      res.json(meetingNotesStore);
+    } catch (error) {
+      console.error("Error fetching meeting notes:", error);
+      res.status(500).json({ error: "Failed to fetch meeting notes" });
+    }
+  });
+
+  app.post("/api/meeting-notes/transcribe", upload.single('audio'), async (req, res) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ error: "No audio file provided" });
+      }
+
+      const { title, donorName } = req.body;
+      const audioPath = req.file.path;
+
+      const openai = new OpenAI({
+        baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
+        apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY
+      });
+
+      // Step 1: Transcribe audio using Whisper
+      const audioFile = fs.createReadStream(audioPath);
+      const transcriptionResponse = await openai.audio.transcriptions.create({
+        file: audioFile,
+        model: "whisper-1",
+      });
+
+      const transcription = transcriptionResponse.text;
+
+      // Clean up uploaded file
+      fs.unlink(audioPath, (err) => {
+        if (err) console.error("Error deleting temp file:", err);
+      });
+
+      // Step 2: Extract insights using GPT-4o
+      const extractionPrompt = `Analyze this meeting transcription and extract key information. Respond in JSON format only.
+
+Transcription:
+${transcription}
+
+Extract and return ONLY a JSON object with these fields:
+{
+  "purpose": "A one-sentence summary of the meeting's main purpose",
+  "topicsDiscussed": ["Array of 3-5 main topics discussed"],
+  "keyLearnings": ["Array of 3-5 key insights or learnings from the meeting"],
+  "actionItems": ["Array of specific action items with who/what/when if mentioned"]
+}
+
+Return only valid JSON, no markdown or explanation.`;
+
+      const extractionResponse = await openai.chat.completions.create({
+        model: "gpt-4o",
+        messages: [
+          { role: "system", content: "You are an expert meeting analyst. Extract structured information from meeting transcriptions. Always respond with valid JSON only." },
+          { role: "user", content: extractionPrompt }
+        ],
+        max_tokens: 1024,
+        response_format: { type: "json_object" }
+      });
+
+      const extractedContent = extractionResponse.choices[0]?.message?.content || "{}";
+      let extracted;
+      try {
+        extracted = JSON.parse(extractedContent);
+      } catch (e) {
+        extracted = {
+          purpose: "Meeting discussion",
+          topicsDiscussed: ["General discussion"],
+          keyLearnings: ["Meeting transcribed successfully"],
+          actionItems: []
+        };
+      }
+
+      // Create meeting note record
+      const meetingNote = {
+        id: `mn_${Date.now()}`,
+        title: title || "Untitled Meeting",
+        recordedAt: new Date().toISOString(),
+        duration: 0, // Would calculate from audio duration
+        transcription: transcription,
+        purpose: extracted.purpose || "",
+        topicsDiscussed: extracted.topicsDiscussed || [],
+        keyLearnings: extracted.keyLearnings || [],
+        actionItems: extracted.actionItems || [],
+        donorName: donorName || null,
+        status: 'completed'
+      };
+
+      meetingNotesStore.unshift(meetingNote);
+
+      res.json({
+        transcription: transcription,
+        purpose: extracted.purpose,
+        topicsDiscussed: extracted.topicsDiscussed,
+        keyLearnings: extracted.keyLearnings,
+        actionItems: extracted.actionItems
+      });
+    } catch (error: any) {
+      console.error("Transcription error:", error);
+      res.status(500).json({ error: "Failed to transcribe audio: " + (error.message || "Unknown error") });
     }
   });
 
