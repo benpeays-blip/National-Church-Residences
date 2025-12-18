@@ -3,6 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { 
   Users, 
   Heart,
@@ -14,7 +15,8 @@ import {
   Star,
   DollarSign,
   Calendar,
-  Building2
+  Building2,
+  X
 } from "lucide-react";
 import {
   Select,
@@ -23,6 +25,15 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
 
 interface PeerDonor {
   id: number;
@@ -194,9 +205,68 @@ export default function PeerDonors() {
   const [searchQuery, setSearchQuery] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [sortBy, setSortBy] = useState<string>("similarity");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [peerDonors, setPeerDonors] = useState<PeerDonor[]>(samplePeerDonors);
+  const { toast } = useToast();
+  
+  const [newConnection, setNewConnection] = useState({
+    sourceDonorName: "",
+    sourceDonorTitle: "",
+    peerDonorName: "",
+    peerDonorTitle: "",
+    sharedCharacteristics: "",
+    potentialAsk: "",
+  });
+
+  const handleAddConnection = () => {
+    if (!newConnection.sourceDonorName || !newConnection.peerDonorName) {
+      toast({
+        title: "Missing Information",
+        description: "Please provide both source and peer donor names.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const newPeer: PeerDonor = {
+      id: peerDonors.length + 1,
+      sourceDonorName: newConnection.sourceDonorName,
+      sourceDonorTitle: newConnection.sourceDonorTitle || "Donor",
+      peerDonorName: newConnection.peerDonorName,
+      peerDonorTitle: newConnection.peerDonorTitle || "Prospect",
+      similarityScore: 0.75 + Math.random() * 0.2,
+      sharedCharacteristics: newConnection.sharedCharacteristics
+        ? newConnection.sharedCharacteristics.split(",").map(s => s.trim())
+        : ["Manual Connection"],
+      sharedOrganizations: [],
+      peerGaveToPrograms: [],
+      personNotYetAskedFor: ["Annual Fund", "Capital Campaign"],
+      peerTotalGiving: 0,
+      peerLargestGift: 0,
+      lastGiftDate: new Date().toISOString().split("T")[0],
+      potentialAsk: parseInt(newConnection.potentialAsk) || 25000,
+      status: 'new'
+    };
+
+    setPeerDonors([newPeer, ...peerDonors]);
+    setNewConnection({
+      sourceDonorName: "",
+      sourceDonorTitle: "",
+      peerDonorName: "",
+      peerDonorTitle: "",
+      sharedCharacteristics: "",
+      potentialAsk: "",
+    });
+    setIsDialogOpen(false);
+    
+    toast({
+      title: "Connection Added",
+      description: `Added ${newConnection.peerDonorName} as a peer connection to ${newConnection.sourceDonorName}.`,
+    });
+  };
 
   // Filter and sort peer donors
-  let filteredDonors = samplePeerDonors.filter(peer => {
+  let filteredDonors = peerDonors.filter(peer => {
     const matchesSearch = searchQuery === "" || 
       peer.sourceDonorName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       peer.peerDonorName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -223,10 +293,10 @@ export default function PeerDonors() {
     }
   });
 
-  const totalPeers = samplePeerDonors.length;
-  const avgMatchScore = samplePeerDonors.reduce((sum, p) => sum + (p.similarityScore * 100), 0) / samplePeerDonors.length;
-  const highPotential = samplePeerDonors.filter(p => p.similarityScore >= 0.8).length;
-  const totalPotentialValue = samplePeerDonors.reduce((sum, p) => sum + p.potentialAsk, 0);
+  const totalPeers = peerDonors.length;
+  const avgMatchScore = peerDonors.length > 0 ? peerDonors.reduce((sum, p) => sum + (p.similarityScore * 100), 0) / peerDonors.length : 0;
+  const highPotential = peerDonors.filter(p => p.similarityScore >= 0.8).length;
+  const totalPotentialValue = peerDonors.reduce((sum, p) => sum + p.potentialAsk, 0);
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -247,11 +317,98 @@ export default function PeerDonors() {
             AI-powered peer donor matching based on giving patterns and affinities
           </p>
         </div>
-        <Button data-testid="button-add-peer-connection">
+        <Button onClick={() => setIsDialogOpen(true)} data-testid="button-add-peer-connection">
           <Plus className="w-4 h-4 mr-2" />
           Add Connection
         </Button>
       </div>
+
+      {/* Add Connection Dialog */}
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          <DialogHeader>
+            <DialogTitle>Add Peer Connection</DialogTitle>
+            <DialogDescription>
+              Create a new peer donor connection to track relationship opportunities.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="sourceDonorName">Source Donor Name *</Label>
+                <Input
+                  id="sourceDonorName"
+                  placeholder="e.g., John Smith"
+                  value={newConnection.sourceDonorName}
+                  onChange={(e) => setNewConnection({...newConnection, sourceDonorName: e.target.value})}
+                  data-testid="input-source-donor-name"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="sourceDonorTitle">Source Donor Title</Label>
+                <Input
+                  id="sourceDonorTitle"
+                  placeholder="e.g., Board Member"
+                  value={newConnection.sourceDonorTitle}
+                  onChange={(e) => setNewConnection({...newConnection, sourceDonorTitle: e.target.value})}
+                  data-testid="input-source-donor-title"
+                />
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="peerDonorName">Peer Donor Name *</Label>
+                <Input
+                  id="peerDonorName"
+                  placeholder="e.g., Jane Doe"
+                  value={newConnection.peerDonorName}
+                  onChange={(e) => setNewConnection({...newConnection, peerDonorName: e.target.value})}
+                  data-testid="input-peer-donor-name"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="peerDonorTitle">Peer Donor Title</Label>
+                <Input
+                  id="peerDonorTitle"
+                  placeholder="e.g., Philanthropist"
+                  value={newConnection.peerDonorTitle}
+                  onChange={(e) => setNewConnection({...newConnection, peerDonorTitle: e.target.value})}
+                  data-testid="input-peer-donor-title"
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="sharedCharacteristics">Shared Characteristics</Label>
+              <Input
+                id="sharedCharacteristics"
+                placeholder="e.g., Healthcare Focus, Board Affiliation (comma-separated)"
+                value={newConnection.sharedCharacteristics}
+                onChange={(e) => setNewConnection({...newConnection, sharedCharacteristics: e.target.value})}
+                data-testid="input-shared-characteristics"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="potentialAsk">Potential Ask Amount ($)</Label>
+              <Input
+                id="potentialAsk"
+                type="number"
+                placeholder="e.g., 50000"
+                value={newConnection.potentialAsk}
+                onChange={(e) => setNewConnection({...newConnection, potentialAsk: e.target.value})}
+                data-testid="input-potential-ask"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDialogOpen(false)} data-testid="button-cancel-connection">
+              Cancel
+            </Button>
+            <Button onClick={handleAddConnection} data-testid="button-save-connection">
+              Add Connection
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
