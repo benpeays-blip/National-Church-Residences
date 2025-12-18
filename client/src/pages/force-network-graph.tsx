@@ -222,10 +222,11 @@ export default function ForceNetworkGraph() {
   // Configure d3 forces for shell layout: orgs outside, people inside
   useEffect(() => {
     if (fgRef.current) {
-      // Add collision force to prevent node overlap
+      // Add collision force to prevent node overlap - account for larger nodes + labels
       fgRef.current.d3Force('collision', d3.forceCollide((node: any) => {
-        const baseRadius = node.type === 'org' ? Math.sqrt(node.val) * 4 : Math.sqrt(node.val) * 3;
-        return baseRadius + 15;
+        const baseRadius = node.type === 'org' ? Math.sqrt(node.val) * 4.5 : Math.sqrt(node.val) * 3;
+        // Extra space for person labels below nodes
+        return baseRadius + (node.type === 'person' ? 30 : 20);
       }));
 
       // Repulsion force - orgs repel more strongly
@@ -313,37 +314,118 @@ export default function ForceNetworkGraph() {
 
   const nodeCanvasObject = useCallback((node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
     const label = node.name;
-    const fontSize = node.type === "org" ? 12 / globalScale : 10 / globalScale;
-    const nodeRadius = node.type === "org" ? Math.sqrt(node.val) * 3 : Math.sqrt(node.val) * 2;
     const isHovered = hoveredNode === node.id;
     const isSelected = selectedNode?.id === node.id;
+    const isHighlighted = isHovered || isSelected;
+    
+    // Bigger base sizes for better visibility
+    const nodeRadius = node.type === "org" 
+      ? Math.sqrt(node.val) * 4.5 
+      : Math.sqrt(node.val) * 3;
+    const displayRadius = nodeRadius * (isHighlighted ? 1.4 : 1);
 
+    // Draw shadow for depth
     ctx.beginPath();
-    ctx.arc(node.x, node.y, nodeRadius * (isHovered || isSelected ? 1.3 : 1), 0, 2 * Math.PI);
-    ctx.fillStyle = node.color;
+    ctx.arc(node.x + 2, node.y + 2, displayRadius, 0, 2 * Math.PI);
+    ctx.fillStyle = "rgba(0,0,0,0.2)";
     ctx.fill();
 
-    if (isHovered || isSelected) {
-      ctx.strokeStyle = "white";
+    // Draw main node circle
+    ctx.beginPath();
+    ctx.arc(node.x, node.y, displayRadius, 0, 2 * Math.PI);
+    
+    // Create gradient fill for orgs
+    if (node.type === "org") {
+      const gradient = ctx.createRadialGradient(
+        node.x - displayRadius * 0.3, node.y - displayRadius * 0.3, 0,
+        node.x, node.y, displayRadius
+      );
+      gradient.addColorStop(0, lightenColor(node.color, 30));
+      gradient.addColorStop(1, node.color);
+      ctx.fillStyle = gradient;
+    } else {
+      // Person nodes - lighter blue with gradient
+      const gradient = ctx.createRadialGradient(
+        node.x - displayRadius * 0.3, node.y - displayRadius * 0.3, 0,
+        node.x, node.y, displayRadius
+      );
+      gradient.addColorStop(0, "#9ED5E8");
+      gradient.addColorStop(1, "#5BA8C8");
+      ctx.fillStyle = gradient;
+    }
+    ctx.fill();
+
+    // Border stroke
+    ctx.strokeStyle = isHighlighted ? "white" : "rgba(255,255,255,0.4)";
+    ctx.lineWidth = isHighlighted ? 3 / globalScale : 1.5 / globalScale;
+    ctx.stroke();
+
+    // Glow effect when highlighted
+    if (isHighlighted) {
+      ctx.beginPath();
+      ctx.arc(node.x, node.y, displayRadius + 4 / globalScale, 0, 2 * Math.PI);
+      ctx.strokeStyle = node.type === "org" ? node.color : "#6FBBD3";
       ctx.lineWidth = 2 / globalScale;
+      ctx.globalAlpha = 0.5;
       ctx.stroke();
+      ctx.globalAlpha = 1;
     }
 
-    if (showLabels && (globalScale > 0.8 || node.type === "org")) {
-      ctx.font = `${fontSize}px Inter, sans-serif`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillStyle = node.type === "org" ? "white" : "rgba(255,255,255,0.9)";
-      
+    // Draw labels
+    if (showLabels) {
       if (node.type === "org") {
-        const shortName = label.split(' ')[0];
-        ctx.fillText(shortName, node.x, node.y);
-      } else if (globalScale > 1.5) {
-        ctx.fillStyle = "#333";
-        ctx.fillText(label, node.x, node.y + nodeRadius + fontSize);
+        // Organization name inside the node
+        const fontSize = Math.max(10, 14 / globalScale);
+        ctx.font = `bold ${fontSize}px Inter, sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "white";
+        
+        // Draw text with shadow for readability
+        ctx.shadowColor = "rgba(0,0,0,0.5)";
+        ctx.shadowBlur = 3;
+        
+        // Split name if too long
+        const words = label.split(' ');
+        if (words.length > 1 && displayRadius > 20) {
+          ctx.fillText(words[0], node.x, node.y - fontSize * 0.4);
+          ctx.fillText(words.slice(1).join(' '), node.x, node.y + fontSize * 0.6);
+        } else {
+          ctx.fillText(words[0], node.x, node.y);
+        }
+        ctx.shadowBlur = 0;
+      } else {
+        // Person name below the node - always show
+        const fontSize = Math.max(8, 11 / globalScale);
+        ctx.font = `${fontSize}px Inter, sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        
+        // Background for readability
+        const textWidth = ctx.measureText(label).width;
+        ctx.fillStyle = "rgba(0,0,0,0.6)";
+        ctx.fillRect(
+          node.x - textWidth / 2 - 3, 
+          node.y + displayRadius + 2, 
+          textWidth + 6, 
+          fontSize + 4
+        );
+        
+        ctx.fillStyle = "white";
+        ctx.fillText(label, node.x, node.y + displayRadius + 4);
       }
     }
   }, [hoveredNode, selectedNode, showLabels]);
+
+  // Helper function to lighten colors
+  const lightenColor = (hex: string, percent: number) => {
+    const num = parseInt(hex.replace('#', ''), 16);
+    const amt = Math.round(2.55 * percent);
+    const R = Math.min(255, (num >> 16) + amt);
+    const G = Math.min(255, ((num >> 8) & 0x00FF) + amt);
+    const B = Math.min(255, (num & 0x0000FF) + amt);
+    return `rgb(${R},${G},${B})`;
+  };
 
   const linkCanvasObject = useCallback((link: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
     const sourceNode = link.source;
