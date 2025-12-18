@@ -1,14 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
-import {
-  CommandDialog,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "@/components/ui/command";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { Command as CommandPrimitive } from "cmdk";
+import { cn } from "@/lib/utils";
 import {
   LayoutDashboard,
   Users,
@@ -36,7 +31,20 @@ import {
   Globe,
   Shield,
   Bell,
+  Search,
+  Keyboard,
 } from "lucide-react";
+
+const accentColors = {
+  teal: '#2A9D8F',
+  olive: '#6B8E23',
+  orange: '#E76F51',
+  coral: '#E9967A',
+  sky: '#4A90A4',
+  lime: '#84a98c',
+  navy: '#395174',
+  gold: '#e1c47d',
+};
 
 interface NavItem {
   id: string;
@@ -47,6 +55,21 @@ interface NavItem {
   group: string;
   keywords?: string[];
 }
+
+interface GroupConfig {
+  label: string;
+  icon: typeof LayoutDashboard;
+  color: string;
+}
+
+const groupConfigs: Record<string, GroupConfig> = {
+  "Dashboards": { label: "Dashboards", icon: LayoutDashboard, color: accentColors.teal },
+  "Core": { label: "Core Pages", icon: Target, color: accentColors.navy },
+  "AI Intelligence": { label: "AI Intelligence", icon: Sparkles, color: accentColors.orange },
+  "Analytics": { label: "Analytics", icon: BarChart3, color: accentColors.olive },
+  "Workflows": { label: "Workflows", icon: Workflow, color: accentColors.sky },
+  "System": { label: "System", icon: Settings, color: accentColors.coral },
+};
 
 const navItems: NavItem[] = [
   // Dashboards
@@ -420,6 +443,7 @@ export function openCommandPalette() {
 
 export function CommandPalette() {
   const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
   const [, setLocation] = useLocation();
 
   useEffect(() => {
@@ -442,6 +466,7 @@ export function CommandPalette() {
 
   const handleSelect = (path: string) => {
     setOpen(false);
+    setSearch("");
     setLocation(path);
   };
 
@@ -454,38 +479,144 @@ export function CommandPalette() {
     return acc;
   }, {} as Record<string, NavItem[]>);
 
+  const groupOrder = ["Dashboards", "Core", "AI Intelligence", "Analytics", "Workflows", "System"];
+
   return (
-    <CommandDialog open={open} onOpenChange={setOpen}>
-      <CommandInput placeholder="Search FundRazor..." data-testid="input-command-search" />
-      <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
-        {Object.entries(groupedItems).map(([group, items], index) => (
-          <div key={group}>
-            {index > 0 && <CommandSeparator />}
-            <CommandGroup heading={group}>
-              {items.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <CommandItem
-                    key={item.id}
-                    value={`${item.label} ${item.description} ${item.keywords?.join(" ") || ""}`}
-                    onSelect={() => handleSelect(item.path)}
-                    data-testid={`command-item-${item.id}`}
-                  >
-                    <Icon className="mr-2 h-4 w-4" />
-                    <div className="flex flex-col">
-                      <span>{item.label}</span>
-                      {item.description && (
-                        <span className="text-xs text-muted-foreground">{item.description}</span>
-                      )}
-                    </div>
-                  </CommandItem>
-                );
-              })}
-            </CommandGroup>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogContent className="overflow-hidden p-0 shadow-2xl max-w-2xl">
+        <VisuallyHidden>
+          <DialogTitle>Search FundRazor</DialogTitle>
+        </VisuallyHidden>
+        <CommandPrimitive
+          className="flex h-full w-full flex-col overflow-hidden rounded-lg bg-popover text-popover-foreground"
+        >
+          {/* Enhanced Search Header */}
+          <div 
+            className="flex items-center gap-4 px-5 py-4 border-b"
+            style={{ backgroundColor: accentColors.navy }}
+          >
+            <div 
+              className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+              style={{ backgroundColor: 'rgba(255,255,255,0.15)' }}
+            >
+              <Search className="w-5 h-5 text-white" />
+            </div>
+            <CommandPrimitive.Input
+              value={search}
+              onValueChange={setSearch}
+              placeholder="Search pages, features, and actions..."
+              className="flex-1 bg-transparent text-white text-base placeholder:text-white/50 outline-none border-none"
+              data-testid="input-command-search"
+            />
+            <div className="flex items-center gap-1.5 text-white/50 text-xs shrink-0">
+              <Keyboard className="w-3.5 h-3.5" />
+              <span className="font-mono">⌘K</span>
+            </div>
           </div>
-        ))}
-      </CommandList>
-    </CommandDialog>
+
+          {/* Results List */}
+          <CommandPrimitive.List className="max-h-[480px] overflow-y-auto p-3">
+            <CommandPrimitive.Empty className="py-12 text-center">
+              <div 
+                className="w-12 h-12 rounded-lg flex items-center justify-center mx-auto mb-3"
+                style={{ backgroundColor: `${accentColors.navy}10` }}
+              >
+                <Search className="w-6 h-6" style={{ color: accentColors.navy }} />
+              </div>
+              <p className="text-sm text-muted-foreground">No results found</p>
+              <p className="text-xs text-muted-foreground mt-1">Try a different search term</p>
+            </CommandPrimitive.Empty>
+
+            {groupOrder.map((group, groupIndex) => {
+              const items = groupedItems[group];
+              if (!items || items.length === 0) return null;
+              
+              const config = groupConfigs[group];
+              const GroupIcon = config.icon;
+
+              return (
+                <CommandPrimitive.Group key={group} className="mb-4">
+                  {/* Category Header */}
+                  <div 
+                    className="flex items-center gap-2 px-3 py-2 rounded-lg mb-2"
+                    style={{ backgroundColor: `${config.color}10` }}
+                  >
+                    <div 
+                      className="w-6 h-6 rounded flex items-center justify-center"
+                      style={{ backgroundColor: `${config.color}20` }}
+                    >
+                      <GroupIcon className="w-3.5 h-3.5" style={{ color: config.color }} />
+                    </div>
+                    <span 
+                      className="text-xs font-semibold uppercase tracking-wider"
+                      style={{ color: config.color }}
+                    >
+                      {config.label}
+                    </span>
+                    <span className="text-xs text-muted-foreground ml-auto">
+                      {items.length} items
+                    </span>
+                  </div>
+
+                  {/* Items Grid */}
+                  <div className="grid grid-cols-2 gap-1">
+                    {items.map((item) => {
+                      const Icon = item.icon;
+                      return (
+                        <CommandPrimitive.Item
+                          key={item.id}
+                          value={`${item.label} ${item.description} ${item.keywords?.join(" ") || ""}`}
+                          onSelect={() => handleSelect(item.path)}
+                          className={cn(
+                            "relative flex items-start gap-3 p-3 rounded-lg cursor-pointer transition-all",
+                            "data-[selected=true]:bg-muted hover:bg-muted/50",
+                            "outline-none"
+                          )}
+                          data-testid={`command-item-${item.id}`}
+                        >
+                          <div 
+                            className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
+                            style={{ backgroundColor: `${config.color}15` }}
+                          >
+                            <Icon className="w-4 h-4" style={{ color: config.color }} />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <span className="text-sm font-medium block truncate">{item.label}</span>
+                            {item.description && (
+                              <span className="text-xs text-muted-foreground block truncate mt-0.5">
+                                {item.description}
+                              </span>
+                            )}
+                          </div>
+                        </CommandPrimitive.Item>
+                      );
+                    })}
+                  </div>
+                </CommandPrimitive.Group>
+              );
+            })}
+          </CommandPrimitive.List>
+
+          {/* Footer */}
+          <div className="flex items-center justify-between px-4 py-3 border-t bg-muted/30 text-xs text-muted-foreground">
+            <div className="flex items-center gap-4">
+              <span className="flex items-center gap-1">
+                <kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px] font-mono">↑↓</kbd>
+                Navigate
+              </span>
+              <span className="flex items-center gap-1">
+                <kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px] font-mono">↵</kbd>
+                Select
+              </span>
+              <span className="flex items-center gap-1">
+                <kbd className="px-1.5 py-0.5 bg-muted rounded text-[10px] font-mono">esc</kbd>
+                Close
+              </span>
+            </div>
+            <span style={{ color: accentColors.navy }}>FundRazor</span>
+          </div>
+        </CommandPrimitive>
+      </DialogContent>
+    </Dialog>
   );
 }
