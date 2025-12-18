@@ -47,35 +47,60 @@ interface GraphLink {
 }
 
 const samplePeople: Person[] = [
-  { id: 1, name: "Sarah Chen", title: "Board Chair", orgs: ["Columbus Foundation", "United Way", "OSU Foundation"] },
-  { id: 2, name: "Michael Rodriguez", title: "CEO", orgs: ["Columbus Foundation", "Tech Hub Ohio"] },
-  { id: 3, name: "Jennifer Williams", title: "Philanthropist", orgs: ["United Way", "Children's Hospital", "Arts Council"] },
-  { id: 4, name: "David Kim", title: "Managing Partner", orgs: ["OSU Foundation", "Tech Hub Ohio", "Columbus Foundation"] },
-  { id: 5, name: "Elizabeth Carter", title: "VP Finance", orgs: ["Children's Hospital", "United Way"] },
-  { id: 6, name: "Robert Thompson", title: "Founder", orgs: ["Arts Council", "Columbus Foundation"] },
-  { id: 7, name: "Amanda Foster", title: "Director", orgs: ["Tech Hub Ohio", "Arts Council"] },
-  { id: 8, name: "James Mitchell", title: "Partner", orgs: ["OSU Foundation", "Children's Hospital"] },
-  { id: 9, name: "Lisa Brown", title: "VP Development", orgs: ["Columbus Foundation", "Children's Hospital"] },
-  { id: 10, name: "Marcus Williams", title: "Board Member", orgs: ["United Way", "Tech Hub Ohio"] },
-  { id: 11, name: "Sophie Martinez", title: "Executive Director", orgs: ["Arts Council", "OSU Foundation"] },
+  { id: 1, name: "Sarah Chen", title: "Board Chair", orgs: ["Columbus Foundation", "United Way", "OSU Foundation", "Community Trust"] },
+  { id: 2, name: "Michael Rodriguez", title: "CEO", orgs: ["Columbus Foundation", "Tech Hub Ohio", "Innovation Center"] },
+  { id: 3, name: "Jennifer Williams", title: "Philanthropist", orgs: ["United Way", "Children's Hospital", "Arts Council", "Youth Alliance"] },
+  { id: 4, name: "David Kim", title: "Managing Partner", orgs: ["OSU Foundation", "Tech Hub Ohio", "Columbus Foundation", "Innovation Center"] },
+  { id: 5, name: "Elizabeth Carter", title: "VP Finance", orgs: ["Children's Hospital", "United Way", "Senior Services"] },
+  { id: 6, name: "Robert Thompson", title: "Founder", orgs: ["Arts Council", "Columbus Foundation", "Cultural Trust"] },
+  { id: 7, name: "Amanda Foster", title: "Director", orgs: ["Tech Hub Ohio", "Arts Council", "Youth Alliance"] },
+  { id: 8, name: "James Mitchell", title: "Partner", orgs: ["OSU Foundation", "Children's Hospital", "Community Trust"] },
+  { id: 9, name: "Lisa Brown", title: "VP Development", orgs: ["Columbus Foundation", "Children's Hospital", "Senior Services"] },
+  { id: 10, name: "Marcus Williams", title: "Board Member", orgs: ["United Way", "Tech Hub Ohio", "Innovation Center"] },
+  { id: 11, name: "Sophie Martinez", title: "Executive Director", orgs: ["Arts Council", "OSU Foundation", "Cultural Trust"] },
   { id: 12, name: "Timothy Jones", title: "CFO", orgs: ["Children's Hospital", "Columbus Foundation"] },
-  { id: 13, name: "Catherine Lee", title: "Trustee", orgs: ["United Way", "Arts Council", "OSU Foundation"] },
-  { id: 14, name: "Dr. Michael Chen", title: "Board Chair", orgs: ["Children's Hospital", "Tech Hub Ohio"] },
-  { id: 15, name: "Ashley Davis", title: "Director", orgs: ["Columbus Foundation", "United Way"] },
-  { id: 16, name: "Benjamin Clark", title: "Partner", orgs: ["OSU Foundation", "Tech Hub Ohio", "Arts Council"] },
+  { id: 13, name: "Catherine Lee", title: "Trustee", orgs: ["United Way", "Arts Council", "OSU Foundation", "Community Trust"] },
+  { id: 14, name: "Dr. Michael Chen", title: "Board Chair", orgs: ["Children's Hospital", "Tech Hub Ohio", "Senior Services"] },
+  { id: 15, name: "Ashley Davis", title: "Director", orgs: ["Columbus Foundation", "United Way", "Youth Alliance"] },
+  { id: 16, name: "Benjamin Clark", title: "Partner", orgs: ["OSU Foundation", "Tech Hub Ohio", "Arts Council", "Innovation Center"] },
   { id: 17, name: "Sandra Martinez", title: "VP Programs", orgs: ["United Way", "Children's Hospital"] },
-  { id: 18, name: "Christopher Davis", title: "Treasurer", orgs: ["Columbus Foundation", "OSU Foundation"] },
-  { id: 19, name: "Emily Anderson", title: "Secretary", orgs: ["Arts Council", "Tech Hub Ohio"] },
-  { id: 20, name: "Steven White", title: "Board Member", orgs: ["Children's Hospital", "Columbus Foundation", "United Way"] },
+  { id: 18, name: "Christopher Davis", title: "Treasurer", orgs: ["Columbus Foundation", "OSU Foundation", "Community Trust"] },
+  { id: 19, name: "Emily Anderson", title: "Secretary", orgs: ["Arts Council", "Tech Hub Ohio", "Cultural Trust"] },
+  { id: 20, name: "Steven White", title: "Board Member", orgs: ["Children's Hospital", "Columbus Foundation", "United Way", "Senior Services"] },
+  { id: 21, name: "Rachel Green", title: "VP Marketing", orgs: ["Tech Hub Ohio", "Innovation Center", "Youth Alliance"] },
+  { id: 22, name: "Daniel Park", title: "Director", orgs: ["Columbus Foundation", "Arts Council", "Cultural Trust"] },
+  { id: 23, name: "Monica Patel", title: "CEO", orgs: ["United Way", "Community Trust", "Senior Services"] },
+  { id: 24, name: "Kevin O'Brien", title: "Board Member", orgs: ["OSU Foundation", "Children's Hospital", "Youth Alliance"] },
+  { id: 25, name: "Laura Nguyen", title: "VP Operations", orgs: ["Tech Hub Ohio", "Columbus Foundation", "Innovation Center"] },
+  { id: 26, name: "Thomas Wright", title: "Trustee", orgs: ["Arts Council", "United Way", "Cultural Trust"] },
+  { id: 27, name: "Jessica Taylor", title: "Director", orgs: ["Children's Hospital", "Senior Services", "Community Trust"] },
+  { id: 28, name: "Andrew Miller", title: "Partner", orgs: ["OSU Foundation", "Tech Hub Ohio", "Innovation Center"] },
+  { id: 29, name: "Samantha Brown", title: "Executive", orgs: ["Columbus Foundation", "Youth Alliance", "United Way"] },
+  { id: 30, name: "Richard Lee", title: "CFO", orgs: ["Arts Council", "Cultural Trust", "OSU Foundation"] },
+  { id: 31, name: "Michelle Garcia", title: "Director", orgs: ["Children's Hospital", "Community Trust", "Senior Services"] },
+  { id: 32, name: "William Johnson", title: "Board Chair", orgs: ["United Way", "Youth Alliance", "Columbus Foundation"] },
+  { id: 33, name: "Patricia Adams", title: "VP Development", orgs: ["Tech Hub Ohio", "Innovation Center"] },
+  { id: 34, name: "Joseph Wilson", title: "Trustee", orgs: ["OSU Foundation", "Arts Council", "Cultural Trust"] },
+  { id: 35, name: "Nancy Thompson", title: "Director", orgs: ["Senior Services", "Children's Hospital", "United Way"] },
+  { id: 36, name: "Charles Martin", title: "Partner", orgs: ["Columbus Foundation", "Community Trust", "Tech Hub Ohio"] },
+  { id: 37, name: "Karen Robinson", title: "VP Programs", orgs: ["Youth Alliance", "Arts Council", "Innovation Center"] },
+  { id: 38, name: "George Harris", title: "Board Member", orgs: ["OSU Foundation", "Cultural Trust", "United Way"] },
+  { id: 39, name: "Betty Jackson", title: "Executive", orgs: ["Children's Hospital", "Senior Services", "Columbus Foundation"] },
+  { id: 40, name: "Edward Lewis", title: "Director", orgs: ["Tech Hub Ohio", "Community Trust", "Youth Alliance"] },
 ];
 
 const sampleOrgs: Organization[] = [
-  { id: 1, name: "Columbus Foundation", sector: "Community", members: ["Sarah Chen", "Michael Rodriguez", "David Kim", "Robert Thompson", "Lisa Brown", "Timothy Jones", "Ashley Davis", "Christopher Davis", "Steven White"], color: "#7FA3A1" },
-  { id: 2, name: "United Way", sector: "Social Services", members: ["Sarah Chen", "Jennifer Williams", "Elizabeth Carter", "Marcus Williams", "Catherine Lee", "Ashley Davis", "Sandra Martinez", "Steven White"], color: "#9CB071" },
-  { id: 3, name: "OSU Foundation", sector: "Education", members: ["Sarah Chen", "David Kim", "James Mitchell", "Sophie Martinez", "Catherine Lee", "Benjamin Clark", "Christopher Davis"], color: "#E8923A" },
-  { id: 4, name: "Tech Hub Ohio", sector: "Economic Dev", members: ["Michael Rodriguez", "David Kim", "Amanda Foster", "Marcus Williams", "Dr. Michael Chen", "Benjamin Clark", "Emily Anderson"], color: "#6FBBD3" },
-  { id: 5, name: "Children's Hospital", sector: "Healthcare", members: ["Jennifer Williams", "Elizabeth Carter", "James Mitchell", "Lisa Brown", "Timothy Jones", "Dr. Michael Chen", "Sandra Martinez", "Steven White"], color: "#D5636C" },
-  { id: 6, name: "Arts Council", sector: "Arts & Culture", members: ["Jennifer Williams", "Robert Thompson", "Amanda Foster", "Sophie Martinez", "Catherine Lee", "Benjamin Clark", "Emily Anderson"], color: "#B5C942" },
+  { id: 1, name: "Columbus Foundation", sector: "Community", members: ["Sarah Chen", "Michael Rodriguez", "David Kim", "Robert Thompson", "Lisa Brown", "Timothy Jones", "Ashley Davis", "Christopher Davis", "Steven White", "Daniel Park", "Laura Nguyen", "Samantha Brown", "William Johnson", "Charles Martin", "Betty Jackson"], color: "#7FA3A1" },
+  { id: 2, name: "United Way", sector: "Social Services", members: ["Sarah Chen", "Jennifer Williams", "Elizabeth Carter", "Marcus Williams", "Catherine Lee", "Ashley Davis", "Sandra Martinez", "Steven White", "Monica Patel", "Thomas Wright", "Samantha Brown", "William Johnson", "Nancy Thompson", "George Harris"], color: "#9CB071" },
+  { id: 3, name: "OSU Foundation", sector: "Education", members: ["Sarah Chen", "David Kim", "James Mitchell", "Sophie Martinez", "Catherine Lee", "Benjamin Clark", "Christopher Davis", "Kevin O'Brien", "Andrew Miller", "Richard Lee", "Joseph Wilson", "George Harris"], color: "#E8923A" },
+  { id: 4, name: "Tech Hub Ohio", sector: "Economic Dev", members: ["Michael Rodriguez", "David Kim", "Amanda Foster", "Marcus Williams", "Dr. Michael Chen", "Benjamin Clark", "Emily Anderson", "Rachel Green", "Laura Nguyen", "Andrew Miller", "Patricia Adams", "Charles Martin", "Edward Lewis"], color: "#6FBBD3" },
+  { id: 5, name: "Children's Hospital", sector: "Healthcare", members: ["Jennifer Williams", "Elizabeth Carter", "James Mitchell", "Lisa Brown", "Timothy Jones", "Dr. Michael Chen", "Sandra Martinez", "Steven White", "Kevin O'Brien", "Jessica Taylor", "Michelle Garcia", "Nancy Thompson", "Betty Jackson"], color: "#D5636C" },
+  { id: 6, name: "Arts Council", sector: "Arts & Culture", members: ["Jennifer Williams", "Robert Thompson", "Amanda Foster", "Sophie Martinez", "Catherine Lee", "Benjamin Clark", "Emily Anderson", "Daniel Park", "Thomas Wright", "Richard Lee", "Joseph Wilson", "Karen Robinson"], color: "#B5C942" },
+  { id: 7, name: "Innovation Center", sector: "Technology", members: ["Michael Rodriguez", "David Kim", "Marcus Williams", "Benjamin Clark", "Rachel Green", "Laura Nguyen", "Andrew Miller", "Patricia Adams", "Karen Robinson"], color: "#9B59B6" },
+  { id: 8, name: "Community Trust", sector: "Philanthropy", members: ["Sarah Chen", "James Mitchell", "Catherine Lee", "Christopher Davis", "Monica Patel", "Jessica Taylor", "Michelle Garcia", "Charles Martin", "Edward Lewis"], color: "#3498DB" },
+  { id: 9, name: "Senior Services", sector: "Elder Care", members: ["Elizabeth Carter", "Lisa Brown", "Dr. Michael Chen", "Steven White", "Monica Patel", "Jessica Taylor", "Michelle Garcia", "Nancy Thompson", "Betty Jackson"], color: "#E67E22" },
+  { id: 10, name: "Youth Alliance", sector: "Youth Development", members: ["Jennifer Williams", "Amanda Foster", "Ashley Davis", "Kevin O'Brien", "Rachel Green", "Samantha Brown", "William Johnson", "Karen Robinson", "Edward Lewis"], color: "#1ABC9C" },
+  { id: 11, name: "Cultural Trust", sector: "Heritage", members: ["Robert Thompson", "Sophie Martinez", "Emily Anderson", "Daniel Park", "Thomas Wright", "Richard Lee", "Joseph Wilson"], color: "#F39C12" },
 ];
 
 export default function ForceNetworkGraph() {
@@ -223,7 +248,7 @@ export default function ForceNetworkGraph() {
   const orgPolygonPositions = useMemo(() => {
     const orgNodes = graphData.nodes.filter(n => n.type === 'org');
     const numOrgs = orgNodes.length;
-    const radius = 300; // Distance from center - larger to fit bigger org nodes
+    const radius = 380; // Distance from center - larger to fit more org nodes
     const positions: Record<string, { x: number; y: number }> = {};
     
     orgNodes.forEach((org, index) => {
