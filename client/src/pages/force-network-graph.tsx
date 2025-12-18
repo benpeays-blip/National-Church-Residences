@@ -319,8 +319,8 @@ export default function ForceNetworkGraph() {
           </div>
         </CardHeader>
         <CardContent className="p-0">
-          <div className="grid grid-cols-1 lg:grid-cols-4">
-            <div className="lg:col-span-3 relative bg-white" style={{ height: 600 }}>
+          <div className="grid grid-cols-1 lg:grid-cols-5">
+            <div className="lg:col-span-4 relative bg-white" style={{ height: 550 }}>
               <ForceGraph2D
                 ref={fgRef}
                 graphData={graphData}
@@ -450,7 +450,7 @@ export default function ForceNetworkGraph() {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
         <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }}>
           <CardContent className="pt-6">
             <div className="text-center">
