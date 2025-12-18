@@ -212,9 +212,11 @@ export default function NetworkVisualizationExamples() {
             <div className="lg:col-span-3">
               <div 
                 ref={containerRef}
-                className="relative h-[650px] rounded-lg overflow-hidden p-6"
+                className="relative rounded-lg overflow-hidden p-6"
                 style={{ 
-                  background: "linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)"
+                  background: "linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)",
+                  height: "calc(100vh - 280px)",
+                  minHeight: "500px"
                 }}
               >
                 <div className="flex justify-between h-full">
