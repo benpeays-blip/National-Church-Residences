@@ -38,45 +38,32 @@ function ProductCard({ product }: { product: TechProduct }) {
       data-testid={`card-product-${product.id}`}
       onClick={() => navigate(`/temporary/tech-stack/${product.id}`)}
     >
-      <div className="p-4 border-b">
-        <div className="flex items-center gap-3 mb-2">
+      <div className="p-3">
+        <div className="flex items-start gap-2 mb-1.5">
           <div 
-            className="w-8 h-8 rounded-md flex items-center justify-center shrink-0"
+            className="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
             style={{ backgroundColor: `${product.brandColor}15` }}
           >
-            <Database className="h-4 w-4" style={{ color: product.brandColor }} />
+            <Database className="h-3.5 w-3.5" style={{ color: product.brandColor }} />
           </div>
           <div className="flex-1 min-w-0">
             <h3 
-              className="font-bold text-sm truncate"
+              className="font-bold text-xs leading-tight truncate"
               style={{ color: product.brandColor }}
               data-testid={`text-product-name-${product.id}`}
             >
               {product.name}
             </h3>
-          </div>
-          <Badge 
-            variant="outline" 
-            className="text-xs shrink-0"
-            style={{ borderColor: getAccentColor(accent), color: getAccentColor(accent) }}
-          >
-            {product.category}
-          </Badge>
-        </div>
-        <p className="text-xs text-muted-foreground">{product.tagline}</p>
-      </div>
-      <div className="p-4 flex-1 flex flex-col">
-        <p className="text-xs text-muted-foreground mb-3 line-clamp-2">{product.description}</p>
-        <div className="mt-auto space-y-2">
-          <div className="flex items-start gap-2">
-            <Check className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("lime") }} />
-            <p className="text-xs text-muted-foreground line-clamp-1">{product.strengths[0]}</p>
-          </div>
-          <div className="flex items-start gap-2">
-            <X className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("coral") }} />
-            <p className="text-xs text-muted-foreground line-clamp-1">{product.weaknesses[0]}</p>
+            <Badge 
+              variant="outline" 
+              className="text-[10px] px-1.5 py-0 h-4 mt-0.5"
+              style={{ borderColor: getAccentColor(accent), color: getAccentColor(accent) }}
+            >
+              {product.category}
+            </Badge>
           </div>
         </div>
+        <p className="text-[11px] text-muted-foreground line-clamp-2 leading-tight">{product.description}</p>
       </div>
     </AccentCard>
   );
@@ -1529,20 +1516,20 @@ function OnSiteInterviews() {
 
 function TechStack() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <AccentCard accent="teal">
-        <CardHeader>
+        <CardHeader className="py-3 px-4">
           <div className="flex items-center gap-2">
-            <Layers className="h-5 w-5" style={{ color: getAccentColor("teal") }} />
-            <CardTitle>NCR Technology Stack</CardTitle>
+            <Layers className="h-4 w-4" style={{ color: getAccentColor("teal") }} />
+            <CardTitle className="text-base">NCR Technology Stack</CardTitle>
           </div>
-          <CardDescription>
-            Overview of software products used across National Church Residences fundraising and operations. Click any card to view full details.
+          <CardDescription className="text-xs">
+            Overview of software products used across NCR fundraising and operations. Click any card for details.
           </CardDescription>
         </CardHeader>
       </AccentCard>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
         {techProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
