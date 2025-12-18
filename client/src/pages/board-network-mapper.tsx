@@ -23,8 +23,8 @@ export default function BoardNetworkMapper() {
   const { view, setView, setFilters, importRows, compute } = useBoardMap();
   const [query, setQuery] = useState("");
   const [roleFilter, setRoleFilter] = useState("");
-  const [yearMin, setYearMin] = useState("");
-  const [yearMax, setYearMax] = useState("");
+  const [yearMin, setYearMin] = useState("2020");
+  const [yearMax, setYearMax] = useState("2025");
 
   // Fetch board memberships from backend
   const { data: memberships, isLoading } = useQuery<BoardMembership[]>({
