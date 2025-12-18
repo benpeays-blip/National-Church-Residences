@@ -638,14 +638,70 @@ export default function AIVoiceNotes() {
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
-                  <FileText className="w-8 h-8 text-muted-foreground" />
+              <div className="space-y-6">
+                <div className="flex flex-col items-center justify-center py-6 text-center">
+                  <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
+                    <FileText className="w-8 h-8 text-muted-foreground" />
+                  </div>
+                  <h3 className="font-semibold mb-2">Ready to Record</h3>
+                  <p className="text-sm text-muted-foreground max-w-xs">
+                    Record or upload audio to get AI-powered transcription and insights
+                  </p>
                 </div>
-                <h3 className="font-semibold mb-2">No Results Yet</h3>
-                <p className="text-sm text-muted-foreground max-w-xs">
-                  Record or upload audio to get AI-powered transcription and insights
-                </p>
+
+                <div className="border-t pt-6">
+                  <h4 className="font-semibold mb-4 flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-[#E8A54B]" />
+                    Tips for Better Results
+                  </h4>
+                  <div className="space-y-3">
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-[#4FA6A6]/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <User className="w-3 h-3 text-[#4FA6A6]" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium">Mention the person's name</p>
+                        <p className="text-xs text-muted-foreground">"I just met with Margaret Chen..."</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-[#92A05A]/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <Target className="w-3 h-3 text-[#92A05A]" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium">State the meeting purpose</p>
+                        <p className="text-xs text-muted-foreground">"We discussed the capital campaign..."</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-[#7BC4DC]/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <MessageSquare className="w-3 h-3 text-[#7BC4DC]" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium">Share key discussion points</p>
+                        <p className="text-xs text-muted-foreground">"They expressed interest in scholarship funding..."</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-[#E8A54B]/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <ListChecks className="w-3 h-3 text-[#E8A54B]" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium">Note follow-up actions</p>
+                        <p className="text-xs text-muted-foreground">"I need to send them the brochure by Friday..."</p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <div className="w-6 h-6 rounded-full bg-[#E86B5A]/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <Calendar className="w-3 h-3 text-[#E86B5A]" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium">Include dates and amounts</p>
+                        <p className="text-xs text-muted-foreground">"They mentioned a potential $50,000 gift in Q1..."</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </CardContent>
