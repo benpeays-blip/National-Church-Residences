@@ -226,12 +226,10 @@ export default function Login() {
         {step === "select-role" && (
           <div className="space-y-4">
             <div className="text-center space-y-2">
-              <div className="flex items-center justify-center mb-4">
+              <div className="flex flex-col items-center justify-center mb-4">
                 <img src={ncrLogo} alt="NCR Logo" className="h-12 w-auto" />
+                <span className="text-xl font-medium text-foreground mt-2" data-testid="text-login-title">National Church Residences</span>
               </div>
-              <h1 className="text-3xl font-bold text-foreground" data-testid="text-login-title">
-                Welcome to FundRazor
-              </h1>
               <p className="text-muted-foreground">
                 Select your role to continue
               </p>
