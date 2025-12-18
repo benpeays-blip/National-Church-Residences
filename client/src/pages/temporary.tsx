@@ -2304,10 +2304,10 @@ function RiskCompliance() {
                   <p className="text-sm text-muted-foreground">{category.regulations.length} regulations</p>
                 </div>
               </div>
-              <div className="space-y-3">
-                {category.regulations.map((reg, idx) => (
-                  <AccentCard key={idx} accent={category.accent} className="p-4 min-h-[88px]">
-                    <div className="flex items-start gap-3">
+              <AccentCard accent={category.accent} className="p-4">
+                <div className="space-y-4">
+                  {category.regulations.map((reg, idx) => (
+                    <div key={idx} className="flex items-start gap-3">
                       <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: `${accentColor}15` }}>
                         <AlertTriangle className="w-4 h-4" style={{ color: accentColor }} />
                       </div>
@@ -2316,9 +2316,9 @@ function RiskCompliance() {
                         <p className="text-sm text-muted-foreground mt-1">{reg.description}</p>
                       </div>
                     </div>
-                  </AccentCard>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </AccentCard>
             </div>
           );
         })}
