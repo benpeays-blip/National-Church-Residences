@@ -17,7 +17,7 @@ import {
   Search
 } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import type { Gift } from "@shared/schema";
+import type { Gift, Person } from "@shared/schema";
 import {
   Table,
   TableBody,
@@ -62,6 +62,22 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
   const { data: gifts, isLoading } = useQuery<Gift[]>({
     queryKey: ["/api/gifts"],
   });
+
+  const { data: persons } = useQuery<Person[]>({
+    queryKey: ["/api/persons"],
+  });
+
+  const personLookup = useMemo(() => {
+    const map = new Map<string, string>();
+    persons?.forEach((person) => {
+      map.set(person.id, `${person.firstName} ${person.lastName}`);
+    });
+    return map;
+  }, [persons]);
+
+  const getDonorName = (personId: string) => {
+    return personLookup.get(personId) || `Donor #${personId.slice(0, 8)}`;
+  };
 
   // Filter gifts based on type, amount, and search query
   const filteredGifts = useMemo(() => {
@@ -400,7 +416,7 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
                   {filteredGifts.map((gift) => (
                     <TableRow key={gift.id} className="hover-elevate">
                       <TableCell className="text-sm">{formatDate(gift.receivedAt)}</TableCell>
-                      <TableCell className="text-sm font-medium">Donor #{gift.personId.slice(0, 8)}</TableCell>
+                      <TableCell className="text-sm font-medium">{getDonorName(gift.personId)}</TableCell>
                       <TableCell className="text-sm font-semibold">{formatCurrency(gift.amount)}</TableCell>
                       <TableCell className="text-sm">{gift.designation || "General Fund"}</TableCell>
                       <TableCell className="text-sm text-muted-foreground">{gift.paymentMethod || "N/A"}</TableCell>
@@ -598,7 +614,7 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
                     return (
                       <TableRow key={gift.id} className="hover-elevate" data-testid={`row-recurring-gift-${gift.id}`}>
                         <TableCell className="text-sm">{formatDate(gift.receivedAt)}</TableCell>
-                        <TableCell className="text-sm font-medium">Donor #{gift.personId.slice(0, 8)}</TableCell>
+                        <TableCell className="text-sm font-medium">{getDonorName(gift.personId)}</TableCell>
                         <TableCell className="text-sm font-semibold">{formatCurrency(gift.amount)}</TableCell>
                         <TableCell className="text-sm capitalize">{cadence.replace('_', ' ')}</TableCell>
                         <TableCell className="text-sm">{gift.paymentMethod || "Credit Card"}</TableCell>
@@ -796,7 +812,7 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
                     return (
                       <TableRow key={gift.id} className="hover-elevate" data-testid={`row-planned-gift-${gift.id}`}>
                         <TableCell className="text-sm">{formatDate(gift.receivedAt)}</TableCell>
-                        <TableCell className="text-sm font-medium">Donor #{gift.personId.slice(0, 8)}</TableCell>
+                        <TableCell className="text-sm font-medium">{getDonorName(gift.personId)}</TableCell>
                         <TableCell className="text-sm font-semibold">{formatCurrency(gift.amount)}</TableCell>
                         <TableCell className="text-sm">{vehicle}</TableCell>
                         <TableCell>
