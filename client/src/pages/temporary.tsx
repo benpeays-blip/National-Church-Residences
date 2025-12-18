@@ -1956,7 +1956,7 @@ function OptimizationIdeas() {
                   </div>
                   <h3 className="font-semibold text-base">{agent.name}</h3>
                 </div>
-                <p className="text-sm text-muted-foreground">{agent.description}</p>
+                <p className="text-base text-muted-foreground">{agent.description}</p>
               </AccentCard>
             );
           })}
