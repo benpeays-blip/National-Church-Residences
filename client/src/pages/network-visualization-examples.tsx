@@ -127,6 +127,44 @@ export default function NetworkVisualizationExamples() {
     setScrollTrigger(prev => prev + 1);
   };
 
+  // Scroll connected elements into view when hovering
+  const scrollToConnections = (name: string) => {
+    setSankeyHovered(name);
+    
+    // Check if it's a person
+    const person = samplePeople.find(p => p.name === name);
+    if (person) {
+      // Scroll connected orgs into view
+      person.orgs.forEach((orgName, idx) => {
+        const org = sampleOrgs.find(o => o.name === orgName);
+        if (org) {
+          const orgEl = orgRefs.current[org.id];
+          if (orgEl && orgsScrollRef.current) {
+            setTimeout(() => {
+              orgEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, idx * 50);
+          }
+        }
+      });
+      return;
+    }
+    
+    // Check if it's an org
+    const org = sampleOrgs.find(o => o.name === name);
+    if (org) {
+      // Scroll connected people into view
+      const connectedPeople = samplePeople.filter(p => p.orgs.includes(name));
+      connectedPeople.forEach((person, idx) => {
+        const personEl = peopleRefs.current[person.id];
+        if (personEl && peopleScrollRef.current) {
+          setTimeout(() => {
+            personEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, idx * 50);
+        }
+      });
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="space-y-1">
@@ -172,7 +210,7 @@ export default function NetworkVisualizationExamples() {
                             key={person.id}
                             ref={el => { peopleRefs.current[person.id] = el; }}
                             className="relative text-left transition-all duration-300 w-full"
-                            onMouseEnter={() => setSankeyHovered(person.name)}
+                            onMouseEnter={() => scrollToConnections(person.name)}
                             onMouseLeave={() => setSankeyHovered(null)}
                             data-testid={`sankey-person-${person.id}`}
                           >
@@ -270,7 +308,7 @@ export default function NetworkVisualizationExamples() {
                             key={org.id}
                             ref={el => { orgRefs.current[org.id] = el; }}
                             className="relative text-right transition-all duration-300 w-full"
-                            onMouseEnter={() => setSankeyHovered(org.name)}
+                            onMouseEnter={() => scrollToConnections(org.name)}
                             onMouseLeave={() => setSankeyHovered(null)}
                             data-testid={`sankey-org-${org.id}`}
                           >
