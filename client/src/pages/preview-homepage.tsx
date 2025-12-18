@@ -191,14 +191,18 @@ export default function PreviewHomepage() {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm" className="gap-2" data-testid="button-quick-add">
-                <Phone className="w-4 h-4" />
-                Log Interaction
-              </Button>
-              <Button size="sm" className="gap-2" data-testid="button-view-pipeline">
-                <Eye className="w-4 h-4" />
-                View Pipeline
-              </Button>
+              <Link href="/meeting-notes">
+                <Button variant="outline" size="sm" className="gap-2" data-testid="button-quick-add">
+                  <Phone className="w-4 h-4" />
+                  Log Interaction
+                </Button>
+              </Link>
+              <Link href="/pipeline">
+                <Button size="sm" className="gap-2" data-testid="button-view-pipeline">
+                  <Eye className="w-4 h-4" />
+                  View Pipeline
+                </Button>
+              </Link>
             </div>
           </div>
 
