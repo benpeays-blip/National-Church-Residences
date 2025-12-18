@@ -108,7 +108,14 @@ export default function PeerToPeer() {
     goal: "",
     endDate: ""
   });
+  const [selectedCampaign, setSelectedCampaign] = useState<typeof initialCampaigns[0] | null>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const { toast } = useToast();
+
+  const handleViewDetails = (campaign: typeof initialCampaigns[0]) => {
+    setSelectedCampaign(campaign);
+    setIsDetailsOpen(true);
+  };
 
   const handleNewCampaign = () => {
     setIsDialogOpen(true);
@@ -244,6 +251,7 @@ export default function PeerToPeer() {
                   key={campaign.id}
                   className="p-4 rounded-lg bg-card border border-border shadow-sm hover-elevate cursor-pointer"
                   style={{ borderLeftWidth: '4px', borderLeftColor: getAccentColor("teal") }}
+                  onClick={() => handleViewDetails(campaign)}
                   data-testid={`campaign-${campaign.id}`}
                 >
                   <div className="flex items-start justify-between mb-3">
@@ -275,7 +283,7 @@ export default function PeerToPeer() {
                       <Trophy className="h-4 w-4" style={{ color: getAccentColor("orange") }} />
                       <span>Top: {campaign.topFundraiser} (${campaign.topAmount.toLocaleString()})</span>
                     </div>
-                    <Button variant="ghost" size="sm">
+                    <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); handleViewDetails(campaign); }}>
                       View Details
                       <ArrowRight className="h-3 w-3 ml-1" />
                     </Button>
@@ -428,6 +436,92 @@ export default function PeerToPeer() {
               Create Campaign
             </Button>
           </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={isDetailsOpen} onOpenChange={setIsDetailsOpen}>
+        <DialogContent className="sm:max-w-[500px]">
+          {selectedCampaign && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="flex items-center gap-2">
+                  {selectedCampaign.name}
+                </DialogTitle>
+                <DialogDescription>
+                  Campaign details and performance metrics
+                </DialogDescription>
+              </DialogHeader>
+              <div className="space-y-4 py-4">
+                <div className="flex items-center justify-between">
+                  <Badge variant="outline" className="text-sm">{selectedCampaign.type}</Badge>
+                  <span className="text-sm text-muted-foreground">Ends {selectedCampaign.endDate}</span>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="font-semibold" style={{ color: getAccentColor("teal") }}>
+                      ${selectedCampaign.raised.toLocaleString()} raised
+                    </span>
+                    <span className="text-muted-foreground">
+                      of ${selectedCampaign.goal.toLocaleString()} goal
+                    </span>
+                  </div>
+                  <Progress value={(selectedCampaign.raised / selectedCampaign.goal) * 100} className="h-3" />
+                  <p className="text-xs text-muted-foreground text-center">
+                    {Math.round((selectedCampaign.raised / selectedCampaign.goal) * 100)}% of goal reached
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="p-3 rounded-lg border bg-muted/30">
+                    <div className="flex items-center gap-2 mb-1">
+                      <Users className="h-4 w-4" style={{ color: getAccentColor("sky") }} />
+                      <span className="text-sm font-medium">Fundraisers</span>
+                    </div>
+                    <p className="text-2xl font-bold">{selectedCampaign.fundraisers}</p>
+                  </div>
+                  <div className="p-3 rounded-lg border bg-muted/30">
+                    <div className="flex items-center gap-2 mb-1">
+                      <DollarSign className="h-4 w-4" style={{ color: getAccentColor("lime") }} />
+                      <span className="text-sm font-medium">Avg per Fundraiser</span>
+                    </div>
+                    <p className="text-2xl font-bold">
+                      ${selectedCampaign.fundraisers > 0 ? Math.round(selectedCampaign.raised / selectedCampaign.fundraisers).toLocaleString() : 0}
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-lg border" style={{ borderColor: `${getAccentColor("orange")}40`, backgroundColor: `${getAccentColor("orange")}10` }}>
+                  <div className="flex items-center gap-2 mb-1">
+                    <Trophy className="h-4 w-4" style={{ color: getAccentColor("orange") }} />
+                    <span className="text-sm font-medium">Top Fundraiser</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="font-semibold">{selectedCampaign.topFundraiser}</span>
+                    <span className="text-lg font-bold" style={{ color: getAccentColor("orange") }}>
+                      ${selectedCampaign.topAmount.toLocaleString()}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-lg border bg-muted/30">
+                  <p className="text-sm font-medium mb-2">Remaining to Goal</p>
+                  <p className="text-xl font-bold" style={{ color: getAccentColor("teal") }}>
+                    ${(selectedCampaign.goal - selectedCampaign.raised).toLocaleString()}
+                  </p>
+                </div>
+              </div>
+              <DialogFooter>
+                <Button variant="outline" onClick={() => setIsDetailsOpen(false)}>
+                  Close
+                </Button>
+                <Button>
+                  <ExternalLink className="h-4 w-4 mr-2" />
+                  Share Campaign
+                </Button>
+              </DialogFooter>
+            </>
+          )}
         </DialogContent>
       </Dialog>
     </div>
