@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Search, 
   Building2, 
@@ -346,6 +347,7 @@ const supplierRisks: SupplierRisk[] = [
 ];
 
 export default function DnBIntelligence() {
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCompany, setSelectedCompany] = useState<CompanyProfile | null>(null);
   const [riskFilter, setRiskFilter] = useState<"all" | "low" | "medium" | "high">("all");
@@ -652,7 +654,19 @@ export default function DnBIntelligence() {
                     </div>
 
                     <div className="flex gap-2 pt-2">
-                      <Button style={{ backgroundColor: "#084594" }} className="gap-2" data-testid="button-add-to-prospects">
+                      <Button 
+                        style={{ backgroundColor: "#084594" }} 
+                        className="gap-2" 
+                        data-testid="button-add-to-prospects"
+                        onClick={() => {
+                          if (selectedCompany) {
+                            toast({
+                              title: "Added to Prospects",
+                              description: `${selectedCompany.name} has been added to your corporate prospects list.`,
+                            });
+                          }
+                        }}
+                      >
                         <Target className="h-4 w-4" />
                         Add to Prospects
                       </Button>
