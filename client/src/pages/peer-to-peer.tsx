@@ -18,6 +18,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
+import { useToast } from "@/hooks/use-toast";
 
 const activeCampaigns = [
   { 
@@ -83,6 +84,14 @@ const recentDonations = [
 
 export default function PeerToPeer() {
   const [searchQuery, setSearchQuery] = useState("");
+  const { toast } = useToast();
+
+  const handleNewCampaign = () => {
+    toast({
+      title: "Coming Soon",
+      description: "The campaign creation wizard is under development. You'll be able to create custom P2P campaigns soon.",
+    });
+  };
 
   const totalRaised = activeCampaigns.reduce((sum, c) => sum + c.raised, 0);
   const totalGoal = activeCampaigns.reduce((sum, c) => sum + c.goal, 0);
@@ -169,7 +178,7 @@ export default function PeerToPeer() {
                 </CardTitle>
                 <CardDescription>Peer-to-peer campaigns currently running</CardDescription>
               </div>
-              <Button data-testid="button-new-campaign">
+              <Button onClick={handleNewCampaign} data-testid="button-new-campaign">
                 <Plus className="h-4 w-4 mr-2" />
                 New Campaign
               </Button>
