@@ -23,6 +23,18 @@ const relationshipsTabs: SectionTab[] = [
     path: "/relationships/dnb",
   },
   {
+    label: "Sankey Flow",
+    value: "visualization",
+    icon: Share2,
+    path: "/relationships/visualization",
+  },
+  {
+    label: "Force Graph",
+    value: "force",
+    icon: Zap,
+    path: "/relationships/force",
+  },
+  {
     label: "Board Network Mapper",
     value: "network",
     icon: Network,
@@ -39,18 +51,6 @@ const relationshipsTabs: SectionTab[] = [
     value: "peer",
     icon: UserPlus,
     path: "/relationships/peer",
-  },
-  {
-    label: "Force Graph",
-    value: "force",
-    icon: Zap,
-    path: "/relationships/force",
-  },
-  {
-    label: "Sankey Flow",
-    value: "visualization",
-    icon: Share2,
-    path: "/relationships/visualization",
   },
 ];
 
