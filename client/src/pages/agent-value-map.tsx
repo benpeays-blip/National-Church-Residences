@@ -226,13 +226,13 @@ export default function AgentValueMap() {
   ];
 
   // Governance non-negotiables
-  const governanceItems: Array<{ title: string; description: string; icon: LucideIcon; accent: AccentColor }> = [
-    { title: "Human-in-the-loop for high-stakes decisions", description: "Eligibility approvals, adverse actions, filings submission sign-off", icon: UserCheck, accent: "sky" },
-    { title: "Full audit trails", description: "Every agent action: who, what, when, data touched, output produced", icon: ClipboardCheck, accent: "lime" },
-    { title: "Purview-enforced access controls", description: "HIPAA/PII boundaries; least-privilege role-based access", icon: Lock, accent: "teal" },
-    { title: "Bias monitoring & fairness audits", description: "Required for eligibility decisions and any scoring models", icon: Scale, accent: "orange" },
-    { title: "Model risk management", description: "Versioning, evaluation, drift monitoring, rollback procedures", icon: AlertTriangle, accent: "coral" },
-    { title: "Data retention & redaction rules", description: "Especially for health/resident data and donor privacy", icon: Eye, accent: "olive" },
+  const governanceItems: Array<{ title: string; description: string; icon: LucideIcon; accent: AccentColor; features: string[] }> = [
+    { title: "Human-in-the-loop for high-stakes decisions", description: "Critical decisions require human approval", icon: UserCheck, accent: "sky", features: ["Eligibility approval workflows", "Adverse action reviews", "Filing submission sign-off", "Exception escalation paths"] },
+    { title: "Full audit trails", description: "Complete transparency for every action", icon: ClipboardCheck, accent: "lime", features: ["Who performed the action", "What data was accessed", "When it occurred", "Output & decisions produced"] },
+    { title: "Purview-enforced access controls", description: "Enterprise-grade data protection", icon: Lock, accent: "teal", features: ["HIPAA/PII boundary enforcement", "Least-privilege access", "Role-based permissions", "Data classification labels"] },
+    { title: "Bias monitoring & fairness audits", description: "Ethical AI governance", icon: Scale, accent: "orange", features: ["Eligibility decision monitoring", "Scoring model audits", "Disparate impact analysis", "Regular fairness reviews"] },
+    { title: "Model risk management", description: "AI model lifecycle governance", icon: AlertTriangle, accent: "coral", features: ["Version control & history", "Performance evaluation", "Drift monitoring alerts", "Rollback procedures"] },
+    { title: "Data retention & redaction rules", description: "Privacy-first data management", icon: Eye, accent: "olive", features: ["Health data retention policies", "Resident privacy controls", "Donor data protection", "Automated redaction rules"] },
   ];
 
   // Scorecard metrics
@@ -680,7 +680,7 @@ export default function AgentValueMap() {
                 {governanceItems.map((item) => (
                   <Link key={item.title} href={`/agent-value-map/governance/${item.title.toLowerCase().replace(/\s+/g, '-')}`}>
                     <Card 
-                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group overflow-hidden"
+                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group overflow-hidden h-full"
                       data-testid={`card-governance-${item.title.toLowerCase().replace(/\s+/g, '-')}`}
                     >
                       <div 
@@ -689,12 +689,20 @@ export default function AgentValueMap() {
                       />
                       <CardContent className="p-4">
                         <div className="flex items-start gap-3">
-                          <div className={`p-2 rounded-md ${getAccentBgClass(item.accent)}`}>
-                            <item.icon className="w-4 h-4 text-white" />
+                          <div className={`p-3 rounded-lg ${getAccentBgClass(item.accent)}`}>
+                            <item.icon className="w-5 h-5 text-white" />
                           </div>
                           <div className="flex-1">
-                            <p className="font-semibold group-hover:text-primary transition-colors">{item.title}</p>
-                            <p className="text-sm text-muted-foreground mt-1">{item.description}</p>
+                            <p className="text-lg font-semibold group-hover:text-primary transition-colors">{item.title}</p>
+                            <p className="text-base text-muted-foreground mt-1">{item.description}</p>
+                            <ul className="mt-3 space-y-1">
+                              {item.features.map((feature, idx) => (
+                                <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                                  <CircleDot className="w-3 h-3 flex-shrink-0" style={{ color: NCR_BRAND_COLORS[item.accent] }} />
+                                  <span>{feature}</span>
+                                </li>
+                              ))}
+                            </ul>
                             <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
                               <span>View details</span>
                               <ChevronRight className="h-4 w-4" />
