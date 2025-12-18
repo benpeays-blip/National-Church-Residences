@@ -121,16 +121,19 @@ export default function AgentValueMap() {
     { name: "Security Agent", domain: "Security", description: "Monitors unusual agent activity patterns + data access anomalies; ties to SIEM tooling", icon: Lock, accent: "oliveDark" },
   ];
 
-  // Personas
-  const personas: Array<{ role: string; benefit: string; icon: LucideIcon; accent: AccentColor }> = [
+  // Personas (main grid)
+  const personasMain: Array<{ role: string; benefit: string; icon: LucideIcon; accent: AccentColor }> = [
     { role: "Chief Operations Officer / Ops Leaders", benefit: "Gets 'system of work' visibility, staffing forecasts, operational compliance posture", icon: Settings, accent: "sky" },
     { role: "Chief Risk Officer / Compliance Leadership", benefit: "Audit trails, filing automation, Purview lineage, bias monitoring, exception handling", icon: AlertTriangle, accent: "orange" },
-    { role: "Chief Compliance Officer / Legal", benefit: "Evidence packs, policy enforcement, access governance, filing timeliness and accuracy", icon: Scale, accent: "teal" },
     { role: "Data Operations", benefit: "OneLake pipelines, canonical objects, model monitoring, quality SLAs", icon: Database, accent: "olive" },
     { role: "Finance Leadership", benefit: "Consolidated P&L, entity registry accuracy, close acceleration, anomaly detection", icon: DollarSign, accent: "lime" },
     { role: "Development Leadership", benefit: "Pipeline clarity, dedup outreach, rapid reporting, donor confidence through metrics", icon: TrendingUp, accent: "coral" },
     { role: "Program Leadership", benefit: "Less paperwork, fewer reworks, more time with residents/patients", icon: Heart, accent: "coralDark" },
   ];
+
+  // Featured persona (bottom row)
+  const personaFeatured: { role: string; benefit: string; icon: LucideIcon; accent: AccentColor } = 
+    { role: "Chief Compliance Officer / Legal", benefit: "Evidence packs, policy enforcement, access governance, filing timeliness and accuracy", icon: Scale, accent: "teal" };
 
   // Roadmap phases
   const roadmapPhases: Array<{ phase: string; title: string; timeline: string; goal: string; items: string[]; deliverables: string[]; accent: AccentColor }> = [
@@ -464,9 +467,9 @@ export default function AgentValueMap() {
               </CardTitle>
               <CardDescription>Map diagram personas to NCR roles so adoption is real</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {personas.map((persona) => (
+                {personasMain.map((persona) => (
                   <AccentCard key={persona.role} accent={persona.accent}>
                     <CardContent className="p-4">
                       <div className="flex items-start gap-3">
@@ -482,6 +485,20 @@ export default function AgentValueMap() {
                   </AccentCard>
                 ))}
               </div>
+              {/* Featured persona on its own row */}
+              <AccentCard accent={personaFeatured.accent}>
+                <CardContent className="p-4">
+                  <div className="flex items-start gap-3">
+                    <div className={`p-2 rounded-md ${getAccentBgClass(personaFeatured.accent)}`}>
+                      <personaFeatured.icon className="w-4 h-4 text-white" />
+                    </div>
+                    <div>
+                      <p className="font-semibold">{personaFeatured.role}</p>
+                      <p className="text-sm text-muted-foreground mt-1">{personaFeatured.benefit}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </AccentCard>
             </CardContent>
           </AccentCard>
 
