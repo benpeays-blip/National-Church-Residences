@@ -67,7 +67,7 @@ export default function NcrHomeHealth() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card className="overflow-hidden">
-          <CardHeader className="bg-[#7BC4DC] text-white">
+          <CardHeader style={{ backgroundColor: '#395174' }}>
             <CardTitle className="text-xl text-white">Conditions We Treat</CardTitle>
             <CardDescription className="text-white/80">Our home health team has expertise in managing a wide range of conditions</CardDescription>
           </CardHeader>
@@ -75,7 +75,7 @@ export default function NcrHomeHealth() {
             <div className="grid grid-cols-2 gap-2">
               {conditions.map((condition) => (
                 <div key={condition} className="flex items-center gap-2 text-sm">
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#7BC4DC]" />
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#4FA6A6]" />
                   {condition}
                 </div>
               ))}
@@ -84,7 +84,7 @@ export default function NcrHomeHealth() {
         </Card>
 
         <Card className="overflow-hidden">
-          <CardHeader className="bg-[#7BC4DC] text-white">
+          <CardHeader style={{ backgroundColor: '#395174' }}>
             <CardTitle className="text-xl text-white">Medicare Certified</CardTitle>
           </CardHeader>
           <CardContent className="prose prose-sm max-w-none text-muted-foreground pt-6">
