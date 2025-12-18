@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect, useLayoutEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { GitBranch } from "lucide-react";
 
@@ -41,6 +41,61 @@ const sampleOrgs: Organization[] = [
 
 export default function NetworkVisualizationExamples() {
   const [sankeyHovered, setSankeyHovered] = useState<string | null>(null);
+  const [positions, setPositions] = useState<{
+    people: { [key: number]: number };
+    orgs: { [key: number]: number };
+    svgTop: number;
+    svgHeight: number;
+  }>({ people: {}, orgs: {}, svgTop: 0, svgHeight: 1 });
+  
+  const containerRef = useRef<HTMLDivElement>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const peopleRefs = useRef<{ [key: number]: HTMLButtonElement | null }>({});
+  const orgRefs = useRef<{ [key: number]: HTMLButtonElement | null }>({});
+
+  // Measure positions after render
+  useLayoutEffect(() => {
+    const updatePositions = () => {
+      if (!containerRef.current || !svgRef.current) return;
+      
+      const svgRect = svgRef.current.getBoundingClientRect();
+      const containerRect = containerRef.current.getBoundingClientRect();
+      
+      const newPeople: { [key: number]: number } = {};
+      const newOrgs: { [key: number]: number } = {};
+      
+      // Get Y center of each person label relative to SVG
+      samplePeople.forEach(person => {
+        const el = peopleRefs.current[person.id];
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          const centerY = rect.top + rect.height / 2 - svgRect.top;
+          newPeople[person.id] = centerY;
+        }
+      });
+      
+      // Get Y center of each org label relative to SVG
+      sampleOrgs.forEach(org => {
+        const el = orgRefs.current[org.id];
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          const centerY = rect.top + rect.height / 2 - svgRect.top;
+          newOrgs[org.id] = centerY;
+        }
+      });
+      
+      setPositions({
+        people: newPeople,
+        orgs: newOrgs,
+        svgTop: svgRect.top - containerRect.top,
+        svgHeight: svgRect.height
+      });
+    };
+    
+    updatePositions();
+    window.addEventListener('resize', updatePositions);
+    return () => window.removeEventListener('resize', updatePositions);
+  }, []);
 
   return (
     <div className="space-y-6">
@@ -65,6 +120,7 @@ export default function NetworkVisualizationExamples() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-3">
               <div 
+                ref={containerRef}
                 className="relative h-[650px] rounded-lg overflow-hidden p-6"
                 style={{ 
                   background: "linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)"
@@ -78,6 +134,7 @@ export default function NetworkVisualizationExamples() {
                       return (
                         <button
                           key={person.id}
+                          ref={el => { peopleRefs.current[person.id] = el; }}
                           className="relative text-left transition-all duration-300"
                           onMouseEnter={() => setSankeyHovered(person.name)}
                           onMouseLeave={() => setSankeyHovered(null)}
@@ -100,7 +157,7 @@ export default function NetworkVisualizationExamples() {
                   </div>
 
                   <div className="flex-1 relative">
-                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
+                    <svg ref={svgRef} className="w-full h-full absolute inset-0">
                       <defs>
                         <linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                           <stop offset="0%" stopColor="#4a9fff">
@@ -111,45 +168,46 @@ export default function NetworkVisualizationExamples() {
                           </stop>
                         </linearGradient>
                         <filter id="flowGlow">
-                          <feGaussianBlur stdDeviation="0.5" result="coloredBlur"/>
+                          <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
                           <feMerge>
                             <feMergeNode in="coloredBlur"/>
                             <feMergeNode in="SourceGraphic"/>
                           </feMerge>
                         </filter>
                       </defs>
-                      {samplePeople.map((person, pIdx) => 
+                      {samplePeople.map((person) => 
                         person.orgs.map((orgName) => {
                           const org = sampleOrgs.find(o => o.name === orgName);
                           if (!org) return null;
-                          const oIdx = sampleOrgs.indexOf(org);
                           const isHighlighted = sankeyHovered === person.name || sankeyHovered === org.name;
-                          // Calculate Y positions to match justify-around: equal space around each item
-                          // For justify-around: first item at (1/2n), then spaced by (1/n) of height
-                          const peopleCount = samplePeople.length;
-                          const orgCount = sampleOrgs.length;
-                          // Adjust for the header label taking some space (~8% at top)
-                          const y1 = 10 + ((pIdx + 0.5) / peopleCount) * 85;
-                          const y2 = 10 + ((oIdx + 0.5) / orgCount) * 85;
+                          
+                          // Use measured positions from refs
+                          const y1 = positions.people[person.id] ?? 0;
+                          const y2 = positions.orgs[org.id] ?? 0;
+                          
+                          // Skip rendering if positions not yet measured
+                          if (y1 === 0 && y2 === 0) return null;
+                          
+                          // Get SVG width for bezier control points
+                          const svgWidth = svgRef.current?.clientWidth ?? 400;
+                          
                           return (
                             <g key={`${person.id}-${org.id}`}>
                               <path
-                                d={`M 0 ${y1} C 35 ${y1}, 65 ${y2}, 100 ${y2}`}
+                                d={`M 0 ${y1} C ${svgWidth * 0.35} ${y1}, ${svgWidth * 0.65} ${y2}, ${svgWidth} ${y2}`}
                                 fill="none"
                                 stroke={isHighlighted ? "url(#flowGrad)" : org.color}
-                                strokeWidth={isHighlighted ? 0.8 : 0.4}
+                                strokeWidth={isHighlighted ? 3 : 1.5}
                                 strokeOpacity={isHighlighted ? 1 : 0.35}
                                 filter={isHighlighted ? "url(#flowGlow)" : undefined}
                                 className="transition-all duration-300"
-                                vectorEffect="non-scaling-stroke"
-                                style={{ strokeWidth: isHighlighted ? 3 : 1.5 }}
                               />
                               {isHighlighted && (
-                                <circle r="0.8" fill="#fff">
+                                <circle r="4" fill="#fff">
                                   <animateMotion 
                                     dur="1.5s" 
                                     repeatCount="indefinite"
-                                    path={`M 0 ${y1} C 35 ${y1}, 65 ${y2}, 100 ${y2}`}
+                                    path={`M 0 ${y1} C ${svgWidth * 0.35} ${y1}, ${svgWidth * 0.65} ${y2}, ${svgWidth} ${y2}`}
                                   />
                                 </circle>
                               )}
@@ -167,6 +225,7 @@ export default function NetworkVisualizationExamples() {
                       return (
                         <button
                           key={org.id}
+                          ref={el => { orgRefs.current[org.id] = el; }}
                           className="relative text-right transition-all duration-300"
                           onMouseEnter={() => setSankeyHovered(org.name)}
                           onMouseLeave={() => setSankeyHovered(null)}
