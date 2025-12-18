@@ -58,9 +58,7 @@ export default function Login() {
         title: "Welcome back!",
         description: `Logged in as ${data.user.firstName || data.user.username}`,
       });
-      if (data.user.role === "board_member") {
-        setLocation("/board-dashboard");
-      } else if (data.user.role === "donor") {
+      if (data.user.role === "donor") {
         setLocation("/donor-portal");
       } else if (data.user.role === "data_ops") {
         setLocation("/data-ops-portal");
