@@ -123,6 +123,9 @@ import AIVoiceNotes from "@/pages/ai-voice-notes";
 import AIWithTabs from "@/pages/ai-with-tabs";
 import MeetingNotes from "@/pages/meeting-notes";
 import CalendarPage from "@/pages/calendar";
+import PhilanthropyDashboard from "@/pages/philanthropy-dashboard";
+import FundraisingDashboard from "@/pages/fundraising-dashboard";
+import AgenticDashboard from "@/pages/agentic-dashboard";
 
 // Relationship Intelligence
 import BoardConnections from "@/pages/relationship-board-connections";
@@ -319,6 +322,9 @@ function Router() {
       <Route path="/icon-style-guide" component={IconStyleGuide} />
       <Route path="/network-visualization-examples" component={NetworkVisualizationExamples} />
       <Route path="/donor-quadrant" component={DonorQuadrantWithTabs} />
+      <Route path="/philanthropy-dashboard" component={PhilanthropyDashboard} />
+      <Route path="/fundraising-dashboard" component={FundraisingDashboard} />
+      <Route path="/agentic-dashboard" component={AgenticDashboard} />
       <Route path="/donors/card-showcase" component={DonorCardShowcase} />
       <Route path="/donors/major-gifts" component={DonorsWithTabs} />
       <Route path="/donors/lybunt" component={DonorsWithTabs} />
@@ -671,11 +677,11 @@ function App() {
                     onClick={() => {
                       setSelectedTopTab(tab);
                       if (tab === 'Agentic Plan') {
-                        navigate('/agent-value-map?tab=overview');
+                        navigate('/agentic-dashboard');
                       } else if (tab === 'Fundraising') {
-                        navigate('/donors');
+                        navigate('/fundraising-dashboard');
                       } else if (tab === 'Philanthropy') {
-                        navigate('/quadrant');
+                        navigate('/philanthropy-dashboard');
                       }
                     }}
                     className={`px-5 py-2 text-sm font-medium transition-colors ${
