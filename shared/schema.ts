@@ -129,6 +129,18 @@ export const giftTypeEnum = pgEnum("gift_type", [
   "in_kind",
 ]);
 
+export const portalUserRoleEnum = pgEnum("portal_user_role", [
+  "board_member",
+  "donor",
+  "demo",
+]);
+
+export const verificationStatusEnum = pgEnum("verification_status", [
+  "pending",
+  "approved",
+  "rejected",
+]);
+
 export const recurringCadenceEnum = pgEnum("recurring_cadence", [
   "weekly",
   "monthly",
@@ -158,6 +170,57 @@ export const users = pgTable("users", {
   role: userRoleEnum("role").notNull().default("MGO"),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Portal Users (for board members and donors with login access)
+export const portalUsers = pgTable("portal_users", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  username: varchar("username").notNull().unique(),
+  email: varchar("email").notNull().unique(),
+  passwordHash: varchar("password_hash").notNull(),
+  role: portalUserRoleEnum("role").notNull(),
+  verificationStatus: verificationStatusEnum("verification_status").notNull().default("pending"),
+  firstName: varchar("first_name"),
+  lastName: varchar("last_name"),
+  verificationCode: varchar("verification_code"),
+  verifiedAt: timestamp("verified_at"),
+  lastLoginAt: timestamp("last_login_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+// Board Roster (authorized board members for verification)
+export const boardRoster = pgTable("board_roster", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  email: varchar("email").notNull().unique(),
+  firstName: varchar("first_name").notNull(),
+  lastName: varchar("last_name").notNull(),
+  position: varchar("position"),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Donor Roster (authorized donors for verification)
+export const donorRoster = pgTable("donor_roster", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  email: varchar("email").notNull().unique(),
+  firstName: varchar("first_name").notNull(),
+  lastName: varchar("last_name").notNull(),
+  donorLevel: varchar("donor_level"),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+// Invite Tokens (for admin-generated invitations)
+export const inviteTokens = pgTable("invite_tokens", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  email: varchar("email").notNull(),
+  role: portalUserRoleEnum("role").notNull(),
+  token: varchar("token").notNull().unique(),
+  expiresAt: timestamp("expires_at").notNull(),
+  consumedAt: timestamp("consumed_at"),
+  createdBy: varchar("created_by"),
+  createdAt: timestamp("created_at").defaultNow(),
 });
 
 // Households
@@ -1107,9 +1170,42 @@ export const insertOrganizationArtifactSchema = createInsertSchema(organizationA
   createdAt: true,
 });
 
+// Portal User schemas
+export const insertPortalUserSchema = createInsertSchema(portalUsers).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+  verifiedAt: true,
+  lastLoginAt: true,
+});
+
+export const insertBoardRosterSchema = createInsertSchema(boardRoster).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertDonorRosterSchema = createInsertSchema(donorRoster).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertInviteTokenSchema = createInsertSchema(inviteTokens).omit({
+  id: true,
+  createdAt: true,
+  consumedAt: true,
+});
+
 // Types
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
+export type InsertPortalUser = z.infer<typeof insertPortalUserSchema>;
+export type PortalUser = typeof portalUsers.$inferSelect;
+export type InsertBoardRoster = z.infer<typeof insertBoardRosterSchema>;
+export type BoardRosterEntry = typeof boardRoster.$inferSelect;
+export type InsertDonorRoster = z.infer<typeof insertDonorRosterSchema>;
+export type DonorRosterEntry = typeof donorRoster.$inferSelect;
+export type InsertInviteToken = z.infer<typeof insertInviteTokenSchema>;
+export type InviteToken = typeof inviteTokens.$inferSelect;
 export type InsertPerson = z.infer<typeof insertPersonSchema>;
 export type Person = typeof persons.$inferSelect;
 export type InsertGift = z.infer<typeof insertGiftSchema>;
