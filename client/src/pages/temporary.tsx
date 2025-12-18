@@ -1967,26 +1967,26 @@ function OptimizationIdeas() {
             <Workflow className="h-4 w-4" style={{ color: getAccentColor("olive") }} />
             Agent Operating Principles
           </h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="space-y-3">
             <div className="flex items-start gap-2">
               <Badge variant="outline" className="shrink-0">1</Badge>
-              <p className="text-xs text-muted-foreground"><strong>Embedded in modules:</strong> Each agent lives inside its relevant app hub.</p>
+              <p className="text-sm text-muted-foreground"><strong>Embedded in modules:</strong> Each agent lives inside its relevant app hub.</p>
             </div>
             <div className="flex items-start gap-2">
               <Badge variant="outline" className="shrink-0">2</Badge>
-              <p className="text-xs text-muted-foreground"><strong>Human-in-the-loop:</strong> Sensitive actions require staff approval.</p>
+              <p className="text-sm text-muted-foreground"><strong>Human-in-the-loop:</strong> Sensitive actions require staff approval.</p>
             </div>
             <div className="flex items-start gap-2">
               <Badge variant="outline" className="shrink-0">3</Badge>
-              <p className="text-xs text-muted-foreground"><strong>Audit trails:</strong> Every agent action logged for compliance and trust.</p>
+              <p className="text-sm text-muted-foreground"><strong>Audit trails:</strong> Every agent action logged for compliance and trust.</p>
             </div>
             <div className="flex items-start gap-2">
               <Badge variant="outline" className="shrink-0">4</Badge>
-              <p className="text-xs text-muted-foreground"><strong>Feedback loops:</strong> Staff can correct or rate AI outputs; agents learn continuously.</p>
+              <p className="text-sm text-muted-foreground"><strong>Feedback loops:</strong> Staff can correct or rate AI outputs; agents learn continuously.</p>
             </div>
             <div className="flex items-start gap-2">
               <Badge variant="outline" className="shrink-0">5</Badge>
-              <p className="text-xs text-muted-foreground"><strong>Event-driven:</strong> Agents respond to triggers from Azure Event Grid.</p>
+              <p className="text-sm text-muted-foreground"><strong>Event-driven:</strong> Agents respond to triggers from Azure Event Grid.</p>
             </div>
           </div>
         </AccentCard>
