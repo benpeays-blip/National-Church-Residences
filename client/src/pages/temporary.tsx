@@ -2289,12 +2289,12 @@ function RiskCompliance() {
         </div>
       </div>
 
-      <div className="space-y-8">
+      <div className="grid md:grid-cols-2 gap-6">
         {riskCategories.map((category) => {
           const Icon = category.icon;
           const accentColor = getAccentColor(category.accent);
           return (
-            <div key={category.id} className="border-t pt-6">
+            <div key={category.id}>
               <div className="flex items-center gap-4 mb-4">
                 <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-sm ${getAccentBgClass(category.accent)}`}>
                   <Icon className="w-6 h-6" />
@@ -2304,7 +2304,7 @@ function RiskCompliance() {
                   <p className="text-sm text-muted-foreground">{category.regulations.length} regulations</p>
                 </div>
               </div>
-              <div className="grid md:grid-cols-2 gap-3">
+              <div className="space-y-3">
                 {category.regulations.map((reg, idx) => (
                   <AccentCard key={idx} accent={category.accent} className="p-4">
                     <div className="flex items-start gap-3">
