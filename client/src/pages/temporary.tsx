@@ -1950,13 +1950,13 @@ function OptimizationIdeas() {
             const Icon = agent.icon;
             return (
               <AccentCard key={agent.id} accent={agent.accent} className="p-4">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className={`w-8 h-8 rounded-lg flex items-center justify-center text-white ${getAccentBgClass(agent.accent)}`}>
-                    <Icon className="w-4 h-4" />
+                <div className="flex items-center gap-3 mb-3">
+                  <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white ${getAccentBgClass(agent.accent)}`}>
+                    <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="font-medium text-sm">{agent.name}</h3>
+                  <h3 className="font-semibold text-base">{agent.name}</h3>
                 </div>
-                <p className="text-xs text-muted-foreground">{agent.description}</p>
+                <p className="text-sm text-muted-foreground">{agent.description}</p>
               </AccentCard>
             );
           })}
