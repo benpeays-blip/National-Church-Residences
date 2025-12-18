@@ -8,6 +8,17 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
+import { 
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger 
+} from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { 
@@ -447,15 +458,36 @@ export default function MeetingNotes() {
 
                     {audioBlob && !isRecording && (
                       <>
-                        <Button 
-                          size="lg" 
-                          variant="outline"
-                          onClick={clearRecording}
-                          data-testid="button-clear-recording"
-                        >
-                          <Trash2 className="w-4 h-4 mr-2" />
-                          Clear
-                        </Button>
+                        <AlertDialog>
+                          <AlertDialogTrigger asChild>
+                            <Button 
+                              size="lg" 
+                              variant="outline"
+                              data-testid="button-clear-recording"
+                            >
+                              <Trash2 className="w-4 h-4 mr-2" />
+                              Clear
+                            </Button>
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>Clear Recording?</AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This will permanently delete your current recording. This action cannot be undone.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel data-testid="button-cancel-clear">Cancel</AlertDialogCancel>
+                              <AlertDialogAction 
+                                onClick={clearRecording}
+                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                                data-testid="button-confirm-clear"
+                              >
+                                Clear Recording
+                              </AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
                         <Button 
                           size="lg" 
                           onClick={startRecording}
