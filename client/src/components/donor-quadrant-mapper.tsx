@@ -202,38 +202,32 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               />
 
             {/* Quadrants - Clickable */}
-            {/* Donor Dots with Hover Cards - rendered first so labels appear on top */}
+            {/* Donor Dots with Hover Cards - rendered below headers (z-index ensures headers are always on top) */}
             {data.donors.map((donor) => {
               const isDraggable = donor.quadrant !== 'partner';
               const isBeingDragged = draggedDonor?.id === donor.id;
               
-              // Calculate adjusted top position to avoid header overlap
-              // Headers are h-12 (48px) tall at top of each quadrant half
-              // Top half header: 0% to ~10% (48px in 520px container)
-              // Bottom half header: 50% to ~60% (50% + 48px)
-              // We need to position dots only in the WHITE areas below each header
+              // Calculate adjusted top position - dots ONLY in white content areas
+              // Headers are h-12 (48px) at top of each quadrant half
+              // Dots must NEVER overlap or touch the headers
               
-              // Usable WHITE areas (approximate percentages for 520px min-height):
-              // Top half white area: 12% to 48%
-              // Bottom half white area: 62% to 96%
+              // Safe WHITE-only zones with generous padding:
+              // Top half: 18% to 44% (clear of header at 0-13%, clear of middle at 50%)
+              // Bottom half: 68% to 88% (clear of header at 50-63%, clear of bottom)
               
               let adjustedTop: string;
               if (donor.energy > 50) {
-                // Top half: energy 100 -> near top (but below header), energy 51 -> near middle
-                const energyInRange = (donor.energy - 50) / 50; // 0 to 1 (51->0, 100->1)
-                // Map to usable white area: 12% (high energy) to 46% (low energy)
-                const usableStart = 14; // Start well below header
-                const usableEnd = 46; // End before middle divider
-                // Higher energy = closer to top = lower percentage
+                // Top half: energy 100 -> near top, energy 51 -> near middle
+                const energyInRange = (donor.energy - 50) / 50; // 0 to 1
+                const usableStart = 18; // Safe distance below header
+                const usableEnd = 44; // Safe distance above middle
                 const topPercent = usableEnd - (energyInRange * (usableEnd - usableStart));
                 adjustedTop = `${topPercent}%`;
               } else {
-                // Bottom half: energy 50 -> near middle (below header), energy 0 -> near bottom
-                const energyInRange = donor.energy / 50; // 0 to 1 (0->0, 50->1)
-                // Map to usable white area: 64% (high energy near middle) to 94% (low energy near bottom)
-                const usableStart = 64; // Start well below middle header
-                const usableEnd = 94; // End near bottom with padding
-                // Higher energy = closer to middle = lower percentage
+                // Bottom half: energy 50 -> near middle, energy 0 -> near bottom
+                const energyInRange = donor.energy / 50; // 0 to 1
+                const usableStart = 68; // Safe distance below middle header
+                const usableEnd = 88; // Safe distance from bottom
                 const topPercent = usableEnd - (energyInRange * (usableEnd - usableStart));
                 adjustedTop = `${topPercent}%`;
               }
@@ -245,7 +239,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                     draggable={isDraggable}
                     onDragStart={(e) => handleDragStart(e, donor)}
                     onDragEnd={handleDragEnd}
-                    className={`absolute w-2.5 h-2.5 rounded-full shadow-sm transition-all border-0 p-0 z-10 bg-primary/80 ${
+                    className={`absolute w-2.5 h-2.5 rounded-full shadow-sm transition-all border-0 p-0 z-5 bg-primary/80 pointer-events-auto ${
                       isDraggable 
                         ? 'cursor-grab active:cursor-grabbing hover:scale-150' 
                         : 'cursor-pointer hover:scale-150'
@@ -253,6 +247,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                     style={{
                       left: `calc(${donor.structure}% - 5px)`,
                       top: adjustedTop,
+                      zIndex: 5,
                     }}
                     data-testid={`dot-donor-${donor.id}`}
                     aria-label={isDraggable 
