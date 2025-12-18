@@ -43,7 +43,8 @@ export default function Donors() {
   const filteredDonors = donors?.filter((donor) => {
     if (giftFilter === "all") return true;
     const minAmount = parseInt(giftFilter);
-    return (donor.totalLifetimeGiving || 0) >= minAmount;
+    const donorGiving = parseFloat(String(donor.totalLifetimeGiving || 0));
+    return donorGiving >= minAmount;
   });
 
   return (
