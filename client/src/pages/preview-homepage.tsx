@@ -362,12 +362,12 @@ export default function PreviewHomepage() {
               </div>
               
               {/* Action Items */}
-              <div className="p-6 space-y-4">
+              <div className="p-6 flex flex-col gap-3">
                 {nextBestActions.map((action, idx) => {
                   const accentColor = getAccentColor(action.accent);
                   const priorityColor = action.priority === "High" ? "#ef4444" : accentColors.olive;
                   return (
-                    <Link key={idx} href={`/donors/${action.donorId}/action-plan`}>
+                    <Link key={idx} href={`/donors/${action.donorId}/action-plan`} className="block">
                       <div 
                         className="group flex items-center gap-4 p-4 rounded-xl border hover-elevate transition-all cursor-pointer hover:shadow-lg"
                         style={{ borderColor: `${accentColor}30`, backgroundColor: `${accentColor}05` }}
