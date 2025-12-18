@@ -1355,8 +1355,8 @@ function InterviewDetailPage({ personId }: { personId: string }) {
 
         <div className="p-6 space-y-4">
           <div className="grid md:grid-cols-2 gap-4 items-stretch">
-            <Accordion type="multiple" defaultValue={["challenges"]} className="space-y-0 h-full">
-              <AccordionItem value="challenges" className="border rounded-lg px-4 h-full flex flex-col">
+            <Accordion type="multiple" defaultValue={["challenges"]} className="space-y-0 h-full [&>div]:h-full">
+              <AccordionItem value="challenges" className="border rounded-lg px-4 h-full flex flex-col [&>div]:last:flex-1">
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("coral")}20` }}>
@@ -1386,8 +1386,8 @@ function InterviewDetailPage({ personId }: { personId: string }) {
               </AccordionItem>
             </Accordion>
 
-            <Accordion type="multiple" defaultValue={["wants"]} className="space-y-0 h-full">
-              <AccordionItem value="wants" className="border rounded-lg px-4 h-full flex flex-col">
+            <Accordion type="multiple" defaultValue={["wants"]} className="space-y-0 h-full [&>div]:h-full">
+              <AccordionItem value="wants" className="border rounded-lg px-4 h-full flex flex-col [&>div]:last:flex-1">
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("lime")}20` }}>
@@ -1419,8 +1419,8 @@ function InterviewDetailPage({ personId }: { personId: string }) {
           </div>
 
           <div className="grid md:grid-cols-2 gap-4 items-stretch">
-            <Accordion type="multiple" defaultValue={["tech"]} className="space-y-0 h-full">
-              <AccordionItem value="tech" className="border rounded-lg px-4 h-full flex flex-col">
+            <Accordion type="multiple" defaultValue={["tech"]} className="space-y-0 h-full [&>div]:h-full">
+              <AccordionItem value="tech" className="border rounded-lg px-4 h-full flex flex-col [&>div]:last:flex-1">
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("sky")}20` }}>
@@ -1446,8 +1446,8 @@ function InterviewDetailPage({ personId }: { personId: string }) {
               </AccordionItem>
             </Accordion>
 
-            <Accordion type="multiple" defaultValue={["observations"]} className="space-y-0 h-full">
-              <AccordionItem value="observations" className="border rounded-lg px-4 h-full flex flex-col">
+            <Accordion type="multiple" defaultValue={["observations"]} className="space-y-0 h-full [&>div]:h-full">
+              <AccordionItem value="observations" className="border rounded-lg px-4 h-full flex flex-col [&>div]:last:flex-1">
                 <AccordionTrigger className="hover:no-underline py-3">
                   <div className="flex items-center gap-2">
                     <div className="w-7 h-7 rounded-md flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("orange")}20` }}>
