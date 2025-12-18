@@ -244,8 +244,8 @@ export default function ForceNetworkGraph() {
       // Add collision force to prevent node overlap - account for larger nodes + labels
       fgRef.current.d3Force('collision', d3.forceCollide((node: any) => {
         const baseRadius = node.type === 'org' ? Math.sqrt(node.val) * 4.5 : Math.sqrt(node.val) * 3;
-        // Extra space for person labels below nodes
-        return baseRadius + (node.type === 'person' ? 25 : 15);
+        // Extra space for person labels below nodes - increased to prevent text overlap
+        return baseRadius + (node.type === 'person' ? 35 : 15);
       }));
 
       // Repulsion force - only for people nodes
@@ -444,24 +444,23 @@ export default function ForceNetworkGraph() {
         }
         ctx.shadowBlur = 0;
       } else {
-        // Person name below the node - always show
-        const fontSize = Math.max(8, 11 / globalScale);
-        ctx.font = `${fontSize}px Inter, sans-serif`;
+        // Person name below the node - clean text with outline
+        const fontSize = Math.max(9, 10 / globalScale);
+        ctx.font = `500 ${fontSize}px Inter, sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
         
-        // Background for readability
-        const textWidth = ctx.measureText(label).width;
-        ctx.fillStyle = "rgba(0,0,0,0.6)";
-        ctx.fillRect(
-          node.x - textWidth / 2 - 3, 
-          node.y + displayRadius + 2, 
-          textWidth + 6, 
-          fontSize + 4
-        );
+        const textY = node.y + displayRadius + 3;
         
-        ctx.fillStyle = "white";
-        ctx.fillText(label, node.x, node.y + displayRadius + 4);
+        // Draw text outline for readability (no black box)
+        ctx.strokeStyle = "rgba(255,255,255,0.9)";
+        ctx.lineWidth = 3 / globalScale;
+        ctx.lineJoin = "round";
+        ctx.strokeText(label, node.x, textY);
+        
+        // Draw main text
+        ctx.fillStyle = "#1a1a2e";
+        ctx.fillText(label, node.x, textY);
       }
     }
   }, [hoveredNode, selectedNode, showLabels]);
