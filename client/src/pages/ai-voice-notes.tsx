@@ -69,7 +69,7 @@ interface TranscriptionResult {
 
 export default function AIVoiceNotes() {
   const { toast } = useToast();
-  const [activeTab, setActiveTab] = useState("record");
+  const [activeTab, setActiveTab] = useState("type");
   const [isRecording, setIsRecording] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
@@ -318,17 +318,17 @@ export default function AIVoiceNotes() {
               </div>
             </div>
 
-            {/* Recording/Upload/Type Tabs */}
+            {/* Type/Upload Tabs */}
             <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-3 gap-1 bg-transparent p-0 mb-4">
+              <TabsList className="grid w-full grid-cols-2 gap-1 bg-transparent p-0 mb-4">
                 <TabsTrigger 
-                  value="record" 
-                  className="group relative gap-2 bg-[#4FA6A6] text-white data-[state=active]:bg-[#4FA6A6] data-[state=active]:text-white data-[state=active]:shadow-none"
-                  data-testid="tab-record"
+                  value="type" 
+                  className="group relative gap-2 bg-[#E8A54B] text-white data-[state=active]:bg-[#E8A54B] data-[state=active]:text-white data-[state=active]:shadow-none"
+                  data-testid="tab-type"
                 >
                   <Mic className="w-4 h-4" />
-                  Record
-                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#4FA6A6] opacity-0 group-data-[state=active]:opacity-100" />
+                  Dictate / Type
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#E8A54B] opacity-0 group-data-[state=active]:opacity-100" />
                 </TabsTrigger>
                 <TabsTrigger 
                   value="upload" 
@@ -339,132 +339,52 @@ export default function AIVoiceNotes() {
                   Upload
                   <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#92A05A] opacity-0 group-data-[state=active]:opacity-100" />
                 </TabsTrigger>
-                <TabsTrigger 
-                  value="type" 
-                  className="group relative gap-2 bg-[#E8A54B] text-white data-[state=active]:bg-[#E8A54B] data-[state=active]:text-white data-[state=active]:shadow-none"
-                  data-testid="tab-type"
-                >
-                  <FileText className="w-4 h-4" />
-                  Type
-                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#E8A54B] opacity-0 group-data-[state=active]:opacity-100" />
-                </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="record" className="mt-6 space-y-4">
-                {/* Recording Interface */}
-                <div className="flex flex-col items-center py-8 space-y-6">
-                  {/* Recording Status */}
-                  <div className={`w-32 h-32 rounded-full flex items-center justify-center transition-all ${
-                    isRecording 
-                      ? isPaused 
-                        ? "bg-[#E8A54B]/20 animate-pulse" 
-                        : "bg-[#E86B5A]/20 animate-pulse" 
-                      : audioBlob 
-                        ? "bg-[#92A05A]/20" 
-                        : "bg-muted"
-                  }`}>
-                    {isRecording ? (
-                      isPaused ? (
-                        <Pause className="w-12 h-12 text-[#E8A54B]" />
-                      ) : (
-                        <Mic className="w-12 h-12 text-[#E86B5A]" />
-                      )
-                    ) : audioBlob ? (
-                      <CheckCircle2 className="w-12 h-12 text-[#92A05A]" />
-                    ) : (
-                      <MicOff className="w-12 h-12 text-muted-foreground" />
-                    )}
+              <TabsContent value="type" className="mt-6 space-y-4">
+                {/* Dictate/Type Notes Interface */}
+                <div className="space-y-4">
+                  <div className="p-4 rounded-lg bg-[#E8A54B]/10 border border-[#E8A54B]/20">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-[#E8A54B]/20 flex items-center justify-center shrink-0">
+                        <Mic className="w-4 h-4 text-[#E8A54B]" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-sm">Voice Dictation Available</p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Click the text area below, then tap the microphone icon on your keyboard to speak. Your device will transcribe your voice into text automatically.
+                        </p>
+                      </div>
+                    </div>
                   </div>
+                  
+                  <Textarea
+                    placeholder="Type your notes here, or tap the microphone on your keyboard to dictate...
 
-                  {/* Timer */}
-                  <div className="text-4xl font-mono font-bold" data-testid="recording-time">
-                    {formatTime(recordingTime)}
-                  </div>
+Example:
+Met with Margaret Chen today to discuss the capital campaign. She mentioned being impressed with our scholarship program outcomes and is interested in potentially increasing her annual gift. We discussed naming opportunities for the new science building.
 
-                  {/* Recording Controls */}
-                  <div className="flex items-center gap-3">
-                    {!isRecording && !audioBlob && (
+Follow-up: Send the campaign brochure by Friday and schedule a campus tour for January."
+                    value={manualTranscript}
+                    onChange={(e) => setManualTranscript(e.target.value)}
+                    className="min-h-[250px] resize-none"
+                    data-testid="input-manual-transcript"
+                  />
+                  
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <span>{manualTranscript.length} characters</span>
+                    {manualTranscript.length > 0 && (
                       <Button 
-                        size="lg" 
-                        onClick={startRecording}
-                        className="bg-[#E86B5A] hover:bg-[#E86B5A]/90"
-                        data-testid="button-start-recording"
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => setManualTranscript("")}
+                        data-testid="button-clear-notes"
                       >
-                        <Mic className="w-5 h-5 mr-2" />
-                        Start Recording
+                        <Trash2 className="w-3 h-3 mr-1" />
+                        Clear
                       </Button>
                     )}
-
-                    {isRecording && (
-                      <>
-                        <Button 
-                          size="icon" 
-                          variant="outline"
-                          onClick={pauseRecording}
-                          data-testid="button-pause-recording"
-                        >
-                          {isPaused ? <Play className="w-5 h-5" /> : <Pause className="w-5 h-5" />}
-                        </Button>
-                        <Button 
-                          size="lg" 
-                          variant="destructive"
-                          onClick={stopRecording}
-                          data-testid="button-stop-recording"
-                        >
-                          <Square className="w-5 h-5 mr-2" />
-                          Stop
-                        </Button>
-                      </>
-                    )}
-
-                    {audioBlob && !isRecording && (
-                      <>
-                        <AlertDialog>
-                          <AlertDialogTrigger asChild>
-                            <Button 
-                              size="lg" 
-                              variant="outline"
-                              data-testid="button-clear-recording"
-                            >
-                              <Trash2 className="w-4 h-4 mr-2" />
-                              Clear
-                            </Button>
-                          </AlertDialogTrigger>
-                          <AlertDialogContent>
-                            <AlertDialogHeader>
-                              <AlertDialogTitle>Clear Recording?</AlertDialogTitle>
-                              <AlertDialogDescription>
-                                This will permanently delete your current recording. This action cannot be undone.
-                              </AlertDialogDescription>
-                            </AlertDialogHeader>
-                            <AlertDialogFooter>
-                              <AlertDialogCancel data-testid="button-cancel-clear">Cancel</AlertDialogCancel>
-                              <AlertDialogAction 
-                                onClick={clearRecording}
-                                className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                                data-testid="button-confirm-clear"
-                              >
-                                Clear Recording
-                              </AlertDialogAction>
-                            </AlertDialogFooter>
-                          </AlertDialogContent>
-                        </AlertDialog>
-                        <Button 
-                          size="lg" 
-                          onClick={startRecording}
-                          data-testid="button-re-record"
-                        >
-                          <Mic className="w-4 h-4 mr-2" />
-                          Re-record
-                        </Button>
-                      </>
-                    )}
                   </div>
-
-                  {/* Audio Preview */}
-                  {audioUrl && (
-                    <audio controls src={audioUrl} className="w-full max-w-md" data-testid="audio-preview" />
-                  )}
                 </div>
               </TabsContent>
 
@@ -514,53 +434,6 @@ export default function AIVoiceNotes() {
                     </Button>
                   </div>
                 )}
-              </TabsContent>
-
-              <TabsContent value="type" className="mt-6 space-y-4">
-                {/* Manual Notes Interface */}
-                <div className="space-y-4">
-                  <div className="p-4 rounded-lg bg-[#E8A54B]/10 border border-[#E8A54B]/20">
-                    <div className="flex items-start gap-3">
-                      <div className="w-8 h-8 rounded-full bg-[#E8A54B]/20 flex items-center justify-center shrink-0">
-                        <Sparkles className="w-4 h-4 text-[#E8A54B]" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-sm">HIPAA-Compliant Alternative</p>
-                        <p className="text-xs text-muted-foreground mt-1">
-                          Type or paste your meeting notes below. AI will extract insights, action items, and key topics while keeping your data secure.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <Textarea
-                    placeholder="Type or paste your meeting notes here...
-
-Example:
-Met with Margaret Chen today to discuss the capital campaign. She mentioned being impressed with our scholarship program outcomes and is interested in potentially increasing her annual gift. We discussed naming opportunities for the new science building.
-
-Follow-up: Send the campaign brochure by Friday and schedule a campus tour for January."
-                    value={manualTranscript}
-                    onChange={(e) => setManualTranscript(e.target.value)}
-                    className="min-h-[250px] resize-none"
-                    data-testid="input-manual-transcript"
-                  />
-                  
-                  <div className="flex items-center justify-between text-sm text-muted-foreground">
-                    <span>{manualTranscript.length} characters</span>
-                    {manualTranscript.length > 0 && (
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        onClick={() => setManualTranscript("")}
-                        data-testid="button-clear-notes"
-                      >
-                        <Trash2 className="w-3 h-3 mr-1" />
-                        Clear
-                      </Button>
-                    )}
-                  </div>
-                </div>
               </TabsContent>
             </Tabs>
 
