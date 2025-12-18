@@ -146,7 +146,8 @@ export default function NcrFoundationImpact() {
               {testimonials.map((testimonial, index) => (
                 <div 
                   key={index} 
-                  className="p-4 rounded-lg bg-muted/50 border-l-4 border-primary"
+                  className="p-4 rounded-lg bg-card border border-border shadow-sm"
+                  style={{ borderLeftWidth: '4px', borderLeftColor: '#4FA6A6' }}
                   data-testid={`testimonial-${index}`}
                 >
                   <p className="italic text-muted-foreground mb-3">"{testimonial.quote}"</p>
