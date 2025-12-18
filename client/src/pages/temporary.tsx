@@ -1908,21 +1908,23 @@ function OptimizationIdeas() {
         </CardHeader>
       </AccentCard>
 
-      <AccentCard accent="teal" className="p-4">
-        <div className="flex items-start gap-3">
-          <Building2 className="h-5 w-5 mt-0.5 shrink-0" style={{ color: getAccentColor("teal") }} />
-          <div>
-            <h4 className="font-medium text-sm" style={{ color: getAccentColor("teal") }}>Executive Summary</h4>
-            <p className="text-sm text-muted-foreground mt-1">
-              <strong>Tech Stack:</strong> Microsoft Fabric OneLake + Purview, Power BI, SharePoint, Raiser's Edge, Yardi, Athena/Epic, Workday, Instrumentl, Azure Event Grid, unified React/Power Platform app.
-            </p>
-            <p className="text-sm text-muted-foreground mt-2">
-              <strong>Agentic AI:</strong> Specialized agents (CareGuide, Compliance, Document, Engagement, Financial, Orchestration) embedded in each module, governed with audit trails.
-            </p>
-            <p className="text-sm text-muted-foreground mt-2">
-              <strong>App:</strong> Modular shell with 8–10 hubs (CareGuide, Grants, Donor, Volunteer, Compliance, Finance, Strategy, Housing, Healthcare, Knowledge).
-            </p>
+      <AccentCard accent="teal" className="p-6">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("teal")}15` }}>
+            <Building2 className="h-6 w-6" style={{ color: getAccentColor("teal") }} />
           </div>
+          <h4 className="font-semibold text-xl" style={{ color: getAccentColor("teal") }}>Executive Summary</h4>
+        </div>
+        <div className="space-y-4">
+          <p className="text-base text-muted-foreground leading-relaxed">
+            <strong className="text-foreground">Tech Stack:</strong> Microsoft Fabric OneLake + Purview, Power BI, SharePoint, Raiser's Edge, Yardi, Athena/Epic, Workday, Instrumentl, Azure Event Grid, unified React/Power Platform app.
+          </p>
+          <p className="text-base text-muted-foreground leading-relaxed">
+            <strong className="text-foreground">Agentic AI:</strong> Specialized agents (CareGuide, Compliance, Document, Engagement, Financial, Orchestration) embedded in each module, governed with audit trails.
+          </p>
+          <p className="text-base text-muted-foreground leading-relaxed">
+            <strong className="text-foreground">App:</strong> Modular shell with 8–10 hubs (CareGuide, Grants, Donor, Volunteer, Compliance, Finance, Strategy, Housing, Healthcare, Knowledge).
+          </p>
         </div>
       </AccentCard>
 
