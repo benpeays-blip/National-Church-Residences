@@ -53,6 +53,17 @@ const activeCampaigns = [
     topAmount: 8500,
     endDate: "2025-02-28"
   },
+  { 
+    id: "4", 
+    name: "Run for Hope 5K", 
+    type: "5k race",
+    goal: 75000, 
+    raised: 31200, 
+    fundraisers: 89,
+    topFundraiser: "Jennifer's Joggers",
+    topAmount: 3800,
+    endDate: "2025-04-20"
+  },
 ];
 
 const topFundraisers = [
