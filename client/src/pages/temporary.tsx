@@ -1501,17 +1501,17 @@ function OnSiteInterviews() {
 
   return (
     <div className="space-y-6">
-      <AccentCard accent="olive">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Users className="h-5 w-5" style={{ color: getAccentColor("olive") }} />
-            <CardTitle>On Site Interviews</CardTitle>
+      <div className="space-y-2">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("olive")}15` }}>
+            <Users className="h-6 w-6" style={{ color: getAccentColor("olive") }} />
           </div>
-          <CardDescription>
-            Key stakeholder interviews conducted at NCR. Click on any card to view detailed insights.
-          </CardDescription>
-        </CardHeader>
-      </AccentCard>
+          <h1 className="text-2xl font-bold">On Site Interviews</h1>
+        </div>
+        <p className="text-base text-muted-foreground">
+          Key stakeholder interviews conducted at NCR. Click on any card to view detailed insights.
+        </p>
+      </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {interviewees.map((person) => (
@@ -1528,20 +1528,18 @@ function OnSiteInterviews() {
 
 function TechStack() {
   return (
-    <div className="space-y-4">
-      <AccentCard accent="teal">
-        <CardHeader className="py-6 px-6">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("teal")}15` }}>
-              <Layers className="h-6 w-6" style={{ color: getAccentColor("teal") }} />
-            </div>
-            <CardTitle className="text-2xl font-bold">NCR Technology Stack</CardTitle>
+    <div className="space-y-6">
+      <div className="space-y-2">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("teal")}15` }}>
+            <Layers className="h-6 w-6" style={{ color: getAccentColor("teal") }} />
           </div>
-          <CardDescription className="text-base mt-2">
-            Overview of software products used across NCR fundraising and operations. Click any card for details.
-          </CardDescription>
-        </CardHeader>
-      </AccentCard>
+          <h1 className="text-2xl font-bold">NCR Technology Stack</h1>
+        </div>
+        <p className="text-base text-muted-foreground">
+          Overview of software products used across NCR fundraising and operations. Click any card for details.
+        </p>
+      </div>
 
       <div className="grid grid-cols-2 gap-4">
         {techProducts.map((product) => (
