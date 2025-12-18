@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ForceGraph2D from "react-force-graph-2d";
+import * as d3 from "d3-force";
 import { 
   Zap, 
   Users, 
@@ -218,6 +219,38 @@ export default function ForceNetworkGraph() {
     return { nodes, links };
   }, []);
 
+  // Configure d3 forces for collision detection and spacing
+  useEffect(() => {
+    if (fgRef.current) {
+      // Add collision force to prevent node overlap
+      fgRef.current.d3Force('collision', d3.forceCollide((node: any) => {
+        // Collision radius based on node size plus padding for text
+        const baseRadius = node.type === 'org' ? Math.sqrt(node.val) * 4 : Math.sqrt(node.val) * 3;
+        return baseRadius + 20; // Add padding for labels
+      }));
+
+      // Strengthen repulsion force to spread nodes apart
+      fgRef.current.d3Force('charge', d3.forceManyBody()
+        .strength((node: any) => {
+          // Stronger repulsion for larger nodes
+          return node.type === 'org' ? -250 : -120;
+        })
+        .distanceMax(400)
+      );
+
+      // Increase link distance to give more space between connected nodes
+      fgRef.current.d3Force('link')
+        ?.distance((link: any) => {
+          const sourceVal = link.source.val || 5;
+          const targetVal = link.target.val || 5;
+          return 80 + (sourceVal + targetVal) * 2.5;
+        });
+
+      // Reheat simulation to apply new forces
+      fgRef.current.d3ReheatSimulation();
+    }
+  }, [graphData]);
+
   const getPersonConnections = (personName: string) => {
     const person = samplePeople.find(p => p.name === personName);
     if (!person) return [];
@@ -367,7 +400,7 @@ export default function ForceNetworkGraph() {
         </CardHeader>
         <CardContent className="p-0 flex-1">
           <div className="grid grid-cols-1 lg:grid-cols-5 h-full">
-            <div ref={containerRef} className="lg:col-span-4 relative bg-white overflow-hidden" style={{ minHeight: 500 }}>
+            <div ref={containerRef} className="lg:col-span-4 relative bg-white overflow-hidden" style={{ minHeight: 600 }}>
               <ForceGraph2D
                 width={dimensions.width}
                 height={dimensions.height}
@@ -402,7 +435,7 @@ export default function ForceNetworkGraph() {
               </div>
             </div>
 
-            <div className="border-l bg-background flex flex-col" style={{ minHeight: 500 }}>
+            <div className="border-l bg-background flex flex-col" style={{ minHeight: 600 }}>
               <div className="p-4 border-b shrink-0">
                 <h3 className="font-semibold text-sm flex items-center gap-2">
                   <Eye className="w-4 h-4" style={{ color: "#395174" }} />
