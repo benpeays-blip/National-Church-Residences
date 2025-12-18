@@ -2123,15 +2123,16 @@ const riskCategories: RiskCategory[] = [
     ]
   },
   {
-    id: "legal",
-    title: "Legal & Compliance",
-    icon: Scale,
-    accent: "tealDark",
+    id: "cybersecurity",
+    title: "Cybersecurity & Technology",
+    icon: Server,
+    accent: "teal",
     regulations: [
-      { name: "Corporate Entity Tracking", description: "NCR must maintain accurate records for 1,100+ legal entities." },
-      { name: "HUD/CMS Filing Requirements", description: "Require timely, accurate compliance filings." },
-      { name: "Sarbanes-Oxley Principles", description: "Require accurate financial controls and reporting." },
-      { name: "State Nonprofit Corporation Laws", description: "Govern board governance, fiduciary duties, and reporting." },
+      { name: "HIPAA Security Rule", description: "Requires safeguards for electronic health information." },
+      { name: "State Data Breach Notification Laws", description: "Require notifying residents and regulators of breaches." },
+      { name: "FTC Act (Section 5)", description: "Prohibits unfair or deceptive practices." },
+      { name: "CISA Guidelines", description: "Healthcare considered 'target rich, cyber poor.'" },
+      { name: "PCI DSS", description: "Governs online rent and donation payments." },
     ]
   },
   {
@@ -2148,16 +2149,15 @@ const riskCategories: RiskCategory[] = [
     ]
   },
   {
-    id: "cybersecurity",
-    title: "Cybersecurity & Technology",
-    icon: Server,
-    accent: "teal",
+    id: "legal",
+    title: "Legal & Compliance",
+    icon: Scale,
+    accent: "tealDark",
     regulations: [
-      { name: "HIPAA Security Rule", description: "Requires safeguards for electronic health information." },
-      { name: "State Data Breach Notification Laws", description: "Require notifying residents and regulators of breaches." },
-      { name: "FTC Act (Section 5)", description: "Prohibits unfair or deceptive practices." },
-      { name: "CISA Guidelines", description: "Healthcare considered 'target rich, cyber poor.'" },
-      { name: "PCI DSS", description: "Governs online rent and donation payments." },
+      { name: "Corporate Entity Tracking", description: "NCR must maintain accurate records for 1,100+ legal entities." },
+      { name: "HUD/CMS Filing Requirements", description: "Require timely, accurate compliance filings." },
+      { name: "Sarbanes-Oxley Principles", description: "Require accurate financial controls and reporting." },
+      { name: "State Nonprofit Corporation Laws", description: "Govern board governance, fiduciary duties, and reporting." },
     ]
   },
   {
@@ -2306,7 +2306,7 @@ function RiskCompliance() {
               </div>
               <div className="space-y-3">
                 {category.regulations.map((reg, idx) => (
-                  <AccentCard key={idx} accent={category.accent} className="p-4">
+                  <AccentCard key={idx} accent={category.accent} className="p-4 min-h-[88px]">
                     <div className="flex items-start gap-3">
                       <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: `${accentColor}15` }}>
                         <AlertTriangle className="w-4 h-4" style={{ color: accentColor }} />
