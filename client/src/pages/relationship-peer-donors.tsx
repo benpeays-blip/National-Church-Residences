@@ -412,7 +412,7 @@ export default function PeerDonors() {
 
       {/* Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <Card className="p-6 border">
+        <Card className="p-6 border-l-4 overflow-hidden" style={{ borderLeftColor: '#6FBBD3' }}>
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(111, 187, 211, 0.15)' }}>
               <Users className="w-5 h-5" style={{ color: '#6FBBD3' }} />
@@ -421,7 +421,7 @@ export default function PeerDonors() {
           <div className="text-2xl font-semibold tabular-nums">{totalPeers}</div>
           <div className="text-sm text-muted-foreground">Peer Connections</div>
         </Card>
-        <Card className="p-6 border">
+        <Card className="p-6 border-l-4 overflow-hidden" style={{ borderLeftColor: '#9CB071' }}>
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(156, 176, 113, 0.15)' }}>
               <Star className="w-5 h-5" style={{ color: '#9CB071' }} />
@@ -430,7 +430,7 @@ export default function PeerDonors() {
           <div className="text-2xl font-semibold tabular-nums">{avgMatchScore.toFixed(0)}%</div>
           <div className="text-sm text-muted-foreground">Avg Match Score</div>
         </Card>
-        <Card className="p-6 border">
+        <Card className="p-6 border-l-4 overflow-hidden" style={{ borderLeftColor: '#E8923A' }}>
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(232, 146, 58, 0.15)' }}>
               <TrendingUp className="w-5 h-5" style={{ color: '#E8923A' }} />
@@ -439,7 +439,7 @@ export default function PeerDonors() {
           <div className="text-2xl font-semibold tabular-nums">{highPotential}</div>
           <div className="text-sm text-muted-foreground">High Potential (80%+)</div>
         </Card>
-        <Card className="p-6 border">
+        <Card className="p-6 border-l-4 overflow-hidden" style={{ borderLeftColor: '#7FA3A1' }}>
           <div className="flex items-center gap-3 mb-2">
             <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: 'rgba(127, 163, 161, 0.15)' }}>
               <DollarSign className="w-5 h-5" style={{ color: '#7FA3A1' }} />
