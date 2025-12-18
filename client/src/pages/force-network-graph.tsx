@@ -134,15 +134,61 @@ export default function ForceNetworkGraph() {
     const nodes: GraphNode[] = [];
     const links: GraphLink[] = [];
     const nodeSet = new Set<string>();
+    const relationshipCounts: Record<string, number> = {};
 
+    // First pass: create all links to count relationships
+    sampleOrgs.forEach(org => {
+      const orgId = `org-${org.id}`;
+      org.members.forEach(memberName => {
+        const person = samplePeople.find(p => p.name === memberName);
+        if (person) {
+          const personId = `person-${person.id}`;
+          links.push({
+            source: personId,
+            target: orgId,
+            value: 1
+          });
+          relationshipCounts[personId] = (relationshipCounts[personId] || 0) + 1;
+          relationshipCounts[orgId] = (relationshipCounts[orgId] || 0) + 1;
+        }
+      });
+    });
+
+    // Person-to-person links based on shared orgs
+    samplePeople.forEach(person => {
+      samplePeople.forEach(otherPerson => {
+        if (person.id < otherPerson.id) {
+          const sharedOrgs = person.orgs.filter(o => otherPerson.orgs.includes(o));
+          if (sharedOrgs.length > 0) {
+            const personId = `person-${person.id}`;
+            const otherId = `person-${otherPerson.id}`;
+            links.push({
+              source: personId,
+              target: otherId,
+              value: sharedOrgs.length
+            });
+            relationshipCounts[personId] = (relationshipCounts[personId] || 0) + 1;
+            relationshipCounts[otherId] = (relationshipCounts[otherId] || 0) + 1;
+          }
+        }
+      });
+    });
+
+    // Find max relationship count for scaling
+    const maxRelationships = Math.max(...Object.values(relationshipCounts), 1);
+
+    // Create person nodes with size based on relationship count
     samplePeople.forEach(person => {
       const nodeId = `person-${person.id}`;
       if (!nodeSet.has(nodeId)) {
+        const relCount = relationshipCounts[nodeId] || 1;
+        // Scale size: min 3, max 12 based on relationship count
+        const nodeSize = 3 + (relCount / maxRelationships) * 9;
         nodes.push({
           id: nodeId,
           name: person.name,
           type: "person",
-          val: person.orgs.length * 2,
+          val: nodeSize,
           color: "#6FBBD3",
           title: person.title
         });
@@ -150,45 +196,23 @@ export default function ForceNetworkGraph() {
       }
     });
 
+    // Create org nodes with size based on relationship count
     sampleOrgs.forEach(org => {
       const nodeId = `org-${org.id}`;
       if (!nodeSet.has(nodeId)) {
+        const relCount = relationshipCounts[nodeId] || 1;
+        // Scale size: min 6, max 18 for orgs (larger than people)
+        const nodeSize = 6 + (relCount / maxRelationships) * 12;
         nodes.push({
           id: nodeId,
           name: org.name,
           type: "org",
-          val: org.members.length * 3,
+          val: nodeSize,
           color: org.color,
           sector: org.sector
         });
         nodeSet.add(nodeId);
       }
-
-      org.members.forEach(memberName => {
-        const person = samplePeople.find(p => p.name === memberName);
-        if (person) {
-          links.push({
-            source: `person-${person.id}`,
-            target: nodeId,
-            value: 1
-          });
-        }
-      });
-    });
-
-    samplePeople.forEach(person => {
-      samplePeople.forEach(otherPerson => {
-        if (person.id < otherPerson.id) {
-          const sharedOrgs = person.orgs.filter(o => otherPerson.orgs.includes(o));
-          if (sharedOrgs.length > 0) {
-            links.push({
-              source: `person-${person.id}`,
-              target: `person-${otherPerson.id}`,
-              value: sharedOrgs.length
-            });
-          }
-        }
-      });
     });
 
     return { nodes, links };
@@ -212,13 +236,14 @@ export default function ForceNetworkGraph() {
   const handleNodeClick = useCallback((node: any) => {
     setSelectedNode(node as GraphNode);
     if (fgRef.current && node.x !== undefined && node.y !== undefined) {
-      // First center on the node, then zoom after centering completes
-      fgRef.current.centerAt(node.x, node.y, 400);
+      // Smoothly center and zoom slightly on the clicked node
+      fgRef.current.centerAt(node.x, node.y, 500);
       setTimeout(() => {
         if (fgRef.current) {
-          fgRef.current.zoom(2.5, 400);
+          // Zoom to 1.8x for a gentle focus effect
+          fgRef.current.zoom(1.8, 400);
         }
-      }, 450);
+      }, 300);
     }
   }, []);
 
