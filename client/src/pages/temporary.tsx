@@ -2289,10 +2289,39 @@ function RiskCompliance() {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-4">
-        {riskCategories.map((category) => (
-          <RiskCategoryCard key={category.id} category={category} />
-        ))}
+      <div className="space-y-8">
+        {riskCategories.map((category) => {
+          const Icon = category.icon;
+          const accentColor = getAccentColor(category.accent);
+          return (
+            <div key={category.id} className="border-t pt-6">
+              <div className="flex items-center gap-4 mb-4">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-sm ${getAccentBgClass(category.accent)}`}>
+                  <Icon className="w-6 h-6" />
+                </div>
+                <div>
+                  <h2 className="text-xl font-bold">{category.title}</h2>
+                  <p className="text-sm text-muted-foreground">{category.regulations.length} regulations</p>
+                </div>
+              </div>
+              <div className="grid md:grid-cols-2 gap-3">
+                {category.regulations.map((reg, idx) => (
+                  <AccentCard key={idx} accent={category.accent} className="p-4">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: `${accentColor}15` }}>
+                        <AlertTriangle className="w-4 h-4" style={{ color: accentColor }} />
+                      </div>
+                      <div>
+                        <h3 className="font-semibold text-sm">{reg.name}</h3>
+                        <p className="text-xs text-muted-foreground mt-1">{reg.description}</p>
+                      </div>
+                    </div>
+                  </AccentCard>
+                ))}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
