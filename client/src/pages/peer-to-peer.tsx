@@ -3,7 +3,23 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { 
   Users, 
   Share2, 
@@ -20,7 +36,7 @@ import {
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
 import { useToast } from "@/hooks/use-toast";
 
-const activeCampaigns = [
+const initialCampaigns = [
   { 
     id: "1", 
     name: "Walk for Housing 2025", 
@@ -84,18 +100,55 @@ const recentDonations = [
 
 export default function PeerToPeer() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [campaigns, setCampaigns] = useState(initialCampaigns);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [newCampaign, setNewCampaign] = useState({
+    name: "",
+    type: "",
+    goal: "",
+    endDate: ""
+  });
   const { toast } = useToast();
 
   const handleNewCampaign = () => {
+    setIsDialogOpen(true);
+  };
+
+  const handleCreateCampaign = () => {
+    if (!newCampaign.name || !newCampaign.type || !newCampaign.goal || !newCampaign.endDate) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all fields to create a campaign.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const campaign = {
+      id: String(campaigns.length + 1),
+      name: newCampaign.name,
+      type: newCampaign.type,
+      goal: parseInt(newCampaign.goal),
+      raised: 0,
+      fundraisers: 0,
+      topFundraiser: "None yet",
+      topAmount: 0,
+      endDate: newCampaign.endDate
+    };
+
+    setCampaigns([...campaigns, campaign]);
+    setIsDialogOpen(false);
+    setNewCampaign({ name: "", type: "", goal: "", endDate: "" });
+    
     toast({
-      title: "Coming Soon",
-      description: "The campaign creation wizard is under development. You'll be able to create custom P2P campaigns soon.",
+      title: "Campaign Created",
+      description: `"${campaign.name}" has been created and is now live.`,
     });
   };
 
-  const totalRaised = activeCampaigns.reduce((sum, c) => sum + c.raised, 0);
-  const totalGoal = activeCampaigns.reduce((sum, c) => sum + c.goal, 0);
-  const totalFundraisers = activeCampaigns.reduce((sum, c) => sum + c.fundraisers, 0);
+  const totalRaised = campaigns.reduce((sum, c) => sum + c.raised, 0);
+  const totalGoal = campaigns.reduce((sum, c) => sum + c.goal, 0);
+  const totalFundraisers = campaigns.reduce((sum, c) => sum + c.fundraisers, 0);
 
   return (
     <div className="space-y-6">
@@ -186,7 +239,7 @@ export default function PeerToPeer() {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {activeCampaigns.map((campaign) => (
+              {campaigns.map((campaign) => (
                 <div 
                   key={campaign.id}
                   className="p-4 rounded-lg bg-card border border-border shadow-sm hover-elevate cursor-pointer"
@@ -306,6 +359,77 @@ export default function PeerToPeer() {
           </Card>
         </div>
       </div>
+
+      <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Create New Campaign</DialogTitle>
+            <DialogDescription>
+              Set up a new peer-to-peer fundraising campaign for your supporters.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid gap-2">
+              <Label htmlFor="campaign-name">Campaign Name</Label>
+              <Input
+                id="campaign-name"
+                placeholder="e.g., Spring Walkathon 2025"
+                value={newCampaign.name}
+                onChange={(e) => setNewCampaign({ ...newCampaign, name: e.target.value })}
+                data-testid="input-campaign-name"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="campaign-type">Campaign Type</Label>
+              <Select
+                value={newCampaign.type}
+                onValueChange={(value) => setNewCampaign({ ...newCampaign, type: value })}
+              >
+                <SelectTrigger data-testid="select-campaign-type">
+                  <SelectValue placeholder="Select type" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="walkathon">Walkathon</SelectItem>
+                  <SelectItem value="5k race">5K Race</SelectItem>
+                  <SelectItem value="birthday">Birthday Fundraiser</SelectItem>
+                  <SelectItem value="challenge">Team Challenge</SelectItem>
+                  <SelectItem value="memorial">Memorial</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="campaign-goal">Fundraising Goal ($)</Label>
+              <Input
+                id="campaign-goal"
+                type="number"
+                placeholder="e.g., 50000"
+                value={newCampaign.goal}
+                onChange={(e) => setNewCampaign({ ...newCampaign, goal: e.target.value })}
+                data-testid="input-campaign-goal"
+              />
+            </div>
+            <div className="grid gap-2">
+              <Label htmlFor="campaign-end-date">End Date</Label>
+              <Input
+                id="campaign-end-date"
+                type="date"
+                value={newCampaign.endDate}
+                onChange={(e) => setNewCampaign({ ...newCampaign, endDate: e.target.value })}
+                data-testid="input-campaign-end-date"
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleCreateCampaign} data-testid="button-create-campaign">
+              Create Campaign
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
