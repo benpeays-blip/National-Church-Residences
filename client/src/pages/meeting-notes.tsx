@@ -357,7 +357,7 @@ export default function MeetingNotes() {
 
             {/* Recording/Upload Tabs */}
             <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-2 gap-1 bg-transparent p-0">
+              <TabsList className="grid w-full grid-cols-2 gap-1 bg-transparent p-0 mb-4">
                 <TabsTrigger 
                   value="record" 
                   className="group relative gap-2 bg-[#4FA6A6] text-white data-[state=active]:bg-[#4FA6A6] data-[state=active]:text-white data-[state=active]:shadow-none"
@@ -365,6 +365,7 @@ export default function MeetingNotes() {
                 >
                   <Mic className="w-4 h-4" />
                   Record
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#4FA6A6] opacity-0 group-data-[state=active]:opacity-100" />
                 </TabsTrigger>
                 <TabsTrigger 
                   value="upload" 
@@ -373,6 +374,7 @@ export default function MeetingNotes() {
                 >
                   <Upload className="w-4 h-4" />
                   Upload
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#92A05A] opacity-0 group-data-[state=active]:opacity-100" />
                 </TabsTrigger>
               </TabsList>
 
