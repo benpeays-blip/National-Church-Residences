@@ -21,6 +21,7 @@ import {
   Zap
 } from "lucide-react";
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
+import { useToast } from "@/hooks/use-toast";
 
 const atRiskDonors = [
   { 
@@ -102,12 +103,34 @@ const getRiskColor = (level: string) => {
 };
 
 export default function RetentionRisk() {
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedTab, setSelectedTab] = useState("at-risk");
 
   const filteredDonors = atRiskDonors.filter(donor =>
     donor.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleIntervene = (donorName: string) => {
+    toast({
+      title: "Intervention Started",
+      description: `Retention workflow initiated for ${donorName}`,
+    });
+  };
+
+  const handleTakeAction = (action: typeof recommendedActions[0]) => {
+    const actionMessages: Record<string, string> = {
+      call: `Phone call scheduled for ${action.donor}`,
+      email: `Impact report email queued for ${action.donor}`,
+      event: `Event invitation sent to ${action.donor}`,
+      meeting: `Meeting request sent to ${action.donor}`,
+    };
+    
+    toast({
+      title: "Action Taken",
+      description: actionMessages[action.type] || `Action initiated for ${action.donor}`,
+    });
+  };
 
   const highRiskCount = atRiskDonors.filter(d => d.riskLevel === "high").length;
   const mediumRiskCount = atRiskDonors.filter(d => d.riskLevel === "medium").length;
@@ -291,7 +314,7 @@ export default function RetentionRisk() {
                           {donor.riskScore}
                         </div>
                         <p className="text-xs text-muted-foreground">Risk Score</p>
-                        <Button size="sm" className="mt-2" data-testid={`button-intervene-${donor.id}`}>
+                        <Button size="sm" className="mt-2" onClick={() => handleIntervene(donor.name)} data-testid={`button-intervene-${donor.id}`}>
                           <Zap className="h-3 w-3 mr-1" />
                           Intervene
                         </Button>
@@ -342,7 +365,7 @@ export default function RetentionRisk() {
                       >
                         {action.priority}
                       </Badge>
-                      <Button size="sm" data-testid={`button-take-action-${index}`}>
+                      <Button size="sm" onClick={() => handleTakeAction(action)} data-testid={`button-take-action-${index}`}>
                         Take Action
                         <ArrowRight className="h-3 w-3 ml-1" />
                       </Button>
