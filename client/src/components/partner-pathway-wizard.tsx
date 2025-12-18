@@ -1134,8 +1134,8 @@ export default function PartnerPathwayWizard() {
                       key={option.value}
                       className={`flex items-start space-x-3 rounded-lg border-2 p-4 transition-colors hover-elevate ${
                         focus === option.value
-                          ? "border-blue-600 bg-blue-50 dark:bg-blue-950/20"
-                          : "border-gray-200"
+                          ? "border-[#4FA6A6] bg-[#4FA6A6]/10 dark:bg-[#4FA6A6]/20"
+                          : "border-muted"
                       }`}
                     >
                       <RadioGroupItem
@@ -1179,17 +1179,17 @@ export default function PartnerPathwayWizard() {
                 <h4 className="font-semibold text-sm">Weekly Capacity</h4>
                 <div className="grid grid-cols-3 gap-4">
                   <div className="text-center" data-testid="summary-meetings">
-                    <Calendar className="h-5 w-5 mx-auto mb-1 text-blue-600" />
+                    <Calendar className="h-5 w-5 mx-auto mb-1 text-[#4FA6A6]" />
                     <div className="text-2xl font-bold">{constraints.meetings}</div>
                     <div className="text-xs text-muted-foreground">Meetings</div>
                   </div>
                   <div className="text-center" data-testid="summary-calls">
-                    <Phone className="h-5 w-5 mx-auto mb-1 text-green-600" />
+                    <Phone className="h-5 w-5 mx-auto mb-1 text-[#92A05A]" />
                     <div className="text-2xl font-bold">{constraints.calls}</div>
                     <div className="text-xs text-muted-foreground">Calls</div>
                   </div>
                   <div className="text-center" data-testid="summary-emails">
-                    <Mail className="h-5 w-5 mx-auto mb-1 text-purple-600" />
+                    <Mail className="h-5 w-5 mx-auto mb-1 text-[#E8A54B]" />
                     <div className="text-2xl font-bold">{constraints.emails}</div>
                     <div className="text-xs text-muted-foreground">Emails</div>
                   </div>
@@ -1204,7 +1204,7 @@ export default function PartnerPathwayWizard() {
                     const Icon = selectedOption?.icon || Target;
                     return (
                       <>
-                        <Icon className="h-5 w-5 text-blue-600" />
+                        <Icon className="h-5 w-5 text-[#4FA6A6]" />
                         <span className="font-medium">{selectedOption?.label}</span>
                       </>
                     );
@@ -1246,7 +1246,7 @@ export default function PartnerPathwayWizard() {
                             <div className="flex items-start justify-between gap-4">
                               <div className="flex-1 space-y-2 text-left">
                                 <div className="flex items-center gap-2 flex-wrap">
-                                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-blue-600 text-white text-sm font-bold">
+                                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#395174] text-white text-sm font-bold">
                                     {index + 1}
                                   </div>
                                   <h4 className="font-semibold text-base">{move.donorName}</h4>
@@ -1288,7 +1288,7 @@ export default function PartnerPathwayWizard() {
                             {/* Objective */}
                             <div className="p-4 border-b">
                               <div className="flex items-center gap-2 mb-2">
-                                <Target className="h-4 w-4 text-blue-600" />
+                                <Target className="h-4 w-4 text-[#4FA6A6]" />
                                 <h5 className="font-semibold text-sm">Objective</h5>
                               </div>
                               <p className="text-sm">{move.objective}</p>
@@ -1297,7 +1297,7 @@ export default function PartnerPathwayWizard() {
                             {/* Context */}
                             <div className="p-4 border-b">
                               <div className="flex items-center gap-2 mb-2">
-                                <FileText className="h-4 w-4 text-purple-600" />
+                                <FileText className="h-4 w-4 text-[#7BC4DC]" />
                                 <h5 className="font-semibold text-sm">Background & Context</h5>
                               </div>
                               <p className="text-sm text-muted-foreground">{move.context}</p>
@@ -1306,13 +1306,13 @@ export default function PartnerPathwayWizard() {
                             {/* Talking Points */}
                             <div className="p-4 border-b">
                               <div className="flex items-center gap-2 mb-3">
-                                <MessageSquare className="h-4 w-4 text-green-600" />
+                                <MessageSquare className="h-4 w-4 text-[#92A05A]" />
                                 <h5 className="font-semibold text-sm">Key Talking Points</h5>
                               </div>
                               <ul className="space-y-2">
                                 {move.talkingPoints.map((point, idx) => (
                                   <li key={idx} className="flex items-start gap-2 text-sm">
-                                    <CheckCircle2 className="h-4 w-4 text-green-500 shrink-0 mt-0.5" />
+                                    <CheckCircle2 className="h-4 w-4 text-[#92A05A] shrink-0 mt-0.5" />
                                     <span>{point}</span>
                                   </li>
                                 ))}
@@ -1352,22 +1352,22 @@ export default function PartnerPathwayWizard() {
                             {/* Expected Outcome */}
                             <div className="p-4 border-b">
                               <div className="flex items-center gap-2 mb-2">
-                                <TrendingUp className="h-4 w-4 text-blue-600" />
+                                <TrendingUp className="h-4 w-4 text-[#4FA6A6]" />
                                 <h5 className="font-semibold text-sm">Expected Outcome</h5>
                               </div>
-                              <p className="text-sm font-medium text-blue-700 dark:text-blue-400">{move.expectedOutcome}</p>
+                              <p className="text-sm font-medium text-[#4FA6A6] dark:text-[#7BC4DC]">{move.expectedOutcome}</p>
                             </div>
 
                             {/* Next Steps */}
                             <div className="p-4 border-b">
                               <div className="flex items-center gap-2 mb-3">
-                                <ArrowRight className="h-4 w-4 text-orange-500" />
+                                <ArrowRight className="h-4 w-4 text-[#E8A54B]" />
                                 <h5 className="font-semibold text-sm">Follow-Up Steps</h5>
                               </div>
                               <ol className="space-y-2">
                                 {move.nextSteps.map((step, idx) => (
                                   <li key={idx} className="flex items-start gap-2 text-sm">
-                                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 text-xs font-semibold shrink-0">
+                                    <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#E8A54B]/10 text-[#E8A54B] text-xs font-semibold shrink-0">
                                       {idx + 1}
                                     </span>
                                     <span>{step}</span>
