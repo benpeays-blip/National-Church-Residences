@@ -1530,12 +1530,14 @@ function TechStack() {
   return (
     <div className="space-y-4">
       <AccentCard accent="teal">
-        <CardHeader className="py-3 px-4">
-          <div className="flex items-center gap-2">
-            <Layers className="h-4 w-4" style={{ color: getAccentColor("teal") }} />
-            <CardTitle className="text-base">NCR Technology Stack</CardTitle>
+        <CardHeader className="py-6 px-6">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("teal")}15` }}>
+              <Layers className="h-6 w-6" style={{ color: getAccentColor("teal") }} />
+            </div>
+            <CardTitle className="text-2xl font-bold">NCR Technology Stack</CardTitle>
           </div>
-          <CardDescription className="text-xs">
+          <CardDescription className="text-base mt-2">
             Overview of software products used across NCR fundraising and operations. Click any card for details.
           </CardDescription>
         </CardHeader>
