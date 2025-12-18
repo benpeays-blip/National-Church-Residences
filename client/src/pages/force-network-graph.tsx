@@ -276,15 +276,15 @@ export default function ForceNetworkGraph() {
   }, [hoveredNode, selectedNode]);
 
   return (
-    <div className="space-y-6">
-      <div className="space-y-1">
+    <div className="flex flex-col h-full">
+      <div className="space-y-1 mb-4">
         <h1 className="text-3xl font-bold">Force Network Graph</h1>
         <p className="text-sm text-muted-foreground">
           Interactive 2D force-directed visualization of donor and organization relationships
         </p>
       </div>
 
-      <Card className="border overflow-hidden">
+      <Card className="border overflow-hidden flex-1 flex flex-col">
         <CardHeader style={{ backgroundColor: '#395174' }}>
           <div className="flex items-center justify-between">
             <div>
@@ -318,12 +318,12 @@ export default function ForceNetworkGraph() {
             </div>
           </div>
         </CardHeader>
-        <CardContent className="p-0">
-          <div className="grid grid-cols-1 lg:grid-cols-5">
-            <div className="lg:col-span-4 relative bg-white overflow-hidden" style={{ height: 600 }}>
+        <CardContent className="p-0 flex-1">
+          <div className="grid grid-cols-1 lg:grid-cols-5 h-full">
+            <div className="lg:col-span-4 relative bg-white overflow-hidden" style={{ minHeight: 500 }}>
               <ForceGraph2D
                 width={800}
-                height={600}
+                height={550}
                 ref={fgRef}
                 graphData={graphData}
                 nodeCanvasObject={nodeCanvasObject}
@@ -355,14 +355,14 @@ export default function ForceNetworkGraph() {
               </div>
             </div>
 
-            <div className="border-l bg-background">
-              <div className="p-4 border-b">
+            <div className="border-l bg-background flex flex-col" style={{ minHeight: 500 }}>
+              <div className="p-4 border-b shrink-0">
                 <h3 className="font-semibold text-sm flex items-center gap-2">
                   <Eye className="w-4 h-4" style={{ color: "#395174" }} />
                   Node Details
                 </h3>
               </div>
-              <div className="p-4">
+              <div className="p-4 flex-1 overflow-auto">
                 {selectedNode ? (
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
