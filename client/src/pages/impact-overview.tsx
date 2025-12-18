@@ -94,7 +94,7 @@ export default function ImpactOverview() {
         </div>
       </div>
 
-      <Card className="p-4" style={{ backgroundColor: "rgba(57, 81, 116, 0.05)" }}>
+      <Card className="p-4">
         <div className="flex items-start gap-3">
           <Sparkles className="h-5 w-5 mt-0.5" style={{ color: "#395174" }} />
           <div>
