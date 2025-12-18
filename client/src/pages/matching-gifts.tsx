@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -267,9 +268,11 @@ export default function MatchingGifts() {
                         <p className="text-xs text-muted-foreground">{donor.matchRatio} match</p>
                       </div>
                       {getStatusBadge(donor.status)}
-                      <Button variant="ghost" size="icon">
-                        <ArrowRight className="h-4 w-4" />
-                      </Button>
+                      <Link href={`/donors/${donor.id}`}>
+                        <Button variant="ghost" size="icon" data-testid={`button-view-donor-${donor.id}`}>
+                          <ArrowRight className="h-4 w-4" />
+                        </Button>
+                      </Link>
                     </div>
                   </div>
                 </div>
