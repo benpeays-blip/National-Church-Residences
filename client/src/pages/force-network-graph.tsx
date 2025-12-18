@@ -313,6 +313,11 @@ export default function ForceNetworkGraph() {
   };
 
   const nodeCanvasObject = useCallback((node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
+    // Guard against undefined positions during initial simulation
+    if (node.x === undefined || node.y === undefined || !isFinite(node.x) || !isFinite(node.y)) {
+      return;
+    }
+    
     const label = node.name;
     const isHovered = hoveredNode === node.id;
     const isSelected = selectedNode?.id === node.id;
