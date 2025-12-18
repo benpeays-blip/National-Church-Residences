@@ -353,9 +353,9 @@ export default function QuadrantTop10() {
   };
 
   return (
-    <Card className="border-0 shadow-none">
+    <Card className="border-0 shadow-none h-full flex flex-col">
       <CardHeader 
-        className="p-6 pb-4 rounded-t-lg"
+        className="p-6 pb-4 rounded-t-lg shrink-0"
         style={{ backgroundColor: "#395174" }}
       >
         <div className="flex items-center justify-between gap-4 flex-wrap">
@@ -381,8 +381,8 @@ export default function QuadrantTop10() {
           </Select>
         </div>
       </CardHeader>
-      <CardContent>
-        <div className="rounded-md border">
+      <CardContent className="flex-1 flex flex-col overflow-hidden p-4">
+        <div className="rounded-md border flex-1 overflow-auto">
           <Table>
             <TableHeader>
               <TableRow>
@@ -433,7 +433,7 @@ export default function QuadrantTop10() {
           </Table>
         </div>
         {visibleCount < filteredOpportunities.length && (
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-4 shrink-0">
             <Button 
               variant="outline" 
               onClick={() => setVisibleCount(prev => prev + 10)}
@@ -446,7 +446,7 @@ export default function QuadrantTop10() {
           </div>
         )}
         {visibleCount >= filteredOpportunities.length && filteredOpportunities.length > 10 && (
-          <p className="text-center text-sm text-muted-foreground mt-4">
+          <p className="text-center text-sm text-muted-foreground mt-4 shrink-0">
             Showing all {filteredOpportunities.length} opportunities
           </p>
         )}

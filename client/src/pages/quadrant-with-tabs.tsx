@@ -59,7 +59,7 @@ export default function QuadrantWithTabs() {
   return (
     <div className="flex flex-col h-full">
       <SectionTabs tabs={quadrantTabs} currentPath={location} />
-      <div className="flex-1 overflow-auto p-6">
+      <div className="flex-1 flex flex-col overflow-hidden p-6">
         <QuadrantComponent />
       </div>
     </div>
