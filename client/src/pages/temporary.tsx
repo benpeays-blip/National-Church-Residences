@@ -1559,7 +1559,7 @@ function ProductDetailPage({ productId }: { productId: string }) {
       <div className="p-6">
         <Card className="p-6 text-center">
           <p className="text-muted-foreground">Product not found</p>
-          <Button className="mt-4" onClick={() => navigate("/temporary/tech-stack")}>
+          <Button className="mt-4" onClick={() => navigate("/temporary/technology-categories")}>
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
@@ -1573,7 +1573,7 @@ function ProductDetailPage({ productId }: { productId: string }) {
       <Button 
         variant="ghost" 
         className="mb-2"
-        onClick={() => navigate("/temporary/tech-stack")}
+        onClick={() => navigate("/temporary/technology-categories")}
         data-testid="button-back"
       >
         <ArrowLeft className="w-4 h-4 mr-2" />
