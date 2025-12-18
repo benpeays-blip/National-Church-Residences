@@ -282,7 +282,7 @@ export default function FoundationMetricDetail() {
         </Card>
 
         <Card className="overflow-hidden">
-          <CardHeader className="bg-[#7BC4DC] text-white">
+          <CardHeader className="bg-[#395174] text-white">
             <CardTitle className="flex items-center gap-2 text-white">
               <Sparkles className="h-5 w-5" />
               Recent Activity
@@ -315,7 +315,7 @@ export default function FoundationMetricDetail() {
       </div>
 
       <Card className="overflow-hidden">
-        <CardHeader className="bg-[#7BC4DC] text-white">
+        <CardHeader className="bg-[#395174] text-white">
           <CardTitle className="flex items-center gap-2 text-white">
             <Award className="h-5 w-5" />
             Goals & Progress
