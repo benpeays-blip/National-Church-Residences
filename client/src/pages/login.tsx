@@ -135,20 +135,36 @@ export default function Login() {
     setError("");
   };
 
-  const handleDemoAccess = () => {
+  const handleBoardDemoAccess = () => {
     localStorage.setItem("portalUser", JSON.stringify({ 
       id: "demo", 
       username: "demo", 
       role: "demo",
       firstName: "Demo",
-      lastName: "User"
+      lastName: "Board Member"
     }));
     localStorage.setItem("authToken", "demo-token");
     toast({
-      title: "Demo Mode",
-      description: "Exploring FundRazor in demo mode",
+      title: "Board Demo Mode",
+      description: "Exploring FundRazor as a board member",
     });
     setLocation("/");
+  };
+
+  const handleDonorDemoAccess = () => {
+    localStorage.setItem("portalUser", JSON.stringify({ 
+      id: "demo-donor", 
+      username: "demo-donor", 
+      role: "donor",
+      firstName: "Demo",
+      lastName: "Donor"
+    }));
+    localStorage.setItem("authToken", "demo-donor-token");
+    toast({
+      title: "Donor Demo Mode",
+      description: "Exploring the donor portal",
+    });
+    setLocation("/donor-portal");
   };
 
   const handleLogin = (e: React.FormEvent) => {
@@ -331,23 +347,40 @@ export default function Login() {
                 </div>
               </div>
 
-              <Button 
-                variant="outline" 
-                className="w-full h-20 text-lg gap-4"
-                onClick={handleDemoAccess}
-                data-testid="button-demo-access"
-              >
-                <div 
-                  className="w-14 h-14 rounded-full flex items-center justify-center"
-                  style={{ backgroundColor: `${getAccentColor("sky")}20` }}
+              <div className="grid grid-cols-2 gap-4">
+                <Button 
+                  variant="outline" 
+                  className="h-20 text-base gap-3 flex-col py-3"
+                  onClick={handleBoardDemoAccess}
+                  data-testid="button-board-demo"
                 >
-                  <Play className="h-7 w-7" style={{ color: getAccentColor("sky") }} />
-                </div>
-                <div className="text-left">
-                  <div className="font-semibold text-xl">Try Demo</div>
-                  <div className="text-sm text-muted-foreground">Explore FundRazor without an account</div>
-                </div>
-              </Button>
+                  <div 
+                    className="w-10 h-10 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: `${getAccentColor("teal")}20` }}
+                  >
+                    <Users className="h-5 w-5" style={{ color: getAccentColor("teal") }} />
+                  </div>
+                  <div className="text-center">
+                    <div className="font-semibold">Board Demo</div>
+                  </div>
+                </Button>
+                <Button 
+                  variant="outline" 
+                  className="h-20 text-base gap-3 flex-col py-3"
+                  onClick={handleDonorDemoAccess}
+                  data-testid="button-donor-demo"
+                >
+                  <div 
+                    className="w-10 h-10 rounded-full flex items-center justify-center"
+                    style={{ backgroundColor: `${getAccentColor("coral")}20` }}
+                  >
+                    <Heart className="h-5 w-5" style={{ color: getAccentColor("coral") }} />
+                  </div>
+                  <div className="text-center">
+                    <div className="font-semibold">Donor Demo</div>
+                  </div>
+                </Button>
+              </div>
             </div>
 
             <p className="text-center text-sm text-muted-foreground">
