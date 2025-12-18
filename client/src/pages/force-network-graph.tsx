@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useMemo, useEffect } from "react";
+import { useState, useRef, useCallback, useMemo, useEffect, useLayoutEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -82,7 +82,29 @@ export default function ForceNetworkGraph() {
   const [hoveredNode, setHoveredNode] = useState<string | null>(null);
   const [showLabels, setShowLabels] = useState(true);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [dimensions, setDimensions] = useState({ width: 800, height: 500 });
   const fgRef = useRef<any>();
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Resize observer to match canvas to container
+  useLayoutEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const updateDimensions = () => {
+      const rect = container.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        setDimensions({ width: rect.width, height: rect.height });
+      }
+    };
+
+    updateDimensions();
+
+    const resizeObserver = new ResizeObserver(updateDimensions);
+    resizeObserver.observe(container);
+
+    return () => resizeObserver.disconnect();
+  }, []);
 
   // Center the graph when the simulation settles on initial load
   useEffect(() => {
@@ -320,10 +342,10 @@ export default function ForceNetworkGraph() {
         </CardHeader>
         <CardContent className="p-0 flex-1">
           <div className="grid grid-cols-1 lg:grid-cols-5 h-full">
-            <div className="lg:col-span-4 relative bg-white overflow-hidden" style={{ minHeight: 500 }}>
+            <div ref={containerRef} className="lg:col-span-4 relative bg-white overflow-hidden" style={{ minHeight: 500 }}>
               <ForceGraph2D
-                width={800}
-                height={550}
+                width={dimensions.width}
+                height={dimensions.height}
                 ref={fgRef}
                 graphData={graphData}
                 nodeCanvasObject={nodeCanvasObject}
