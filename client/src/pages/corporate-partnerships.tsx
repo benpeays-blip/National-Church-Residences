@@ -170,20 +170,22 @@ export default function CorporatePartnershipsPage() {
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <Card 
-          className={`border cursor-pointer transition-all hover:shadow-md ${expandedMetric === 'active' ? 'ring-2 ring-primary' : ''}`}
-          style={{ backgroundColor: 'rgba(222, 235, 247, 0.3)' }}
+          className={`border-l-4 overflow-hidden cursor-pointer transition-all hover:shadow-md ${expandedMetric === 'active' ? 'ring-2 ring-primary' : ''}`}
+          style={{ borderLeftColor: '#4A9B8C' }}
           onClick={() => toggleMetric('active')}
           data-testid="metric-active-partners"
         >
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Active Partners</CardTitle>
             <div className="flex items-center gap-1">
-              <Building2 className="w-4 h-4" style={{ color: "#084594" }} />
+              <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#4A9B8C15' }}>
+                <Building2 className="w-4 h-4" style={{ color: "#4A9B8C" }} />
+              </div>
               {expandedMetric === 'active' ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{activePartners}</div>
+            <div className="text-3xl font-bold" style={{ color: "#4A9B8C" }}>{activePartners}</div>
             <p className="text-xs text-muted-foreground mt-1">
               of {partnerships?.length || 0} total
             </p>
@@ -191,20 +193,22 @@ export default function CorporatePartnershipsPage() {
         </Card>
 
         <Card 
-          className={`border cursor-pointer transition-all hover:shadow-md ${expandedMetric === 'contributions' ? 'ring-2 ring-primary' : ''}`}
-          style={{ backgroundColor: 'rgba(222, 235, 247, 0.3)' }}
+          className={`border-l-4 overflow-hidden cursor-pointer transition-all hover:shadow-md ${expandedMetric === 'contributions' ? 'ring-2 ring-primary' : ''}`}
+          style={{ borderLeftColor: '#8B9A5C' }}
           onClick={() => toggleMetric('contributions')}
           data-testid="metric-total-contributions"
         >
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Contributions</CardTitle>
             <div className="flex items-center gap-1">
-              <DollarSign className="w-4 h-4" style={{ color: "#084594" }} />
+              <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#8B9A5C15' }}>
+                <DollarSign className="w-4 h-4" style={{ color: "#8B9A5C" }} />
+              </div>
               {expandedMetric === 'contributions' ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>
+            <div className="text-3xl font-bold" style={{ color: "#8B9A5C" }}>
               ${totalContributions.toLocaleString(undefined, { maximumFractionDigits: 0 })}
             </div>
             <p className="text-xs text-muted-foreground mt-1">All-time giving</p>
@@ -212,20 +216,22 @@ export default function CorporatePartnershipsPage() {
         </Card>
 
         <Card 
-          className={`border cursor-pointer transition-all hover:shadow-md ${expandedMetric === 'hours' ? 'ring-2 ring-primary' : ''}`}
-          style={{ backgroundColor: 'rgba(222, 235, 247, 0.3)' }}
+          className={`border-l-4 overflow-hidden cursor-pointer transition-all hover:shadow-md ${expandedMetric === 'hours' ? 'ring-2 ring-primary' : ''}`}
+          style={{ borderLeftColor: '#D4884A' }}
           onClick={() => toggleMetric('hours')}
           data-testid="metric-volunteer-hours"
         >
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Volunteer Hours</CardTitle>
             <div className="flex items-center gap-1">
-              <Clock className="w-4 h-4" style={{ color: "#084594" }} />
+              <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#D4884A15' }}>
+                <Clock className="w-4 h-4" style={{ color: "#D4884A" }} />
+              </div>
               {expandedMetric === 'hours' ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>
+            <div className="text-3xl font-bold" style={{ color: "#D4884A" }}>
               {totalVolunteerHours.toLocaleString()}
             </div>
             <p className="text-xs text-muted-foreground mt-1">Hours contributed</p>
@@ -233,20 +239,22 @@ export default function CorporatePartnershipsPage() {
         </Card>
 
         <Card 
-          className={`border cursor-pointer transition-all hover:shadow-md ${expandedMetric === 'volunteers' ? 'ring-2 ring-primary' : ''}`}
-          style={{ backgroundColor: 'rgba(222, 235, 247, 0.3)' }}
+          className={`border-l-4 overflow-hidden cursor-pointer transition-all hover:shadow-md ${expandedMetric === 'volunteers' ? 'ring-2 ring-primary' : ''}`}
+          style={{ borderLeftColor: '#5BA3C6' }}
           onClick={() => toggleMetric('volunteers')}
           data-testid="metric-total-volunteers"
         >
           <CardHeader className="flex flex-row items-center justify-between gap-2 space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Volunteers</CardTitle>
             <div className="flex items-center gap-1">
-              <Users className="w-4 h-4" style={{ color: "#084594" }} />
+              <div className="h-8 w-8 rounded-lg flex items-center justify-center" style={{ backgroundColor: '#5BA3C615' }}>
+                <Users className="w-4 h-4" style={{ color: "#5BA3C6" }} />
+              </div>
               {expandedMetric === 'volunteers' ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
             </div>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold" style={{ color: "#084594" }}>{totalVolunteers}</div>
+            <div className="text-3xl font-bold" style={{ color: "#5BA3C6" }}>{totalVolunteers}</div>
             <p className="text-xs text-muted-foreground mt-1">Corporate volunteers</p>
           </CardContent>
         </Card>
