@@ -2272,18 +2272,20 @@ function RiskCompliance() {
         </div>
       </div>
 
-      <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${getAccentColor("sky")}15` }}>
-          <Building2 className="h-6 w-6" style={{ color: getAccentColor("sky") }} />
-        </div>
-        <div>
-          <h2 className="text-2xl font-bold" style={{ color: getAccentColor("sky") }}>Executive Summary</h2>
-          <p className="text-base text-muted-foreground mt-2 leading-relaxed">
-            NCR's risk landscape spans <strong className="text-foreground">7 major domains</strong>: Healthcare (HIPAA, HITECH, 42 CFR Part 2, CMS), 
-            Housing (Fair Housing Act, HUD, Section 504, ADA), Fundraising (IRS 990, solicitation laws, GAAP/FASB), 
-            Legal (entity tracking, HUD/CMS filings, Sarbanes-Oxley), Finance (IRS, GAAP, labor laws, ERISA), 
-            Cybersecurity (HIPAA Security Rule, breach laws, PCI DSS), and Ethics (bias, consent, transparency, accessibility).
-          </p>
+      <div className="border-t pt-6">
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${getAccentColor("sky")}15` }}>
+            <Building2 className="h-6 w-6" style={{ color: getAccentColor("sky") }} />
+          </div>
+          <div>
+            <h2 className="text-2xl font-bold" style={{ color: getAccentColor("sky") }}>Executive Summary</h2>
+            <p className="text-base text-muted-foreground mt-2 leading-relaxed">
+              NCR's risk landscape spans <strong className="text-foreground">7 major domains</strong>: Healthcare (HIPAA, HITECH, 42 CFR Part 2, CMS), 
+              Housing (Fair Housing Act, HUD, Section 504, ADA), Fundraising (IRS 990, solicitation laws, GAAP/FASB), 
+              Legal (entity tracking, HUD/CMS filings, Sarbanes-Oxley), Finance (IRS, GAAP, labor laws, ERISA), 
+              Cybersecurity (HIPAA Security Rule, breach laws, PCI DSS), and Ethics (bias, consent, transparency, accessibility).
+            </p>
+          </div>
         </div>
       </div>
 
