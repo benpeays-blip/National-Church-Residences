@@ -542,20 +542,30 @@ export default function AgentValueMap() {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {agentCatalogue.map((agent) => (
-                  <AccentCard key={agent.name} accent={agent.accent} data-testid={`card-agent-${agent.name.toLowerCase().replace(/\s+/g, '-')}`}>
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-3">
-                        <div className={`p-2 rounded-md ${getAccentBgClass(agent.accent)}`}>
-                          <agent.icon className="w-4 h-4 text-white" />
+                  <Link key={agent.name} href={`/agent-value-map/agent/${agent.name.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <AccentCard 
+                      accent={agent.accent} 
+                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group h-full"
+                      data-testid={`card-agent-${agent.name.toLowerCase().replace(/\s+/g, '-')}`}
+                    >
+                      <CardContent className="p-4">
+                        <div className="flex items-start gap-3">
+                          <div className={`p-2 rounded-md ${getAccentBgClass(agent.accent)}`}>
+                            <agent.icon className="w-4 h-4 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-semibold group-hover:text-primary transition-colors">{agent.name}</p>
+                            <Badge variant="outline" className="text-xs mt-1">{agent.domain}</Badge>
+                            <p className="text-sm text-muted-foreground mt-2">{agent.description}</p>
+                            <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
+                              <span>View agent details</span>
+                              <ChevronRight className="h-4 w-4" />
+                            </div>
+                          </div>
                         </div>
-                        <div className="flex-1">
-                          <p className="font-semibold">{agent.name}</p>
-                          <Badge variant="outline" className="text-xs mt-1">{agent.domain}</Badge>
-                          <p className="text-sm text-muted-foreground mt-2">{agent.description}</p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </AccentCard>
+                      </CardContent>
+                    </AccentCard>
+                  </Link>
                 ))}
               </div>
             </CardContent>
