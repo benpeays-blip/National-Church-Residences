@@ -124,9 +124,13 @@ export default function NetworkVisualizationExamples() {
                           if (!org) return null;
                           const oIdx = sampleOrgs.indexOf(org);
                           const isHighlighted = sankeyHovered === person.name || sankeyHovered === org.name;
-                          // Calculate Y positions to align with the flex justify-around spacing
-                          const y1 = 5 + (pIdx * 90 / (samplePeople.length - 1));
-                          const y2 = 5 + (oIdx * 90 / (sampleOrgs.length - 1));
+                          // Calculate Y positions to match justify-around: equal space around each item
+                          // For justify-around: first item at (1/2n), then spaced by (1/n) of height
+                          const peopleCount = samplePeople.length;
+                          const orgCount = sampleOrgs.length;
+                          // Adjust for the header label taking some space (~8% at top)
+                          const y1 = 10 + ((pIdx + 0.5) / peopleCount) * 85;
+                          const y2 = 10 + ((oIdx + 0.5) / orgCount) * 85;
                           return (
                             <g key={`${person.id}-${org.id}`}>
                               <path
