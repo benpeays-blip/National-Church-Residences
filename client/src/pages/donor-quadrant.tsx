@@ -1,12 +1,11 @@
 import DonorQuadrantMapper from "@/components/donor-quadrant-mapper";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, ArrowRight, Zap, Grid3x3, Lightbulb, TrendingUp, Clock, Users, Star } from 'lucide-react';
+import { FileText, ArrowRight, Zap, Grid3x3, Lightbulb } from 'lucide-react';
 
 const thesisPoints = [
   {
     number: 1,
     title: "Donor movement is predictable",
-    icon: TrendingUp,
     content: "Every donor relationship moves from:",
     highlight: "anonymous → known → seen → valued → essential",
     footer: "This quadrant system maps that progression."
@@ -14,14 +13,12 @@ const thesisPoints = [
   {
     number: 2,
     title: "All movement requires BOTH energy and structure",
-    icon: Zap,
     bullets: ["Energy builds closeness.", "Structure builds commitment."],
     footer: "Partner-level donors emerge only where both converge."
   },
   {
     number: 3,
     title: "Each quadrant has a \"default destiny\"",
-    icon: Clock,
     content: "If not intentionally moved:",
     bullets: [
       "Acquaintances disappear.",
@@ -33,7 +30,6 @@ const thesisPoints = [
   {
     number: 4,
     title: "Internal discipline determines upward movement",
-    icon: Users,
     content: "Most donors do not move on their own. They move because YOU intentionally:",
     bullets: [
       "invest energy,",
@@ -45,7 +41,6 @@ const thesisPoints = [
   {
     number: 5,
     title: "The ultimate goal is a community of Partners",
-    icon: Star,
     content: "This is where:",
     bullets: [
       "transformational gifts occur,",
@@ -186,7 +181,6 @@ export default function DonorQuadrant() {
       {/* Thesis Points Grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
         {thesisPoints.map((point) => {
-          const Icon = point.icon;
           return (
             <Card key={point.number} className="flex flex-col">
               <CardHeader className="pb-3">
@@ -195,10 +189,7 @@ export default function DonorQuadrant() {
                     {point.number}
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Icon className="w-4 h-4 text-[#7BC4DC] flex-shrink-0" />
-                      <CardTitle className="text-sm leading-tight">{point.title}</CardTitle>
-                    </div>
+                    <CardTitle className="text-sm leading-tight">{point.title}</CardTitle>
                   </div>
                 </div>
               </CardHeader>
