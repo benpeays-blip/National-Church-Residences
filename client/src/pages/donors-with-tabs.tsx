@@ -4,6 +4,7 @@ import { Users, AlertCircle, Clock, UserPlus } from "lucide-react";
 import Donors from "@/pages/donors";
 import LYBUNTDonors from "@/pages/analytics-lybunt-donors";
 import SYBUNTDonors from "@/pages/analytics-sybunt-donors";
+import Prospects from "@/pages/prospects";
 
 const donorTabs: SectionTab[] = [
   {
@@ -35,14 +36,13 @@ const donorTabs: SectionTab[] = [
 export default function DonorsWithTabs() {
   const [location] = useLocation();
 
-  let DonorComponent = Donors;
+  let DonorComponent: React.ComponentType = Donors;
   if (location === "/donors/lybunt") {
     DonorComponent = LYBUNTDonors;
   } else if (location === "/donors/sybunt") {
     DonorComponent = SYBUNTDonors;
   } else if (location === "/donors/prospects") {
-    // For now, use the main Donors component - we'll filter later
-    DonorComponent = Donors;
+    DonorComponent = Prospects;
   }
 
   return (
