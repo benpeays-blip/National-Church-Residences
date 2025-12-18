@@ -1658,6 +1658,138 @@ function ProductDetailPage({ productId }: { productId: string }) {
   );
 }
 
+function EcosystemProductDetailPage({ productId }: { productId: string }) {
+  const [, navigate] = useLocation();
+  const product = techProducts.find(p => p.id === productId);
+
+  if (!product) {
+    return (
+      <div className="p-6">
+        <Card className="p-6 text-center">
+          <p className="text-muted-foreground">Product not found</p>
+          <Button className="mt-4" onClick={() => navigate("/temporary/technology-categories")}>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back to Tech Ecosystem
+          </Button>
+        </Card>
+      </div>
+    );
+  }
+
+  const getCategoryIcon = () => {
+    const iconMap: Record<string, typeof Database> = {
+      "CRM": Heart,
+      "Finance": DollarSign,
+      "Compliance": Shield,
+      "HR & Finance": Users,
+      "BI & Analytics": BarChart3,
+      "Data Platform": Database,
+      "Governance": Shield,
+      "Grants": Target,
+      "Property Management": Home,
+    };
+    return iconMap[product.category] || Building2;
+  };
+  const CategoryIcon = getCategoryIcon();
+
+  return (
+    <div className="p-6 space-y-6">
+      <Button 
+        variant="ghost" 
+        className="mb-2"
+        onClick={() => navigate("/temporary/technology-categories")}
+        data-testid="button-back-ecosystem"
+      >
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back to Tech Ecosystem
+      </Button>
+
+      <Card>
+        <div 
+          className="p-6"
+          style={{ backgroundColor: product.brandColorLight }}
+        >
+          <div className="flex items-start justify-between gap-4 flex-wrap">
+            <div className="flex items-start gap-4">
+              <div 
+                className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
+                style={{ backgroundColor: `${product.brandColor}20` }}
+              >
+                <CategoryIcon className="w-6 h-6" style={{ color: product.brandColor }} />
+              </div>
+              <div>
+                <h1 
+                  className="text-2xl font-bold mb-2"
+                  style={{ color: product.brandColor }}
+                >
+                  {product.name}
+                </h1>
+                <Badge variant="outline" className="text-sm" style={{ borderColor: product.brandColor, color: product.brandColor }}>
+                  {product.category}
+                </Badge>
+                <p className="text-sm text-muted-foreground mt-3">{product.tagline}</p>
+              </div>
+            </div>
+            <Button
+              variant="outline"
+              onClick={() => window.open(product.website, '_blank')}
+              data-testid={`button-visit-${product.id}`}
+            >
+              <ExternalLink className="h-4 w-4 mr-2" />
+              Visit Website
+            </Button>
+          </div>
+        </div>
+
+        <div className="p-6 border-t">
+          <h2 className="font-semibold text-lg mb-3">Overview</h2>
+          <p className="text-muted-foreground">{product.description}</p>
+        </div>
+      </Card>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <AccentCard accent="lime" className="p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <Check className="h-5 w-5" style={{ color: getAccentColor("lime") }} />
+            <h2 className="font-semibold text-lg">Strengths</h2>
+          </div>
+          <ul className="space-y-3">
+            {product.strengths.map((strength, idx) => (
+              <li key={idx} className="flex items-start gap-3">
+                <span className="font-bold mt-0.5" style={{ color: getAccentColor("lime") }}>+</span>
+                <span className="text-sm text-muted-foreground">{strength}</span>
+              </li>
+            ))}
+          </ul>
+        </AccentCard>
+
+        <AccentCard accent="coral" className="p-6">
+          <div className="flex items-center gap-2 mb-4">
+            <X className="h-5 w-5" style={{ color: getAccentColor("coral") }} />
+            <h2 className="font-semibold text-lg">Weaknesses</h2>
+          </div>
+          <ul className="space-y-3">
+            {product.weaknesses.map((weakness, idx) => (
+              <li key={idx} className="flex items-start gap-3">
+                <span className="font-bold mt-0.5" style={{ color: getAccentColor("coral") }}>−</span>
+                <span className="text-sm text-muted-foreground">{weakness}</span>
+              </li>
+            ))}
+          </ul>
+        </AccentCard>
+      </div>
+
+      <AccentCard accent="teal" className="p-6">
+        <div className="flex items-center gap-2 mb-4">
+          <Building2 className="h-5 w-5" style={{ color: getAccentColor("teal") }} />
+          <h2 className="font-semibold text-lg" style={{ color: getAccentColor("teal") }}>NCR Context</h2>
+        </div>
+        <p className="text-muted-foreground">{product.ncrContext}</p>
+      </AccentCard>
+    </div>
+  );
+}
+
 interface TechComponent {
   id: string;
   name: string;
@@ -2391,6 +2523,7 @@ export default function Temporary() {
   const [location] = useLocation();
 
   const productDetailMatch = location.match(/^\/temporary\/tech-stack\/(.+)$/);
+  const ecosystemDetailMatch = location.match(/^\/temporary\/technology-categories\/(.+)$/);
   const interviewDetailMatch = location.match(/^\/temporary\/interviews\/(.+)$/);
   const riskCategoryMatch = location.match(/^\/temporary\/risk-compliance\/(.+)$/);
   const techComponentMatch = location.match(/^\/temporary\/tech-component\/(.+)$/);
@@ -2401,6 +2534,17 @@ export default function Temporary() {
       <div className="flex flex-col h-full">
         <div className="flex-1 overflow-auto">
           <ProductDetailPage productId={productId} />
+        </div>
+      </div>
+    );
+  }
+
+  if (ecosystemDetailMatch) {
+    const productId = ecosystemDetailMatch[1];
+    return (
+      <div className="flex flex-col h-full">
+        <div className="flex-1 overflow-auto">
+          <EcosystemProductDetailPage productId={productId} />
         </div>
       </div>
     );
