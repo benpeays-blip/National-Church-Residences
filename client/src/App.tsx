@@ -38,17 +38,21 @@ const navigationDomains = {
       { name: "SMS Fundraising", href: "/sms-fundraising" },
     ]
   },
-  "Intelligence": {
+  "Analytics": {
     items: [
       { name: "Retention Risk", href: "/retention-risk" },
       { name: "Benchmarks", href: "/benchmarks" },
       { name: "Email Tracking", href: "/email-tracking" },
-      { name: "Duplicate Detection", href: "/duplicate-detection" },
-      { name: "Address Verification", href: "/address-verification" },
       { name: "Giving Anniversaries", href: "/giving-anniversaries" },
     ]
   },
-  "Portals": {
+  "Data Quality": {
+    items: [
+      { name: "Duplicate Detection", href: "/duplicate-detection" },
+      { name: "Address Verification", href: "/address-verification" },
+    ]
+  },
+  "Stakeholders": {
     items: [
       { name: "Donor Portal", href: "/donor-portal" },
       { name: "Board Dashboard", href: "/board-dashboard" },
@@ -772,31 +776,31 @@ function App() {
                       )}
                     </div>
 
-                    {/* Intelligence Dropdown */}
+                    {/* Analytics Dropdown */}
                     <div
                       className="relative"
-                      onMouseEnter={() => setActiveDropdown("Intelligence")}
+                      onMouseEnter={() => setActiveDropdown("Analytics")}
                       onMouseLeave={() => setActiveDropdown(null)}
                     >
                       <div className={`relative`}>
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleDropdownClick("Intelligence")}
+                          onClick={() => handleDropdownClick("Analytics")}
                           className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
-                            activeDropdown === "Intelligence" ? "bg-black/10" : ""
+                            activeDropdown === "Analytics" ? "bg-black/10" : ""
                           }`}
-                          data-testid="button-nav-intelligence"
+                          data-testid="button-nav-analytics"
                         >
-                          Intelligence
-                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Intelligence" ? "rotate-180" : ""}`} />
+                          Analytics
+                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Analytics" ? "rotate-180" : ""}`} />
                         </Button>
                       </div>
-                      {activeDropdown === "Intelligence" && (
+                      {activeDropdown === "Analytics" && (
                         <div className="absolute right-0 top-full pt-1 z-50">
                           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
                             <div className="py-2 px-1">
-                              {navigationDomains["Intelligence"].items.map((item) => (
+                              {navigationDomains["Analytics"].items.map((item) => (
                                 <Link 
                                   key={item.name} 
                                   href={item.href}
@@ -813,31 +817,72 @@ function App() {
                       )}
                     </div>
 
-                    {/* Portals Dropdown */}
+                    {/* Data Quality Dropdown */}
                     <div
                       className="relative"
-                      onMouseEnter={() => setActiveDropdown("Portals")}
+                      onMouseEnter={() => setActiveDropdown("Data Quality")}
                       onMouseLeave={() => setActiveDropdown(null)}
                     >
                       <div className={`relative`}>
                         <Button
                           variant="ghost"
                           size="sm"
-                          onClick={() => handleDropdownClick("Portals")}
+                          onClick={() => handleDropdownClick("Data Quality")}
                           className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
-                            activeDropdown === "Portals" ? "bg-black/10" : ""
+                            activeDropdown === "Data Quality" ? "bg-black/10" : ""
                           }`}
-                          data-testid="button-nav-portals"
+                          data-testid="button-nav-data-quality"
                         >
-                          Portals
-                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Portals" ? "rotate-180" : ""}`} />
+                          Data Quality
+                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Data Quality" ? "rotate-180" : ""}`} />
                         </Button>
                       </div>
-                      {activeDropdown === "Portals" && (
+                      {activeDropdown === "Data Quality" && (
                         <div className="absolute right-0 top-full pt-1 z-50">
                           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
                             <div className="py-2 px-1">
-                              {navigationDomains["Portals"].items.map((item) => (
+                              {navigationDomains["Data Quality"].items.map((item) => (
+                                <Link 
+                                  key={item.name} 
+                                  href={item.href}
+                                  className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                  onClick={closeDropdown}
+                                  data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                >
+                                  {item.name}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Stakeholders Dropdown */}
+                    <div
+                      className="relative"
+                      onMouseEnter={() => setActiveDropdown("Stakeholders")}
+                      onMouseLeave={() => setActiveDropdown(null)}
+                    >
+                      <div className={`relative`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDropdownClick("Stakeholders")}
+                          className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
+                            activeDropdown === "Stakeholders" ? "bg-black/10" : ""
+                          }`}
+                          data-testid="button-nav-stakeholders"
+                        >
+                          Stakeholders
+                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Stakeholders" ? "rotate-180" : ""}`} />
+                        </Button>
+                      </div>
+                      {activeDropdown === "Stakeholders" && (
+                        <div className="absolute right-0 top-full pt-1 z-50">
+                          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
+                            <div className="py-2 px-1">
+                              {navigationDomains["Stakeholders"].items.map((item) => (
                                 <Link 
                                   key={item.name} 
                                   href={item.href}
@@ -910,37 +955,34 @@ function App() {
                               Search
                               <span className="ml-auto text-xs text-gray-400">⌘K</span>
                             </button>
-                            <Link href="/notifications">
-                              <a
-                                className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                                onClick={() => setHamburgerOpen(false)}
-                                data-testid="button-notifications"
-                              >
-                                <Bell className="h-4 w-4" />
-                                Notifications
-                                <span className="ml-auto bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">3</span>
-                              </a>
+                            <Link 
+                              href="/notifications"
+                              className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                              onClick={() => setHamburgerOpen(false)}
+                              data-testid="button-notifications"
+                            >
+                              <Bell className="h-4 w-4" />
+                              Notifications
+                              <span className="ml-auto bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">3</span>
                             </Link>
                             <div className="my-1.5 mx-2 h-px bg-gray-200 dark:bg-gray-700" />
-                            <Link href="/settings">
-                              <a
-                                className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                                onClick={() => setHamburgerOpen(false)}
-                                data-testid="button-settings"
-                              >
-                                <SettingsIcon className="h-4 w-4" />
-                                Settings
-                              </a>
+                            <Link 
+                              href="/settings"
+                              className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                              onClick={() => setHamburgerOpen(false)}
+                              data-testid="button-settings"
+                            >
+                              <SettingsIcon className="h-4 w-4" />
+                              Settings
                             </Link>
-                            <Link href="/profile">
-                              <a
-                                className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                                onClick={() => setHamburgerOpen(false)}
-                                data-testid="button-account"
-                              >
-                                <User className="h-4 w-4" />
-                                Profile
-                              </a>
+                            <Link 
+                              href="/profile"
+                              className="flex items-center gap-3 w-full mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                              onClick={() => setHamburgerOpen(false)}
+                              data-testid="button-account"
+                            >
+                              <User className="h-4 w-4" />
+                              Profile
                             </Link>
                           </div>
                         </div>
