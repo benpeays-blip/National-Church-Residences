@@ -255,11 +255,11 @@ export function AIChatTab() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-200px)]">
-      <div className="mb-6">
-        <h1 className="text-3xl font-bold">Impact Intelligence Assistant</h1>
-        <p className="text-muted-foreground">
-          Ask any question about program outcomes, resident stories, and impact metrics for your donor reports.
+    <div className="flex flex-col h-full">
+      <div className="mb-4">
+        <h1 className="text-2xl font-bold">Impact Intelligence Assistant</h1>
+        <p className="text-sm text-muted-foreground">
+          Ask about program outcomes, resident stories, and impact metrics.
         </p>
       </div>
 
@@ -652,7 +652,7 @@ export default function ImpactIntelligence() {
   return (
     <div className="flex flex-col h-full">
       <SectionTabs tabs={impactTabs} currentPath={location} />
-      <div className="flex-1 overflow-auto p-6">
+      <div className={`flex-1 p-6 ${isFeedTab ? 'overflow-auto' : 'overflow-hidden'}`}>
         {isFeedTab ? <ImpactFeedTab /> : <AIChatTab />}
       </div>
     </div>
