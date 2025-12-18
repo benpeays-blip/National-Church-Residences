@@ -30,7 +30,6 @@ import {
 } from "@/components/ui/tooltip";
 import {
   Search,
-  Sparkles,
   Filter,
   Calendar,
   DollarSign,
@@ -53,7 +52,6 @@ import {
   ArrowUpRight,
   Bookmark,
   RefreshCw,
-  Zap,
   FileText,
   Home,
   Heart,
@@ -150,14 +148,6 @@ const GEOGRAPHIES = [
   "Columbus Metro",
   "Central Ohio",
   "Multi-State",
-];
-
-const QUICK_PROMPTS = [
-  { label: "Senior housing & care", query: "Grants for senior housing and healthcare services" },
-  { label: "Affordable housing", query: "Foundation grants for affordable housing development" },
-  { label: "Healthcare access", query: "Funding for community health and wellness programs" },
-  { label: "Capital projects", query: "Capital campaign grants for facility improvements" },
-  { label: "General operating", query: "Unrestricted general operating support for nonprofits" },
 ];
 
 const mockOpportunities: GrantOpportunity[] = [
@@ -820,53 +810,6 @@ export default function GrantResearchPage() {
 
   return (
     <div className="flex flex-col h-full" data-testid="grant-research-page">
-      <div className="p-6 border-b" style={{ backgroundColor: 'rgba(222, 235, 247, 0.3)' }}>
-        <div className="max-w-4xl mx-auto space-y-4">
-          <div className="flex items-center gap-2 mb-2">
-            <Sparkles className="w-5 h-5 text-blue-600" />
-            <h1 className="text-2xl font-bold">Grant Research & Discovery</h1>
-          </div>
-          <p className="text-muted-foreground">
-            AI-powered grant matching to find the best funding opportunities for National Church Residences
-          </p>
-          
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
-            <Input
-              placeholder="Search grants naturally, e.g. 'Senior housing grants in Ohio for capital projects'"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-12 pr-24 h-12 text-base bg-background border"
-              data-testid="input-grant-search"
-            />
-            <Button 
-              size="sm" 
-              className="absolute right-2 top-1/2 -translate-y-1/2"
-              data-testid="button-search-grants"
-            >
-              <Zap className="w-4 h-4 mr-1" />
-              Search
-            </Button>
-          </div>
-          
-          <div className="flex flex-wrap gap-2">
-            <span className="text-sm text-muted-foreground">Quick searches:</span>
-            {QUICK_PROMPTS.map((prompt) => (
-              <Button
-                key={prompt.label}
-                variant="outline"
-                size="sm"
-                className="text-xs h-7"
-                onClick={() => setSearchQuery(prompt.query)}
-                data-testid={`button-quick-prompt-${prompt.label.toLowerCase().replace(/\s+/g, '-')}`}
-              >
-                {prompt.label}
-              </Button>
-            ))}
-          </div>
-        </div>
-      </div>
-      
       <div className="grid grid-cols-12 gap-6 p-6 bg-background flex-1 overflow-hidden">
         <div className="col-span-12 md:col-span-3 space-y-6">
           <Card className="p-6">
@@ -875,14 +818,25 @@ export default function GrantResearchPage() {
                 <Filter className="w-4 h-4" />
                 <h3 className="font-semibold text-sm">Filters</h3>
               </div>
-              {hasActiveFilters && (
+              {(hasActiveFilters || searchQuery) && (
                 <Button variant="ghost" size="sm" className="h-6 text-xs" onClick={clearAllFilters}>
                   Clear all
                 </Button>
               )}
             </div>
             
-            <ScrollArea className="h-[calc(100vh-400px)]">
+            <div className="relative mb-4">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+              <Input
+                placeholder="Search grants..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-9 h-9"
+                data-testid="input-grant-search"
+              />
+            </div>
+            
+            <ScrollArea className="h-[calc(100vh-450px)]">
               <Accordion type="multiple" defaultValue={["focus", "funding", "geography", "amount"]} className="space-y-2">
                 <AccordionItem value="focus" className="border-none">
                   <AccordionTrigger className="py-2 text-sm font-medium hover:no-underline">
