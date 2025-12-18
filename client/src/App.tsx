@@ -46,16 +46,11 @@ const navigationDomains = {
       { name: "Giving Anniversaries", href: "/giving-anniversaries" },
     ]
   },
-  "Data Quality": {
-    items: [
-      { name: "Duplicate Detection", href: "/duplicate-detection" },
-      { name: "Address Verification", href: "/address-verification" },
-    ]
-  },
   "Stakeholders": {
     items: [
       { name: "Donor Portal", href: "/donor-portal" },
       { name: "Board Dashboard", href: "/board-dashboard" },
+      { name: "Data Ops Portal", href: "/data-ops-portal" },
     ]
   },
 };
@@ -218,6 +213,7 @@ import DuplicateDetection from "@/pages/duplicate-detection";
 import AddressVerification from "@/pages/address-verification";
 import GivingAnniversaries from "@/pages/giving-anniversaries";
 import BoardDashboard from "@/pages/board-dashboard";
+import DataOpsPortal from "@/pages/data-ops-portal";
 
 // Network Visualization Examples
 import NetworkVisualizationExamples from "@/pages/network-visualization-examples";
@@ -509,11 +505,18 @@ function Router() {
       </Route>
       <Route path="/benchmarks" component={Benchmarks} />
       <Route path="/email-tracking" component={EmailTracking} />
-      <Route path="/duplicate-detection" component={DuplicateDetection} />
-      <Route path="/address-verification" component={AddressVerification} />
+      <Route path="/duplicate-detection">
+        {() => <ProtectedRoute component={DuplicateDetection} allowedRoles={["data_ops"]} />}
+      </Route>
+      <Route path="/address-verification">
+        {() => <ProtectedRoute component={AddressVerification} allowedRoles={["data_ops"]} />}
+      </Route>
       <Route path="/giving-anniversaries" component={GivingAnniversaries} />
       <Route path="/board-dashboard">
         {() => <ProtectedRoute component={BoardDashboard} allowedRoles={["board_member"]} />}
+      </Route>
+      <Route path="/data-ops-portal">
+        {() => <ProtectedRoute component={DataOpsPortal} allowedRoles={["data_ops"]} />}
       </Route>
       
       <Route component={NotFound} />

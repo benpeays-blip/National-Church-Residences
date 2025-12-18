@@ -61,6 +61,8 @@ FundRazor is an AI-powered, enterprise-grade fundraising CRM designed for nonpro
 - **Address Verification**: USPS validation for accurate direct mail campaigns with auto-fix suggestions.
 - **Giving Anniversary Alerts**: Automated milestone celebrations for donor anniversaries and giving achievements.
 - **Board Member Dashboard**: Simplified prospect view for board members with assigned prospects and key metrics.
+- **Data Operations Portal**: Centralized hub for data quality tools including Duplicate Detection and Address Verification, with data health metrics and issue tracking.
+- **Multi-Tier Login System**: Role-based portal access with four login options: Board Member, Donor, Data Operations, and Demo mode. Features server-side session management, bcrypt password hashing, and protected routes with server-verified role authorization.
 
 ## External Dependencies
 - **Database Hosting**: Neon (for PostgreSQL)

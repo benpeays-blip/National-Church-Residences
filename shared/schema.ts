@@ -132,6 +132,7 @@ export const giftTypeEnum = pgEnum("gift_type", [
 export const portalUserRoleEnum = pgEnum("portal_user_role", [
   "board_member",
   "donor",
+  "data_ops",
   "demo",
 ]);
 

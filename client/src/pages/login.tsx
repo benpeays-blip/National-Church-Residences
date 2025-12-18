@@ -17,7 +17,8 @@ import {
   User,
   Shield,
   CheckCircle,
-  AlertCircle
+  AlertCircle,
+  Database
 } from "lucide-react";
 import { getAccentColor } from "@/components/ui/accent-card";
 import { useMutation } from "@tanstack/react-query";
@@ -25,7 +26,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
 type LoginStep = "select-role" | "login" | "register";
-type UserRole = "board_member" | "donor" | null;
+type UserRole = "board_member" | "donor" | "data_ops" | null;
 
 export default function Login() {
   const [, setLocation] = useLocation();
@@ -61,6 +62,8 @@ export default function Login() {
         setLocation("/board-dashboard");
       } else if (data.user.role === "donor") {
         setLocation("/donor-portal");
+      } else if (data.user.role === "data_ops") {
+        setLocation("/data-ops-portal");
       } else {
         setLocation("/");
       }
@@ -199,6 +202,14 @@ export default function Login() {
         description: "Access board dashboards and prospect assignments"
       };
     }
+    if (selectedRole === "data_ops") {
+      return {
+        title: "Data Operations",
+        icon: Database,
+        color: getAccentColor("orange"),
+        description: "Access data quality and maintenance tools"
+      };
+    }
     return {
       title: "Donor",
       icon: Heart,
@@ -272,6 +283,29 @@ export default function Login() {
                       <h3 className="font-semibold text-lg">Donor</h3>
                       <p className="text-sm text-muted-foreground">
                         View your giving history and manage recurring gifts
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card 
+                className="cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 hover:border-orange-400"
+                onClick={() => handleRoleSelect("data_ops")}
+                data-testid="card-data-ops-login"
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-center gap-4">
+                    <div 
+                      className="w-14 h-14 rounded-full flex items-center justify-center"
+                      style={{ backgroundColor: `${getAccentColor("orange")}20` }}
+                    >
+                      <Database className="h-7 w-7" style={{ color: getAccentColor("orange") }} />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-lg">Data Operations</h3>
+                      <p className="text-sm text-muted-foreground">
+                        Access data quality tools and record maintenance
                       </p>
                     </div>
                   </div>
