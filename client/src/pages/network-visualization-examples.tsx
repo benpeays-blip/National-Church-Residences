@@ -75,8 +75,11 @@ const sampleOrgs: Organization[] = [
 
 export default function NetworkVisualizationExamples() {
   const [sankeySelected, setSankeySelected] = useState<string | null>(null);
+  const [sankeyHovered, setSankeyHovered] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const sankeyHovered = sankeySelected; // Use selected as the active state
+  
+  // Use selected state if set, otherwise fall back to hovered state
+  const activeHighlight = sankeySelected || sankeyHovered;
 
   // Filter search results
   const searchResults = searchQuery.trim() ? [
@@ -242,14 +245,16 @@ export default function NetworkVisualizationExamples() {
                       style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(74, 159, 255, 0.3) transparent' }}
                     >
                       {orderedPeople.map(person => {
-                        const isHovered = sankeyHovered === person.name;
-                        const isConnected = sankeyHovered && sampleOrgs.find(o => o.name === sankeyHovered)?.members?.includes(person.name);
+                        const isHovered = activeHighlight === person.name;
+                        const isConnected = activeHighlight && sampleOrgs.find(o => o.name === activeHighlight)?.members?.includes(person.name);
                         return (
                           <button
                             key={person.id}
                             ref={el => { peopleRefs.current[person.id] = el; }}
                             className="relative text-left transition-all duration-300 w-full"
                             onClick={() => setSankeySelected(sankeySelected === person.name ? null : person.name)}
+                            onMouseEnter={() => setSankeyHovered(person.name)}
+                            onMouseLeave={() => setSankeyHovered(null)}
                             data-testid={`sankey-person-${person.id}`}
                           >
                             <div 
@@ -295,7 +300,7 @@ export default function NetworkVisualizationExamples() {
                         person.orgs.map((orgName) => {
                           const org = sampleOrgs.find(o => o.name === orgName);
                           if (!org) return null;
-                          const isHighlighted = sankeyHovered === person.name || sankeyHovered === org.name;
+                          const isHighlighted = activeHighlight === person.name || activeHighlight === org.name;
                           
                           // Use measured positions from refs
                           const y1 = positions.people[person.id] ?? 0;
@@ -343,14 +348,16 @@ export default function NetworkVisualizationExamples() {
                       style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(0, 255, 136, 0.3) transparent' }}
                     >
                       {orderedOrgs.map(org => {
-                        const isHovered = sankeyHovered === org.name;
-                        const isConnected = sankeyHovered && samplePeople.find(p => p.name === sankeyHovered)?.orgs.includes(org.name);
+                        const isHovered = activeHighlight === org.name;
+                        const isConnected = activeHighlight && samplePeople.find(p => p.name === activeHighlight)?.orgs.includes(org.name);
                         return (
                           <button
                             key={org.id}
                             ref={el => { orgRefs.current[org.id] = el; }}
                             className="relative text-right transition-all duration-300 w-full"
                             onClick={() => setSankeySelected(sankeySelected === org.name ? null : org.name)}
+                            onMouseEnter={() => setSankeyHovered(org.name)}
+                            onMouseLeave={() => setSankeyHovered(null)}
                             data-testid={`sankey-org-${org.id}`}
                           >
                             <div 
@@ -424,19 +431,19 @@ export default function NetworkVisualizationExamples() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  {sankeyHovered ? (
+                  {activeHighlight ? (
                     <div className="space-y-4">
-                      {samplePeople.find(p => p.name === sankeyHovered) ? (
+                      {samplePeople.find(p => p.name === activeHighlight) ? (
                         <div className="space-y-3">
                           <div>
-                            <p className="font-medium text-sm">{sankeyHovered}</p>
+                            <p className="font-medium text-sm">{activeHighlight}</p>
                             <p className="text-xs text-muted-foreground">
-                              {samplePeople.find(p => p.name === sankeyHovered)?.title}
+                              {samplePeople.find(p => p.name === activeHighlight)?.title}
                             </p>
                           </div>
                           <div className="space-y-2">
                             <p className="text-xs font-semibold text-muted-foreground">CONNECTED TO</p>
-                            {samplePeople.find(p => p.name === sankeyHovered)?.orgs.map(orgName => {
+                            {samplePeople.find(p => p.name === activeHighlight)?.orgs.map(orgName => {
                               const org = sampleOrgs.find(o => o.name === orgName);
                               return (
                                 <div key={orgName} className="flex items-center gap-2 p-2 rounded-md bg-muted/50">
@@ -450,14 +457,14 @@ export default function NetworkVisualizationExamples() {
                       ) : (
                         <div className="space-y-3">
                           <div>
-                            <p className="font-medium text-sm">{sankeyHovered}</p>
+                            <p className="font-medium text-sm">{activeHighlight}</p>
                             <p className="text-xs text-muted-foreground">
-                              {sampleOrgs.find(o => o.name === sankeyHovered)?.sector}
+                              {sampleOrgs.find(o => o.name === activeHighlight)?.sector}
                             </p>
                           </div>
                           <div className="space-y-2">
                             <p className="text-xs font-semibold text-muted-foreground">MEMBERS</p>
-                            {sampleOrgs.find(o => o.name === sankeyHovered)?.members.slice(0, 6).map(member => (
+                            {sampleOrgs.find(o => o.name === activeHighlight)?.members.slice(0, 6).map(member => (
                               <div key={member} className="flex items-center gap-2 p-2 rounded-md bg-muted/50">
                                 <div className="w-6 h-6 rounded-full bg-muted flex items-center justify-center text-[10px] font-medium">
                                   {member.split(' ').map(n => n[0]).join('')}
@@ -473,10 +480,10 @@ export default function NetworkVisualizationExamples() {
                     <div className="flex flex-col items-center justify-center h-48 text-center">
                       <GitBranch className="w-8 h-8 text-muted-foreground/30 mb-2" />
                       <p className="text-sm text-muted-foreground">
-                        Click a name to see animated flows
+                        Hover over a name to preview connections
                       </p>
                       <p className="text-xs text-muted-foreground mt-2">
-                        Click again to deselect
+                        Click to lock selection, click again to deselect
                       </p>
                     </div>
                   )}
