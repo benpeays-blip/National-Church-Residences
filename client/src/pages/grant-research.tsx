@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -760,44 +760,6 @@ export default function GrantResearchPage() {
     });
   };
 
-  const handleSaveSearch = () => {
-    const hasFilters = searchQuery || selectedFocusAreas.length > 0 || selectedFundingTypes.length > 0 || selectedGeographies.length > 0;
-    
-    if (!hasFilters) {
-      toast({
-        title: "No Search Criteria",
-        description: "Please enter a search term or select some filters first.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const searchName = searchQuery || 
-      (selectedFocusAreas.length > 0 ? FOCUS_AREAS.find(f => f.id === selectedFocusAreas[0])?.label : "") ||
-      (selectedGeographies.length > 0 ? selectedGeographies[0] : "Custom Search");
-    
-    const newSearch: SavedSearch = {
-      id: `search-${Date.now()}`,
-      name: searchName + (selectedGeographies.length > 0 && searchQuery ? ` - ${selectedGeographies[0]}` : ""),
-      query: searchQuery,
-      filters: { 
-        focusAreas: selectedFocusAreas, 
-        fundingTypes: selectedFundingTypes,
-        geography: selectedGeographies 
-      },
-      alertEnabled: false,
-      lastRun: new Date(),
-      resultsCount: filteredOpportunities.length,
-    };
-    
-    setSavedSearches(prev => [...prev, newSearch]);
-    
-    toast({
-      title: "Search Saved",
-      description: "Your search criteria has been saved. You can access it anytime from the Saved Searches panel.",
-    });
-  };
-  
   const filteredOpportunities = useMemo(() => {
     return mockOpportunities.filter((opp) => {
       const matchesSearch = !searchQuery || 
@@ -839,6 +801,44 @@ export default function GrantResearchPage() {
 
   const hasActiveFilters = selectedFocusAreas.length > 0 || selectedFundingTypes.length > 0 || 
     selectedGeographies.length > 0 || amountRange[0] > 0 || amountRange[1] < 2000000 || openToNewOnly;
+
+  const handleSaveSearch = useCallback(() => {
+    const hasFilters = searchQuery || selectedFocusAreas.length > 0 || selectedFundingTypes.length > 0 || selectedGeographies.length > 0;
+    
+    if (!hasFilters) {
+      toast({
+        title: "No Search Criteria",
+        description: "Please enter a search term or select some filters first.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const searchName = searchQuery || 
+      (selectedFocusAreas.length > 0 ? FOCUS_AREAS.find(f => f.id === selectedFocusAreas[0])?.label : "") ||
+      (selectedGeographies.length > 0 ? selectedGeographies[0] : "Custom Search");
+    
+    const newSearch: SavedSearch = {
+      id: `search-${Date.now()}`,
+      name: String(searchName) + (selectedGeographies.length > 0 && searchQuery ? ` - ${selectedGeographies[0]}` : ""),
+      query: searchQuery,
+      filters: { 
+        focusAreas: selectedFocusAreas, 
+        fundingTypes: selectedFundingTypes,
+        geography: selectedGeographies 
+      },
+      alertEnabled: false,
+      lastRun: new Date(),
+      resultsCount: filteredOpportunities.length,
+    };
+    
+    setSavedSearches(prev => [...prev, newSearch]);
+    
+    toast({
+      title: "Search Saved",
+      description: "Your search criteria has been saved. You can access it anytime from the Saved Searches panel.",
+    });
+  }, [searchQuery, selectedFocusAreas, selectedFundingTypes, selectedGeographies, filteredOpportunities.length, toast]);
 
   return (
     <div className="flex flex-col h-full" data-testid="grant-research-page">
