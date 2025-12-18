@@ -831,12 +831,12 @@ export default function GrantResearchPage() {
           </p>
           
           <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground z-10" />
             <Input
               placeholder="Search grants naturally, e.g. 'Senior housing grants in Ohio for capital projects'"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-12 pr-4 py-6 text-base bg-white"
+              className="pl-12 pr-24 h-12 text-base bg-background border"
               data-testid="input-grant-search"
             />
             <Button 
