@@ -123,10 +123,10 @@ export default function GrantProposals() {
                   </Badge>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6 pt-6">
                 {item.proposal.funderGuidelines && (
-                  <div className="space-y-1">
-                    <div className="text-sm font-semibold mb-1">Funder Guidelines</div>
+                  <div className="space-y-2">
+                    <div className="text-sm font-semibold">Funder Guidelines</div>
                     <div className="text-sm text-muted-foreground bg-muted/50 p-3 rounded">
                       {item.proposal.funderGuidelines.substring(0, 200)}...
                     </div>
@@ -134,8 +134,8 @@ export default function GrantProposals() {
                 )}
 
                 {item.proposal.generatedNarrative && (
-                  <div className="space-y-1">
-                    <div className="text-sm font-semibold mb-1">AI-Generated Narrative</div>
+                  <div className="space-y-2">
+                    <div className="text-sm font-semibold">AI-Generated Narrative</div>
                     <div className="text-sm text-muted-foreground bg-muted/50 p-3 rounded">
                       {item.proposal.generatedNarrative.substring(0, 300)}...
                     </div>
@@ -143,8 +143,8 @@ export default function GrantProposals() {
                 )}
 
                 {item.proposal.generatedOutcomes && item.proposal.generatedOutcomes.length > 0 && (
-                  <div className="space-y-1">
-                    <div className="text-sm font-semibold ">Expected Outcomes</div>
+                  <div className="space-y-2">
+                    <div className="text-sm font-semibold">Expected Outcomes</div>
                     <ul className="list-disc list-inside space-y-1 text-sm text-muted-foreground">
                       {item.proposal.generatedOutcomes.slice(0, 3).map((outcome, idx) => (
                         <li key={idx}>{outcome}</li>
