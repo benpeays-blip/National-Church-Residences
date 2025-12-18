@@ -227,7 +227,15 @@ export default function Login() {
           <div className="space-y-4">
             <div className="text-center space-y-2">
               <div className="flex items-center justify-center mb-4">
-                <NationalChurchResidencesLogo />
+                <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg" className="w-32 h-16">
+                  {/* NCR Logo - Colorful chevron pattern */}
+                  <polygon points="50,80 70,50 90,65 70,95" fill="#F7B04A" />
+                  <polygon points="70,65 90,35 110,50 90,80" fill="#F27B7F" />
+                  <polygon points="90,50 110,20 130,35 110,65" fill="#8CC4A8" />
+                  <polygon points="110,35 130,5 150,20 130,50" fill="#C5D86D" />
+                  <polygon points="110,65 130,35 150,50 130,80" fill="#8FD3EC" />
+                  <polygon points="130,50 150,20 170,35 150,65" fill="#B9D869" />
+                </svg>
               </div>
               <h1 className="text-3xl font-bold text-foreground" data-testid="text-login-title">
                 Welcome to FundRazor
