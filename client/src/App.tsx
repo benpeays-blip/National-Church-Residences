@@ -177,6 +177,9 @@ import WorkflowStepDetail from "@/pages/workflow-step-detail";
 
 // Impact Drill-Down Pages
 import ImpactOverview from "@/pages/impact-overview";
+
+// Network Visualization Examples
+import NetworkVisualizationExamples from "@/pages/network-visualization-examples";
 import ImpactBuildingFacilities from "@/pages/impact-building-facilities";
 import ImpactHomeHealth from "@/pages/impact-home-health";
 import ImpactVolunteerHours from "@/pages/impact-volunteer-hours";
@@ -208,6 +211,7 @@ function Router() {
       <Route path="/navigation-mockups" component={NavigationMockups} />
       <Route path="/navigation-hybrid-mockup" component={NavigationHybridMockup} />
       <Route path="/icon-style-guide" component={IconStyleGuide} />
+      <Route path="/network-visualization-examples" component={NetworkVisualizationExamples} />
       <Route path="/donor-quadrant" component={DonorQuadrantWithTabs} />
       <Route path="/donors/card-showcase" component={DonorCardShowcase} />
       <Route path="/donors/major-gifts" component={DonorsWithTabs} />
