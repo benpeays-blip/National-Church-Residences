@@ -594,6 +594,10 @@ export default function ForceNetworkGraph() {
                   <div className="w-3 h-3 rounded-full" style={{ backgroundColor: "#7FA3A1" }} />
                   <span className="text-xs text-muted-foreground">Organizations ({sampleOrgs.length})</span>
                 </div>
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-md bg-white/90 border shadow-sm">
+                  <Zap className="w-3 h-3" style={{ color: "#395174" }} />
+                  <span className="text-xs text-muted-foreground">Connections ({graphData.links.length})</span>
+                </div>
               </div>
             </div>
 
@@ -704,32 +708,6 @@ export default function ForceNetworkGraph() {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }}>
-          <CardContent className="pt-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold" style={{ color: "#084594" }}>{samplePeople.length}</div>
-              <p className="text-sm text-muted-foreground">People in Network</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }}>
-          <CardContent className="pt-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold" style={{ color: "#084594" }}>{sampleOrgs.length}</div>
-              <p className="text-sm text-muted-foreground">Organizations</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }}>
-          <CardContent className="pt-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold" style={{ color: "#084594" }}>{graphData.links.length}</div>
-              <p className="text-sm text-muted-foreground">Total Connections</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 }
