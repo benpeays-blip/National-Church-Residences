@@ -1966,25 +1966,27 @@ function OptimizationIdeas() {
         </div>
       </div>
 
-      <div>
-        <div className="flex items-center gap-4 mb-4">
-          <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("teal")}15` }}>
+      <Card className="p-6">
+        <div className="flex items-start gap-4">
+          <div className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${getAccentColor("teal")}15` }}>
             <Building2 className="h-6 w-6" style={{ color: getAccentColor("teal") }} />
           </div>
-          <h4 className="font-semibold text-xl" style={{ color: getAccentColor("teal") }}>Executive Summary</h4>
+          <div>
+            <h4 className="font-semibold text-xl" style={{ color: getAccentColor("teal") }}>Executive Summary</h4>
+            <div className="space-y-3 mt-3">
+              <p className="text-base text-muted-foreground leading-relaxed">
+                <strong className="text-foreground">Tech Stack:</strong> Microsoft Fabric OneLake + Purview, Power BI, SharePoint, Raiser's Edge, Yardi, Athena/Epic, Workday, Instrumentl, Azure Event Grid, unified React/Power Platform app.
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                <strong className="text-foreground">Agentic AI:</strong> Specialized agents (CareGuide, Compliance, Document, Engagement, Financial, Orchestration) embedded in each module, governed with audit trails.
+              </p>
+              <p className="text-base text-muted-foreground leading-relaxed">
+                <strong className="text-foreground">App:</strong> Modular shell with 8–10 hubs (CareGuide, Grants, Donor, Volunteer, Compliance, Finance, Strategy, Housing, Healthcare, Knowledge).
+              </p>
+            </div>
+          </div>
         </div>
-        <div className="space-y-4">
-          <p className="text-base text-muted-foreground leading-relaxed">
-            <strong className="text-foreground">Tech Stack:</strong> Microsoft Fabric OneLake + Purview, Power BI, SharePoint, Raiser's Edge, Yardi, Athena/Epic, Workday, Instrumentl, Azure Event Grid, unified React/Power Platform app.
-          </p>
-          <p className="text-base text-muted-foreground leading-relaxed">
-            <strong className="text-foreground">Agentic AI:</strong> Specialized agents (CareGuide, Compliance, Document, Engagement, Financial, Orchestration) embedded in each module, governed with audit trails.
-          </p>
-          <p className="text-base text-muted-foreground leading-relaxed">
-            <strong className="text-foreground">App:</strong> Modular shell with 8–10 hubs (CareGuide, Grants, Donor, Volunteer, Compliance, Finance, Strategy, Housing, Healthcare, Knowledge).
-          </p>
-        </div>
-      </div>
+      </Card>
 
       <div>
         <div className="flex items-center gap-2 mb-4">
