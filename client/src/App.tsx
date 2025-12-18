@@ -175,6 +175,7 @@ import ScorecardDetail from "@/pages/scorecard-detail";
 import HubDetail from "@/pages/hub-detail";
 import GovernanceDetail from "@/pages/governance-detail";
 import WorkflowStepDetail from "@/pages/workflow-step-detail";
+import AgentDetail from "@/pages/agent-detail";
 
 // Impact Drill-Down Pages
 import ImpactOverview from "@/pages/impact-overview";
@@ -271,6 +272,7 @@ function Router() {
       <Route path="/agent-value-map/hub/:hubId" component={HubDetail} />
       <Route path="/agent-value-map/governance/:governanceId" component={GovernanceDetail} />
       <Route path="/agent-value-map/workflow/:stepId" component={WorkflowStepDetail} />
+      <Route path="/agent-value-map/agent/:agentId" component={AgentDetail} />
       <Route path="/agent-value-map" component={AgentValueMap} />
       <Route path="/corporate-partnerships/employee-giving" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/sponsorships/:id" component={SponsorshipDetail} />
