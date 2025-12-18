@@ -1963,8 +1963,8 @@ function OptimizationIdeas() {
         </div>
 
         <AccentCard accent="olive" className="mt-4 p-4">
-          <h3 className="font-medium text-sm mb-3 flex items-center gap-2">
-            <Workflow className="h-4 w-4" style={{ color: getAccentColor("olive") }} />
+          <h3 className="font-semibold text-base mb-4 flex items-center gap-2">
+            <Workflow className="h-5 w-5" style={{ color: getAccentColor("olive") }} />
             Agent Operating Principles
           </h3>
           <div className="space-y-3">
@@ -1999,8 +1999,8 @@ function OptimizationIdeas() {
         </div>
         <div className="grid md:grid-cols-2 gap-4">
           <AccentCard accent="lime" className="p-4">
-            <h3 className="font-medium text-sm mb-3">App Structure</h3>
-            <ul className="space-y-2 text-xs text-muted-foreground">
+            <h3 className="font-semibold text-base mb-4">App Structure</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
                 <Check className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("lime") }} />
                 <span><strong>Modular shell:</strong> React/Power Platform with hubs for CareGuide, Grants, Donor, Volunteer, Compliance, Finance, Strategy, Housing, Healthcare, Knowledge.</span>
@@ -2024,8 +2024,8 @@ function OptimizationIdeas() {
             </ul>
           </AccentCard>
           <AccentCard accent="sky" className="p-4">
-            <h3 className="font-medium text-sm mb-3">How the App Supports Agents</h3>
-            <ul className="space-y-2 text-xs text-muted-foreground">
+            <h3 className="font-semibold text-base mb-4">How the App Supports Agents</h3>
+            <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-start gap-2">
                 <Zap className="h-3 w-3 mt-0.5 shrink-0" style={{ color: getAccentColor("sky") }} />
                 <span><strong>Data context:</strong> App modules provide structured data (eligibility rules, donor records, grant pipelines) that agents act on.</span>
