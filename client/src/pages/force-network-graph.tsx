@@ -85,9 +85,25 @@ export default function ForceNetworkGraph() {
   const fgRef = useRef<any>();
 
   // Center the graph when the simulation settles on initial load
+  useEffect(() => {
+    // Give the simulation time to settle, then center
+    const timer = setTimeout(() => {
+      if (fgRef.current && !isInitialized) {
+        fgRef.current.zoomToFit(500, 100);
+        setIsInitialized(true);
+      }
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, [isInitialized]);
+
   const handleEngineStop = useCallback(() => {
     if (!isInitialized && fgRef.current) {
-      fgRef.current.zoomToFit(400, 60);
+      // Delayed to ensure all node positions are finalized
+      setTimeout(() => {
+        if (fgRef.current) {
+          fgRef.current.zoomToFit(400, 100);
+        }
+      }, 100);
       setIsInitialized(true);
     }
   }, [isInitialized]);
