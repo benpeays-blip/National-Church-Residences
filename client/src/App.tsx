@@ -32,6 +32,26 @@ const navigationDomains = {
       { name: "Grants", href: "/grants" },
       { name: "Campaigns", href: "/campaigns" },
       { name: "Events", href: "/events" },
+      { name: "Matching Gifts", href: "/matching-gifts" },
+      { name: "Tribute Giving", href: "/tribute-giving" },
+      { name: "Peer-to-Peer", href: "/peer-to-peer" },
+      { name: "SMS Fundraising", href: "/sms-fundraising" },
+    ]
+  },
+  "Intelligence": {
+    items: [
+      { name: "Retention Risk", href: "/retention-risk" },
+      { name: "Benchmarks", href: "/benchmarks" },
+      { name: "Email Tracking", href: "/email-tracking" },
+      { name: "Duplicate Detection", href: "/duplicate-detection" },
+      { name: "Address Verification", href: "/address-verification" },
+      { name: "Giving Anniversaries", href: "/giving-anniversaries" },
+    ]
+  },
+  "Portals": {
+    items: [
+      { name: "Donor Portal", href: "/donor-portal" },
+      { name: "Board Dashboard", href: "/board-dashboard" },
     ]
   },
 };
@@ -736,6 +756,88 @@ function App() {
                           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
                             <div className="py-2 px-1">
                               {navigationDomains["Fundraising"].items.map((item) => (
+                                <Link 
+                                  key={item.name} 
+                                  href={item.href}
+                                  className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                  onClick={closeDropdown}
+                                  data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                >
+                                  {item.name}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Intelligence Dropdown */}
+                    <div
+                      className="relative"
+                      onMouseEnter={() => setActiveDropdown("Intelligence")}
+                      onMouseLeave={() => setActiveDropdown(null)}
+                    >
+                      <div className={`relative`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDropdownClick("Intelligence")}
+                          className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
+                            activeDropdown === "Intelligence" ? "bg-black/10" : ""
+                          }`}
+                          data-testid="button-nav-intelligence"
+                        >
+                          Intelligence
+                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Intelligence" ? "rotate-180" : ""}`} />
+                        </Button>
+                      </div>
+                      {activeDropdown === "Intelligence" && (
+                        <div className="absolute right-0 top-full pt-1 z-50">
+                          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
+                            <div className="py-2 px-1">
+                              {navigationDomains["Intelligence"].items.map((item) => (
+                                <Link 
+                                  key={item.name} 
+                                  href={item.href}
+                                  className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                  onClick={closeDropdown}
+                                  data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                >
+                                  {item.name}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Portals Dropdown */}
+                    <div
+                      className="relative"
+                      onMouseEnter={() => setActiveDropdown("Portals")}
+                      onMouseLeave={() => setActiveDropdown(null)}
+                    >
+                      <div className={`relative`}>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => handleDropdownClick("Portals")}
+                          className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
+                            activeDropdown === "Portals" ? "bg-black/10" : ""
+                          }`}
+                          data-testid="button-nav-portals"
+                        >
+                          Portals
+                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Portals" ? "rotate-180" : ""}`} />
+                        </Button>
+                      </div>
+                      {activeDropdown === "Portals" && (
+                        <div className="absolute right-0 top-full pt-1 z-50">
+                          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
+                            <div className="py-2 px-1">
+                              {navigationDomains["Portals"].items.map((item) => (
                                 <Link 
                                   key={item.name} 
                                   href={item.href}
