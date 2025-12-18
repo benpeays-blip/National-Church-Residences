@@ -17,10 +17,10 @@ import {
   User,
   Shield,
   CheckCircle,
-  AlertCircle,
-  Database
+  AlertCircle
 } from "lucide-react";
 import { getAccentColor } from "@/components/ui/accent-card";
+import { FundRazorLogo } from "@/components/FundRazorLogo";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -205,7 +205,7 @@ export default function Login() {
     if (selectedRole === "data_ops") {
       return {
         title: "Data Operations",
-        icon: Database,
+        icon: Shield,
         color: getAccentColor("orange"),
         description: "Access data quality and maintenance tools"
       };
@@ -221,18 +221,13 @@ export default function Login() {
   const roleInfo = getRoleInfo();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
+    <div className="h-screen overflow-hidden bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         {step === "select-role" && (
           <div className="space-y-6">
             <div className="text-center space-y-2">
               <div className="flex items-center justify-center gap-2 mb-4">
-                <div 
-                  className="w-12 h-12 rounded-xl flex items-center justify-center"
-                  style={{ backgroundColor: "#395174" }}
-                >
-                  <Shield className="h-7 w-7 text-white" />
-                </div>
+                <FundRazorLogo width={200} height={56} />
               </div>
               <h1 className="text-3xl font-bold text-foreground" data-testid="text-login-title">
                 Welcome to FundRazor
@@ -283,29 +278,6 @@ export default function Login() {
                       <h3 className="font-semibold text-lg">Donor</h3>
                       <p className="text-sm text-muted-foreground">
                         View your giving history and manage recurring gifts
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card 
-                className="cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 hover:border-orange-400"
-                onClick={() => handleRoleSelect("data_ops")}
-                data-testid="card-data-ops-login"
-              >
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4">
-                    <div 
-                      className="w-14 h-14 rounded-full flex items-center justify-center"
-                      style={{ backgroundColor: `${getAccentColor("orange")}20` }}
-                    >
-                      <Database className="h-7 w-7" style={{ color: getAccentColor("orange") }} />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-lg">Data Operations</h3>
-                      <p className="text-sm text-muted-foreground">
-                        Access data quality tools and record maintenance
                       </p>
                     </div>
                   </div>
