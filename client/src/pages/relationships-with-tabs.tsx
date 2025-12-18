@@ -1,11 +1,12 @@
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Network, Users, UserPlus, Link2, BarChart3 } from "lucide-react";
+import { Network, Users, UserPlus, Link2, BarChart3, Share2 } from "lucide-react";
 import BoardNetworkMapper from "@/pages/board-network-mapper";
 import BoardConnections from "@/pages/relationship-board-connections";
 import PeerDonors from "@/pages/relationship-peer-donors";
 import RelSciMapping from "@/pages/relsci-mapping";
 import DnBIntelligence from "@/pages/dnb-intelligence";
+import NetworkVisualizationExamples from "@/pages/network-visualization-examples";
 
 const relationshipsTabs: SectionTab[] = [
   {
@@ -38,6 +39,12 @@ const relationshipsTabs: SectionTab[] = [
     icon: UserPlus,
     path: "/relationships/peer",
   },
+  {
+    label: "Network Visualization",
+    value: "visualization",
+    icon: Share2,
+    path: "/relationships/visualization",
+  },
 ];
 
 export default function RelationshipsWithTabs() {
@@ -49,6 +56,7 @@ export default function RelationshipsWithTabs() {
     if (location.includes('/relationships/network')) return 'network';
     if (location.includes('/relationships/connections')) return 'connections';
     if (location.includes('/relationships/peer')) return 'peer';
+    if (location.includes('/relationships/visualization')) return 'visualization';
     return 'relsci';
   };
   
@@ -65,6 +73,8 @@ export default function RelationshipsWithTabs() {
     RelationshipComponent = BoardConnections;
   } else if (activeTab === 'peer') {
     RelationshipComponent = PeerDonors;
+  } else if (activeTab === 'visualization') {
+    RelationshipComponent = NetworkVisualizationExamples;
   }
 
   return (
