@@ -476,8 +476,9 @@ export default function RelSciMapping() {
             </CardContent>
           </Card>
 
-          <div className="space-y-3">
-            <h4 className="text-sm font-medium text-muted-foreground">Recent Connection Paths</h4>
+          <div>
+            <h4 className="text-sm font-medium text-muted-foreground mb-3">Recent Connection Paths</h4>
+            <div className="space-y-3">
             {sampleConnectionPaths.map((path) => {
               const degreeStyle = getDegreeStyle(path.degrees);
               return (
@@ -535,6 +536,7 @@ export default function RelSciMapping() {
                 </Link>
               );
             })}
+            </div>
           </div>
         </TabsContent>
 
