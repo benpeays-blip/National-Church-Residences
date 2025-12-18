@@ -1908,7 +1908,7 @@ function OptimizationIdeas() {
         </div>
       </div>
 
-      <AccentCard accent="teal" className="p-6">
+      <div>
         <div className="flex items-center gap-4 mb-4">
           <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("teal")}15` }}>
             <Building2 className="h-6 w-6" style={{ color: getAccentColor("teal") }} />
@@ -1926,7 +1926,7 @@ function OptimizationIdeas() {
             <strong className="text-foreground">App:</strong> Modular shell with 8–10 hubs (CareGuide, Grants, Donor, Volunteer, Compliance, Finance, Strategy, Housing, Healthcare, Knowledge).
           </p>
         </div>
-      </AccentCard>
+      </div>
 
       <div>
         <div className="flex items-center gap-2 mb-4">
