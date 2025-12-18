@@ -60,6 +60,12 @@ interface SupplierRisk {
   trend: "up" | "down" | "stable";
   lastAssessment: string;
   alerts: string[];
+  riskReasons: string[];
+  recommendedActions: string[];
+  contactName?: string;
+  contactEmail?: string;
+  annualSpend?: string;
+  contractExpiry?: string;
 }
 
 const sampleCompanies: CompanyProfile[] = [
@@ -164,7 +170,13 @@ const supplierRisks: SupplierRisk[] = [
     riskScore: 23,
     trend: "stable",
     lastAssessment: "2 weeks ago",
-    alerts: []
+    alerts: [],
+    riskReasons: ["Solid financial position", "Long-standing partnership"],
+    recommendedActions: ["Continue standard monitoring", "Schedule annual review"],
+    contactName: "David Chen",
+    contactEmail: "dchen@medequip.com",
+    annualSpend: "$1.2M",
+    contractExpiry: "Dec 2026"
   },
   {
     id: "2",
@@ -173,7 +185,13 @@ const supplierRisks: SupplierRisk[] = [
     riskScore: 45,
     trend: "up",
     lastAssessment: "1 month ago",
-    alerts: ["Payment delays reported", "Credit score decline"]
+    alerts: ["Payment delays reported", "Credit score decline"],
+    riskReasons: ["Recent payment delays (15+ days)", "Credit score dropped 12 points", "Key executive departure"],
+    recommendedActions: ["Schedule immediate review call", "Consider backup supplier identification", "Request updated financials"],
+    contactName: "Lisa Martinez",
+    contactEmail: "lmartinez@comfortcare.com",
+    annualSpend: "$890K",
+    contractExpiry: "Jun 2025"
   },
   {
     id: "3",
@@ -182,13 +200,171 @@ const supplierRisks: SupplierRisk[] = [
     riskScore: 18,
     trend: "down",
     lastAssessment: "3 weeks ago",
-    alerts: []
+    alerts: [],
+    riskReasons: ["Strong financials", "Improving credit trajectory"],
+    recommendedActions: ["Maintain current relationship", "Explore volume discount opportunities"],
+    contactName: "Michael Brown",
+    contactEmail: "mbrown@regionalfoods.com",
+    annualSpend: "$2.1M",
+    contractExpiry: "Mar 2027"
+  },
+  {
+    id: "4",
+    name: "Premier Building Maintenance",
+    category: "Facilities Services",
+    riskScore: 72,
+    trend: "up",
+    lastAssessment: "1 week ago",
+    alerts: ["Lawsuit pending", "Cash flow concerns", "Late payments to subcontractors"],
+    riskReasons: ["Active litigation impacting operations", "Significant cash flow deterioration", "Multiple subcontractor complaints"],
+    recommendedActions: ["Immediate contract review", "Identify replacement vendors", "Request meeting with leadership"],
+    contactName: "Robert Wilson",
+    contactEmail: "rwilson@premierbm.com",
+    annualSpend: "$560K",
+    contractExpiry: "Sep 2025"
+  },
+  {
+    id: "5",
+    name: "TechHealth IT Solutions",
+    category: "Technology Services",
+    riskScore: 31,
+    trend: "stable",
+    lastAssessment: "2 weeks ago",
+    alerts: [],
+    riskReasons: ["Stable operations", "Good payment history"],
+    recommendedActions: ["Continue monitoring", "Review contract terms at renewal"],
+    contactName: "Jennifer Lee",
+    contactEmail: "jlee@techhealth.com",
+    annualSpend: "$1.8M",
+    contractExpiry: "Aug 2026"
+  },
+  {
+    id: "6",
+    name: "Midwest Pharmacy Distributors",
+    category: "Pharmaceutical Supply",
+    riskScore: 85,
+    trend: "up",
+    lastAssessment: "3 days ago",
+    alerts: ["Bankruptcy warning", "Major contract losses", "Executive departures"],
+    riskReasons: ["Imminent bankruptcy risk", "Lost 3 major contracts in Q4", "CFO and COO resigned", "Debt-to-equity ratio critical"],
+    recommendedActions: ["Activate contingency plan immediately", "Transition to backup supplier", "Secure current inventory", "Legal review of contract terms"],
+    contactName: "Thomas Garcia",
+    contactEmail: "tgarcia@midwestpharma.com",
+    annualSpend: "$3.4M",
+    contractExpiry: "Feb 2025"
+  },
+  {
+    id: "7",
+    name: "SafeGuard Security Systems",
+    category: "Security Services",
+    riskScore: 28,
+    trend: "down",
+    lastAssessment: "1 month ago",
+    alerts: [],
+    riskReasons: ["Strong market position", "Consistent performance"],
+    recommendedActions: ["Standard annual review", "Consider expanded services"],
+    contactName: "Angela Thompson",
+    contactEmail: "athompson@safeguardsec.com",
+    annualSpend: "$420K",
+    contractExpiry: "Nov 2026"
+  },
+  {
+    id: "8",
+    name: "GreenScape Landscaping",
+    category: "Grounds Maintenance",
+    riskScore: 15,
+    trend: "stable",
+    lastAssessment: "3 weeks ago",
+    alerts: [],
+    riskReasons: ["Excellent payment history", "Growing business"],
+    recommendedActions: ["Maintain relationship", "Negotiate multi-year contract"],
+    contactName: "Mark Stevens",
+    contactEmail: "mstevens@greenscape.com",
+    annualSpend: "$180K",
+    contractExpiry: "Apr 2027"
+  },
+  {
+    id: "9",
+    name: "ClearView Window Services",
+    category: "Facilities Services",
+    riskScore: 52,
+    trend: "up",
+    lastAssessment: "2 weeks ago",
+    alerts: ["Insurance lapse reported"],
+    riskReasons: ["Insurance coverage gap identified", "Recent ownership change", "Workforce turnover increasing"],
+    recommendedActions: ["Verify insurance reinstatement", "Meet with new ownership", "Review service quality metrics"],
+    contactName: "Patricia Davis",
+    contactEmail: "pdavis@clearview.com",
+    annualSpend: "$95K",
+    contractExpiry: "Jul 2025"
+  },
+  {
+    id: "10",
+    name: "Allied Transport Logistics",
+    category: "Transportation",
+    riskScore: 67,
+    trend: "up",
+    lastAssessment: "1 week ago",
+    alerts: ["Fleet maintenance issues", "Driver shortage"],
+    riskReasons: ["Fleet age causing reliability issues", "Driver retention problems", "Fuel cost pressures"],
+    recommendedActions: ["Request fleet modernization plan", "Identify backup carrier", "Negotiate fuel surcharge terms"],
+    contactName: "James Miller",
+    contactEmail: "jmiller@alliedtransport.com",
+    annualSpend: "$780K",
+    contractExpiry: "Oct 2025"
+  },
+  {
+    id: "11",
+    name: "Quality Linen Services",
+    category: "Laundry Services",
+    riskScore: 22,
+    trend: "stable",
+    lastAssessment: "1 month ago",
+    alerts: [],
+    riskReasons: ["Family-owned, stable operations", "Excellent service record"],
+    recommendedActions: ["Continue partnership", "Annual quality review"],
+    contactName: "Susan Wright",
+    contactEmail: "swright@qualitylinen.com",
+    annualSpend: "$340K",
+    contractExpiry: "May 2026"
+  },
+  {
+    id: "12",
+    name: "ProClean Waste Management",
+    category: "Waste Disposal",
+    riskScore: 38,
+    trend: "down",
+    lastAssessment: "3 weeks ago",
+    alerts: [],
+    riskReasons: ["Improving financials after restructuring", "New management team"],
+    recommendedActions: ["Monitor quarterly", "Review pricing at renewal"],
+    contactName: "Kevin Johnson",
+    contactEmail: "kjohnson@proclean.com",
+    annualSpend: "$210K",
+    contractExpiry: "Jan 2026"
   }
 ];
 
 export default function DnBIntelligence() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCompany, setSelectedCompany] = useState<CompanyProfile | null>(null);
+  const [riskFilter, setRiskFilter] = useState<"all" | "low" | "medium" | "high">("all");
+  const [selectedSupplier, setSelectedSupplier] = useState<SupplierRisk | null>(null);
+
+  const getRiskLevel = (score: number): "low" | "medium" | "high" => {
+    if (score < 30) return "low";
+    if (score < 60) return "medium";
+    return "high";
+  };
+
+  const filteredSuppliers = supplierRisks.filter(s => {
+    if (riskFilter === "all") return true;
+    return getRiskLevel(s.riskScore) === riskFilter;
+  });
+
+  const lowRiskCount = supplierRisks.filter(s => s.riskScore < 30).length;
+  const mediumRiskCount = supplierRisks.filter(s => s.riskScore >= 30 && s.riskScore < 60).length;
+  const highRiskCount = supplierRisks.filter(s => s.riskScore >= 60).length;
 
   const getRiskColor = (level: string) => {
     switch (level) {
@@ -598,123 +774,278 @@ export default function DnBIntelligence() {
         </TabsContent>
 
         <TabsContent value="risk" className="space-y-4 mt-4">
-          <div className="grid md:grid-cols-3 gap-4">
-            <Card>
+          <div className="grid md:grid-cols-4 gap-4">
+            <Card 
+              className={`cursor-pointer hover-elevate transition-all ${riskFilter === "all" ? "ring-2" : ""}`}
+              style={{ borderColor: riskFilter === "all" ? "#084594" : undefined }}
+              onClick={() => setRiskFilter("all")}
+              data-testid="filter-all"
+            >
+              <CardContent className="pt-6">
+                <div className="flex items-center gap-3">
+                  <div className="h-12 w-12 rounded-full flex items-center justify-center" style={{ backgroundColor: "rgba(8, 69, 148, 0.1)" }}>
+                    <Layers className="h-6 w-6" style={{ color: "#084594" }} />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">{supplierRisks.length}</div>
+                    <p className="text-sm text-muted-foreground">All Partners</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Card 
+              className={`cursor-pointer hover-elevate transition-all ${riskFilter === "low" ? "ring-2" : ""}`}
+              style={{ borderColor: riskFilter === "low" ? "#2ca02c" : undefined }}
+              onClick={() => setRiskFilter("low")}
+              data-testid="filter-low"
+            >
               <CardContent className="pt-6">
                 <div className="flex items-center gap-3">
                   <div className="h-12 w-12 rounded-full flex items-center justify-center" style={{ backgroundColor: "rgba(44, 160, 44, 0.1)" }}>
                     <CheckCircle2 className="h-6 w-6" style={{ color: "#2ca02c" }} />
                   </div>
                   <div>
-                    <div className="text-2xl font-bold">156</div>
-                    <p className="text-sm text-muted-foreground">Low Risk Partners</p>
+                    <div className="text-2xl font-bold">{lowRiskCount}</div>
+                    <p className="text-sm text-muted-foreground">Low Risk</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
-            <Card>
+            <Card 
+              className={`cursor-pointer hover-elevate transition-all ${riskFilter === "medium" ? "ring-2" : ""}`}
+              style={{ borderColor: riskFilter === "medium" ? "#f59e0b" : undefined }}
+              onClick={() => setRiskFilter("medium")}
+              data-testid="filter-medium"
+            >
               <CardContent className="pt-6">
                 <div className="flex items-center gap-3">
                   <div className="h-12 w-12 rounded-full flex items-center justify-center" style={{ backgroundColor: "rgba(245, 158, 11, 0.1)" }}>
                     <AlertTriangle className="h-6 w-6" style={{ color: "#f59e0b" }} />
                   </div>
                   <div>
-                    <div className="text-2xl font-bold">23</div>
+                    <div className="text-2xl font-bold">{mediumRiskCount}</div>
                     <p className="text-sm text-muted-foreground">Medium Risk</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
-            <Card>
+            <Card 
+              className={`cursor-pointer hover-elevate transition-all ${riskFilter === "high" ? "ring-2" : ""}`}
+              style={{ borderColor: riskFilter === "high" ? "#dc2626" : undefined }}
+              onClick={() => setRiskFilter("high")}
+              data-testid="filter-high"
+            >
               <CardContent className="pt-6">
                 <div className="flex items-center gap-3">
                   <div className="h-12 w-12 rounded-full flex items-center justify-center" style={{ backgroundColor: "rgba(220, 38, 38, 0.1)" }}>
                     <Shield className="h-6 w-6" style={{ color: "#dc2626" }} />
                   </div>
                   <div>
-                    <div className="text-2xl font-bold">5</div>
-                    <p className="text-sm text-muted-foreground">High Risk - Review</p>
+                    <div className="text-2xl font-bold">{highRiskCount}</div>
+                    <p className="text-sm text-muted-foreground">High Risk</p>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Shield className="h-5 w-5" style={{ color: "#084594" }} />
-                Supplier & Partner Risk Monitoring
-              </CardTitle>
-              <CardDescription>
-                Continuous monitoring of corporate partners and suppliers for financial stability
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3">
-                {supplierRisks.map((supplier) => (
-                  <div key={supplier.id} className="flex items-center justify-between p-4 rounded-lg border">
-                    <div className="flex items-center gap-4">
-                      <div 
-                        className="h-10 w-10 rounded-lg flex items-center justify-center"
-                        style={{ 
-                          backgroundColor: supplier.riskScore < 30 
-                            ? "rgba(44, 160, 44, 0.1)" 
-                            : supplier.riskScore < 60 
-                              ? "rgba(245, 158, 11, 0.1)"
-                              : "rgba(220, 38, 38, 0.1)"
-                        }}
-                      >
-                        <Building2 
-                          className="h-5 w-5" 
-                          style={{ 
-                            color: supplier.riskScore < 30 
-                              ? "#2ca02c" 
-                              : supplier.riskScore < 60 
-                                ? "#f59e0b"
-                                : "#dc2626"
-                          }} 
-                        />
-                      </div>
-                      <div>
-                        <h4 className="font-medium">{supplier.name}</h4>
-                        <p className="text-sm text-muted-foreground">{supplier.category}</p>
-                      </div>
+          <div className="grid lg:grid-cols-3 gap-4">
+            <div className="lg:col-span-2">
+              <Card>
+                <CardHeader>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-lg flex items-center gap-2">
+                        <Shield className="h-5 w-5" style={{ color: "#084594" }} />
+                        Supplier & Partner Risk Monitoring
+                      </CardTitle>
+                      <CardDescription>
+                        Click a partner to view detailed risk information and recommendations
+                      </CardDescription>
                     </div>
-                    <div className="flex items-center gap-6">
-                      <div className="w-32">
-                        <div className="flex items-center justify-between text-sm mb-1">
-                          <span className="text-muted-foreground">Risk Score</span>
-                          <span className="font-medium">{supplier.riskScore}</span>
-                        </div>
-                        <Progress 
-                          value={supplier.riskScore} 
-                          className="h-2"
-                        />
-                      </div>
-                      <div className="flex items-center gap-1">
-                        {supplier.trend === "up" && <TrendingUp className="h-4 w-4" style={{ color: "#dc2626" }} />}
-                        {supplier.trend === "down" && <TrendingDown className="h-4 w-4" style={{ color: "#2ca02c" }} />}
-                        {supplier.trend === "stable" && <span className="text-muted-foreground text-sm">—</span>}
-                      </div>
-                      {supplier.alerts.length > 0 ? (
-                        <Badge variant="destructive" className="gap-1">
-                          <AlertTriangle className="h-3 w-3" />
-                          {supplier.alerts.length} Alert{supplier.alerts.length > 1 ? "s" : ""}
-                        </Badge>
-                      ) : (
-                        <Badge variant="outline" className="gap-1" style={{ borderColor: "#2ca02c", color: "#2ca02c" }}>
-                          <CheckCircle2 className="h-3 w-3" />
-                          Stable
-                        </Badge>
-                      )}
-                      <span className="text-xs text-muted-foreground">{supplier.lastAssessment}</span>
-                    </div>
+                    <Badge variant="outline">
+                      {filteredSuppliers.length} {riskFilter === "all" ? "partners" : `${riskFilter} risk`}
+                    </Badge>
                   </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-2 max-h-[600px] overflow-y-auto pr-2">
+                    {filteredSuppliers.map((supplier) => (
+                      <div 
+                        key={supplier.id} 
+                        className={`flex items-center justify-between p-4 rounded-lg border cursor-pointer hover-elevate transition-all ${selectedSupplier?.id === supplier.id ? "ring-2 bg-muted/30" : ""}`}
+                        style={{ borderColor: selectedSupplier?.id === supplier.id ? getRiskColor(getRiskLevel(supplier.riskScore)) : undefined }}
+                        onClick={() => setSelectedSupplier(supplier)}
+                        data-testid={`supplier-${supplier.id}`}
+                      >
+                        <div className="flex items-center gap-4">
+                          <div 
+                            className="h-10 w-10 rounded-lg flex items-center justify-center"
+                            style={{ 
+                              backgroundColor: supplier.riskScore < 30 
+                                ? "rgba(44, 160, 44, 0.1)" 
+                                : supplier.riskScore < 60 
+                                  ? "rgba(245, 158, 11, 0.1)"
+                                  : "rgba(220, 38, 38, 0.1)"
+                            }}
+                          >
+                            <Building2 
+                              className="h-5 w-5" 
+                              style={{ 
+                                color: supplier.riskScore < 30 
+                                  ? "#2ca02c" 
+                                  : supplier.riskScore < 60 
+                                    ? "#f59e0b"
+                                    : "#dc2626"
+                              }} 
+                            />
+                          </div>
+                          <div>
+                            <h4 className="font-medium">{supplier.name}</h4>
+                            <p className="text-sm text-muted-foreground">{supplier.category}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <div className="w-24">
+                            <div className="flex items-center justify-between text-sm mb-1">
+                              <span className="text-muted-foreground text-xs">Score</span>
+                              <span className="font-medium">{supplier.riskScore}</span>
+                            </div>
+                            <Progress value={supplier.riskScore} className="h-2" />
+                          </div>
+                          <div className="flex items-center gap-1 w-6">
+                            {supplier.trend === "up" && <TrendingUp className="h-4 w-4" style={{ color: "#dc2626" }} />}
+                            {supplier.trend === "down" && <TrendingDown className="h-4 w-4" style={{ color: "#2ca02c" }} />}
+                            {supplier.trend === "stable" && <span className="text-muted-foreground text-sm">—</span>}
+                          </div>
+                          {supplier.alerts.length > 0 ? (
+                            <Badge variant="destructive" className="gap-1">
+                              <AlertTriangle className="h-3 w-3" />
+                              {supplier.alerts.length}
+                            </Badge>
+                          ) : (
+                            <Badge variant="outline" className="gap-1" style={{ borderColor: "#2ca02c", color: "#2ca02c" }}>
+                              <CheckCircle2 className="h-3 w-3" />
+                              OK
+                            </Badge>
+                          )}
+                          <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div>
+              <Card className="h-full">
+                <CardHeader style={{ backgroundColor: selectedSupplier ? getRiskColor(getRiskLevel(selectedSupplier.riskScore)) : "#084594" }}>
+                  <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
+                    <FileText className="w-4 h-4" />
+                    Partner Details
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="p-6">
+                  {selectedSupplier ? (
+                    <div className="space-y-4">
+                      <div>
+                        <h3 className="font-semibold text-lg">{selectedSupplier.name}</h3>
+                        <p className="text-sm text-muted-foreground">{selectedSupplier.category}</p>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-3">
+                        <div className="p-3 rounded-lg bg-muted/50">
+                          <p className="text-xs text-muted-foreground">Risk Score</p>
+                          <p className="font-bold text-lg" style={{ color: getRiskColor(getRiskLevel(selectedSupplier.riskScore)) }}>
+                            {selectedSupplier.riskScore}/100
+                          </p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-muted/50">
+                          <p className="text-xs text-muted-foreground">Annual Spend</p>
+                          <p className="font-bold text-lg">{selectedSupplier.annualSpend}</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-muted/50">
+                          <p className="text-xs text-muted-foreground">Contract Expiry</p>
+                          <p className="font-medium">{selectedSupplier.contractExpiry}</p>
+                        </div>
+                        <div className="p-3 rounded-lg bg-muted/50">
+                          <p className="text-xs text-muted-foreground">Last Assessed</p>
+                          <p className="font-medium">{selectedSupplier.lastAssessment}</p>
+                        </div>
+                      </div>
+
+                      <div className="border-t pt-4">
+                        <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                          <Users className="h-4 w-4" style={{ color: "#084594" }} />
+                          Primary Contact
+                        </h4>
+                        <p className="text-sm">{selectedSupplier.contactName}</p>
+                        <p className="text-sm text-muted-foreground">{selectedSupplier.contactEmail}</p>
+                      </div>
+
+                      {selectedSupplier.alerts.length > 0 && (
+                        <div className="border-t pt-4">
+                          <h4 className="font-medium text-sm mb-2 flex items-center gap-2" style={{ color: "#dc2626" }}>
+                            <AlertTriangle className="h-4 w-4" />
+                            Active Alerts
+                          </h4>
+                          <div className="space-y-1">
+                            {selectedSupplier.alerts.map((alert, idx) => (
+                              <div key={idx} className="text-sm p-2 rounded bg-red-50 text-red-800 dark:bg-red-950 dark:text-red-200">
+                                {alert}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="border-t pt-4">
+                        <h4 className="font-medium text-sm mb-2 flex items-center gap-2">
+                          <Target className="h-4 w-4" style={{ color: "#084594" }} />
+                          Risk Factors
+                        </h4>
+                        <ul className="space-y-1">
+                          {selectedSupplier.riskReasons.map((reason, idx) => (
+                            <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
+                              <span className="text-muted-foreground mt-1">•</span>
+                              {reason}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="border-t pt-4">
+                        <h4 className="font-medium text-sm mb-2 flex items-center gap-2" style={{ color: "#2ca02c" }}>
+                          <ArrowRight className="h-4 w-4" />
+                          Recommended Actions
+                        </h4>
+                        <ul className="space-y-2">
+                          {selectedSupplier.recommendedActions.map((action, idx) => (
+                            <li key={idx} className="text-sm p-2 rounded bg-green-50 text-green-800 dark:bg-green-950 dark:text-green-200">
+                              {idx + 1}. {action}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <Button className="w-full gap-2 mt-4" data-testid="button-schedule-review">
+                        <Clock className="h-4 w-4" />
+                        Schedule Review Meeting
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-64 text-center">
+                      <Building2 className="h-12 w-12 text-muted-foreground/30 mb-4" />
+                      <p className="text-muted-foreground">
+                        Select a partner from the list to view detailed risk information
+                      </p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+          </div>
         </TabsContent>
       </Tabs>
     </div>
