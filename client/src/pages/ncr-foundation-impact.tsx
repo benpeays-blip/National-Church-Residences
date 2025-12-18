@@ -173,7 +173,8 @@ export default function NcrFoundationImpact() {
             {programImpact.map((program, index) => (
               <div 
                 key={index} 
-                className="p-4 rounded-lg bg-muted/50"
+                className="p-4 rounded-lg bg-card border border-border shadow-sm"
+                style={{ borderLeftWidth: '4px', borderLeftColor: '#4FA6A6' }}
                 data-testid={`program-${program.program.toLowerCase().replace(/\s+/g, '-')}`}
               >
                 <div className="flex items-center justify-between mb-2">
