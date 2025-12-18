@@ -166,6 +166,22 @@ export default function TechStackMapper() {
               <CardDescription className="max-w-2xl mx-auto">
                 A unified view of the optimized technology stack powering fundraising, operations, and intelligence
               </CardDescription>
+              <div className="flex items-center gap-4 justify-center flex-wrap pt-4">
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: getAccentColor("teal") }} />
+                  <span className="text-muted-foreground">Core Systems</span>
+                </div>
+                <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: getAccentColor("sky") }} />
+                  <span className="text-muted-foreground">Intelligence Layer</span>
+                </div>
+                <ArrowRight className="w-4 h-4 text-muted-foreground" />
+                <div className="flex items-center gap-2 text-sm">
+                  <div className="w-3 h-3 rounded-full" style={{ backgroundColor: getAccentColor("lime") }} />
+                  <span className="text-muted-foreground">Operations</span>
+                </div>
+              </div>
             </CardHeader>
             <CardContent className="space-y-6">
               {(["core", "intelligence", "operations"] as const).map((layer) => {
@@ -309,29 +325,6 @@ export default function TechStackMapper() {
                 );
               })}
 
-              <AccentCard accent="olive" className="p-0 border-dashed">
-                <div className="p-6">
-                  <div className="flex items-center gap-4 justify-center flex-wrap">
-                    <div className="flex items-center gap-2 text-sm">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: getAccentColor("teal") }} />
-                      <span className="text-muted-foreground">Core Systems</span>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                    <div className="flex items-center gap-2 text-sm">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: getAccentColor("sky") }} />
-                      <span className="text-muted-foreground">Intelligence Layer</span>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                    <div className="flex items-center gap-2 text-sm">
-                      <div className="w-3 h-3 rounded-full" style={{ backgroundColor: getAccentColor("lime") }} />
-                      <span className="text-muted-foreground">Operations</span>
-                    </div>
-                  </div>
-                  <p className="text-xs text-center text-muted-foreground mt-4">
-                    Data flows from core systems through analytics and intelligence layers to power operational decisions
-                  </p>
-                </div>
-              </AccentCard>
             </CardContent>
           </Card>
         </TabsContent>
