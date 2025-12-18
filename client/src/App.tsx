@@ -620,6 +620,23 @@ function App() {
     { name: 'Infrastructure', path: '/temporary/infrastructure' },
   ];
 
+  // Check if user is a donor - render standalone donor portal
+  const portalUser = typeof window !== 'undefined' ? localStorage.getItem("portalUser") : null;
+  const userRole = portalUser ? JSON.parse(portalUser)?.role : null;
+  const isDonor = userRole === "donor";
+
+  // If user is a donor, render only the donor portal without main navigation
+  if (isDonor) {
+    return (
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <DonorPortal />
+          <Toaster />
+        </TooltipProvider>
+      </QueryClientProvider>
+    );
+  }
+
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
