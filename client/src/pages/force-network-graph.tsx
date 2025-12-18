@@ -219,34 +219,44 @@ export default function ForceNetworkGraph() {
     return { nodes, links };
   }, []);
 
-  // Configure d3 forces for collision detection and spacing
+  // Configure d3 forces for shell layout: orgs outside, people inside
   useEffect(() => {
     if (fgRef.current) {
       // Add collision force to prevent node overlap
       fgRef.current.d3Force('collision', d3.forceCollide((node: any) => {
-        // Collision radius based on node size plus padding for text
         const baseRadius = node.type === 'org' ? Math.sqrt(node.val) * 4 : Math.sqrt(node.val) * 3;
-        return baseRadius + 20; // Add padding for labels
+        return baseRadius + 15;
       }));
 
-      // Strengthen repulsion force to spread nodes apart
+      // Repulsion force - orgs repel more strongly
       fgRef.current.d3Force('charge', d3.forceManyBody()
         .strength((node: any) => {
-          // Stronger repulsion for larger nodes
-          return node.type === 'org' ? -250 : -120;
+          return node.type === 'org' ? -300 : -80;
         })
-        .distanceMax(400)
+        .distanceMax(500)
       );
 
-      // Increase link distance to give more space between connected nodes
+      // Link distance - longer between people and orgs
       fgRef.current.d3Force('link')
         ?.distance((link: any) => {
-          const sourceVal = link.source.val || 5;
-          const targetVal = link.target.val || 5;
-          return 80 + (sourceVal + targetVal) * 2.5;
+          const source = link.source;
+          const target = link.target;
+          // Longer distance for person-to-org links to push orgs outward
+          if ((source.type === 'person' && target.type === 'org') ||
+              (source.type === 'org' && target.type === 'person')) {
+            return 150;
+          }
+          // Shorter distance for person-to-person links
+          return 60;
         });
 
-      // Reheat simulation to apply new forces
+      // Custom radial force to push orgs to the outside
+      fgRef.current.d3Force('radial', d3.forceRadial(
+        (node: any) => node.type === 'org' ? 200 : 0, // Orgs at radius 200, people at center
+        0, 0 // Center point
+      ).strength((node: any) => node.type === 'org' ? 0.8 : 0.1));
+
+      // Reheat simulation
       fgRef.current.d3ReheatSimulation();
     }
   }, [graphData]);
@@ -472,25 +482,35 @@ export default function ForceNetworkGraph() {
                     {selectedNode.type === "person" && (
                       <>
                         <div className="space-y-2">
-                          <p className="text-xs font-semibold text-muted-foreground">ORGANIZATIONS</p>
+                          <p className="text-xs font-semibold text-muted-foreground">
+                            ALL AFFILIATIONS ({samplePeople.find(p => `person-${p.id}` === selectedNode.id)?.orgs.length || 0})
+                          </p>
                           {samplePeople.find(p => `person-${p.id}` === selectedNode.id)?.orgs.map(orgName => {
                             const org = sampleOrgs.find(o => o.name === orgName);
+                            const isInChart = !!org;
                             return (
                               <div key={orgName} className="flex items-center gap-2 p-2 rounded-md bg-muted/50">
-                                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: org?.color }} />
-                                <span className="text-sm">{orgName}</span>
+                                <div 
+                                  className="w-2 h-2 rounded-full" 
+                                  style={{ backgroundColor: org?.color || "#94a3b8" }} 
+                                />
+                                <span className="text-sm flex-1">{orgName}</span>
+                                {isInChart && (
+                                  <Badge variant="outline" className="text-[10px] px-1 py-0">In Chart</Badge>
+                                )}
                               </div>
                             );
                           })}
                         </div>
                         <div className="space-y-2">
                           <p className="text-xs font-semibold text-muted-foreground">
-                            CONNECTIONS
+                            NETWORK CONNECTIONS ({getPersonConnections(samplePeople.find(p => `person-${p.id}` === selectedNode.id)?.name || '').length})
                           </p>
                           {(() => {
                             const person = samplePeople.find(p => `person-${p.id}` === selectedNode.id);
                             if (!person) return null;
-                            return getPersonConnections(person.name).slice(0, 5).map(conn => (
+                            const connections = getPersonConnections(person.name);
+                            return connections.slice(0, 6).map(conn => (
                               <div key={conn.name} className="p-2 rounded-md bg-muted/50">
                                 <p className="text-sm font-medium">{conn.name}</p>
                                 <p className="text-xs text-muted-foreground">via {conn.sharedOrgs.join(', ')}</p>
