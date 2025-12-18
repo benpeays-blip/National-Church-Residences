@@ -1028,18 +1028,18 @@ export default function PartnerPathwayWizard() {
 
         {/* Step 1: Weekly Constraints */}
         {currentStep === 1 && (
-          <div className="space-y-6">
+          <div className="space-y-8">
             <div>
-              <h3 className="text-lg font-semibold mb-4">Set This Week's Constraints</h3>
-              <p className="text-sm text-muted-foreground mb-6">
+              <h3 className="text-xl font-semibold mb-4">Set This Week's Constraints</h3>
+              <p className="text-base text-muted-foreground mb-6">
                 Help us understand your capacity so we don't suggest more than you can realistically accomplish.
               </p>
             </div>
 
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="meetings" className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <Label htmlFor="meetings" className="flex items-center gap-2 text-base">
+                  <Calendar className="h-5 w-5" />
                   How many 1:1 meetings can you take this week?
                 </Label>
                 <Input
@@ -1060,9 +1060,9 @@ export default function PartnerPathwayWizard() {
                 )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="calls" className="flex items-center gap-2">
-                  <Phone className="h-4 w-4" />
+              <div className="space-y-3">
+                <Label htmlFor="calls" className="flex items-center gap-2 text-base">
+                  <Phone className="h-5 w-5" />
                   How many warm calls can you make?
                 </Label>
                 <Input
@@ -1083,9 +1083,9 @@ export default function PartnerPathwayWizard() {
                 )}
               </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="emails" className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" />
+              <div className="space-y-3">
+                <Label htmlFor="emails" className="flex items-center gap-2 text-base">
+                  <Mail className="h-5 w-5" />
                   How many personalized emails/proposals can you send?
                 </Label>
                 <Input
