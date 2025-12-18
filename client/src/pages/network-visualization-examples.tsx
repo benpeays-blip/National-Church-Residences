@@ -100,7 +100,7 @@ export default function NetworkVisualizationExamples() {
                   </div>
 
                   <div className="flex-1 relative">
-                    <svg className="w-full h-full">
+                    <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
                       <defs>
                         <linearGradient id="flowGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                           <stop offset="0%" stopColor="#4a9fff">
@@ -111,7 +111,7 @@ export default function NetworkVisualizationExamples() {
                           </stop>
                         </linearGradient>
                         <filter id="flowGlow">
-                          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                          <feGaussianBlur stdDeviation="0.5" result="coloredBlur"/>
                           <feMerge>
                             <feMergeNode in="coloredBlur"/>
                             <feMergeNode in="SourceGraphic"/>
@@ -124,25 +124,28 @@ export default function NetworkVisualizationExamples() {
                           if (!org) return null;
                           const oIdx = sampleOrgs.indexOf(org);
                           const isHighlighted = sankeyHovered === person.name || sankeyHovered === org.name;
-                          const y1 = (pIdx + 1) * (590 / 11);
-                          const y2 = (oIdx + 1) * (590 / 7);
+                          // Calculate Y positions to align with the flex justify-around spacing
+                          const y1 = 5 + (pIdx * 90 / (samplePeople.length - 1));
+                          const y2 = 5 + (oIdx * 90 / (sampleOrgs.length - 1));
                           return (
                             <g key={`${person.id}-${org.id}`}>
                               <path
-                                d={`M 0 ${y1} C 150 ${y1}, 200 ${y2}, 350 ${y2}`}
+                                d={`M 0 ${y1} C 35 ${y1}, 65 ${y2}, 100 ${y2}`}
                                 fill="none"
                                 stroke={isHighlighted ? "url(#flowGrad)" : org.color}
-                                strokeWidth={isHighlighted ? 4 : 2}
-                                strokeOpacity={isHighlighted ? 1 : 0.3}
+                                strokeWidth={isHighlighted ? 0.8 : 0.4}
+                                strokeOpacity={isHighlighted ? 1 : 0.35}
                                 filter={isHighlighted ? "url(#flowGlow)" : undefined}
                                 className="transition-all duration-300"
+                                vectorEffect="non-scaling-stroke"
+                                style={{ strokeWidth: isHighlighted ? 3 : 1.5 }}
                               />
                               {isHighlighted && (
-                                <circle r="4" fill="#fff">
+                                <circle r="0.8" fill="#fff">
                                   <animateMotion 
                                     dur="1.5s" 
                                     repeatCount="indefinite"
-                                    path={`M 0 ${y1} C 150 ${y1}, 200 ${y2}, 350 ${y2}`}
+                                    path={`M 0 ${y1} C 35 ${y1}, 65 ${y2}, 100 ${y2}`}
                                   />
                                 </circle>
                               )}
