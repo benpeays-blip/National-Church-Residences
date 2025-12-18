@@ -222,35 +222,35 @@ export default function Login() {
 
   return (
     <div className="fixed inset-0 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center p-4 z-50">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-xl">
         {step === "select-role" && (
-          <div className="space-y-4">
-            <div className="text-center space-y-2">
-              <div className="flex flex-col items-center justify-center mb-4">
-                <img src={ncrLogoIcon} alt="NCR Logo" className="h-16 w-auto" />
+          <div className="space-y-6">
+            <div className="text-center space-y-3">
+              <div className="flex flex-col items-center justify-center mb-6">
+                <img src={ncrLogoIcon} alt="NCR Logo" className="h-28 w-auto" />
               </div>
-              <p className="text-muted-foreground">
+              <p className="text-lg text-muted-foreground">
                 Select your role to continue
               </p>
             </div>
 
-            <div className="space-y-4">
+            <div className="space-y-5">
               <Card 
                 className="cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 border-2 hover:border-teal-400"
                 onClick={() => handleRoleSelect("board_member")}
                 data-testid="card-board-login"
               >
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4">
+                <CardContent className="p-8">
+                  <div className="flex items-center gap-5">
                     <div 
-                      className="w-14 h-14 rounded-full flex items-center justify-center"
+                      className="w-20 h-20 rounded-full flex items-center justify-center"
                       style={{ backgroundColor: `${getAccentColor("teal")}20` }}
                     >
-                      <Users className="h-7 w-7" style={{ color: getAccentColor("teal") }} />
+                      <Users className="h-10 w-10" style={{ color: getAccentColor("teal") }} />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-semibold text-lg">Board Member</h3>
-                      <p className="text-sm text-muted-foreground">
+                      <h3 className="font-semibold text-2xl">Board Member</h3>
+                      <p className="text-base text-muted-foreground">
                         Access board dashboards and prospect assignments
                       </p>
                     </div>
@@ -263,17 +263,17 @@ export default function Login() {
                 onClick={() => handleRoleSelect("donor")}
                 data-testid="card-donor-login"
               >
-                <CardContent className="p-6">
-                  <div className="flex items-center gap-4">
+                <CardContent className="p-8">
+                  <div className="flex items-center gap-5">
                     <div 
-                      className="w-14 h-14 rounded-full flex items-center justify-center"
+                      className="w-20 h-20 rounded-full flex items-center justify-center"
                       style={{ backgroundColor: `${getAccentColor("coral")}20` }}
                     >
-                      <Heart className="h-7 w-7" style={{ color: getAccentColor("coral") }} />
+                      <Heart className="h-10 w-10" style={{ color: getAccentColor("coral") }} />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-semibold text-lg">Donor</h3>
-                      <p className="text-sm text-muted-foreground">
+                      <h3 className="font-semibold text-2xl">Donor</h3>
+                      <p className="text-base text-muted-foreground">
                         View your giving history and manage recurring gifts
                       </p>
                     </div>
@@ -285,8 +285,8 @@ export default function Login() {
                 <div className="absolute inset-0 flex items-center">
                   <span className="w-full border-t" />
                 </div>
-                <div className="relative flex justify-center text-xs uppercase">
-                  <span className="bg-background px-2 text-muted-foreground">
+                <div className="relative flex justify-center text-sm uppercase">
+                  <span className="bg-background px-3 text-muted-foreground">
                     Or
                   </span>
                 </div>
@@ -294,24 +294,24 @@ export default function Login() {
 
               <Button 
                 variant="outline" 
-                className="w-full h-14 text-base gap-3"
+                className="w-full h-20 text-lg gap-4"
                 onClick={handleDemoAccess}
                 data-testid="button-demo-access"
               >
                 <div 
-                  className="w-10 h-10 rounded-full flex items-center justify-center"
+                  className="w-14 h-14 rounded-full flex items-center justify-center"
                   style={{ backgroundColor: `${getAccentColor("sky")}20` }}
                 >
-                  <Play className="h-5 w-5" style={{ color: getAccentColor("sky") }} />
+                  <Play className="h-7 w-7" style={{ color: getAccentColor("sky") }} />
                 </div>
                 <div className="text-left">
-                  <div className="font-semibold">Try Demo</div>
-                  <div className="text-xs text-muted-foreground">Explore FundRazor without an account</div>
+                  <div className="font-semibold text-xl">Try Demo</div>
+                  <div className="text-sm text-muted-foreground">Explore FundRazor without an account</div>
                 </div>
               </Button>
             </div>
 
-            <p className="text-center text-xs text-muted-foreground">
+            <p className="text-center text-sm text-muted-foreground">
               By continuing, you agree to our Terms of Service and Privacy Policy
             </p>
           </div>
