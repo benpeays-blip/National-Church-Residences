@@ -207,44 +207,38 @@ export default function TechStackMapper() {
                         const CategoryIcon = categoryIcons[product.category] || Building2;
                         const productAccent = getCategoryAccent(product.category);
                         return (
-                          <Link key={product.id} href={`/temporary/tech-stack/${product.id}`} className="block">
-                            <AccentCard 
-                              accent={productAccent}
-                              className="p-0 hover-elevate transition-all cursor-pointer h-full"
-                              data-testid={`card-ecosystem-${product.id}`}
-                            >
-                              <div className="p-4 space-y-3">
-                                <div className="flex items-start justify-between gap-3">
-                                  <div className="flex items-start gap-3 flex-1">
-                                    <div 
-                                      className="w-8 h-8 rounded-md flex items-center justify-center shrink-0"
-                                      style={{ backgroundColor: `${getAccentColor(productAccent)}15` }}
-                                    >
-                                      <CategoryIcon className="w-4 h-4" style={{ color: getAccentColor(productAccent) }} />
-                                    </div>
-                                    <div className="flex-1 min-w-0">
-                                      <h4 className="font-semibold text-sm leading-tight" style={{ color: getAccentColor(productAccent) }}>{product.name}</h4>
-                                      <p className="text-xs text-muted-foreground mt-0.5">{product.tagline}</p>
-                                    </div>
-                                  </div>
-                                  <div className="shrink-0 w-6 h-6 flex items-center justify-center">
-                                    <ChevronRight className="h-4 w-4 text-muted-foreground" />
-                                  </div>
-                                </div>
-                                <Badge 
-                                  variant="outline" 
-                                  className="text-xs gap-1"
-                                  style={{ borderColor: getAccentColor(productAccent), color: getAccentColor(productAccent) }}
+                          <AccentCard 
+                            key={product.id}
+                            accent={productAccent}
+                            className="p-0 h-full"
+                            data-testid={`card-ecosystem-${product.id}`}
+                          >
+                            <div className="p-4 space-y-3">
+                              <div className="flex items-start gap-3">
+                                <div 
+                                  className="w-8 h-8 rounded-md flex items-center justify-center shrink-0"
+                                  style={{ backgroundColor: `${getAccentColor(productAccent)}15` }}
                                 >
-                                  <CategoryIcon className="w-3 h-3" />
-                                  {product.category}
-                                </Badge>
-                                <p className="text-xs text-muted-foreground line-clamp-2">
-                                  {product.strengths[0]}
-                                </p>
+                                  <CategoryIcon className="w-4 h-4" style={{ color: getAccentColor(productAccent) }} />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <h4 className="font-semibold text-sm leading-tight" style={{ color: getAccentColor(productAccent) }}>{product.name}</h4>
+                                  <p className="text-xs text-muted-foreground mt-0.5">{product.tagline}</p>
+                                </div>
                               </div>
-                            </AccentCard>
-                          </Link>
+                              <Badge 
+                                variant="outline" 
+                                className="text-xs gap-1"
+                                style={{ borderColor: getAccentColor(productAccent), color: getAccentColor(productAccent) }}
+                              >
+                                <CategoryIcon className="w-3 h-3" />
+                                {product.category}
+                              </Badge>
+                              <p className="text-xs text-muted-foreground line-clamp-2">
+                                {product.strengths[0]}
+                              </p>
+                            </div>
+                          </AccentCard>
                         );
                       })}
                     </div>
