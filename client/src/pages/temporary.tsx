@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
-import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree, Settings, MessageSquare, User, Briefcase } from "lucide-react";
+import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, ChevronRight, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree, Settings, MessageSquare, User, Briefcase } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { AccentCard, NCR_BRAND_COLORS, AccentColor, getAccentColor, getAccentBgClass } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
@@ -2175,50 +2175,85 @@ const riskCategories: RiskCategory[] = [
 ];
 
 function RiskCategoryCard({ category }: { category: RiskCategory }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const Icon = category.icon;
+
+  return (
+    <Link href={`/temporary/risk-compliance/${category.id}`}>
+      <AccentCard 
+        accent={category.accent}
+        className="hover-elevate cursor-pointer transition-all"
+        data-testid={`card-risk-${category.id}`}
+      >
+        <div className="p-4 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-sm ${getAccentBgClass(category.accent)}`}>
+              <Icon className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-base">{category.title}</h3>
+              <p className="text-sm text-muted-foreground">{category.regulations.length} regulations</p>
+            </div>
+          </div>
+          <ChevronRight className="h-5 w-5 text-muted-foreground" />
+        </div>
+      </AccentCard>
+    </Link>
+  );
+}
+
+function RiskCategoryDetailPage({ categoryId }: { categoryId: string }) {
+  const category = riskCategories.find(c => c.id === categoryId);
+  
+  if (!category) {
+    return (
+      <div className="p-6">
+        <p className="text-muted-foreground">Category not found.</p>
+        <Link href="/temporary/risk-compliance">
+          <Button variant="ghost" className="mt-4">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Risk & Compliance
+          </Button>
+        </Link>
+      </div>
+    );
+  }
+
   const Icon = category.icon;
   const accentColor = getAccentColor(category.accent);
 
   return (
-    <AccentCard 
-      accent={category.accent}
-      className="hover-elevate cursor-pointer transition-all"
-      data-testid={`card-risk-${category.id}`}
-    >
-      <div 
-        className="p-4 flex items-center justify-between gap-3"
-        onClick={() => setIsExpanded(!isExpanded)}
-      >
-        <div className="flex items-center gap-3">
-          <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-sm ${getAccentBgClass(category.accent)}`}>
-            <Icon className="w-5 h-5" />
-          </div>
-          <div>
-            <h3 className="font-semibold text-sm">{category.title}</h3>
-            <p className="text-xs text-muted-foreground">{category.regulations.length} regulations</p>
-          </div>
+    <div className="p-6 space-y-6">
+      <div className="flex items-center gap-4">
+        <Link href="/temporary/risk-compliance">
+          <Button variant="ghost" size="icon">
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+        </Link>
+        <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-sm ${getAccentBgClass(category.accent)}`}>
+          <Icon className="w-6 h-6" />
         </div>
-        <Button variant="ghost" size="icon">
-          {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-        </Button>
+        <div>
+          <h1 className="text-2xl font-bold">{category.title}</h1>
+          <p className="text-muted-foreground">{category.regulations.length} regulations</p>
+        </div>
       </div>
 
-      {isExpanded && (
-        <div className="p-4 border-t space-y-3">
-          {category.regulations.map((reg, idx) => (
-            <div key={idx} className="flex items-start gap-3">
-              <div className="w-6 h-6 rounded flex items-center justify-center shrink-0 mt-0.5 bg-muted/50">
-                <AlertTriangle className="w-3 h-3" style={{ color: accentColor }} />
+      <div className="space-y-4">
+        {category.regulations.map((reg, idx) => (
+          <AccentCard key={idx} accent={category.accent} className="p-4">
+            <div className="flex items-start gap-4">
+              <div className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0" style={{ backgroundColor: `${accentColor}15` }}>
+                <AlertTriangle className="w-5 h-5" style={{ color: accentColor }} />
               </div>
               <div>
-                <p className="text-sm font-medium">{reg.name}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">{reg.description}</p>
+                <h3 className="font-semibold text-base">{reg.name}</h3>
+                <p className="text-sm text-muted-foreground mt-1">{reg.description}</p>
               </div>
             </div>
-          ))}
-        </div>
-      )}
-    </AccentCard>
+          </AccentCard>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -2266,6 +2301,7 @@ export default function Temporary() {
 
   const productDetailMatch = location.match(/^\/temporary\/tech-stack\/(.+)$/);
   const interviewDetailMatch = location.match(/^\/temporary\/interviews\/(.+)$/);
+  const riskCategoryMatch = location.match(/^\/temporary\/risk-compliance\/(.+)$/);
   
   if (productDetailMatch) {
     const productId = productDetailMatch[1];
@@ -2284,6 +2320,17 @@ export default function Temporary() {
       <div className="flex flex-col h-full">
         <div className="flex-1 overflow-auto">
           <InterviewDetailPage personId={personId} />
+        </div>
+      </div>
+    );
+  }
+
+  if (riskCategoryMatch) {
+    const categoryId = riskCategoryMatch[1];
+    return (
+      <div className="flex flex-col h-full">
+        <div className="flex-1 overflow-auto">
+          <RiskCategoryDetailPage categoryId={categoryId} />
         </div>
       </div>
     );
