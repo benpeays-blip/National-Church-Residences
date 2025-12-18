@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 import type { Person } from "@shared/schema";
 
 type ViewMode = "gallery" | "list";
@@ -36,9 +37,17 @@ export default function Donors() {
   const [viewMode, setViewMode] = useState<ViewMode>("gallery");
   const [giftFilter, setGiftFilter] = useState<GiftFilter>("all");
   const [, setLocation] = useLocation();
+  const { toast } = useToast();
   const { data: donors, isLoading } = useQuery<Person[]>({
     queryKey: ["/api/persons", searchQuery],
   });
+
+  const handleAddDonor = () => {
+    toast({
+      title: "Add Donor",
+      description: "Donor creation form coming soon. This feature is under development.",
+    });
+  };
 
   const filteredDonors = donors?.filter((donor) => {
     if (giftFilter === "all") return true;
@@ -56,7 +65,7 @@ export default function Donors() {
             Manage your donor relationships and data
           </p>
         </div>
-        <Button data-testid="button-add-donor">
+        <Button onClick={handleAddDonor} data-testid="button-add-donor">
           <Plus className="w-4 h-4 mr-2" />
           Add Donor
         </Button>
@@ -216,7 +225,7 @@ export default function Donors() {
           title="No donors found"
           description="Get started by adding your first donor to the system."
           actionLabel="Add Donor"
-          onAction={() => {}}
+          onAction={handleAddDonor}
         />
       )}
     </div>

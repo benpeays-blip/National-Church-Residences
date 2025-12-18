@@ -24,6 +24,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
+import { useToast } from "@/hooks/use-toast";
 
 const accentColors = {
   teal: "#3D8C8C",
@@ -197,8 +198,30 @@ const typeConfig: Record<string, { icon: any; color: string; label: string }> = 
 export default function ActionDetail() {
   const { id } = useParams<{ id: string }>();
   const actionId = parseInt(id || "0");
+  const { toast } = useToast();
   
   const action = actionsDatabase.find(a => a.id === actionId);
+
+  const handleLogInteraction = () => {
+    toast({
+      title: "Log Interaction",
+      description: "Interaction logging form coming soon. This feature is under development.",
+    });
+  };
+
+  const handleAddNote = () => {
+    toast({
+      title: "Add Note",
+      description: "Note creation form coming soon. This feature is under development.",
+    });
+  };
+
+  const handleScheduleFollowup = () => {
+    toast({
+      title: "Schedule Follow-up",
+      description: "Follow-up scheduling form coming soon. This feature is under development.",
+    });
+  };
   
   if (!action) {
     return (
@@ -454,15 +477,15 @@ export default function ActionDetail() {
                   </Button>
                 </Link>
               )}
-              <Button variant="outline" className="w-full justify-start gap-2" data-testid="button-log-interaction">
+              <Button variant="outline" className="w-full justify-start gap-2" onClick={handleLogInteraction} data-testid="button-log-interaction">
                 <Phone className="w-4 h-4" />
                 Log Interaction
               </Button>
-              <Button variant="outline" className="w-full justify-start gap-2" data-testid="button-add-note">
+              <Button variant="outline" className="w-full justify-start gap-2" onClick={handleAddNote} data-testid="button-add-note">
                 <FileText className="w-4 h-4" />
                 Add Note
               </Button>
-              <Button variant="outline" className="w-full justify-start gap-2" data-testid="button-schedule-followup">
+              <Button variant="outline" className="w-full justify-start gap-2" onClick={handleScheduleFollowup} data-testid="button-schedule-followup">
                 <Calendar className="w-4 h-4" />
                 Schedule Follow-up
               </Button>

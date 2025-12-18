@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link, useSearch } from "wouter";
 import { getAccentColor } from "@/components/ui/accent-card";
+import { useToast } from "@/hooks/use-toast";
 import { 
   Calendar, 
   Phone, 
@@ -30,6 +31,14 @@ export default function UpcomingActionsPage() {
   const searchString = useSearch();
   const params = new URLSearchParams(searchString);
   const filterType = params.get("filter");
+  const { toast } = useToast();
+
+  const handleAddAction = () => {
+    toast({
+      title: "Add Action",
+      description: "Action creation form coming soon. This feature is under development.",
+    });
+  };
 
   const completedActions = [
     { 
@@ -326,7 +335,7 @@ export default function UpcomingActionsPage() {
               </Button>
             </Link>
           )}
-          <Button className="gap-2" style={{ backgroundColor: accentColors.olive }}>
+          <Button onClick={handleAddAction} className="gap-2" style={{ backgroundColor: accentColors.olive }} data-testid="button-add-action">
             <Plus className="w-4 h-4" />
             Add Action
           </Button>
