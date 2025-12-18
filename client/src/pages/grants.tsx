@@ -33,7 +33,7 @@ export default function Grants({ initialStageFilter }: GrantsProps = {}) {
       title: "Add Grant",
       description: "Opening grant research to find new opportunities...",
     });
-    window.location.href = "/grant-research";
+    window.location.href = "/grants/research";
   };
 
   const { data: allGrants, isLoading } = useQuery<Grant[]>({
