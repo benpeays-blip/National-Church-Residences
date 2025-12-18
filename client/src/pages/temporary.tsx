@@ -2260,17 +2260,17 @@ function RiskCategoryDetailPage({ categoryId }: { categoryId: string }) {
 function RiskCompliance() {
   return (
     <div className="space-y-6">
-      <AccentCard accent="coral">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Shield className="h-5 w-5" style={{ color: getAccentColor("coral") }} />
-            <CardTitle>NCR Legal & Risk Landscape</CardTitle>
-          </div>
-          <CardDescription>
-            Complete overview of regulatory compliance requirements across healthcare, housing, fundraising, and operations. Click any category to expand details.
-          </CardDescription>
-        </CardHeader>
-      </AccentCard>
+      <div className="flex items-center gap-4">
+        <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("coral")}15` }}>
+          <Shield className="h-6 w-6" style={{ color: getAccentColor("coral") }} />
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold">NCR Legal & Risk Landscape</h1>
+          <p className="text-muted-foreground">
+            Complete overview of regulatory compliance requirements across healthcare, housing, fundraising, and operations.
+          </p>
+        </div>
+      </div>
 
       <AccentCard accent="sky" className="p-4">
         <div className="flex items-start gap-3">
