@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
 import {
   Sheet,
   SheetContent,
@@ -17,7 +16,6 @@ import {
   Calendar,
   Search,
   Filter,
-  TrendingUp,
   RefreshCw,
   Gift,
   ArrowRight,
@@ -33,7 +31,6 @@ import {
   Send,
   Heart,
   Sparkles,
-  X,
 } from "lucide-react";
 import {
   Select,
@@ -42,14 +39,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 interface CorporateGift {
   id: string;
@@ -180,7 +169,6 @@ const giftTypeLabels: Record<string, { label: string; variant: "default" | "seco
 };
 
 const getActionSteps = (gift: CorporateGift): ActionStep[] => {
-  const baseSteps: ActionStep[] = [];
   const today = new Date();
   
   if (gift.giftType === "matching") {
@@ -360,7 +348,7 @@ const getActionSteps = (gift: CorporateGift): ActionStep[] => {
         dueDate: new Date(today.getTime() + 90 * 24 * 60 * 60 * 1000).toLocaleDateString(),
         priority: "medium",
         completed: false,
-        icon: TrendingUp,
+        icon: Target,
       },
     ];
   }
@@ -483,140 +471,127 @@ export default function CorporateGiving() {
         </Card>
       </div>
 
-      <Card>
-        <CardHeader className="rounded-t-xl" style={{ backgroundColor: "#395174" }}>
-          <div className="flex items-center justify-between">
-            <div>
-              <CardTitle className="text-white">Corporate Gifts</CardTitle>
-              <p className="text-white/70 text-sm mt-1">
-                {filteredGifts.length} gifts • Click arrow to view action steps
-              </p>
-            </div>
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search companies..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-9 w-64 bg-white/90"
-                  data-testid="input-search"
-                />
-              </div>
-              <Select value={filterType} onValueChange={setFilterType}>
-                <SelectTrigger className="w-40 bg-white/90" data-testid="select-filter-type">
-                  <Filter className="w-4 h-4 mr-2" />
-                  <SelectValue placeholder="Filter type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Types</SelectItem>
-                  <SelectItem value="annual">Annual</SelectItem>
-                  <SelectItem value="matching">Matching</SelectItem>
-                  <SelectItem value="capital">Capital</SelectItem>
-                  <SelectItem value="pledge">Pledge</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-        </CardHeader>
-        <CardContent className="p-0">
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="pl-6">Company</TableHead>
-                <TableHead>Type</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Designation</TableHead>
-                <TableHead>Date</TableHead>
-                <TableHead>Contact</TableHead>
-                <TableHead className="text-right pr-6">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {filteredGifts.map((gift) => (
-                <TableRow 
-                  key={gift.id} 
-                  className="cursor-pointer hover:bg-muted/50"
-                  data-testid={`row-gift-${gift.id}`}
-                >
-                  <TableCell className="pl-6">
-                    <div className="flex items-center gap-3">
-                      {gift.logoUrl ? (
-                        <img
-                          src={gift.logoUrl}
-                          alt={`${gift.companyName} logo`}
-                          className="w-8 h-8 object-contain"
-                          onError={(e) => {
-                            e.currentTarget.style.display = "none";
-                          }}
-                        />
-                      ) : (
-                        <Building2 className="w-8 h-8 text-muted-foreground" />
-                      )}
-                      <div>
-                        <p className="font-medium">{gift.companyName}</p>
-                        {gift.isRecurring && (
-                          <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                            <Repeat className="w-3 h-3" />
-                            <span>{gift.recurringFrequency}</span>
-                          </div>
-                        )}
-                      </div>
+      <div className="flex flex-col sm:flex-row gap-4">
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder="Search by company or fund..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-10"
+            data-testid="input-search"
+          />
+        </div>
+        <Select value={filterType} onValueChange={setFilterType}>
+          <SelectTrigger className="w-[180px]" data-testid="select-filter-type">
+            <Filter className="w-4 h-4 mr-2" />
+            <SelectValue placeholder="Type" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">All Types</SelectItem>
+            <SelectItem value="annual">Annual</SelectItem>
+            <SelectItem value="matching">Matching</SelectItem>
+            <SelectItem value="capital">Capital</SelectItem>
+            <SelectItem value="pledge">Pledge</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {filteredGifts.map((gift) => (
+          <Card
+            key={gift.id}
+            className="border hover:shadow-lg transition-shadow cursor-pointer hover-elevate"
+            onClick={() => setSelectedGift(gift)}
+            data-testid={`card-gift-${gift.id}`}
+          >
+            <CardHeader className="pb-3" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }}>
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  {gift.logoUrl ? (
+                    <img
+                      src={gift.logoUrl}
+                      alt={`${gift.companyName} logo`}
+                      className="w-12 h-12 object-contain rounded-lg bg-white p-1 border"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = "none";
+                      }}
+                    />
+                  ) : (
+                    <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                      <Building2 className="w-6 h-6 text-primary" />
                     </div>
-                  </TableCell>
-                  <TableCell>
-                    <Badge variant={giftTypeLabels[gift.giftType].variant}>
-                      {giftTypeLabels[gift.giftType].label}
+                  )}
+                  <div>
+                    <CardTitle className="text-lg">{gift.companyName}</CardTitle>
+                    <p className="text-sm text-muted-foreground">{gift.designatedFund}</p>
+                  </div>
+                </div>
+                <div className="flex flex-col gap-1 items-end">
+                  <Badge variant={giftTypeLabels[gift.giftType].variant}>
+                    {giftTypeLabels[gift.giftType].label}
+                  </Badge>
+                  {gift.matchRatio && (
+                    <Badge variant="outline" className="text-xs">
+                      {gift.matchRatio} Match
                     </Badge>
-                    {gift.matchRatio && (
-                      <span className="ml-2 text-xs text-muted-foreground">
-                        ({gift.matchRatio})
-                      </span>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <span className="font-semibold" style={{ color: "#084594" }}>
-                      ${gift.amount.toLocaleString()}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm">{gift.designatedFund}</span>
-                    {gift.campaign && (
-                      <p className="text-xs text-muted-foreground">{gift.campaign}</p>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <span className="text-sm">
-                      {new Date(gift.giftDate).toLocaleDateString("en-US", {
-                        month: "short",
-                        day: "numeric",
-                        year: "numeric",
-                      })}
-                    </span>
-                    <p className="text-xs text-muted-foreground">{gift.fiscalYear}</p>
-                  </TableCell>
-                  <TableCell>
-                    <div>
-                      <p className="text-sm font-medium">{gift.contactName}</p>
-                      <p className="text-xs text-muted-foreground">{gift.contactTitle}</p>
-                    </div>
-                  </TableCell>
-                  <TableCell className="text-right pr-6">
-                    <Button 
-                      variant="ghost" 
-                      size="sm"
-                      onClick={() => setSelectedGift(gift)}
-                      data-testid={`button-actions-${gift.id}`}
-                    >
-                      <ArrowRight className="w-4 h-4" />
-                    </Button>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+                  )}
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="space-y-4 pt-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-xs text-muted-foreground">Gift Amount</p>
+                  <p className="text-xl font-bold" style={{ color: "#084594" }}>
+                    ${gift.amount.toLocaleString()}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs text-muted-foreground">Gift Date</p>
+                  <p className="text-lg font-semibold">
+                    {new Date(gift.giftDate).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </p>
+                </div>
+              </div>
+
+              {gift.campaign && (
+                <div className="bg-muted/50 p-3 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <Gift className="w-4 h-4" style={{ color: "#084594" }} />
+                    <p className="text-sm font-medium">{gift.campaign}</p>
+                  </div>
+                </div>
+              )}
+
+              {gift.isRecurring && (
+                <div className="flex items-center gap-2 text-sm">
+                  <Repeat className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">Recurring:</span>
+                  <span className="capitalize">{gift.recurringFrequency}</span>
+                </div>
+              )}
+
+              <div className="flex items-center justify-between pt-2 border-t">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+                    <Users className="w-4 h-4 text-muted-foreground" />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium">{gift.contactName}</p>
+                    <p className="text-xs text-muted-foreground">{gift.contactTitle}</p>
+                  </div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-muted-foreground" />
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
 
       {/* Action Steps Sheet */}
       <Sheet open={!!selectedGift} onOpenChange={() => setSelectedGift(null)}>
@@ -646,6 +621,45 @@ export default function CorporateGiving() {
               </SheetHeader>
 
               <div className="space-y-6">
+                {/* Gift Stats */}
+                <div className="grid grid-cols-2 gap-4 p-4 rounded-lg" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }}>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Gift Amount</p>
+                    <p className="text-2xl font-bold" style={{ color: "#395174" }}>
+                      ${selectedGift.amount.toLocaleString()}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Gift Date</p>
+                    <p className="text-lg font-semibold">
+                      {new Date(selectedGift.giftDate).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Fiscal Year</p>
+                    <p className="text-lg font-semibold">{selectedGift.fiscalYear}</p>
+                  </div>
+                  <div>
+                    <p className="text-xs text-muted-foreground">Designation</p>
+                    <p className="text-sm font-medium">{selectedGift.designatedFund}</p>
+                  </div>
+                </div>
+
+                {/* Contact Info */}
+                <Card className="border">
+                  <CardHeader className="pb-2">
+                    <CardTitle className="text-sm flex items-center gap-2">
+                      <Users className="w-4 h-4" style={{ color: "#395174" }} />
+                      Primary Contact
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-2">
+                    <p className="font-medium">{selectedGift.contactName}</p>
+                    <p className="text-sm text-muted-foreground">{selectedGift.contactTitle}</p>
+                  </CardContent>
+                </Card>
+
+                {/* AI Recommendations */}
                 <Card className="border" style={{ backgroundColor: "rgba(57, 81, 116, 0.05)" }}>
                   <CardContent className="p-4">
                     <div className="flex items-center gap-2 mb-2">
@@ -653,7 +667,7 @@ export default function CorporateGiving() {
                       <h4 className="font-semibold text-sm" style={{ color: "#395174" }}>AI-Recommended Actions</h4>
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      These action steps are tailored for {selectedGift.giftType} gifts to maximize stewardship and renewal potential.
+                      These action steps are tailored for {giftTypeLabels[selectedGift.giftType].label.toLowerCase()}s to maximize stewardship and renewal potential.
                     </p>
                   </CardContent>
                 </Card>
