@@ -212,7 +212,7 @@ export default function OutreachGenerator() {
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="pt-6 space-y-4">
                 {item.template.subject && (
                   <div className="space-y-1">
                     <h4 className="font-semibold text-sm mb-1">Subject</h4>
