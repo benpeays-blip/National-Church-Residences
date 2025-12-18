@@ -374,32 +374,32 @@ export default function QuadrantStrategies() {
       </div>
 
       <Tabs defaultValue="acquaintance" className="w-full">
-        <TabsList className="w-full justify-start bg-transparent p-0 h-auto gap-2 mb-4">
+        <TabsList className="h-12 bg-transparent border-0 rounded-none gap-1 w-auto inline-flex border-b">
           <TabsTrigger 
             value="acquaintance" 
             data-testid="tab-strategy-acquaintance"
-            className="px-3 py-1.5 text-sm rounded-md data-[state=active]:bg-[#A5A033] data-[state=active]:text-white"
+            className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-12 gap-2"
           >
             Acquaintance → Partner
           </TabsTrigger>
           <TabsTrigger 
             value="friend" 
             data-testid="tab-strategy-friend"
-            className="px-3 py-1.5 text-sm rounded-md data-[state=active]:bg-[#D5636C] data-[state=active]:text-white"
+            className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-12 gap-2"
           >
             Friend → Partner
           </TabsTrigger>
           <TabsTrigger 
             value="colleague" 
             data-testid="tab-strategy-colleague"
-            className="px-3 py-1.5 text-sm rounded-md data-[state=active]:bg-[#7BC4DC] data-[state=active]:text-white"
+            className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-12 gap-2"
           >
             Colleague → Partner
           </TabsTrigger>
           <TabsTrigger 
             value="partner" 
             data-testid="tab-strategy-partner"
-            className="px-3 py-1.5 text-sm rounded-md data-[state=active]:bg-[#7FA3A1] data-[state=active]:text-white"
+            className="data-[state=active]:bg-transparent data-[state=active]:shadow-none data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none h-12 gap-2"
           >
             Maintain Partner
           </TabsTrigger>
