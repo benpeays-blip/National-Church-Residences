@@ -622,6 +622,10 @@ function App() {
     { name: 'Grants', path: '/grants' },
     { name: 'Campaigns', path: '/campaigns' },
     { name: 'Events', path: '/events' },
+    { name: 'Matching Gifts', path: '/matching-gifts' },
+    { name: 'Tribute Giving', path: '/tribute-giving' },
+    { name: 'Peer-to-Peer', path: '/peer-to-peer' },
+    { name: 'SMS Fundraising', path: '/sms-fundraising' },
   ];
 
   // Check if user is a donor - render standalone donor portal
