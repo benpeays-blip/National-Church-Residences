@@ -966,11 +966,12 @@ export default function PartnerPathwayWizard() {
   const stepIcons = [Calendar, Target, CheckCircle2, Wand2];
   
   // Brand colors for each step: teal, olive, orange, coral
+  // Inactive state uses 70% opacity for more saturated appearance
   const stepColors = [
-    { bg: "#4FA6A6", light: "rgba(79, 166, 166, 0.15)", text: "#4FA6A6" }, // Teal
-    { bg: "#92A05A", light: "rgba(146, 160, 90, 0.15)", text: "#92A05A" }, // Olive
-    { bg: "#E8A54B", light: "rgba(232, 165, 75, 0.15)", text: "#E8A54B" }, // Orange
-    { bg: "#E86B5A", light: "rgba(232, 107, 90, 0.15)", text: "#E86B5A" }, // Coral
+    { bg: "#4FA6A6", light: "rgba(79, 166, 166, 0.7)", text: "#4FA6A6" }, // Teal
+    { bg: "#92A05A", light: "rgba(146, 160, 90, 0.7)", text: "#92A05A" }, // Olive
+    { bg: "#E8A54B", light: "rgba(232, 165, 75, 0.7)", text: "#E8A54B" }, // Orange
+    { bg: "#E86B5A", light: "rgba(232, 107, 90, 0.7)", text: "#E86B5A" }, // Coral
   ];
 
   return (
