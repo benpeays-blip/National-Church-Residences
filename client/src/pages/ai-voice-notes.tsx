@@ -529,7 +529,7 @@ export default function AIVoiceNotes() {
         </Card>
 
         {/* Right Column - Results */}
-        <Card>
+        <Card className="flex flex-col">
           <CardHeader className="rounded-t-xl" style={{ backgroundColor: '#395174' }}>
             <CardTitle className="text-white flex items-center gap-2">
               <FileText className="w-5 h-5" />
@@ -539,7 +539,7 @@ export default function AIVoiceNotes() {
               AI-extracted information from your voice note
             </CardDescription>
           </CardHeader>
-          <CardContent className="pt-6">
+          <CardContent className="pt-6 flex-1 flex flex-col">
             {result ? (
               <div className="space-y-6">
                 {/* Purpose */}
@@ -638,7 +638,7 @@ export default function AIVoiceNotes() {
                 </div>
               </div>
             ) : (
-              <div className="space-y-6">
+              <div className="flex-1 flex flex-col justify-between">
                 <div className="flex flex-col items-center justify-center py-6 text-center">
                   <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
                     <FileText className="w-8 h-8 text-muted-foreground" />
@@ -649,12 +649,12 @@ export default function AIVoiceNotes() {
                   </p>
                 </div>
 
-                <div className="border-t pt-6">
+                <div className="border-t pt-6 mt-auto">
                   <h4 className="font-semibold mb-6 flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-[#E8A54B]" />
                     Tips for Better Results
                   </h4>
-                  <div className="space-y-5">
+                  <div className="space-y-6">
                     <div className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-[#4FA6A6]/10 flex items-center justify-center shrink-0 mt-0.5">
                         <User className="w-3 h-3 text-[#4FA6A6]" />
