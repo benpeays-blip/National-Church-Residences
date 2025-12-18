@@ -236,14 +236,14 @@ export default function AgentValueMap() {
   ];
 
   // Scorecard metrics
-  const scorecardMetrics: Array<{ domain: string; metrics: string[]; accent: AccentColor }> = [
-    { domain: "Housing", metrics: ["HUD recert cycle time ↓", "Error rate ↓", "Staff hours saved ↑", "Compliance exceptions ↓"], accent: "sky" },
-    { domain: "Healthcare", metrics: ["Claim rejection rate ↓", "Billing cycle time ↓", "Duplicate intake rate ↓"], accent: "lime" },
-    { domain: "Finance", metrics: ["Close time ↓", "Reconciliation exceptions ↓", "Entity mapping accuracy ↑"], accent: "limeDark" },
-    { domain: "Fundraising", metrics: ["Acknowledgment time ↓", "Donor retention ↑", "Pipeline coverage ↑", "ROI reporting adoption ↑"], accent: "coral" },
-    { domain: "Grants", metrics: ["On-time submissions ↑", "Duplicate outreach incidents ↓", "Report turnaround time ↓"], accent: "orange" },
-    { domain: "Compliance & Risk", metrics: ["Audit findings ↓", "Filing timeliness ↑", "Data access violations ↓", "Bias flags resolved time ↓"], accent: "teal" },
-    { domain: "Adoption", metrics: ["Active users ↑", "Spreadsheet dependency ↓", "Agent tasks completed ↑"], accent: "olive" },
+  const scorecardMetrics: Array<{ domain: string; metrics: string[]; accent: AccentColor; icon: LucideIcon }> = [
+    { domain: "Housing", metrics: ["HUD recert cycle time ↓", "Error rate ↓", "Staff hours saved ↑", "Compliance exceptions ↓"], accent: "sky", icon: Home },
+    { domain: "Healthcare", metrics: ["Claim rejection rate ↓", "Billing cycle time ↓", "Duplicate intake rate ↓"], accent: "lime", icon: Heart },
+    { domain: "Finance", metrics: ["Close time ↓", "Reconciliation exceptions ↓", "Entity mapping accuracy ↑"], accent: "limeDark", icon: DollarSign },
+    { domain: "Fundraising", metrics: ["Acknowledgment time ↓", "Donor retention ↑", "Pipeline coverage ↑", "ROI reporting adoption ↑"], accent: "coral", icon: HandHeart },
+    { domain: "Grants", metrics: ["On-time submissions ↑", "Duplicate outreach incidents ↓", "Report turnaround time ↓"], accent: "orange", icon: Target },
+    { domain: "Compliance & Risk", metrics: ["Audit findings ↓", "Filing timeliness ↑", "Data access violations ↓", "Bias flags resolved time ↓"], accent: "teal", icon: Shield },
+    { domain: "Adoption", metrics: ["Active users ↑", "Spreadsheet dependency ↓", "Agent tasks completed ↑"], accent: "olive", icon: Users },
   ];
 
   // Agent vs Infrastructure
@@ -734,22 +734,29 @@ export default function AgentValueMap() {
                   <Link key={item.domain} href={`/agent-value-map/scorecard/${item.domain.toLowerCase().replace(/\s+/g, '-')}`}>
                     <AccentCard 
                       accent={item.accent} 
-                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group"
+                      className="cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group h-full"
                       data-testid={`card-scorecard-${item.domain.toLowerCase().replace(/\s+/g, '-')}`}
                     >
                       <CardContent className="p-4">
-                        <p className="font-semibold mb-3 group-hover:text-primary transition-colors">{item.domain}</p>
-                        <ul className="space-y-1">
-                          {item.metrics.map((metric, index) => (
-                            <li key={index} className="flex items-center gap-2 text-sm">
-                              <CircleDot className="w-3 h-3 text-muted-foreground flex-shrink-0 group-hover:text-primary transition-colors" />
-                              <span>{metric}</span>
-                            </li>
-                          ))}
-                        </ul>
-                        <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
-                          <span>View full scorecard</span>
-                          <ChevronRight className="h-4 w-4" />
+                        <div className="flex items-start gap-3">
+                          <div className={`p-3 rounded-lg ${getAccentBgClass(item.accent)}`}>
+                            <item.icon className="w-5 h-5 text-white" />
+                          </div>
+                          <div className="flex-1">
+                            <p className="text-lg font-semibold mb-2" style={{ color: NCR_BRAND_COLORS[item.accent] }}>{item.domain}</p>
+                            <ul className="space-y-1">
+                              {item.metrics.map((metric, index) => (
+                                <li key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
+                                  <CircleDot className="w-3 h-3 flex-shrink-0" style={{ color: NCR_BRAND_COLORS[item.accent] }} />
+                                  <span>{metric}</span>
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
+                              <span>View full scorecard</span>
+                              <ChevronRight className="h-4 w-4" />
+                            </div>
+                          </div>
                         </div>
                       </CardContent>
                     </AccentCard>
