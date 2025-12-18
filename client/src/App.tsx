@@ -816,7 +816,7 @@ function App() {
                             className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${activeDropdown === "Assessment" ? "bg-black/10" : ""}`}
                             data-testid="button-nav-assessment"
                           >
-                            Assessment
+                            Our Assessment
                             <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Assessment" ? "rotate-180" : ""}`} />
                           </Button>
                           {activeDropdown === "Assessment" && (
