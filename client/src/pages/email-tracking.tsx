@@ -62,6 +62,94 @@ const emailCampaigns = [
     donations: 0,
     revenue: 0
   },
+  { 
+    id: "5", 
+    name: "Giving Tuesday Campaign", 
+    sentDate: "2024-11-26", 
+    recipients: 4500,
+    delivered: 4420,
+    opened: 2210,
+    clicked: 663,
+    donations: 156,
+    revenue: 78500
+  },
+  { 
+    id: "6", 
+    name: "Monthly Newsletter - November", 
+    sentDate: "2024-11-01", 
+    recipients: 3150,
+    delivered: 3100,
+    opened: 1147,
+    clicked: 321,
+    donations: 38,
+    revenue: 7200
+  },
+  { 
+    id: "7", 
+    name: "Impact Report - Q3 2024", 
+    sentDate: "2024-10-15", 
+    recipients: 2800,
+    delivered: 2765,
+    opened: 1659,
+    clicked: 498,
+    donations: 72,
+    revenue: 18600
+  },
+  { 
+    id: "8", 
+    name: "Fall Campaign Launch", 
+    sentDate: "2024-10-01", 
+    recipients: 3800,
+    delivered: 3750,
+    opened: 1500,
+    clicked: 420,
+    donations: 95,
+    revenue: 32400
+  },
+  { 
+    id: "9", 
+    name: "Monthly Newsletter - October", 
+    sentDate: "2024-10-01", 
+    recipients: 3100,
+    delivered: 3050,
+    opened: 1098,
+    clicked: 287,
+    donations: 29,
+    revenue: 5800
+  },
+  { 
+    id: "10", 
+    name: "Major Gift Stewardship", 
+    sentDate: "2024-09-20", 
+    recipients: 125,
+    delivered: 125,
+    opened: 112,
+    clicked: 45,
+    donations: 8,
+    revenue: 125000
+  },
+  { 
+    id: "11", 
+    name: "Monthly Newsletter - September", 
+    sentDate: "2024-09-01", 
+    recipients: 3050,
+    delivered: 3000,
+    opened: 1050,
+    clicked: 273,
+    donations: 31,
+    revenue: 6200
+  },
+  { 
+    id: "12", 
+    name: "Back to School Campaign", 
+    sentDate: "2024-08-15", 
+    recipients: 2200,
+    delivered: 2175,
+    opened: 870,
+    clicked: 218,
+    donations: 45,
+    revenue: 12500
+  },
 ];
 
 const topEngagers = [
@@ -70,6 +158,16 @@ const topEngagers = [
   { name: "Emily Rodriguez", opens: 21, clicks: 12, lastOpen: "3 hours ago" },
   { name: "David Kim", opens: 19, clicks: 14, lastOpen: "5 hours ago" },
   { name: "Jennifer Williams", opens: 18, clicks: 11, lastOpen: "1 day ago" },
+  { name: "Robert Thompson", opens: 17, clicks: 13, lastOpen: "4 hours ago" },
+  { name: "Amanda Foster", opens: 16, clicks: 10, lastOpen: "6 hours ago" },
+  { name: "Christopher Lee", opens: 16, clicks: 9, lastOpen: "1 day ago" },
+  { name: "Patricia Martinez", opens: 15, clicks: 11, lastOpen: "8 hours ago" },
+  { name: "James Anderson", opens: 15, clicks: 8, lastOpen: "2 days ago" },
+  { name: "Linda Garcia", opens: 14, clicks: 10, lastOpen: "12 hours ago" },
+  { name: "William Brown", opens: 14, clicks: 7, lastOpen: "1 day ago" },
+  { name: "Elizabeth Taylor", opens: 13, clicks: 9, lastOpen: "3 days ago" },
+  { name: "Richard Davis", opens: 13, clicks: 6, lastOpen: "2 days ago" },
+  { name: "Barbara Wilson", opens: 12, clicks: 8, lastOpen: "4 days ago" },
 ];
 
 export default function EmailTracking() {
@@ -179,7 +277,7 @@ export default function EmailTracking() {
             </div>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
               {filteredCampaigns.map((campaign) => {
                 const openRate = Math.round((campaign.opened / campaign.delivered) * 100);
                 const clickRate = Math.round((campaign.clicked / campaign.opened) * 100);
@@ -243,7 +341,7 @@ export default function EmailTracking() {
             <CardDescription>Most active email readers</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className="space-y-4">
+            <div className="space-y-4 max-h-[500px] overflow-y-auto pr-2">
               {topEngagers.map((engager, idx) => (
                 <div 
                   key={idx}
