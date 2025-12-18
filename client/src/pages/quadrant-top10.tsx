@@ -1,12 +1,11 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle } from "@/components/ui/sheet";
-import { Separator } from "@/components/ui/separator";
-import { ArrowRight, Target, ChevronDown, Phone, Mail, Calendar, MessageSquare, FileText, CheckCircle2, Clock, User, Lightbulb } from "lucide-react";
+import { ArrowRight, Target, ChevronDown } from "lucide-react";
 
 type OpportunityFilter = "all" | "friend-to-partner" | "colleague-to-partner" | "acquaintance-to-colleague";
 
@@ -20,128 +19,6 @@ interface ActionableOpportunity {
   owner: string;
   transitionType: "friend-to-partner" | "colleague-to-partner" | "acquaintance-to-colleague";
 }
-
-const getResponseGuidance = (opp: ActionableOpportunity) => {
-  const templates: Record<string, { 
-    approach: string; 
-    talkingPoints: string[]; 
-    emailTemplate: string;
-    callScript: string;
-    timeline: string;
-    successMetrics: string[];
-  }> = {
-    "friend-to-partner": {
-      approach: "Deepen the relationship by connecting their passion to a specific, impactful opportunity. Friends already trust us—now show them how they can make a transformational difference.",
-      talkingPoints: [
-        "Reference specific events or interactions they've had with your organization",
-        "Share a compelling story that aligns with their known interests",
-        "Present a concrete project or initiative they could fund or champion",
-        "Discuss recognition opportunities and legacy impact",
-        "Ask about their philanthropic goals and timeline"
-      ],
-      emailTemplate: `Dear ${opp.donorName.split(' ')[0]},
-
-I hope this message finds you well. I've been reflecting on our recent conversations and your wonderful engagement with [organization].
-
-Your passion for [their interest area] has truly inspired our team, and I believe there's an exciting opportunity that aligns perfectly with your values.
-
-I'd love to share more over coffee—are you available [suggest 2-3 dates]?
-
-Warm regards,
-${opp.owner}`,
-      callScript: `Opening: "Hi ${opp.donorName.split(' ')[0]}, this is ${opp.owner}. I've been thinking about you and wanted to personally reach out..."
-
-Key Points:
-• Thank them for their ongoing support and engagement
-• Reference a specific moment that stood out to you
-• Transition: "I have something exciting I'd love to share with you..."
-• Propose an in-person meeting to discuss a major gift opportunity
-
-Close: "Would you have time for coffee next week? I'd love to explore how we might partner together on something meaningful."`,
-      timeline: "2-3 weeks from initial outreach to proposal meeting",
-      successMetrics: [
-        "Secure in-person meeting within 2 weeks",
-        "Present tailored giving proposal",
-        "Obtain verbal commitment or clear next steps",
-        "Transition to Partner quadrant"
-      ]
-    },
-    "colleague-to-partner": {
-      approach: "Build on their consistent giving pattern by presenting an elevated opportunity. Show appreciation for their loyalty while inviting them into deeper partnership.",
-      talkingPoints: [
-        "Acknowledge their giving history and express genuine gratitude",
-        "Share the cumulative impact of their contributions",
-        "Present a multi-year pledge opportunity with benefits",
-        "Discuss naming opportunities if appropriate",
-        "Explore matching gift or challenge grant participation"
-      ],
-      emailTemplate: `Dear ${opp.donorName.split(' ')[0]},
-
-Your steadfast support of [organization] over the years has made a remarkable difference. As we look ahead to [upcoming initiative], I'm reaching out to a select group of committed donors like yourself.
-
-I believe you'd be interested in learning about a special opportunity to deepen your impact.
-
-Could we schedule a brief call this week? I'd love to share what we're planning.
-
-With gratitude,
-${opp.owner}`,
-      callScript: `Opening: "Hi ${opp.donorName.split(' ')[0]}, thank you for taking my call. I wanted to personally thank you for your incredible support..."
-
-Key Points:
-• Quantify their cumulative giving impact
-• Share a beneficiary story connected to their giving area
-• Introduce the elevated opportunity: "We're inviting our most committed supporters to..."
-• Present specific giving levels and associated recognition
-
-Close: "I'd love to schedule a time to discuss this further. What works best for your calendar?"`,
-      timeline: "3-4 weeks for cultivation and proposal presentation",
-      successMetrics: [
-        "Schedule discovery call within 1 week",
-        "Conduct in-depth conversation about capacity",
-        "Present multi-year or major gift proposal",
-        "Secure commitment or establish follow-up timeline"
-      ]
-    },
-    "acquaintance-to-colleague": {
-      approach: "Convert interest into engagement through personalized touchpoints. Focus on building trust and demonstrating value before discussing increased involvement.",
-      talkingPoints: [
-        "Reference their recent interaction with your organization",
-        "Ask questions to understand their interests and motivations",
-        "Invite them to an upcoming event or program",
-        "Offer to send personalized impact information",
-        "Suggest a low-pressure next step"
-      ],
-      emailTemplate: `Dear ${opp.donorName.split(' ')[0]},
-
-It was wonderful to connect with you at [event/touchpoint]. Your interest in [topic] resonated with me, and I wanted to follow up personally.
-
-I thought you might enjoy this [impact report/story/article] that relates to what we discussed.
-
-I'd love to hear your thoughts and learn more about what inspires your philanthropy.
-
-Best regards,
-${opp.owner}`,
-      callScript: `Opening: "Hi ${opp.donorName.split(' ')[0]}, this is ${opp.owner} from [organization]. I wanted to personally thank you for [recent interaction]..."
-
-Key Points:
-• Express genuine appreciation for their engagement
-• Ask open-ended questions about their interests
-• Listen actively and take notes
-• Offer something of value (event invite, tour, report)
-
-Close: "I'd love to stay in touch and keep you updated on [area of interest]. Would that be alright?"`,
-      timeline: "4-6 weeks of cultivation before asking for commitment",
-      successMetrics: [
-        "Complete thank you call within 48 hours",
-        "Send personalized follow-up materials",
-        "Secure commitment to next engagement opportunity",
-        "Establish regular communication cadence"
-      ]
-    }
-  };
-  
-  return templates[opp.transitionType] || templates["acquaintance-to-colleague"];
-};
 
 const mockOpportunities: ActionableOpportunity[] = [
   {
@@ -447,9 +324,9 @@ const mockOpportunities: ActionableOpportunity[] = [
 ];
 
 export default function QuadrantTop10() {
+  const [, setLocation] = useLocation();
   const [opportunityFilter, setOpportunityFilter] = useState<OpportunityFilter>("all");
   const [visibleCount, setVisibleCount] = useState(10);
-  const [selectedOpportunity, setSelectedOpportunity] = useState<ActionableOpportunity | null>(null);
 
   const filteredOpportunities = mockOpportunities.filter(opp => {
     if (opportunityFilter === "all") return true;
@@ -457,8 +334,6 @@ export default function QuadrantTop10() {
   });
 
   const visibleOpportunities = filteredOpportunities.slice(0, visibleCount);
-  
-  const guidance = selectedOpportunity ? getResponseGuidance(selectedOpportunity) : null;
 
   const getImpactStyle = (impact: string): { backgroundColor: string; color: string; borderColor: string } => {
     switch (impact) {
@@ -534,7 +409,7 @@ export default function QuadrantTop10() {
                     key={opp.id} 
                     data-testid={`row-opportunity-${opp.id}`}
                     className="cursor-pointer hover-elevate"
-                    onClick={() => setSelectedOpportunity(opp)}
+                    onClick={() => setLocation(`/opportunity-response/${opp.id}`)}
                   >
                     <TableCell className="font-medium">{opp.donorName}</TableCell>
                     <TableCell>
@@ -583,151 +458,6 @@ export default function QuadrantTop10() {
           </p>
         )}
       </CardContent>
-
-      {/* Response Guidance Sheet */}
-      <Sheet open={!!selectedOpportunity} onOpenChange={() => setSelectedOpportunity(null)}>
-        <SheetContent className="w-full sm:max-w-xl overflow-y-auto">
-          {selectedOpportunity && guidance && (
-            <>
-              <SheetHeader>
-                <SheetTitle className="flex items-center gap-2">
-                  <User className="h-5 w-5" />
-                  {selectedOpportunity.donorName}
-                </SheetTitle>
-                <SheetDescription>
-                  Response guidance for {selectedOpportunity.currentQuadrant} → Partner transition
-                </SheetDescription>
-              </SheetHeader>
-              
-              <div className="mt-6 space-y-6">
-                {/* Quick Context */}
-                <div className="flex flex-wrap gap-2">
-                  <Badge variant="secondary">{selectedOpportunity.currentQuadrant}</Badge>
-                  <Badge variant="outline" style={getImpactStyle(selectedOpportunity.estimatedImpact)}>
-                    {selectedOpportunity.estimatedImpact} Impact
-                  </Badge>
-                  <Badge variant="outline" className="gap-1">
-                    <User className="h-3 w-3" />
-                    {selectedOpportunity.owner}
-                  </Badge>
-                </div>
-
-                {/* Why Now */}
-                <div className="p-4 rounded-lg bg-muted/50 border">
-                  <div className="flex items-center gap-2 mb-2">
-                    <Clock className="h-4 w-4 text-primary" />
-                    <span className="font-semibold text-sm">Why Now</span>
-                  </div>
-                  <p className="text-sm">{selectedOpportunity.whyNow}</p>
-                </div>
-
-                {/* Recommended Move */}
-                <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-                  <div className="flex items-center gap-2 mb-2">
-                    <ArrowRight className="h-4 w-4 text-primary" />
-                    <span className="font-semibold text-sm">Recommended Move</span>
-                  </div>
-                  <p className="text-sm font-medium">{selectedOpportunity.recommendedMove}</p>
-                </div>
-
-                <Separator />
-
-                {/* Approach */}
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Lightbulb className="h-4 w-4 text-amber-500" />
-                    <h4 className="font-semibold">Recommended Approach</h4>
-                  </div>
-                  <p className="text-sm text-muted-foreground">{guidance.approach}</p>
-                </div>
-
-                {/* Talking Points */}
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <MessageSquare className="h-4 w-4 text-primary" />
-                    <h4 className="font-semibold">Key Talking Points</h4>
-                  </div>
-                  <ul className="space-y-2">
-                    {guidance.talkingPoints.map((point, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm">
-                        <CheckCircle2 className="h-4 w-4 text-primary mt-0.5 shrink-0" />
-                        <span>{point}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <Separator />
-
-                {/* Email Template */}
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Mail className="h-4 w-4 text-primary" />
-                    <h4 className="font-semibold">Email Template</h4>
-                  </div>
-                  <div className="p-3 rounded-lg bg-muted/50 border font-mono text-xs whitespace-pre-wrap">
-                    {guidance.emailTemplate}
-                  </div>
-                  <Button variant="outline" size="sm" className="mt-2 gap-2" data-testid="button-copy-email">
-                    <FileText className="h-3 w-3" />
-                    Copy to Clipboard
-                  </Button>
-                </div>
-
-                {/* Call Script */}
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Phone className="h-4 w-4 text-primary" />
-                    <h4 className="font-semibold">Call Script</h4>
-                  </div>
-                  <div className="p-3 rounded-lg bg-muted/50 border font-mono text-xs whitespace-pre-wrap">
-                    {guidance.callScript}
-                  </div>
-                </div>
-
-                <Separator />
-
-                {/* Timeline */}
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Calendar className="h-4 w-4 text-primary" />
-                    <h4 className="font-semibold">Timeline</h4>
-                  </div>
-                  <p className="text-sm">{guidance.timeline}</p>
-                </div>
-
-                {/* Success Metrics */}
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <Target className="h-4 w-4 text-primary" />
-                    <h4 className="font-semibold">Success Metrics</h4>
-                  </div>
-                  <ul className="space-y-2">
-                    {guidance.successMetrics.map((metric, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-sm">
-                        <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 shrink-0" />
-                        <span>{metric}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Action Buttons */}
-                <div className="flex gap-2 pt-4">
-                  <Button className="flex-1 gap-2" data-testid="button-schedule-call">
-                    <Phone className="h-4 w-4" />
-                    Schedule Call
-                  </Button>
-                  <Button variant="outline" className="flex-1 gap-2" data-testid="button-draft-email">
-                    <Mail className="h-4 w-4" />
-                    Draft Email
-                  </Button>
-                </div>
-              </div>
-            </>
-          )}
-        </SheetContent>
-      </Sheet>
     </Card>
   );
 }

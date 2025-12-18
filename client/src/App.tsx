@@ -103,6 +103,7 @@ import Integrations2 from "@/pages/integrations-2";
 // Tab-based landing pages
 import IntelligenceWithTabs from "@/pages/intelligence-with-tabs";
 import QuadrantWithTabs from "@/pages/quadrant-with-tabs";
+import OpportunityResponse from "@/pages/opportunity-response";
 import EventsWithTabs from "@/pages/events-with-tabs";
 import GrantsWithTabs from "@/pages/grants-with-tabs";
 import AIToolsWithTabs from "@/pages/ai-tools-with-tabs";
@@ -341,6 +342,7 @@ function Router() {
       <Route path="/quadrant/top10" component={QuadrantWithTabs} />
       <Route path="/quadrant/wizard" component={QuadrantWithTabs} />
       <Route path="/quadrant" component={QuadrantWithTabs} />
+      <Route path="/opportunity-response/:id">{(params) => <OpportunityResponse id={params.id} />}</Route>
       <Route path="/events/upcoming" component={EventsWithTabs} />
       <Route path="/events/past" component={EventsWithTabs} />
       <Route path="/events" component={EventsWithTabs} />

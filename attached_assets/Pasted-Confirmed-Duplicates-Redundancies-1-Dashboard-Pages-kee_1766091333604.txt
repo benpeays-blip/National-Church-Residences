@@ -1,0 +1,58 @@
+Confirmed Duplicates & Redundancies
+1. Dashboard Pages (keep: dashboard-home-with-tabs.tsx)
+File	Status	Recommendation
+dashboard.tsx	Redundant	Remove - basic placeholder
+dashboard-home.tsx	Redundant	Remove - superseded by tabs version
+dashboard-home-with-tabs.tsx	Keep	Main dashboard with role tabs
+2. Integration Pages (keep: integrations.tsx)
+File	Status	Recommendation
+integrations.tsx	Keep	Primary integrations page
+integrations-2.tsx	Redundant	Remove - duplicate/experimental
+3. Gift Pages (keep: gifts-with-tabs.tsx, gifts.tsx)
+File	Status	Recommendation
+major-gifts.tsx	Redundant	Remove - consolidated into filter dropdown
+4. AI Tools Pages (keep: ai-tools-with-tabs.tsx)
+File	Status	Recommendation
+ai-tools-with-tabs.tsx	Keep	Main AI tools landing
+ai-with-tabs.tsx	Redundant	Remove - duplicate structure
+5. Quadrant Pages (keep: donor-quadrant-with-tabs.tsx, quadrant-with-tabs.tsx)
+File	Status	Recommendation
+donor-quadrant.tsx	Redundant	Remove - superseded by tabs version
+quadrant-with-tabs.tsx	Keep	Main quadrant view
+6. Navigation/Design Previews (can all be removed)
+File	Status	Recommendation
+navigation-preview.tsx	Dev tool	Remove - not user-facing
+navigation-mockups.tsx	Dev tool	Remove - not user-facing
+navigation-hybrid-mockup.tsx	Dev tool	Remove - not user-facing
+navigation-mega-menu-preview.tsx	Dev tool	Remove - not user-facing
+card-design-preview.tsx	Dev tool	Remove - not user-facing
+card-design-modern.tsx	Dev tool	Remove - not user-facing
+hero-preview.tsx	Dev tool	Remove - not user-facing
+logo-preview.tsx	Dev tool	Remove - not user-facing
+icon-style-guide.tsx	Dev tool	Remove - not user-facing
+donor-card-showcase.tsx	Dev tool	Remove - not user-facing
+7. NCR Foundation Pages (keep: ncr-foundation-with-tabs.tsx)
+File	Status	Recommendation
+ncr-foundation.tsx	Redundant	Remove - superseded by tabs version
+ncr-foundation-with-tabs.tsx	Keep	Main foundation view
+8. Network Visualization (keep one)
+File	Status	Recommendation
+force-network-graph.tsx	Dev/experimental	Remove if not used
+network-visualization-examples.tsx	Dev/experimental	Remove if not used
+9. Temporary/Test Pages
+File	Status	Recommendation
+temporary.tsx	Test page	Remove
+preview-homepage.tsx	Dev preview	Remove if not needed
+Summary
+Total pages that can be removed: ~20 files
+
+Category	Files to Remove
+Dashboard duplicates	2
+Integration duplicates	1
+Gift duplicates	1
+AI duplicates	1
+Quadrant duplicates	1
+NCR duplicates	1
+Dev/Preview pages	10
+Temp/Test pages	2
+Network visualization	2
