@@ -28,15 +28,38 @@ const samplePeople: Person[] = [
   { id: 8, name: "James Mitchell", title: "Partner", orgs: ["OSU Foundation", "Children's Hospital"] },
   { id: 9, name: "Lisa Brown", title: "VP Development", orgs: ["Columbus Foundation", "Children's Hospital"] },
   { id: 10, name: "Marcus Williams", title: "Board Member", orgs: ["United Way", "Tech Hub Ohio"] },
+  { id: 11, name: "Patricia Moore", title: "Executive Director", orgs: ["Community Foundation", "Civic League"] },
+  { id: 12, name: "Thomas Anderson", title: "CFO", orgs: ["Healthcare Alliance", "Business Roundtable"] },
+  { id: 13, name: "Nancy Taylor", title: "President", orgs: ["Education Trust", "Youth Services"] },
+  { id: 14, name: "Christopher Lee", title: "Chairman", orgs: ["Environmental Council", "Green Initiative"] },
+  { id: 15, name: "Susan Martinez", title: "VP Operations", orgs: ["Community Foundation", "Healthcare Alliance"] },
+  { id: 16, name: "Daniel Harris", title: "Managing Director", orgs: ["Business Roundtable", "Tech Hub Ohio"] },
+  { id: 17, name: "Michelle Clark", title: "Board Treasurer", orgs: ["Youth Services", "Education Trust"] },
+  { id: 18, name: "Kevin Robinson", title: "Chief Strategy Officer", orgs: ["Civic League", "Environmental Council"] },
+  { id: 19, name: "Angela White", title: "Senior Partner", orgs: ["Green Initiative", "Arts Council"] },
+  { id: 20, name: "Steven Hall", title: "Vice Chair", orgs: ["Columbus Foundation", "Community Foundation"] },
+  { id: 21, name: "Laura Adams", title: "Director of Development", orgs: ["United Way", "Youth Services"] },
+  { id: 22, name: "Richard Scott", title: "Board Secretary", orgs: ["OSU Foundation", "Education Trust"] },
+  { id: 23, name: "Catherine Young", title: "CEO", orgs: ["Healthcare Alliance", "Children's Hospital"] },
+  { id: 24, name: "Joseph King", title: "Philanthropist", orgs: ["Environmental Council", "Columbus Foundation"] },
+  { id: 25, name: "Dorothy Wright", title: "Founder", orgs: ["Civic League", "Business Roundtable"] },
 ];
 
 const sampleOrgs: Organization[] = [
-  { id: 1, name: "Columbus Foundation", sector: "Community", members: ["Sarah Chen", "Michael Rodriguez", "David Kim", "Robert Thompson", "Lisa Brown"], color: "#7FA3A1" },
-  { id: 2, name: "United Way", sector: "Social Services", members: ["Sarah Chen", "Jennifer Williams", "Elizabeth Carter", "Marcus Williams"], color: "#9CB071" },
-  { id: 3, name: "OSU Foundation", sector: "Education", members: ["Sarah Chen", "David Kim", "James Mitchell"], color: "#E8923A" },
-  { id: 4, name: "Tech Hub Ohio", sector: "Economic Dev", members: ["Michael Rodriguez", "David Kim", "Amanda Foster", "Marcus Williams"], color: "#6FBBD3" },
-  { id: 5, name: "Children's Hospital", sector: "Healthcare", members: ["Jennifer Williams", "Elizabeth Carter", "James Mitchell", "Lisa Brown"], color: "#D5636C" },
-  { id: 6, name: "Arts Council", sector: "Arts & Culture", members: ["Jennifer Williams", "Robert Thompson", "Amanda Foster"], color: "#B5C942" },
+  { id: 1, name: "Columbus Foundation", sector: "Community", members: ["Sarah Chen", "Michael Rodriguez", "David Kim", "Robert Thompson", "Lisa Brown", "Steven Hall", "Joseph King"], color: "#7FA3A1" },
+  { id: 2, name: "United Way", sector: "Social Services", members: ["Sarah Chen", "Jennifer Williams", "Elizabeth Carter", "Marcus Williams", "Laura Adams"], color: "#9CB071" },
+  { id: 3, name: "OSU Foundation", sector: "Education", members: ["Sarah Chen", "David Kim", "James Mitchell", "Richard Scott"], color: "#E8923A" },
+  { id: 4, name: "Tech Hub Ohio", sector: "Economic Dev", members: ["Michael Rodriguez", "David Kim", "Amanda Foster", "Marcus Williams", "Daniel Harris"], color: "#6FBBD3" },
+  { id: 5, name: "Children's Hospital", sector: "Healthcare", members: ["Jennifer Williams", "Elizabeth Carter", "James Mitchell", "Lisa Brown", "Catherine Young"], color: "#D5636C" },
+  { id: 6, name: "Arts Council", sector: "Arts & Culture", members: ["Jennifer Williams", "Robert Thompson", "Amanda Foster", "Angela White"], color: "#B5C942" },
+  { id: 7, name: "Community Foundation", sector: "Philanthropy", members: ["Patricia Moore", "Susan Martinez", "Steven Hall"], color: "#8E6BB8" },
+  { id: 8, name: "Civic League", sector: "Civic Engagement", members: ["Patricia Moore", "Kevin Robinson", "Dorothy Wright"], color: "#E07B53" },
+  { id: 9, name: "Healthcare Alliance", sector: "Healthcare", members: ["Thomas Anderson", "Susan Martinez", "Catherine Young"], color: "#5BA8A0" },
+  { id: 10, name: "Business Roundtable", sector: "Business", members: ["Thomas Anderson", "Daniel Harris", "Dorothy Wright"], color: "#C4A35A" },
+  { id: 11, name: "Education Trust", sector: "Education", members: ["Nancy Taylor", "Michelle Clark", "Richard Scott"], color: "#7B9ED1" },
+  { id: 12, name: "Youth Services", sector: "Youth Development", members: ["Nancy Taylor", "Michelle Clark", "Laura Adams"], color: "#D4A5C9" },
+  { id: 13, name: "Environmental Council", sector: "Environment", members: ["Christopher Lee", "Kevin Robinson", "Joseph King"], color: "#6AAF6A" },
+  { id: 14, name: "Green Initiative", sector: "Sustainability", members: ["Christopher Lee", "Angela White"], color: "#A3C985" },
 ];
 
 export default function NetworkVisualizationExamples() {
@@ -50,10 +73,13 @@ export default function NetworkVisualizationExamples() {
   
   const containerRef = useRef<HTMLDivElement>(null);
   const svgRef = useRef<SVGSVGElement>(null);
+  const peopleScrollRef = useRef<HTMLDivElement>(null);
+  const orgsScrollRef = useRef<HTMLDivElement>(null);
   const peopleRefs = useRef<{ [key: number]: HTMLButtonElement | null }>({});
   const orgRefs = useRef<{ [key: number]: HTMLButtonElement | null }>({});
+  const [scrollTrigger, setScrollTrigger] = useState(0);
 
-  // Measure positions after render
+  // Measure positions after render and on scroll
   useLayoutEffect(() => {
     const updatePositions = () => {
       if (!containerRef.current || !svgRef.current) return;
@@ -95,7 +121,11 @@ export default function NetworkVisualizationExamples() {
     updatePositions();
     window.addEventListener('resize', updatePositions);
     return () => window.removeEventListener('resize', updatePositions);
-  }, []);
+  }, [scrollTrigger]);
+
+  const handleScroll = () => {
+    setScrollTrigger(prev => prev + 1);
+  };
 
   return (
     <div className="space-y-6">
@@ -127,33 +157,40 @@ export default function NetworkVisualizationExamples() {
                 }}
               >
                 <div className="flex justify-between h-full">
-                  <div className="flex flex-col justify-around w-40">
-                    <p className="text-xs font-semibold text-cyan-400 mb-2">INDIVIDUALS</p>
-                    {samplePeople.map(person => {
-                      const isHovered = sankeyHovered === person.name;
-                      return (
-                        <button
-                          key={person.id}
-                          ref={el => { peopleRefs.current[person.id] = el; }}
-                          className="relative text-left transition-all duration-300"
-                          onMouseEnter={() => setSankeyHovered(person.name)}
-                          onMouseLeave={() => setSankeyHovered(null)}
-                          data-testid={`sankey-person-${person.id}`}
-                        >
-                          <div 
-                            className="p-2 rounded-md text-sm text-white/90 transition-all"
-                            style={{ 
-                              background: isHovered 
-                                ? "linear-gradient(90deg, rgba(74, 159, 255, 0.3), transparent)" 
-                                : "transparent",
-                              borderLeft: isHovered ? "3px solid #4a9fff" : "3px solid transparent"
-                            }}
+                  <div className="flex flex-col w-44">
+                    <p className="text-xs font-semibold text-cyan-400 mb-2 flex-shrink-0">INDIVIDUALS</p>
+                    <div 
+                      ref={peopleScrollRef}
+                      onScroll={handleScroll}
+                      className="flex-1 overflow-y-auto pr-2 space-y-1"
+                      style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(74, 159, 255, 0.3) transparent' }}
+                    >
+                      {samplePeople.map(person => {
+                        const isHovered = sankeyHovered === person.name;
+                        return (
+                          <button
+                            key={person.id}
+                            ref={el => { peopleRefs.current[person.id] = el; }}
+                            className="relative text-left transition-all duration-300 w-full"
+                            onMouseEnter={() => setSankeyHovered(person.name)}
+                            onMouseLeave={() => setSankeyHovered(null)}
+                            data-testid={`sankey-person-${person.id}`}
                           >
-                            {person.name}
-                          </div>
-                        </button>
-                      );
-                    })}
+                            <div 
+                              className="p-2 rounded-md text-sm text-white/90 transition-all"
+                              style={{ 
+                                background: isHovered 
+                                  ? "linear-gradient(90deg, rgba(74, 159, 255, 0.3), transparent)" 
+                                  : "transparent",
+                                borderLeft: isHovered ? "3px solid #4a9fff" : "3px solid transparent"
+                              }}
+                            >
+                              {person.name}
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
 
                   <div className="flex-1 relative">
@@ -218,38 +255,45 @@ export default function NetworkVisualizationExamples() {
                     </svg>
                   </div>
 
-                  <div className="flex flex-col justify-around w-44">
-                    <p className="text-xs font-semibold text-emerald-400 mb-2 text-right">ORGANIZATIONS</p>
-                    {sampleOrgs.map(org => {
-                      const isHovered = sankeyHovered === org.name || (sankeyHovered && samplePeople.find(p => p.name === sankeyHovered)?.orgs.includes(org.name));
-                      return (
-                        <button
-                          key={org.id}
-                          ref={el => { orgRefs.current[org.id] = el; }}
-                          className="relative text-right transition-all duration-300"
-                          onMouseEnter={() => setSankeyHovered(org.name)}
-                          onMouseLeave={() => setSankeyHovered(null)}
-                          data-testid={`sankey-org-${org.id}`}
-                        >
-                          <div 
-                            className="p-2 rounded-md text-sm flex items-center justify-end gap-2 transition-all"
-                            style={{ 
-                              background: isHovered 
-                                ? `linear-gradient(270deg, ${org.color}40, transparent)` 
-                                : "transparent",
-                              borderRight: `3px solid ${isHovered ? org.color : 'transparent'}`,
-                              color: isHovered ? 'white' : 'rgba(255,255,255,0.7)'
-                            }}
+                  <div className="flex flex-col w-48">
+                    <p className="text-xs font-semibold text-emerald-400 mb-2 text-right flex-shrink-0">ORGANIZATIONS</p>
+                    <div 
+                      ref={orgsScrollRef}
+                      onScroll={handleScroll}
+                      className="flex-1 overflow-y-auto pl-2 space-y-1"
+                      style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(0, 255, 136, 0.3) transparent' }}
+                    >
+                      {sampleOrgs.map(org => {
+                        const isHovered = sankeyHovered === org.name || (sankeyHovered && samplePeople.find(p => p.name === sankeyHovered)?.orgs.includes(org.name));
+                        return (
+                          <button
+                            key={org.id}
+                            ref={el => { orgRefs.current[org.id] = el; }}
+                            className="relative text-right transition-all duration-300 w-full"
+                            onMouseEnter={() => setSankeyHovered(org.name)}
+                            onMouseLeave={() => setSankeyHovered(null)}
+                            data-testid={`sankey-org-${org.id}`}
                           >
-                            <span className="truncate">{org.name}</span>
                             <div 
-                              className="w-2 h-2 rounded-full flex-shrink-0"
-                              style={{ backgroundColor: org.color }}
-                            />
-                          </div>
-                        </button>
-                      );
-                    })}
+                              className="p-2 rounded-md text-sm flex items-center justify-end gap-2 transition-all"
+                              style={{ 
+                                background: isHovered 
+                                  ? `linear-gradient(270deg, ${org.color}40, transparent)` 
+                                  : "transparent",
+                                borderRight: `3px solid ${isHovered ? org.color : 'transparent'}`,
+                                color: isHovered ? 'white' : 'rgba(255,255,255,0.7)'
+                              }}
+                            >
+                              <span className="truncate">{org.name}</span>
+                              <div 
+                                className="w-2 h-2 rounded-full flex-shrink-0"
+                                style={{ backgroundColor: org.color }}
+                              />
+                            </div>
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
               </div>
