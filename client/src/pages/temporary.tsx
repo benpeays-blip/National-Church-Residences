@@ -1822,74 +1822,132 @@ const redundanciesRemoved = [
 ];
 
 function TechComponentCard({ component }: { component: TechComponent }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+  const Icon = component.icon;
+
+  return (
+    <Link href={`/temporary/tech-component/${component.id}`}>
+      <AccentCard 
+        accent={component.accent} 
+        className="hover-elevate cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-[1.02] group h-full"
+        data-testid={`card-tech-component-${component.id}`}
+      >
+        <div className="p-4 flex items-start justify-between gap-3">
+          <div className="flex items-start gap-3">
+            <div 
+              className={`w-10 h-10 rounded-lg flex items-center justify-center text-white shrink-0 ${getAccentBgClass(component.accent)}`}
+            >
+              <Icon className="w-5 h-5" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-semibold text-base group-hover:text-primary transition-colors">{component.name}</h3>
+              <p className="text-sm text-muted-foreground mt-0.5">{component.role}</p>
+              <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
+                <span>View details</span>
+                <ChevronRight className="h-4 w-4" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </AccentCard>
+    </Link>
+  );
+}
+
+function TechComponentDetailPage({ componentId }: { componentId: string }) {
+  const component = techComponents.find(c => c.id === componentId);
+  
+  if (!component) {
+    return (
+      <div className="p-6">
+        <p className="text-muted-foreground">Component not found.</p>
+        <Link href="/temporary/optimization-ideas">
+          <Button variant="ghost" className="mt-4">
+            <ArrowLeft className="h-4 w-4 mr-2" />
+            Back to Optimization Ideas
+          </Button>
+        </Link>
+      </div>
+    );
+  }
+
   const Icon = component.icon;
   const accentColor = getAccentColor(component.accent);
 
   return (
-    <AccentCard accent={component.accent} className="hover-elevate cursor-pointer" onClick={() => setIsExpanded(!isExpanded)}>
-      <div className="p-4 flex items-start justify-between gap-3">
-        <div className="flex items-start gap-3">
-          <div 
-            className={`w-10 h-10 rounded-lg flex items-center justify-center text-white shrink-0 ${getAccentBgClass(component.accent)}`}
-          >
-            <Icon className="w-5 h-5" />
-          </div>
-          <div className="flex-1">
-            <h3 className="font-semibold text-base">{component.name}</h3>
-            <p className="text-sm text-muted-foreground mt-0.5">{component.role}</p>
-          </div>
+    <div className="p-6 space-y-6">
+      <div className="flex items-center gap-4">
+        <Link href="/temporary/optimization-ideas">
+          <Button variant="ghost" size="icon" data-testid="button-back">
+            <ArrowLeft className="h-4 w-4" />
+          </Button>
+        </Link>
+        <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-sm ${getAccentBgClass(component.accent)}`}>
+          <Icon className="w-6 h-6" />
         </div>
-        <Button variant="ghost" size="icon">
-          {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-        </Button>
+        <div>
+          <h1 className="text-2xl font-bold">{component.name}</h1>
+          <p className="text-muted-foreground">{component.role}</p>
+        </div>
       </div>
 
-      {isExpanded && (
-        <div className="border-t">
-          <div className="grid md:grid-cols-2 gap-0">
-            <div className="p-4 border-b md:border-b-0 md:border-r">
-              <div className="flex items-center gap-2 mb-2">
-                <Bot className="h-4 w-4" style={{ color: accentColor }} />
-                <h4 className="font-medium text-xs" style={{ color: accentColor }}>AI Assistance</h4>
-              </div>
-              <p className="text-xs text-muted-foreground">{component.aiHelp}</p>
-            </div>
-            <div className="p-4">
-              <div className="flex items-center gap-2 mb-2">
-                <Layout className="h-4 w-4" style={{ color: accentColor }} />
-                <h4 className="font-medium text-xs" style={{ color: accentColor }}>App Role</h4>
-              </div>
-              <p className="text-xs text-muted-foreground">{component.appRole}</p>
-            </div>
+      <div className="grid md:grid-cols-2 gap-6">
+        <AccentCard accent={component.accent} className="p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Bot className="h-5 w-5" style={{ color: accentColor }} />
+            <h4 className="font-semibold text-base" style={{ color: accentColor }}>AI Assistance</h4>
           </div>
-          <div className="p-4 border-t bg-muted/30">
-            <div className="flex items-center gap-2 mb-2">
-              <Clock className="h-4 w-4" style={{ color: accentColor }} />
-              <h4 className="font-medium text-xs" style={{ color: accentColor }}>Implementation</h4>
-            </div>
-            <div className="flex flex-wrap gap-1 mb-2">
-              {component.owners.map((owner, idx) => (
-                <Badge key={idx} variant="outline" className="text-xs">{owner}</Badge>
-              ))}
-            </div>
-            <ul className="text-xs text-muted-foreground space-y-1">
-              {component.steps.map((step, idx) => (
-                <li key={idx} className="flex items-start gap-2">
-                  <span style={{ color: accentColor }} className="mt-0.5">&#8594;</span>
-                  <span>{step}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="mt-2 pt-2 border-t">
-              <Badge className={`text-white text-xs ${getAccentBgClass(component.accent)}`}>
-                {component.timeline}
-              </Badge>
-            </div>
+          <p className="text-muted-foreground">{component.aiHelp}</p>
+        </AccentCard>
+
+        <AccentCard accent={component.accent} className="p-5">
+          <div className="flex items-center gap-2 mb-3">
+            <Layout className="h-5 w-5" style={{ color: accentColor }} />
+            <h4 className="font-semibold text-base" style={{ color: accentColor }}>App Role</h4>
+          </div>
+          <p className="text-muted-foreground">{component.appRole}</p>
+        </AccentCard>
+      </div>
+
+      <AccentCard accent={component.accent} className="p-5">
+        <div className="flex items-center gap-2 mb-4">
+          <Clock className="h-5 w-5" style={{ color: accentColor }} />
+          <h4 className="font-semibold text-base" style={{ color: accentColor }}>Implementation Details</h4>
+        </div>
+        
+        <div className="mb-4">
+          <p className="text-sm font-medium text-muted-foreground mb-2">Owners</p>
+          <div className="flex flex-wrap gap-2">
+            {component.owners.map((owner, idx) => (
+              <Badge key={idx} variant="outline">{owner}</Badge>
+            ))}
           </div>
         </div>
-      )}
-    </AccentCard>
+
+        <div className="mb-4">
+          <p className="text-sm font-medium text-muted-foreground mb-2">Implementation Steps</p>
+          <ul className="space-y-2">
+            {component.steps.map((step, idx) => (
+              <li key={idx} className="flex items-start gap-3">
+                <div 
+                  className="w-6 h-6 rounded-full flex items-center justify-center shrink-0 text-white text-xs font-medium"
+                  style={{ backgroundColor: accentColor }}
+                >
+                  {idx + 1}
+                </div>
+                <span className="text-muted-foreground pt-0.5">{step}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="pt-4 border-t">
+          <p className="text-sm font-medium text-muted-foreground mb-2">Timeline</p>
+          <Badge className={`text-white ${getAccentBgClass(component.accent)}`}>
+            {component.timeline}
+          </Badge>
+        </div>
+      </AccentCard>
+    </div>
   );
 }
 
@@ -2333,6 +2391,7 @@ export default function Temporary() {
   const productDetailMatch = location.match(/^\/temporary\/tech-stack\/(.+)$/);
   const interviewDetailMatch = location.match(/^\/temporary\/interviews\/(.+)$/);
   const riskCategoryMatch = location.match(/^\/temporary\/risk-compliance\/(.+)$/);
+  const techComponentMatch = location.match(/^\/temporary\/tech-component\/(.+)$/);
   
   if (productDetailMatch) {
     const productId = productDetailMatch[1];
@@ -2362,6 +2421,17 @@ export default function Temporary() {
       <div className="flex flex-col h-full">
         <div className="flex-1 overflow-auto">
           <RiskCategoryDetailPage categoryId={categoryId} />
+        </div>
+      </div>
+    );
+  }
+
+  if (techComponentMatch) {
+    const componentId = techComponentMatch[1];
+    return (
+      <div className="flex flex-col h-full">
+        <div className="flex-1 overflow-auto">
+          <TechComponentDetailPage componentId={componentId} />
         </div>
       </div>
     );
