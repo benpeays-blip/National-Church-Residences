@@ -15,7 +15,7 @@ const quadrantTabs: SectionTab[] = [
     path: "/quadrant",
   },
   {
-    label: "Top 10",
+    label: "Opportunities",
     value: "top10",
     icon: ListOrdered,
     path: "/quadrant/top10",
