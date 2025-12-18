@@ -228,7 +228,6 @@ export default function Login() {
             <div className="text-center space-y-2">
               <div className="flex flex-col items-center justify-center mb-4">
                 <img src={ncrLogoIcon} alt="NCR Logo" className="h-16 w-auto" />
-                <span className="text-xl font-medium text-foreground mt-3" data-testid="text-login-title">National Church Residences</span>
               </div>
               <p className="text-muted-foreground">
                 Select your role to continue
