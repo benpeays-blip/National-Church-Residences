@@ -670,7 +670,7 @@ export default function RelSciMapping() {
                     data-testid="input-prospect-search"
                   />
                 </div>
-                <Button style={{ backgroundColor: "#7BC4DC" }} data-testid="button-search-prospects">
+                <Button style={{ backgroundColor: "#084594" }} data-testid="button-search-prospects">
                   <Search className="h-4 w-4 mr-2" />
                   Search
                 </Button>
@@ -709,7 +709,7 @@ export default function RelSciMapping() {
                     >
                       <div className="flex items-start gap-3">
                         <Avatar className="h-10 w-10">
-                          <AvatarFallback style={{ backgroundColor: "#084594", color: "white" }}>
+                          <AvatarFallback style={{ backgroundColor: "#395174", color: "white" }}>
                             {prospect.name.split(' ').map(n => n[0]).join('')}
                           </AvatarFallback>
                         </Avatar>
@@ -735,7 +735,7 @@ export default function RelSciMapping() {
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex items-center gap-4">
                         <Avatar className="h-16 w-16">
-                          <AvatarFallback className="text-xl" style={{ backgroundColor: "#084594", color: "white" }}>
+                          <AvatarFallback className="text-xl" style={{ backgroundColor: "#395174", color: "white" }}>
                             {selectedProspect.name.split(' ').map(n => n[0]).join('')}
                           </AvatarFallback>
                         </Avatar>
