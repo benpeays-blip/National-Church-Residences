@@ -19,6 +19,7 @@ import {
   ArrowRight
 } from "lucide-react";
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
+import { useToast } from "@/hooks/use-toast";
 
 const matchEligibleDonors = [
   { id: "1", name: "Sarah Johnson", employer: "Microsoft", donation: 5000, matchRatio: "1:1", matchAmount: 5000, status: "eligible", submissionDeadline: "2025-03-15" },
@@ -53,6 +54,14 @@ const getStatusBadge = (status: string) => {
 
 export default function MatchingGifts() {
   const [searchQuery, setSearchQuery] = useState("");
+  const { toast } = useToast();
+
+  const handleSendReminders = () => {
+    toast({
+      title: "Reminders Sent",
+      description: "Automated reminder emails have been queued for 3 donors who haven't submitted their matching gift forms.",
+    });
+  };
   const [employerSearch, setEmployerSearch] = useState("");
 
   const filteredDonors = matchEligibleDonors.filter(donor =>
@@ -299,7 +308,7 @@ export default function MatchingGifts() {
                 These donors haven't submitted their matching gift forms yet. Send automated reminders to capture this revenue.
               </p>
             </div>
-            <Button style={{ backgroundColor: getAccentColor("olive") }} data-testid="button-send-reminders">
+            <Button onClick={handleSendReminders} style={{ backgroundColor: getAccentColor("olive") }} data-testid="button-send-reminders">
               Send Reminders
             </Button>
           </div>
