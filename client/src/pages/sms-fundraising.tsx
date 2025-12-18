@@ -131,17 +131,17 @@ export default function SmsFundraising() {
       </div>
 
       <div className="grid lg:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader className="bg-[#395174] text-white rounded-t-lg">
-            <CardTitle className="text-white flex items-center gap-2">
-              <Zap className="h-5 w-5" />
+        <AccentCard accent="teal">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Zap className="h-5 w-5" style={{ color: getAccentColor("teal") }} />
               Active Keywords
             </CardTitle>
-            <CardDescription className="text-white/80">
+            <CardDescription>
               Text-to-give keywords for your campaigns
             </CardDescription>
           </CardHeader>
-          <CardContent className="pt-6">
+          <CardContent className="pt-2">
             <div className="space-y-4">
               {keywords.map((kw) => (
                 <div 
@@ -169,12 +169,12 @@ export default function SmsFundraising() {
               ))}
             </div>
           </CardContent>
-        </Card>
+        </AccentCard>
 
-        <Card>
+        <AccentCard accent="teal">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <MessageSquare className="h-5 w-5" style={{ color: getAccentColor("sky") }} />
+              <MessageSquare className="h-5 w-5" style={{ color: getAccentColor("teal") }} />
               Create New Keyword
             </CardTitle>
             <CardDescription>Set up a new text-to-give keyword</CardDescription>
@@ -210,10 +210,10 @@ export default function SmsFundraising() {
               Create Keyword
             </Button>
           </CardContent>
-        </Card>
+        </AccentCard>
       </div>
 
-      <Card>
+      <AccentCard accent="sky">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
@@ -263,10 +263,10 @@ export default function SmsFundraising() {
             ))}
           </div>
         </CardContent>
-      </Card>
+      </AccentCard>
 
       <div className="grid lg:grid-cols-2 gap-6">
-        <Card>
+        <AccentCard accent="olive">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Heart className="h-5 w-5" style={{ color: getAccentColor("olive") }} />
@@ -293,12 +293,12 @@ export default function SmsFundraising() {
               ))}
             </div>
           </CardContent>
-        </Card>
+        </AccentCard>
 
-        <Card>
+        <AccentCard accent="olive">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Gift className="h-5 w-5" style={{ color: getAccentColor("orange") }} />
+              <Gift className="h-5 w-5" style={{ color: getAccentColor("olive") }} />
               Event Reminders
             </CardTitle>
             <CardDescription>SMS reminders for upcoming events</CardDescription>
@@ -325,10 +325,10 @@ export default function SmsFundraising() {
               ))}
             </div>
           </CardContent>
-        </Card>
+        </AccentCard>
       </div>
 
-      <Card>
+      <AccentCard accent="orange">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Clock className="h-5 w-5" style={{ color: getAccentColor("orange") }} />
@@ -374,7 +374,7 @@ export default function SmsFundraising() {
             ))}
           </div>
         </CardContent>
-      </Card>
+      </AccentCard>
     </div>
   );
 }
