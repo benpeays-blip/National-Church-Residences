@@ -109,7 +109,7 @@ export default function ImpactOverview() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {quickStats.map((stat) => (
-          <Card key={stat.label}>
+          <Card key={stat.label} className="border-l-4 overflow-hidden" style={{ borderLeftColor: stat.color }}>
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
                 <div 
@@ -146,7 +146,8 @@ export default function ImpactOverview() {
             {impactMetrics.map((metric) => (
               <Link key={metric.id} href={metric.href}>
                 <Card 
-                  className="cursor-pointer transition-all duration-200 hover:shadow-lg hover-elevate group h-full"
+                  className="cursor-pointer transition-all duration-200 hover:shadow-lg hover-elevate group h-full border-l-4 overflow-hidden"
+                  style={{ borderLeftColor: metric.color }}
                   data-testid={`card-metric-${metric.id}`}
                 >
                   <CardContent className="p-6">

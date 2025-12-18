@@ -491,8 +491,17 @@ export default function PeerDonors() {
       {/* Peer Donor Cards */}
       <div className="grid grid-cols-1 gap-4">
         {filteredDonors.length > 0 ? (
-          filteredDonors.map((peer) => (
-            <Card key={peer.id} className="border hover-elevate cursor-pointer" data-testid={`card-peer-${peer.id}`}>
+          filteredDonors.map((peer) => {
+            const accentColor = peer.similarityScore >= 0.9 ? '#6FBBD3' : 
+                               peer.similarityScore >= 0.8 ? '#9CB071' : 
+                               peer.similarityScore >= 0.7 ? '#E8923A' : '#E07B54';
+            return (
+            <Card 
+              key={peer.id} 
+              className="border-l-4 overflow-hidden hover-elevate cursor-pointer" 
+              style={{ borderLeftColor: accentColor }}
+              data-testid={`card-peer-${peer.id}`}
+            >
               <CardContent className="p-6">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex-1">
@@ -614,7 +623,7 @@ export default function PeerDonors() {
                 </div>
               </CardContent>
             </Card>
-          ))
+          );})
         ) : (
           <Card className="p-12 text-center border">
             <Users className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
