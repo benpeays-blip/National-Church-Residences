@@ -65,7 +65,7 @@ export default function NetworkVisualizationExamples() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             <div className="lg:col-span-3">
               <div 
-                className="relative h-[500px] rounded-lg overflow-hidden p-6"
+                className="relative h-[650px] rounded-lg overflow-hidden p-6"
                 style={{ 
                   background: "linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%)"
                 }}
@@ -124,8 +124,8 @@ export default function NetworkVisualizationExamples() {
                           if (!org) return null;
                           const oIdx = sampleOrgs.indexOf(org);
                           const isHighlighted = sankeyHovered === person.name || sankeyHovered === org.name;
-                          const y1 = (pIdx + 1) * (440 / 11);
-                          const y2 = (oIdx + 1) * (440 / 7);
+                          const y1 = (pIdx + 1) * (590 / 11);
+                          const y2 = (oIdx + 1) * (590 / 7);
                           return (
                             <g key={`${person.id}-${org.id}`}>
                               <path
