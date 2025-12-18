@@ -650,11 +650,11 @@ export default function AIVoiceNotes() {
                 </div>
 
                 <div className="border-t pt-6">
-                  <h4 className="font-semibold mb-4 flex items-center gap-2">
+                  <h4 className="font-semibold mb-6 flex items-center gap-2">
                     <Sparkles className="w-4 h-4 text-[#E8A54B]" />
                     Tips for Better Results
                   </h4>
-                  <div className="space-y-3">
+                  <div className="space-y-5">
                     <div className="flex items-start gap-3">
                       <div className="w-6 h-6 rounded-full bg-[#4FA6A6]/10 flex items-center justify-center shrink-0 mt-0.5">
                         <User className="w-3 h-3 text-[#4FA6A6]" />
