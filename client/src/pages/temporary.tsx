@@ -2312,8 +2312,8 @@ function RiskCompliance() {
                         <AlertTriangle className="w-4 h-4" style={{ color: accentColor }} />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-sm">{reg.name}</h3>
-                        <p className="text-xs text-muted-foreground mt-1">{reg.description}</p>
+                        <h3 className="font-semibold text-base">{reg.name}</h3>
+                        <p className="text-sm text-muted-foreground mt-1">{reg.description}</p>
                       </div>
                     </div>
                   </AccentCard>
