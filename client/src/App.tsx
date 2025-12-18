@@ -1021,14 +1021,14 @@ function App() {
                           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
                             <div className="py-2 px-1">
                               {[
-                                { name: 'Predictive Timing', href: '/ai-tools?tab=predictive-timing' },
-                                { name: 'Voice-to-CRM', href: '/ai-tools?tab=voice-to-crm' },
-                                { name: 'Outreach Generator', href: '/ai-tools?tab=outreach-generator' },
-                                { name: 'Grant Proposals', href: '/ai-tools?tab=grant-proposals' },
-                                { name: 'Impact Reports', href: '/ai-tools?tab=impact-reports' },
-                                { name: 'Workflow Builder', href: '/ai-tools?tab=workflow-builder' },
-                                { name: 'AI Assistant', href: '/ai-tools?tab=ai-assistant' },
-                                { name: 'Impact Feed', href: '/ai-tools?tab=impact-feed' },
+                                { name: 'Predictive Timing', href: '/ai-tools' },
+                                { name: 'Voice-to-CRM', href: '/ai-tools/voice' },
+                                { name: 'Outreach Generator', href: '/ai-tools/outreach' },
+                                { name: 'Grant Proposals', href: '/ai-tools/grants' },
+                                { name: 'Impact Reports', href: '/ai-tools/reports' },
+                                { name: 'Workflow Builder', href: '/ai-tools/workflows' },
+                                { name: 'AI Assistant', href: '/ai-tools/assistant' },
+                                { name: 'Impact Feed', href: '/ai-tools/feed' },
                               ].map((item) => (
                                 <Link 
                                   key={item.name} 

@@ -1,7 +1,4 @@
 import { useLocation } from "wouter";
-import { useMemo, useState, useEffect } from "react";
-import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { Mic, MessageSquare, FileText, BarChart3, Workflow, TrendingUp, Bot, Sparkles } from "lucide-react";
 import AIVoiceNotes from "@/pages/ai-voice-notes";
 import OutreachGenerator from "@/pages/content-outreach";
 import GrantProposals from "@/pages/content-grant-proposals";
@@ -9,57 +6,6 @@ import ImpactReports from "@/pages/content-impact-reports";
 import Workflows from "@/pages/workflows";
 import AIPredictiveTiming from "@/pages/ai-predictive-timing";
 import { AIChatTab, ImpactFeedTab } from "@/pages/impact-intelligence";
-
-const aiToolsTabs: SectionTab[] = [
-  {
-    label: "Predictive Timing",
-    value: "timing",
-    icon: TrendingUp,
-    path: "/ai-tools",
-  },
-  {
-    label: "Voice-to-CRM",
-    value: "voice",
-    icon: Mic,
-    path: "/ai-tools/voice",
-  },
-  {
-    label: "Outreach Generator",
-    value: "outreach",
-    icon: MessageSquare,
-    path: "/ai-tools/outreach",
-  },
-  {
-    label: "Grant Proposals",
-    value: "grants",
-    icon: FileText,
-    path: "/ai-tools/grants",
-  },
-  {
-    label: "Impact Reports",
-    value: "reports",
-    icon: BarChart3,
-    path: "/ai-tools/reports",
-  },
-  {
-    label: "Workflow Builder",
-    value: "workflows",
-    icon: Workflow,
-    path: "/ai-tools/workflows",
-  },
-  {
-    label: "AI Assistant",
-    value: "assistant",
-    icon: Bot,
-    path: "/ai-tools/assistant",
-  },
-  {
-    label: "Impact Feed",
-    value: "feed",
-    icon: Sparkles,
-    path: "/ai-tools/feed",
-  },
-];
 
 export default function AIToolsWithTabs() {
   const [location] = useLocation();
@@ -100,8 +46,7 @@ export default function AIToolsWithTabs() {
 
   return (
     <div className="flex flex-col h-full">
-      <SectionTabs tabs={aiToolsTabs} currentPath={location} />
-      <div className="flex-1 overflow-auto p-6">
+      <div className="flex-1 overflow-auto">
         {content}
       </div>
     </div>
