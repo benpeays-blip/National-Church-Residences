@@ -964,6 +964,14 @@ export default function PartnerPathwayWizard() {
 
   const stepLabels = ["Constraints", "Focus", "Review", "Action Plan"];
   const stepIcons = [Calendar, Target, CheckCircle2, Wand2];
+  
+  // Brand colors for each step: teal, olive, orange, coral
+  const stepColors = [
+    { bg: "#4FA6A6", light: "rgba(79, 166, 166, 0.15)", text: "#4FA6A6" }, // Teal
+    { bg: "#92A05A", light: "rgba(146, 160, 90, 0.15)", text: "#92A05A" }, // Olive
+    { bg: "#E8A54B", light: "rgba(232, 165, 75, 0.15)", text: "#E8A54B" }, // Orange
+    { bg: "#E86B5A", light: "rgba(232, 107, 90, 0.15)", text: "#E86B5A" }, // Coral
+  ];
 
   return (
     <Card className="overflow-hidden">
@@ -990,22 +998,29 @@ export default function PartnerPathwayWizard() {
             const StepIcon = stepIcons[idx];
             const isActive = currentStep === step;
             const isCompleted = currentStep > step;
+            const color = stepColors[idx];
             return (
               <div
                 key={step}
-                className={`flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors ${
-                  isActive 
-                    ? "bg-white text-[#395174]" 
-                    : isCompleted
-                      ? "bg-[#2d4163] text-white/90"
-                      : "bg-transparent text-white/50"
-                }`}
+                className="flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors"
+                style={{
+                  backgroundColor: isActive 
+                    ? color.bg 
+                    : isCompleted 
+                      ? color.light 
+                      : "rgba(255, 255, 255, 0.08)",
+                  color: isActive 
+                    ? "white" 
+                    : isCompleted 
+                      ? color.text 
+                      : "rgba(255, 255, 255, 0.5)"
+                }}
                 data-testid={`step-indicator-${step}`}
               >
                 {isCompleted ? (
-                  <CheckCircle2 className="w-4 h-4 text-[#e1c47d]" />
+                  <CheckCircle2 className="w-4 h-4" style={{ color: color.text }} />
                 ) : (
-                  <StepIcon className={`w-4 h-4 ${isActive ? "text-[#395174]" : ""}`} />
+                  <StepIcon className="w-4 h-4" />
                 )}
                 <span className="hidden sm:inline">{label}</span>
                 <span className="sm:hidden">{step}</span>
