@@ -1,8 +1,7 @@
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { DollarSign, TrendingUp, Repeat, FileText, GiftIcon } from "lucide-react";
+import { DollarSign, Repeat, FileText, GiftIcon } from "lucide-react";
 import Gifts from "@/pages/gifts";
-import MajorGifts from "@/pages/major-gifts";
 
 const giftTabs: SectionTab[] = [
   {
@@ -10,12 +9,6 @@ const giftTabs: SectionTab[] = [
     value: "all",
     icon: DollarSign,
     path: "/gifts",
-  },
-  {
-    label: "Major Gifts",
-    value: "major",
-    icon: TrendingUp,
-    path: "/gifts/major",
   },
   {
     label: "Recurring",
@@ -42,7 +35,6 @@ export default function GiftsWithTabs() {
 
   // Determine active tab from the URL path
   const getActiveTab = (): string => {
-    if (location === "/gifts/major") return "major";
     if (location === "/gifts/recurring") return "recurring";
     if (location === "/gifts/planned") return "planned";
     if (location === "/gifts/types") return "types";
@@ -55,7 +47,7 @@ export default function GiftsWithTabs() {
     <div className="flex flex-col h-full" key={`gifts-${activeTab}`}>
       <SectionTabs tabs={giftTabs} currentPath={location} />
       <div className="flex-1 overflow-auto">
-        {activeTab === "major" ? <MajorGifts /> : <Gifts activeTab={activeTab} />}
+        <Gifts activeTab={activeTab} />
       </div>
     </div>
   );

@@ -13,7 +13,8 @@ import {
   FileText,
   Filter,
   Download,
-  Gift as GiftIcon
+  Gift as GiftIcon,
+  Search
 } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { Gift } from "@shared/schema";
@@ -25,6 +26,14 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useMemo, useState } from "react";
 
 type GiftType = "all" | "major" | "recurring" | "planned" | "types";
@@ -33,33 +42,37 @@ interface GiftsProps {
   activeTab?: string;
 }
 
+type AmountFilter = "all" | "1000" | "5000" | "10000" | "25000" | "50000" | "100000";
+
+const amountFilterOptions: { value: AmountFilter; label: string }[] = [
+  { value: "all", label: "All Amounts" },
+  { value: "1000", label: "$1,000+" },
+  { value: "5000", label: "$5,000+" },
+  { value: "10000", label: "$10,000+ (Major)" },
+  { value: "25000", label: "$25,000+" },
+  { value: "50000", label: "$50,000+" },
+  { value: "100000", label: "$100,000+" },
+];
+
 export default function Gifts({ activeTab = "all" }: GiftsProps) {
   const [showDateFilter, setShowDateFilter] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [amountFilter, setAmountFilter] = useState<AmountFilter>("all");
   
   const { data: gifts, isLoading } = useQuery<Gift[]>({
     queryKey: ["/api/gifts"],
   });
 
-  // Filter gifts based on type using structured fields with keyword fallbacks
+  // Filter gifts based on type, amount, and search query
   const filteredGifts = useMemo(() => {
     if (!gifts) return [];
     
+    let result = gifts;
+    
+    // Filter by tab type
     switch (activeTab) {
-      case "major":
-        // Major gifts: use giftType field, OR $10,000+, OR designation keywords
-        return gifts.filter(g => {
-          const amount = parseFloat(g.amount);
-          const designation = g.designation?.toLowerCase() || '';
-          return g.giftType === 'major' ||
-                 amount >= 10000 || 
-                 designation.includes('major') || 
-                 designation.includes('capital campaign') ||
-                 designation.includes('endowment') ||
-                 designation.includes('leadership');
-        });
       case "recurring":
-        // Recurring gifts: use giftType and recurringCadence fields, OR designation keywords
-        return gifts.filter(g => {
+        result = result.filter(g => {
           const designation = g.designation?.toLowerCase() || '';
           return g.giftType === 'recurring' ||
                  (g.recurringCadence && g.recurringCadence !== 'one_time') ||
@@ -67,9 +80,9 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
                  designation.includes('sustainer') ||
                  designation.includes('recurring');
         });
+        break;
       case "planned":
-        // Planned gifts: use giftType field, OR designation keywords
-        return gifts.filter(g => {
+        result = result.filter(g => {
           const designation = g.designation?.toLowerCase() || '';
           return g.giftType === 'planned' ||
                  designation.includes('bequest') || 
@@ -78,10 +91,27 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
                  designation.includes('planned gift') ||
                  designation.includes('charitable');
         });
-      default:
-        return gifts;
+        break;
     }
-  }, [gifts, activeTab]);
+    
+    // Apply amount filter
+    if (amountFilter !== "all") {
+      const minAmount = parseInt(amountFilter);
+      result = result.filter(g => parseFloat(g.amount) >= minAmount);
+    }
+    
+    // Apply search filter (search by donor ID or designation)
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(g => 
+        g.personId.toLowerCase().includes(query) ||
+        (g.designation?.toLowerCase().includes(query)) ||
+        (g.sourceSystem?.toLowerCase().includes(query))
+      );
+    }
+    
+    return result;
+  }, [gifts, activeTab, amountFilter, searchQuery]);
 
   // Calculate comprehensive metrics
   const metrics = useMemo(() => {
@@ -212,29 +242,19 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
 
   return (
     <div className="space-y-6 p-6">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between flex-wrap gap-4">
         <div className="space-y-1">
           <h1 className="text-3xl font-bold">Gifts</h1>
           <p className="text-sm text-muted-foreground">
             Comprehensive donor contribution management
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button 
-            variant="outline" 
-            size="sm" 
-            data-testid="button-filter"
-            onClick={() => setShowDateFilter(!showDateFilter)}
-          >
-            <Filter className="w-4 h-4 mr-2" />
-            Filter
-          </Button>
+        <div className="flex items-center gap-2">
           <Button 
             variant="outline" 
             size="sm" 
             data-testid="button-export"
             onClick={() => {
-              // Simple CSV export
               const csv = [
                 ['Date', 'Donor ID', 'Amount', 'Designation', 'Payment Method', 'Source'].join(','),
                 ...filteredGifts.map(g => [
@@ -259,6 +279,45 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
             <Download className="w-4 h-4 mr-2" />
             Export
           </Button>
+        </div>
+      </div>
+
+      {/* Search and Filter Bar */}
+      <div className="flex items-center gap-3 flex-wrap">
+        <div className="relative flex-1 min-w-[200px] max-w-md">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Input
+            placeholder="Search gifts by donor, designation..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9"
+            data-testid="input-search-gifts"
+          />
+        </div>
+        <Select value={amountFilter} onValueChange={(val) => setAmountFilter(val as AmountFilter)}>
+          <SelectTrigger className="w-[180px]" data-testid="select-amount-filter">
+            <SelectValue placeholder="Filter by amount" />
+          </SelectTrigger>
+          <SelectContent>
+            {amountFilterOptions.map((option) => (
+              <SelectItem key={option.value} value={option.value} data-testid={`option-amount-${option.value}`}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        {(amountFilter !== "all" || searchQuery) && (
+          <Button 
+            variant="ghost" 
+            size="sm"
+            onClick={() => { setAmountFilter("all"); setSearchQuery(""); }}
+            data-testid="button-clear-filters"
+          >
+            Clear filters
+          </Button>
+        )}
+        <div className="text-sm text-muted-foreground ml-auto">
+          {filteredGifts.length} gift{filteredGifts.length !== 1 ? 's' : ''} found
         </div>
       </div>
 
@@ -354,202 +413,6 @@ export default function Gifts({ activeTab = "all" }: GiftsProps) {
                   ))}
                 </TableBody>
               </Table>
-            </CardContent>
-          </Card>
-        </div>
-      )}
-
-      {/* Major Gifts Tab */}
-      {activeTab === "major" && (
-        <div className="space-y-6">
-          {/* Page Introduction */}
-          <div className="space-y-1">
-            <h2 className="text-2xl font-bold" data-testid="heading-major-gifts">Major Gifts Program</h2>
-            <p className="text-sm text-muted-foreground">
-              Transformational gifts of $10,000 or more that power our mission. Major donors represent our most significant philanthropic partners.
-            </p>
-          </div>
-
-          {/* KPI Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <Card>
-              <CardHeader>
-                <div className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-sm font-medium">Major Gifts Total</CardTitle>
-                  <Heart className="w-4 h-4 text-muted-foreground" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold tabular-nums">{formatCurrency(metrics.totalRaised)}</div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {metrics.giftCount} gifts of $10,000+
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <div className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-sm font-medium">Major Donors</CardTitle>
-                  <Users className="w-4 h-4 text-muted-foreground" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold tabular-nums">{metrics.uniqueDonors}</div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Active major gift donors
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <div className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-sm font-medium">Average Major Gift</CardTitle>
-                  <TrendingUp className="w-4 h-4 text-muted-foreground" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold tabular-nums">{formatCurrency(metrics.avgGift)}</div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  Per major gift
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <div className="flex flex-row items-center justify-between">
-                  <CardTitle className="text-sm font-medium">Pipeline Value</CardTitle>
-                  <DollarSign className="w-4 h-4 text-muted-foreground" />
-                </div>
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold tabular-nums">{formatCurrency(metrics.pipelineValue || 0)}</div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {metrics.pipelineValue > 0 ? 'In active solicitation' : 'Pipeline opportunities'}
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Gift Breakdown and Insights */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            {/* Gift Breakdown by Designation */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Gifts by Designation</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                {[
-                  { name: "Capital Campaign", percent: 45 },
-                  { name: "Endowment Fund", percent: 25 },
-                  { name: "Leadership Annual Fund", percent: 15 },
-                  { name: "Scholarship Fund", percent: 10 },
-                  { name: "Other Designations", percent: 5 },
-                ].map((item) => (
-                  <div key={item.name} className="flex items-center justify-between py-2 border-b last:border-0">
-                    <span className="text-sm font-medium">{item.name}</span>
-                    <span className="text-sm text-muted-foreground">{item.percent}%</span>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Giving Levels */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Major Gift Levels</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                {[
-                  { level: "Visionary Circle", range: "$100,000+", count: Math.floor(metrics.giftCount * 0.05) || 1 },
-                  { level: "Leadership Circle", range: "$50,000-$99,999", count: Math.floor(metrics.giftCount * 0.1) || 2 },
-                  { level: "Benefactor Circle", range: "$25,000-$49,999", count: Math.floor(metrics.giftCount * 0.2) || 3 },
-                  { level: "Patron Circle", range: "$10,000-$24,999", count: Math.floor(metrics.giftCount * 0.65) || 5 },
-                ].map((level) => (
-                  <div key={level.level} className="flex items-center justify-between py-2 border-b last:border-0">
-                    <div>
-                      <p className="font-medium text-sm">{level.level}</p>
-                      <p className="text-xs text-muted-foreground">{level.range}</p>
-                    </div>
-                    <Badge variant="outline">{level.count} donors</Badge>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
-
-            {/* Major Gift Opportunities */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-base">Strategic Opportunities</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="p-3 rounded-lg bg-muted border">
-                  <p className="text-sm font-medium">Upgrade Potential</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {Math.floor(metrics.uniqueDonors * 0.3) || 2} donors showing capacity for increased giving
-                  </p>
-                </div>
-                <div className="p-3 rounded-lg bg-muted border">
-                  <p className="text-sm font-medium">Renewal Ready</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {Math.floor(metrics.uniqueDonors * 0.4) || 3} donors due for annual renewal outreach
-                  </p>
-                </div>
-                <div className="p-3 rounded-lg bg-muted border">
-                  <p className="text-sm font-medium">Planned Gift Prospects</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {Math.floor(metrics.uniqueDonors * 0.2) || 2} major donors with planned giving potential
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Major Gifts Table */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Major Gifts History</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Date</TableHead>
-                    <TableHead>Donor</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Designation</TableHead>
-                    <TableHead>Recognition Level</TableHead>
-                    <TableHead>Source</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {filteredGifts.slice(0, 15).map((gift) => {
-                    const amount = parseFloat(gift.amount);
-                    const level = amount >= 100000 ? "Visionary" : amount >= 50000 ? "Leadership" : amount >= 25000 ? "Benefactor" : "Patron";
-                    return (
-                      <TableRow key={gift.id} className="hover-elevate" data-testid={`row-major-gift-${gift.id}`}>
-                        <TableCell className="text-sm">{formatDate(gift.receivedAt)}</TableCell>
-                        <TableCell className="text-sm font-medium">Donor #{gift.personId.slice(0, 8)}</TableCell>
-                        <TableCell className="text-sm font-bold">{formatCurrency(gift.amount)}</TableCell>
-                        <TableCell className="text-sm">{gift.designation || "Capital Campaign"}</TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className="text-xs">{level} Circle</Badge>
-                        </TableCell>
-                        <TableCell>
-                          <Badge variant="outline" className="text-xs">{gift.sourceSystem || "Manual"}</Badge>
-                        </TableCell>
-                      </TableRow>
-                    );
-                  })}
-                </TableBody>
-              </Table>
-              {filteredGifts.length === 0 && (
-                <div className="text-center py-8 text-muted-foreground">
-                  No major gifts found in this period.
-                </div>
-              )}
             </CardContent>
           </Card>
         </div>
