@@ -948,13 +948,14 @@ export default function QuadrantStrategies() {
       </div>
 
       <Tabs defaultValue="acquaintance" className="w-full">
-        <TabsList className="grid w-full grid-cols-4 gap-1 bg-transparent p-0 mb-4">
+        <TabsList className="grid w-full grid-cols-4 gap-1 bg-transparent p-0 mb-8">
           <TabsTrigger 
             value="acquaintance" 
             data-testid="tab-strategy-acquaintance"
             className="group relative gap-2 bg-[#4FA6A6] text-white data-[state=active]:bg-[#4FA6A6] data-[state=active]:text-white data-[state=active]:shadow-none"
           >
             Acquaintance → Partner
+            <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#4FA6A6] opacity-0 group-data-[state=active]:opacity-100" />
           </TabsTrigger>
           <TabsTrigger 
             value="friend" 
@@ -962,6 +963,7 @@ export default function QuadrantStrategies() {
             className="group relative gap-2 bg-[#92A05A] text-white data-[state=active]:bg-[#92A05A] data-[state=active]:text-white data-[state=active]:shadow-none"
           >
             Friend → Partner
+            <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#92A05A] opacity-0 group-data-[state=active]:opacity-100" />
           </TabsTrigger>
           <TabsTrigger 
             value="colleague" 
@@ -969,6 +971,7 @@ export default function QuadrantStrategies() {
             className="group relative gap-2 bg-[#E8A54B] text-white data-[state=active]:bg-[#E8A54B] data-[state=active]:text-white data-[state=active]:shadow-none"
           >
             Colleague → Partner
+            <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#E8A54B] opacity-0 group-data-[state=active]:opacity-100" />
           </TabsTrigger>
           <TabsTrigger 
             value="partner" 
@@ -976,6 +979,7 @@ export default function QuadrantStrategies() {
             className="group relative gap-2 bg-[#7BC4DC] text-white data-[state=active]:bg-[#7BC4DC] data-[state=active]:text-white data-[state=active]:shadow-none"
           >
             Maintain Partner
+            <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#7BC4DC] opacity-0 group-data-[state=active]:opacity-100" />
           </TabsTrigger>
         </TabsList>
 
