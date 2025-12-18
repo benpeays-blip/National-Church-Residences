@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Brain, Users, MapPin, Shield, Music, Sun } from "lucide-react";
+import { Brain, Users, MapPin, Shield, Music, Sun, Sparkles } from "lucide-react";
 
 export default function NcrMemoryCare() {
   const communities = [
@@ -11,27 +11,50 @@ export default function NcrMemoryCare() {
   ];
 
   const specializedCare = [
-    { icon: Shield, title: "Secure Environment", description: "Purpose-built spaces designed for safety and freedom of movement" },
-    { icon: Brain, title: "Cognitive Programs", description: "Evidence-based activities to engage and stimulate the mind" },
-    { icon: Music, title: "Therapeutic Activities", description: "Music, art, and sensory programs tailored to individual needs" },
-    { icon: Sun, title: "Daily Structure", description: "Consistent routines that provide comfort and reduce anxiety" },
+    { icon: Shield, title: "Secure Environment", description: "Purpose-built spaces designed for safety and freedom of movement", color: "#7FA3A1" },
+    { icon: Brain, title: "Cognitive Programs", description: "Evidence-based activities to engage and stimulate the mind", color: "#9CB071" },
+    { icon: Music, title: "Therapeutic Activities", description: "Music, art, and sensory programs tailored to individual needs", color: "#E8923A" },
+    { icon: Sun, title: "Daily Structure", description: "Consistent routines that provide comfort and reduce anxiety", color: "#6FBBD3" },
   ];
 
   return (
-    <div className="p-6 space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold" data-testid="page-title">Memory Care</h1>
-        <p className="text-muted-foreground mt-1">
-          Specialized care for individuals living with Alzheimer's disease and other forms of dementia
-        </p>
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold" style={{ color: "#395174" }} data-testid="page-title">
+            Memory Care
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            Specialized care for individuals living with Alzheimer's disease and other forms of dementia
+          </p>
+        </div>
       </div>
+
+      <Card className="p-4" style={{ backgroundColor: "rgba(57, 81, 116, 0.05)" }}>
+        <div className="flex items-start gap-3">
+          <Sparkles className="h-5 w-5 mt-0.5" style={{ color: "#395174" }} />
+          <div>
+            <h4 className="font-medium text-sm" style={{ color: "#395174" }}>Dignity, Purpose, and Joy</h4>
+            <p className="text-sm text-muted-foreground mt-1">
+              Our specially trained staff use evidence-based approaches to create meaningful connections 
+              and moments of clarity for every resident living with dementia.
+            </p>
+          </div>
+        </div>
+      </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {specializedCare.map((service) => (
-          <Card key={service.title}>
+          <Card key={service.title} className="border overflow-hidden">
+            <div className="h-1" style={{ backgroundColor: service.color }} />
             <CardContent className="p-6">
               <div className="flex flex-col items-center text-center">
-                <service.icon className="w-8 h-8 text-primary mb-4" />
+                <div 
+                  className="h-12 w-12 rounded-lg flex items-center justify-center mb-4"
+                  style={{ backgroundColor: `${service.color}15` }}
+                >
+                  <service.icon className="w-6 h-6" style={{ color: service.color }} />
+                </div>
                 <h3 className="font-semibold">{service.title}</h3>
                 <p className="text-sm text-muted-foreground mt-2">{service.description}</p>
               </div>
@@ -40,15 +63,20 @@ export default function NcrMemoryCare() {
         ))}
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-xl">Memory Care Communities</CardTitle>
-          <CardDescription>Compassionate, specialized care in secure, purposeful environments</CardDescription>
+      <Card className="border">
+        <CardHeader style={{ backgroundColor: '#395174' }}>
+          <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
+            <Brain className="w-4 h-4" />
+            Memory Care Communities
+          </CardTitle>
+          <CardDescription className="text-white/80 text-xs">
+            Compassionate, specialized care in secure, purposeful environments
+          </CardDescription>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {communities.map((community) => (
-              <Card key={community.name} className="hover-elevate">
+              <Card key={community.name} className="hover-elevate border">
                 <CardContent className="p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div>
@@ -62,7 +90,12 @@ export default function NcrMemoryCare() {
                   </div>
                   <div className="mt-4">
                     <div className="text-sm text-muted-foreground">Care Approach</div>
-                    <Badge className="mt-1">{community.approach}</Badge>
+                    <Badge 
+                      className="mt-1"
+                      style={{ backgroundColor: "#39517415", color: "#395174", border: "1px solid #39517430" }}
+                    >
+                      {community.approach}
+                    </Badge>
                   </div>
                   <div className="flex flex-wrap gap-2 mt-3">
                     {community.features.map((feature) => (
@@ -76,9 +109,12 @@ export default function NcrMemoryCare() {
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="border">
         <CardHeader>
-          <CardTitle className="text-xl">Our Memory Care Philosophy</CardTitle>
+          <CardTitle className="text-lg flex items-center gap-2" style={{ color: "#395174" }}>
+            <Brain className="w-5 h-5" />
+            Our Memory Care Philosophy
+          </CardTitle>
         </CardHeader>
         <CardContent className="prose prose-sm max-w-none text-muted-foreground">
           <p>
