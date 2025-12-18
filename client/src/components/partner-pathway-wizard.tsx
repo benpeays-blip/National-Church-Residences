@@ -1006,14 +1006,10 @@ export default function PartnerPathwayWizard() {
                 style={{
                   backgroundColor: isActive 
                     ? color.bg 
-                    : isCompleted 
-                      ? color.light 
-                      : "#395174",
+                    : color.light,
                   color: isActive 
                     ? "white" 
-                    : isCompleted 
-                      ? color.text 
-                      : "rgba(255, 255, 255, 0.6)"
+                    : color.text
                 }}
                 data-testid={`step-indicator-${step}`}
               >
