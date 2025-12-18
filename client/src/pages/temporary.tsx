@@ -1836,8 +1836,8 @@ function TechComponentCard({ component }: { component: TechComponent }) {
             <Icon className="w-5 h-5" />
           </div>
           <div className="flex-1">
-            <h3 className="font-semibold text-sm">{component.name}</h3>
-            <p className="text-xs text-muted-foreground mt-0.5">{component.role}</p>
+            <h3 className="font-semibold text-base">{component.name}</h3>
+            <p className="text-sm text-muted-foreground mt-0.5">{component.role}</p>
           </div>
         </div>
         <Button variant="ghost" size="icon">
