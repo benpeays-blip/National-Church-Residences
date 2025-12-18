@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -17,7 +18,8 @@ import {
   TrendingUp,
   Edit,
   RefreshCw,
-  History
+  History,
+  LogOut
 } from "lucide-react";
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
 
@@ -49,6 +51,14 @@ const impactMetrics = [
 
 export default function DonorPortal() {
   const [selectedTab, setSelectedTab] = useState("overview");
+  const [, setLocation] = useLocation();
+
+  const handleLogout = () => {
+    localStorage.removeItem("portalUser");
+    localStorage.removeItem("authToken");
+    setLocation("/login");
+    window.location.reload();
+  };
 
   return (
     <div className="min-h-screen bg-background p-4 md:p-6">
@@ -60,7 +70,16 @@ export default function DonorPortal() {
             Self-service access for donors to manage their profile and giving
           </p>
         </div>
-        <User className="h-8 w-8 text-muted-foreground" />
+        <Button 
+          variant="outline" 
+          size="sm" 
+          onClick={handleLogout}
+          className="gap-2"
+          data-testid="button-logout"
+        >
+          <LogOut className="h-4 w-4" />
+          Logout
+        </Button>
       </div>
 
       <Card className="overflow-hidden">
