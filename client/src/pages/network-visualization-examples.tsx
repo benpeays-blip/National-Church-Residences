@@ -219,7 +219,7 @@ export default function NetworkVisualizationExamples() {
               >
                 <div className="flex justify-between h-full">
                   <div className="flex flex-col w-44">
-                    <p className="text-xs font-semibold text-cyan-400 mb-2 flex-shrink-0">INDIVIDUALS</p>
+                    <p className="text-xs font-semibold text-cyan-400 mb-2 flex-shrink-0">INDIVIDUALS ({samplePeople.length})</p>
                     <div 
                       ref={peopleScrollRef}
                       onScroll={handleScroll}
@@ -321,7 +321,7 @@ export default function NetworkVisualizationExamples() {
                   </div>
 
                   <div className="flex flex-col w-48">
-                    <p className="text-xs font-semibold text-emerald-400 mb-2 text-right flex-shrink-0">ORGANIZATIONS</p>
+                    <p className="text-xs font-semibold text-emerald-400 mb-2 text-right flex-shrink-0">ORGANIZATIONS ({sampleOrgs.length})</p>
                     <div 
                       ref={orgsScrollRef}
                       onScroll={handleScroll}
@@ -439,34 +439,6 @@ export default function NetworkVisualizationExamples() {
         </CardContent>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }}>
-          <CardContent className="pt-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold" style={{ color: "#084594" }}>{samplePeople.length}</div>
-              <p className="text-sm text-muted-foreground">Individuals</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }}>
-          <CardContent className="pt-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold" style={{ color: "#084594" }}>{sampleOrgs.length}</div>
-              <p className="text-sm text-muted-foreground">Organizations</p>
-            </div>
-          </CardContent>
-        </Card>
-        <Card className="border" style={{ backgroundColor: "rgba(222, 235, 247, 0.3)" }}>
-          <CardContent className="pt-6">
-            <div className="text-center">
-              <div className="text-3xl font-bold" style={{ color: "#084594" }}>
-                {samplePeople.reduce((acc, p) => acc + p.orgs.length, 0)}
-              </div>
-              <p className="text-sm text-muted-foreground">Total Connections</p>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
     </div>
   );
 }
