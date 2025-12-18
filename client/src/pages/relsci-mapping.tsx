@@ -357,6 +357,116 @@ const sampleProspects: ProspectProfile[] = [
     interests: ["Aging Services", "Healthcare Equity", "Lutheran Ministry"],
     connectionScore: 95,
     warmPaths: 4
+  },
+  {
+    id: "4",
+    name: "Robert J. Whitmore",
+    title: "Founder & Managing Partner",
+    organization: "Whitmore Capital Group",
+    location: "Toledo, OH",
+    netWorth: "$85M - $100M",
+    philanthropicHistory: [
+      "University of Toledo - $3.5M (2023)",
+      "ProMedica Foundation - $2M (2022)",
+      "Toledo Museum of Art - $1.2M (2021)"
+    ],
+    boardMemberships: [
+      "Toledo Community Foundation",
+      "ProMedica Health System",
+      "Ohio Chamber of Commerce"
+    ],
+    education: ["Wharton School of Business", "University of Michigan"],
+    interests: ["Senior Housing", "Medical Research", "Community Development"],
+    connectionScore: 88,
+    warmPaths: 3
+  },
+  {
+    id: "5",
+    name: "Margaret Chen-Williams",
+    title: "CEO (Retired)",
+    organization: "Midwest Healthcare Partners",
+    location: "Dayton, OH",
+    netWorth: "$55M - $70M",
+    philanthropicHistory: [
+      "Wright State University - $1.8M (2023)",
+      "Dayton Children's Hospital - $1.5M (2022)",
+      "YWCA Dayton - $600K (2021)"
+    ],
+    boardMemberships: [
+      "Premier Health Network",
+      "Dayton Foundation",
+      "Asian American Commerce Group"
+    ],
+    education: ["Stanford Graduate School of Business", "UC Berkeley"],
+    interests: ["Healthcare Access", "Women's Health", "AAPI Philanthropy"],
+    connectionScore: 82,
+    warmPaths: 2
+  },
+  {
+    id: "6",
+    name: "William H. Patterson III",
+    title: "Chairman Emeritus",
+    organization: "Patterson Family Trust",
+    location: "Akron, OH",
+    netWorth: "$150M+",
+    philanthropicHistory: [
+      "University of Akron - $10M (2022)",
+      "Akron Children's Hospital - $5M (2021)",
+      "Stan Hywet Hall & Gardens - $2M (2020)"
+    ],
+    boardMemberships: [
+      "Goodyear Tire & Rubber (Retired)",
+      "Akron Community Foundation",
+      "Knight Foundation Ohio"
+    ],
+    education: ["Yale University", "Case Western Reserve Law"],
+    interests: ["Historic Preservation", "Youth Education", "Faith Communities"],
+    connectionScore: 91,
+    warmPaths: 5
+  },
+  {
+    id: "7",
+    name: "Dr. Sarah Okonkwo",
+    title: "Chief Medical Officer (Retired)",
+    organization: "OhioHealth",
+    location: "Columbus, OH",
+    netWorth: "$25M - $40M",
+    philanthropicHistory: [
+      "Ohio State Wexner Medical Center - $1.5M (2023)",
+      "African American Heritage Foundation - $800K (2022)",
+      "Columbus Urban League - $400K (2021)"
+    ],
+    boardMemberships: [
+      "Central Ohio Hospital Council",
+      "National Medical Association",
+      "Columbus Metropolitan Club"
+    ],
+    education: ["Howard University College of Medicine", "Spelman College"],
+    interests: ["Health Disparities", "Minority Health", "Senior Care"],
+    connectionScore: 86,
+    warmPaths: 3
+  },
+  {
+    id: "8",
+    name: "James & Ellen Fitzgerald",
+    title: "Co-Founders",
+    organization: "Fitzgerald Family Foundation",
+    location: "Dublin, OH",
+    netWorth: "$65M - $80M",
+    philanthropicHistory: [
+      "Catholic Diocese of Columbus - $3M (2023)",
+      "Dublin Community Foundation - $1.5M (2022)",
+      "Meals on Wheels Central Ohio - $500K (2021)"
+    ],
+    boardMemberships: [
+      "Catholic Foundation of Columbus",
+      "Dublin City Schools Foundation",
+      "Ohio Dominican University"
+    ],
+    education: ["Notre Dame", "Ohio Dominican University"],
+    interests: ["Catholic Charities", "Senior Services", "Education"],
+    connectionScore: 94,
+    warmPaths: 4
   }
 ];
 
@@ -478,7 +588,7 @@ export default function RelSciMapping() {
 
           <div>
             <h4 className="text-sm font-medium text-muted-foreground mb-3">Recent Connection Paths</h4>
-            <div className="space-y-3">
+            <div className="space-y-4">
             {sampleConnectionPaths.map((path) => {
               const degreeStyle = getDegreeStyle(path.degrees);
               return (
