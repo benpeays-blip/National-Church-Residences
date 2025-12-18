@@ -187,7 +187,7 @@ export default function ImpactOverview() {
       </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card>
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#2ca02c" }}>
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <TrendingUp className="h-5 w-5" style={{ color: "#395174" }} />
@@ -228,7 +228,7 @@ export default function ImpactOverview() {
           </CardContent>
         </Card>
 
-        <Card>
+        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#D4A84B" }}>
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
               <Star className="h-5 w-5" style={{ color: "#395174" }} />
