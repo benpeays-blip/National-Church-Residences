@@ -202,26 +202,26 @@ export default function PreviewHomepage() {
             </div>
           </div>
 
-          {/* Alert Strip */}
+          {/* Alert Strip - Data Quality Errors */}
           <div className="flex items-center gap-4 mb-6 flex-wrap">
+            <Link href="/duplicate-detection">
+              <Badge variant="secondary" className="gap-1.5 py-1.5 cursor-pointer hover:bg-secondary/80 transition-colors" data-testid="alert-duplicates">
+                <AlertTriangle className="w-3 h-3 text-red-500" />
+                <span className="text-xs uppercase tracking-wide">47 potential duplicates</span>
+                <ChevronRight className="w-3 h-3 ml-1 opacity-50" />
+              </Badge>
+            </Link>
+            <Link href="/address-verification">
+              <Badge variant="secondary" className="gap-1.5 py-1.5 cursor-pointer hover:bg-secondary/80 transition-colors" data-testid="alert-addresses">
+                <AlertTriangle className="w-3 h-3 text-orange-500" />
+                <span className="text-xs uppercase tracking-wide">23 invalid addresses</span>
+                <ChevronRight className="w-3 h-3 ml-1 opacity-50" />
+              </Badge>
+            </Link>
             <Link href="/pledges-expiring">
               <Badge variant="secondary" className="gap-1.5 py-1.5 cursor-pointer hover:bg-secondary/80 transition-colors" data-testid="alert-pledges">
-                <AlertTriangle className="w-3 h-3 text-orange-500" />
-                <span className="text-xs uppercase tracking-wide">3 pledges expiring</span>
-                <ChevronRight className="w-3 h-3 ml-1 opacity-50" />
-              </Badge>
-            </Link>
-            <Link href="/pipeline">
-              <Badge variant="secondary" className="gap-1.5 py-1.5 cursor-pointer hover:bg-secondary/80 transition-colors" data-testid="alert-opportunities">
                 <Clock className="w-3 h-3 text-sky-500" />
-                <span className="text-xs uppercase tracking-wide">5 opportunities need attention</span>
-                <ChevronRight className="w-3 h-3 ml-1 opacity-50" />
-              </Badge>
-            </Link>
-            <Link href="/upcoming-actions?filter=completed">
-              <Badge variant="secondary" className="gap-1.5 py-1.5 cursor-pointer hover:bg-secondary/80 transition-colors" data-testid="alert-tasks">
-                <CheckCircle2 className="w-3 h-3 text-emerald-500" />
-                <span className="text-xs uppercase tracking-wide">12 tasks completed</span>
+                <span className="text-xs uppercase tracking-wide">3 pledges expiring</span>
                 <ChevronRight className="w-3 h-3 ml-1 opacity-50" />
               </Badge>
             </Link>
