@@ -256,85 +256,157 @@ export default function TechStackMapper() {
           </Card>
         </TabsContent>
 
-        {/* TAB 2: Stack Architecture - Understanding the layers */}
+        {/* TAB 2: Stack Architecture - Visual architecture diagram */}
         <TabsContent value="layers" className="space-y-6">
           <Card>
-            <CardHeader>
-              <CardTitle>Understanding the Technology Stack</CardTitle>
-              <CardDescription>
-                How NCR's platforms work together across three strategic layers
+            <CardHeader className="text-center">
+              <CardTitle>Technology Architecture</CardTitle>
+              <CardDescription className="max-w-2xl mx-auto">
+                How data flows through NCR's integrated technology stack
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-6">
+            <CardContent className="space-y-8">
               
-              {(["core", "intelligence", "operations"] as const).map((layer) => {
-                const info = layerInfo[layer];
-                const LayerIcon = info.icon;
-                const products = searchQuery ? filteredGroupedByLayer[layer] : groupedByLayer[layer];
-                const accentColor = getAccentColor(info.accent);
-                
-                if (products.length === 0 && searchQuery) return null;
-                
-                return (
-                  <AccentCard key={layer} accent={info.accent} className="p-0">
-                    <div className="px-6 py-4 border-b flex items-center gap-3">
-                      <div 
-                        className="w-10 h-10 rounded-lg flex items-center justify-center"
-                        style={{ backgroundColor: accentColor }}
-                      >
-                        <LayerIcon className="w-5 h-5 text-white" />
+              {/* Visual Architecture Diagram */}
+              <div className="relative">
+                {/* Layer 1: Core Systems */}
+                <div className="relative z-10">
+                  <div 
+                    className="rounded-xl p-6 text-white"
+                    style={{ backgroundColor: getAccentColor("teal") }}
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                        <Layers className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="font-semibold text-sm">{info.label}</h4>
-                        <p className="text-xs text-muted-foreground">{info.description}</p>
+                        <h3 className="font-bold text-lg">Core Systems</h3>
+                        <p className="text-white/80 text-sm">Systems of record — where donor data lives</p>
                       </div>
                     </div>
-                    <div className="p-6">
-                      <div className={`grid grid-cols-1 ${products.length > 2 ? 'md:grid-cols-3' : 'md:grid-cols-2'} gap-4`}>
-                        {products.map((product) => {
-                          const productAccent = getCategoryAccent(product.category);
-                          return (
-                            <div 
-                              key={product.id} 
-                              className="p-4 rounded-lg border-l-2"
-                              style={{ 
-                                backgroundColor: `${getAccentColor(productAccent)}10`,
-                                borderLeftColor: getAccentColor(productAccent)
-                              }}
-                            >
-                              <p className="font-medium text-sm">{product.name}</p>
-                              <p className="text-xs text-muted-foreground">{product.category} — {product.tagline}</p>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </AccentCard>
-                );
-              })}
-
-              <AccentCard accent="olive" className="p-0 border-dashed">
-                <div className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div 
-                      className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                      style={{ backgroundColor: `${getAccentColor("olive")}20` }}
-                    >
-                      <Target className="w-5 h-5" style={{ color: getAccentColor("olive") }} />
-                    </div>
-                    <div className="space-y-2">
-                      <h4 className="font-semibold">The Integration Imperative</h4>
-                      <p className="text-sm text-muted-foreground">
-                        Each platform excels in its domain, but the real power comes from integration. 
-                        <span className="font-medium text-foreground"> Core systems</span> hold the data, 
-                        <span className="font-medium text-foreground"> Intelligence tools</span> surface insights, and 
-                        <span className="font-medium text-foreground"> Operations platforms</span> execute on those insights. 
-                        FundRazor bridges these layers to deliver unified fundraising intelligence.
-                      </p>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {groupedByLayer.core.map((product) => (
+                        <div key={product.id} className="bg-white/15 rounded-lg p-3 text-center">
+                          <p className="font-medium text-sm">{product.name}</p>
+                          <p className="text-white/70 text-xs">{product.category}</p>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>
-              </AccentCard>
+
+                {/* Arrow Down */}
+                <div className="flex justify-center py-2">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="w-0.5 h-6 bg-muted-foreground/30" />
+                    <ArrowRight className="w-5 h-5 rotate-90 text-muted-foreground" />
+                    <span className="text-xs text-muted-foreground">Data flows to</span>
+                  </div>
+                </div>
+
+                {/* Layer 2: Intelligence */}
+                <div className="relative z-10">
+                  <div 
+                    className="rounded-xl p-6 text-white"
+                    style={{ backgroundColor: getAccentColor("sky") }}
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                        <Zap className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-lg">Intelligence Layer</h3>
+                        <p className="text-white/80 text-sm">Analytics & insights — where data becomes actionable</p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {groupedByLayer.intelligence.map((product) => (
+                        <div key={product.id} className="bg-white/15 rounded-lg p-3 text-center">
+                          <p className="font-medium text-sm">{product.name}</p>
+                          <p className="text-white/70 text-xs">{product.category}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Arrow Down */}
+                <div className="flex justify-center py-2">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="w-0.5 h-6 bg-muted-foreground/30" />
+                    <ArrowRight className="w-5 h-5 rotate-90 text-muted-foreground" />
+                    <span className="text-xs text-muted-foreground">Insights drive</span>
+                  </div>
+                </div>
+
+                {/* Layer 3: Operations */}
+                <div className="relative z-10">
+                  <div 
+                    className="rounded-xl p-6 text-white"
+                    style={{ backgroundColor: getAccentColor("lime") }}
+                  >
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+                        <Network className="w-5 h-5" />
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-lg">Operations</h3>
+                        <p className="text-white/80 text-sm">Execution layer — where action happens</p>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                      {groupedByLayer.operations.map((product) => (
+                        <div key={product.id} className="bg-white/15 rounded-lg p-3 text-center">
+                          <p className="font-medium text-sm">{product.name}</p>
+                          <p className="text-white/70 text-xs">{product.category}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* FundRazor Integration Hub */}
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-full border-t border-dashed border-muted-foreground/30" />
+                </div>
+                <div className="relative flex justify-center">
+                  <div 
+                    className="bg-background px-6 py-3 rounded-full border-2 flex items-center gap-3"
+                    style={{ borderColor: getAccentColor("olive") }}
+                  >
+                    <Target className="w-5 h-5" style={{ color: getAccentColor("olive") }} />
+                    <span className="font-semibold" style={{ color: getAccentColor("olive") }}>FundRazor</span>
+                    <span className="text-sm text-muted-foreground">Unified Intelligence Hub</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Integration Value Proposition */}
+              <div className="grid md:grid-cols-3 gap-4">
+                <div className="p-4 rounded-lg border bg-card">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Database className="w-4 h-4" style={{ color: getAccentColor("teal") }} />
+                    <span className="font-medium text-sm">Unified Data</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Single source of truth across all donor touchpoints</p>
+                </div>
+                <div className="p-4 rounded-lg border bg-card">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Zap className="w-4 h-4" style={{ color: getAccentColor("sky") }} />
+                    <span className="font-medium text-sm">Smart Insights</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">AI-powered recommendations from integrated analytics</p>
+                </div>
+                <div className="p-4 rounded-lg border bg-card">
+                  <div className="flex items-center gap-2 mb-2">
+                    <CheckCircle2 className="w-4 h-4" style={{ color: getAccentColor("lime") }} />
+                    <span className="font-medium text-sm">Seamless Execution</span>
+                  </div>
+                  <p className="text-xs text-muted-foreground">Automated workflows that turn insights into action</p>
+                </div>
+              </div>
             </CardContent>
           </Card>
         </TabsContent>
