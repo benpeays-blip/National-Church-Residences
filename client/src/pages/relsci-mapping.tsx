@@ -474,6 +474,7 @@ export default function RelSciMapping() {
   const [searchQuery, setSearchQuery] = useState("");
   const [prospectSearch, setProspectSearch] = useState("");
   const [selectedProspect, setSelectedProspect] = useState<ProspectProfile | null>(null);
+  const [activeTab, setActiveTab] = useState("pathfinder");
 
   const filteredProspects = prospectSearch 
     ? sampleProspects.filter(p => 
@@ -528,7 +529,7 @@ export default function RelSciMapping() {
         </div>
       </Card>
 
-      <Tabs defaultValue="pathfinder" className="w-full">
+      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="grid w-full grid-cols-3 gap-1 bg-transparent p-0 mb-4">
           <TabsTrigger 
             value="pathfinder" 
@@ -832,7 +833,17 @@ export default function RelSciMapping() {
                     </div>
 
                     <div className="flex gap-2 pt-2">
-                      <Button style={{ backgroundColor: "#084594" }} className="gap-2">
+                      <Button 
+                        style={{ backgroundColor: "#084594" }} 
+                        className="gap-2"
+                        onClick={() => {
+                          if (selectedProspect) {
+                            setSearchQuery(selectedProspect.name);
+                            setActiveTab("pathfinder");
+                          }
+                        }}
+                        data-testid="button-find-intro-paths"
+                      >
                         <Network className="h-4 w-4" />
                         Find Introduction Paths
                       </Button>
