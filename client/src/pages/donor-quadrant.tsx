@@ -184,13 +184,11 @@ export default function DonorQuadrant() {
           return (
             <Card key={point.number} className="flex flex-col">
               <CardHeader className="pb-3">
-                <div className="flex items-start gap-3">
+                <div className="flex items-center gap-3">
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#395174] text-white flex items-center justify-center font-bold text-sm">
                     {point.number}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <CardTitle className="text-sm leading-tight">{point.title}</CardTitle>
-                  </div>
+                  <CardTitle className="text-sm leading-tight">{point.title}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="flex-1 pt-0">
