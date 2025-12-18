@@ -191,7 +191,7 @@ export default function PreviewHomepage() {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <Link href="/meeting-notes">
+              <Link href="/ai-tools/meeting-notes">
                 <Button variant="outline" size="sm" className="gap-2" data-testid="button-quick-add">
                   <Phone className="w-4 h-4" />
                   Log Interaction
