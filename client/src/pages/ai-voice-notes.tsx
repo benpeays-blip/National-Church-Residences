@@ -81,6 +81,7 @@ export default function AIVoiceNotes() {
   const [result, setResult] = useState<TranscriptionResult | null>(null);
   const [meetingTitle, setMeetingTitle] = useState("");
   const [donorName, setDonorName] = useState("");
+  const [manualTranscript, setManualTranscript] = useState("");
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
@@ -196,7 +197,15 @@ export default function AIVoiceNotes() {
   };
 
   const processAudio = async () => {
-    if (!audioBlob) return;
+    // Can process with either audio or manual transcript
+    if (!audioBlob && !manualTranscript.trim()) {
+      toast({
+        title: "No Content",
+        description: "Please record audio, upload a file, or type your notes.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     setIsProcessing(true);
     setProcessingProgress(0);
@@ -213,34 +222,42 @@ export default function AIVoiceNotes() {
 
     try {
       const formData = new FormData();
-      formData.append('audio', audioBlob, 'recording.webm');
+      // If we have audio, include it (but transcript is required for processing)
+      if (audioBlob) {
+        formData.append('audio', audioBlob, 'recording.webm');
+      } else {
+        // Create empty audio placeholder for API compatibility
+        formData.append('audio', new Blob([''], { type: 'audio/webm' }), 'placeholder.webm');
+      }
       formData.append('title', meetingTitle || 'Voice Note');
       formData.append('donorName', donorName);
+      formData.append('manualTranscript', manualTranscript);
 
       const response = await fetch('/api/meeting-notes/transcribe', {
         method: 'POST',
         body: formData,
       });
 
+      const data = await response.json();
+      
       if (!response.ok) {
-        throw new Error('Transcription failed');
+        throw new Error(data.error || 'Processing failed');
       }
 
-      const data = await response.json();
       setResult(data);
       setProcessingProgress(100);
 
       queryClient.invalidateQueries({ queryKey: ['/api/meeting-notes'] });
 
       toast({
-        title: "Voice Note Processed",
-        description: "Your recording has been transcribed and insights extracted.",
+        title: "Notes Processed",
+        description: "Your notes have been analyzed and insights extracted.",
       });
 
-    } catch (error) {
+    } catch (error: any) {
       toast({
         title: "Processing Failed",
-        description: "Failed to process the audio. Please try again.",
+        description: error.message || "Failed to process notes. Please try again.",
         variant: "destructive",
       });
     } finally {
@@ -255,7 +272,7 @@ export default function AIVoiceNotes() {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const hasAudioToProcess = audioBlob && !result;
+  const hasContentToProcess = (audioBlob || manualTranscript.trim()) && !result;
 
   return (
     <div className="space-y-6">
@@ -301,9 +318,9 @@ export default function AIVoiceNotes() {
               </div>
             </div>
 
-            {/* Recording/Upload Tabs */}
+            {/* Recording/Upload/Type Tabs */}
             <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid w-full grid-cols-2 gap-1 bg-transparent p-0 mb-4">
+              <TabsList className="grid w-full grid-cols-3 gap-1 bg-transparent p-0 mb-4">
                 <TabsTrigger 
                   value="record" 
                   className="group relative gap-2 bg-[#4FA6A6] text-white data-[state=active]:bg-[#4FA6A6] data-[state=active]:text-white data-[state=active]:shadow-none"
@@ -321,6 +338,15 @@ export default function AIVoiceNotes() {
                   <Upload className="w-4 h-4" />
                   Upload
                   <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#92A05A] opacity-0 group-data-[state=active]:opacity-100" />
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="type" 
+                  className="group relative gap-2 bg-[#E8A54B] text-white data-[state=active]:bg-[#E8A54B] data-[state=active]:text-white data-[state=active]:shadow-none"
+                  data-testid="tab-type"
+                >
+                  <FileText className="w-4 h-4" />
+                  Type
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#E8A54B] opacity-0 group-data-[state=active]:opacity-100" />
                 </TabsTrigger>
               </TabsList>
 
@@ -489,15 +515,62 @@ export default function AIVoiceNotes() {
                   </div>
                 )}
               </TabsContent>
+
+              <TabsContent value="type" className="mt-6 space-y-4">
+                {/* Manual Notes Interface */}
+                <div className="space-y-4">
+                  <div className="p-4 rounded-lg bg-[#E8A54B]/10 border border-[#E8A54B]/20">
+                    <div className="flex items-start gap-3">
+                      <div className="w-8 h-8 rounded-full bg-[#E8A54B]/20 flex items-center justify-center shrink-0">
+                        <Sparkles className="w-4 h-4 text-[#E8A54B]" />
+                      </div>
+                      <div>
+                        <p className="font-medium text-sm">HIPAA-Compliant Alternative</p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Type or paste your meeting notes below. AI will extract insights, action items, and key topics while keeping your data secure.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <Textarea
+                    placeholder="Type or paste your meeting notes here...
+
+Example:
+Met with Margaret Chen today to discuss the capital campaign. She mentioned being impressed with our scholarship program outcomes and is interested in potentially increasing her annual gift. We discussed naming opportunities for the new science building.
+
+Follow-up: Send the campaign brochure by Friday and schedule a campus tour for January."
+                    value={manualTranscript}
+                    onChange={(e) => setManualTranscript(e.target.value)}
+                    className="min-h-[250px] resize-none"
+                    data-testid="input-manual-transcript"
+                  />
+                  
+                  <div className="flex items-center justify-between text-sm text-muted-foreground">
+                    <span>{manualTranscript.length} characters</span>
+                    {manualTranscript.length > 0 && (
+                      <Button 
+                        variant="ghost" 
+                        size="sm"
+                        onClick={() => setManualTranscript("")}
+                        data-testid="button-clear-notes"
+                      >
+                        <Trash2 className="w-3 h-3 mr-1" />
+                        Clear
+                      </Button>
+                    )}
+                  </div>
+                </div>
+              </TabsContent>
             </Tabs>
 
             {/* Process Button */}
-            {hasAudioToProcess && (
+            {hasContentToProcess && (
               <div className="space-y-4">
                 {isProcessing && (
                   <div className="space-y-2">
                     <div className="flex items-center justify-between text-sm">
-                      <span>Processing audio...</span>
+                      <span>Processing notes...</span>
                       <span>{processingProgress}%</span>
                     </div>
                     <Progress value={processingProgress} className="h-2" />
@@ -519,7 +592,7 @@ export default function AIVoiceNotes() {
                   ) : (
                     <>
                       <Sparkles className="w-4 h-4 mr-2" />
-                      Transcribe & Extract Insights
+                      Extract Insights
                     </>
                   )}
                 </Button>

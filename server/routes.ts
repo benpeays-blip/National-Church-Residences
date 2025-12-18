@@ -2704,41 +2704,23 @@ When responding:
         return res.status(400).json({ error: "No audio file provided" });
       }
 
-      const { title, donorName } = req.body;
+      const { title, donorName, manualTranscript } = req.body;
       const audioPath = req.file.path;
 
-      // Initialize OpenAI client for Whisper transcription
-      // Use standard OpenAI API endpoint for Whisper (not Replit AI integration)
-      const openai = new OpenAI({
-        apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY
+      // Clean up uploaded file immediately (we use manual transcript for now)
+      fs.unlink(audioPath, (err) => {
+        if (err) console.error("Error deleting temp file:", err);
       });
 
       let transcription: string;
       
-      try {
-        // Step 1: Transcribe audio using OpenAI Whisper API
-        const audioFile = fs.createReadStream(audioPath);
-        const whisperResponse = await openai.audio.transcriptions.create({
-          file: audioFile,
-          model: "whisper-1",
-          language: "en",
-          response_format: "text"
-        });
-        
-        transcription = whisperResponse as unknown as string;
-        
-        // If transcription is empty, provide feedback
-        if (!transcription || transcription.trim().length === 0) {
-          transcription = "[No speech detected in the recording]";
-        }
-      } catch (whisperError: any) {
-        console.error("Whisper transcription error:", whisperError);
-        // Fallback message if Whisper fails
-        transcription = "[Audio transcription unavailable - Whisper API error: " + (whisperError.message || "Unknown error") + "]";
-      } finally {
-        // Clean up uploaded file
-        fs.unlink(audioPath, (err) => {
-          if (err) console.error("Error deleting temp file:", err);
+      // Check if manual transcript was provided
+      if (manualTranscript && manualTranscript.trim().length > 0) {
+        transcription = manualTranscript.trim();
+      } else {
+        // No transcript provided - return helpful message
+        return res.status(400).json({ 
+          error: "HIPAA-compliant transcription requires integration with a certified provider (Amazon Transcribe Medical, Rev AI, or AssemblyAI). Please enter your notes manually in the text field, or contact your administrator to configure a HIPAA-compliant transcription service."
         });
       }
 
