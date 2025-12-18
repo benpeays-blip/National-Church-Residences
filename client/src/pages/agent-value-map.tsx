@@ -205,14 +205,14 @@ export default function AgentValueMap() {
   ];
 
   // App Shell hubs
-  const appShellHubs: Array<{ name: string; description: string; icon: LucideIcon; accent: AccentColor }> = [
-    { name: "Donor Hub", description: "ROI dashboards, impact narratives, acknowledgments, pipeline views", icon: HandHeart, accent: "coral" },
-    { name: "Grants Hub", description: "Pipeline, deadlines, report generator, dedup outreach, outcomes", icon: Target, accent: "orange" },
-    { name: "Volunteer Hub", description: "Onboarding, scheduling, recognition automation, wishlists integration", icon: Users, accent: "sky" },
-    { name: "Resident Engagement Hub", description: "Intake, service pathways, multilingual support, accessibility validation", icon: Heart, accent: "coralDark" },
-    { name: "Governance & Compliance Hub", description: "Agent audit trails, filings, Purview lineage, fairness audit reports", icon: Shield, accent: "teal" },
-    { name: "Strategy & Sustainability Hub", description: "Forecasts, scenario modeling, ROI simulations, sustainability metrics", icon: LineChart, accent: "olive" },
-    { name: "Ops & Security Hub", description: "Continuity workflows, system uptime, agent observability, incident playbooks", icon: Lock, accent: "lime" },
+  const appShellHubs: Array<{ name: string; description: string; icon: LucideIcon; accent: AccentColor; features: string[] }> = [
+    { name: "Donor Hub", description: "Unified donor management with intelligent engagement tools", icon: HandHeart, accent: "coral", features: ["ROI dashboards linking gifts to outcomes", "AI-generated impact narratives", "Automated acknowledgment workflows", "Pipeline & portfolio views"] },
+    { name: "Grants Hub", description: "End-to-end grant lifecycle management", icon: Target, accent: "orange", features: ["Visual pipeline with deadline tracking", "Automated report generation", "Dedup outreach coordination", "Outcomes & metrics integration"] },
+    { name: "Volunteer Hub", description: "Complete volunteer lifecycle support", icon: Users, accent: "sky", features: ["Streamlined onboarding workflows", "Intelligent shift scheduling", "Recognition automation", "Wishlist & needs matching"] },
+    { name: "Resident Engagement Hub", description: "Holistic resident support platform", icon: Heart, accent: "coralDark", features: ["Unified intake process", "AI-guided service pathways", "Multilingual support", "Accessibility compliance tools"] },
+    { name: "Governance & Compliance Hub", description: "Enterprise-grade compliance management", icon: Shield, accent: "teal", features: ["Complete agent audit trails", "Filing preparation automation", "Purview lineage tracking", "Fairness audit reports"] },
+    { name: "Strategy & Sustainability Hub", description: "Data-driven strategic planning", icon: LineChart, accent: "olive", features: ["Occupancy & staffing forecasts", "Scenario modeling tools", "ROI simulations", "Sustainability metrics dashboard"] },
+    { name: "Ops & Security Hub", description: "Operational resilience command center", icon: Lock, accent: "lime", features: ["Business continuity workflows", "System uptime monitoring", "Agent observability", "Incident response playbooks"] },
   ];
 
   // Day in the life steps
@@ -636,12 +636,20 @@ export default function AgentValueMap() {
                     >
                       <CardContent className="p-4">
                         <div className="flex items-start gap-3">
-                          <div className={`p-2 rounded-md ${getAccentBgClass(hub.accent)}`}>
-                            <hub.icon className="w-4 h-4 text-white" />
+                          <div className={`p-3 rounded-lg ${getAccentBgClass(hub.accent)}`}>
+                            <hub.icon className="w-5 h-5 text-white" />
                           </div>
                           <div className="flex-1">
-                            <p className="font-semibold group-hover:text-primary transition-colors">{hub.name}</p>
-                            <p className="text-sm text-muted-foreground mt-1">{hub.description}</p>
+                            <p className="text-lg font-semibold group-hover:text-primary transition-colors">{hub.name}</p>
+                            <p className="text-base text-muted-foreground mt-1">{hub.description}</p>
+                            <ul className="mt-3 space-y-1">
+                              {hub.features.map((feature, idx) => (
+                                <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground">
+                                  <CircleDot className="w-3 h-3 flex-shrink-0" style={{ color: NCR_BRAND_COLORS[hub.accent] }} />
+                                  <span>{feature}</span>
+                                </li>
+                              ))}
+                            </ul>
                             <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
                               <span>View hub details</span>
                               <ChevronRight className="h-4 w-4" />
