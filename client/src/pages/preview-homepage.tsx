@@ -197,6 +197,12 @@ export default function PreviewHomepage() {
                   Log Interaction
                 </Button>
               </Link>
+              <Link href="/calendar">
+                <Button variant="outline" size="sm" className="gap-2" data-testid="button-calendar">
+                  <Calendar className="w-4 h-4" />
+                  Calendar
+                </Button>
+              </Link>
               <Link href="/pipeline">
                 <Button size="sm" className="gap-2" data-testid="button-view-pipeline">
                   <Eye className="w-4 h-4" />

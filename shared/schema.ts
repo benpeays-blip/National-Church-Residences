@@ -681,13 +681,16 @@ export const calendarEvents = pgTable("calendar_events", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   userId: varchar("user_id").references(() => users.id).notNull(),
   personId: varchar("person_id").references(() => persons.id),
-  eventType: varchar("event_type"), // "donor_meeting", "cultivation_event", etc.
+  title: varchar("title").notNull(),
+  description: text("description"),
+  eventType: varchar("event_type"), // "call", "email", "meeting", "task", etc.
   scheduledAt: timestamp("scheduled_at").notNull(),
   duration: integer("duration"), // Minutes
   aiSuggestedTime: timestamp("ai_suggested_time"),
-  priority: integer("priority"), // 0-100, AI-calculated
+  priority: varchar("priority"), // "high", "medium", "low"
   estimatedImpact: decimal("estimated_impact", { precision: 10, scale: 2 }),
   meetingBriefId: varchar("meeting_brief_id").references(() => meetingBriefs.id),
+  taskId: varchar("task_id"), // Link to original task if created from NBA
   completed: integer("completed").notNull().default(0),
   outcome: text("outcome"),
   createdAt: timestamp("created_at").defaultNow(),
