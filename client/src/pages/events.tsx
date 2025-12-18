@@ -7,6 +7,7 @@ import { Calendar, Plus, MapPin, Users, DollarSign, Trophy } from "lucide-react"
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { FundraisingEvent } from "@shared/schema";
 import { useLocation } from "wouter";
+import { useToast } from "@/hooks/use-toast";
 
 type EventFilter = "all" | "past" | "upcoming";
 
@@ -27,6 +28,14 @@ interface EventsProps {
 
 export default function Events({ filterType }: EventsProps = {}) {
   const [location, setLocation] = useLocation();
+  const { toast } = useToast();
+
+  const handleAddEvent = () => {
+    toast({
+      title: "Add Event",
+      description: "Event creation form coming soon. This feature is under development.",
+    });
+  };
   
   // Derive active filter from prop or URL path
   const activeFilter = useMemo<EventFilter>(() => {
@@ -98,7 +107,7 @@ export default function Events({ filterType }: EventsProps = {}) {
             Manage fundraising events and donor engagement activities
           </p>
         </div>
-        <Button data-testid="button-add-event">
+        <Button onClick={handleAddEvent} data-testid="button-add-event">
           <Plus className="w-4 h-4 mr-2" />
           Add Event
         </Button>
@@ -147,7 +156,7 @@ export default function Events({ filterType }: EventsProps = {}) {
             {activeFilter === "past" && "No past events on record"}
             {activeFilter === "all" && "Get started by adding your first fundraising event"}
           </p>
-          <Button size="sm" data-testid="button-add-first-event">
+          <Button size="sm" onClick={handleAddEvent} data-testid="button-add-first-event">
             <Plus className="w-4 h-4 mr-2" />
             Add Event
           </Button>
