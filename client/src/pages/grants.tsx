@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useToast } from "@/hooks/use-toast";
 import { FileText, Plus, Search, Calendar, DollarSign } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { Grant } from "@shared/schema";
@@ -25,6 +26,15 @@ interface GrantsProps {
 export default function Grants({ initialStageFilter }: GrantsProps = {}) {
   const [searchQuery, setSearchQuery] = useState("");
   const [stageFilter, setStageFilter] = useState<string>(initialStageFilter || "all");
+  const { toast } = useToast();
+
+  const handleAddGrant = () => {
+    toast({
+      title: "Add Grant",
+      description: "Opening grant research to find new opportunities...",
+    });
+    window.location.href = "/grant-research";
+  };
 
   const { data: allGrants, isLoading } = useQuery<Grant[]>({
     queryKey: ["/api/grants"],
@@ -101,7 +111,7 @@ export default function Grants({ initialStageFilter }: GrantsProps = {}) {
             Manage foundation grants and track submissions
           </p>
         </div>
-        <Button data-testid="button-add-grant">
+        <Button onClick={handleAddGrant} data-testid="button-add-grant">
           <Plus className="w-4 h-4 mr-2" />
           Add Grant
         </Button>
@@ -262,7 +272,7 @@ export default function Grants({ initialStageFilter }: GrantsProps = {}) {
               : "Get started by adding your first grant prospect to the system."
           }
           actionLabel="Add Grant"
-          onAction={() => {}}
+          onAction={handleAddGrant}
         />
       )}
     </div>
