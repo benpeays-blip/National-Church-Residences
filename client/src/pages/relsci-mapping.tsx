@@ -588,7 +588,7 @@ export default function RelSciMapping() {
 
           <div>
             <h4 className="text-sm font-medium text-muted-foreground mb-3">Recent Connection Paths</h4>
-            <div className="space-y-4">
+            <div className="space-y-6">
             {sampleConnectionPaths.map((path) => {
               const degreeStyle = getDegreeStyle(path.degrees);
               return (
