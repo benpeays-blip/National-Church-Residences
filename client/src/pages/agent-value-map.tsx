@@ -310,15 +310,15 @@ export default function AgentValueMap() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="p-4 bg-muted/50 rounded-lg">
+                <div className="p-4 border rounded-lg">
                   <p className="font-semibold">Microsoft Fabric OneLake</p>
                   <p className="text-sm text-muted-foreground">Unified data layer</p>
                 </div>
-                <div className="p-4 bg-muted/50 rounded-lg">
+                <div className="p-4 border rounded-lg">
                   <p className="font-semibold">Microsoft Purview</p>
                   <p className="text-sm text-muted-foreground">Governance (classification, access policies, lineage, audit)</p>
                 </div>
-                <div className="p-4 bg-muted/50 rounded-lg">
+                <div className="p-4 border rounded-lg">
                   <p className="font-semibold">Standardized Canonical Objects</p>
                   <p className="text-sm text-muted-foreground">Person, Resident, Donor, Gift, Grant, Property, Entity, Claim, Filing, Vendor, Volunteer, Interaction</p>
                 </div>
@@ -550,13 +550,13 @@ export default function AgentValueMap() {
                     >
                       <CardContent className="p-4">
                         <div className="flex items-start gap-3">
-                          <div className={`p-2 rounded-md ${getAccentBgClass(agent.accent)}`}>
-                            <agent.icon className="w-4 h-4 text-white" />
+                          <div className={`p-3 rounded-lg ${getAccentBgClass(agent.accent)}`}>
+                            <agent.icon className="w-5 h-5 text-white" />
                           </div>
                           <div className="flex-1">
-                            <p className="font-semibold group-hover:text-primary transition-colors">{agent.name}</p>
+                            <p className="text-lg font-semibold group-hover:text-primary transition-colors">{agent.name}</p>
                             <Badge variant="outline" className="text-xs mt-1">{agent.domain}</Badge>
-                            <p className="text-sm text-muted-foreground mt-2">{agent.description}</p>
+                            <p className="text-base text-muted-foreground mt-2">{agent.description}</p>
                             <div className="mt-3 flex items-center gap-1 text-sm opacity-0 group-hover:opacity-100 transition-opacity text-primary">
                               <span>View agent details</span>
                               <ChevronRight className="h-4 w-4" />
