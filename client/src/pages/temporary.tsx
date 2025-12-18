@@ -1896,17 +1896,17 @@ function TechComponentCard({ component }: { component: TechComponent }) {
 function OptimizationIdeas() {
   return (
     <div className="space-y-8">
-      <AccentCard accent="lime">
-        <CardHeader>
-          <div className="flex items-center gap-2">
-            <Lightbulb className="h-5 w-5" style={{ color: getAccentColor("lime") }} />
-            <CardTitle>NCR Optimized Tech Stack</CardTitle>
-          </div>
-          <CardDescription>
+      <div className="flex items-start gap-4">
+        <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("lime")}15` }}>
+          <Lightbulb className="h-6 w-6" style={{ color: getAccentColor("lime") }} />
+        </div>
+        <div>
+          <h1 className="text-2xl font-bold">NCR Optimized Tech Stack</h1>
+          <p className="text-muted-foreground mt-1">
             A unified ecosystem where existing systems remain the source of record, Fabric + Purview unify data, AI agents handle busywork, and the app provides a single pane of glass.
-          </CardDescription>
-        </CardHeader>
-      </AccentCard>
+          </p>
+        </div>
+      </div>
 
       <AccentCard accent="teal" className="p-6">
         <div className="flex items-center gap-4 mb-4">
