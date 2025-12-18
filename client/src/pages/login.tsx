@@ -20,7 +20,7 @@ import {
   AlertCircle
 } from "lucide-react";
 import { getAccentColor } from "@/components/ui/accent-card";
-import ncrLogo from "@assets/Screenshot_2025-12-14_at_1.40.02_PM_1765741231815.png";
+import ncrLogoIcon from "@assets/image_1766086607961.png";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -227,8 +227,8 @@ export default function Login() {
           <div className="space-y-4">
             <div className="text-center space-y-2">
               <div className="flex flex-col items-center justify-center mb-4">
-                <img src={ncrLogo} alt="NCR Logo" className="h-12 w-auto" />
-                <span className="text-xl font-medium text-foreground mt-2" data-testid="text-login-title">National Church Residences</span>
+                <img src={ncrLogoIcon} alt="NCR Logo" className="h-16 w-auto" />
+                <span className="text-xl font-medium text-foreground mt-3" data-testid="text-login-title">National Church Residences</span>
               </div>
               <p className="text-muted-foreground">
                 Select your role to continue
