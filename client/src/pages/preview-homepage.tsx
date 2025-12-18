@@ -225,6 +225,20 @@ export default function PreviewHomepage() {
                 <ChevronRight className="w-3 h-3 ml-1 opacity-50" />
               </Badge>
             </Link>
+            <Link href="/pipeline">
+              <Badge variant="secondary" className="gap-1.5 py-1.5 cursor-pointer hover:bg-secondary/80 transition-colors" data-testid="alert-opportunities">
+                <TrendingUp className="w-3 h-3 text-teal-500" />
+                <span className="text-xs uppercase tracking-wide">12 open opportunities</span>
+                <ChevronRight className="w-3 h-3 ml-1 opacity-50" />
+              </Badge>
+            </Link>
+            <Link href="/upcoming-actions">
+              <Badge variant="secondary" className="gap-1.5 py-1.5 cursor-pointer hover:bg-secondary/80 transition-colors" data-testid="alert-tasks">
+                <CheckCircle2 className="w-3 h-3 text-lime-500" />
+                <span className="text-xs uppercase tracking-wide">8 tasks completed this week</span>
+                <ChevronRight className="w-3 h-3 ml-1 opacity-50" />
+              </Badge>
+            </Link>
           </div>
 
           {/* Executive KPI Grid */}
