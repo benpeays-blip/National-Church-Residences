@@ -75,7 +75,7 @@ export default function CorporatePartnerships() {
             <CardTitle className="text-white">Corporate Partnerships</CardTitle>
             <CardDescription className="text-white/80">Companies with employee donors and matching gift programs</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-6">
             <div className="space-y-4">
               {partnerships.map((partnership) => (
                 <div key={partnership.id} className="border-b pb-4 last:border-0" data-testid={`partnership-${partnership.id}`}>
