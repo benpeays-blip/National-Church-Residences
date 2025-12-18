@@ -264,6 +264,8 @@ function Router() {
       <Route path="/relationships/network" component={RelationshipsWithTabs} />
       <Route path="/relationships/connections" component={RelationshipsWithTabs} />
       <Route path="/relationships/peer" component={RelationshipsWithTabs} />
+      <Route path="/relationships/force" component={RelationshipsWithTabs} />
+      <Route path="/relationships/visualization" component={RelationshipsWithTabs} />
       <Route path="/relationships" component={RelationshipsWithTabs} />
       <Route path="/agent-value-map/scorecard/:domainId" component={ScorecardDetail} />
       <Route path="/agent-value-map/hub/:hubId" component={HubDetail} />
