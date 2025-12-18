@@ -97,10 +97,31 @@ export default function NcrAffordableHousing() {
     },
   ];
 
-  const statesServed = [
-    "AR", "AZ", "CA", "CT", "FL", "GA", "IN", "KS", "LA", "MD", 
-    "MI", "MO", "NC", "NJ", "NY", "OH", "PA", "SC", "TN", "TX", 
-    "VT", "WA", "WI"
+  const regionalFootprint = [
+    { 
+      region: "Midwest", 
+      states: ["OH", "IN", "MI", "WI", "MO", "KS"],
+      units: "12,500+",
+      color: "#7FA3A1"
+    },
+    { 
+      region: "Southeast", 
+      states: ["FL", "GA", "NC", "SC", "TN", "LA"],
+      units: "6,200+",
+      color: "#D5636C"
+    },
+    { 
+      region: "Northeast", 
+      states: ["NY", "PA", "NJ", "CT", "VT", "MD"],
+      units: "4,100+",
+      color: "#E8923A"
+    },
+    { 
+      region: "Southwest & West", 
+      states: ["TX", "AZ", "AR", "CA", "WA"],
+      units: "2,200+",
+      color: "#B5C942"
+    },
   ];
 
   const donorTalkingPoints = [
@@ -197,35 +218,45 @@ export default function NcrAffordableHousing() {
           <CardHeader style={{ backgroundColor: '#395174' }}>
             <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
               <Globe className="w-4 h-4" />
-              Geographic Reach
+              National Footprint
             </CardTitle>
             <CardDescription className="text-white/80 text-xs">
-              Serving seniors across 23 states coast-to-coast
+              25,000+ homes across 23 states coast-to-coast
             </CardDescription>
           </CardHeader>
           <CardContent className="p-6">
-            <div className="flex flex-wrap gap-2 mb-6">
-              {statesServed.map((state) => (
-                <Badge 
-                  key={state} 
-                  variant="secondary" 
-                  className="text-xs font-medium"
+            <div className="grid grid-cols-2 gap-3">
+              {regionalFootprint.map((region) => (
+                <div 
+                  key={region.region} 
+                  className="rounded-lg p-4 border"
+                  style={{ backgroundColor: `${region.color}10`, borderColor: `${region.color}30` }}
                 >
-                  {state}
-                </Badge>
-              ))}
-            </div>
-            <div className="bg-muted/30 rounded-lg p-4">
-              <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                <div>
-                  <p className="font-medium text-sm">National Footprint</p>
-                  <p className="text-xs text-muted-foreground mt-1">
-                    From Florida to Washington, Texas to Vermont - NCR's presence ensures 
-                    seniors across America have access to quality affordable housing.
-                  </p>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="font-semibold text-sm" style={{ color: region.color }}>
+                      {region.region}
+                    </span>
+                    <Badge 
+                      variant="secondary" 
+                      className="text-xs font-bold"
+                      style={{ backgroundColor: `${region.color}20`, color: region.color }}
+                    >
+                      {region.units}
+                    </Badge>
+                  </div>
+                  <div className="flex flex-wrap gap-1">
+                    {region.states.map((state) => (
+                      <span 
+                        key={state}
+                        className="text-xs font-medium px-1.5 py-0.5 rounded"
+                        style={{ backgroundColor: `${region.color}15`, color: region.color }}
+                      >
+                        {state}
+                      </span>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </CardContent>
         </Card>
