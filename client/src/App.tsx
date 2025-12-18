@@ -46,13 +46,6 @@ const navigationDomains = {
       { name: "Giving Anniversaries", href: "/giving-anniversaries" },
     ]
   },
-  "Stakeholders": {
-    items: [
-      { name: "Donor Portal", href: "/donor-portal" },
-      { name: "Board Dashboard", href: "/board-dashboard" },
-      { name: "Data Ops Portal", href: "/data-ops-portal" },
-    ]
-  },
 };
 
 // Direct navigation links (no dropdown)
@@ -899,47 +892,6 @@ function App() {
                           <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
                             <div className="py-2 px-1">
                               {navigationDomains["Analytics"].items.map((item) => (
-                                <Link 
-                                  key={item.name} 
-                                  href={item.href}
-                                  className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                                  onClick={closeDropdown}
-                                  data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
-                                >
-                                  {item.name}
-                                </Link>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Stakeholders Dropdown */}
-                    <div
-                      className="relative"
-                      onMouseEnter={() => setActiveDropdown("Stakeholders")}
-                      onMouseLeave={() => setActiveDropdown(null)}
-                    >
-                      <div className={`relative`}>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => handleDropdownClick("Stakeholders")}
-                          className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
-                            activeDropdown === "Stakeholders" ? "bg-black/10" : ""
-                          }`}
-                          data-testid="button-nav-stakeholders"
-                        >
-                          Stakeholders
-                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Stakeholders" ? "rotate-180" : ""}`} />
-                        </Button>
-                      </div>
-                      {activeDropdown === "Stakeholders" && (
-                        <div className="absolute right-0 top-full pt-1 z-50">
-                          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
-                            <div className="py-2 px-1">
-                              {navigationDomains["Stakeholders"].items.map((item) => (
                                 <Link 
                                   key={item.name} 
                                   href={item.href}
