@@ -9,7 +9,9 @@ import {
   TrendingUp,
   ArrowRight,
   Clock,
-  Star
+  Star,
+  Sparkles,
+  BarChart3
 } from "lucide-react";
 
 interface ImpactMetric {
@@ -21,6 +23,7 @@ interface ImpactMetric {
   icon: any;
   trend: string;
   href: string;
+  color: string;
 }
 
 const impactMetrics: ImpactMetric[] = [
@@ -32,7 +35,8 @@ const impactMetrics: ImpactMetric[] = [
     description: "Senior living communities and affordable housing properties serving residents across 28 states",
     icon: Building2,
     trend: "+12 new properties YTD",
-    href: "/impact/building-facilities"
+    href: "/impact/building-facilities",
+    color: "#7FA3A1"
   },
   {
     id: "home-health-visits",
@@ -42,7 +46,8 @@ const impactMetrics: ImpactMetric[] = [
     description: "In-home care visits providing wellness checks, medication management, and therapeutic services",
     icon: Heart,
     trend: "+18% from last year",
-    href: "/impact/home-health"
+    href: "/impact/home-health",
+    color: "#D5636C"
   },
   {
     id: "volunteer-hours",
@@ -52,7 +57,8 @@ const impactMetrics: ImpactMetric[] = [
     description: "Dedicated volunteers supporting companionship, nutrition, recreation, and wellness programs",
     icon: Users,
     trend: "1,245 active volunteers",
-    href: "/impact/volunteer-hours"
+    href: "/impact/volunteer-hours",
+    color: "#E8923A"
   },
   {
     id: "affordable-units",
@@ -62,38 +68,58 @@ const impactMetrics: ImpactMetric[] = [
     description: "Income-restricted housing serving seniors at 30-80% of Area Median Income levels",
     icon: Home,
     trend: "97.2% occupancy rate",
-    href: "/impact/affordable-units"
+    href: "/impact/affordable-units",
+    color: "#B5C942"
   },
 ];
 
 const quickStats = [
-  { label: "Total Residents Served", value: "32,450", icon: Users },
-  { label: "States with Presence", value: "28", icon: Building2 },
-  { label: "Average Satisfaction", value: "96.8%", icon: Star },
-  { label: "Years of Service", value: "60+", icon: Clock },
+  { label: "Total Residents Served", value: "32,450", icon: Users, color: "#084594" },
+  { label: "States with Presence", value: "28", icon: Building2, color: "#7FA3A1" },
+  { label: "Average Satisfaction", value: "96.8%", icon: Star, color: "#2ca02c" },
+  { label: "Years of Service", value: "60+", icon: Clock, color: "#E8923A" },
 ];
 
 export default function ImpactOverview() {
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold" data-testid="page-title">Impact Overview</h1>
-        <p className="text-muted-foreground mt-2 max-w-3xl">
-          Comprehensive view of NCR's mission impact across housing, healthcare, and community services. 
-          Click any metric card to explore detailed breakdowns and data.
-        </p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-2xl font-bold" style={{ color: "#395174" }} data-testid="page-title">
+            Impact Overview
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            Comprehensive view of NCR's mission impact across housing, healthcare, and community services
+          </p>
+        </div>
       </div>
+
+      <Card className="p-4" style={{ backgroundColor: "rgba(57, 81, 116, 0.05)" }}>
+        <div className="flex items-start gap-3">
+          <Sparkles className="h-5 w-5 mt-0.5" style={{ color: "#395174" }} />
+          <div>
+            <h4 className="font-medium text-sm" style={{ color: "#395174" }}>Mission Impact Dashboard</h4>
+            <p className="text-sm text-muted-foreground mt-1">
+              Click any metric card below to explore detailed breakdowns, historical trends, and comprehensive data. 
+              All metrics are updated monthly from NCR's operational systems.
+            </p>
+          </div>
+        </div>
+      </Card>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {quickStats.map((stat) => (
           <Card key={stat.label}>
             <CardContent className="p-6">
               <div className="flex items-center gap-4">
-                <div className="h-12 w-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <stat.icon className="h-6 w-6 text-primary" />
+                <div 
+                  className="h-12 w-12 rounded-lg flex items-center justify-center"
+                  style={{ backgroundColor: `${stat.color}15` }}
+                >
+                  <stat.icon className="h-6 w-6" style={{ color: stat.color }} />
                 </div>
                 <div>
-                  <div className="text-3xl font-bold">{stat.value}</div>
+                  <div className="text-3xl font-bold" style={{ color: stat.color }}>{stat.value}</div>
                   <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </div>
               </div>
@@ -103,9 +129,15 @@ export default function ImpactOverview() {
       </div>
 
       <Card>
-        <CardHeader className="bg-primary text-primary-foreground rounded-t-lg">
-          <CardTitle className="text-xl">Mission Impact Metrics</CardTitle>
-          <CardDescription className="text-primary-foreground/80">
+        <CardHeader 
+          className="rounded-t-lg"
+          style={{ backgroundColor: "#395174" }}
+        >
+          <CardTitle className="text-xl text-white flex items-center gap-2">
+            <BarChart3 className="h-5 w-5" />
+            Mission Impact Metrics
+          </CardTitle>
+          <CardDescription className="text-white/80">
             Click any card to view comprehensive drill-down data
           </CardDescription>
         </CardHeader>
@@ -119,8 +151,11 @@ export default function ImpactOverview() {
                 >
                   <CardContent className="p-6">
                     <div className="flex items-start justify-between mb-4">
-                      <div className="h-12 w-12 rounded-lg bg-primary/10 transition-all duration-200 group-hover:scale-105 flex items-center justify-center">
-                        <metric.icon className="h-6 w-6 text-primary" />
+                      <div 
+                        className="h-12 w-12 rounded-lg transition-all duration-200 group-hover:scale-105 flex items-center justify-center"
+                        style={{ backgroundColor: `${metric.color}15` }}
+                      >
+                        <metric.icon className="h-6 w-6" style={{ color: metric.color }} />
                       </div>
                       <ArrowRight className="h-5 w-5 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
                     </div>
@@ -128,7 +163,7 @@ export default function ImpactOverview() {
                     <div className="space-y-2">
                       <h3 className="font-semibold text-xl">{metric.title}</h3>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-3xl font-bold text-primary">
+                        <span className="text-3xl font-bold" style={{ color: metric.color }}>
                           {metric.value}
                         </span>
                         <span className="text-sm text-muted-foreground">{metric.subtitle}</span>
@@ -153,8 +188,8 @@ export default function ImpactOverview() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <Card>
           <CardHeader>
-            <CardTitle className="text-xl flex items-center gap-2">
-              <TrendingUp className="h-5 w-5 text-primary" />
+            <CardTitle className="text-lg flex items-center gap-2">
+              <TrendingUp className="h-5 w-5" style={{ color: "#395174" }} />
               Year-Over-Year Growth
             </CardTitle>
           </CardHeader>
@@ -163,28 +198,28 @@ export default function ImpactOverview() {
               <div className="p-4 rounded-lg bg-muted/50">
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-medium">Residents Served</span>
-                  <Badge variant="outline" className="text-green-600">+12%</Badge>
+                  <Badge variant="outline" style={{ borderColor: "#2ca02c", color: "#2ca02c" }}>+12%</Badge>
                 </div>
                 <div className="text-sm text-muted-foreground">32,450 vs 28,970 last year</div>
               </div>
               <div className="p-4 rounded-lg bg-muted/50">
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-medium">Home Health Visits</span>
-                  <Badge variant="outline" className="text-green-600">+18%</Badge>
+                  <Badge variant="outline" style={{ borderColor: "#2ca02c", color: "#2ca02c" }}>+18%</Badge>
                 </div>
                 <div className="text-sm text-muted-foreground">156,420 vs 132,560 last year</div>
               </div>
               <div className="p-4 rounded-lg bg-muted/50">
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-medium">Volunteer Engagement</span>
-                  <Badge variant="outline" className="text-green-600">+22%</Badge>
+                  <Badge variant="outline" style={{ borderColor: "#2ca02c", color: "#2ca02c" }}>+22%</Badge>
                 </div>
                 <div className="text-sm text-muted-foreground">48,250 hrs vs 39,550 hrs last year</div>
               </div>
               <div className="p-4 rounded-lg bg-muted/50">
                 <div className="flex justify-between items-center mb-2">
                   <span className="font-medium">Affordable Units Added</span>
-                  <Badge variant="outline" className="text-green-600">+580</Badge>
+                  <Badge variant="outline" style={{ borderColor: "#2ca02c", color: "#2ca02c" }}>+580</Badge>
                 </div>
                 <div className="text-sm text-muted-foreground">24,850 total vs 24,270 last year</div>
               </div>
@@ -194,8 +229,8 @@ export default function ImpactOverview() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-xl flex items-center gap-2">
-              <Star className="h-5 w-5 text-primary" />
+            <CardTitle className="text-lg flex items-center gap-2">
+              <Star className="h-5 w-5" style={{ color: "#395174" }} />
               Impact Highlights
             </CardTitle>
           </CardHeader>
