@@ -127,43 +127,56 @@ export default function NetworkVisualizationExamples() {
     setScrollTrigger(prev => prev + 1);
   };
 
-  // Scroll connected elements into view when hovering
-  const scrollToConnections = (name: string) => {
-    setSankeyHovered(name);
+  // Compute reordered lists based on hover state
+  const getOrderedPeople = () => {
+    if (!sankeyHovered) return samplePeople;
     
-    // Check if it's a person
-    const person = samplePeople.find(p => p.name === name);
-    if (person) {
-      // Scroll connected orgs into view
-      person.orgs.forEach((orgName, idx) => {
-        const org = sampleOrgs.find(o => o.name === orgName);
-        if (org) {
-          const orgEl = orgRefs.current[org.id];
-          if (orgEl && orgsScrollRef.current) {
-            setTimeout(() => {
-              orgEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            }, idx * 50);
-          }
-        }
-      });
-      return;
+    // If hovering over a person, keep that person at current position
+    const hoveredPerson = samplePeople.find(p => p.name === sankeyHovered);
+    if (hoveredPerson) return samplePeople;
+    
+    // If hovering over an org, bring connected people to center
+    const hoveredOrg = sampleOrgs.find(o => o.name === sankeyHovered);
+    if (hoveredOrg) {
+      const connected = samplePeople.filter(p => p.orgs.includes(sankeyHovered));
+      const unconnected = samplePeople.filter(p => !p.orgs.includes(sankeyHovered));
+      // Put connected people first, then unconnected
+      return [...connected, ...unconnected];
     }
     
-    // Check if it's an org
-    const org = sampleOrgs.find(o => o.name === name);
-    if (org) {
-      // Scroll connected people into view
-      const connectedPeople = samplePeople.filter(p => p.orgs.includes(name));
-      connectedPeople.forEach((person, idx) => {
-        const personEl = peopleRefs.current[person.id];
-        if (personEl && peopleScrollRef.current) {
-          setTimeout(() => {
-            personEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          }, idx * 50);
-        }
-      });
-    }
+    return samplePeople;
   };
+
+  const getOrderedOrgs = () => {
+    if (!sankeyHovered) return sampleOrgs;
+    
+    // If hovering over an org, keep that org at current position
+    const hoveredOrg = sampleOrgs.find(o => o.name === sankeyHovered);
+    if (hoveredOrg) return sampleOrgs;
+    
+    // If hovering over a person, bring connected orgs to center
+    const hoveredPerson = samplePeople.find(p => p.name === sankeyHovered);
+    if (hoveredPerson) {
+      const connected = sampleOrgs.filter(o => hoveredPerson.orgs.includes(o.name));
+      const unconnected = sampleOrgs.filter(o => !hoveredPerson.orgs.includes(o.name));
+      // Put connected orgs first, then unconnected
+      return [...connected, ...unconnected];
+    }
+    
+    return sampleOrgs;
+  };
+
+  const orderedPeople = getOrderedPeople();
+  const orderedOrgs = getOrderedOrgs();
+
+  // Trigger position recalculation when hover changes
+  useEffect(() => {
+    // Small delay to let DOM update after reorder
+    const timer = setTimeout(() => {
+      setScrollTrigger(prev => prev + 1);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [sankeyHovered]);
 
   return (
     <div className="space-y-6">
@@ -203,24 +216,28 @@ export default function NetworkVisualizationExamples() {
                       className="flex-1 overflow-y-auto pr-2 space-y-1"
                       style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(74, 159, 255, 0.3) transparent' }}
                     >
-                      {samplePeople.map(person => {
+                      {orderedPeople.map(person => {
                         const isHovered = sankeyHovered === person.name;
+                        const isConnected = sankeyHovered && sampleOrgs.find(o => o.name === sankeyHovered)?.members?.includes(person.name);
                         return (
                           <button
                             key={person.id}
                             ref={el => { peopleRefs.current[person.id] = el; }}
                             className="relative text-left transition-all duration-300 w-full"
-                            onMouseEnter={() => scrollToConnections(person.name)}
+                            onMouseEnter={() => setSankeyHovered(person.name)}
                             onMouseLeave={() => setSankeyHovered(null)}
                             data-testid={`sankey-person-${person.id}`}
                           >
                             <div 
-                              className="p-2 rounded-md text-sm text-white/90 transition-all"
+                              className="p-2 rounded-md text-sm transition-all"
                               style={{ 
                                 background: isHovered 
                                   ? "linear-gradient(90deg, rgba(74, 159, 255, 0.3), transparent)" 
-                                  : "transparent",
-                                borderLeft: isHovered ? "3px solid #4a9fff" : "3px solid transparent"
+                                  : isConnected 
+                                    ? "linear-gradient(90deg, rgba(74, 159, 255, 0.15), transparent)"
+                                    : "transparent",
+                                borderLeft: isHovered ? "3px solid #4a9fff" : isConnected ? "3px solid rgba(74, 159, 255, 0.5)" : "3px solid transparent",
+                                color: isHovered || isConnected ? 'white' : 'rgba(255,255,255,0.7)'
                               }}
                             >
                               {person.name}
@@ -301,14 +318,15 @@ export default function NetworkVisualizationExamples() {
                       className="flex-1 overflow-y-auto pl-2 space-y-1"
                       style={{ scrollbarWidth: 'thin', scrollbarColor: 'rgba(0, 255, 136, 0.3) transparent' }}
                     >
-                      {sampleOrgs.map(org => {
-                        const isHovered = sankeyHovered === org.name || (sankeyHovered && samplePeople.find(p => p.name === sankeyHovered)?.orgs.includes(org.name));
+                      {orderedOrgs.map(org => {
+                        const isHovered = sankeyHovered === org.name;
+                        const isConnected = sankeyHovered && samplePeople.find(p => p.name === sankeyHovered)?.orgs.includes(org.name);
                         return (
                           <button
                             key={org.id}
                             ref={el => { orgRefs.current[org.id] = el; }}
                             className="relative text-right transition-all duration-300 w-full"
-                            onMouseEnter={() => scrollToConnections(org.name)}
+                            onMouseEnter={() => setSankeyHovered(org.name)}
                             onMouseLeave={() => setSankeyHovered(null)}
                             data-testid={`sankey-org-${org.id}`}
                           >
@@ -317,9 +335,11 @@ export default function NetworkVisualizationExamples() {
                               style={{ 
                                 background: isHovered 
                                   ? `linear-gradient(270deg, ${org.color}40, transparent)` 
-                                  : "transparent",
-                                borderRight: `3px solid ${isHovered ? org.color : 'transparent'}`,
-                                color: isHovered ? 'white' : 'rgba(255,255,255,0.7)'
+                                  : isConnected
+                                    ? `linear-gradient(270deg, ${org.color}20, transparent)`
+                                    : "transparent",
+                                borderRight: `3px solid ${isHovered ? org.color : isConnected ? `${org.color}80` : 'transparent'}`,
+                                color: isHovered || isConnected ? 'white' : 'rgba(255,255,255,0.7)'
                               }}
                             >
                               <span className="truncate">{org.name}</span>
