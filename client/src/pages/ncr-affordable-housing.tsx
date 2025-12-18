@@ -24,28 +24,28 @@ export default function NcrAffordableHousing() {
       value: "25,000+", 
       icon: Home, 
       description: "Safe, dignified housing units",
-      color: "#084594"
+      color: "#4FA6A6"
     },
     { 
       label: "States Served", 
       value: "23", 
       icon: Globe, 
       description: "Coast-to-coast presence",
-      color: "#2171b5"
+      color: "#92A05A"
     },
     { 
       label: "Team Members", 
       value: "2,300+", 
       icon: Users, 
       description: "Dedicated to resident care",
-      color: "#4292c6"
+      color: "#E8A54B"
     },
     { 
       label: "Years of Service", 
       value: "60+", 
       icon: Clock, 
       description: "Proven track record since 1961",
-      color: "#6baed6"
+      color: "#7BC4DC"
     },
   ];
 
@@ -102,25 +102,25 @@ export default function NcrAffordableHousing() {
       region: "Midwest", 
       states: ["OH", "IN", "MI", "WI", "MO", "KS"],
       units: "12,500+",
-      color: "#7FA3A1"
+      color: "#4FA6A6"
     },
     { 
       region: "Southeast", 
       states: ["FL", "GA", "NC", "SC", "TN", "LA"],
       units: "6,200+",
-      color: "#D5636C"
+      color: "#E86B5A"
     },
     { 
       region: "Northeast", 
       states: ["NY", "PA", "NJ", "CT", "VT", "MD"],
       units: "4,100+",
-      color: "#E8923A"
+      color: "#E8A54B"
     },
     { 
       region: "Southwest & West", 
       states: ["TX", "AZ", "AR", "CA", "WA"],
       units: "2,200+",
-      color: "#B5C942"
+      color: "#92A05A"
     },
   ];
 
