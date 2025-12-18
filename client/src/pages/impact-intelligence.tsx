@@ -266,14 +266,14 @@ export function AIChatTab() {
       <div className="flex gap-6 flex-1 min-h-0">
         {/* Chat Area */}
         <Card className="flex-1 flex flex-col">
-          <CardHeader className="pb-3 border-b bg-primary text-primary-foreground rounded-t-lg">
+          <CardHeader className="pb-3 border-b rounded-t-lg" style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}>
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center">
-                <Bot className="w-5 h-5" />
+              <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center">
+                <Bot className="w-5 h-5 text-primary" />
               </div>
               <div>
                 <CardTitle className="text-xl">Impact Assistant</CardTitle>
-                <CardDescription className="text-primary-foreground/70">Powered by AI to help you find the right stories and data</CardDescription>
+                <CardDescription>Powered by AI to help you find the right stories and data</CardDescription>
               </div>
             </div>
           </CardHeader>
