@@ -996,19 +996,55 @@ function App() {
                       )}
                     </div>
 
-                    {/* AI Tools - Direct Link */}
-                    <Link href="/ai-tools">
+                    {/* AI Tools Dropdown */}
+                    <div
+                      className="relative"
+                      onMouseEnter={() => setActiveDropdown("AITools")}
+                      onMouseLeave={() => setActiveDropdown(null)}
+                    >
                       <div className={`relative ${isNavActive('ai-tools') ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                          onClick={() => handleDropdownClick("AITools")}
+                          className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${
+                            activeDropdown === "AITools" ? "bg-black/10" : ""
+                          }`}
                           data-testid="button-nav-ai-tools"
                         >
                           AI Tools
+                          <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "AITools" ? "rotate-180" : ""}`} />
                         </Button>
                       </div>
-                    </Link>
+                      {activeDropdown === "AITools" && (
+                        <div className="absolute right-0 top-full pt-1 z-50">
+                          <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[180px] overflow-hidden">
+                            <div className="py-2 px-1">
+                              {[
+                                { name: 'Predictive Timing', href: '/ai-tools?tab=predictive-timing' },
+                                { name: 'Voice-to-CRM', href: '/ai-tools?tab=voice-to-crm' },
+                                { name: 'Outreach Generator', href: '/ai-tools?tab=outreach-generator' },
+                                { name: 'Grant Proposals', href: '/ai-tools?tab=grant-proposals' },
+                                { name: 'Impact Reports', href: '/ai-tools?tab=impact-reports' },
+                                { name: 'Workflow Builder', href: '/ai-tools?tab=workflow-builder' },
+                                { name: 'AI Assistant', href: '/ai-tools?tab=ai-assistant' },
+                                { name: 'Impact Feed', href: '/ai-tools?tab=impact-feed' },
+                              ].map((item) => (
+                                <Link 
+                                  key={item.name} 
+                                  href={item.href}
+                                  className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                  onClick={closeDropdown}
+                                  data-testid={`link-nav-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                                >
+                                  {item.name}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                       </>
                     )}
                   </nav>
