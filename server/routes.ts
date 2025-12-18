@@ -2707,50 +2707,64 @@ When responding:
       const { title, donorName } = req.body;
       const audioPath = req.file.path;
 
-      // Clean up uploaded file
-      fs.unlink(audioPath, (err) => {
-        if (err) console.error("Error deleting temp file:", err);
+      // Initialize OpenAI client for Whisper transcription
+      // Use standard OpenAI API endpoint for Whisper (not Replit AI integration)
+      const openai = new OpenAI({
+        apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY
       });
 
-      // Note: Whisper audio transcription is not supported by Replit AI integrations
-      // Using simulated demo transcription to showcase the feature
-      const donorNameForDemo = donorName || "Margaret Chen";
-      const titleForDemo = title || "Donor Meeting";
+      let transcription: string;
       
-      // Generate contextual demo transcription based on the meeting info
-      const transcription = `Good afternoon, thank you for meeting with me today ${donorNameForDemo}. I wanted to discuss the upcoming capital campaign and your thoughts on our education initiatives. 
+      try {
+        // Step 1: Transcribe audio using OpenAI Whisper API
+        const audioFile = fs.createReadStream(audioPath);
+        const whisperResponse = await openai.audio.transcriptions.create({
+          file: audioFile,
+          model: "whisper-1",
+          language: "en",
+          response_format: "text"
+        });
+        
+        transcription = whisperResponse as unknown as string;
+        
+        // If transcription is empty, provide feedback
+        if (!transcription || transcription.trim().length === 0) {
+          transcription = "[No speech detected in the recording]";
+        }
+      } catch (whisperError: any) {
+        console.error("Whisper transcription error:", whisperError);
+        // Fallback message if Whisper fails
+        transcription = "[Audio transcription unavailable - Whisper API error: " + (whisperError.message || "Unknown error") + "]";
+      } finally {
+        // Clean up uploaded file
+        fs.unlink(audioPath, (err) => {
+          if (err) console.error("Error deleting temp file:", err);
+        });
+      }
 
-${donorNameForDemo} mentioned they've been really impressed with the scholarship program outcomes from last year. The 95% graduation rate among recipients really resonated with them. They're interested in potentially increasing their annual gift and also mentioned their family foundation is reviewing grant applications next quarter.
-
-We discussed the new science building project and ${donorNameForDemo} expressed interest in naming opportunities. They asked about the recognition levels and timing. I explained the $500,000 threshold for major naming and they seemed receptive.
-
-Action items from our conversation: Send the capital campaign brochure by end of week, schedule a campus tour for early January, and prepare a customized proposal highlighting the scholarship and science building opportunities.
-
-${donorNameForDemo} also mentioned their daughter recently joined the alumni board, which could be a great connection for our young alumni engagement efforts.`;
-
-      // Initialize OpenAI client for insight extraction
-      const openai = new OpenAI({
+      // Step 2: Extract insights using GPT-4o via Replit AI integration
+      const openaiChat = new OpenAI({
         baseURL: process.env.AI_INTEGRATIONS_OPENAI_BASE_URL,
         apiKey: process.env.AI_INTEGRATIONS_OPENAI_API_KEY
       });
 
-      // Step 2: Extract insights using GPT-4o
-      const extractionPrompt = `Analyze this meeting transcription and extract key information. Respond in JSON format only.
+      const extractionPrompt = `Analyze this voice note transcription and extract key information. Respond in JSON format only.
 
 Transcription:
 ${transcription}
 
 Extract and return ONLY a JSON object with these fields:
 {
-  "purpose": "A one-sentence summary of the meeting's main purpose",
-  "topicsDiscussed": ["Array of 3-5 main topics discussed"],
-  "keyLearnings": ["Array of 3-5 key insights or learnings from the meeting"],
-  "actionItems": ["Array of specific action items with who/what/when if mentioned"]
+  "purpose": "A one-sentence summary of what this voice note is about",
+  "topicsDiscussed": ["Array of 3-5 main topics or themes mentioned"],
+  "keyLearnings": ["Array of 3-5 key insights, observations, or important points"],
+  "actionItems": ["Array of specific action items, follow-ups, or next steps mentioned"]
 }
 
+If any category has no relevant content, return an empty array for that field.
 Return only valid JSON, no markdown or explanation.`;
 
-      const extractionResponse = await openai.chat.completions.create({
+      const extractionResponse = await openaiChat.chat.completions.create({
         model: "gpt-4o",
         messages: [
           { role: "system", content: "You are an expert meeting analyst. Extract structured information from meeting transcriptions. Always respond with valid JSON only." },
