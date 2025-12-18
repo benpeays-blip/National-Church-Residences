@@ -63,6 +63,18 @@ export default function MatchingGifts() {
     });
   };
   const [employerSearch, setEmployerSearch] = useState("");
+  const [eligibilityChecked, setEligibilityChecked] = useState(false);
+
+  const handleCheckEligibility = () => {
+    if (employerSearch.trim()) {
+      setEligibilityChecked(true);
+    }
+  };
+
+  const handleEmployerSearchChange = (value: string) => {
+    setEmployerSearch(value);
+    setEligibilityChecked(false);
+  };
 
   const filteredDonors = matchEligibleDonors.filter(donor =>
     donor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -160,18 +172,18 @@ export default function MatchingGifts() {
               <Input
                 placeholder="Enter employer name..."
                 value={employerSearch}
-                onChange={(e) => setEmployerSearch(e.target.value)}
+                onChange={(e) => handleEmployerSearchChange(e.target.value)}
                 className="pl-10"
                 data-testid="input-employer-search"
               />
             </div>
-            <Button data-testid="button-check-eligibility">
+            <Button onClick={handleCheckEligibility} data-testid="button-check-eligibility">
               <Zap className="h-4 w-4 mr-2" />
               Check Eligibility
             </Button>
           </div>
 
-          {employerSearch && (
+          {eligibilityChecked && employerSearch && (
             <div className="mt-4 p-4 rounded-lg border bg-card">
               <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("lime")}20` }}>
