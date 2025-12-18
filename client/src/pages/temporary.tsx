@@ -1433,7 +1433,7 @@ function InterviewDetailPage({ personId }: { personId: string }) {
                 <AccordionContent className="flex-1">
                   <div className="space-y-3 pb-2">
                     {person.techStack.map((tech, idx) => (
-                      <div key={idx} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                      <div key={idx} className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full mt-2 shrink-0" style={{ backgroundColor: getAccentColor("sky") }} />
                         <div>
                           <h4 className="font-medium text-sm">{tech.name}</h4>
