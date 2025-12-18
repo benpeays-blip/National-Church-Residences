@@ -2713,15 +2713,24 @@ async function seed() {
     const scheduledDate = new Date();
     scheduledDate.setDate(scheduledDate.getDate() + daysOut);
     
-    const eventTypes = ["donor_meeting", "cultivation_lunch", "site_visit", "proposal_presentation", "stewardship_call"];
+    const eventTypes = ["meeting", "call", "visit", "meeting", "call"];
     const eventType = eventTypes[Math.floor(Math.random() * eventTypes.length)];
+    
+    const eventTitles: Record<string, string[]> = {
+      meeting: ["Cultivation Meeting", "Discovery Meeting", "Proposal Review", "Strategy Discussion"],
+      call: ["Stewardship Call", "Follow-up Call", "Cultivation Call", "Check-in Call"],
+      visit: ["Site Visit", "Campus Tour", "Program Tour", "Facility Visit"],
+    };
+    const titles = eventTitles[eventType] || ["Event"];
+    const title = `${titles[Math.floor(Math.random() * titles.length)]} - ${donor.firstName} ${donor.lastName}`;
     
     calendarEventsList.push({
       userId: mgo.id,
       personId: donor.id,
+      title,
       eventType,
       scheduledAt: scheduledDate,
-      duration: eventType === "donor_meeting" ? 60 : eventType === "cultivation_lunch" ? 90 : eventType === "site_visit" ? 120 : 45,
+      duration: eventType === "meeting" ? 60 : eventType === "call" ? 30 : eventType === "visit" ? 120 : 45,
       aiSuggestedTime: Math.random() > 0.5 ? new Date(scheduledDate.getTime() + 24 * 60 * 60 * 1000) : null,
       priority: Math.floor(Math.random() * 60) + 40,
       estimatedImpact: (Math.floor(Math.random() * 100000) + 5000).toString(),

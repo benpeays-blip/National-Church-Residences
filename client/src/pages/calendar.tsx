@@ -73,6 +73,7 @@ export default function CalendarPage() {
   const [viewMode, setViewMode] = useState<"week" | "month">("week");
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [isAddEventOpen, setIsAddEventOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<CalendarEventWithPerson | null>(null);
   const [newEvent, setNewEvent] = useState({
     title: "",
     description: "",
@@ -483,11 +484,12 @@ export default function CalendarPage() {
                                   return (
                                     <div 
                                       key={event.id}
-                                      className="flex items-center gap-3 p-3 rounded-lg border"
+                                      className="flex items-center gap-3 p-3 rounded-lg border cursor-pointer hover-elevate"
                                       style={{ 
                                         backgroundColor: `${config.color}10`,
                                         borderColor: `${config.color}30`
                                       }}
+                                      onClick={() => setSelectedEvent(event)}
                                       data-testid={`event-item-${event.id}`}
                                     >
                                       <div 
@@ -610,13 +612,18 @@ export default function CalendarPage() {
                               return (
                                 <div
                                   key={event.id}
-                                  className="text-xs p-1 rounded truncate"
+                                  className="text-xs p-1 rounded truncate cursor-pointer hover:opacity-80"
                                   style={{ 
                                     backgroundColor: `${config.color}20`,
                                     color: config.color
                                   }}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setSelectedEvent(event);
+                                  }}
+                                  data-testid={`month-event-${event.id}`}
                                 >
-                                  {event.title}
+                                  {event.title || "Untitled Event"}
                                 </div>
                               );
                             })}
@@ -666,7 +673,8 @@ export default function CalendarPage() {
                       return (
                         <div 
                           key={event.id}
-                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
+                          className="flex items-center gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors cursor-pointer"
+                          onClick={() => setSelectedEvent(event)}
                           data-testid={`upcoming-event-${event.id}`}
                         >
                           <div 
@@ -754,6 +762,128 @@ export default function CalendarPage() {
           </div>
         </div>
       </div>
+
+      {/* Event Detail Dialog */}
+      <Dialog open={!!selectedEvent} onOpenChange={(open) => !open && setSelectedEvent(null)}>
+        <DialogContent className="max-w-md">
+          {selectedEvent && (() => {
+            const config = eventTypeConfig[selectedEvent.eventType || "task"] || eventTypeConfig.task;
+            const Icon = config.icon;
+            return (
+              <>
+                <DialogHeader>
+                  <div className="flex items-center gap-3">
+                    <div 
+                      className="w-10 h-10 rounded-lg flex items-center justify-center"
+                      style={{ backgroundColor: `${config.color}15` }}
+                    >
+                      <Icon className="w-5 h-5" style={{ color: config.color }} />
+                    </div>
+                    <div>
+                      <DialogTitle>{selectedEvent.title || "Untitled Event"}</DialogTitle>
+                      <DialogDescription>
+                        {config.label}
+                      </DialogDescription>
+                    </div>
+                  </div>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-muted-foreground">Date & Time</p>
+                      <p className="text-sm font-medium flex items-center gap-2">
+                        <CalendarIcon className="w-4 h-4" style={{ color: config.color }} />
+                        {format(parseISO(selectedEvent.scheduledAt as unknown as string), "MMM d, yyyy")}
+                      </p>
+                      <p className="text-sm flex items-center gap-2">
+                        <Clock className="w-4 h-4" style={{ color: config.color }} />
+                        {format(parseISO(selectedEvent.scheduledAt as unknown as string), "h:mm a")}
+                        {selectedEvent.duration && <span className="text-muted-foreground">({selectedEvent.duration} min)</span>}
+                      </p>
+                    </div>
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-muted-foreground">Priority</p>
+                      {selectedEvent.priority && (
+                        <Badge 
+                          variant="outline"
+                          className="text-xs capitalize"
+                          style={{ 
+                            borderColor: priorityColors[selectedEvent.priority] || accentColors.teal,
+                            color: priorityColors[selectedEvent.priority] || accentColors.teal
+                          }}
+                        >
+                          {selectedEvent.priority}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                  
+                  {selectedEvent.personName && (
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-muted-foreground">Related Contact</p>
+                      <p className="text-sm font-medium flex items-center gap-2">
+                        <Users className="w-4 h-4" style={{ color: config.color }} />
+                        {selectedEvent.personName}
+                      </p>
+                    </div>
+                  )}
+                  
+                  {selectedEvent.description && (
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-muted-foreground">Notes</p>
+                      <p className="text-sm text-foreground">{selectedEvent.description}</p>
+                    </div>
+                  )}
+                  
+                  {selectedEvent.outcome && (
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-muted-foreground">Outcome</p>
+                      <p className="text-sm text-foreground">{selectedEvent.outcome}</p>
+                    </div>
+                  )}
+                  
+                  {selectedEvent.estimatedImpact && (
+                    <div className="space-y-1">
+                      <p className="text-xs font-medium text-muted-foreground">Estimated Impact</p>
+                      <p className="text-sm font-bold" style={{ color: accentColors.teal }}>
+                        ${parseFloat(selectedEvent.estimatedImpact).toLocaleString()}
+                      </p>
+                    </div>
+                  )}
+                </div>
+                <DialogFooter className="gap-2">
+                  {!selectedEvent.completed && (
+                    <Button
+                      variant="outline"
+                      onClick={() => {
+                        completeEventMutation.mutate(selectedEvent.id);
+                        setSelectedEvent(null);
+                      }}
+                      className="gap-2"
+                      data-testid="button-dialog-complete"
+                    >
+                      <CheckCircle2 className="w-4 h-4" />
+                      Mark Complete
+                    </Button>
+                  )}
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      deleteEventMutation.mutate(selectedEvent.id);
+                      setSelectedEvent(null);
+                    }}
+                    className="gap-2 text-destructive hover:text-destructive"
+                    data-testid="button-dialog-delete"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    Delete
+                  </Button>
+                </DialogFooter>
+              </>
+            );
+          })()}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
