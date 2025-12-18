@@ -188,7 +188,7 @@ export default function DonorQuadrant() {
                   <div className="flex-shrink-0 w-8 h-8 rounded-full bg-[#395174] text-white flex items-center justify-center font-bold text-sm">
                     {point.number}
                   </div>
-                  <CardTitle className="text-[14px]">{point.title}</CardTitle>
+                  <CardTitle className="text-[18px]">{point.title}</CardTitle>
                 </div>
               </CardHeader>
               <CardContent className="flex-1 pt-0">
