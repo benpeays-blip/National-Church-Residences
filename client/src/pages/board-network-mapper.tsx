@@ -31,6 +31,11 @@ export default function BoardNetworkMapper() {
     queryKey: ["/api/board-network"],
   });
 
+  // Extract unique roles from memberships
+  const uniqueRoles = memberships
+    ? Array.from(new Set(memberships.map(m => m.role).filter(Boolean))).sort()
+    : [];
+
   // Load data into store when fetched
   useEffect(() => {
     if (memberships && memberships.length > 0) {
@@ -124,13 +129,22 @@ export default function BoardNetworkMapper() {
               <Label htmlFor="role-filter" className="text-xs">
                 Role Filter
               </Label>
-              <Input
-                id="role-filter"
-                placeholder="e.g., Director"
+              <Select
                 value={roleFilter}
-                onChange={(e) => setRoleFilter(e.target.value)}
-                data-testid="input-role-filter"
-              />
+                onValueChange={(v) => setRoleFilter(v === "all" ? "" : v)}
+              >
+                <SelectTrigger id="role-filter" data-testid="select-role-filter">
+                  <SelectValue placeholder="All Roles" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">All Roles</SelectItem>
+                  {uniqueRoles.map((role) => (
+                    <SelectItem key={role} value={role as string}>
+                      {role}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <Label htmlFor="year-min" className="text-xs">
