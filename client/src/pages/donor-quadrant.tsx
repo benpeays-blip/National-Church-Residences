@@ -66,8 +66,11 @@ export default function DonorQuadrant() {
             <div className="grid md:grid-cols-2 gap-4 pt-2 border-t">
               <div className="p-4 rounded-lg bg-muted/50">
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Zap className="w-4 h-4 text-primary" />
+                  <div 
+                    className="w-8 h-8 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: "rgba(57, 81, 116, 0.1)" }}
+                  >
+                    <Zap className="w-4 h-4" style={{ color: "#395174" }} />
                   </div>
                   <span className="font-semibold">Y-Axis: ENERGY</span>
                 </div>
@@ -86,8 +89,11 @@ export default function DonorQuadrant() {
 
               <div className="p-4 rounded-lg bg-muted/50">
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                    <Grid3x3 className="w-4 h-4 text-primary" />
+                  <div 
+                    className="w-8 h-8 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: "rgba(57, 81, 116, 0.1)" }}
+                  >
+                    <Grid3x3 className="w-4 h-4" style={{ color: "#395174" }} />
                   </div>
                   <span className="font-semibold">X-Axis: STRUCTURE</span>
                 </div>
