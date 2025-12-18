@@ -38,17 +38,17 @@ function ProductCard({ product }: { product: TechProduct }) {
       data-testid={`card-product-${product.id}`}
       onClick={() => navigate(`/temporary/tech-stack/${product.id}`)}
     >
-      <div className="p-3">
-        <div className="flex items-start gap-2 mb-1.5">
+      <div className="p-4">
+        <div className="flex items-start gap-3 mb-2">
           <div 
-            className="w-7 h-7 rounded-md flex items-center justify-center shrink-0"
+            className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
             style={{ backgroundColor: `${product.brandColor}15` }}
           >
-            <Database className="h-3.5 w-3.5" style={{ color: product.brandColor }} />
+            <Database className="h-5 w-5" style={{ color: product.brandColor }} />
           </div>
           <div className="flex-1 min-w-0">
             <h3 
-              className="font-bold text-xs leading-tight truncate"
+              className="font-bold text-sm leading-tight"
               style={{ color: product.brandColor }}
               data-testid={`text-product-name-${product.id}`}
             >
@@ -56,14 +56,15 @@ function ProductCard({ product }: { product: TechProduct }) {
             </h3>
             <Badge 
               variant="outline" 
-              className="text-[10px] px-1.5 py-0 h-4 mt-0.5"
+              className="text-xs px-2 py-0.5 mt-1"
               style={{ borderColor: getAccentColor(accent), color: getAccentColor(accent) }}
             >
               {product.category}
             </Badge>
           </div>
         </div>
-        <p className="text-[11px] text-muted-foreground line-clamp-2 leading-tight">{product.description}</p>
+        <p className="text-xs text-muted-foreground mt-2">{product.tagline}</p>
+        <p className="text-xs text-muted-foreground mt-2 line-clamp-3">{product.description}</p>
       </div>
     </AccentCard>
   );
@@ -1541,7 +1542,7 @@ function TechStack() {
         </CardHeader>
       </AccentCard>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {techProducts.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
