@@ -56,7 +56,10 @@ const directNavigationLinks = [
 type DomainKey = keyof typeof navigationDomains;
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
+import DashboardHome from "@/pages/dashboard-home";
 import DashboardHomeWithTabs from "@/pages/dashboard-home-with-tabs";
+import PreviewHomepage from "@/pages/preview-homepage";
+import Dashboard from "@/pages/dashboard";
 import DashboardMGO from "@/pages/dashboard-mgo";
 import DashboardDevDirector from "@/pages/dashboard-dev-director";
 import DashboardCEO from "@/pages/dashboard-ceo";
@@ -67,13 +70,20 @@ import Proposals from "@/pages/proposals";
 import TechStackMapper from "@/pages/tech-stack-mapper";
 import OrganizationMapper from "@/pages/organization-mapper";
 import OrganizationWorkflowCanvas from "@/pages/organization-workflow-canvas";
+import NavigationPreview from "@/pages/navigation-preview";
+import NavigationMockups from "@/pages/navigation-mockups";
+import NavigationHybridMockup from "@/pages/navigation-hybrid-mockup";
+import CardDesignPreview from "@/pages/card-design-preview";
+import CardDesignModern from "@/pages/card-design-modern";
 import Donors from "@/pages/donors";
 import DonorsWithTabs from "@/pages/donors-with-tabs";
 import Donor360 from "@/pages/donor-360";
 import DonorDetail from "@/pages/donor-detail";
 import DonorActionPlan from "@/pages/donor-action-plan";
+import DonorCardShowcase from "@/pages/donor-card-showcase";
 import UpcomingActionsPage from "@/pages/upcoming-actions";
 import ActionDetail from "@/pages/action-detail";
+import DonorQuadrant from "@/pages/donor-quadrant";
 import DonorQuadrantWithTabs from "@/pages/donor-quadrant-with-tabs";
 import Pipeline from "@/pages/pipeline";
 import PipelineWithTabs from "@/pages/pipeline-with-tabs";
@@ -88,6 +98,7 @@ import Settings from "@/pages/settings";
 import Notifications from "@/pages/notifications";
 import Profile from "@/pages/profile";
 import Integrations from "@/pages/integrations";
+import Integrations2 from "@/pages/integrations-2";
 
 // Tab-based landing pages
 import IntelligenceWithTabs from "@/pages/intelligence-with-tabs";
@@ -99,6 +110,7 @@ import AIToolsWithTabs from "@/pages/ai-tools-with-tabs";
 import RelationshipsWithTabs from "@/pages/relationships-with-tabs";
 import AgentValueMap from "@/pages/agent-value-map";
 import OtherWithTabs from "@/pages/other-with-tabs";
+import Temporary from "@/pages/temporary";
 import ImpactIntelligence from "@/pages/impact-intelligence";
 import ReportingVisuals from "@/pages/reporting-visuals";
 import PledgesExpiring from "@/pages/pledges-expiring";
@@ -108,6 +120,7 @@ import AIPredictiveTiming from "@/pages/ai-predictive-timing";
 import AIWealthEvents from "@/pages/ai-wealth-events";
 import AIMeetingBriefs from "@/pages/ai-meeting-briefs";
 import AIVoiceNotes from "@/pages/ai-voice-notes";
+import AIWithTabs from "@/pages/ai-with-tabs";
 import MeetingNotes from "@/pages/meeting-notes";
 
 // Relationship Intelligence
@@ -149,6 +162,18 @@ import Workflows from "@/pages/workflows";
 import WorkflowTemplates from "@/pages/workflows-templates";
 import WorkflowCanvas from "@/pages/workflow-canvas";
 
+// Logo Preview
+import LogoPreview from "@/pages/logo-preview";
+
+// Hero Preview
+import HeroPreview from "@/pages/hero-preview";
+
+// Navigation Previews
+import NavigationMegaMenuPreview from "@/pages/navigation-mega-menu-preview";
+
+// Icon Style Guide
+import IconStyleGuide from "@/pages/icon-style-guide";
+
 // MGO Detail Pages
 import MGOPortfolioDetail from "@/pages/mgo-portfolio-detail";
 import MGOPipelineDetail from "@/pages/mgo-pipeline-detail";
@@ -184,6 +209,8 @@ import GivingAnniversaries from "@/pages/giving-anniversaries";
 import BoardDashboard from "@/pages/board-dashboard";
 import DataOpsPortal from "@/pages/data-ops-portal";
 
+// Network Visualization Examples
+import NetworkVisualizationExamples from "@/pages/network-visualization-examples";
 import ImpactBuildingFacilities from "@/pages/impact-building-facilities";
 import ImpactHomeHealth from "@/pages/impact-home-health";
 import ImpactVolunteerHours from "@/pages/impact-volunteer-hours";
@@ -266,13 +293,14 @@ function Router() {
   return (
     <Switch>
       <Route path="/login" component={Login} />
-      <Route path="/" component={DashboardHomeWithTabs} />
+      <Route path="/" component={PreviewHomepage} />
+      <Route path="/dashboard-old" component={DashboardHome} />
       <Route path="/home-old" component={Home} />
       <Route path="/welcome" component={OtherWithTabs} />
       <Route path="/national-church-residences" component={OtherWithTabs} />
-      <Route path="/dashboard/mgo" component={DashboardMGO} />
-      <Route path="/dashboard/dev-director" component={DashboardDevDirector} />
-      <Route path="/dashboard/ceo" component={DashboardCEO} />
+      <Route path="/dashboard/mgo" component={Dashboard} />
+      <Route path="/dashboard/dev-director" component={Dashboard} />
+      <Route path="/dashboard/ceo" component={Dashboard} />
       <Route path="/mgo/portfolio" component={MGOPortfolioDetail} />
       <Route path="/mgo/pipeline" component={MGOPipelineDetail} />
       <Route path="/mgo/tasks" component={MGOTasksDetail} />
@@ -280,9 +308,17 @@ function Router() {
       <Route path="/solutions" component={Solutions} />
       <Route path="/proposals" component={Proposals} />
       <Route path="/tech-stack-mapper" component={OtherWithTabs} />
+      <Route path="/card-design-preview" component={CardDesignPreview} />
+      <Route path="/card-design-modern" component={CardDesignModern} />
       <Route path="/organization-mapper" component={OtherWithTabs} />
       <Route path="/organization-workflow-canvas" component={OtherWithTabs} />
+      <Route path="/navigation-preview" component={NavigationPreview} />
+      <Route path="/navigation-mockups" component={NavigationMockups} />
+      <Route path="/navigation-hybrid-mockup" component={NavigationHybridMockup} />
+      <Route path="/icon-style-guide" component={IconStyleGuide} />
+      <Route path="/network-visualization-examples" component={NetworkVisualizationExamples} />
       <Route path="/donor-quadrant" component={DonorQuadrantWithTabs} />
+      <Route path="/donors/card-showcase" component={DonorCardShowcase} />
       <Route path="/donors/major-gifts" component={DonorsWithTabs} />
       <Route path="/donors/lybunt" component={DonorsWithTabs} />
       <Route path="/donors/sybunt" component={DonorsWithTabs} />
@@ -378,6 +414,17 @@ function Router() {
       <Route path="/impact/overview" component={ImpactOverview} />
       
       <Route path="/other" component={OtherWithTabs} />
+      <Route path="/temporary" component={Temporary} />
+      <Route path="/temporary/interviews/:personId" component={Temporary} />
+      <Route path="/temporary/tech-stack" component={Temporary} />
+      <Route path="/temporary/tech-stack/:productId" component={Temporary} />
+      <Route path="/temporary/technology-categories" component={Temporary} />
+      <Route path="/temporary/technology-categories/:productId" component={Temporary} />
+      <Route path="/temporary/optimization-ideas" component={Temporary} />
+      <Route path="/temporary/risk-compliance" component={Temporary} />
+      <Route path="/temporary/risk-compliance/:categoryId" component={Temporary} />
+      <Route path="/temporary/tech-component/:componentId" component={Temporary} />
+      <Route path="/temporary/infrastructure" component={Temporary} />
       
       <Route path="/campaigns/active" component={CampaignsWithTabs} />
       <Route path="/campaigns/planned" component={CampaignsWithTabs} />
@@ -389,6 +436,7 @@ function Router() {
       <Route path="/campaigns" component={CampaignsWithTabs} />
       <Route path="/data-health" component={DataHealth} />
       <Route path="/integrations" component={Integrations} />
+      <Route path="/integrations-2" component={Integrations2} />
       <Route path="/settings" component={Settings} />
       <Route path="/notifications" component={Notifications} />
       <Route path="/profile" component={Profile} />
@@ -431,6 +479,15 @@ function Router() {
       <Route path="/workflows/templates" component={WorkflowTemplates} />
       <Route path="/workflows/:id/canvas" component={WorkflowCanvas} />
       <Route path="/workflows" component={OtherWithTabs} />
+      
+      {/* Logo Preview */}
+      <Route path="/logo-preview" component={LogoPreview} />
+      
+      {/* Hero Preview */}
+      <Route path="/hero-preview" component={HeroPreview} />
+      
+      {/* Navigation Previews */}
+      <Route path="/navigation-mega-menu-preview" component={NavigationMegaMenuPreview} />
       
       {/* New Feature Pages */}
       <Route path="/matching-gifts" component={MatchingGifts} />

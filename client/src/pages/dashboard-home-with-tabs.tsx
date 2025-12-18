@@ -1,7 +1,7 @@
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
 import { LayoutDashboard, Target } from "lucide-react";
-import DashboardMGO from "@/pages/dashboard-mgo";
+import DashboardHome from "@/pages/dashboard-home";
 import PipelineWithTabs from "@/pages/pipeline-with-tabs";
 
 const dashboardTabs: SectionTab[] = [
@@ -23,7 +23,7 @@ export default function DashboardHomeWithTabs() {
   const [location] = useLocation();
 
   // Determine which component to render based on location
-  let DashboardComponent = DashboardMGO;
+  let DashboardComponent = DashboardHome;
   if (location.startsWith("/pipeline")) {
     DashboardComponent = PipelineWithTabs;
   }
