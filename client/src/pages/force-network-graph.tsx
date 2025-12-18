@@ -223,7 +223,7 @@ export default function ForceNetworkGraph() {
   const orgPolygonPositions = useMemo(() => {
     const orgNodes = graphData.nodes.filter(n => n.type === 'org');
     const numOrgs = orgNodes.length;
-    const radius = 250; // Distance from center
+    const radius = 300; // Distance from center - larger to fit bigger org nodes
     const positions: Record<string, { x: number; y: number }> = {};
     
     orgNodes.forEach((org, index) => {
@@ -243,9 +243,9 @@ export default function ForceNetworkGraph() {
     if (fgRef.current) {
       // Add collision force to prevent node overlap - account for larger nodes + labels
       fgRef.current.d3Force('collision', d3.forceCollide((node: any) => {
-        const baseRadius = node.type === 'org' ? Math.sqrt(node.val) * 4.5 : Math.sqrt(node.val) * 3;
-        // Extra space for person labels below nodes - increased to prevent text overlap
-        return baseRadius + (node.type === 'person' ? 35 : 15);
+        const baseRadius = node.type === 'org' ? Math.sqrt(node.val) * 6 : Math.sqrt(node.val) * 3;
+        // Extra space for labels below nodes
+        return baseRadius + (node.type === 'person' ? 35 : 25);
       }));
 
       // Repulsion force - only for people nodes
@@ -369,7 +369,7 @@ export default function ForceNetworkGraph() {
     
     // Bigger base sizes for better visibility
     const nodeRadius = node.type === "org" 
-      ? Math.sqrt(node.val) * 4.5 
+      ? Math.sqrt(node.val) * 6 
       : Math.sqrt(node.val) * 3;
     const displayRadius = nodeRadius * (isHighlighted ? 1.4 : 1);
 
@@ -423,26 +423,23 @@ export default function ForceNetworkGraph() {
     // Draw labels
     if (showLabels) {
       if (node.type === "org") {
-        // Organization name inside the node
-        const fontSize = Math.max(10, 14 / globalScale);
-        ctx.font = `bold ${fontSize}px Inter, sans-serif`;
+        // Organization name below the node
+        const fontSize = Math.max(10, 12 / globalScale);
+        ctx.font = `600 ${fontSize}px Inter, sans-serif`;
         ctx.textAlign = "center";
-        ctx.textBaseline = "middle";
-        ctx.fillStyle = "white";
+        ctx.textBaseline = "top";
         
-        // Draw text with shadow for readability
-        ctx.shadowColor = "rgba(0,0,0,0.5)";
-        ctx.shadowBlur = 3;
+        const textY = node.y + displayRadius + 4;
         
-        // Split name if too long
-        const words = label.split(' ');
-        if (words.length > 1 && displayRadius > 20) {
-          ctx.fillText(words[0], node.x, node.y - fontSize * 0.4);
-          ctx.fillText(words.slice(1).join(' '), node.x, node.y + fontSize * 0.6);
-        } else {
-          ctx.fillText(words[0], node.x, node.y);
-        }
-        ctx.shadowBlur = 0;
+        // Draw text outline for readability
+        ctx.strokeStyle = "rgba(255,255,255,0.95)";
+        ctx.lineWidth = 4 / globalScale;
+        ctx.lineJoin = "round";
+        ctx.strokeText(label, node.x, textY);
+        
+        // Draw main text in organization's color
+        ctx.fillStyle = node.color;
+        ctx.fillText(label, node.x, textY);
       } else {
         // Person name below the node - clean text with outline
         const fontSize = Math.max(9, 10 / globalScale);
