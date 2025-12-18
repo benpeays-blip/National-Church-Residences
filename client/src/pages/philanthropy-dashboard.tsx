@@ -137,13 +137,13 @@ export default function PhilanthropyDashboard() {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <Link href="/quadrant">
+              <Link href="/quadrant" data-testid="link-hero-quadrant">
                 <Button variant="outline" className="gap-2" data-testid="button-view-quadrant">
                   <Target className="w-4 h-4" />
                   Donor Quadrant
                 </Button>
               </Link>
-              <Link href="/relationships">
+              <Link href="/relationships" data-testid="link-hero-relationships">
                 <Button className="gap-2" style={{ backgroundColor: accentColors.teal }} data-testid="button-view-relationships">
                   <Network className="w-4 h-4" />
                   Relationships
@@ -155,7 +155,7 @@ export default function PhilanthropyDashboard() {
           {/* KPI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             {kpiMetrics.map((metric, index) => (
-              <Link key={index} href={metric.href}>
+              <Link key={index} href={metric.href} data-testid={`link-metric-${metric.label.toLowerCase().replace(/\s+/g, '-')}`}>
                 <AccentCard 
                   accent={metric.accent} 
                   className="hover-elevate cursor-pointer h-full"
@@ -196,84 +196,171 @@ export default function PhilanthropyDashboard() {
 
       {/* Main Content */}
       <div className="px-6 py-6 space-y-6">
-        {/* Relationship Insights & Quadrant Snapshot */}
+        {/* Relationship Pipeline & Visual Quadrant */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Relationship Pipeline */}
-          <Card>
-            <CardHeader className="pb-2">
+          {/* Relationship Pipeline - Enhanced with progress bars */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.teal}12 0%, ${accentColors.teal}04 100%)` }}
+            >
               <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Handshake className="w-5 h-5" style={{ color: accentColors.teal }} />
-                    Relationship Pipeline
-                  </CardTitle>
-                  <CardDescription>Current donor relationship stages</CardDescription>
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.teal}15` }}
+                  >
+                    <Handshake className="w-6 h-6" style={{ color: accentColors.teal }} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Relationship Pipeline</CardTitle>
+                    <CardDescription>82 donors across stages</CardDescription>
+                  </div>
                 </div>
-                <Link href="/pipeline">
-                  <Button variant="ghost" size="sm" className="gap-1" data-testid="button-view-pipeline">
+                <Link href="/pipeline" data-testid="link-header-pipeline">
+                  <Button variant="outline" size="sm" className="gap-1" data-testid="button-view-pipeline">
                     View All <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
             </CardHeader>
-            <CardContent className="space-y-3">
-              {relationshipInsights.map((item, index) => (
-                <Link key={index} href={item.href}>
-                  <div className="flex items-center justify-between p-3 rounded-lg hover-elevate cursor-pointer border" data-testid={`row-pipeline-${item.type.toLowerCase().replace(/\s+/g, '-')}`}>
-                    <div className="flex items-center gap-3">
-                      <div 
-                        className="w-3 h-3 rounded-full"
-                        style={{ backgroundColor: item.color }}
-                      />
-                      <div>
-                        <div className="font-medium text-sm">{item.type}</div>
-                        <div className="text-xs text-muted-foreground">{item.label}</div>
+            <CardContent className="pt-4 space-y-4">
+              {relationshipInsights.map((item, index) => {
+                const total = relationshipInsights.reduce((sum, i) => sum + i.count, 0);
+                const percentage = Math.round((item.count / total) * 100);
+                return (
+                  <Link key={index} href={item.href} data-testid={`link-pipeline-${item.type.toLowerCase().replace(/\s+/g, '-')}`}>
+                    <div 
+                      className="group p-4 rounded-xl border hover-elevate cursor-pointer transition-all"
+                      style={{ borderColor: `${item.color}30` }}
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div 
+                            className="w-8 h-8 rounded-lg flex items-center justify-center"
+                            style={{ backgroundColor: `${item.color}15` }}
+                          >
+                            {item.type === "High Priority" && <AlertTriangle className="w-4 h-4" style={{ color: item.color }} />}
+                            {item.type === "Cultivation" && <Sparkles className="w-4 h-4" style={{ color: item.color }} />}
+                            {item.type === "Stewardship" && <Heart className="w-4 h-4" style={{ color: item.color }} />}
+                            {item.type === "At Risk" && <AlertTriangle className="w-4 h-4" style={{ color: item.color }} />}
+                          </div>
+                          <div>
+                            <div className="font-semibold text-sm">{item.type}</div>
+                            <div className="text-xs text-muted-foreground">{item.label}</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="text-right">
+                            <span className="text-2xl font-bold" style={{ color: item.color }}>{item.count}</span>
+                            <span className="text-xs text-muted-foreground ml-1">({percentage}%)</span>
+                          </div>
+                          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                      <div className="relative h-2 rounded-full bg-muted overflow-hidden">
+                        <div 
+                          className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
+                          style={{ width: `${percentage}%`, backgroundColor: item.color }}
+                        />
                       </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                      <span className="text-xl font-bold" style={{ color: item.color }}>{item.count}</span>
-                      <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                    </div>
-                  </div>
-                </Link>
-              ))}
+                  </Link>
+                );
+              })}
             </CardContent>
           </Card>
 
-          {/* Donor Quadrant Snapshot */}
-          <Card>
-            <CardHeader className="pb-2">
+          {/* Visual Donor Quadrant - True 2x2 Grid */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.sky}12 0%, ${accentColors.sky}04 100%)` }}
+            >
               <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Target className="w-5 h-5" style={{ color: accentColors.sky }} />
-                    Donor Quadrant
-                  </CardTitle>
-                  <CardDescription>Portfolio segmentation overview</CardDescription>
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.sky}15` }}
+                  >
+                    <Target className="w-6 h-6" style={{ color: accentColors.sky }} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Donor Quadrant</CardTitle>
+                    <CardDescription>247 donors segmented</CardDescription>
+                  </div>
                 </div>
-                <Link href="/quadrant">
-                  <Button variant="ghost" size="sm" className="gap-1" data-testid="button-open-quadrant">
-                    Open Quadrant <ArrowRight className="w-4 h-4" />
+                <Link href="/quadrant" data-testid="link-header-quadrant">
+                  <Button variant="outline" size="sm" className="gap-1" data-testid="button-open-quadrant">
+                    Explore <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-3">
-                {quadrantSnapshot.map((q, index) => (
-                  <div 
-                    key={index}
-                    className="p-3 rounded-lg border"
-                    style={{ borderLeftWidth: 3, borderLeftColor: q.color }}
-                    data-testid={`card-quadrant-${q.quadrant.toLowerCase()}`}
-                  >
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="font-medium text-sm">{q.quadrant}</span>
-                      <span className="text-lg font-bold" style={{ color: q.color }}>{q.count}</span>
-                    </div>
-                    <div className="text-xs text-muted-foreground">{q.description}</div>
-                  </div>
-                ))}
+            <CardContent className="pt-4">
+              {/* Axis Labels */}
+              <div className="relative">
+                <div className="absolute -left-2 top-1/2 -translate-y-1/2 -rotate-90 text-[10px] font-medium text-muted-foreground whitespace-nowrap">
+                  ENGAGEMENT
+                </div>
+                <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 text-[10px] font-medium text-muted-foreground">
+                  CAPACITY
+                </div>
+                
+                {/* Quadrant Grid */}
+                <div className="grid grid-cols-2 gap-2 ml-4 mb-6">
+                  {quadrantSnapshot.map((q, index) => {
+                    const total = quadrantSnapshot.reduce((sum, i) => sum + i.count, 0);
+                    const percentage = Math.round((q.count / total) * 100);
+                    return (
+                      <Link key={index} href="/quadrant" data-testid={`link-quadrant-${q.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                        <div 
+                          className="group relative p-4 rounded-xl cursor-pointer transition-all hover:scale-[1.02] hover:shadow-lg"
+                          style={{ 
+                            backgroundColor: `${q.color}10`,
+                            border: `2px solid ${q.color}30`
+                          }}
+                          data-testid={`card-quadrant-${q.quadrant.toLowerCase()}`}
+                        >
+                          {/* Decorative Corner */}
+                          <div 
+                            className="absolute top-0 right-0 w-12 h-12 opacity-20"
+                            style={{
+                              background: `radial-gradient(circle at top right, ${q.color} 0%, transparent 70%)`
+                            }}
+                          />
+                          
+                          <div className="relative">
+                            <div className="flex items-center justify-between mb-2">
+                              <span 
+                                className="text-xs font-bold uppercase tracking-wide"
+                                style={{ color: q.color }}
+                              >
+                                {q.quadrant}
+                              </span>
+                              <Badge 
+                                variant="outline" 
+                                className="text-xs"
+                                style={{ borderColor: q.color, color: q.color }}
+                              >
+                                {percentage}%
+                              </Badge>
+                            </div>
+                            <div 
+                              className="text-3xl font-bold mb-1"
+                              style={{ color: q.color }}
+                            >
+                              {q.count}
+                            </div>
+                            <div className="text-xs text-muted-foreground leading-tight">
+                              {q.description}
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    );
+                  })}
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -281,119 +368,202 @@ export default function PhilanthropyDashboard() {
 
         {/* Recent Activity & Corporate Partners */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Recent Relationship Activity */}
-          <Card>
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between">
+          {/* Recent Relationship Activity - Enhanced Timeline */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.olive}12 0%, ${accentColors.olive}04 100%)` }}
+            >
+              <div className="flex items-center gap-3">
+                <div 
+                  className="w-12 h-12 rounded-lg flex items-center justify-center"
+                  style={{ backgroundColor: `${accentColors.olive}15` }}
+                >
+                  <Clock className="w-6 h-6" style={{ color: accentColors.olive }} />
+                </div>
                 <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Clock className="w-5 h-5" style={{ color: accentColors.olive }} />
-                    Recent Activity
-                  </CardTitle>
+                  <CardTitle className="text-lg">Recent Activity</CardTitle>
                   <CardDescription>Latest relationship touchpoints</CardDescription>
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="space-y-2">
-              {recentRelationshipActivity.map((activity, index) => (
-                <div key={index} className="flex items-center justify-between p-2 rounded-lg hover:bg-muted/50 transition-colors" data-testid={`row-activity-${index}`}>
-                  <div className="flex items-center gap-3">
-                    <CheckCircle2 className="w-4 h-4" style={{ color: accentColors.lime }} />
-                    <div>
-                      <div className="text-sm font-medium">{activity.donor}</div>
-                      <div className="text-xs text-muted-foreground">{activity.action}</div>
-                    </div>
-                  </div>
-                  <Badge variant="outline" className="text-xs">{activity.time}</Badge>
+            <CardContent className="pt-4">
+              <div className="relative">
+                {/* Timeline line */}
+                <div 
+                  className="absolute left-4 top-0 bottom-0 w-0.5 rounded-full"
+                  style={{ backgroundColor: `${accentColors.olive}20` }}
+                />
+                
+                <div className="space-y-4">
+                  {recentRelationshipActivity.map((activity, index) => {
+                    const iconColors = {
+                      visit: accentColors.teal,
+                      proposal: accentColors.sky,
+                      call: accentColors.lime,
+                      report: accentColors.olive,
+                    };
+                    const color = iconColors[activity.type as keyof typeof iconColors] || accentColors.teal;
+                    return (
+                      <div 
+                        key={index} 
+                        className="relative flex items-start gap-4 pl-8 group"
+                        data-testid={`row-activity-${index}`}
+                      >
+                        {/* Timeline dot */}
+                        <div 
+                          className="absolute left-2 w-5 h-5 rounded-full border-2 bg-background flex items-center justify-center"
+                          style={{ borderColor: color }}
+                        >
+                          <div 
+                            className="w-2 h-2 rounded-full"
+                            style={{ backgroundColor: color }}
+                          />
+                        </div>
+                        
+                        <div className="flex-1 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <div className="font-medium text-sm">{activity.donor}</div>
+                              <div className="text-xs text-muted-foreground flex items-center gap-2">
+                                <CheckCircle2 className="w-3 h-3" style={{ color: accentColors.lime }} />
+                                {activity.action}
+                              </div>
+                            </div>
+                            <Badge variant="outline" className="text-xs shrink-0">{activity.time}</Badge>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
-              ))}
+              </div>
             </CardContent>
           </Card>
 
-          {/* Corporate Partners */}
-          <Card>
-            <CardHeader className="pb-2">
+          {/* Corporate Partners - Enhanced Cards */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.coral}12 0%, ${accentColors.coral}04 100%)` }}
+            >
               <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Building2 className="w-5 h-5" style={{ color: accentColors.coral }} />
-                    Corporate Partners
-                  </CardTitle>
-                  <CardDescription>Key corporate relationships</CardDescription>
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.coral}15` }}
+                  >
+                    <Building2 className="w-6 h-6" style={{ color: accentColors.coral }} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Corporate Partners</CardTitle>
+                    <CardDescription>$275K in partnerships</CardDescription>
+                  </div>
                 </div>
-                <Link href="/corporate-partnerships">
-                  <Button variant="ghost" size="sm" className="gap-1" data-testid="button-view-corporate">
+                <Link href="/corporate-partnerships" data-testid="link-header-corporate">
+                  <Button variant="outline" size="sm" className="gap-1" data-testid="button-view-corporate">
                     View All <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="pt-4 space-y-3">
               {corporatePartners.map((partner, index) => (
-                <div key={index} className="flex items-center justify-between p-2 rounded-lg border" data-testid={`row-partner-${index}`}>
-                  <div className="flex items-center gap-3">
-                    <div 
-                      className="w-8 h-8 rounded-lg flex items-center justify-center"
-                      style={{ backgroundColor: `${accentColors.coral}15` }}
-                    >
-                      <Building2 className="w-4 h-4" style={{ color: accentColors.coral }} />
+                <Link key={index} href="/corporate-partnerships" data-testid={`link-corporate-${index}`}>
+                  <div 
+                    className="group flex items-center justify-between p-4 rounded-xl border hover-elevate cursor-pointer transition-all"
+                    data-testid={`row-partner-${index}`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div 
+                        className="w-12 h-12 rounded-xl flex items-center justify-center text-lg font-bold"
+                        style={{ backgroundColor: `${accentColors.coral}10`, color: accentColors.coral }}
+                      >
+                        {partner.name.split(' ').map(w => w[0]).slice(0, 2).join('')}
+                      </div>
+                      <div>
+                        <div className="font-semibold text-sm group-hover:text-primary transition-colors">{partner.name}</div>
+                        <div className="text-xs text-muted-foreground">{partner.type}</div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-sm font-medium">{partner.name}</div>
-                      <div className="text-xs text-muted-foreground">{partner.type}</div>
+                    <div className="text-right flex items-center gap-3">
+                      <div>
+                        <div className="text-lg font-bold" style={{ color: accentColors.teal }}>{partner.value}</div>
+                        <Badge 
+                          variant="secondary"
+                          className="text-xs"
+                          style={{ 
+                            backgroundColor: partner.status === 'Active' ? `${accentColors.lime}20` : `${accentColors.orange}20`,
+                            color: partner.status === 'Active' ? accentColors.lime : accentColors.orange
+                          }}
+                        >
+                          {partner.status}
+                        </Badge>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-sm font-semibold" style={{ color: accentColors.teal }}>{partner.value}</div>
-                    <Badge 
-                      variant="outline" 
-                      className="text-xs"
-                      style={{ 
-                        borderColor: partner.status === 'Active' ? accentColors.lime : accentColors.orange,
-                        color: partner.status === 'Active' ? accentColors.lime : accentColors.orange
-                      }}
-                    >
-                      {partner.status}
-                    </Badge>
-                  </div>
-                </div>
+                </Link>
               ))}
             </CardContent>
           </Card>
         </div>
 
-        {/* Quick Actions */}
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Star className="w-5 h-5" style={{ color: accentColors.orange }} />
-              Quick Actions
-            </CardTitle>
+        {/* Quick Actions - Enhanced with hover effects */}
+        <Card className="overflow-hidden">
+          <CardHeader 
+            className="pb-4"
+            style={{ background: `linear-gradient(135deg, ${accentColors.orange}12 0%, ${accentColors.orange}04 100%)` }}
+          >
+            <div className="flex items-center gap-3">
+              <div 
+                className="w-12 h-12 rounded-lg flex items-center justify-center"
+                style={{ backgroundColor: `${accentColors.orange}15` }}
+              >
+                <Star className="w-6 h-6" style={{ color: accentColors.orange }} />
+              </div>
+              <div>
+                <CardTitle className="text-lg">Quick Actions</CardTitle>
+                <CardDescription>Jump to key philanthropy tools</CardDescription>
+              </div>
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <Link href="/quadrant">
-                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2" data-testid="button-quick-quadrant">
-                  <Target className="w-5 h-5" style={{ color: accentColors.teal }} />
-                  <span className="text-sm">Donor Quadrant</span>
+          <CardContent className="pt-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Link href="/quadrant" data-testid="link-quick-donor-quadrant">
+                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2 hover:scale-[1.02] transition-all" data-testid="button-quick-donor-quadrant">
+                  <div className="w-12 h-12 rounded-lg mx-auto flex items-center justify-center" style={{ backgroundColor: `${accentColors.teal}15` }}>
+                    <Target className="w-6 h-6" style={{ color: accentColors.teal }} />
+                  </div>
+                  <span className="text-sm font-semibold">Donor Quadrant</span>
+                  <span className="text-xs text-muted-foreground">Segment donors</span>
                 </Button>
               </Link>
-              <Link href="/relationships">
-                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2" data-testid="button-quick-relationships">
-                  <Network className="w-5 h-5" style={{ color: accentColors.sky }} />
-                  <span className="text-sm">Relationships</span>
+              <Link href="/relationships" data-testid="link-quick-relationships">
+                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2 hover:scale-[1.02] transition-all" data-testid="button-quick-relationships">
+                  <div className="w-12 h-12 rounded-lg mx-auto flex items-center justify-center" style={{ backgroundColor: `${accentColors.sky}15` }}>
+                    <Network className="w-6 h-6" style={{ color: accentColors.sky }} />
+                  </div>
+                  <span className="text-sm font-semibold">Relationships</span>
+                  <span className="text-xs text-muted-foreground">Map connections</span>
                 </Button>
               </Link>
-              <Link href="/corporate-partnerships">
-                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2" data-testid="button-quick-corporate">
-                  <Building2 className="w-5 h-5" style={{ color: accentColors.coral }} />
-                  <span className="text-sm">Corporations</span>
+              <Link href="/corporate-partnerships" data-testid="link-quick-corporations">
+                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2 hover:scale-[1.02] transition-all" data-testid="button-quick-corporations">
+                  <div className="w-12 h-12 rounded-lg mx-auto flex items-center justify-center" style={{ backgroundColor: `${accentColors.coral}15` }}>
+                    <Building2 className="w-6 h-6" style={{ color: accentColors.coral }} />
+                  </div>
+                  <span className="text-sm font-semibold">Corporations</span>
+                  <span className="text-xs text-muted-foreground">Partner management</span>
                 </Button>
               </Link>
-              <Link href="/ncr/foundation">
-                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2" data-testid="button-quick-foundations">
-                  <Globe className="w-5 h-5" style={{ color: accentColors.olive }} />
-                  <span className="text-sm">Foundations</span>
+              <Link href="/ncr/foundation" data-testid="link-quick-foundations">
+                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2 hover:scale-[1.02] transition-all" data-testid="button-quick-foundations">
+                  <div className="w-12 h-12 rounded-lg mx-auto flex items-center justify-center" style={{ backgroundColor: `${accentColors.olive}15` }}>
+                    <Globe className="w-6 h-6" style={{ color: accentColors.olive }} />
+                  </div>
+                  <span className="text-sm font-semibold">Foundations</span>
+                  <span className="text-xs text-muted-foreground">Grant sources</span>
                 </Button>
               </Link>
             </div>

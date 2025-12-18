@@ -143,13 +143,13 @@ export default function AgenticDashboard() {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <Link href="/agent-value-map?tab=framework">
+              <Link href="/agent-value-map?tab=framework" data-testid="link-hero-framework">
                 <Button variant="outline" className="gap-2" data-testid="button-view-framework">
                   <Layers className="w-4 h-4" />
                   Framework
                 </Button>
               </Link>
-              <Link href="/agent-value-map?tab=agents">
+              <Link href="/agent-value-map?tab=agents" data-testid="link-hero-agents">
                 <Button className="gap-2" style={{ backgroundColor: accentColors.coral }} data-testid="button-view-agents">
                   <Bot className="w-4 h-4" />
                   All Agents
@@ -161,7 +161,7 @@ export default function AgenticDashboard() {
           {/* KPI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             {kpiMetrics.map((metric, index) => (
-              <Link key={index} href={metric.href}>
+              <Link key={index} href={metric.href} data-testid={`link-metric-${metric.label.toLowerCase().replace(/\s+/g, '-')}`}>
                 <AccentCard 
                   accent={metric.accent} 
                   className="hover-elevate cursor-pointer h-full"
@@ -204,198 +204,336 @@ export default function AgenticDashboard() {
       <div className="px-6 py-6 space-y-6">
         {/* Agent Status & Recent Activity */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Agent Status */}
-          <Card>
-            <CardHeader className="pb-2">
+          {/* Agent Status - Enhanced */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.teal}12 0%, ${accentColors.teal}04 100%)` }}
+            >
               <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Bot className="w-5 h-5" style={{ color: accentColors.teal }} />
-                    Agent Status
-                  </CardTitle>
-                  <CardDescription>Active automation agents</CardDescription>
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.teal}15` }}
+                  >
+                    <Bot className="w-6 h-6" style={{ color: accentColors.teal }} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Agent Status</CardTitle>
+                    <CardDescription>5 agents, 4 active</CardDescription>
+                  </div>
                 </div>
-                <Link href="/agent-value-map?tab=agents">
-                  <Button variant="ghost" size="sm" className="gap-1" data-testid="button-all-agents">
+                <Link href="/agent-value-map?tab=agents" data-testid="link-header-agents">
+                  <Button variant="outline" size="sm" className="gap-1" data-testid="button-all-agents">
                     All Agents <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
             </CardHeader>
-            <CardContent className="space-y-2">
-              {agentStatuses.map((agent, index) => (
-                <div key={index} className="flex items-center justify-between p-2 rounded-lg border" data-testid={`row-agent-${index}`}>
-                  <div className="flex items-center gap-3">
+            <CardContent className="pt-4 space-y-3">
+              {agentStatuses.map((agent, index) => {
+                const healthColor = agent.health === 'healthy' ? accentColors.lime : accentColors.orange;
+                return (
+                  <Link key={index} href="/agent-value-map?tab=agents" data-testid={`link-agent-${index}`}>
                     <div 
-                      className="w-2 h-2 rounded-full"
-                      style={{ 
-                        backgroundColor: agent.health === 'healthy' ? accentColors.lime : accentColors.orange 
-                      }}
-                    />
-                    <div>
-                      <div className="text-sm font-medium">{agent.name}</div>
-                      <div className="text-xs text-muted-foreground">Last run: {agent.lastRun}</div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Badge 
-                      variant="outline" 
-                      className="text-xs"
-                      style={{ 
-                        borderColor: agent.status === 'Active' ? accentColors.lime : accentColors.orange,
-                        color: agent.status === 'Active' ? accentColors.lime : accentColors.orange
-                      }}
+                      className="group flex items-center justify-between p-4 rounded-xl border hover-elevate cursor-pointer transition-all"
                     >
-                      {agent.status}
-                    </Badge>
-                    <span className="text-sm font-medium" style={{ color: accentColors.teal }}>
-                      {agent.tasks} tasks
-                    </span>
-                  </div>
-                </div>
-              ))}
+                      <div className="flex items-center gap-4">
+                        <div className="relative">
+                          <div 
+                            className="w-10 h-10 rounded-lg flex items-center justify-center"
+                            style={{ backgroundColor: `${healthColor}15` }}
+                          >
+                            <Cpu className="w-5 h-5" style={{ color: healthColor }} />
+                          </div>
+                          <div 
+                            className="absolute -top-1 -right-1 w-3 h-3 rounded-full border-2 border-background"
+                            style={{ backgroundColor: healthColor }}
+                          />
+                        </div>
+                        <div>
+                          <div className="font-semibold text-sm group-hover:text-primary transition-colors">{agent.name}</div>
+                          <div className="text-xs text-muted-foreground">Last run: {agent.lastRun}</div>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-3">
+                        <div className="text-right">
+                          <div className="text-lg font-bold" style={{ color: accentColors.teal }}>{agent.tasks}</div>
+                          <div className="text-xs text-muted-foreground">tasks</div>
+                        </div>
+                        <Badge 
+                          variant="secondary"
+                          className="text-xs"
+                          style={{ 
+                            backgroundColor: `${healthColor}20`,
+                            color: healthColor
+                          }}
+                        >
+                          {agent.status}
+                        </Badge>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </CardContent>
           </Card>
 
-          {/* Recent Automations */}
-          <Card>
-            <CardHeader className="pb-2">
-              <div className="flex items-center justify-between">
+          {/* Recent Automations - Enhanced Timeline */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.sky}12 0%, ${accentColors.sky}04 100%)` }}
+            >
+              <div className="flex items-center gap-3">
+                <div 
+                  className="w-12 h-12 rounded-lg flex items-center justify-center"
+                  style={{ backgroundColor: `${accentColors.sky}15` }}
+                >
+                  <Activity className="w-6 h-6" style={{ color: accentColors.sky }} />
+                </div>
                 <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Activity className="w-5 h-5" style={{ color: accentColors.sky }} />
-                    Recent Automations
-                  </CardTitle>
+                  <CardTitle className="text-lg">Recent Automations</CardTitle>
                   <CardDescription>Latest agent activity</CardDescription>
                 </div>
               </div>
             </CardHeader>
-            <CardContent className="space-y-2">
-              {recentAutomations.map((automation, index) => (
-                <div key={index} className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/50 transition-colors" data-testid={`row-automation-${index}`}>
-                  <CheckCircle2 className="w-4 h-4 mt-0.5" style={{ color: accentColors.lime }} />
-                  <div className="flex-1">
-                    <div className="text-sm">{automation.action}</div>
-                    <div className="flex items-center gap-2 mt-1">
-                      <Badge variant="outline" className="text-xs">{automation.agent}</Badge>
-                      <span className="text-xs text-muted-foreground">{automation.time}</span>
+            <CardContent className="pt-4">
+              <div className="relative">
+                {/* Timeline line */}
+                <div 
+                  className="absolute left-4 top-0 bottom-0 w-0.5 rounded-full"
+                  style={{ backgroundColor: `${accentColors.sky}20` }}
+                />
+                
+                <div className="space-y-4">
+                  {recentAutomations.map((automation, index) => (
+                    <div 
+                      key={index} 
+                      className="relative flex items-start gap-4 pl-8"
+                      data-testid={`row-automation-${index}`}
+                    >
+                      {/* Timeline dot */}
+                      <div 
+                        className="absolute left-2 w-5 h-5 rounded-full border-2 bg-background flex items-center justify-center"
+                        style={{ borderColor: accentColors.lime }}
+                      >
+                        <div 
+                          className="w-2 h-2 rounded-full"
+                          style={{ backgroundColor: accentColors.lime }}
+                        />
+                      </div>
+                      
+                      <div className="flex-1 p-3 rounded-lg border hover:bg-muted/50 transition-colors cursor-pointer">
+                        <div className="text-sm font-medium">{automation.action}</div>
+                        <div className="flex items-center gap-2 mt-2">
+                          <Badge 
+                            variant="secondary" 
+                            className="text-xs"
+                            style={{ backgroundColor: `${accentColors.sky}15`, color: accentColors.sky }}
+                          >
+                            {automation.agent}
+                          </Badge>
+                          <span className="text-xs text-muted-foreground">{automation.time}</span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
+                  ))}
                 </div>
-              ))}
+              </div>
             </CardContent>
           </Card>
         </div>
 
         {/* Roadmap & Governance */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Roadmap Progress */}
-          <Card>
-            <CardHeader className="pb-2">
+          {/* Roadmap Progress - Enhanced */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.lime}12 0%, ${accentColors.lime}04 100%)` }}
+            >
               <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <GitBranch className="w-5 h-5" style={{ color: accentColors.lime }} />
-                    Development Roadmap
-                  </CardTitle>
-                  <CardDescription>Upcoming agent capabilities</CardDescription>
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.lime}15` }}
+                  >
+                    <GitBranch className="w-6 h-6" style={{ color: accentColors.lime }} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Development Roadmap</CardTitle>
+                    <CardDescription>4 capabilities in progress</CardDescription>
+                  </div>
                 </div>
-                <Link href="/agent-value-map?tab=roadmap">
-                  <Button variant="ghost" size="sm" className="gap-1" data-testid="button-view-roadmap">
+                <Link href="/agent-value-map?tab=roadmap" data-testid="link-header-roadmap">
+                  <Button variant="outline" size="sm" className="gap-1" data-testid="button-view-roadmap">
                     Full Roadmap <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
-              {roadmapItems.map((item, index) => (
-                <div key={index} className="space-y-2" data-testid={`row-roadmap-${index}`}>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">{item.name}</span>
-                    <div className="flex items-center gap-2">
-                      <Badge variant="outline" className="text-xs">{item.quarter}</Badge>
-                      <Badge 
-                        variant="outline" 
-                        className="text-xs"
-                        style={{ 
-                          borderColor: item.status === 'In Progress' ? accentColors.sky : accentColors.olive,
-                          color: item.status === 'In Progress' ? accentColors.sky : accentColors.olive
-                        }}
-                      >
-                        {item.status}
-                      </Badge>
+            <CardContent className="pt-4 space-y-4">
+              {roadmapItems.map((item, index) => {
+                const statusColor = item.status === 'In Progress' ? accentColors.sky : item.status === 'Planned' ? accentColors.olive : accentColors.orange;
+                return (
+                  <Link key={index} href="/agent-value-map?tab=roadmap" data-testid={`link-roadmap-${index}`}>
+                    <div 
+                      className="group p-4 rounded-xl border hover-elevate cursor-pointer transition-all"
+                      data-testid={`row-roadmap-${index}`}
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div 
+                            className="relative w-12 h-12"
+                          >
+                            <svg className="w-12 h-12 -rotate-90" viewBox="0 0 48 48">
+                              <circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" strokeWidth="4" className="text-muted/30" />
+                              <circle 
+                                cx="24" cy="24" r="20" fill="none" 
+                                stroke={statusColor}
+                                strokeWidth="4" 
+                                strokeLinecap="round"
+                                strokeDasharray={`${item.progress * 1.25} 125`}
+                              />
+                            </svg>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <span className="text-xs font-bold">{item.progress}%</span>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-semibold text-sm group-hover:text-primary transition-colors">{item.name}</div>
+                            <Badge variant="outline" className="text-xs mt-1">{item.quarter}</Badge>
+                          </div>
+                        </div>
+                        <Badge 
+                          variant="secondary"
+                          className="text-xs"
+                          style={{ backgroundColor: `${statusColor}20`, color: statusColor }}
+                        >
+                          {item.status}
+                        </Badge>
+                      </div>
                     </div>
-                  </div>
-                  <Progress value={item.progress} className="h-1.5" />
-                </div>
-              ))}
+                  </Link>
+                );
+              })}
             </CardContent>
           </Card>
 
-          {/* Governance & Compliance */}
-          <Card>
-            <CardHeader className="pb-2">
+          {/* Governance & Compliance - Enhanced */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.olive}12 0%, ${accentColors.olive}04 100%)` }}
+            >
               <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Shield className="w-5 h-5" style={{ color: accentColors.olive }} />
-                    Governance & Compliance
-                  </CardTitle>
-                  <CardDescription>AI safety metrics</CardDescription>
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.olive}15` }}
+                  >
+                    <Shield className="w-6 h-6" style={{ color: accentColors.olive }} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Governance & Compliance</CardTitle>
+                    <CardDescription>All metrics passing</CardDescription>
+                  </div>
                 </div>
-                <Link href="/agent-value-map?tab=governance">
-                  <Button variant="ghost" size="sm" className="gap-1" data-testid="button-view-governance">
+                <Link href="/agent-value-map?tab=governance" data-testid="link-header-governance">
+                  <Button variant="outline" size="sm" className="gap-1" data-testid="button-view-governance">
                     Details <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
             </CardHeader>
-            <CardContent className="space-y-3">
+            <CardContent className="pt-4 space-y-3">
               {governanceMetrics.map((item, index) => (
-                <div key={index} className="flex items-center justify-between p-2 rounded-lg border" data-testid={`row-governance-${index}`}>
-                  <div className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4" style={{ color: accentColors.lime }} />
-                    <span className="text-sm">{item.metric}</span>
+                <div 
+                  key={index} 
+                  className="flex items-center justify-between p-4 rounded-xl border hover:bg-muted/30 transition-colors"
+                  data-testid={`row-governance-${index}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div 
+                      className="w-8 h-8 rounded-lg flex items-center justify-center"
+                      style={{ backgroundColor: `${accentColors.lime}15` }}
+                    >
+                      <CheckCircle2 className="w-4 h-4" style={{ color: accentColors.lime }} />
+                    </div>
+                    <span className="text-sm font-medium">{item.metric}</span>
                   </div>
-                  <span className="text-sm font-bold" style={{ color: accentColors.lime }}>{item.value}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-lg font-bold" style={{ color: accentColors.lime }}>{item.value}</span>
+                    <Badge 
+                      variant="secondary"
+                      className="text-xs"
+                      style={{ backgroundColor: `${accentColors.lime}20`, color: accentColors.lime }}
+                    >
+                      Passing
+                    </Badge>
+                  </div>
                 </div>
               ))}
             </CardContent>
           </Card>
         </div>
 
-        {/* Quick Actions */}
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Sparkles className="w-5 h-5" style={{ color: accentColors.orange }} />
-              Quick Actions
-            </CardTitle>
+        {/* Quick Actions - Enhanced */}
+        <Card className="overflow-hidden">
+          <CardHeader 
+            className="pb-4"
+            style={{ background: `linear-gradient(135deg, ${accentColors.orange}12 0%, ${accentColors.orange}04 100%)` }}
+          >
+            <div className="flex items-center gap-3">
+              <div 
+                className="w-12 h-12 rounded-lg flex items-center justify-center"
+                style={{ backgroundColor: `${accentColors.orange}15` }}
+              >
+                <Sparkles className="w-6 h-6" style={{ color: accentColors.orange }} />
+              </div>
+              <div>
+                <CardTitle className="text-lg">Quick Actions</CardTitle>
+                <CardDescription>Jump to AI tools</CardDescription>
+              </div>
+            </div>
           </CardHeader>
-          <CardContent>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              <Link href="/agent-value-map?tab=overview">
-                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2" data-testid="button-quick-overview">
-                  <Brain className="w-5 h-5" style={{ color: accentColors.coral }} />
-                  <span className="text-sm">AI Overview</span>
+          <CardContent className="pt-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <Link href="/agent-value-map?tab=overview" data-testid="link-quick-ai-overview">
+                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2 hover:scale-[1.02] transition-all" data-testid="button-quick-ai-overview">
+                  <div className="w-12 h-12 rounded-lg mx-auto flex items-center justify-center" style={{ backgroundColor: `${accentColors.coral}15` }}>
+                    <Brain className="w-6 h-6" style={{ color: accentColors.coral }} />
+                  </div>
+                  <span className="text-sm font-semibold">AI Overview</span>
+                  <span className="text-xs text-muted-foreground">Agent metrics</span>
                 </Button>
               </Link>
-              <Link href="/agent-value-map?tab=framework">
-                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2" data-testid="button-quick-framework">
-                  <Layers className="w-5 h-5" style={{ color: accentColors.teal }} />
-                  <span className="text-sm">Framework</span>
+              <Link href="/agent-value-map?tab=framework" data-testid="link-quick-framework">
+                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2 hover:scale-[1.02] transition-all" data-testid="button-quick-framework">
+                  <div className="w-12 h-12 rounded-lg mx-auto flex items-center justify-center" style={{ backgroundColor: `${accentColors.teal}15` }}>
+                    <Layers className="w-6 h-6" style={{ color: accentColors.teal }} />
+                  </div>
+                  <span className="text-sm font-semibold">Framework</span>
+                  <span className="text-xs text-muted-foreground">Agent architecture</span>
                 </Button>
               </Link>
-              <Link href="/agent-value-map?tab=scorecard">
-                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2" data-testid="button-quick-scorecard">
-                  <BarChart3 className="w-5 h-5" style={{ color: accentColors.sky }} />
-                  <span className="text-sm">Scorecard</span>
+              <Link href="/agent-value-map?tab=scorecard" data-testid="link-quick-scorecard">
+                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2 hover:scale-[1.02] transition-all" data-testid="button-quick-scorecard">
+                  <div className="w-12 h-12 rounded-lg mx-auto flex items-center justify-center" style={{ backgroundColor: `${accentColors.sky}15` }}>
+                    <BarChart3 className="w-6 h-6" style={{ color: accentColors.sky }} />
+                  </div>
+                  <span className="text-sm font-semibold">Scorecard</span>
+                  <span className="text-xs text-muted-foreground">Performance data</span>
                 </Button>
               </Link>
-              <Link href="/workflow-builder">
-                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2" data-testid="button-quick-workflows">
-                  <Workflow className="w-5 h-5" style={{ color: accentColors.lime }} />
-                  <span className="text-sm">Workflows</span>
+              <Link href="/workflow-builder" data-testid="link-quick-workflows">
+                <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2 hover:scale-[1.02] transition-all" data-testid="button-quick-workflows">
+                  <div className="w-12 h-12 rounded-lg mx-auto flex items-center justify-center" style={{ backgroundColor: `${accentColors.lime}15` }}>
+                    <Workflow className="w-6 h-6" style={{ color: accentColors.lime }} />
+                  </div>
+                  <span className="text-sm font-semibold">Workflows</span>
+                  <span className="text-xs text-muted-foreground">Build automations</span>
                 </Button>
               </Link>
             </div>

@@ -145,13 +145,13 @@ export default function FundraisingDashboard() {
               </p>
             </div>
             <div className="flex items-center gap-3">
-              <Link href="/pipeline">
+              <Link href="/pipeline" data-testid="link-hero-pipeline">
                 <Button variant="outline" className="gap-2" data-testid="button-view-pipeline">
                   <BarChart3 className="w-4 h-4" />
                   Pipeline
                 </Button>
               </Link>
-              <Link href="/gifts">
+              <Link href="/gifts" data-testid="link-hero-gifts">
                 <Button className="gap-2" style={{ backgroundColor: accentColors.sky }} data-testid="button-view-gifts">
                   <Gift className="w-4 h-4" />
                   All Gifts
@@ -163,7 +163,7 @@ export default function FundraisingDashboard() {
           {/* KPI Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
             {kpiMetrics.map((metric, index) => (
-              <Link key={index} href={metric.href}>
+              <Link key={index} href={metric.href} data-testid={`link-metric-${metric.label.toLowerCase().replace(/\s+/g, '-')}`}>
                 <AccentCard 
                   accent={metric.accent} 
                   className="hover-elevate cursor-pointer h-full"
@@ -211,87 +211,144 @@ export default function FundraisingDashboard() {
       <div className="px-6 py-6 space-y-6">
         {/* Pipeline & Recent Gifts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Pipeline Overview */}
-          <Card>
-            <CardHeader className="pb-2">
+          {/* Pipeline Overview - Enhanced Funnel Visual */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.sky}12 0%, ${accentColors.sky}04 100%)` }}
+            >
               <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <BarChart3 className="w-5 h-5" style={{ color: accentColors.sky }} />
-                    Pipeline Overview
-                  </CardTitle>
-                  <CardDescription>Opportunities by stage</CardDescription>
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.sky}15` }}
+                  >
+                    <BarChart3 className="w-6 h-6" style={{ color: accentColors.sky }} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Pipeline Overview</CardTitle>
+                    <CardDescription>$8.7M across 61 opportunities</CardDescription>
+                  </div>
                 </div>
-                <Link href="/pipeline">
-                  <Button variant="ghost" size="sm" className="gap-1" data-testid="button-open-pipeline">
+                <Link href="/pipeline" data-testid="link-header-pipeline">
+                  <Button variant="outline" size="sm" className="gap-1" data-testid="button-open-pipeline">
                     View Pipeline <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
             </CardHeader>
-            <CardContent className="space-y-3">
-              {pipelineStages.map((stage, index) => (
-                <div key={index} className="flex items-center justify-between p-3 rounded-lg border" data-testid={`row-pipeline-${stage.stage.toLowerCase()}`}>
-                  <div className="flex items-center gap-3">
+            <CardContent className="pt-4 space-y-3">
+              {pipelineStages.map((stage, index) => {
+                const totalValue = 8.7;
+                const stageValue = parseFloat(stage.value.replace('$', '').replace('M', ''));
+                const percentage = Math.round((stageValue / totalValue) * 100);
+                return (
+                  <Link key={index} href="/pipeline" data-testid={`link-pipeline-${stage.stage.toLowerCase()}`}>
                     <div 
-                      className="w-3 h-3 rounded-full"
-                      style={{ backgroundColor: stage.color }}
-                    />
-                    <div>
-                      <div className="font-medium text-sm">{stage.stage}</div>
-                      <div className="text-xs text-muted-foreground">{stage.count} opportunities</div>
+                      className="group p-4 rounded-xl border hover-elevate cursor-pointer transition-all"
+                      style={{ borderColor: `${stage.color}30` }}
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div 
+                            className="w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold"
+                            style={{ backgroundColor: `${stage.color}15`, color: stage.color }}
+                          >
+                            {stage.count}
+                          </div>
+                          <div>
+                            <div className="font-semibold text-sm">{stage.stage}</div>
+                            <div className="text-xs text-muted-foreground">{stage.count} opportunities</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="text-right">
+                            <span className="text-xl font-bold" style={{ color: stage.color }}>{stage.value}</span>
+                            <span className="text-xs text-muted-foreground ml-1">({percentage}%)</span>
+                          </div>
+                          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                      <div className="relative h-2 rounded-full bg-muted overflow-hidden">
+                        <div 
+                          className="absolute inset-y-0 left-0 rounded-full transition-all duration-500"
+                          style={{ width: `${percentage}%`, backgroundColor: stage.color }}
+                        />
+                      </div>
                     </div>
-                  </div>
-                  <div className="text-lg font-bold" style={{ color: stage.color }}>{stage.value}</div>
-                </div>
-              ))}
-              <div className="pt-2 border-t">
+                  </Link>
+                );
+              })}
+              <div className="p-4 rounded-xl border-2 border-dashed" style={{ borderColor: `${accentColors.teal}40` }}>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium">Total Pipeline</span>
-                  <span className="text-xl font-bold" style={{ color: accentColors.teal }}>$8.7M</span>
+                  <span className="font-semibold">Total Pipeline Value</span>
+                  <span className="text-2xl font-bold" style={{ color: accentColors.teal }}>$8.7M</span>
                 </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Recent Gifts */}
-          <Card>
-            <CardHeader className="pb-2">
+          {/* Recent Gifts - Enhanced with larger amounts */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.teal}12 0%, ${accentColors.teal}04 100%)` }}
+            >
               <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Gift className="w-5 h-5" style={{ color: accentColors.teal }} />
-                    Recent Gifts
-                  </CardTitle>
-                  <CardDescription>Latest donations received</CardDescription>
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.teal}15` }}
+                  >
+                    <Gift className="w-6 h-6" style={{ color: accentColors.teal }} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Recent Gifts</CardTitle>
+                    <CardDescription>$250K received this week</CardDescription>
+                  </div>
                 </div>
-                <Link href="/gifts">
-                  <Button variant="ghost" size="sm" className="gap-1" data-testid="button-all-gifts">
+                <Link href="/gifts" data-testid="link-header-gifts">
+                  <Button variant="outline" size="sm" className="gap-1" data-testid="button-all-gifts">
                     All Gifts <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="pt-4 space-y-3">
               {recentGifts.map((gift, index) => (
-                <div key={index} className="flex items-center justify-between p-2 rounded-lg border" data-testid={`row-gift-${index}`}>
-                  <div className="flex items-center gap-3">
-                    <div 
-                      className="w-8 h-8 rounded-lg flex items-center justify-center"
-                      style={{ backgroundColor: `${gift.color}15` }}
-                    >
-                      <Gift className="w-4 h-4" style={{ color: gift.color }} />
+                <Link key={index} href="/gifts" data-testid={`link-gift-${index}`}>
+                  <div 
+                    className="group flex items-center justify-between p-4 rounded-xl border hover-elevate cursor-pointer transition-all"
+                  >
+                    <div className="flex items-center gap-4">
+                      <div 
+                        className="w-12 h-12 rounded-xl flex items-center justify-center"
+                        style={{ backgroundColor: `${gift.color}15` }}
+                      >
+                        <Gift className="w-5 h-5" style={{ color: gift.color }} />
+                      </div>
+                      <div>
+                        <div className="font-semibold text-sm group-hover:text-primary transition-colors">{gift.donor}</div>
+                        <div className="text-xs text-muted-foreground flex items-center gap-2">
+                          <Badge 
+                            variant="secondary" 
+                            className="text-xs"
+                            style={{ backgroundColor: `${gift.color}15`, color: gift.color }}
+                          >
+                            {gift.type}
+                          </Badge>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-sm font-medium">{gift.donor}</div>
-                      <div className="text-xs text-muted-foreground">{gift.type}</div>
+                    <div className="text-right flex items-center gap-3">
+                      <div>
+                        <div className="text-lg font-bold" style={{ color: accentColors.teal }}>{gift.amount}</div>
+                        <div className="text-xs text-muted-foreground">{gift.date}</div>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-sm font-bold" style={{ color: accentColors.teal }}>{gift.amount}</div>
-                    <div className="text-xs text-muted-foreground">{gift.date}</div>
-                  </div>
-                </div>
+                </Link>
               ))}
             </CardContent>
           </Card>
@@ -299,163 +356,286 @@ export default function FundraisingDashboard() {
 
         {/* Campaigns & Grants */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Active Campaigns */}
-          <Card>
-            <CardHeader className="pb-2">
+          {/* Active Campaigns - Enhanced with visual progress */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.lime}12 0%, ${accentColors.lime}04 100%)` }}
+            >
               <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Megaphone className="w-5 h-5" style={{ color: accentColors.lime }} />
-                    Active Campaigns
-                  </CardTitle>
-                  <CardDescription>Campaign progress</CardDescription>
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.lime}15` }}
+                  >
+                    <Megaphone className="w-6 h-6" style={{ color: accentColors.lime }} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Active Campaigns</CardTitle>
+                    <CardDescription>6 campaigns in progress</CardDescription>
+                  </div>
                 </div>
-                <Link href="/campaigns">
-                  <Button variant="ghost" size="sm" className="gap-1" data-testid="button-all-campaigns">
+                <Link href="/campaigns" data-testid="link-header-campaigns">
+                  <Button variant="outline" size="sm" className="gap-1" data-testid="button-all-campaigns">
                     All Campaigns <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
             </CardHeader>
-            <CardContent className="space-y-4">
-              {activeCampaigns.map((campaign, index) => (
-                <div key={index} className="space-y-2" data-testid={`row-campaign-${index}`}>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium">{campaign.name}</span>
-                    <Badge variant="outline" className="text-xs">
-                      {campaign.daysLeft} days left
-                    </Badge>
-                  </div>
-                  <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>{campaign.raised} raised</span>
-                    <span>Goal: {campaign.goal}</span>
-                  </div>
-                  <Progress value={campaign.progress} className="h-2" />
-                </div>
-              ))}
+            <CardContent className="pt-4 space-y-4">
+              {activeCampaigns.map((campaign, index) => {
+                const progressColor = campaign.progress >= 70 ? accentColors.lime : campaign.progress >= 40 ? accentColors.orange : accentColors.coral;
+                return (
+                  <Link key={index} href="/campaigns" data-testid={`link-campaign-${index}`}>
+                    <div 
+                      className="group p-4 rounded-xl border hover-elevate cursor-pointer transition-all"
+                      data-testid={`row-campaign-${index}`}
+                    >
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-3">
+                          <div 
+                            className="relative w-14 h-14"
+                          >
+                            <svg className="w-14 h-14 -rotate-90" viewBox="0 0 56 56">
+                              <circle cx="28" cy="28" r="24" fill="none" stroke="currentColor" strokeWidth="4" className="text-muted/30" />
+                              <circle 
+                                cx="28" cy="28" r="24" fill="none" 
+                                stroke={progressColor}
+                                strokeWidth="4" 
+                                strokeLinecap="round"
+                                strokeDasharray={`${campaign.progress * 1.5} 150`}
+                              />
+                            </svg>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <span className="text-xs font-bold">{campaign.progress}%</span>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-semibold text-sm group-hover:text-primary transition-colors">{campaign.name}</div>
+                            <div className="text-xs text-muted-foreground">{campaign.raised} of {campaign.goal}</div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Badge 
+                            variant="outline" 
+                            className="text-xs"
+                            style={{ 
+                              borderColor: campaign.daysLeft <= 14 ? accentColors.coral : accentColors.olive,
+                              color: campaign.daysLeft <= 14 ? accentColors.coral : accentColors.olive
+                            }}
+                          >
+                            <Clock className="w-3 h-3 mr-1" />
+                            {campaign.daysLeft}d
+                          </Badge>
+                          <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </CardContent>
           </Card>
 
-          {/* Grant Opportunities */}
-          <Card>
-            <CardHeader className="pb-2">
+          {/* Grant Opportunities - Enhanced */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.olive}12 0%, ${accentColors.olive}04 100%)` }}
+            >
               <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Target className="w-5 h-5" style={{ color: accentColors.olive }} />
-                    Grant Pipeline
-                  </CardTitle>
-                  <CardDescription>Upcoming grant opportunities</CardDescription>
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.olive}15` }}
+                  >
+                    <Target className="w-6 h-6" style={{ color: accentColors.olive }} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Grant Pipeline</CardTitle>
+                    <CardDescription>$900K in opportunities</CardDescription>
+                  </div>
                 </div>
-                <Link href="/grants">
-                  <Button variant="ghost" size="sm" className="gap-1" data-testid="button-all-grants">
+                <Link href="/grants" data-testid="link-header-grants">
+                  <Button variant="outline" size="sm" className="gap-1" data-testid="button-all-grants">
                     All Grants <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
             </CardHeader>
-            <CardContent className="space-y-2">
-              {grantOpportunities.map((grant, index) => (
-                <div key={index} className="flex items-center justify-between p-2 rounded-lg border" data-testid={`row-grant-${index}`}>
-                  <div>
-                    <div className="text-sm font-medium">{grant.foundation}</div>
-                    <div className="text-xs text-muted-foreground">Deadline: {grant.deadline}</div>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-sm font-bold" style={{ color: accentColors.teal }}>{grant.amount}</div>
-                    <Badge 
-                      variant="outline" 
-                      className="text-xs"
-                      style={{ 
-                        borderColor: grant.status === 'Submitted' ? accentColors.lime : accentColors.orange,
-                        color: grant.status === 'Submitted' ? accentColors.lime : accentColors.orange
-                      }}
+            <CardContent className="pt-4 space-y-3">
+              {grantOpportunities.map((grant, index) => {
+                const statusColors = {
+                  'Submitted': accentColors.lime,
+                  'In Progress': accentColors.sky,
+                  'Research': accentColors.orange,
+                };
+                const color = statusColors[grant.status as keyof typeof statusColors] || accentColors.teal;
+                return (
+                  <Link key={index} href="/grants" data-testid={`link-grant-${index}`}>
+                    <div 
+                      className="group flex items-center justify-between p-4 rounded-xl border hover-elevate cursor-pointer transition-all"
+                      data-testid={`row-grant-${index}`}
                     >
-                      {grant.status}
-                    </Badge>
-                  </div>
-                </div>
-              ))}
+                      <div className="flex items-center gap-4">
+                        <div 
+                          className="w-12 h-12 rounded-xl flex items-center justify-center text-lg font-bold"
+                          style={{ backgroundColor: `${color}10`, color: color }}
+                        >
+                          {grant.foundation.split(' ')[0][0]}
+                        </div>
+                        <div>
+                          <div className="font-semibold text-sm group-hover:text-primary transition-colors">{grant.foundation}</div>
+                          <div className="text-xs text-muted-foreground flex items-center gap-2">
+                            <Calendar className="w-3 h-3" />
+                            Due: {grant.deadline}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right flex items-center gap-3">
+                        <div>
+                          <div className="text-lg font-bold" style={{ color: accentColors.teal }}>{grant.amount}</div>
+                          <Badge 
+                            variant="secondary"
+                            className="text-xs"
+                            style={{ backgroundColor: `${color}20`, color: color }}
+                          >
+                            {grant.status}
+                          </Badge>
+                        </div>
+                        <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+                  </Link>
+                );
+              })}
             </CardContent>
           </Card>
         </div>
 
         {/* Events & Quick Actions */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Upcoming Events */}
-          <Card>
-            <CardHeader className="pb-2">
+          {/* Upcoming Events - Enhanced */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.coral}12 0%, ${accentColors.coral}04 100%)` }}
+            >
               <div className="flex items-center justify-between">
-                <div>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <CalendarDays className="w-5 h-5" style={{ color: accentColors.coral }} />
-                    Upcoming Events
-                  </CardTitle>
-                  <CardDescription>Scheduled fundraising events</CardDescription>
+                <div className="flex items-center gap-3">
+                  <div 
+                    className="w-12 h-12 rounded-lg flex items-center justify-center"
+                    style={{ backgroundColor: `${accentColors.coral}15` }}
+                  >
+                    <CalendarDays className="w-6 h-6" style={{ color: accentColors.coral }} />
+                  </div>
+                  <div>
+                    <CardTitle className="text-lg">Upcoming Events</CardTitle>
+                    <CardDescription>$170K projected revenue</CardDescription>
+                  </div>
                 </div>
-                <Link href="/events">
-                  <Button variant="ghost" size="sm" className="gap-1" data-testid="button-all-events">
+                <Link href="/events" data-testid="link-header-events">
+                  <Button variant="outline" size="sm" className="gap-1" data-testid="button-all-events">
                     All Events <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
             </CardHeader>
-            <CardContent className="space-y-2">
+            <CardContent className="pt-4 space-y-3">
               {upcomingEvents.map((event, index) => (
-                <div key={index} className="flex items-center justify-between p-2 rounded-lg border" data-testid={`row-event-${index}`}>
-                  <div className="flex items-center gap-3">
-                    <div 
-                      className="w-8 h-8 rounded-lg flex items-center justify-center"
-                      style={{ backgroundColor: `${accentColors.coral}15` }}
-                    >
-                      <Calendar className="w-4 h-4" style={{ color: accentColors.coral }} />
+                <Link key={index} href="/events" data-testid={`link-event-${index}`}>
+                  <div 
+                    className="group flex items-center justify-between p-4 rounded-xl border hover-elevate cursor-pointer transition-all"
+                    data-testid={`row-event-${index}`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div 
+                        className="w-14 h-14 rounded-xl flex flex-col items-center justify-center"
+                        style={{ backgroundColor: `${accentColors.coral}10` }}
+                      >
+                        <span className="text-xs font-medium text-muted-foreground">
+                          {event.date.split(' ')[0]}
+                        </span>
+                        <span className="text-lg font-bold" style={{ color: accentColors.coral }}>
+                          {event.date.split(' ')[1]?.replace(',', '') || event.date}
+                        </span>
+                      </div>
+                      <div>
+                        <div className="font-semibold text-sm group-hover:text-primary transition-colors">{event.name}</div>
+                        <div className="text-xs text-muted-foreground flex items-center gap-2">
+                          <Users className="w-3 h-3" />
+                          {event.attendees} expected
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="text-sm font-medium">{event.name}</div>
-                      <div className="text-xs text-muted-foreground">{event.attendees} expected</div>
+                    <div className="text-right flex items-center gap-3">
+                      <div>
+                        <div className="text-lg font-bold" style={{ color: accentColors.teal }}>{event.revenue}</div>
+                        <Badge variant="outline" className="text-xs">Revenue</Badge>
+                      </div>
+                      <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
-                  <div className="text-right">
-                    <div className="text-sm font-medium">{event.date}</div>
-                    <div className="text-xs" style={{ color: accentColors.teal }}>{event.revenue}</div>
-                  </div>
-                </div>
+                </Link>
               ))}
             </CardContent>
           </Card>
 
-          {/* Quick Actions */}
-          <Card>
-            <CardHeader className="pb-2">
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Sparkles className="w-5 h-5" style={{ color: accentColors.orange }} />
-                Quick Actions
-              </CardTitle>
+          {/* Quick Actions - Enhanced */}
+          <Card className="overflow-hidden">
+            <CardHeader 
+              className="pb-4"
+              style={{ background: `linear-gradient(135deg, ${accentColors.orange}12 0%, ${accentColors.orange}04 100%)` }}
+            >
+              <div className="flex items-center gap-3">
+                <div 
+                  className="w-12 h-12 rounded-lg flex items-center justify-center"
+                  style={{ backgroundColor: `${accentColors.orange}15` }}
+                >
+                  <Sparkles className="w-6 h-6" style={{ color: accentColors.orange }} />
+                </div>
+                <div>
+                  <CardTitle className="text-lg">Quick Actions</CardTitle>
+                  <CardDescription>Jump to fundraising tools</CardDescription>
+                </div>
+              </div>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-2 gap-3">
-                <Link href="/matching-gifts">
-                  <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2" data-testid="button-quick-matching">
-                    <Heart className="w-5 h-5" style={{ color: accentColors.coral }} />
-                    <span className="text-sm">Matching Gifts</span>
+            <CardContent className="pt-4">
+              <div className="grid grid-cols-2 gap-4">
+                <Link href="/matching-gifts" data-testid="link-quick-matching-gifts">
+                  <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2 hover:scale-[1.02] transition-all" data-testid="button-quick-matching-gifts">
+                    <div className="w-12 h-12 rounded-lg mx-auto flex items-center justify-center" style={{ backgroundColor: `${accentColors.coral}15` }}>
+                      <Heart className="w-6 h-6" style={{ color: accentColors.coral }} />
+                    </div>
+                    <span className="text-sm font-semibold">Matching Gifts</span>
+                    <span className="text-xs text-muted-foreground">Corporate matches</span>
                   </Button>
                 </Link>
-                <Link href="/tribute-giving">
-                  <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2" data-testid="button-quick-tribute">
-                    <Gift className="w-5 h-5" style={{ color: accentColors.teal }} />
-                    <span className="text-sm">Tribute Giving</span>
+                <Link href="/tribute-giving" data-testid="link-quick-tribute-giving">
+                  <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2 hover:scale-[1.02] transition-all" data-testid="button-quick-tribute-giving">
+                    <div className="w-12 h-12 rounded-lg mx-auto flex items-center justify-center" style={{ backgroundColor: `${accentColors.teal}15` }}>
+                      <Gift className="w-6 h-6" style={{ color: accentColors.teal }} />
+                    </div>
+                    <span className="text-sm font-semibold">Tribute Giving</span>
+                    <span className="text-xs text-muted-foreground">Honor & memorial</span>
                   </Button>
                 </Link>
-                <Link href="/peer-to-peer">
-                  <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2" data-testid="button-quick-p2p">
-                    <Users className="w-5 h-5" style={{ color: accentColors.sky }} />
-                    <span className="text-sm">Peer-to-Peer</span>
+                <Link href="/peer-to-peer" data-testid="link-quick-peer-to-peer">
+                  <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2 hover:scale-[1.02] transition-all" data-testid="button-quick-peer-to-peer">
+                    <div className="w-12 h-12 rounded-lg mx-auto flex items-center justify-center" style={{ backgroundColor: `${accentColors.sky}15` }}>
+                      <Users className="w-6 h-6" style={{ color: accentColors.sky }} />
+                    </div>
+                    <span className="text-sm font-semibold">Peer-to-Peer</span>
+                    <span className="text-xs text-muted-foreground">Supporter campaigns</span>
                   </Button>
                 </Link>
-                <Link href="/sms-fundraising">
-                  <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2" data-testid="button-quick-sms">
-                    <MessageSquare className="w-5 h-5" style={{ color: accentColors.lime }} />
-                    <span className="text-sm">SMS Fundraising</span>
+                <Link href="/sms-fundraising" data-testid="link-quick-sms-fundraising">
+                  <Button variant="outline" className="w-full h-auto py-4 flex-col gap-2 hover:scale-[1.02] transition-all" data-testid="button-quick-sms-fundraising">
+                    <div className="w-12 h-12 rounded-lg mx-auto flex items-center justify-center" style={{ backgroundColor: `${accentColors.lime}15` }}>
+                      <MessageSquare className="w-6 h-6" style={{ color: accentColors.lime }} />
+                    </div>
+                    <span className="text-sm font-semibold">SMS Fundraising</span>
+                    <span className="text-xs text-muted-foreground">Text-to-give</span>
                   </Button>
                 </Link>
               </div>
