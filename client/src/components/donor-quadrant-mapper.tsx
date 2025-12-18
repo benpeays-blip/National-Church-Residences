@@ -208,27 +208,29 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               const isBeingDragged = draggedDonor?.id === donor.id;
               
               // Calculate adjusted top position - dots ONLY in white content areas
-              // Headers are h-12 (48px) at top of each quadrant half
-              // Dots must NEVER overlap or touch the headers
+              // Top headers: h-12 at top (0-13%)
+              // Bottom headers: h-12 at bottom (87-100%)
+              // Center line at 50%
+              // Dots must stay in white areas only
               
-              // Safe WHITE-only zones with generous padding:
-              // Top half: 18% to 44% (clear of header at 0-13%, clear of middle at 50%)
-              // Bottom half: 68% to 88% (clear of header at 50-63%, clear of bottom)
+              // Safe WHITE-only zones:
+              // Top half: 16% to 46% (below top headers, above center line)
+              // Bottom half: 54% to 84% (below center line, above bottom headers)
               
               let adjustedTop: string;
               if (donor.energy > 50) {
                 // Top half: energy 100 -> near top, energy 51 -> near middle
                 const energyInRange = (donor.energy - 50) / 50; // 0 to 1
-                const usableStart = 18; // Safe distance below header
-                const usableEnd = 44; // Safe distance above middle
+                const usableStart = 16; // Safe distance below header
+                const usableEnd = 46; // Safe distance above center line
                 const topPercent = usableEnd - (energyInRange * (usableEnd - usableStart));
                 adjustedTop = `${topPercent}%`;
               } else {
-                // Bottom half: energy 50 -> near middle, energy 0 -> near bottom
+                // Bottom half: energy 50 -> near center, energy 0 -> near bottom
                 const energyInRange = donor.energy / 50; // 0 to 1
-                const usableStart = 68; // Safe distance below middle header
-                const usableEnd = 88; // Safe distance from bottom
-                const topPercent = usableEnd - (energyInRange * (usableEnd - usableStart));
+                const usableStart = 54; // Safe distance below center line
+                const usableEnd = 84; // Safe distance from bottom headers
+                const topPercent = usableStart + ((1 - energyInRange) * (usableEnd - usableStart));
                 adjustedTop = `${topPercent}%`;
               }
               
@@ -401,20 +403,20 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               </div>
             )}
 
-            {/* Bottom Left - Acquaintance */}
+            {/* Bottom Left - Acquaintance (positioned at bottom of chart) */}
             <button
               onClick={() => setSelectedQuadrant('acquaintance')}
-              className="absolute left-0 top-1/2 w-[calc(50%-1px)] h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
+              className="absolute left-0 bottom-0 w-[calc(50%-1px)] h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-t border-[#395174]/30"
               data-testid="quadrant-acquaintance"
             >
               <span className="font-semibold text-sm text-white">Acquaintance</span>
               <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-acquaintance">{data.counts.acquaintance} Donors</span>
             </button>
 
-            {/* Bottom Right - Colleague */}
+            {/* Bottom Right - Colleague (positioned at bottom of chart) */}
             <button
               onClick={() => setSelectedQuadrant('colleague')}
-              className="absolute left-1/2 top-1/2 w-1/2 h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
+              className="absolute left-1/2 bottom-0 w-1/2 h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-t border-[#395174]/30"
               data-testid="quadrant-colleague"
             >
               <span className="font-semibold text-sm text-white">Colleague</span>
