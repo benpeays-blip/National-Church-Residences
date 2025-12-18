@@ -3,6 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { 
   Users, 
   AlertTriangle, 
@@ -14,8 +15,17 @@ import {
   Zap
 } from "lucide-react";
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
+import { useToast } from "@/hooks/use-toast";
 
-const duplicatePairs = [
+type DuplicatePair = {
+  id: string;
+  confidence: number;
+  record1: { id: string; name: string; email: string; phone: string | null; gifts: number; totalGiving: number };
+  record2: { id: string; name: string; email: string; phone: string | null; gifts: number; totalGiving: number };
+  matchReasons: string[];
+};
+
+const initialDuplicatePairs: DuplicatePair[] = [
   { 
     id: "1", 
     confidence: 95,
@@ -54,7 +64,34 @@ const stats = {
 };
 
 export default function DuplicateDetection() {
-  const [selectedPair, setSelectedPair] = useState<string | null>(null);
+  const { toast } = useToast();
+  const [pairs, setPairs] = useState<DuplicatePair[]>(initialDuplicatePairs);
+  const [reviewPair, setReviewPair] = useState<DuplicatePair | null>(null);
+  const [mergedCount, setMergedCount] = useState(stats.mergedThisMonth);
+  const [dismissedCount, setDismissedCount] = useState(0);
+
+  const handleReview = (pair: DuplicatePair) => {
+    setReviewPair(pair);
+  };
+
+  const handleMerge = (pairId: string) => {
+    const pair = pairs.find(p => p.id === pairId);
+    setPairs(pairs.filter(p => p.id !== pairId));
+    setMergedCount(prev => prev + 1);
+    toast({
+      title: "Records Merged",
+      description: `Successfully merged ${pair?.record2.name} into ${pair?.record1.name}`,
+    });
+  };
+
+  const handleDismiss = (pairId: string) => {
+    setPairs(pairs.filter(p => p.id !== pairId));
+    setDismissedCount(prev => prev + 1);
+    toast({
+      title: "Dismissed",
+      description: "This pair has been marked as not a duplicate",
+    });
+  };
 
   return (
     <div className="space-y-6">
@@ -90,7 +127,7 @@ export default function DuplicateDetection() {
                 <AlertTriangle className="h-5 w-5" style={{ color: getAccentColor("orange") }} />
               </div>
               <div>
-                <p className="text-2xl font-bold" data-testid="metric-duplicates">{stats.potentialDuplicates}</p>
+                <p className="text-2xl font-bold" data-testid="metric-duplicates">{pairs.length}</p>
                 <p className="text-sm text-muted-foreground">Potential Duplicates</p>
               </div>
             </div>
@@ -104,7 +141,7 @@ export default function DuplicateDetection() {
                 <Merge className="h-5 w-5" style={{ color: getAccentColor("lime") }} />
               </div>
               <div>
-                <p className="text-2xl font-bold" data-testid="metric-merged">{stats.mergedThisMonth}</p>
+                <p className="text-2xl font-bold" data-testid="metric-merged">{mergedCount}</p>
                 <p className="text-sm text-muted-foreground">Merged This Month</p>
               </div>
             </div>
@@ -146,7 +183,7 @@ export default function DuplicateDetection() {
         </CardHeader>
         <CardContent className="pt-6">
           <div className="space-y-4">
-            {duplicatePairs.map((pair) => (
+            {pairs.map((pair) => (
               <div 
                 key={pair.id}
                 className="p-4 rounded-lg bg-card border border-border shadow-sm"
@@ -175,15 +212,15 @@ export default function DuplicateDetection() {
                     </div>
                   </div>
                   <div className="flex gap-2">
-                    <Button variant="outline" size="sm" data-testid={`button-view-${pair.id}`}>
+                    <Button variant="outline" size="sm" onClick={() => handleReview(pair)} data-testid={`button-view-${pair.id}`}>
                       <Eye className="h-3 w-3 mr-1" />
                       Review
                     </Button>
-                    <Button size="sm" style={{ backgroundColor: getAccentColor("lime") }} data-testid={`button-merge-${pair.id}`}>
+                    <Button size="sm" style={{ backgroundColor: getAccentColor("lime") }} onClick={() => handleMerge(pair.id)} data-testid={`button-merge-${pair.id}`}>
                       <Merge className="h-3 w-3 mr-1" />
                       Merge
                     </Button>
-                    <Button variant="ghost" size="sm" data-testid={`button-dismiss-${pair.id}`}>
+                    <Button variant="ghost" size="sm" onClick={() => handleDismiss(pair.id)} data-testid={`button-dismiss-${pair.id}`}>
                       <XCircle className="h-3 w-3" />
                     </Button>
                   </div>
@@ -218,6 +255,98 @@ export default function DuplicateDetection() {
           </div>
         </CardContent>
       </Card>
+
+      <Dialog open={reviewPair !== null} onOpenChange={() => setReviewPair(null)}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Review Duplicate Pair</DialogTitle>
+            <DialogDescription>
+              Compare records and decide whether to merge or dismiss
+            </DialogDescription>
+          </DialogHeader>
+          
+          {reviewPair && (
+            <div className="space-y-4">
+              <div className="flex items-center gap-2">
+                <Badge 
+                  style={{ 
+                    backgroundColor: reviewPair.confidence >= 90 ? getAccentColor("coral") : reviewPair.confidence >= 80 ? getAccentColor("orange") : getAccentColor("sky"),
+                    color: "white"
+                  }}
+                >
+                  {reviewPair.confidence}% Match Confidence
+                </Badge>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="p-4 rounded-lg border-2" style={{ borderColor: getAccentColor("lime") }}>
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-bold">{reviewPair.record1.name}</span>
+                    <Badge style={{ backgroundColor: getAccentColor("lime"), color: "white" }}>Primary Record</Badge>
+                  </div>
+                  <div className="space-y-2 text-sm">
+                    <p><span className="text-muted-foreground">Email:</span> {reviewPair.record1.email}</p>
+                    <p><span className="text-muted-foreground">Phone:</span> {reviewPair.record1.phone || "N/A"}</p>
+                    <p><span className="text-muted-foreground">Total Gifts:</span> {reviewPair.record1.gifts}</p>
+                    <p><span className="text-muted-foreground">Total Giving:</span> ${reviewPair.record1.totalGiving.toLocaleString()}</p>
+                  </div>
+                </div>
+                <div className="p-4 rounded-lg border">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-bold">{reviewPair.record2.name}</span>
+                    <Badge variant="outline">Potential Duplicate</Badge>
+                  </div>
+                  <div className="space-y-2 text-sm">
+                    <p><span className="text-muted-foreground">Email:</span> {reviewPair.record2.email}</p>
+                    <p><span className="text-muted-foreground">Phone:</span> {reviewPair.record2.phone || "N/A"}</p>
+                    <p><span className="text-muted-foreground">Total Gifts:</span> {reviewPair.record2.gifts}</p>
+                    <p><span className="text-muted-foreground">Total Giving:</span> ${reviewPair.record2.totalGiving.toLocaleString()}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-3 rounded-lg bg-muted/50">
+                <p className="text-sm font-medium mb-2">Match Reasons:</p>
+                <div className="flex flex-wrap gap-2">
+                  {reviewPair.matchReasons.map((reason, idx) => (
+                    <Badge key={idx} variant="secondary">{reason}</Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+          
+          <DialogFooter className="gap-2">
+            <Button variant="outline" onClick={() => setReviewPair(null)}>
+              Cancel
+            </Button>
+            <Button 
+              variant="ghost" 
+              onClick={() => {
+                if (reviewPair) {
+                  handleDismiss(reviewPair.id);
+                  setReviewPair(null);
+                }
+              }}
+            >
+              <XCircle className="h-4 w-4 mr-2" />
+              Not a Duplicate
+            </Button>
+            <Button 
+              style={{ backgroundColor: getAccentColor("lime") }}
+              onClick={() => {
+                if (reviewPair) {
+                  handleMerge(reviewPair.id);
+                  setReviewPair(null);
+                }
+              }}
+            >
+              <Merge className="h-4 w-4 mr-2" />
+              Merge Records
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
