@@ -842,228 +842,220 @@ export default function GrantResearchPage() {
 
   return (
     <div className="flex flex-col h-full" data-testid="grant-research-page">
-      <div className="grid grid-cols-12 gap-6 p-6 bg-background flex-1 overflow-hidden">
-        <div className="col-span-12 md:col-span-3 space-y-6 overflow-y-auto">
-          <Card className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <Filter className="w-4 h-4" />
-                <h3 className="font-semibold text-sm">Filters</h3>
-              </div>
-              {(hasActiveFilters || searchQuery) && (
-                <Button variant="ghost" size="sm" className="h-6 text-xs" onClick={clearAllFilters}>
-                  Clear all
-                </Button>
-              )}
-            </div>
-            
-            <div className="relative mb-4">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                placeholder="Search grants..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-9 h-9"
-                data-testid="input-grant-search"
-              />
-            </div>
-            
-            <ScrollArea className="h-[calc(100vh-450px)]">
-              <Accordion type="multiple" defaultValue={["focus", "funding", "geography", "amount"]} className="space-y-2">
-                <AccordionItem value="focus" className="border-none">
-                  <AccordionTrigger className="py-2 text-sm font-medium hover:no-underline">
-                    Focus Areas
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pt-2">
-                    {FOCUS_AREAS.map((area) => (
-                      <div key={area.id} className="flex items-center gap-2">
-                        <Checkbox
-                          id={`focus-${area.id}`}
-                          checked={selectedFocusAreas.includes(area.id)}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              setSelectedFocusAreas([...selectedFocusAreas, area.id]);
-                            } else {
-                              setSelectedFocusAreas(selectedFocusAreas.filter(f => f !== area.id));
-                            }
-                          }}
-                          data-testid={`checkbox-focus-${area.id}`}
-                        />
-                        <label htmlFor={`focus-${area.id}`} className="text-sm flex items-center gap-1.5 cursor-pointer">
-                          <area.icon className="w-3.5 h-3.5 text-muted-foreground" />
-                          {area.label}
-                        </label>
-                      </div>
-                    ))}
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="funding" className="border-none">
-                  <AccordionTrigger className="py-2 text-sm font-medium hover:no-underline">
-                    Funding Type
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pt-2">
-                    {FUNDING_TYPES.map((type) => (
-                      <div key={type} className="flex items-center gap-2">
-                        <Checkbox
-                          id={`funding-${type}`}
-                          checked={selectedFundingTypes.includes(type)}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              setSelectedFundingTypes([...selectedFundingTypes, type]);
-                            } else {
-                              setSelectedFundingTypes(selectedFundingTypes.filter(f => f !== type));
-                            }
-                          }}
-                          data-testid={`checkbox-funding-${type.toLowerCase().replace(/\s+/g, '-')}`}
-                        />
-                        <label htmlFor={`funding-${type}`} className="text-sm cursor-pointer">
-                          {type}
-                        </label>
-                      </div>
-                    ))}
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="geography" className="border-none">
-                  <AccordionTrigger className="py-2 text-sm font-medium hover:no-underline">
-                    Geography
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pt-2">
-                    {GEOGRAPHIES.map((geo) => (
-                      <div key={geo} className="flex items-center gap-2">
-                        <Checkbox
-                          id={`geo-${geo}`}
-                          checked={selectedGeographies.includes(geo)}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              setSelectedGeographies([...selectedGeographies, geo]);
-                            } else {
-                              setSelectedGeographies(selectedGeographies.filter(g => g !== geo));
-                            }
-                          }}
-                          data-testid={`checkbox-geo-${geo.toLowerCase().replace(/\s+/g, '-')}`}
-                        />
-                        <label htmlFor={`geo-${geo}`} className="text-sm cursor-pointer">
-                          {geo}
-                        </label>
-                      </div>
-                    ))}
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="amount" className="border-none">
-                  <AccordionTrigger className="py-2 text-sm font-medium hover:no-underline">
-                    Grant Amount
-                  </AccordionTrigger>
-                  <AccordionContent className="pt-4 pb-2">
-                    <div className="space-y-4">
-                      <Slider
-                        value={amountRange}
-                        min={0}
-                        max={2000000}
-                        step={25000}
-                        onValueChange={(value) => setAmountRange(value as [number, number])}
-                        className="w-full"
-                        data-testid="slider-amount-range"
-                      />
-                      <div className="flex items-center justify-between text-xs text-muted-foreground">
-                        <span>{formatCurrency(amountRange[0])}</span>
-                        <span>{formatCurrency(amountRange[1])}</span>
-                      </div>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-                
-                <AccordionItem value="eligibility" className="border-none">
-                  <AccordionTrigger className="py-2 text-sm font-medium hover:no-underline">
-                    Eligibility
-                  </AccordionTrigger>
-                  <AccordionContent className="space-y-2 pt-2">
-                    <div className="flex items-center gap-2">
-                      <Checkbox
-                        id="open-new"
-                        checked={openToNewOnly}
-                        onCheckedChange={(checked) => setOpenToNewOnly(checked === true)}
-                        data-testid="checkbox-open-new-grantees"
-                      />
-                      <label htmlFor="open-new" className="text-sm cursor-pointer">
-                        Open to new grantees only
-                      </label>
-                    </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
-            </ScrollArea>
-          </Card>
+      <div className="p-6 space-y-6 flex-1 overflow-auto">
+        <div className="flex items-center justify-between gap-4">
+          <div className="relative flex-1 max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="Search grants, funders, or keywords..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-9 h-9 bg-background"
+              data-testid="input-grant-search"
+            />
+          </div>
           
-          <Card className="p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <Bookmark className="w-4 h-4" />
-              <h3 className="font-semibold text-sm">Saved Searches</h3>
-            </div>
-            <div className="space-y-2">
-              {savedSearches.map((search) => (
-                <div 
-                  key={search.id} 
-                  className="flex items-center justify-between p-2 rounded-md hover:bg-muted/50 cursor-pointer"
-                  data-testid={`saved-search-${search.id}`}
-                >
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium truncate">{search.name}</div>
-                    <div className="text-xs text-muted-foreground">{search.resultsCount} results</div>
-                  </div>
-                  {search.alertEnabled && (
-                    <Bell className="w-3.5 h-3.5 text-blue-600" />
-                  )}
-                </div>
-              ))}
-              <Button 
-                variant="outline" 
-                size="sm" 
-                className="w-full text-xs mt-2"
-                onClick={handleSaveSearch}
-                aria-label="Save current search"
+          <div className="flex items-center gap-2">
+            {savedSearches.length > 0 && (
+              <select 
+                className="h-9 px-3 text-sm border rounded-md bg-background"
+                onChange={(e) => {
+                  const search = savedSearches.find(s => s.id === e.target.value);
+                  if (search) {
+                    setSearchQuery(search.query);
+                    if (search.filters.focusAreas) setSelectedFocusAreas(search.filters.focusAreas);
+                    if (search.filters.fundingTypes) setSelectedFundingTypes(search.filters.fundingTypes as string[]);
+                    if (search.filters.geography) setSelectedGeographies(search.filters.geography);
+                  }
+                }}
+                defaultValue=""
+                data-testid="select-saved-searches"
               >
-                <BookmarkPlus className="w-3.5 h-3.5 mr-1" />
-                Save Current Search
+                <option value="" disabled>Saved Searches ({savedSearches.length})</option>
+                {savedSearches.map((search) => (
+                  <option key={search.id} value={search.id}>
+                    {search.name} ({search.resultsCount} results)
+                  </option>
+                ))}
+              </select>
+            )}
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={handleSaveSearch}
+              data-testid="button-save-search"
+            >
+              <BookmarkPlus className="w-4 h-4 mr-1.5" />
+              Save Search
+            </Button>
+          </div>
+        </div>
+
+        <Card className="p-4">
+          <div className="flex items-start justify-between gap-4 mb-4">
+            <div className="flex items-center gap-2">
+              <Filter className="w-4 h-4 text-muted-foreground" />
+              <span className="text-sm font-medium">Filters</span>
+            </div>
+            {(hasActiveFilters || searchQuery) && (
+              <Button variant="ghost" size="sm" className="h-7 text-xs" onClick={clearAllFilters}>
+                Clear all
               </Button>
+            )}
+          </div>
+          
+          <div className="space-y-4">
+            <div>
+              <div className="text-xs text-muted-foreground mb-2">Focus Areas</div>
+              <div className="flex flex-wrap gap-1.5">
+                {FOCUS_AREAS.map((area) => {
+                  const isSelected = selectedFocusAreas.includes(area.id);
+                  return (
+                    <Badge
+                      key={area.id}
+                      variant={isSelected ? "default" : "outline"}
+                      className="cursor-pointer text-xs"
+                      onClick={() => {
+                        if (isSelected) {
+                          setSelectedFocusAreas(selectedFocusAreas.filter(f => f !== area.id));
+                        } else {
+                          setSelectedFocusAreas([...selectedFocusAreas, area.id]);
+                        }
+                      }}
+                      data-testid={`filter-focus-${area.id}`}
+                    >
+                      <area.icon className="w-3 h-3 mr-1" />
+                      {area.label}
+                    </Badge>
+                  );
+                })}
+              </div>
+            </div>
+            
+            <Separator />
+            
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div>
+                <div className="text-xs text-muted-foreground mb-2">Funding Type</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {FUNDING_TYPES.map((type) => {
+                    const isSelected = selectedFundingTypes.includes(type);
+                    return (
+                      <Badge
+                        key={type}
+                        variant={isSelected ? "default" : "outline"}
+                        className="cursor-pointer text-xs"
+                        onClick={() => {
+                          if (isSelected) {
+                            setSelectedFundingTypes(selectedFundingTypes.filter(f => f !== type));
+                          } else {
+                            setSelectedFundingTypes([...selectedFundingTypes, type]);
+                          }
+                        }}
+                        data-testid={`filter-funding-${type.toLowerCase().replace(/\s+/g, '-')}`}
+                      >
+                        {type}
+                      </Badge>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              <div>
+                <div className="text-xs text-muted-foreground mb-2">Geography</div>
+                <div className="flex flex-wrap gap-1.5">
+                  {GEOGRAPHIES.map((geo) => {
+                    const isSelected = selectedGeographies.includes(geo);
+                    return (
+                      <Badge
+                        key={geo}
+                        variant={isSelected ? "default" : "outline"}
+                        className="cursor-pointer text-xs"
+                        onClick={() => {
+                          if (isSelected) {
+                            setSelectedGeographies(selectedGeographies.filter(g => g !== geo));
+                          } else {
+                            setSelectedGeographies([...selectedGeographies, geo]);
+                          }
+                        }}
+                        data-testid={`filter-geo-${geo.toLowerCase().replace(/\s+/g, '-')}`}
+                      >
+                        <MapPin className="w-3 h-3 mr-1" />
+                        {geo}
+                      </Badge>
+                    );
+                  })}
+                </div>
+              </div>
+              
+              <div>
+                <div className="text-xs text-muted-foreground mb-2">Grant Amount</div>
+                <div className="space-y-2">
+                  <Slider
+                    value={amountRange}
+                    min={0}
+                    max={2000000}
+                    step={25000}
+                    onValueChange={(value) => setAmountRange(value as [number, number])}
+                    className="w-full"
+                    data-testid="slider-amount-range"
+                  />
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
+                    <span>{formatCurrency(amountRange[0])}</span>
+                    <span>{formatCurrency(amountRange[1])}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div>
+                <div className="text-xs text-muted-foreground mb-2">Eligibility</div>
+                <div className="flex items-center gap-2">
+                  <Checkbox
+                    id="open-new"
+                    checked={openToNewOnly}
+                    onCheckedChange={(checked) => setOpenToNewOnly(checked === true)}
+                    data-testid="checkbox-open-new-grantees"
+                  />
+                  <label htmlFor="open-new" className="text-xs cursor-pointer">
+                    Open to new grantees only
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Card>
+
+        <div className="grid grid-cols-3 gap-4">
+          <Card className="p-4">
+            <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
+              <FileText className="w-3.5 h-3.5" />
+              Matching Grants
+            </div>
+            <div className="text-2xl font-bold tabular-nums" data-testid="stat-matching-grants">
+              {totalMatchingGrants}
+            </div>
+          </Card>
+          <Card className="p-4">
+            <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
+              <DollarSign className="w-3.5 h-3.5" />
+              Potential Funding
+            </div>
+            <div className="text-2xl font-bold tabular-nums" data-testid="stat-potential-funding">
+              {formatCurrency(totalPotentialFunding)}
+            </div>
+          </Card>
+          <Card className="p-4">
+            <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
+              <Target className="w-3.5 h-3.5" />
+              Avg Match Score
+            </div>
+            <div className="text-2xl font-bold tabular-nums" data-testid="stat-avg-match">
+              {avgMatchScore}%
             </div>
           </Card>
         </div>
         
-        <div className="col-span-12 md:col-span-9 space-y-6 overflow-hidden flex flex-col">
-          <div className="grid grid-cols-3 gap-6">
-            <Card className="p-6">
-              <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
-                <FileText className="w-3.5 h-3.5" />
-                Matching Grants
-              </div>
-              <div className="text-2xl font-bold tabular-nums" data-testid="stat-matching-grants">
-                {totalMatchingGrants}
-              </div>
-            </Card>
-            <Card className="p-6">
-              <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
-                <DollarSign className="w-3.5 h-3.5" />
-                Potential Funding
-              </div>
-              <div className="text-2xl font-bold tabular-nums" data-testid="stat-potential-funding">
-                {formatCurrency(totalPotentialFunding)}
-              </div>
-            </Card>
-            <Card className="p-6">
-              <div className="flex items-center gap-2 text-muted-foreground text-xs mb-1">
-                <Target className="w-3.5 h-3.5" />
-                Avg Match Score
-              </div>
-              <div className="text-2xl font-bold tabular-nums" data-testid="stat-avg-match">
-                {avgMatchScore}%
-              </div>
-            </Card>
-          </div>
-          
-          <div className="flex items-center gap-2 border-b">
+        <div className="flex items-center gap-2 border-b pb-2">
             <Button
               variant={activeTab === "opportunities" ? "default" : "ghost"}
               size="sm"
@@ -1165,7 +1157,6 @@ export default function GrantResearchPage() {
               </div>
             )}
           </ScrollArea>
-        </div>
       </div>
       
       <Dialog open={!!selectedOpportunity} onOpenChange={() => setSelectedOpportunity(null)}>
