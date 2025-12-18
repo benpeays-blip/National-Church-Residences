@@ -25,6 +25,7 @@ import {
   Filter
 } from "lucide-react";
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
+import { useToast } from "@/hooks/use-toast";
 
 const tributeGifts = [
   { 
@@ -89,6 +90,14 @@ const pendingNotifications = tributeGifts.filter(g => !g.notificationSent && g.n
 export default function TributeGiving() {
   const [filterType, setFilterType] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
+  const { toast } = useToast();
+
+  const handleSendAllNotifications = () => {
+    toast({
+      title: "Notifications Sent",
+      description: `${pendingNotifications.length} tribute notification${pendingNotifications.length > 1 ? 's' : ''} have been queued for delivery.`,
+    });
+  };
 
   const filteredGifts = tributeGifts.filter(gift => {
     const matchesSearch = 
@@ -297,7 +306,7 @@ export default function TributeGiving() {
                   Honorees or families haven't been notified about these tribute gifts yet.
                 </p>
               </div>
-              <Button style={{ backgroundColor: getAccentColor("orange") }} data-testid="button-send-all">
+              <Button onClick={handleSendAllNotifications} style={{ backgroundColor: getAccentColor("orange") }} data-testid="button-send-all">
                 <Send className="h-4 w-4 mr-2" />
                 Send All Notifications
               </Button>
