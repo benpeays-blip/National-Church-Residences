@@ -615,6 +615,15 @@ function App() {
     { name: 'Infrastructure', path: '/temporary/infrastructure' },
   ];
 
+  const fundraisingNavItems = [
+    { name: 'Donors', path: '/donors' },
+    { name: 'Pipeline', path: '/pipeline' },
+    { name: 'Gifts', path: '/gifts' },
+    { name: 'Grants', path: '/grants' },
+    { name: 'Campaigns', path: '/campaigns' },
+    { name: 'Events', path: '/events' },
+  ];
+
   // Check if user is a donor - render standalone donor portal
   const portalUser = typeof window !== 'undefined' ? localStorage.getItem("portalUser") : null;
   const userRole = portalUser ? JSON.parse(portalUser)?.role : null;
@@ -658,7 +667,7 @@ function App() {
                       if (tab === 'Agentic Plan') {
                         navigate('/agent-value-map?tab=overview');
                       } else if (tab === 'Fundraising') {
-                        navigate('/temporary');
+                        navigate('/donors');
                       } else if (tab === 'Philanthropy') {
                         navigate('/quadrant');
                       }
@@ -711,9 +720,7 @@ function App() {
                             </Link>
                           );
                         })}
-                      </>
-                    ) : selectedTopTab === 'Fundraising' ? (
-                      <>
+                        <div className="h-4 w-px bg-gray-300 mx-1" />
                         {assessmentNavItems.map((item) => (
                           <Link key={item.path} href={item.path}>
                             <div className={`relative ${location === item.path || (location.startsWith(item.path) && item.path !== '/temporary') || (location === '/temporary' && item.path === '/temporary' && !location.includes('/temporary/')) ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
@@ -722,6 +729,23 @@ function App() {
                                 size="sm"
                                 className="font-semibold text-sm text-gray-700 hover:bg-black/10"
                                 data-testid={`button-nav-assessment-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                              >
+                                {item.name}
+                              </Button>
+                            </div>
+                          </Link>
+                        ))}
+                      </>
+                    ) : selectedTopTab === 'Fundraising' ? (
+                      <>
+                        {fundraisingNavItems.map((item) => (
+                          <Link key={item.path} href={item.path}>
+                            <div className={`relative ${location === item.path ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                                data-testid={`button-nav-fundraising-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                               >
                                 {item.name}
                               </Button>
