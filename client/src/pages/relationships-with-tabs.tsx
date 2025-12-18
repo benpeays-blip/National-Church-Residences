@@ -23,7 +23,7 @@ const relationshipsTabs: SectionTab[] = [
     path: "/relationships/dnb",
   },
   {
-    label: "Sankey Flow",
+    label: "Relationship Flow",
     value: "visualization",
     icon: Share2,
     path: "/relationships/visualization",
