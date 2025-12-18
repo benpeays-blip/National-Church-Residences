@@ -476,7 +476,6 @@ function App() {
     { name: 'App Shell', tab: 'appshell' },
     { name: 'Governance', tab: 'governance' },
     { name: 'Scorecard', tab: 'scorecard' },
-    { name: 'Tech Stack', tab: 'techstack' },
   ];
 
   const assessmentNavItems = [
