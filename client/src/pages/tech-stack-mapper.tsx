@@ -205,12 +205,12 @@ export default function TechStackMapper() {
                                 <div className="flex items-start gap-3 flex-1">
                                   <div 
                                     className="w-8 h-8 rounded-md flex items-center justify-center shrink-0"
-                                    style={{ backgroundColor: `${product.brandColor}15` }}
+                                    style={{ backgroundColor: `${getAccentColor(productAccent)}15` }}
                                   >
-                                    <CategoryIcon className="w-4 h-4" style={{ color: product.brandColor }} />
+                                    <CategoryIcon className="w-4 h-4" style={{ color: getAccentColor(productAccent) }} />
                                   </div>
                                   <div className="flex-1 min-w-0">
-                                    <h4 className="font-semibold text-sm leading-tight" style={{ color: product.brandColor }}>{product.name}</h4>
+                                    <h4 className="font-semibold text-sm leading-tight" style={{ color: getAccentColor(productAccent) }}>{product.name}</h4>
                                     <p className="text-xs text-muted-foreground mt-0.5">{product.tagline}</p>
                                   </div>
                                 </div>
