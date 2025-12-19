@@ -545,22 +545,22 @@ export function ImpactFeedTab() {
           const isSaved = savedStories.has(story.id);
           
           return (
-            <Card key={story.id} className="hover-elevate overflow-hidden" data-testid={`story-card-${story.id}`}>
-              <CardHeader style={{ backgroundColor: '#395174' }} className="text-white">
+            <Card key={story.id} className="hover-elevate" data-testid={`story-card-${story.id}`}>
+              <CardHeader className="border-b">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-full bg-primary-foreground/20 flex items-center justify-center flex-shrink-0">
-                      <CategoryIcon className="w-5 h-5" />
+                    <div className="w-10 h-10 rounded-lg bg-[#4FA6A6]/10 flex items-center justify-center flex-shrink-0">
+                      <CategoryIcon className="w-5 h-5 text-[#4FA6A6]" />
                     </div>
                     <div>
                       <CardTitle className="text-xl">{story.title}</CardTitle>
                       <div className="flex items-center gap-2 mt-1 flex-wrap">
                         <Badge variant="secondary">{story.programArea}</Badge>
-                        <span className="text-xs text-primary-foreground/80 flex items-center gap-1">
+                        <span className="text-xs text-muted-foreground flex items-center gap-1">
                           <Calendar className="w-3 h-3" />
                           {new Date(story.date).toLocaleDateString()}
                         </span>
-                        <span className="text-xs text-primary-foreground/80 flex items-center gap-1">
+                        <span className="text-xs text-muted-foreground flex items-center gap-1">
                           <Building2 className="w-3 h-3" />
                           {story.location}
                         </span>
@@ -571,12 +571,11 @@ export function ImpactFeedTab() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="hover:bg-primary-foreground/20"
                       onClick={() => toggleSave(story.id)}
                       data-testid={`save-story-${story.id}`}
                     >
                       {isSaved ? (
-                        <BookmarkCheck className="w-4 h-4" />
+                        <BookmarkCheck className="w-4 h-4 text-[#4FA6A6]" />
                       ) : (
                         <Bookmark className="w-4 h-4" />
                       )}
@@ -584,12 +583,11 @@ export function ImpactFeedTab() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="hover:bg-primary-foreground/20"
                       onClick={() => copyToClipboard(story)}
                       data-testid={`copy-story-${story.id}`}
                     >
                       {copiedId === story.id ? (
-                        <CheckCircle2 className="w-4 h-4 text-green-300" />
+                        <CheckCircle2 className="w-4 h-4 text-green-500" />
                       ) : (
                         <Copy className="w-4 h-4" />
                       )}
