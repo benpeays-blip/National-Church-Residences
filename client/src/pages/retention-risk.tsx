@@ -329,12 +329,12 @@ export default function RetentionRisk() {
 
         <TabsContent value="actions" className="space-y-6">
           <Card>
-            <CardHeader className="bg-[#395174] text-white rounded-t-lg">
-              <CardTitle className="text-white flex items-center gap-2">
-                <Zap className="h-5 w-5" />
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Zap className="h-5 w-5" style={{ color: getAccentColor("teal") }} />
                 AI-Recommended Interventions
               </CardTitle>
-              <CardDescription className="text-white/80">
+              <CardDescription>
                 Personalized actions to re-engage at-risk donors
               </CardDescription>
             </CardHeader>
