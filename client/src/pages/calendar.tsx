@@ -628,16 +628,22 @@ export default function CalendarPage() {
                               );
                             })}
                             {dayTasks.slice(0, 2).map((task) => (
-                              <div
-                                key={task.id}
-                                className="text-xs p-1 rounded truncate"
-                                style={{ 
-                                  backgroundColor: `${accentColors.sky}20`,
-                                  color: accentColors.sky
-                                }}
+                              <Link 
+                                key={task.id} 
+                                href={`/actions/${task.id}`}
+                                onClick={(e: React.MouseEvent) => e.stopPropagation()}
+                                data-testid={`month-task-${task.id}`}
                               >
-                                {task.title}
-                              </div>
+                                <div
+                                  className="text-xs p-1 rounded truncate cursor-pointer hover:opacity-80"
+                                  style={{ 
+                                    backgroundColor: `${accentColors.sky}20`,
+                                    color: accentColors.sky
+                                  }}
+                                >
+                                  {task.title}
+                                </div>
+                              </Link>
                             ))}
                             {(dayEvents.length + dayTasks.length) > 2 && (
                               <p className="text-xs text-muted-foreground">
