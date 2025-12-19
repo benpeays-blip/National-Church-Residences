@@ -285,7 +285,7 @@ export default function PhilanthropyDashboard() {
   ];
 
   const corporatePartners = [
-    { name: "Tech Corp Industries", type: "Corporate Sponsor", value: "$150K", status: "Active" },
+    { name: "Google", type: "Corporate Sponsor", value: "$150K", status: "Active" },
     { name: "Regional Bank", type: "Matching Gift Partner", value: "$75K", status: "Active" },
     { name: "Healthcare Systems", type: "In-Kind Partner", value: "$50K", status: "Pending" },
   ];
