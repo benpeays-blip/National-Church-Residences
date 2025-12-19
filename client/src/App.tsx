@@ -444,7 +444,7 @@ function Router() {
 }
 
 
-type TopTab = 'Philanthropy' | 'Fundraising' | 'Agentic Plan';
+type TopTab = 'Philanthropy' | 'Fundraising' | 'Agentic Plan' | 'Assessment';
 
 function App() {
   const [location, navigate] = useLocation();
@@ -518,7 +518,7 @@ function App() {
     setActiveDropdown(null);
   };
 
-  const topTabs: TopTab[] = ['Philanthropy', 'Fundraising', 'Agentic Plan'];
+  const topTabs: TopTab[] = ['Philanthropy', 'Fundraising', 'Agentic Plan', 'Assessment'];
 
   const agenticPlanNavItems = [
     { name: 'Overview', tab: 'overview' },
@@ -582,6 +582,8 @@ function App() {
                         navigate('/fundraising-dashboard');
                       } else if (tab === 'Philanthropy') {
                         navigate('/philanthropy-dashboard');
+                      } else if (tab === 'Assessment') {
+                        navigate('/temporary');
                       }
                     }}
                     className={`px-5 py-2 text-sm font-medium transition-colors ${
@@ -708,44 +710,6 @@ function App() {
                             </div>
                           )}
                         </div>
-
-                        <div className="h-4 w-px bg-gray-300 mx-1" />
-
-                        {/* Assessment Dropdown */}
-                        <div
-                          className="relative"
-                          onMouseEnter={() => setActiveDropdown("Assessment")}
-                          onMouseLeave={() => setActiveDropdown(null)}
-                        >
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDropdownClick("Assessment")}
-                            className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${activeDropdown === "Assessment" ? "bg-black/10" : ""}`}
-                            data-testid="button-nav-assessment"
-                          >
-                            Our Assessment
-                            <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "Assessment" ? "rotate-180" : ""}`} />
-                          </Button>
-                          {activeDropdown === "Assessment" && (
-                            <div className="absolute left-0 top-full pt-1 z-50">
-                              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[200px] overflow-hidden">
-                                <div className="py-2 px-1">
-                                  {assessmentNavItems.map((item) => (
-                                    <Link 
-                                      key={item.path} 
-                                      href={item.path}
-                                      className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                                      onClick={closeDropdown}
-                                    >
-                                      {item.name}
-                                    </Link>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
                       </>
                     ) : selectedTopTab === 'Fundraising' ? (
                       <>
@@ -757,6 +721,23 @@ function App() {
                                 size="sm"
                                 className="font-semibold text-sm text-gray-700 hover:bg-black/10"
                                 data-testid={`button-nav-fundraising-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
+                              >
+                                {item.name}
+                              </Button>
+                            </div>
+                          </Link>
+                        ))}
+                      </>
+                    ) : selectedTopTab === 'Assessment' ? (
+                      <>
+                        {assessmentNavItems.map((item) => (
+                          <Link key={item.path} href={item.path}>
+                            <div className={`relative ${location === item.path || location.startsWith(item.path) ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                                data-testid={`button-nav-assessment-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
                               >
                                 {item.name}
                               </Button>
