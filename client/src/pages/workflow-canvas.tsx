@@ -300,7 +300,7 @@ export default function WorkflowCanvas() {
 
         <div 
           className="flex-1 relative"
-          style={{ backgroundColor: '#0f1c2e' }}
+          style={{ backgroundColor: '#ffffff' }}
         >
           <ReactFlow
             nodes={nodes}
@@ -313,7 +313,7 @@ export default function WorkflowCanvas() {
             defaultEdgeOptions={{
               type: 'smoothstep',
               animated: false,
-              style: { stroke: '#4a5568', strokeWidth: 2 },
+              style: { stroke: '#94a3b8', strokeWidth: 2 },
             }}
             onDrop={(e) => {
               e.preventDefault();
@@ -346,19 +346,19 @@ export default function WorkflowCanvas() {
             data-testid="workflow-canvas"
           >
             <Background 
-              color="#1e3a5f" 
+              color="#e2e8f0" 
               gap={20} 
               size={1}
-              style={{ backgroundColor: '#0f1c2e' }}
+              style={{ backgroundColor: '#ffffff' }}
             />
-            <Controls className="!bg-white/10 !border-white/20 [&>button]:!bg-white/10 [&>button]:!border-white/20 [&>button]:!text-white [&>button:hover]:!bg-white/20" />
+            <Controls className="!bg-gray-100 !border-gray-200 [&>button]:!bg-gray-100 [&>button]:!border-gray-200 [&>button]:!text-gray-600 [&>button:hover]:!bg-gray-200" />
             <MiniMap 
-              nodeColor="#ffffff"
-              maskColor="rgba(15, 28, 46, 0.8)"
-              style={{ backgroundColor: '#1a2d47' }}
+              nodeColor="#0891b2"
+              maskColor="rgba(255, 255, 255, 0.8)"
+              style={{ backgroundColor: '#f8fafc' }}
             />
-            <Panel position="top-right" className="bg-white/10 backdrop-blur-sm p-3 rounded-lg border border-white/20">
-              <div className="text-xs text-white/80">
+            <Panel position="top-right" className="bg-white/90 backdrop-blur-sm p-3 rounded-lg border border-gray-200 shadow-sm">
+              <div className="text-xs text-gray-600">
                 {nodes.length} blocks • {edges.length} connections
               </div>
             </Panel>
