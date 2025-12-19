@@ -418,11 +418,11 @@ Close: "Whatever you decide, I appreciate ${corporation.name}'s consideration. O
       <Card className="overflow-hidden" data-testid="card-action-plan-header">
         <div 
           className="p-6"
-          style={{ backgroundColor: "rgba(234, 88, 12, 0.1)" }}
+          style={{ backgroundColor: "rgba(14, 165, 233, 0.1)" }}
         >
           <div className="flex items-center gap-2 mb-2">
-            <Sparkles className="w-5 h-5 text-orange-500" />
-            <Badge className="text-xs bg-orange-500">AI-Generated Action Plan</Badge>
+            <Sparkles className="w-5 h-5 text-sky-500" />
+            <Badge className="text-xs bg-sky-500">AI-Generated Action Plan</Badge>
           </div>
           <h1 className="text-3xl font-bold" data-testid="text-action-plan-title">
             Partner Pathway for {corporation.name}
@@ -434,8 +434,8 @@ Close: "Whatever you decide, I appreciate ${corporation.name}'s consideration. O
         <CardContent className="p-6">
           <div className="flex items-start gap-6">
             <div className="flex items-center gap-4">
-              <Avatar className="w-16 h-16 border-2 border-orange-500/20">
-                <AvatarFallback className="bg-orange-100 text-orange-700 text-lg font-semibold">
+              <Avatar className="w-16 h-16 border-2 border-sky-500/20">
+                <AvatarFallback className="bg-sky-100 text-sky-700 text-lg font-semibold">
                   {corporation.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
                 </AvatarFallback>
               </Avatar>
@@ -446,11 +446,11 @@ Close: "Whatever you decide, I appreciate ${corporation.name}'s consideration. O
                   <span>{corporation.industry}</span>
                 </div>
                 <div className="flex items-center gap-2 mt-2">
-                  <Badge variant={getQuadrantVariant(currentQuadrant)} className="bg-orange-100 text-orange-700">
+                  <Badge variant={getQuadrantVariant(currentQuadrant)} className="bg-sky-100 text-sky-700">
                     Current: {getQuadrantLabel(currentQuadrant)}
                   </Badge>
                   <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                  <Badge className="bg-orange-500">
+                  <Badge className="bg-sky-500">
                     Goal: Partner
                   </Badge>
                 </div>
@@ -458,24 +458,24 @@ Close: "Whatever you decide, I appreciate ${corporation.name}'s consideration. O
             </div>
 
             <div className="flex-1 grid grid-cols-4 gap-4 ml-6">
-              <div className="text-center p-3 rounded-lg bg-orange-50 dark:bg-orange-950/20">
-                <p className="text-2xl font-bold text-orange-600">
+              <div className="text-center p-3 rounded-lg bg-sky-50 dark:bg-sky-950/20">
+                <p className="text-2xl font-bold text-sky-600">
                   ${corporation.totalContributions.toLocaleString()}
                 </p>
                 <p className="text-xs text-muted-foreground">Total Contributions</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-orange-50 dark:bg-orange-950/20">
-                <p className="text-2xl font-bold text-orange-600">{corporation.volunteerHours.toLocaleString()}</p>
+              <div className="text-center p-3 rounded-lg bg-sky-50 dark:bg-sky-950/20">
+                <p className="text-2xl font-bold text-sky-600">{corporation.volunteerHours.toLocaleString()}</p>
                 <p className="text-xs text-muted-foreground">Volunteer Hours</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-orange-50 dark:bg-orange-950/20">
-                <p className="text-2xl font-bold text-orange-600">
+              <div className="text-center p-3 rounded-lg bg-sky-50 dark:bg-sky-950/20">
+                <p className="text-2xl font-bold text-sky-600">
                   {corporation.employeeCount.toLocaleString()}
                 </p>
                 <p className="text-xs text-muted-foreground">Employees</p>
               </div>
-              <div className="text-center p-3 rounded-lg bg-orange-50 dark:bg-orange-950/20">
-                <p className="text-2xl font-bold text-orange-600">
+              <div className="text-center p-3 rounded-lg bg-sky-50 dark:bg-sky-950/20">
+                <p className="text-2xl font-bold text-sky-600">
                   ${corporation.matchingGiftAmount.toLocaleString()}
                 </p>
                 <p className="text-xs text-muted-foreground">Match Potential</p>
@@ -512,7 +512,7 @@ Close: "Whatever you decide, I appreciate ${corporation.name}'s consideration. O
 
       <div className="space-y-4">
         <h2 className="text-xl font-semibold flex items-center gap-2">
-          <Calendar className="w-5 h-5 text-orange-500" />
+          <Calendar className="w-5 h-5 text-sky-500" />
           8-Week Corporate Partnership Plan
         </h2>
 
@@ -522,11 +522,11 @@ Close: "Whatever you decide, I appreciate ${corporation.name}'s consideration. O
             <Card key={phaseIdx} data-testid={`card-phase-${phaseIdx}`}>
               <CardHeader className="pb-3">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-lg bg-orange-100 dark:bg-orange-950/30 flex items-center justify-center">
-                    <PhaseIcon className="w-5 h-5 text-orange-600" />
+                  <div className="w-10 h-10 rounded-lg bg-sky-100 dark:bg-sky-950/30 flex items-center justify-center">
+                    <PhaseIcon className="w-5 h-5 text-sky-600" />
                   </div>
                   <div>
-                    <Badge variant="outline" className="mb-1 border-orange-200 text-orange-700">{phase.week}</Badge>
+                    <Badge variant="outline" className="mb-1 border-sky-200 text-sky-700">{phase.week}</Badge>
                     <CardTitle className="text-lg">{phase.phase}</CardTitle>
                   </div>
                 </div>
@@ -541,12 +541,12 @@ Close: "Whatever you decide, I appreciate ${corporation.name}'s consideration. O
                     <div className="p-4 bg-muted/20">
                       <div className="flex items-start justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-950/30 flex items-center justify-center">
-                            {action.type === 'call' && <Phone className="w-4 h-4 text-orange-600" />}
-                            {action.type === 'email' && <Mail className="w-4 h-4 text-orange-600" />}
-                            {action.type === 'meeting' && <Coffee className="w-4 h-4 text-orange-600" />}
-                            {action.type === 'proposal' && <FileText className="w-4 h-4 text-orange-600" />}
-                            {action.type === 'event' && <Users className="w-4 h-4 text-orange-600" />}
+                          <div className="w-8 h-8 rounded-full bg-sky-100 dark:bg-sky-950/30 flex items-center justify-center">
+                            {action.type === 'call' && <Phone className="w-4 h-4 text-sky-600" />}
+                            {action.type === 'email' && <Mail className="w-4 h-4 text-sky-600" />}
+                            {action.type === 'meeting' && <Coffee className="w-4 h-4 text-sky-600" />}
+                            {action.type === 'proposal' && <FileText className="w-4 h-4 text-sky-600" />}
+                            {action.type === 'event' && <Users className="w-4 h-4 text-sky-600" />}
                           </div>
                           <div>
                             <h4 className="font-semibold">{action.title}</h4>
@@ -554,7 +554,7 @@ Close: "Whatever you decide, I appreciate ${corporation.name}'s consideration. O
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
-                          <Badge variant={action.priority === 'High' ? 'default' : 'secondary'} className={action.priority === 'High' ? 'bg-orange-500' : ''}>
+                          <Badge variant={action.priority === 'High' ? 'default' : 'secondary'} className={action.priority === 'High' ? 'bg-sky-500' : ''}>
                             {action.priority}
                           </Badge>
                           <Badge variant="outline" className="text-xs">
@@ -567,7 +567,7 @@ Close: "Whatever you decide, I appreciate ${corporation.name}'s consideration. O
                     
                     <div className="p-4 bg-background">
                       <div className="flex items-center gap-2 mb-3">
-                        <Sparkles className="w-4 h-4 text-orange-500" />
+                        <Sparkles className="w-4 h-4 text-sky-500" />
                         <span className="text-sm font-medium">
                           AI-Generated {action.type === 'call' ? 'Script' : action.type === 'meeting' ? 'Agenda' : action.type === 'proposal' ? 'Outline' : action.type === 'event' ? 'Plan' : 'Draft'}
                         </span>
@@ -585,7 +585,7 @@ Close: "Whatever you decide, I appreciate ${corporation.name}'s consideration. O
                           Customize
                         </Button>
                         {action.type === 'email' && (
-                          <Button size="sm" className="bg-orange-500 hover:bg-orange-600">
+                          <Button size="sm" className="bg-sky-500 hover:bg-sky-600">
                             <Send className="w-4 h-4 mr-1" />
                             Send Email
                           </Button>
@@ -603,7 +603,7 @@ Close: "Whatever you decide, I appreciate ${corporation.name}'s consideration. O
       <Card>
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
-            <TrendingUp className="w-5 h-5 text-orange-500" />
+            <TrendingUp className="w-5 h-5 text-sky-500" />
             Partnership Success Metrics
           </CardTitle>
           <CardDescription>
@@ -613,22 +613,22 @@ Close: "Whatever you decide, I appreciate ${corporation.name}'s consideration. O
         <CardContent>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="p-4 rounded-lg border text-center">
-              <DollarSign className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+              <DollarSign className="w-8 h-8 text-sky-500 mx-auto mb-2" />
               <p className="text-sm font-medium">Annual Giving</p>
               <p className="text-xs text-muted-foreground mt-1">Target: $50,000+</p>
             </div>
             <div className="p-4 rounded-lg border text-center">
-              <Users className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+              <Users className="w-8 h-8 text-sky-500 mx-auto mb-2" />
               <p className="text-sm font-medium">Volunteer Events</p>
               <p className="text-xs text-muted-foreground mt-1">Target: 4+ per year</p>
             </div>
             <div className="p-4 rounded-lg border text-center">
-              <Award className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+              <Award className="w-8 h-8 text-sky-500 mx-auto mb-2" />
               <p className="text-sm font-medium">Executive Engagement</p>
               <p className="text-xs text-muted-foreground mt-1">Target: C-suite sponsor</p>
             </div>
             <div className="p-4 rounded-lg border text-center">
-              <PieChart className="w-8 h-8 text-orange-500 mx-auto mb-2" />
+              <PieChart className="w-8 h-8 text-sky-500 mx-auto mb-2" />
               <p className="text-sm font-medium">Multi-Year Commit</p>
               <p className="text-xs text-muted-foreground mt-1">Target: 3-year agreement</p>
             </div>
