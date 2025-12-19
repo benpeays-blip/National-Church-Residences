@@ -223,31 +223,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Portal User Registration
+  // Portal User Registration - Simplified for NCR Staff
   app.post("/api/auth/register", async (req, res) => {
     try {
-      const { username, email, password, role, firstName, lastName, verificationCode } = req.body;
+      const { username, email, password, role, firstName, lastName } = req.body;
       
-      if (!username || !email || !password || !role) {
+      if (!username || !email || !password) {
         return res.status(400).json({ message: "All fields are required" });
       }
 
       if (password.length < 8) {
         return res.status(400).json({ message: "Password must be at least 8 characters" });
-      }
-
-      // Verify the email verification code from the send-verification step
-      const pending = pendingVerifications.get(email.toLowerCase());
-      if (pending) {
-        if (new Date() > pending.expiresAt) {
-          pendingVerifications.delete(email.toLowerCase());
-          return res.status(400).json({ message: "Verification code has expired. Please request a new one." });
-        }
-        if (pending.code !== verificationCode) {
-          return res.status(400).json({ message: "Invalid verification code" });
-        }
-        // Code is valid, clear it from pending
-        pendingVerifications.delete(email.toLowerCase());
       }
 
       // Check if username or email already exists
@@ -269,68 +255,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Email already registered" });
       }
 
-      // Verify the user based on role and roster membership + invite token
-      let verificationStatus: "pending" | "approved" | "rejected" = "pending";
-      
-      if (role === "board_member") {
-        // Check if email is in board roster (primary verification)
-        const [boardMember] = await db
-          .select()
-          .from(boardRoster)
-          .where(and(
-            eq(boardRoster.email, email.toLowerCase()),
-            eq(boardRoster.isActive, true)
-          ));
-        
-        // Must be in roster AND have valid invite token
-        if (boardMember && verificationCode) {
-          const [invite] = await db
-            .select()
-            .from(inviteTokens)
-            .where(and(
-              eq(inviteTokens.token, verificationCode),
-              eq(inviteTokens.email, email.toLowerCase()),
-              eq(inviteTokens.role, "board_member")
-            ));
-
-          if (invite && !invite.consumedAt && new Date(invite.expiresAt) > new Date()) {
-            verificationStatus = "approved";
-            await db
-              .update(inviteTokens)
-              .set({ consumedAt: new Date() })
-              .where(eq(inviteTokens.id, invite.id));
-          }
-        }
-      } else if (role === "donor") {
-        // Check if email is in donor roster (primary verification)
-        const [donor] = await db
-          .select()
-          .from(donorRoster)
-          .where(and(
-            eq(donorRoster.email, email.toLowerCase()),
-            eq(donorRoster.isActive, true)
-          ));
-        
-        // Must be in roster AND have valid invite token
-        if (donor && verificationCode) {
-          const [invite] = await db
-            .select()
-            .from(inviteTokens)
-            .where(and(
-              eq(inviteTokens.token, verificationCode),
-              eq(inviteTokens.email, email.toLowerCase()),
-              eq(inviteTokens.role, "donor")
-            ));
-
-          if (invite && !invite.consumedAt && new Date(invite.expiresAt) > new Date()) {
-            verificationStatus = "approved";
-            await db
-              .update(inviteTokens)
-              .set({ consumedAt: new Date() })
-              .where(eq(inviteTokens.id, invite.id));
-          }
-        }
-      }
+      // Auto-approve NCR staff registrations
+      const verificationStatus: "pending" | "approved" | "rejected" = "approved";
 
       const passwordHash = await hashPassword(password);
 

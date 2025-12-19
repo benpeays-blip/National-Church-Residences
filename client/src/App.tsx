@@ -204,7 +204,6 @@ import RetentionRisk from "@/pages/retention-risk";
 import SmsFundraising from "@/pages/sms-fundraising";
 import PeerToPeer from "@/pages/peer-to-peer";
 import TributeGiving from "@/pages/tribute-giving";
-import DonorPortal from "@/pages/donor-portal";
 import Benchmarks from "@/pages/benchmarks";
 import EmailTracking from "@/pages/email-tracking";
 import DuplicateDetection from "@/pages/duplicate-detection";
@@ -503,9 +502,6 @@ function Router() {
       <Route path="/sms-fundraising" component={SmsFundraising} />
       <Route path="/peer-to-peer" component={PeerToPeer} />
       <Route path="/tribute-giving" component={TributeGiving} />
-      <Route path="/donor-portal">
-        {() => <ProtectedRoute component={DonorPortal} allowedRoles={["donor"]} />}
-      </Route>
       <Route path="/benchmarks" component={Benchmarks} />
       <Route path="/email-tracking" component={EmailTracking} />
       <Route path="/duplicate-detection">
@@ -636,22 +632,6 @@ function App() {
     { name: 'SMS Fundraising', path: '/sms-fundraising' },
   ];
 
-  // Check if user is a donor - render standalone donor portal
-  const portalUser = typeof window !== 'undefined' ? localStorage.getItem("portalUser") : null;
-  const userRole = portalUser ? JSON.parse(portalUser)?.role : null;
-  const isDonor = userRole === "donor";
-
-  // If user is a donor, render only the donor portal without main navigation
-  if (isDonor) {
-    return (
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <DonorPortal />
-          <Toaster />
-        </TooltipProvider>
-      </QueryClientProvider>
-    );
-  }
 
   return (
     <QueryClientProvider client={queryClient}>
