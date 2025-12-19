@@ -356,22 +356,21 @@ export default function QuadrantTop10() {
 
   return (
     <Card className="border-0 shadow-none h-full flex flex-col">
-      <CardHeader 
-        className="p-6 pb-4 rounded-t-lg shrink-0"
-        style={{ backgroundColor: "#395174" }}
-      >
+      <CardHeader className="border-b shrink-0">
         <div className="flex items-center justify-between gap-4 flex-wrap">
-          <div className="flex items-center gap-2">
-            <Target className="h-5 w-5 text-white" />
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-[#395174]/10 flex items-center justify-center">
+              <Target className="h-5 w-5 text-[#395174]" />
+            </div>
             <div>
-              <CardTitle className="text-white">TOP ACTIONABLE OPPORTUNITIES</CardTitle>
-              <CardDescription className="mt-1 text-white/80">
+              <CardTitle>Top Actionable Opportunities</CardTitle>
+              <CardDescription className="mt-1">
                 Priority donor engagement opportunities based on scoring logic
               </CardDescription>
             </div>
           </div>
           <Select value={opportunityFilter} onValueChange={(value) => setOpportunityFilter(value as OpportunityFilter)}>
-            <SelectTrigger className="w-56 bg-white/10 border-white/20 text-white" data-testid="select-opportunity-filter">
+            <SelectTrigger className="w-56" data-testid="select-opportunity-filter">
               <SelectValue placeholder="Filter opportunities" />
             </SelectTrigger>
             <SelectContent>
