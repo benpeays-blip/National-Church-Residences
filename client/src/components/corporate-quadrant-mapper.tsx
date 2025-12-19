@@ -294,27 +294,27 @@ export default function CorporateQuadrantMapper() {
   };
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 h-full min-h-0" data-testid="corporate-quadrant-container">
-      <Card className="lg:col-span-3 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 80px)', minHeight: '420px' }} data-testid="card-quadrant-visualization">
-        <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
+    <div className="flex flex-row gap-6 items-stretch" data-testid="corporate-quadrant-container">
+      <Card className="flex-[2.5] flex flex-col overflow-visible shadow-lg" style={{ minHeight: '600px' }} data-testid="card-quadrant-visualization">
+        <CardHeader className="border-b py-4" style={{ backgroundColor: '#395174' }}>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="flex items-center gap-2 text-white" data-testid="title-corporate-quadrant">
-                <Building2 className="w-5 h-5" style={{ color: '#e1c47d' }} />
+              <CardTitle className="flex items-center gap-2 text-white text-xl" data-testid="title-corporate-quadrant">
+                <Building2 className="w-6 h-6" style={{ color: '#e1c47d' }} />
                 Corporate Relationship Quadrant
               </CardTitle>
               <CardDescription className="mt-1 text-white/80">
-                Engagement increases upward; giving increases to the right.<br />Goal: Move every corporation toward Partner.
+                Engagement increases upward; giving increases to the right. Goal: Move every corporation toward Partner.
               </CardDescription>
             </div>
-            <Badge variant="secondary" className="text-sm" style={{ backgroundColor: '#e1c47d', color: '#000000' }} data-testid="badge-total-corporations">
+            <Badge variant="secondary" className="text-base px-3 py-1" style={{ backgroundColor: '#e1c47d', color: '#000000' }} data-testid="badge-total-corporations">
               {corporations.length} Corporations
             </Badge>
           </div>
         </CardHeader>
-        <CardContent className="p-6 flex-1 min-h-0 flex flex-col" style={{ backgroundColor: '#f4f4f4' }}>
-          <div className="relative flex-1 min-h-0 pb-8 pl-10">
-            <div className="relative w-full h-full min-h-[720px] max-h-[calc(100vh-80px)] aspect-square rounded-lg overflow-hidden bg-background" style={{ border: '3px solid #395174' }}>
+        <CardContent className="p-8 flex-1 flex flex-col" style={{ backgroundColor: '#f4f4f4' }}>
+          <div className="relative flex-1 pb-10 pl-12">
+            <div className="relative w-full overflow-hidden bg-background rounded-lg" style={{ border: '3px solid #395174', aspectRatio: '1/1' }}>
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
               <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
 
@@ -538,17 +538,17 @@ export default function CorporateQuadrantMapper() {
               </button>
             </div>
 
-            <div className="absolute -left-10 top-1/2 -translate-y-1/2 -rotate-90 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+            <div className="absolute -left-12 top-1/2 -translate-y-1/2 -rotate-90 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Engagement →
             </div>
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+            <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Giving →
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card className="lg:col-span-2 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 80px)', minHeight: '420px' }} data-testid="card-quadrant-details">
+      <Card className="flex-1 flex flex-col overflow-hidden shadow-lg" style={{ minWidth: '320px', maxWidth: '400px', minHeight: '600px' }} data-testid="card-quadrant-details">
         <div className="flex border-b bg-muted/30 shrink-0" data-testid="quadrant-tabs-container">
           {(['partner', 'volunteering', 'donor', 'acquaintance'] as QuadrantType[]).map((q) => {
             const isSelected = selectedQuadrant === q;
