@@ -53,6 +53,32 @@ const getTypeLabel = (type: string | null) => {
   }
 };
 
+const getTypeColor = (type: string | null): string => {
+  switch (type) {
+    case "email":
+      return "#4FA6A6";
+    case "letter":
+      return "#92A05A";
+    case "call_script":
+      return "#E8A54B";
+    default:
+      return "#395174";
+  }
+};
+
+const getLargeTypeIcon = (type: string | null, color: string) => {
+  switch (type) {
+    case "email":
+      return <Mail className="w-5 h-5" style={{ color }} />;
+    case "letter":
+      return <FileText className="w-5 h-5" style={{ color }} />;
+    case "call_script":
+      return <Phone className="w-5 h-5" style={{ color }} />;
+    default:
+      return <Mail className="w-5 h-5" style={{ color }} />;
+  }
+};
+
 export default function OutreachGenerator() {
   const [filter, setFilter] = useState<FilterType>("all");
   
@@ -187,28 +213,43 @@ export default function OutreachGenerator() {
         </div>
       ) : filteredTemplates && filteredTemplates.length > 0 ? (
         <div className="grid grid-cols-1 gap-4">
-          {filteredTemplates.map((item) => (
-            <Card key={item.template.id} className="overflow-hidden" data-testid={`template-${item.template.id}`}>
-              <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
+          {filteredTemplates.map((item) => {
+            const typeColor = getTypeColor(item.template.templateType);
+            return (
+            <Card 
+              key={item.template.id} 
+              className="overflow-hidden" 
+              style={{ borderLeft: `4px solid ${typeColor}` }}
+              data-testid={`template-${item.template.id}`}
+            >
+              <CardHeader className="border-b">
                 <div className="flex items-start justify-between gap-2">
-                  <div className="flex-1">
-                    <CardTitle className="text-lg text-white">
-                      {item.person.firstName} {item.person.lastName}
-                    </CardTitle>
-                    <CardDescription className="text-white/80">{item.template.purpose}</CardDescription>
+                  <div className="flex items-start gap-3">
+                    <div 
+                      className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ backgroundColor: `${typeColor}15` }}
+                    >
+                      {getLargeTypeIcon(item.template.templateType, typeColor)}
+                    </div>
+                    <div>
+                      <CardTitle className="text-lg">
+                        {item.person.firstName} {item.person.lastName}
+                      </CardTitle>
+                      <CardDescription>{item.template.purpose}</CardDescription>
+                    </div>
                   </div>
                   <div className="flex gap-2 flex-wrap">
                     <Badge 
                       variant="outline"
                       className="flex items-center gap-1"
-                      style={{ color: '#e1c47d', borderColor: '#e1c47d' }}
+                      style={{ color: typeColor, borderColor: typeColor }}
                       data-testid={`type-badge-${item.template.templateType}`}
                     >
                       {getTypeIcon(item.template.templateType)}
                       {getTypeLabel(item.template.templateType)}
                     </Badge>
-                    <Badge variant="outline" style={{ color: 'white', borderColor: 'rgba(255,255,255,0.5)' }}>{item.template.tone}</Badge>
-                    {item.template.used === 1 && <Badge variant="outline" style={{ color: '#4ade80', borderColor: '#4ade80' }}>Sent</Badge>}
+                    <Badge variant="secondary">{item.template.tone}</Badge>
+                    {item.template.used === 1 && <Badge className="bg-emerald-500">Sent</Badge>}
                   </div>
                 </div>
               </CardHeader>
@@ -233,7 +274,8 @@ export default function OutreachGenerator() {
                 )}
               </CardContent>
             </Card>
-          ))}
+            );
+          })}
         </div>
       ) : filter !== "all" ? (
         <Card>
