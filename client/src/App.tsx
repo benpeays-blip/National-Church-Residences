@@ -537,7 +537,6 @@ function App() {
     { name: 'Optimization Ideas', path: '/temporary/optimization-ideas' },
     { name: 'Org Canvas', path: '/organization-workflow-canvas' },
     { name: 'Risk & Compliance', path: '/temporary/risk-compliance' },
-    { name: 'Infrastructure', path: '/temporary/infrastructure' },
   ];
 
   const fundraisingNavItems = [
