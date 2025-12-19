@@ -491,41 +491,46 @@ export default function CorporateQuadrantMapper() {
                 );
               })}
 
+              {/* Centered Quadrant Labels */}
+              {/* Volunteering - Top Left */}
               <button
                 onClick={() => setSelectedQuadrant('volunteering')}
-                className="absolute left-0 top-0 w-[calc(50%-1px)] h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
+                className="absolute left-1/4 top-1/4 -translate-x-1/2 -translate-y-1/2 z-30 px-4 py-2 flex flex-col items-center justify-center cursor-pointer transition-all hover:scale-105 hover:shadow-lg bg-[#395174] rounded-lg shadow-md"
                 data-testid="quadrant-volunteering"
               >
                 <span className="font-semibold text-sm text-white">Volunteering</span>
                 <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-volunteering">{counts.volunteering} Corps</span>
               </button>
 
+              {/* Partner - Top Right */}
               <button
                 onClick={() => setSelectedQuadrant('partner')}
-                className="absolute left-1/2 top-0 w-1/2 h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
+                className="absolute left-3/4 top-1/4 -translate-x-1/2 -translate-y-1/2 z-30 px-4 py-2 flex flex-col items-center justify-center cursor-pointer transition-all hover:scale-105 hover:shadow-lg bg-[#395174] rounded-lg shadow-md"
                 data-testid="quadrant-partner"
               >
                 <span className="font-semibold text-sm text-white">Partner</span>
                 <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-partner">{counts.partner} Corps</span>
               </button>
               {isPartnerHovered && draggedCorp && (
-                <div className="absolute left-3/4 top-14 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow z-40">
+                <div className="absolute left-3/4 top-1/4 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow z-40">
                   Drop to move to Partner
                 </div>
               )}
 
+              {/* Acquaintance - Bottom Left */}
               <button
                 onClick={() => setSelectedQuadrant('acquaintance')}
-                className="absolute left-0 bottom-0 w-[calc(50%-1px)] h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-t border-[#395174]/30"
+                className="absolute left-1/4 top-3/4 -translate-x-1/2 -translate-y-1/2 z-30 px-4 py-2 flex flex-col items-center justify-center cursor-pointer transition-all hover:scale-105 hover:shadow-lg bg-[#395174] rounded-lg shadow-md"
                 data-testid="quadrant-acquaintance"
               >
                 <span className="font-semibold text-sm text-white">Acquaintance</span>
                 <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-acquaintance">{counts.acquaintance} Corps</span>
               </button>
 
+              {/* Donor - Bottom Right */}
               <button
                 onClick={() => setSelectedQuadrant('donor')}
-                className="absolute left-1/2 bottom-0 w-1/2 h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-t border-[#395174]/30"
+                className="absolute left-3/4 top-3/4 -translate-x-1/2 -translate-y-1/2 z-30 px-4 py-2 flex flex-col items-center justify-center cursor-pointer transition-all hover:scale-105 hover:shadow-lg bg-[#395174] rounded-lg shadow-md"
                 data-testid="quadrant-donor"
               >
                 <span className="font-semibold text-sm text-white">Donor</span>
