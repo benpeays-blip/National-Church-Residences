@@ -3,7 +3,9 @@ import { OpportunityCard } from "@/components/opportunity-card";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { TrendingUp, ArrowLeft } from "lucide-react";
+import { Link } from "wouter";
 import type { Opportunity } from "@shared/schema";
 
 export default function Pipeline() {
@@ -39,6 +41,12 @@ export default function Pipeline() {
     <div className="flex flex-col h-full">
       <div className="flex items-center justify-between shrink-0 mb-6">
         <div className="space-y-1">
+          <Link href="/">
+            <Button variant="ghost" size="sm" className="gap-1.5 mb-2 -ml-2" data-testid="button-back-dashboard">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Dashboard
+            </Button>
+          </Link>
           <h1 className="text-3xl font-bold">Pipeline</h1>
           <p className="text-sm text-muted-foreground">
             Manage opportunities through the fundraising lifecycle

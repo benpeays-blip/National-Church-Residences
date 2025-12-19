@@ -11,6 +11,7 @@ import {
   Mail, 
   FileText, 
   ArrowRight,
+  ArrowLeft,
   Clock,
   User,
   Building2,
@@ -526,6 +527,12 @@ export default function PledgesExpiring() {
             <AlertTriangle className="w-6 h-6" style={{ color: accentColors.orange }} />
           </div>
           <div>
+            <Link href="/">
+              <Button variant="ghost" size="sm" className="gap-1.5 mb-2 -ml-2" data-testid="button-back-dashboard">
+                <ArrowLeft className="w-4 h-4" />
+                Back to Dashboard
+              </Button>
+            </Link>
             <h1 className="text-3xl font-bold">Expiring Pledges</h1>
             <p className="text-muted-foreground">Pledges requiring attention and recommended next steps</p>
           </div>

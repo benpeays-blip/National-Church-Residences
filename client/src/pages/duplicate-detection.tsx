@@ -12,10 +12,12 @@ import {
   Search,
   Eye,
   XCircle,
-  Zap
+  Zap,
+  ArrowLeft
 } from "lucide-react";
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
 import { useToast } from "@/hooks/use-toast";
+import { Link } from "wouter";
 
 type DuplicatePair = {
   id: string;
@@ -97,6 +99,12 @@ export default function DuplicateDetection() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
+          <Link href="/">
+            <Button variant="ghost" size="sm" className="gap-1.5 mb-2 -ml-2" data-testid="button-back-dashboard">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Dashboard
+            </Button>
+          </Link>
           <h1 className="text-3xl font-bold" data-testid="text-page-title">Duplicate Detection</h1>
           <p className="text-sm text-muted-foreground">
             Find and merge duplicate donor records to maintain data quality

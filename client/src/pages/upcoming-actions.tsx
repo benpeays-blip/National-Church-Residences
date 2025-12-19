@@ -16,7 +16,8 @@ import {
   ChevronRight,
   Filter,
   Plus,
-  CheckCircle2
+  CheckCircle2,
+  ArrowLeft
 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { queryClient, apiRequest } from "@/lib/queryClient";
@@ -366,6 +367,12 @@ export default function UpcomingActionsPage() {
       {/* Page Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
+          <Link href="/">
+            <Button variant="ghost" size="sm" className="gap-1.5 mb-2 -ml-2" data-testid="button-back-dashboard">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Dashboard
+            </Button>
+          </Link>
           <h1 className="text-3xl font-bold">
             {isShowingCompleted ? "Completed Tasks" : "Upcoming Actions"}
           </h1>

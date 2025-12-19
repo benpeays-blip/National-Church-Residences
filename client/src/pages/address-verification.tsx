@@ -13,9 +13,11 @@ import {
   RefreshCw,
   Mail,
   Home,
-  Zap
+  Zap,
+  ArrowLeft
 } from "lucide-react";
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
+import { Link } from "wouter";
 
 const addressIssues = [
   { 
@@ -80,6 +82,12 @@ export default function AddressVerification() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="space-y-1">
+          <Link href="/">
+            <Button variant="ghost" size="sm" className="gap-1.5 mb-2 -ml-2" data-testid="button-back-dashboard">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Dashboard
+            </Button>
+          </Link>
           <h1 className="text-3xl font-bold" data-testid="text-page-title">Address Verification</h1>
           <p className="text-sm text-muted-foreground">
             USPS validation for accurate direct mail campaigns
