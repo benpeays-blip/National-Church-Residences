@@ -326,7 +326,7 @@ const mockOpportunities: ActionableOpportunity[] = [
 export default function QuadrantTop10() {
   const [, setLocation] = useLocation();
   const [opportunityFilter, setOpportunityFilter] = useState<OpportunityFilter>("all");
-  const [visibleCount, setVisibleCount] = useState(20);
+  const [visibleCount, setVisibleCount] = useState(40);
 
   const filteredOpportunities = mockOpportunities.filter(opp => {
     if (opportunityFilter === "all") return true;
@@ -382,8 +382,8 @@ export default function QuadrantTop10() {
           </Select>
         </div>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col overflow-hidden p-4">
-        <div className="rounded-md border flex-1 overflow-auto">
+      <CardContent className="flex-1 flex flex-col overflow-hidden p-4" style={{ minHeight: '600px' }}>
+        <div className="rounded-md border flex-1 overflow-auto" style={{ minHeight: '500px' }}>
           <Table>
             <TableHeader>
               <TableRow>
@@ -451,7 +451,7 @@ export default function QuadrantTop10() {
             </Button>
           </div>
         )}
-        {visibleCount >= filteredOpportunities.length && filteredOpportunities.length > 20 && (
+        {visibleCount >= filteredOpportunities.length && filteredOpportunities.length > 40 && (
           <p className="text-center text-sm text-muted-foreground mt-4 shrink-0">
             Showing all {filteredOpportunities.length} opportunities
           </p>
