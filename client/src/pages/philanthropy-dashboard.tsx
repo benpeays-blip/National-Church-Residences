@@ -4,6 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Link } from "wouter";
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
+import { useQuery } from "@tanstack/react-query";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { 
   TrendingUp, 
   Users, 
@@ -31,6 +34,177 @@ const accentColors = {
   coral: getAccentColor("coral"),
   orange: getAccentColor("orange"),
 };
+
+interface Donor {
+  id: string;
+  firstName: string;
+  lastName: string;
+  energy: number;
+  structure: number;
+  quadrant: 'partner' | 'friend' | 'colleague' | 'acquaintance';
+}
+
+interface QuadrantData {
+  donors: Donor[];
+  counts: {
+    partner: number;
+    friend: number;
+    colleague: number;
+    acquaintance: number;
+  };
+  totalDonors: number;
+}
+
+const quadrantColors = {
+  partner: accentColors.teal,
+  friend: accentColors.sky,
+  colleague: accentColors.lime,
+  acquaintance: accentColors.olive,
+};
+
+const quadrantLabels = {
+  partner: 'Partner',
+  friend: 'Friend',
+  colleague: 'Colleague',
+  acquaintance: 'Acquaintance',
+};
+
+function MiniDonorQuadrant() {
+  const { data, isLoading } = useQuery<QuadrantData>({
+    queryKey: ['/api/donors/quadrant'],
+  });
+
+  if (isLoading) {
+    return (
+      <div className="space-y-3">
+        <Skeleton className="h-[220px] w-full rounded-lg" />
+        <div className="grid grid-cols-4 gap-2">
+          {[1, 2, 3, 4].map(i => (
+            <Skeleton key={i} className="h-12 rounded" />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return <div className="text-sm text-muted-foreground text-center py-8">No data available</div>;
+  }
+
+  return (
+    <Link href="/quadrant" data-testid="link-mini-quadrant">
+      <div className="cursor-pointer hover:opacity-95 transition-opacity">
+        {/* Axis Labels */}
+        <div className="relative">
+          <div className="absolute -left-1 top-1/2 -translate-y-1/2 -rotate-90 text-[9px] font-medium text-muted-foreground whitespace-nowrap z-10">
+            ENERGY
+          </div>
+          <div className="absolute bottom-[-16px] left-1/2 -translate-x-1/2 text-[9px] font-medium text-muted-foreground z-10">
+            STRUCTURE
+          </div>
+
+          {/* Mini Quadrant Grid */}
+          <div 
+            className="relative ml-4 mb-5 h-[200px] rounded-lg overflow-hidden bg-background"
+            style={{ border: '2px solid hsl(var(--border))' }}
+          >
+            {/* Grid Lines */}
+            <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
+            <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
+
+            {/* Quadrant Backgrounds with Labels */}
+            {/* Partner - Top Right */}
+            <div 
+              className="absolute top-0 right-0 w-1/2 h-1/2 flex items-center justify-center"
+              style={{ backgroundColor: `${quadrantColors.partner}08` }}
+            >
+              <span className="text-[10px] font-semibold opacity-60" style={{ color: quadrantColors.partner }}>
+                Partner
+              </span>
+            </div>
+            {/* Friend - Top Left */}
+            <div 
+              className="absolute top-0 left-0 w-1/2 h-1/2 flex items-center justify-center"
+              style={{ backgroundColor: `${quadrantColors.friend}08` }}
+            >
+              <span className="text-[10px] font-semibold opacity-60" style={{ color: quadrantColors.friend }}>
+                Friend
+              </span>
+            </div>
+            {/* Colleague - Bottom Right */}
+            <div 
+              className="absolute bottom-0 right-0 w-1/2 h-1/2 flex items-center justify-center"
+              style={{ backgroundColor: `${quadrantColors.colleague}08` }}
+            >
+              <span className="text-[10px] font-semibold opacity-60" style={{ color: quadrantColors.colleague }}>
+                Colleague
+              </span>
+            </div>
+            {/* Acquaintance - Bottom Left */}
+            <div 
+              className="absolute bottom-0 left-0 w-1/2 h-1/2 flex items-center justify-center"
+              style={{ backgroundColor: `${quadrantColors.acquaintance}08` }}
+            >
+              <span className="text-[10px] font-semibold opacity-60" style={{ color: quadrantColors.acquaintance }}>
+                Acquaintance
+              </span>
+            </div>
+
+            {/* Donor Dots */}
+            {data.donors.map((donor) => {
+              const color = quadrantColors[donor.quadrant];
+              const topPercent = 100 - donor.energy;
+              const leftPercent = donor.structure;
+              
+              return (
+                <Tooltip key={donor.id}>
+                  <TooltipTrigger asChild>
+                    <div
+                      className="absolute w-2 h-2 rounded-full transition-transform hover:scale-150 z-20"
+                      style={{
+                        left: `calc(${leftPercent}% - 4px)`,
+                        top: `calc(${topPercent}% - 4px)`,
+                        backgroundColor: color,
+                        opacity: 0.8,
+                      }}
+                      data-testid={`mini-dot-${donor.id}`}
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent side="top" className="text-xs">
+                    <p className="font-medium">{donor.firstName} {donor.lastName}</p>
+                    <p className="text-muted-foreground">{quadrantLabels[donor.quadrant]}</p>
+                  </TooltipContent>
+                </Tooltip>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Quadrant Summary */}
+        <div className="grid grid-cols-4 gap-2 mt-2">
+          {(['partner', 'friend', 'colleague', 'acquaintance'] as const).map((q) => (
+            <div 
+              key={q}
+              className="text-center p-2 rounded-lg"
+              style={{ backgroundColor: `${quadrantColors[q]}10` }}
+              data-testid={`mini-summary-${q}`}
+            >
+              <div 
+                className="text-lg font-bold"
+                style={{ color: quadrantColors[q] }}
+              >
+                {data.counts[q]}
+              </div>
+              <div className="text-[10px] text-muted-foreground capitalize truncate">
+                {q}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Link>
+  );
+}
 
 function getGreeting(): string {
   const hour = new Date().getHours();
@@ -298,70 +472,7 @@ export default function PhilanthropyDashboard() {
               </div>
             </CardHeader>
             <CardContent className="pt-4">
-              {/* Axis Labels */}
-              <div className="relative">
-                <div className="absolute -left-2 top-1/2 -translate-y-1/2 -rotate-90 text-[10px] font-medium text-muted-foreground whitespace-nowrap">
-                  ENGAGEMENT
-                </div>
-                <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 text-[10px] font-medium text-muted-foreground">
-                  CAPACITY
-                </div>
-                
-                {/* Quadrant Grid */}
-                <div className="grid grid-cols-2 gap-2 ml-4 mb-6">
-                  {quadrantSnapshot.map((q, index) => {
-                    const total = quadrantSnapshot.reduce((sum, i) => sum + i.count, 0);
-                    const percentage = Math.round((q.count / total) * 100);
-                    return (
-                      <Link key={index} href="/quadrant" data-testid={`link-quadrant-${q.quadrant.toLowerCase().replace(/\s+/g, '-')}`}>
-                        <div 
-                          className="group relative p-4 rounded-xl cursor-pointer transition-all hover:scale-[1.02] hover:shadow-lg"
-                          style={{ 
-                            backgroundColor: `${q.color}10`,
-                            border: `2px solid ${q.color}30`
-                          }}
-                          data-testid={`card-quadrant-${q.quadrant.toLowerCase()}`}
-                        >
-                          {/* Decorative Corner */}
-                          <div 
-                            className="absolute top-0 right-0 w-12 h-12 opacity-20"
-                            style={{
-                              background: `radial-gradient(circle at top right, ${q.color} 0%, transparent 70%)`
-                            }}
-                          />
-                          
-                          <div className="relative">
-                            <div className="flex items-center justify-between mb-2">
-                              <span 
-                                className="text-xs font-bold uppercase tracking-wide"
-                                style={{ color: q.color }}
-                              >
-                                {q.quadrant}
-                              </span>
-                              <Badge 
-                                variant="outline" 
-                                className="text-xs"
-                                style={{ borderColor: q.color, color: q.color }}
-                              >
-                                {percentage}%
-                              </Badge>
-                            </div>
-                            <div 
-                              className="text-3xl font-bold mb-1"
-                              style={{ color: q.color }}
-                            >
-                              {q.count}
-                            </div>
-                            <div className="text-xs text-muted-foreground leading-tight">
-                              {q.description}
-                            </div>
-                          </div>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </div>
+              <MiniDonorQuadrant />
             </CardContent>
           </Card>
         </div>
