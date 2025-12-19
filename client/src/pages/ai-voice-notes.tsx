@@ -275,7 +275,7 @@ export default function AIVoiceNotes() {
   const hasContentToProcess = (audioBlob || manualTranscript.trim()) && !result;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 min-h-[calc(100vh-120px)] pb-12">
       <div className="space-y-1">
         <h1 className="text-3xl font-bold">Voice-to-CRM</h1>
         <p className="text-sm text-muted-foreground">
@@ -285,7 +285,7 @@ export default function AIVoiceNotes() {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Column - Recording/Upload */}
-        <Card>
+        <Card className="min-h-[600px]">
           <CardHeader className="border-b">
             <CardTitle className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-[#E8A54B]/10 flex items-center justify-center">
@@ -477,7 +477,7 @@ Follow-up: Send the campaign brochure by Friday and schedule a campus tour for J
         </Card>
 
         {/* Right Column - Results */}
-        <Card className="flex flex-col">
+        <Card className="flex flex-col min-h-[600px]">
           <CardHeader className="border-b">
             <CardTitle className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-[#4FA6A6]/10 flex items-center justify-center">
@@ -659,7 +659,7 @@ Follow-up: Send the campaign brochure by Friday and schedule a campus tour for J
       </div>
 
       {/* Recent Voice Notes */}
-      <Card>
+      <Card className="min-h-[400px]">
         <CardHeader className="border-b">
           <CardTitle className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-[#7BC4DC]/10 flex items-center justify-center">
