@@ -439,6 +439,13 @@ export function ImpactFeedTab() {
     staff: Award,
   };
 
+  const categoryColors: Record<string, string> = {
+    resident: "#4FA6A6",
+    program: "#92A05A",
+    community: "#E8A54B",
+    staff: "#395174",
+  };
+
   const filteredStories = sampleStories.filter((story) => {
     const matchesSearch = story.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       story.summary.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -558,13 +565,23 @@ export function ImpactFeedTab() {
           const CategoryIcon = categoryIcons[story.category] || Heart;
           const isSaved = savedStories.has(story.id);
           
+          const categoryColor = categoryColors[story.category] || "#4FA6A6";
+          
           return (
-            <Card key={story.id} className="hover-elevate" data-testid={`story-card-${story.id}`}>
+            <Card 
+              key={story.id} 
+              className="hover-elevate overflow-hidden" 
+              style={{ borderLeft: `4px solid ${categoryColor}` }}
+              data-testid={`story-card-${story.id}`}
+            >
               <CardHeader className="border-b">
                 <div className="flex items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-[#4FA6A6]/10 flex items-center justify-center flex-shrink-0">
-                      <CategoryIcon className="w-5 h-5 text-[#4FA6A6]" />
+                    <div 
+                      className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ backgroundColor: `${categoryColor}15` }}
+                    >
+                      <CategoryIcon className="w-5 h-5" style={{ color: categoryColor }} />
                     </div>
                     <div>
                       <CardTitle className="text-xl">{story.title}</CardTitle>
