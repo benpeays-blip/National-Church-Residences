@@ -219,83 +219,10 @@ import ImpactHomeHealth from "@/pages/impact-home-health";
 import ImpactVolunteerHours from "@/pages/impact-volunteer-hours";
 import ImpactAffordableUnits from "@/pages/impact-affordable-units";
 
-// Login
-import Login from "@/pages/login";
-
-// Auth protection wrapper component with server validation
-function ProtectedRoute({ component: Component, allowedRoles }: { 
-  component: React.ComponentType; 
-  allowedRoles?: string[];
-}) {
-  const [, navigate] = useLocation();
-  const [isValidating, setIsValidating] = useState(true);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  
-  useEffect(() => {
-    const validateAuth = async () => {
-      const token = localStorage.getItem("authToken");
-      const portalUser = localStorage.getItem("portalUser");
-      
-      if (!token || !portalUser) {
-        navigate("/login");
-        return;
-      }
-      
-      try {
-        // Validate token with server
-        const response = await fetch("/api/auth/portal-status", {
-          headers: {
-            "Authorization": `Bearer ${token}`
-          }
-        });
-        const data = await response.json();
-        
-        if (!data.authenticated) {
-          // Clear invalid session
-          localStorage.removeItem("authToken");
-          localStorage.removeItem("portalUser");
-          navigate("/login");
-          return;
-        }
-        
-        // Check role authorization using SERVER-VERIFIED role (not localStorage)
-        const serverRole = data.role;
-        if (allowedRoles && !allowedRoles.includes(serverRole) && serverRole !== "demo") {
-          navigate("/login");
-          return;
-        }
-        
-        setIsAuthenticated(true);
-      } catch (error) {
-        console.error("Auth validation error:", error);
-        navigate("/login");
-      } finally {
-        setIsValidating(false);
-      }
-    };
-    
-    validateAuth();
-  }, [navigate, allowedRoles]);
-  
-  if (isValidating) {
-    return (
-      <div className="flex items-center justify-center h-full">
-        <div className="text-muted-foreground">Verifying access...</div>
-      </div>
-    );
-  }
-  
-  if (!isAuthenticated) {
-    return null;
-  }
-  
-  return <Component />;
-}
 
 function Router() {
   return (
     <Switch>
-      <Route path="/login" component={Login} />
       <Route path="/" component={PreviewHomepage} />
       <Route path="/dashboard-old" component={DashboardHome} />
       <Route path="/home-old" component={Home} />
@@ -504,19 +431,11 @@ function Router() {
       <Route path="/tribute-giving" component={TributeGiving} />
       <Route path="/benchmarks" component={Benchmarks} />
       <Route path="/email-tracking" component={EmailTracking} />
-      <Route path="/duplicate-detection">
-        {() => <ProtectedRoute component={DuplicateDetection} allowedRoles={["data_ops"]} />}
-      </Route>
-      <Route path="/address-verification">
-        {() => <ProtectedRoute component={AddressVerification} allowedRoles={["data_ops"]} />}
-      </Route>
+      <Route path="/duplicate-detection" component={DuplicateDetection} />
+      <Route path="/address-verification" component={AddressVerification} />
       <Route path="/giving-anniversaries" component={GivingAnniversaries} />
-      <Route path="/board-dashboard">
-        {() => <ProtectedRoute component={BoardDashboard} allowedRoles={["board_member"]} />}
-      </Route>
-      <Route path="/data-ops-portal">
-        {() => <ProtectedRoute component={DataOpsPortal} allowedRoles={["data_ops"]} />}
-      </Route>
+      <Route path="/board-dashboard" component={BoardDashboard} />
+      <Route path="/data-ops-portal" component={DataOpsPortal} />
       
       <Route component={NotFound} />
     </Switch>
