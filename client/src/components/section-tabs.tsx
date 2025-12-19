@@ -71,8 +71,8 @@ export function SectionTabs({ tabs, currentPath, variant = "default" }: SectionT
                     "flex items-center gap-2 px-4 py-2.5 rounded-lg border transition-all",
                     "hover-elevate active-elevate-2",
                     isActive 
-                      ? "bg-primary/10 border-primary text-primary font-medium" 
-                      : "bg-card border-card-border text-muted-foreground hover:text-foreground"
+                      ? "bg-sky-500 border-sky-500 text-white font-medium" 
+                      : "bg-white dark:bg-background border-sky-500 text-sky-600 dark:text-sky-400 hover:text-sky-700"
                   )}
                 >
                   {Icon && <Icon className="w-4 h-4" />}
