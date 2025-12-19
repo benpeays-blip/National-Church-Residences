@@ -505,7 +505,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardContent>
       </Card>
       {/* Right Panel - Quadrant Details */}
-      <Card className="flex-[1.5] flex flex-col overflow-hidden" style={{ minWidth: '350px', maxWidth: '450px', maxHeight: '600px' }}>
+      <Card className="flex-[1.5] flex flex-col overflow-hidden self-stretch" style={{ minWidth: '350px', maxWidth: '450px' }}>
         {/* Layered Tab Navigation */}
         <div className="flex border-b bg-muted/30 shrink-0">
           {(['partner', 'friend', 'colleague', 'acquaintance'] as QuadrantType[]).map((q) => {
