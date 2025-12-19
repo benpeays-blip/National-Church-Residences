@@ -307,7 +307,7 @@ export default function PhilanthropyDashboard() {
               <div className="flex items-center gap-3 mb-2">
                 <Sparkles className="w-6 h-6" style={{ color: accentColors.teal }} />
                 <h1 className="text-3xl font-bold text-foreground" data-testid="text-philanthropy-greeting">
-                  {greeting}, Relationship Builder
+                  Philanthropy Dashboard
                 </h1>
               </div>
               <p className="text-muted-foreground text-lg">
