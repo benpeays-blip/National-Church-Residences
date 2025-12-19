@@ -289,37 +289,40 @@ export default function TechStackMapper() {
             <CardContent className="space-y-8">
               
               {/* Visual Architecture Diagram */}
-              <div className="relative">
+              <div className="relative space-y-4">
                 {/* Layer 1: Core Systems */}
                 <div className="relative z-10">
-                  <div 
-                    className="rounded-xl p-6 text-white"
-                    style={{ backgroundColor: getAccentColor("teal") }}
-                  >
+                  <AccentCard accent="teal" className="p-6">
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                        <Layers className="w-5 h-5" />
+                      <div 
+                        className="w-10 h-10 rounded-lg flex items-center justify-center"
+                        style={{ backgroundColor: `${getAccentColor("teal")}15` }}
+                      >
+                        <Layers className="w-5 h-5" style={{ color: getAccentColor("teal") }} />
                       </div>
                       <div>
-                        <h3 className="font-bold text-lg">Core Systems</h3>
-                        <p className="text-white/80 text-sm">Systems of record — where donor data lives</p>
+                        <h3 className="font-bold text-lg" style={{ color: getAccentColor("teal") }}>Core Systems</h3>
+                        <p className="text-muted-foreground text-sm">Systems of record — where donor data lives</p>
                       </div>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {groupedByLayer.core.map((product) => (
-                        <div key={product.id} className="bg-white/15 rounded-lg p-3 text-center">
+                        <div 
+                          key={product.id} 
+                          className="rounded-lg p-3 text-center border"
+                          style={{ backgroundColor: `${getAccentColor("teal")}08`, borderColor: `${getAccentColor("teal")}30` }}
+                        >
                           <p className="font-medium text-sm">{product.name}</p>
-                          <p className="text-white/70 text-xs">{product.category}</p>
+                          <p className="text-muted-foreground text-xs">{product.category}</p>
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </AccentCard>
                 </div>
 
                 {/* Arrow Down */}
-                <div className="flex justify-center py-2">
+                <div className="flex justify-center py-1">
                   <div className="flex flex-col items-center gap-1">
-                    <div className="w-0.5 h-6 bg-muted-foreground/30" />
                     <ArrowRight className="w-5 h-5 rotate-90 text-muted-foreground" />
                     <span className="text-xs text-muted-foreground">Data flows to</span>
                   </div>
@@ -327,34 +330,37 @@ export default function TechStackMapper() {
 
                 {/* Layer 2: Intelligence */}
                 <div className="relative z-10">
-                  <div 
-                    className="rounded-xl p-6 text-white"
-                    style={{ backgroundColor: getAccentColor("sky") }}
-                  >
+                  <AccentCard accent="sky" className="p-6">
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                        <Zap className="w-5 h-5" />
+                      <div 
+                        className="w-10 h-10 rounded-lg flex items-center justify-center"
+                        style={{ backgroundColor: `${getAccentColor("sky")}15` }}
+                      >
+                        <Zap className="w-5 h-5" style={{ color: getAccentColor("sky") }} />
                       </div>
                       <div>
-                        <h3 className="font-bold text-lg">Intelligence Layer</h3>
-                        <p className="text-white/80 text-sm">Analytics & insights — where data becomes actionable</p>
+                        <h3 className="font-bold text-lg" style={{ color: getAccentColor("sky") }}>Intelligence Layer</h3>
+                        <p className="text-muted-foreground text-sm">Analytics & insights — where data becomes actionable</p>
                       </div>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {groupedByLayer.intelligence.map((product) => (
-                        <div key={product.id} className="bg-white/15 rounded-lg p-3 text-center">
+                        <div 
+                          key={product.id} 
+                          className="rounded-lg p-3 text-center border"
+                          style={{ backgroundColor: `${getAccentColor("sky")}08`, borderColor: `${getAccentColor("sky")}30` }}
+                        >
                           <p className="font-medium text-sm">{product.name}</p>
-                          <p className="text-white/70 text-xs">{product.category}</p>
+                          <p className="text-muted-foreground text-xs">{product.category}</p>
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </AccentCard>
                 </div>
 
                 {/* Arrow Down */}
-                <div className="flex justify-center py-2">
+                <div className="flex justify-center py-1">
                   <div className="flex flex-col items-center gap-1">
-                    <div className="w-0.5 h-6 bg-muted-foreground/30" />
                     <ArrowRight className="w-5 h-5 rotate-90 text-muted-foreground" />
                     <span className="text-xs text-muted-foreground">Insights drive</span>
                   </div>
@@ -362,28 +368,32 @@ export default function TechStackMapper() {
 
                 {/* Layer 3: Operations */}
                 <div className="relative z-10">
-                  <div 
-                    className="rounded-xl p-6 text-white"
-                    style={{ backgroundColor: getAccentColor("lime") }}
-                  >
+                  <AccentCard accent="lime" className="p-6">
                     <div className="flex items-center gap-3 mb-4">
-                      <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
-                        <Network className="w-5 h-5" />
+                      <div 
+                        className="w-10 h-10 rounded-lg flex items-center justify-center"
+                        style={{ backgroundColor: `${getAccentColor("lime")}15` }}
+                      >
+                        <Network className="w-5 h-5" style={{ color: getAccentColor("lime") }} />
                       </div>
                       <div>
-                        <h3 className="font-bold text-lg">Operations</h3>
-                        <p className="text-white/80 text-sm">Execution layer — where action happens</p>
+                        <h3 className="font-bold text-lg" style={{ color: getAccentColor("lime") }}>Operations</h3>
+                        <p className="text-muted-foreground text-sm">Execution layer — where action happens</p>
                       </div>
                     </div>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                       {groupedByLayer.operations.map((product) => (
-                        <div key={product.id} className="bg-white/15 rounded-lg p-3 text-center">
+                        <div 
+                          key={product.id} 
+                          className="rounded-lg p-3 text-center border"
+                          style={{ backgroundColor: `${getAccentColor("lime")}08`, borderColor: `${getAccentColor("lime")}30` }}
+                        >
                           <p className="font-medium text-sm">{product.name}</p>
-                          <p className="text-white/70 text-xs">{product.category}</p>
+                          <p className="text-muted-foreground text-xs">{product.category}</p>
                         </div>
                       ))}
                     </div>
-                  </div>
+                  </AccentCard>
                 </div>
               </div>
 
