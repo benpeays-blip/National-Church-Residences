@@ -161,7 +161,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
     .sort((a, b) => (b.energy + b.structure) - (a.energy + a.structure));
 
   return (
-    <div className="flex flex-row gap-6">
+    <div className="flex flex-row gap-6 items-stretch">
       {/* Main Quadrant Visualization - Hero Feature */}
       <Card className="flex-[2.5] flex flex-col overflow-visible shadow-lg" style={{ minHeight: '600px' }}>
         <CardHeader className="border-b py-4" style={{ backgroundColor: '#395174' }}>
