@@ -51,6 +51,13 @@ export default function GrantProposals() {
     return "outline";
   };
 
+  const getStatusColor = (status: string): string => {
+    if (status === "submitted") return "#22C55E";
+    if (status === "in_review") return "#E8A54B";
+    if (status === "needs_revision") return "#EF4444";
+    return "#395174";
+  };
+
   if (isLoading) {
     return (
       <div className="space-y-6">
@@ -102,22 +109,36 @@ export default function GrantProposals() {
 
       {proposals && proposals.length > 0 ? (
         <div className="grid gap-4">
-          {proposals.map((item) => (
-            <Card key={item.proposal.id} className="overflow-hidden" data-testid={`card-proposal-${item.proposal.id}`}>
-              <CardHeader className="border-b" style={{ backgroundColor: 'rgba(222, 235, 247, 0.5)' }}>
+          {proposals.map((item) => {
+            const statusColor = getStatusColor(item.proposal.status);
+            return (
+            <Card 
+              key={item.proposal.id} 
+              className="overflow-hidden" 
+              style={{ borderLeft: `4px solid ${statusColor}` }}
+              data-testid={`card-proposal-${item.proposal.id}`}
+            >
+              <CardHeader className="border-b">
                 <div className="flex items-start justify-between gap-2">
-                  <div className="space-y-1">
-                    <CardTitle className="text-lg flex items-center gap-2" style={{ color: '#084594' }}>
-                      {getStatusIcon(item.proposal.status)}
-                      {item.grant.funderName}
-                    </CardTitle>
-                    <div className="text-sm text-muted-foreground mt-1">
-                      Requested: ${parseFloat(item.grant.askAmount).toLocaleString()} • Created {format(new Date(item.proposal.createdAt), "MMM d, yyyy")}
+                  <div className="flex items-start gap-3">
+                    <div 
+                      className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ backgroundColor: `${statusColor}15` }}
+                    >
+                      <FileEdit className="w-5 h-5" style={{ color: statusColor }} />
+                    </div>
+                    <div>
+                      <CardTitle className="text-lg">
+                        {item.grant.funderName}
+                      </CardTitle>
+                      <div className="text-sm text-muted-foreground mt-1">
+                        Requested: ${parseFloat(item.grant.askAmount).toLocaleString()} • Created {format(new Date(item.proposal.createdAt), "MMM d, yyyy")}
+                      </div>
                     </div>
                   </div>
                   <Badge 
                     variant="outline"
-                    style={{ color: '#084594', borderColor: '#084594' }}
+                    style={{ color: statusColor, borderColor: statusColor }}
                   >
                     {item.proposal.status.replace("_", " ")}
                   </Badge>
@@ -166,7 +187,8 @@ export default function GrantProposals() {
                 )}
               </CardContent>
             </Card>
-          ))}
+            );
+          })}
         </div>
       ) : (
         <Card>
