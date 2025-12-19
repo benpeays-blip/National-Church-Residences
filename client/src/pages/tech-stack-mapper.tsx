@@ -129,6 +129,27 @@ export default function TechStackMapper() {
 
   return (
     <div className="space-y-6">
+      {/* Gradient Wash Header */}
+      <div 
+        className="relative overflow-hidden rounded-xl -mx-6 -mt-6 mb-2"
+        style={{
+          background: `linear-gradient(135deg, ${getAccentColor("sky")}15 0%, ${getAccentColor("teal")}10 50%, ${getAccentColor("lime")}05 100%)`,
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
+        <div className="relative px-6 py-8">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("sky")}20` }}>
+              <Layers className="h-6 w-6" style={{ color: getAccentColor("sky") }} />
+            </div>
+            <h1 className="text-2xl font-bold">Technology Categories</h1>
+          </div>
+          <p className="text-base text-muted-foreground">
+            Explore NCR's technology ecosystem organized by category and integration layer.
+          </p>
+        </div>
+      </div>
+
       <Tabs defaultValue="architecture" className="w-full">
         <TabsList className="grid w-full grid-cols-3 gap-1 bg-transparent p-0 mb-4" data-testid="tabs-tech-stack">
           <TabsTrigger 

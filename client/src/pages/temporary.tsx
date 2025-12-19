@@ -1538,16 +1538,25 @@ function OnSiteInterviews() {
 function TechStack() {
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("teal")}15` }}>
-            <Layers className="h-6 w-6" style={{ color: getAccentColor("teal") }} />
+      {/* Gradient Wash Header */}
+      <div 
+        className="relative overflow-hidden rounded-xl -mx-6 -mt-6 mb-2"
+        style={{
+          background: `linear-gradient(135deg, ${getAccentColor("teal")}15 0%, ${getAccentColor("sky")}10 50%, ${getAccentColor("olive")}05 100%)`,
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
+        <div className="relative px-6 py-8">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("teal")}20` }}>
+              <Layers className="h-6 w-6" style={{ color: getAccentColor("teal") }} />
+            </div>
+            <h1 className="text-2xl font-bold">NCR Technology Stack</h1>
           </div>
-          <h1 className="text-2xl font-bold">NCR Technology Stack</h1>
+          <p className="text-base text-muted-foreground">
+            Overview of software products used across NCR fundraising and operations. Click any card for details.
+          </p>
         </div>
-        <p className="text-base text-muted-foreground">
-          Overview of software products used across NCR fundraising and operations. Click any card for details.
-        </p>
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -2095,13 +2104,22 @@ function TechComponentDetailPage({ componentId }: { componentId: string }) {
 function OptimizationIdeas() {
   return (
     <div className="space-y-8">
-      <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("lime")}15` }}>
-          <Lightbulb className="h-6 w-6" style={{ color: getAccentColor("lime") }} />
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold">NCR Optimized Tech Stack</h1>
-          <p className="text-muted-foreground mt-1">
+      {/* Gradient Wash Header */}
+      <div 
+        className="relative overflow-hidden rounded-xl -mx-6 -mt-6 mb-2"
+        style={{
+          background: `linear-gradient(135deg, ${getAccentColor("lime")}15 0%, ${getAccentColor("teal")}10 50%, ${getAccentColor("sky")}05 100%)`,
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
+        <div className="relative px-6 py-8">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("lime")}20` }}>
+              <Lightbulb className="h-6 w-6" style={{ color: getAccentColor("lime") }} />
+            </div>
+            <h1 className="text-2xl font-bold">NCR Optimized Tech Stack</h1>
+          </div>
+          <p className="text-base text-muted-foreground">
             A unified ecosystem where existing systems remain the source of record, Fabric + Purview unify data, AI agents handle busywork, and the app provides a single pane of glass.
           </p>
         </div>
@@ -2461,13 +2479,22 @@ function RiskCategoryDetailPage({ categoryId }: { categoryId: string }) {
 function RiskCompliance() {
   return (
     <div className="space-y-6">
-      <div className="flex items-center gap-4">
-        <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("coral")}15` }}>
-          <Shield className="h-6 w-6" style={{ color: getAccentColor("coral") }} />
-        </div>
-        <div>
-          <h1 className="text-2xl font-bold">NCR Legal & Risk Landscape</h1>
-          <p className="text-muted-foreground">
+      {/* Gradient Wash Header */}
+      <div 
+        className="relative overflow-hidden rounded-xl -mx-6 -mt-6 mb-2"
+        style={{
+          background: `linear-gradient(135deg, ${getAccentColor("coral")}15 0%, ${getAccentColor("orange")}10 50%, ${getAccentColor("olive")}05 100%)`,
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
+        <div className="relative px-6 py-8">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("coral")}20` }}>
+              <Shield className="h-6 w-6" style={{ color: getAccentColor("coral") }} />
+            </div>
+            <h1 className="text-2xl font-bold">NCR Legal & Risk Landscape</h1>
+          </div>
+          <p className="text-base text-muted-foreground">
             Complete overview of regulatory compliance requirements across healthcare, housing, fundraising, and operations.
           </p>
         </div>
