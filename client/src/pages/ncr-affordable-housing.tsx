@@ -189,15 +189,24 @@ export default function NcrAffordableHousing() {
       {/* Two Column Layout: Program Types & Geographic Reach */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Program Type Breakdown */}
-        <Card className="border">
-          <CardHeader style={{ backgroundColor: '#395174' }}>
-            <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
-              <Building2 className="w-4 h-4" />
-              Housing Program Types
-            </CardTitle>
-            <CardDescription className="text-white/80 text-xs">
-              Distribution of 25,000+ affordable housing units
-            </CardDescription>
+        <Card className="border" style={{ borderLeft: '4px solid #4FA6A6' }}>
+          <CardHeader className="border-b">
+            <div className="flex items-start gap-3">
+              <div 
+                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: '#4FA6A615' }}
+              >
+                <Building2 className="w-5 h-5" style={{ color: '#4FA6A6' }} />
+              </div>
+              <div>
+                <CardTitle className="text-base font-semibold">
+                  Housing Program Types
+                </CardTitle>
+                <CardDescription className="text-xs">
+                  Distribution of 25,000+ affordable housing units
+                </CardDescription>
+              </div>
+            </div>
           </CardHeader>
           <CardContent className="p-6 space-y-5">
             {programTypes.map((program) => (
@@ -214,15 +223,24 @@ export default function NcrAffordableHousing() {
         </Card>
 
         {/* Geographic Reach */}
-        <Card className="border">
-          <CardHeader style={{ backgroundColor: '#395174' }}>
-            <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
-              <Globe className="w-4 h-4" />
-              National Footprint
-            </CardTitle>
-            <CardDescription className="text-white/80 text-xs">
-              25,000+ homes across 23 states coast-to-coast
-            </CardDescription>
+        <Card className="border" style={{ borderLeft: '4px solid #92A05A' }}>
+          <CardHeader className="border-b">
+            <div className="flex items-start gap-3">
+              <div 
+                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: '#92A05A15' }}
+              >
+                <Globe className="w-5 h-5" style={{ color: '#92A05A' }} />
+              </div>
+              <div>
+                <CardTitle className="text-base font-semibold">
+                  National Footprint
+                </CardTitle>
+                <CardDescription className="text-xs">
+                  25,000+ homes across 23 states coast-to-coast
+                </CardDescription>
+              </div>
+            </div>
           </CardHeader>
           <CardContent className="p-6">
             <div className="grid grid-cols-2 gap-3">
@@ -263,15 +281,24 @@ export default function NcrAffordableHousing() {
       </div>
 
       {/* Donor Talking Points */}
-      <Card className="border">
-        <CardHeader style={{ backgroundColor: '#395174' }}>
-          <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
-            <FileText className="w-4 h-4" />
-            Donor Talking Points
-          </CardTitle>
-          <CardDescription className="text-white/80 text-xs">
-            Key messages for donor conversations and stewardship reports
-          </CardDescription>
+      <Card className="border" style={{ borderLeft: '4px solid #E8A54B' }}>
+        <CardHeader className="border-b">
+          <div className="flex items-start gap-3">
+            <div 
+              className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: '#E8A54B15' }}
+            >
+              <FileText className="w-5 h-5" style={{ color: '#E8A54B' }} />
+            </div>
+            <div>
+              <CardTitle className="text-base font-semibold">
+                Donor Talking Points
+              </CardTitle>
+              <CardDescription className="text-xs">
+                Key messages for donor conversations and stewardship reports
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -292,15 +319,24 @@ export default function NcrAffordableHousing() {
       </Card>
 
       {/* Resident Impact Stories */}
-      <Card className="border">
-        <CardHeader style={{ backgroundColor: '#395174' }}>
-          <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
-            <Quote className="w-4 h-4" />
-            Resident Impact Stories
-          </CardTitle>
-          <CardDescription className="text-white/80 text-xs">
-            Real stories that demonstrate donor impact
-          </CardDescription>
+      <Card className="border" style={{ borderLeft: '4px solid #395174' }}>
+        <CardHeader className="border-b">
+          <div className="flex items-start gap-3">
+            <div 
+              className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: '#39517415' }}
+            >
+              <Quote className="w-5 h-5" style={{ color: '#395174' }} />
+            </div>
+            <div>
+              <CardTitle className="text-base font-semibold">
+                Resident Impact Stories
+              </CardTitle>
+              <CardDescription className="text-xs">
+                Real stories that demonstrate donor impact
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -331,15 +367,24 @@ export default function NcrAffordableHousing() {
       </Card>
 
       {/* Featured Communities */}
-      <Card className="border">
-        <CardHeader>
-          <CardTitle className="text-base font-semibold flex items-center gap-2" style={{ color: '#395174' }}>
-            <Home className="w-4 h-4" />
-            Featured Communities
-          </CardTitle>
-          <CardDescription className="text-xs">
-            Highlighting the variety and quality of NCR affordable housing
-          </CardDescription>
+      <Card className="border" style={{ borderLeft: '4px solid #7BC4DC' }}>
+        <CardHeader className="border-b">
+          <div className="flex items-start gap-3">
+            <div 
+              className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: '#7BC4DC15' }}
+            >
+              <Home className="w-5 h-5" style={{ color: '#7BC4DC' }} />
+            </div>
+            <div>
+              <CardTitle className="text-base font-semibold">
+                Featured Communities
+              </CardTitle>
+              <CardDescription className="text-xs">
+                Highlighting the variety and quality of NCR affordable housing
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
