@@ -919,31 +919,33 @@ export default function RelSciMapping() {
             <CardContent>
               <div className="space-y-4">
                 {[
-                  { name: "Board of Directors", count: 12, paths: 156, color: "#7FA3A1" },
-                  { name: "Foundation Board", count: 8, paths: 89, color: "#7BC4DC" },
-                  { name: "Leadership Team", count: 6, paths: 67, color: "#E8923A" },
+                  { name: "Board of Directors", slug: "board-of-directors", count: 12, paths: 156, color: "#7FA3A1" },
+                  { name: "Foundation Board", slug: "foundation-board", count: 8, paths: 89, color: "#7BC4DC" },
+                  { name: "Leadership Team", slug: "leadership-team", count: 6, paths: 67, color: "#E8923A" },
                 ].map((group) => (
-                  <div key={group.name} className="flex items-center justify-between p-4 rounded-lg border hover-elevate cursor-pointer">
-                    <div className="flex items-center gap-4">
-                      <div 
-                        className="h-10 w-10 rounded-lg flex items-center justify-center"
-                        style={{ backgroundColor: `${group.color}20` }}
-                      >
-                        <Users className="h-5 w-5" style={{ color: group.color }} />
+                  <Link key={group.name} href={`/relsci/network/${group.slug}`} data-testid={`link-network-${group.slug}`}>
+                    <div className="flex items-center justify-between p-4 rounded-lg border hover-elevate cursor-pointer">
+                      <div className="flex items-center gap-4">
+                        <div 
+                          className="h-10 w-10 rounded-lg flex items-center justify-center"
+                          style={{ backgroundColor: `${group.color}20` }}
+                        >
+                          <Users className="h-5 w-5" style={{ color: group.color }} />
+                        </div>
+                        <div>
+                          <h4 className="font-medium">{group.name}</h4>
+                          <p className="text-sm text-muted-foreground">{group.count} members mapped</p>
+                        </div>
                       </div>
-                      <div>
-                        <h4 className="font-medium">{group.name}</h4>
-                        <p className="text-sm text-muted-foreground">{group.count} members mapped</p>
+                      <div className="flex items-center gap-6">
+                        <div className="text-right">
+                          <p className="text-sm text-muted-foreground">Connection Paths</p>
+                          <p className="font-semibold" style={{ color: group.color }}>{group.paths}</p>
+                        </div>
+                        <ChevronRight className="h-5 w-5 text-muted-foreground" />
                       </div>
                     </div>
-                    <div className="flex items-center gap-6">
-                      <div className="text-right">
-                        <p className="text-sm text-muted-foreground">Connection Paths</p>
-                        <p className="font-semibold" style={{ color: group.color }}>{group.paths}</p>
-                      </div>
-                      <ChevronRight className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </CardContent>

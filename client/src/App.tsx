@@ -133,6 +133,7 @@ import BoardConnections from "@/pages/relationship-board-connections";
 import RelationshipCorporatePartnerships from "@/pages/relationship-corporate-partnerships";
 import PeerDonors from "@/pages/relationship-peer-donors";
 import BoardNetworkMapper from "@/pages/board-network-mapper";
+import BoardNetworkDetail from "@/pages/board-network-detail";
 
 // Corporate Partnerships (top-level section)
 import CorporatePartnershipsPage from "@/pages/corporate-partnerships";
@@ -308,6 +309,7 @@ function Router() {
       <Route path="/relationships/force" component={RelationshipsWithTabs} />
       <Route path="/relationships/visualization" component={RelationshipsWithTabs} />
       <Route path="/relationships" component={RelationshipsWithTabs} />
+      <Route path="/relsci/network/:groupId" component={BoardNetworkDetail} />
       <Route path="/agent-value-map/scorecard/:domainId" component={ScorecardDetail} />
       <Route path="/agent-value-map/hub/:hubId" component={HubDetail} />
       <Route path="/agent-value-map/governance/:governanceId" component={GovernanceDetail} />
