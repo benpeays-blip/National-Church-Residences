@@ -163,7 +163,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
   return (
     <div className="flex flex-row gap-6">
       {/* Main Quadrant Visualization - Hero Feature */}
-      <Card className="flex-[3] flex flex-col overflow-visible shadow-lg" style={{ minHeight: '600px' }}>
+      <Card className="flex-[2.5] flex flex-col overflow-visible shadow-lg" style={{ minHeight: '600px' }}>
         <CardHeader className="border-b py-4" style={{ backgroundColor: '#395174' }}>
           <div className="flex items-center justify-between">
             <div>
@@ -505,7 +505,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardContent>
       </Card>
       {/* Right Panel - Quadrant Details */}
-      <Card className="flex-[1] flex flex-col overflow-hidden" style={{ minWidth: '280px', maxWidth: '320px', maxHeight: '600px' }}>
+      <Card className="flex-[1.5] flex flex-col overflow-hidden" style={{ minWidth: '350px', maxWidth: '450px', maxHeight: '600px' }}>
         {/* Layered Tab Navigation */}
         <div className="flex border-b bg-muted/30 shrink-0">
           {(['partner', 'friend', 'colleague', 'acquaintance'] as QuadrantType[]).map((q) => {
