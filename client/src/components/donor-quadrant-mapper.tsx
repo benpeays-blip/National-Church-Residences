@@ -182,7 +182,28 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardHeader>
         <CardContent className="p-8 flex-1 flex flex-col" style={{ backgroundColor: '#f4f4f4' }}>
           <div className="relative flex-1 pb-10 pl-12">
-            <div className="relative w-full h-full min-h-[500px] rounded-lg overflow-hidden bg-background shadow-inner" style={{ border: '3px solid #395174' }}>
+            {/* Top Row Quadrant Headers - Outside Chart */}
+            <div className="flex mb-2">
+              <button
+                onClick={() => setSelectedQuadrant('friend')}
+                className="flex-1 h-10 flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] rounded-t-lg mr-0.5"
+                data-testid="quadrant-friend"
+              >
+                <span className="font-semibold text-sm text-white">Friend</span>
+                <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-friend">{data.counts.friend} Donors</span>
+              </button>
+              <button
+                onClick={() => setSelectedQuadrant('partner')}
+                className="flex-1 h-10 flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] rounded-t-lg ml-0.5"
+                data-testid="quadrant-partner"
+              >
+                <span className="font-semibold text-sm text-white">Partner</span>
+                <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-partner">{data.counts.partner} Donors</span>
+              </button>
+            </div>
+
+            {/* Main Chart Area - Clean plotting space */}
+            <div className="relative w-full min-h-[400px] rounded-lg overflow-hidden bg-background shadow-inner" style={{ border: '3px solid #395174' }}>
               {/* Grid Lines */}
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
               <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
@@ -200,65 +221,48 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
                 onDrop={handleDrop}
                 data-testid="drop-zone-partner"
               />
+              {isPartnerHovered && draggedDonor && (
+                <div className="absolute left-3/4 top-1/4 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow z-40">
+                  Drop to generate action plan
+                </div>
+              )}
 
-            {/* Quadrants - Clickable */}
-            {/* Donor Dots with Hover Cards - rendered below headers (z-index ensures headers are always on top) */}
-            {data.donors.map((donor) => {
-              const isDraggable = donor.quadrant !== 'partner';
-              const isBeingDragged = draggedDonor?.id === donor.id;
-              
-              // Calculate adjusted top position - dots ONLY in white content areas
-              // Top headers: h-12 at top (0-13%)
-              // Bottom headers: h-12 at bottom (87-100%)
-              // Center line at 50%
-              // Dots must stay in white areas only
-              
-              // Safe WHITE-only zones:
-              // Top half: 16% to 46% (below top headers, above center line)
-              // Bottom half: 54% to 84% (below center line, above bottom headers)
-              
-              let adjustedTop: string;
-              if (donor.energy > 50) {
-                // Top half: energy 100 -> near top, energy 51 -> near middle
-                const energyInRange = (donor.energy - 50) / 50; // 0 to 1
-                const usableStart = 16; // Safe distance below header
-                const usableEnd = 46; // Safe distance above center line
-                const topPercent = usableEnd - (energyInRange * (usableEnd - usableStart));
-                adjustedTop = `${topPercent}%`;
-              } else {
-                // Bottom half: energy 50 -> near center, energy 0 -> near bottom
-                const energyInRange = donor.energy / 50; // 0 to 1
-                const usableStart = 54; // Safe distance below center line
-                const usableEnd = 84; // Safe distance from bottom headers
-                const topPercent = usableStart + ((1 - energyInRange) * (usableEnd - usableStart));
-                adjustedTop = `${topPercent}%`;
-              }
-              
-              return (
-              <HoverCard key={donor.id} openDelay={150} closeDelay={50} open={draggedDonor ? false : undefined}>
-                <HoverCardTrigger asChild>
-                  <button
-                    draggable={isDraggable}
-                    onDragStart={(e) => handleDragStart(e, donor)}
-                    onDragEnd={handleDragEnd}
-                    className={`absolute w-2.5 h-2.5 rounded-full shadow-sm transition-all border-0 p-0 z-5 bg-primary/80 pointer-events-auto ${
-                      isDraggable 
-                        ? 'cursor-grab active:cursor-grabbing hover:scale-150' 
-                        : 'cursor-pointer hover:scale-150'
-                    } ${isBeingDragged ? 'opacity-50 scale-125' : ''}`}
-                    style={{
-                      left: `calc(${donor.structure}% - 5px)`,
-                      top: adjustedTop,
-                      zIndex: 5,
-                    }}
-                    data-testid={`dot-donor-${donor.id}`}
-                    aria-label={isDraggable 
-                      ? `Drag ${donor.firstName} ${donor.lastName} to Partner quadrant to generate action plan`
-                      : `View profile for ${donor.firstName} ${donor.lastName}`
-                    }
-                    title={isDraggable ? 'Drag to Partner quadrant' : undefined}
-                  />
-                </HoverCardTrigger>
+              {/* Donor Dots with Hover Cards */}
+              {data.donors.map((donor) => {
+                const isDraggable = donor.quadrant !== 'partner';
+                const isBeingDragged = draggedDonor?.id === donor.id;
+                
+                // True coordinate mapping:
+                // X-axis (structure): 0-50 = left half, 51-100 = right half
+                // Y-axis (energy): 0-50 = bottom half, 51-100 = top half
+                // CSS top: energy 100 = 0%, energy 0 = 100%
+                const topPercent = 100 - donor.energy;
+                
+                return (
+                <HoverCard key={donor.id} openDelay={150} closeDelay={50} open={draggedDonor ? false : undefined}>
+                  <HoverCardTrigger asChild>
+                    <button
+                      draggable={isDraggable}
+                      onDragStart={(e) => handleDragStart(e, donor)}
+                      onDragEnd={handleDragEnd}
+                      className={`absolute w-2.5 h-2.5 rounded-full shadow-sm transition-all border-0 p-0 z-5 bg-primary/80 pointer-events-auto ${
+                        isDraggable 
+                          ? 'cursor-grab active:cursor-grabbing hover:scale-150' 
+                          : 'cursor-pointer hover:scale-150'
+                      } ${isBeingDragged ? 'opacity-50 scale-125' : ''}`}
+                      style={{
+                        left: `calc(${donor.structure}% - 5px)`,
+                        top: `calc(${topPercent}% - 5px)`,
+                        zIndex: 5,
+                      }}
+                      data-testid={`dot-donor-${donor.id}`}
+                      aria-label={isDraggable 
+                        ? `Drag ${donor.firstName} ${donor.lastName} to Partner quadrant to generate action plan`
+                        : `View profile for ${donor.firstName} ${donor.lastName}`
+                      }
+                      title={isDraggable ? 'Drag to Partner quadrant' : undefined}
+                    />
+                  </HoverCardTrigger>
                 <HoverCardContent className="w-96 p-0 overflow-hidden z-50" side="right" align="start" sideOffset={10}>
                   <div className="space-y-0">
                     {/* Profile Header */}
@@ -376,55 +380,29 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               </HoverCard>
               );
             })}
-
-            {/* Quadrant Header Bars - at top of each quadrant */}
-            {/* Top Left - Friend */}
-            <button
-              onClick={() => setSelectedQuadrant('friend')}
-              className="absolute left-0 top-0 w-[calc(50%-1px)] h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
-              data-testid="quadrant-friend"
-            >
-              <span className="font-semibold text-sm text-white">Friend</span>
-              <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-friend">{data.counts.friend} Donors</span>
-            </button>
-
-            {/* Top Right - Partner */}
-            <button
-              onClick={() => setSelectedQuadrant('partner')}
-              className="absolute left-1/2 top-0 w-1/2 h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
-              data-testid="quadrant-partner"
-            >
-              <span className="font-semibold text-sm text-white">Partner</span>
-              <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-partner">{data.counts.partner} Donors</span>
-            </button>
-            {isPartnerHovered && draggedDonor && (
-              <div className="absolute left-3/4 top-14 -translate-x-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow z-40">
-                Drop to generate action plan
-              </div>
-            )}
-
-            {/* Bottom Left - Acquaintance (positioned just below center line) */}
-            <button
-              onClick={() => setSelectedQuadrant('acquaintance')}
-              className="absolute left-0 top-1/2 w-[calc(50%-1px)] h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
-              data-testid="quadrant-acquaintance"
-            >
-              <span className="font-semibold text-sm text-white">Acquaintance</span>
-              <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-acquaintance">{data.counts.acquaintance} Donors</span>
-            </button>
-
-            {/* Bottom Right - Colleague (positioned just below center line) */}
-            <button
-              onClick={() => setSelectedQuadrant('colleague')}
-              className="absolute left-1/2 top-1/2 w-1/2 h-12 z-30 pointer-events-auto flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] border-b border-[#395174]/30"
-              data-testid="quadrant-colleague"
-            >
-              <span className="font-semibold text-sm text-white">Colleague</span>
-              <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-colleague">{data.counts.colleague} Donors</span>
-            </button>
             </div>
 
-            {/* Axis Labels - outside overflow-hidden container */}
+            {/* Bottom Row Quadrant Headers - Outside Chart */}
+            <div className="flex mt-2">
+              <button
+                onClick={() => setSelectedQuadrant('acquaintance')}
+                className="flex-1 h-10 flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] rounded-b-lg mr-0.5"
+                data-testid="quadrant-acquaintance"
+              >
+                <span className="font-semibold text-sm text-white">Acquaintance</span>
+                <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-acquaintance">{data.counts.acquaintance} Donors</span>
+              </button>
+              <button
+                onClick={() => setSelectedQuadrant('colleague')}
+                className="flex-1 h-10 flex flex-col items-center justify-center cursor-pointer transition-colors hover:brightness-110 bg-[#395174] rounded-b-lg ml-0.5"
+                data-testid="quadrant-colleague"
+              >
+                <span className="font-semibold text-sm text-white">Colleague</span>
+                <span className="text-xs text-[#e1c47d] font-medium" data-testid="count-colleague">{data.counts.colleague} Donors</span>
+              </button>
+            </div>
+
+            {/* Axis Labels - outside chart container */}
             <div className="absolute -left-10 top-1/2 -translate-y-1/2 -rotate-90 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Energy →
             </div>
