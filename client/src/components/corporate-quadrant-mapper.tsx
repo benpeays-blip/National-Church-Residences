@@ -314,8 +314,8 @@ export default function CorporateQuadrantMapper() {
             </Badge>
           </div>
         </CardHeader>
-        <CardContent className="p-8 flex-1 flex flex-col" style={{ backgroundColor: '#f4f4f4' }}>
-          <div className="relative flex-1 pb-10 pl-12">
+        <CardContent className="p-8" style={{ backgroundColor: '#f4f4f4' }}>
+          <div className="relative pb-10 pl-12">
             <div className="relative w-full overflow-hidden bg-background rounded-lg" style={{ border: '3px solid #395174', aspectRatio: '1/1' }}>
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
               <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
