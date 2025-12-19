@@ -1501,16 +1501,25 @@ function OnSiteInterviews() {
 
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("olive")}15` }}>
-            <Users className="h-6 w-6" style={{ color: getAccentColor("olive") }} />
+      {/* Gradient Wash Header */}
+      <div 
+        className="relative overflow-hidden rounded-xl -mx-6 -mt-6 mb-2"
+        style={{
+          background: `linear-gradient(135deg, ${getAccentColor("olive")}15 0%, ${getAccentColor("teal")}10 50%, ${getAccentColor("sky")}05 100%)`,
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background" />
+        <div className="relative px-6 py-8">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${getAccentColor("olive")}20` }}>
+              <Users className="h-6 w-6" style={{ color: getAccentColor("olive") }} />
+            </div>
+            <h1 className="text-2xl font-bold">On Site Interviews</h1>
           </div>
-          <h1 className="text-2xl font-bold">On Site Interviews</h1>
+          <p className="text-base text-muted-foreground">
+            Key stakeholder interviews conducted at NCR. Click on any card to view detailed insights.
+          </p>
         </div>
-        <p className="text-base text-muted-foreground">
-          Key stakeholder interviews conducted at NCR. Click on any card to view detailed insights.
-        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
