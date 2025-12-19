@@ -76,11 +76,11 @@ function MiniDonorQuadrant() {
 
   if (isLoading) {
     return (
-      <div className="space-y-3">
-        <Skeleton className="h-[220px] w-full rounded-lg" />
+      <div className="space-y-3 pl-6 pb-6">
+        <Skeleton className="h-[280px] w-full rounded-lg" />
         <div className="grid grid-cols-4 gap-2">
           {[1, 2, 3, 4].map(i => (
-            <Skeleton key={i} className="h-12 rounded" />
+            <Skeleton key={i} className="h-14 rounded" />
           ))}
         </div>
       </div>
@@ -95,17 +95,21 @@ function MiniDonorQuadrant() {
     <Link href="/quadrant" data-testid="link-mini-quadrant">
       <div className="cursor-pointer hover:opacity-95 transition-opacity">
         {/* Axis Labels */}
-        <div className="relative">
-          <div className="absolute -left-1 top-1/2 -translate-y-1/2 -rotate-90 text-[9px] font-medium text-muted-foreground whitespace-nowrap z-10">
-            ENERGY
+        <div className="relative pl-6 pb-6">
+          {/* Y-Axis Label */}
+          <div className="absolute left-0 top-1/2 -translate-y-1/2 flex flex-col items-center gap-1 z-10">
+            <span className="text-[10px] font-semibold text-muted-foreground writing-mode-vertical" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+              ENERGY
+            </span>
           </div>
-          <div className="absolute bottom-[-16px] left-1/2 -translate-x-1/2 text-[9px] font-medium text-muted-foreground z-10">
-            STRUCTURE
+          {/* X-Axis Label */}
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 text-[10px] font-semibold text-muted-foreground z-10">
+            STRUCTURE →
           </div>
 
           {/* Mini Quadrant Grid */}
           <div 
-            className="relative ml-4 mb-5 h-[200px] rounded-lg overflow-hidden bg-background"
+            className="relative h-[280px] rounded-lg overflow-hidden bg-background"
             style={{ border: '2px solid hsl(var(--border))' }}
           >
             {/* Grid Lines */}
@@ -181,21 +185,21 @@ function MiniDonorQuadrant() {
         </div>
 
         {/* Quadrant Summary */}
-        <div className="grid grid-cols-4 gap-2 mt-2">
+        <div className="grid grid-cols-4 gap-3 mt-4">
           {(['partner', 'friend', 'colleague', 'acquaintance'] as const).map((q) => (
             <div 
               key={q}
-              className="text-center p-2 rounded-lg"
+              className="text-center p-3 rounded-lg"
               style={{ backgroundColor: `${quadrantColors[q]}10` }}
               data-testid={`mini-summary-${q}`}
             >
               <div 
-                className="text-lg font-bold"
+                className="text-xl font-bold"
                 style={{ color: quadrantColors[q] }}
               >
                 {data.counts[q]}
               </div>
-              <div className="text-[10px] text-muted-foreground capitalize truncate">
+              <div className="text-xs text-muted-foreground capitalize">
                 {q}
               </div>
             </div>
