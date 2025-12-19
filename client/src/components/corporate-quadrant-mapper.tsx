@@ -314,8 +314,8 @@ export default function CorporateQuadrantMapper() {
             </Badge>
           </div>
         </CardHeader>
-        <CardContent className="p-8 flex-1 flex flex-col" style={{ backgroundColor: '#f4f4f4' }}>
-          <div className="relative flex-1 pb-10 pl-12">
+        <CardContent className="p-4 flex-1 flex flex-col">
+          <div className="relative flex-1 pb-8 pl-10">
             <div className="relative w-full overflow-hidden bg-background rounded-lg" style={{ border: '3px solid #395174', aspectRatio: '1/1' }}>
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
               <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
@@ -551,10 +551,10 @@ export default function CorporateQuadrantMapper() {
               </button>
             </div>
 
-            <div className="absolute -left-12 top-1/2 -translate-y-1/2 -rotate-90 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+            <div className="absolute -left-10 top-1/2 -translate-y-1/2 -rotate-90 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Engagement →
             </div>
-            <div className="absolute left-1/2 -translate-x-1/2 -bottom-2 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+            <div className="absolute left-1/2 -translate-x-1/2 -bottom-1 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
               Giving →
             </div>
           </div>
