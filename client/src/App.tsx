@@ -617,99 +617,20 @@ function App() {
                   <nav className="flex items-center gap-0.5">
                     {selectedTopTab === 'Agentic Plan' ? (
                       <>
-                        {/* Overview - Direct Link */}
-                        <Link href="/agent-value-map?tab=overview">
-                          <div className={`relative ${location.startsWith('/agent-value-map') && currentTabParam === 'overview' ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                              data-testid="button-nav-agentic-overview"
-                            >
-                              Overview
-                            </Button>
-                          </div>
-                        </Link>
-
-                        {/* Strategy Dropdown (Framework, Governance, Scorecard) */}
-                        <div
-                          className="relative"
-                          onMouseEnter={() => setActiveDropdown("AgenticStrategy")}
-                          onMouseLeave={() => setActiveDropdown(null)}
-                        >
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDropdownClick("AgenticStrategy")}
-                            className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${activeDropdown === "AgenticStrategy" ? "bg-black/10" : ""}`}
-                            data-testid="button-nav-agentic-strategy"
-                          >
-                            Strategy
-                            <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "AgenticStrategy" ? "rotate-180" : ""}`} />
-                          </Button>
-                          {activeDropdown === "AgenticStrategy" && (
-                            <div className="absolute left-0 top-full pt-1 z-50">
-                              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[160px] overflow-hidden">
-                                <div className="py-2 px-1">
-                                  {[
-                                    { name: 'Framework', tab: 'framework' },
-                                    { name: 'Governance', tab: 'governance' },
-                                    { name: 'Scorecard', tab: 'scorecard' },
-                                  ].map((item) => (
-                                    <Link 
-                                      key={item.tab} 
-                                      href={`/agent-value-map?tab=${item.tab}`}
-                                      className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                                      onClick={closeDropdown}
-                                    >
-                                      {item.name}
-                                    </Link>
-                                  ))}
-                                </div>
-                              </div>
+                        {agenticPlanNavItems.map((item) => (
+                          <Link key={item.tab} href={`/agent-value-map?tab=${item.tab}`}>
+                            <div className={`relative ${location.startsWith('/agent-value-map') && currentTabParam === item.tab ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                                data-testid={`button-nav-agentic-${item.tab}`}
+                              >
+                                {item.name}
+                              </Button>
                             </div>
-                          )}
-                        </div>
-
-                        {/* Implementation Dropdown (Agents, Roadmap, App Shell) */}
-                        <div
-                          className="relative"
-                          onMouseEnter={() => setActiveDropdown("AgenticImpl")}
-                          onMouseLeave={() => setActiveDropdown(null)}
-                        >
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDropdownClick("AgenticImpl")}
-                            className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${activeDropdown === "AgenticImpl" ? "bg-black/10" : ""}`}
-                            data-testid="button-nav-agentic-implementation"
-                          >
-                            Implementation
-                            <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "AgenticImpl" ? "rotate-180" : ""}`} />
-                          </Button>
-                          {activeDropdown === "AgenticImpl" && (
-                            <div className="absolute left-0 top-full pt-1 z-50">
-                              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[160px] overflow-hidden">
-                                <div className="py-2 px-1">
-                                  {[
-                                    { name: 'Agents', tab: 'agents' },
-                                    { name: 'Roadmap', tab: 'roadmap' },
-                                    { name: 'App Shell', tab: 'appshell' },
-                                  ].map((item) => (
-                                    <Link 
-                                      key={item.tab} 
-                                      href={`/agent-value-map?tab=${item.tab}`}
-                                      className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
-                                      onClick={closeDropdown}
-                                    >
-                                      {item.name}
-                                    </Link>
-                                  ))}
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                        </div>
+                          </Link>
+                        ))}
                       </>
                     ) : selectedTopTab === 'Fundraising' ? (
                       <>
