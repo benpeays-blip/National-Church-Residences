@@ -202,8 +202,8 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               </button>
             </div>
 
-            {/* Top Half Chart Area - High Energy (51-100) */}
-            <div className="relative w-full h-[200px] overflow-hidden bg-background" style={{ borderLeft: '3px solid #395174', borderRight: '3px solid #395174' }}>
+            {/* Top Half Chart Area - High Energy (51-100) - Square quadrants */}
+            <div className="relative w-full overflow-hidden bg-background" style={{ borderLeft: '3px solid #395174', borderRight: '3px solid #395174', aspectRatio: '2/1' }}>
               {/* Vertical center line */}
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
 
@@ -399,8 +399,8 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
               </button>
             </div>
 
-            {/* Bottom Half Chart Area - Low Energy (0-50) */}
-            <div className="relative w-full h-[200px] overflow-hidden bg-background rounded-b-lg" style={{ borderLeft: '3px solid #395174', borderRight: '3px solid #395174', borderBottom: '3px solid #395174' }}>
+            {/* Bottom Half Chart Area - Low Energy (0-50) - Square quadrants */}
+            <div className="relative w-full overflow-hidden bg-background rounded-b-lg" style={{ borderLeft: '3px solid #395174', borderRight: '3px solid #395174', borderBottom: '3px solid #395174', aspectRatio: '2/1' }}>
               {/* Vertical center line */}
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
 
