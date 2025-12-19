@@ -297,7 +297,7 @@ export default function CorporateQuadrantMapper() {
 
   return (
     <div className="flex flex-row gap-6 items-stretch" data-testid="corporate-quadrant-container">
-      <Card className="flex-[2.5] flex flex-col overflow-visible shadow-lg" style={{ minHeight: '600px' }} data-testid="card-quadrant-visualization">
+      <Card className="flex flex-col overflow-visible shadow-lg" style={{ minHeight: '1000px', width: '1000px' }} data-testid="card-quadrant-visualization">
         <CardHeader className="border-b py-4" style={{ backgroundColor: '#395174' }}>
           <div className="flex items-center justify-between">
             <div>
