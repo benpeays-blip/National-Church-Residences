@@ -287,7 +287,7 @@ export default function PhilanthropyDashboard() {
   const corporatePartners = [
     { name: "Google", type: "Corporate Sponsor", value: "$150K", status: "Active" },
     { name: "Home Depot", type: "Matching Gift Partner", value: "$75K", status: "Active" },
-    { name: "Healthcare Systems", type: "In-Kind Partner", value: "$50K", status: "Pending" },
+    { name: "Ferguson Appliance", type: "In-Kind Partner", value: "$50K", status: "Pending" },
   ];
 
   return (
