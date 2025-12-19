@@ -163,7 +163,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
   return (
     <div className="flex flex-row gap-6 items-stretch">
       {/* Main Quadrant Visualization - Hero Feature */}
-      <Card className="flex flex-col overflow-visible shadow-lg" style={{ minHeight: '850px', width: '850px' }}>
+      <Card className="flex flex-col overflow-visible shadow-lg" style={{ minHeight: '1000px', width: '1000px' }}>
         <CardHeader className="border-b py-4" style={{ backgroundColor: '#395174' }}>
           <div className="flex items-center justify-between">
             <div>
