@@ -245,12 +245,14 @@ export default function OpportunityResponse({ id }: OpportunityResponseProps) {
       </Button>
 
       <Card>
-        <CardHeader style={{ backgroundColor: "#395174" }} className="rounded-t-lg">
+        <CardHeader className="border-b">
           <div className="flex items-center gap-3">
-            <User className="h-6 w-6 text-white" />
+            <div className="w-10 h-10 rounded-lg bg-[#4FA6A6]/10 flex items-center justify-center">
+              <User className="h-5 w-5 text-[#4FA6A6]" />
+            </div>
             <div>
-              <CardTitle className="text-white text-xl">{opportunity.donorName}</CardTitle>
-              <CardDescription className="text-white/80">
+              <CardTitle className="text-xl">{opportunity.donorName}</CardTitle>
+              <CardDescription>
                 Response guidance for {opportunity.currentQuadrant} → Partner transition
               </CardDescription>
             </div>
