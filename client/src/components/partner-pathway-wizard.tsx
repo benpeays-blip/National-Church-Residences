@@ -24,6 +24,7 @@ import {
   User,
   ChevronDown,
   ChevronUp,
+  ChevronRight,
   MessageSquare,
   FileText,
   Lightbulb,
@@ -964,21 +965,12 @@ export default function PartnerPathwayWizard() {
 
   const stepLabels = ["Constraints", "Focus", "Review", "Action Plan"];
   const stepIcons = [Calendar, Target, CheckCircle2, Wand2];
-  
-  // Brand colors for each step: teal, olive, orange, coral
-  // Inactive state uses 70% opacity for more saturated appearance
-  const stepColors = [
-    { bg: "#4FA6A6", light: "rgba(79, 166, 166, 0.7)", text: "#4FA6A6" }, // Teal
-    { bg: "#92A05A", light: "rgba(146, 160, 90, 0.7)", text: "#92A05A" }, // Olive
-    { bg: "#E8A54B", light: "rgba(232, 165, 75, 0.7)", text: "#E8A54B" }, // Orange
-    { bg: "#E86B5A", light: "rgba(232, 107, 90, 0.7)", text: "#E86B5A" }, // Coral
-  ];
 
   return (
     <Card className="overflow-hidden flex flex-col h-full">
       {/* Compact Header with Step Navigation */}
       <div className="bg-white dark:bg-card">
-        <CardHeader className="pb-0">
+        <CardHeader className="pb-4">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-lg bg-[#395174]/10 flex items-center justify-center">
               <Wand2 className="w-5 h-5 text-[#e1c47d]" />
@@ -992,36 +984,77 @@ export default function PartnerPathwayWizard() {
           </div>
         </CardHeader>
         
-        {/* Step Navigation Bar */}
-        <div className="flex mt-4">
-          {stepLabels.map((label, idx) => {
-            const step = idx + 1;
-            const StepIcon = stepIcons[idx];
-            const isActive = currentStep === step;
-            const isCompleted = currentStep > step;
-            const color = stepColors[idx];
-            return (
-              <div
-                key={step}
-                className="flex-1 flex items-center justify-center gap-2 py-3 text-sm font-medium transition-colors"
-                style={{
-                  backgroundColor: isActive 
-                    ? color.bg 
-                    : color.light,
-                  color: "white"
-                }}
-                data-testid={`step-indicator-${step}`}
-              >
-                {isCompleted ? (
-                  <CheckCircle2 className="w-4 h-4 text-white" />
-                ) : (
-                  <StepIcon className="w-4 h-4" />
-                )}
-                <span className="hidden sm:inline">{label}</span>
-                <span className="sm:hidden">{step}</span>
-              </div>
-            );
-          })}
+        {/* Progressive Step Navigation */}
+        <div className="px-6 pb-6">
+          <div className="flex items-center justify-between">
+            {stepLabels.map((label, idx) => {
+              const step = idx + 1;
+              const StepIcon = stepIcons[idx];
+              const isActive = currentStep === step;
+              const isCompleted = currentStep > step;
+              const isPending = currentStep < step;
+              
+              return (
+                <div key={step} className="flex items-center flex-1 last:flex-none">
+                  {/* Step Circle and Label */}
+                  <div 
+                    className="flex flex-col items-center gap-2"
+                    data-testid={`step-indicator-${step}`}
+                  >
+                    <div 
+                      className={`
+                        w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 border-2
+                        ${isCompleted 
+                          ? 'bg-[#395174] border-[#395174] text-white' 
+                          : isActive 
+                            ? 'bg-[#395174] border-[#395174] text-white shadow-lg ring-4 ring-[#395174]/20' 
+                            : 'bg-muted/50 border-muted-foreground/30 text-muted-foreground'
+                        }
+                      `}
+                    >
+                      {isCompleted ? (
+                        <CheckCircle2 className="w-5 h-5" />
+                      ) : (
+                        <StepIcon className="w-5 h-5" />
+                      )}
+                    </div>
+                    <div className="flex flex-col items-center">
+                      <span 
+                        className={`text-xs font-semibold hidden sm:block ${
+                          isActive || isCompleted ? 'text-[#395174]' : 'text-muted-foreground'
+                        }`}
+                      >
+                        {label}
+                      </span>
+                      <span 
+                        className={`text-[10px] ${
+                          isActive ? 'text-[#395174] font-medium' : 'text-muted-foreground'
+                        }`}
+                      >
+                        Step {step}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* Arrow Connector (except after last step) */}
+                  {idx < stepLabels.length - 1 && (
+                    <div className="flex-1 flex items-center px-2 -mt-6">
+                      <div 
+                        className={`flex-1 h-0.5 transition-colors duration-300 ${
+                          isCompleted ? 'bg-[#395174]' : 'bg-muted-foreground/20'
+                        }`}
+                      />
+                      <ChevronRight 
+                        className={`w-5 h-5 -ml-1 transition-colors duration-300 ${
+                          isCompleted ? 'text-[#395174]' : 'text-muted-foreground/30'
+                        }`}
+                      />
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
       
