@@ -63,15 +63,24 @@ export default function NcrAssistedLiving() {
         ))}
       </div>
 
-      <Card className="border">
-        <CardHeader style={{ backgroundColor: '#395174' }}>
-          <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
-            <HandHelping className="w-4 h-4" />
-            Assisted Living Communities
-          </CardTitle>
-          <CardDescription className="text-white/80 text-xs">
-            Compassionate care in comfortable, home-like settings
-          </CardDescription>
+      <Card className="border" style={{ borderLeft: '4px solid #D5636C' }}>
+        <CardHeader className="border-b">
+          <div className="flex items-start gap-3">
+            <div 
+              className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: '#D5636C15' }}
+            >
+              <HandHelping className="w-5 h-5" style={{ color: '#D5636C' }} />
+            </div>
+            <div>
+              <CardTitle className="text-base font-semibold">
+                Assisted Living Communities
+              </CardTitle>
+              <CardDescription className="text-xs">
+                Compassionate care in comfortable, home-like settings
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

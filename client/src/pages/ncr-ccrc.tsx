@@ -90,15 +90,24 @@ export default function NcrCcrc() {
         ))}
       </div>
 
-      <Card className="border">
-        <CardHeader style={{ backgroundColor: '#395174' }}>
-          <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
-            <TrendingUp className="w-4 h-4" />
-            Levels of Care
-          </CardTitle>
-          <CardDescription className="text-white/80 text-xs">
-            A full continuum of care as your needs evolve
-          </CardDescription>
+      <Card className="border" style={{ borderLeft: '4px solid #7FA3A1' }}>
+        <CardHeader className="border-b">
+          <div className="flex items-start gap-3">
+            <div 
+              className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: '#7FA3A115' }}
+            >
+              <TrendingUp className="w-5 h-5" style={{ color: '#7FA3A1' }} />
+            </div>
+            <div>
+              <CardTitle className="text-base font-semibold">
+                Levels of Care
+              </CardTitle>
+              <CardDescription className="text-xs">
+                A full continuum of care as your needs evolve
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -122,15 +131,24 @@ export default function NcrCcrc() {
         </CardContent>
       </Card>
 
-      <Card className="border">
-        <CardHeader style={{ backgroundColor: '#395174' }}>
-          <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
-            <Building2 className="w-4 h-4" />
-            CCRC Communities
-          </CardTitle>
-          <CardDescription className="text-white/80 text-xs">
-            Campus-style retirement communities with complete care continuums
-          </CardDescription>
+      <Card className="border" style={{ borderLeft: '4px solid #E8923A' }}>
+        <CardHeader className="border-b">
+          <div className="flex items-start gap-3">
+            <div 
+              className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: '#E8923A15' }}
+            >
+              <Building2 className="w-5 h-5" style={{ color: '#E8923A' }} />
+            </div>
+            <div>
+              <CardTitle className="text-base font-semibold">
+                CCRC Communities
+              </CardTitle>
+              <CardDescription className="text-xs">
+                Campus-style retirement communities with complete care continuums
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-6">
           <div className="space-y-4">

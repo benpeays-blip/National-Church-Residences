@@ -63,15 +63,24 @@ export default function NcrMemoryCare() {
         ))}
       </div>
 
-      <Card className="border">
-        <CardHeader style={{ backgroundColor: '#395174' }}>
-          <CardTitle className="text-base font-semibold text-white flex items-center gap-2">
-            <Brain className="w-4 h-4" />
-            Memory Care Communities
-          </CardTitle>
-          <CardDescription className="text-white/80 text-xs">
-            Compassionate, specialized care in secure, purposeful environments
-          </CardDescription>
+      <Card className="border" style={{ borderLeft: '4px solid #9CB071' }}>
+        <CardHeader className="border-b">
+          <div className="flex items-start gap-3">
+            <div 
+              className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: '#9CB07115' }}
+            >
+              <Brain className="w-5 h-5" style={{ color: '#9CB071' }} />
+            </div>
+            <div>
+              <CardTitle className="text-base font-semibold">
+                Memory Care Communities
+              </CardTitle>
+              <CardDescription className="text-xs">
+                Compassionate, specialized care in secure, purposeful environments
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
