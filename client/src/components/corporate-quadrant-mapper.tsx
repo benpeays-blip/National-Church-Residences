@@ -243,6 +243,8 @@ export default function CorporateQuadrantMapper() {
     
     if (draggedCorp && draggedCorp.quadrant !== 'partner' && !movedToPartner.has(draggedCorp.id)) {
       setMovedToPartner(prev => new Set(Array.from(prev).concat(draggedCorp.id)));
+      // Navigate to action plan page
+      navigate(`/corporate-partnerships/${draggedCorp.id}/action-plan`);
     }
     setDraggedCorp(null);
   };
@@ -435,16 +437,27 @@ export default function CorporateQuadrantMapper() {
                                 View More
                               </Link>
                             </p>
-                            <div className="mt-3">
-                              <Link href={`/corporate-partnerships/${corp.id}`}>
+                            <div className="mt-3 flex gap-2">
+                              <Link href={`/corporate-partnerships/${corp.id}/action-plan`}>
                                 <Button 
                                   variant="default"
                                   size="sm"
-                                  className="h-7 text-xs bg-orange-500 hover:bg-orange-600"
+                                  className="h-7 text-xs"
+                                  data-testid={`button-action-plan-${corp.id}`}
+                                >
+                                  <Sparkles className="w-3 h-3 mr-1" />
+                                  Generate Action Plan
+                                </Button>
+                              </Link>
+                              <Link href={`/corporate-partnerships/${corp.id}`}>
+                                <Button 
+                                  variant="outline"
+                                  size="sm"
+                                  className="h-7 text-xs"
                                   data-testid={`button-view-corp-${corp.id}`}
                                 >
                                   <Eye className="w-3 h-3 mr-1" />
-                                  View Corporation
+                                  View
                                 </Button>
                               </Link>
                             </div>
@@ -513,7 +526,7 @@ export default function CorporateQuadrantMapper() {
               </button>
               {isPartnerHovered && draggedCorp && (
                 <div className="absolute left-3/4 top-1/4 -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-xs font-medium text-emerald-700 bg-emerald-50 px-2 py-1 rounded shadow z-40">
-                  Drop to move to Partner
+                  Drop to generate action plan
                 </div>
               )}
 

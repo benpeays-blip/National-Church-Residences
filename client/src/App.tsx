@@ -80,6 +80,7 @@ import DonorsWithTabs from "@/pages/donors-with-tabs";
 import Donor360 from "@/pages/donor-360";
 import DonorDetail from "@/pages/donor-detail";
 import DonorActionPlan from "@/pages/donor-action-plan";
+import CorporateActionPlan from "@/pages/corporate-action-plan";
 import DonorCardShowcase from "@/pages/donor-card-showcase";
 import UpcomingActionsPage from "@/pages/upcoming-actions";
 import ActionDetail from "@/pages/action-detail";
@@ -321,6 +322,7 @@ function Router() {
       <Route path="/corporate-partnerships/inkind" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/foundations" component={CorporationsWithTabs} />
       <Route path="/corporate-partnerships/prospects" component={CorporationsWithTabs} />
+      <Route path="/corporate-partnerships/:id/action-plan" component={CorporateActionPlan} />
       <Route path="/corporate-partnerships/:id" component={CorporatePartnershipDetail} />
       <Route path="/corporate-partnerships" component={CorporationsWithTabs} />
       {/* NCR Pages */}
