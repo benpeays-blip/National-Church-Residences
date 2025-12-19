@@ -364,7 +364,7 @@ export default function QuadrantTop10() {
           <div className="flex items-center gap-2">
             <Target className="h-5 w-5 text-white" />
             <div>
-              <CardTitle className="text-white">TOP 10 ACTIONABLE OPPORTUNITIES</CardTitle>
+              <CardTitle className="text-white">TOP ACTIONABLE OPPORTUNITIES</CardTitle>
               <CardDescription className="mt-1 text-white/80">
                 Priority donor engagement opportunities based on scoring logic
               </CardDescription>

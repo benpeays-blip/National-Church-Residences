@@ -977,15 +977,15 @@ export default function PartnerPathwayWizard() {
   return (
     <Card className="overflow-hidden flex flex-col h-full">
       {/* Compact Header with Step Navigation */}
-      <div className="bg-[#395174]">
+      <div className="bg-white dark:bg-card">
         <CardHeader className="pb-0">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
+            <div className="w-10 h-10 rounded-lg bg-[#395174]/10 flex items-center justify-center">
               <Wand2 className="w-5 h-5 text-[#e1c47d]" />
             </div>
             <div>
-              <CardTitle className="text-white text-lg">Partner Pathway Wizard</CardTitle>
-              <CardDescription className="text-white/70">
+              <CardTitle className="text-foreground text-lg">Partner Pathway Wizard</CardTitle>
+              <CardDescription className="text-muted-foreground">
                 Generate your top actionable moves for the week
               </CardDescription>
             </div>
