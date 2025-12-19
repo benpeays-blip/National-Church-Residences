@@ -163,7 +163,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
   return (
     <div className="flex flex-row gap-6 items-stretch">
       {/* Main Quadrant Visualization - Hero Feature */}
-      <Card className="flex flex-col overflow-visible shadow-lg" style={{ minHeight: '450px', maxWidth: '500px' }}>
+      <Card className="flex flex-col overflow-visible shadow-lg" style={{ minHeight: '700px', width: '700px' }}>
         <CardHeader className="border-b py-4" style={{ backgroundColor: '#395174' }}>
           <div className="flex items-center justify-between">
             <div>
@@ -180,8 +180,8 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             </Badge>
           </div>
         </CardHeader>
-        <CardContent className="p-6" style={{ backgroundColor: '#f4f4f4' }}>
-          <div className="relative pb-8 pl-10">
+        <CardContent className="p-8" style={{ backgroundColor: '#f4f4f4' }}>
+          <div className="relative pb-10 pl-12">
             {/* Full Quadrant Chart Area */}
             <div className="relative w-full overflow-hidden bg-background rounded-lg" style={{ border: '3px solid #395174', aspectRatio: '1/1' }}>
               {/* Grid lines */}
@@ -401,10 +401,10 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
             </div>
 
             {/* Axis Labels - outside chart container */}
-            <div className="absolute -left-8 top-1/2 -translate-y-1/2 -rotate-90 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            <div className="absolute -left-10 top-1/2 -translate-y-1/2 -rotate-90 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Energy →
             </div>
-            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+            <div className="absolute left-1/2 -translate-x-1/2 bottom-0 text-sm font-semibold text-muted-foreground uppercase tracking-wider">
               Structure →
             </div>
           </div>
