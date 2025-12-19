@@ -128,18 +128,24 @@ export default function ImpactOverview() {
         ))}
       </div>
 
-      <Card>
-        <CardHeader 
-          className="rounded-t-lg"
-          style={{ backgroundColor: "#395174" }}
-        >
-          <CardTitle className="text-xl text-white flex items-center gap-2">
-            <BarChart3 className="h-5 w-5" />
-            Mission Impact Metrics
-          </CardTitle>
-          <CardDescription className="text-white/80">
-            Click any card to view comprehensive drill-down data
-          </CardDescription>
+      <Card style={{ borderLeft: '4px solid #395174' }}>
+        <CardHeader className="border-b">
+          <div className="flex items-start gap-3">
+            <div 
+              className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+              style={{ backgroundColor: '#39517415' }}
+            >
+              <BarChart3 className="h-5 w-5" style={{ color: '#395174' }} />
+            </div>
+            <div>
+              <CardTitle className="text-xl">
+                Mission Impact Metrics
+              </CardTitle>
+              <CardDescription>
+                Click any card to view comprehensive drill-down data
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -187,12 +193,19 @@ export default function ImpactOverview() {
       </Card>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#2ca02c" }}>
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <TrendingUp className="h-5 w-5" style={{ color: "#395174" }} />
-              Year-Over-Year Growth
-            </CardTitle>
+        <Card className="overflow-hidden" style={{ borderLeft: '4px solid #2ca02c' }}>
+          <CardHeader className="border-b">
+            <div className="flex items-start gap-3">
+              <div 
+                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: '#2ca02c15' }}
+              >
+                <TrendingUp className="h-5 w-5" style={{ color: '#2ca02c' }} />
+              </div>
+              <div>
+                <CardTitle className="text-lg">Year-Over-Year Growth</CardTitle>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
@@ -228,12 +241,19 @@ export default function ImpactOverview() {
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 overflow-hidden" style={{ borderLeftColor: "#D4A84B" }}>
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Star className="h-5 w-5" style={{ color: "#395174" }} />
-              Impact Highlights
-            </CardTitle>
+        <Card className="overflow-hidden" style={{ borderLeft: '4px solid #D4A84B' }}>
+          <CardHeader className="border-b">
+            <div className="flex items-start gap-3">
+              <div 
+                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                style={{ backgroundColor: '#D4A84B15' }}
+              >
+                <Star className="h-5 w-5" style={{ color: '#D4A84B' }} />
+              </div>
+              <div>
+                <CardTitle className="text-lg">Impact Highlights</CardTitle>
+              </div>
+            </div>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
