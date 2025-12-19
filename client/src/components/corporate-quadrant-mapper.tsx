@@ -393,7 +393,7 @@ export default function CorporateQuadrantMapper() {
                         <div className="p-4 bg-card border-b">
                           <div className="flex items-start gap-3">
                             <Avatar className="w-16 h-16 border-2 border-primary/10">
-                              <AvatarFallback className="bg-orange-100 text-orange-700 text-lg font-semibold">
+                              <AvatarFallback className="bg-primary/10 text-primary text-lg font-semibold">
                                 {corp.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
                               </AvatarFallback>
                             </Avatar>
@@ -411,18 +411,18 @@ export default function CorporateQuadrantMapper() {
                               </div>
                               <div className="flex flex-col gap-1.5 mt-2">
                                 <div className="flex items-center gap-1.5 text-xs">
-                                  <Badge variant="secondary" className="px-1.5 py-0.5 bg-orange-500 text-white hover:bg-orange-600 no-default-hover-elevate">
+                                  <Badge variant="secondary" className="px-1.5 py-0.5 bg-sky-500 text-white hover:bg-sky-600 no-default-hover-elevate">
                                     <Phone className="w-3 h-3 mr-1" />
                                     PHONE
                                   </Badge>
-                                  <span className="text-orange-600 dark:text-orange-400 font-medium">{corp.contactPhone}</span>
+                                  <span className="text-sky-600 dark:text-sky-400 font-medium">{corp.contactPhone}</span>
                                 </div>
                                 <div className="flex items-center gap-1.5 text-xs">
-                                  <Badge variant="secondary" className="px-1.5 py-0.5 bg-orange-500 text-white hover:bg-orange-600 no-default-hover-elevate">
+                                  <Badge variant="secondary" className="px-1.5 py-0.5 bg-sky-500 text-white hover:bg-sky-600 no-default-hover-elevate">
                                     <Mail className="w-3 h-3 mr-1" />
                                     EMAIL
                                   </Badge>
-                                  <span className="text-orange-600 dark:text-orange-400 font-medium truncate">{corp.contactEmail}</span>
+                                  <span className="text-sky-600 dark:text-sky-400 font-medium truncate">{corp.contactEmail}</span>
                                 </div>
                               </div>
                             </div>
@@ -432,7 +432,7 @@ export default function CorporateQuadrantMapper() {
                               {corp.description}{' '}
                               <Link 
                                 href={`/corporate-partnerships/${corp.id}`} 
-                                className="text-orange-500 hover:text-orange-600 hover:underline"
+                                className="text-sky-500 hover:text-sky-600 hover:underline"
                               >
                                 View More
                               </Link>
@@ -466,21 +466,21 @@ export default function CorporateQuadrantMapper() {
 
                         <div className="grid grid-cols-2 divide-x bg-muted/30">
                           <div className="p-4 text-center">
-                            <div className="text-2xl font-bold text-orange-600">
+                            <div className="text-2xl font-bold text-primary">
                               ${corp.totalContributions.toLocaleString()}
                             </div>
                             <div className="text-xs text-muted-foreground mt-1">Total Contributions</div>
                           </div>
                           <div className="p-4 text-center">
-                            <div className="text-2xl font-bold text-orange-600">{corp.volunteerHours.toLocaleString()}</div>
+                            <div className="text-2xl font-bold text-primary">{corp.volunteerHours.toLocaleString()}</div>
                             <div className="text-xs text-muted-foreground mt-1">Volunteer Hours</div>
                           </div>
                         </div>
 
                         <div className="p-4 border-t space-y-3 bg-white dark:bg-card">
                           <div className="flex items-start gap-3">
-                            <div className="w-16 h-16 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
-                              <Building2 className="w-8 h-8 text-orange-600" />
+                            <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                              <Building2 className="w-8 h-8 text-primary" />
                             </div>
                             <div className="flex-1 space-y-2">
                               <div className="flex items-center gap-2 text-sm font-medium">
@@ -627,7 +627,7 @@ export default function CorporateQuadrantMapper() {
                         <div className="flex items-center gap-2">
                           <div 
                             className="w-2.5 h-2.5 rounded-full flex-shrink-0"
-                            style={{ backgroundColor: isGreen ? '#22C55E' : '#EA580C' }}
+                            style={{ backgroundColor: isGreen ? '#22C55E' : 'hsl(var(--primary))' }}
                           />
                           <div className="font-medium truncate">
                             {corp.name}
@@ -661,7 +661,7 @@ export default function CorporateQuadrantMapper() {
         
         <div className="bg-muted/30 border-t px-4 py-4 shrink-0">
           <div className="flex items-center gap-2 text-sm font-semibold mb-3">
-            <Lightbulb className="w-4 h-4 text-orange-500" />
+            <Lightbulb className="w-4 h-4 text-primary" />
             <span>AI Playbook to Move towards Partner:</span>
           </div>
           <ol className="space-y-2 text-sm">
