@@ -135,7 +135,7 @@ export default function AgenticDashboard() {
               <div className="flex items-center gap-3 mb-2">
                 <Sparkles className="w-6 h-6" style={{ color: accentColors.coral }} />
                 <h1 className="text-3xl font-bold text-foreground" data-testid="text-agentic-greeting">
-                  {greeting}, Innovator
+                  Agentic Plan
                 </h1>
               </div>
               <p className="text-muted-foreground text-lg">

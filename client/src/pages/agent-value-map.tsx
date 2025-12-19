@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation, Link } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { AccentCard, getAccentBgClass, AccentColor, NCR_BRAND_COLORS } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
@@ -14,6 +15,7 @@ import {
   Target,
   BarChart3,
   ArrowRight,
+  ArrowLeft,
   CheckCircle2,
   Sparkles,
   Database,
@@ -272,6 +274,12 @@ export default function AgentValueMap() {
 
   return (
     <div className="p-6 space-y-6">
+      <Link href="/agentic-plan">
+        <Button variant="ghost" size="sm" className="gap-1 mb-4">
+          <ArrowLeft className="w-4 h-4" />
+          Back to Agentic Plan
+        </Button>
+      </Link>
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
           <h1 className="text-3xl font-bold" data-testid="text-page-title">Agentic Plan</h1>
