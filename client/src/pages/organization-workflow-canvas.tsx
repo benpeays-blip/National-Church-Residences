@@ -78,6 +78,13 @@ export default function OrganizationWorkflowCanvas() {
     }
   }, [selectedCanvasId, selectedCanvasError, toast]);
 
+  // Auto-select the first canvas when canvases are loaded
+  useEffect(() => {
+    if (!selectedCanvasId && canvases.length > 0 && !isLoading) {
+      setSelectedCanvasId(canvases[0].id);
+    }
+  }, [canvases, selectedCanvasId, isLoading]);
+
   // Create canvas mutation
   const createCanvasMutation = useMutation({
     mutationFn: async (data: { name: string; description?: string; canvasData: any }) => {
