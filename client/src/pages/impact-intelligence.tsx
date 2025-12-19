@@ -496,6 +496,33 @@ export function ImpactFeedTab() {
         ))}
       </div>
 
+      {/* Category Navigation */}
+      <div className="flex items-center gap-2 border-b pb-4">
+        {[
+          { value: "all", label: "All Stories", icon: BookOpen },
+          { value: "resident", label: "Resident Stories", icon: Heart },
+          { value: "program", label: "Program Outcomes", icon: Target },
+          { value: "community", label: "Community Impact", icon: Users },
+          { value: "staff", label: "Staff Excellence", icon: Award },
+        ].map((cat) => {
+          const Icon = cat.icon;
+          const isActive = filterCategory === cat.value;
+          return (
+            <Button
+              key={cat.value}
+              variant={isActive ? "default" : "outline"}
+              size="sm"
+              className={`gap-2 ${isActive ? 'bg-[#395174] hover:bg-[#395174]/90' : ''}`}
+              onClick={() => setFilterCategory(cat.value)}
+              data-testid={`filter-category-${cat.value}`}
+            >
+              <Icon className="w-4 h-4" />
+              {cat.label}
+            </Button>
+          );
+        })}
+      </div>
+
       {/* Filters */}
       <div className="flex flex-wrap gap-4 items-center">
         <div className="relative flex-1 min-w-[200px]">
@@ -508,19 +535,6 @@ export function ImpactFeedTab() {
             data-testid="search-stories"
           />
         </div>
-        <Select value={filterCategory} onValueChange={setFilterCategory}>
-          <SelectTrigger className="w-[160px]" data-testid="filter-category">
-            <Filter className="w-4 h-4 mr-2" />
-            <SelectValue placeholder="Category" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All Categories</SelectItem>
-            <SelectItem value="resident">Resident Stories</SelectItem>
-            <SelectItem value="program">Program Outcomes</SelectItem>
-            <SelectItem value="community">Community Impact</SelectItem>
-            <SelectItem value="staff">Staff Excellence</SelectItem>
-          </SelectContent>
-        </Select>
         <Select value={filterProgram} onValueChange={setFilterProgram}>
           <SelectTrigger className="w-[180px]" data-testid="filter-program">
             <SelectValue placeholder="Program Area" />
