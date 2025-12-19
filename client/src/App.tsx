@@ -448,7 +448,7 @@ type TopTab = 'Philanthropy' | 'Fundraising' | 'Agentic Plan' | 'Assessment';
 
 function App() {
   const [location, navigate] = useLocation();
-  const [activeDropdown, setActiveDropdown] = useState<DomainKey | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<DomainKey | "AgenticStrategy" | "AgenticImpl" | "AssessmentTech" | "AssessmentOps" | "Assessment" | null>(null);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [selectedTopTab, setSelectedTopTab] = useState<TopTab>('Philanthropy');
   
@@ -730,20 +730,98 @@ function App() {
                       </>
                     ) : selectedTopTab === 'Assessment' ? (
                       <>
-                        {assessmentNavItems.map((item) => (
-                          <Link key={item.path} href={item.path}>
-                            <div className={`relative ${location === item.path || location.startsWith(item.path) ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
-                              <Button
-                                variant="ghost"
-                                size="sm"
-                                className="font-semibold text-sm text-gray-700 hover:bg-black/10"
-                                data-testid={`button-nav-assessment-${item.name.toLowerCase().replace(/\s+/g, '-')}`}
-                              >
-                                {item.name}
-                              </Button>
+                        {/* On Site Interviews - Direct Link */}
+                        <Link href="/temporary">
+                          <div className={`relative ${location === '/temporary' ? 'after:absolute after:bottom-0 after:left-2 after:right-2 after:h-0.5 after:bg-primary after:rounded-full' : ''}`}>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="font-semibold text-sm text-gray-700 hover:bg-black/10"
+                              data-testid="button-nav-assessment-interviews"
+                            >
+                              On Site Interviews
+                            </Button>
+                          </div>
+                        </Link>
+
+                        {/* Technology Dropdown */}
+                        <div
+                          className="relative"
+                          onMouseEnter={() => setActiveDropdown("AssessmentTech")}
+                          onMouseLeave={() => setActiveDropdown(null)}
+                        >
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDropdownClick("AssessmentTech")}
+                            className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${activeDropdown === "AssessmentTech" ? "bg-black/10" : ""}`}
+                            data-testid="button-nav-assessment-technology"
+                          >
+                            Technology
+                            <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "AssessmentTech" ? "rotate-180" : ""}`} />
+                          </Button>
+                          {activeDropdown === "AssessmentTech" && (
+                            <div className="absolute left-0 top-full pt-1 z-50">
+                              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[200px] overflow-hidden">
+                                <div className="py-2 px-1">
+                                  {[
+                                    { name: 'Tech Stack', path: '/temporary/tech-stack' },
+                                    { name: 'Technology Categories', path: '/temporary/technology-categories' },
+                                    { name: 'Infrastructure', path: '/temporary/infrastructure' },
+                                  ].map((item) => (
+                                    <Link 
+                                      key={item.path} 
+                                      href={item.path}
+                                      className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                      onClick={closeDropdown}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
                             </div>
-                          </Link>
-                        ))}
+                          )}
+                        </div>
+
+                        {/* Operations Dropdown */}
+                        <div
+                          className="relative"
+                          onMouseEnter={() => setActiveDropdown("AssessmentOps")}
+                          onMouseLeave={() => setActiveDropdown(null)}
+                        >
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDropdownClick("AssessmentOps")}
+                            className={`font-semibold gap-1 text-sm text-gray-700 hover:bg-black/10 ${activeDropdown === "AssessmentOps" ? "bg-black/10" : ""}`}
+                            data-testid="button-nav-assessment-operations"
+                          >
+                            Operations
+                            <ChevronDown className={`h-3 w-3 transition-transform ${activeDropdown === "AssessmentOps" ? "rotate-180" : ""}`} />
+                          </Button>
+                          {activeDropdown === "AssessmentOps" && (
+                            <div className="absolute left-0 top-full pt-1 z-50">
+                              <div className="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl min-w-[200px] overflow-hidden">
+                                <div className="py-2 px-1">
+                                  {[
+                                    { name: 'Optimization Ideas', path: '/temporary/optimization-ideas' },
+                                    { name: 'Risk & Compliance', path: '/temporary/risk-compliance' },
+                                  ].map((item) => (
+                                    <Link 
+                                      key={item.path} 
+                                      href={item.path}
+                                      className="block mx-1 px-3 py-2.5 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-blue-50 dark:hover:bg-blue-900/30 hover:text-blue-700 dark:hover:text-blue-300 rounded-md transition-all duration-150"
+                                      onClick={closeDropdown}
+                                    >
+                                      {item.name}
+                                    </Link>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
                       </>
                     ) : (
                       <>
