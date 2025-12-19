@@ -124,17 +124,17 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        <Card className="lg:col-span-3">
+      <div className="flex flex-col xl:flex-row gap-6">
+        <Card className="xl:flex-[3]" style={{ minHeight: '600px' }}>
           <CardHeader>
             <Skeleton className="h-6 w-64" />
             <Skeleton className="h-4 w-96 mt-2" />
           </CardHeader>
           <CardContent>
-            <Skeleton className="w-full aspect-square" />
+            <Skeleton className="w-full min-h-[500px]" />
           </CardContent>
         </Card>
-        <Card className="lg:col-span-2">
+        <Card className="xl:flex-[1]" style={{ minHeight: '600px' }}>
           <CardHeader>
             <Skeleton className="h-6 w-48" />
           </CardHeader>
@@ -161,28 +161,28 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
     .sort((a, b) => (b.energy + b.structure) - (a.energy + a.structure));
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 h-full min-h-0">
-      {/* Main Quadrant Visualization */}
-      <Card className="lg:col-span-3 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 80px)', minHeight: '420px' }}>
-        <CardHeader className="border-b" style={{ backgroundColor: '#395174' }}>
+    <div className="flex flex-col xl:flex-row gap-6 h-full min-h-0">
+      {/* Main Quadrant Visualization - Hero Feature */}
+      <Card className="xl:flex-[3] flex flex-col overflow-visible shadow-lg" style={{ minHeight: '600px' }}>
+        <CardHeader className="border-b py-4" style={{ backgroundColor: '#395174' }}>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="flex items-center gap-2 text-white">
-                <Users className="w-5 h-5" style={{ color: '#e1c47d' }} />
+              <CardTitle className="flex items-center gap-2 text-white text-xl">
+                <Users className="w-6 h-6" style={{ color: '#e1c47d' }} />
                 Donor Relationship Quadrant
               </CardTitle>
               <CardDescription className="mt-1 text-white/80">
-                Energy increases upward; structure increases to the right.<br />Goal: Move every donor toward Partner.
+                Energy increases upward; structure increases to the right. Goal: Move every donor toward Partner.
               </CardDescription>
             </div>
-            <Badge variant="secondary" className="text-sm" style={{ backgroundColor: '#e1c47d', color: '#000000' }}>
+            <Badge variant="secondary" className="text-base px-3 py-1" style={{ backgroundColor: '#e1c47d', color: '#000000' }}>
               {data.totalDonors} Donors
             </Badge>
           </div>
         </CardHeader>
-        <CardContent className="p-6 flex-1 min-h-0 flex flex-col" style={{ backgroundColor: '#f4f4f4' }}>
-          <div className="relative flex-1 min-h-0 pb-8 pl-10">
-            <div className="relative w-full h-full min-h-[360px] max-h-[calc(100vh-80px)] aspect-square rounded-lg overflow-hidden bg-background" style={{ border: '3px solid #395174' }}>
+        <CardContent className="p-8 flex-1 flex flex-col" style={{ backgroundColor: '#f4f4f4' }}>
+          <div className="relative flex-1 pb-10 pl-12">
+            <div className="relative w-full h-full min-h-[500px] rounded-lg overflow-hidden bg-background shadow-inner" style={{ border: '3px solid #395174' }}>
               {/* Grid Lines */}
               <div className="absolute left-1/2 top-0 bottom-0 w-px bg-border" />
               <div className="absolute left-0 right-0 top-1/2 h-px bg-border" />
@@ -435,7 +435,7 @@ export default function DonorQuadrantMapper({ showEducationalContent = false }: 
         </CardContent>
       </Card>
       {/* Right Panel - Quadrant Details */}
-      <Card className="lg:col-span-2 flex flex-col overflow-hidden" style={{ maxHeight: 'calc(100vh - 80px)', minHeight: '420px' }}>
+      <Card className="xl:flex-[1] flex flex-col overflow-hidden" style={{ minHeight: '600px' }}>
         {/* Layered Tab Navigation */}
         <div className="flex border-b bg-muted/30 shrink-0">
           {(['partner', 'friend', 'colleague', 'acquaintance'] as QuadrantType[]).map((q) => {
