@@ -286,12 +286,14 @@ export default function AIVoiceNotes() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Left Column - Recording/Upload */}
         <Card>
-          <CardHeader className="rounded-t-xl" style={{ backgroundColor: '#395174' }}>
-            <CardTitle className="text-white flex items-center gap-2">
-              <Mic className="w-5 h-5" />
+          <CardHeader className="border-b">
+            <CardTitle className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-[#E8A54B]/10 flex items-center justify-center">
+                <Mic className="w-4 h-4 text-[#E8A54B]" />
+              </div>
               Record Voice Note
             </CardTitle>
-            <CardDescription className="text-white/80">
+            <CardDescription>
               Record live or upload an audio file
             </CardDescription>
           </CardHeader>
@@ -476,12 +478,14 @@ Follow-up: Send the campaign brochure by Friday and schedule a campus tour for J
 
         {/* Right Column - Results */}
         <Card className="flex flex-col">
-          <CardHeader className="rounded-t-xl" style={{ backgroundColor: '#395174' }}>
-            <CardTitle className="text-white flex items-center gap-2">
-              <FileText className="w-5 h-5" />
+          <CardHeader className="border-b">
+            <CardTitle className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-[#4FA6A6]/10 flex items-center justify-center">
+                <FileText className="w-4 h-4 text-[#4FA6A6]" />
+              </div>
               Extracted Insights
             </CardTitle>
-            <CardDescription className="text-white/80">
+            <CardDescription>
               AI-extracted information from your voice note
             </CardDescription>
           </CardHeader>
@@ -656,9 +660,14 @@ Follow-up: Send the campaign brochure by Friday and schedule a campus tour for J
 
       {/* Recent Voice Notes */}
       <Card>
-        <CardHeader className="rounded-t-xl" style={{ backgroundColor: '#395174' }}>
-          <CardTitle className="text-white">Recent Voice Notes</CardTitle>
-          <CardDescription className="text-white/80">
+        <CardHeader className="border-b">
+          <CardTitle className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-[#7BC4DC]/10 flex items-center justify-center">
+              <Clock className="w-4 h-4 text-[#7BC4DC]" />
+            </div>
+            Recent Voice Notes
+          </CardTitle>
+          <CardDescription>
             Your transcribed voice notes and extracted insights
           </CardDescription>
         </CardHeader>
