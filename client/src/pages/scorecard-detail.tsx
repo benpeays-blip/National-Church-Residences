@@ -2,8 +2,6 @@ import { useParams, Link } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Progress } from "@/components/ui/progress";
-import { AccentCard, NCR_BRAND_COLORS, type AccentColor } from "@/components/ui/accent-card";
 import { 
   ArrowLeft,
   Home,

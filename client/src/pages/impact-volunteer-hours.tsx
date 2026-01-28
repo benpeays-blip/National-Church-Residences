@@ -13,8 +13,7 @@ import {
   Calendar,
   Star,
   Gift,
-  Building2,
-  MapPin
+  Building2
 } from "lucide-react";
 import {
   Table,

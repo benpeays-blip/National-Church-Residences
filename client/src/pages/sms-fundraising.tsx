@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
@@ -12,13 +11,11 @@ import {
   TrendingUp,
   Calendar,
   Clock,
-  CheckCircle2,
   Smartphone,
   Zap,
   Heart,
   Gift
 } from "lucide-react";
-import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
 
 const recentMessages = [
   { id: "1", donor: "Sarah J.", message: "GIVE25 to support housing", amount: 25, timestamp: "2 min ago", campaign: "Housing Fund" },

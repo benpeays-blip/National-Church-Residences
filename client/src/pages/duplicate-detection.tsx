@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { 
   Users, 
@@ -70,7 +69,7 @@ export default function DuplicateDetection() {
   const [pairs, setPairs] = useState<DuplicatePair[]>(initialDuplicatePairs);
   const [reviewPair, setReviewPair] = useState<DuplicatePair | null>(null);
   const [mergedCount, setMergedCount] = useState(stats.mergedThisMonth);
-  const [dismissedCount, setDismissedCount] = useState(0);
+  const [_dismissedCount, setDismissedCount] = useState(0);
 
   const handleReview = (pair: DuplicatePair) => {
     setReviewPair(pair);

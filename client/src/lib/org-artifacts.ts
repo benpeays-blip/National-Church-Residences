@@ -1,5 +1,4 @@
 import {
-  Target,
   Users,
   Handshake,
   DollarSign,
@@ -18,7 +17,6 @@ import {
   Globe,
   Calendar,
   Phone,
-  FileBarChart,
   type LucideIcon,
 } from "lucide-react";
 

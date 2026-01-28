@@ -4,14 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
-import { 
-  MapPin, 
-  CheckCircle2, 
-  AlertTriangle, 
+import {
+  MapPin,
+  CheckCircle2,
+  AlertTriangle,
   XCircle,
   Search,
   RefreshCw,
-  Mail,
   Home,
   Zap,
   ArrowLeft

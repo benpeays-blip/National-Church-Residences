@@ -2,13 +2,11 @@ import { db } from "./db";
 import {
   users,
   persons,
-  households,
   gifts,
   opportunities,
   grants,
   interactions,
   campaigns,
-  portfolios,
   tasks,
   workflows,
   workflowBlocks,
@@ -39,7 +37,7 @@ import {
   type OrganizationCanvas,
   type InsertOrganizationCanvas,
 } from "@shared/schema";
-import { eq, like, or, and, desc, sql, ilike } from "drizzle-orm";
+import { eq, like, or, and, desc, ilike } from "drizzle-orm";
 
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
@@ -302,14 +300,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async updateTask(id: string, task: Partial<InsertTask>): Promise<Task | undefined> {
-    const updates: any = { ...task };
-    if (task.completed === 1 && !task.completedAt) {
-      updates.completedAt = new Date();
-    }
-    
     const result = await db
       .update(tasks)
-      .set(updates)
+      .set(task)
       .where(eq(tasks.id, id))
       .returning();
     return result[0];
@@ -329,14 +322,17 @@ export class DatabaseStorage implements IStorage {
     const lastGift = giftsList[0];
     const totalLifetimeGiving = giftsList.reduce((sum, g) => sum + parseFloat(g.amount), 0);
 
-    await this.updatePerson(personId, {
-      engagementScore,
-      capacityScore,
-      affinityScore,
-      lastGiftDate: lastGift?.receivedAt,
-      lastGiftAmount: lastGift?.amount,
-      totalLifetimeGiving: totalLifetimeGiving.toString(),
-    });
+    // Update computed fields directly (these are omitted from InsertPerson schema)
+    await db.update(persons)
+      .set({
+        engagementScore,
+        capacityScore,
+        affinityScore,
+        lastGiftDate: lastGift?.receivedAt,
+        lastGiftAmount: lastGift?.amount,
+        totalLifetimeGiving: totalLifetimeGiving.toString(),
+      } as any)
+      .where(eq(persons.id, personId));
   }
 
   private calculateEngagementScore(interactions: Interaction[]): number {
@@ -596,7 +592,7 @@ export class DatabaseStorage implements IStorage {
       ownerId: ownerId || original.ownerId,
       status: "draft",
       isTemplate: false,
-      tags: original.tags,
+      tags: original.tags as any,
       templateCategory: original.templateCategory,
     });
 
@@ -612,7 +608,7 @@ export class DatabaseStorage implements IStorage {
         positionY: block.positionY,
         width: block.width,
         height: block.height,
-        metadata: block.metadata,
+        metadata: block.metadata as any,
         colorToken: block.colorToken,
       });
       blockIdMap.set(block.id, newBlock.id);
@@ -626,7 +622,7 @@ export class DatabaseStorage implements IStorage {
         targetBlockId: blockIdMap.get(connection.targetBlockId)!,
         label: connection.label,
         connectionType: connection.connectionType,
-        metadata: connection.metadata,
+        metadata: connection.metadata as any,
       });
     }
 
@@ -716,13 +712,13 @@ export class DatabaseStorage implements IStorage {
           await this.createWorkflowBlock({
             id: blockId,
             workflowId: workflow.id,
-            type: demoBlock.type,
+            type: demoBlock.type as any,
             subtype: demoBlock.subtype,
-            displayName: demoBlock.label,
-            positionX: demoBlock.position.x,
-            positionY: demoBlock.position.y,
-            config: demoBlock.config || {},
-          });
+            displayName: demoBlock.label as string,
+            positionX: demoBlock.position.x.toString(),
+            positionY: demoBlock.position.y.toString(),
+            metadata: demoBlock.config || {},
+          } as any);
         }
 
         // Create connections using mapped IDs

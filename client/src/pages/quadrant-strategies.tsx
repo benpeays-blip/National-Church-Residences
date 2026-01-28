@@ -18,7 +18,6 @@ import {
   Mail,
   Video,
   Handshake,
-  Star,
   Crown,
   TrendingUp,
   Zap,

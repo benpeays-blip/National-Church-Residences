@@ -36,7 +36,6 @@ const pipelineData = {
 };
 
 export default function MGOPipelineDetail() {
-  const weightedPercentage = (pipelineData.weightedValue / pipelineData.totalValue) * 100;
 
   return (
     <div className="space-y-6">

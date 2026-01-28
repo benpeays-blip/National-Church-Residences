@@ -9,7 +9,6 @@ import {
   Calendar,
   DollarSign,
   Trophy,
-  Star,
   CheckCircle,
   Clock,
   Users,

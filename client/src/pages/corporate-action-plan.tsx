@@ -4,11 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { 
-  Phone, Mail, Calendar, Gift, Send, FileText, 
-  Clock, ArrowRight, Sparkles, Target, 
-  Users, TrendingUp, MessageSquare, Coffee, 
-  Building2, ChevronLeft, Briefcase, DollarSign,
+import {
+  Users, TrendingUp, MessageSquare, Coffee,
+  ChevronLeft, Briefcase, DollarSign,
   Handshake, Award, PieChart, Presentation
 } from "lucide-react";
 

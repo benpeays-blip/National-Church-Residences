@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
+import { api, ApiError } from "@/lib/api";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,27 +9,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Progress } from "@/components/ui/progress";
-import { 
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger 
-} from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest, queryClient } from "@/lib/queryClient";
-import { 
-  Mic, 
-  MicOff, 
-  Upload, 
-  FileAudio, 
-  Play, 
-  Pause,
-  Square,
+import { queryClient } from "@/lib/queryClient";
+import {
+  Mic,
+  Upload,
+  FileAudio,
   Clock,
   User,
   Target,
@@ -70,9 +56,6 @@ interface TranscriptionResult {
 export default function AIVoiceNotes() {
   const { toast } = useToast();
   const [activeTab, setActiveTab] = useState("type");
-  const [isRecording, setIsRecording] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
-  const [recordingTime, setRecordingTime] = useState(0);
   const [audioBlob, setAudioBlob] = useState<Blob | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
@@ -82,14 +65,13 @@ export default function AIVoiceNotes() {
   const [meetingTitle, setMeetingTitle] = useState("");
   const [donorName, setDonorName] = useState("");
   const [manualTranscript, setManualTranscript] = useState("");
-  
-  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
-  const chunksRef = useRef<Blob[]>([]);
+
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: notes, isLoading } = useQuery<MeetingNote[]>({
-    queryKey: ["/api/meeting-notes"],
+    queryKey: ["meeting-notes"],
+    queryFn: () => api.meetingNotes.getAll(),
   });
 
   useEffect(() => {
@@ -102,82 +84,6 @@ export default function AIVoiceNotes() {
       }
     };
   }, [audioUrl]);
-
-  const startRecording = async () => {
-    try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const mediaRecorder = new MediaRecorder(stream);
-      mediaRecorderRef.current = mediaRecorder;
-      chunksRef.current = [];
-
-      mediaRecorder.ondataavailable = (e) => {
-        if (e.data.size > 0) {
-          chunksRef.current.push(e.data);
-        }
-      };
-
-      mediaRecorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
-        setAudioBlob(blob);
-        setAudioUrl(URL.createObjectURL(blob));
-        stream.getTracks().forEach(track => track.stop());
-      };
-
-      mediaRecorder.start(1000);
-      setIsRecording(true);
-      setIsPaused(false);
-      setRecordingTime(0);
-
-      timerRef.current = setInterval(() => {
-        setRecordingTime(prev => prev + 1);
-      }, 1000);
-
-    } catch (error) {
-      toast({
-        title: "Microphone Access Denied",
-        description: "Please allow microphone access to record audio.",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const pauseRecording = () => {
-    if (mediaRecorderRef.current) {
-      if (isPaused) {
-        mediaRecorderRef.current.resume();
-        timerRef.current = setInterval(() => {
-          setRecordingTime(prev => prev + 1);
-        }, 1000);
-      } else {
-        mediaRecorderRef.current.pause();
-        if (timerRef.current) {
-          clearInterval(timerRef.current);
-        }
-      }
-      setIsPaused(!isPaused);
-    }
-  };
-
-  const stopRecording = () => {
-    if (mediaRecorderRef.current) {
-      mediaRecorderRef.current.stop();
-      setIsRecording(false);
-      setIsPaused(false);
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
-    }
-  };
-
-  const clearRecording = () => {
-    setAudioBlob(null);
-    if (audioUrl) {
-      URL.revokeObjectURL(audioUrl);
-    }
-    setAudioUrl(null);
-    setRecordingTime(0);
-    setResult(null);
-  };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -221,33 +127,40 @@ export default function AIVoiceNotes() {
     }, 500);
 
     try {
-      const formData = new FormData();
-      // If we have audio, include it (but transcript is required for processing)
+      let data: TranscriptionResult;
+
+      // If we have audio, use the API client
       if (audioBlob) {
-        formData.append('audio', audioBlob, 'recording.webm');
+        const audioFile = audioBlob instanceof File
+          ? audioBlob
+          : new File([audioBlob], meetingTitle || 'recording.webm', { type: audioBlob.type });
+
+        data = await api.meetingNotes.transcribe(audioFile);
       } else {
-        // Create empty audio placeholder for API compatibility
+        // For manual transcript only, we still need to use fetch since the API client doesn't support this
+        const formData = new FormData();
         formData.append('audio', new Blob([''], { type: 'audio/webm' }), 'placeholder.webm');
-      }
-      formData.append('title', meetingTitle || 'Voice Note');
-      formData.append('donorName', donorName);
-      formData.append('manualTranscript', manualTranscript);
+        formData.append('title', meetingTitle || 'Voice Note');
+        formData.append('donorName', donorName);
+        formData.append('manualTranscript', manualTranscript);
 
-      const response = await fetch('/api/meeting-notes/transcribe', {
-        method: 'POST',
-        body: formData,
-      });
+        const response = await fetch('/api/meeting-notes/transcribe', {
+          method: 'POST',
+          body: formData,
+        });
 
-      const data = await response.json();
-      
-      if (!response.ok) {
-        throw new Error(data.error || 'Processing failed');
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new ApiError(errorData.error || 'Processing failed', response.status);
+        }
+
+        data = await response.json();
       }
 
       setResult(data);
       setProcessingProgress(100);
 
-      queryClient.invalidateQueries({ queryKey: ['/api/meeting-notes'] });
+      queryClient.invalidateQueries({ queryKey: ['meeting-notes'] });
 
       toast({
         title: "Notes Processed",
@@ -255,21 +168,19 @@ export default function AIVoiceNotes() {
       });
 
     } catch (error: any) {
+      const errorMessage = error instanceof ApiError
+        ? error.message
+        : error.message || "Failed to process notes. Please try again.";
+
       toast({
         title: "Processing Failed",
-        description: error.message || "Failed to process notes. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
       clearInterval(progressInterval);
       setIsProcessing(false);
     }
-  };
-
-  const formatTime = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
   const hasContentToProcess = (audioBlob || manualTranscript.trim()) && !result;

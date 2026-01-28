@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { MetricCard } from "@/components/metric-card";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -79,7 +80,8 @@ interface IntegrationCoverage {
 
 export default function DashboardDevDirector() {
   const { data, isLoading } = useQuery<DevDirectorData>({
-    queryKey: ["/api/dashboard/dev-director"],
+    queryKey: ["dashboard", "dev-director"],
+    queryFn: () => api.dashboards.getDevDirector(),
   });
   
   const { data: integrationData } = useQuery<{ coverageMetrics: IntegrationCoverage }>({

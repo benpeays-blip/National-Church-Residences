@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -29,7 +30,8 @@ interface CEODashboardData {
 
 export default function DashboardCEO() {
   const { data, isLoading } = useQuery<CEODashboardData>({
-    queryKey: ["/api/dashboard/ceo"],
+    queryKey: ["dashboard", "ceo"],
+    queryFn: () => api.dashboards.getCEO(),
   });
 
   if (isLoading) {

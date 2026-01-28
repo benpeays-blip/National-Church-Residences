@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { MetricCard } from "@/components/metric-card";
 import { TaskItem } from "@/components/task-item";
 import { OpportunityCard } from "@/components/opportunity-card";
@@ -31,7 +32,8 @@ interface DashboardData {
 export default function DashboardMGO() {
   const { toast } = useToast();
   const { data, isLoading } = useQuery<DashboardData>({
-    queryKey: ["/api/dashboard/mgo"],
+    queryKey: ["dashboard", "mgo"],
+    queryFn: () => api.dashboards.getMGO(),
   });
 
   const generateNBA = useMutation({
@@ -40,7 +42,7 @@ export default function DashboardMGO() {
       return await response.json();
     },
     onSuccess: (newTasks: any) => {
-      queryClient.invalidateQueries({ queryKey: ["/api/dashboard/mgo"] });
+      queryClient.invalidateQueries({ queryKey: ["dashboard", "mgo"] });
       toast({
         title: "Tasks Generated",
         description: `Generated ${newTasks?.length || 0} next best action tasks based on donor data.`,

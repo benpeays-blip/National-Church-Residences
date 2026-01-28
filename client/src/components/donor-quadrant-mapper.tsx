@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,8 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { HoverCard, HoverCardContent, HoverCardTrigger } from '@/components/ui/hover-card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { TrendingUp, Users, Lightbulb, Phone, Mail, Heart, Award, Calendar, BookOpen, AlertTriangle, ArrowRight, CheckCircle2, Sparkles, Eye } from 'lucide-react';
+import { Users, Lightbulb, Phone, Mail, Heart, Award, Calendar, Sparkles, Eye } from 'lucide-react';
 import { Link } from 'wouter';
 
 interface Donor {
@@ -55,7 +54,7 @@ interface DonorQuadrantMapperProps {
   showEducationalContent?: boolean;
 }
 
-export default function DonorQuadrantMapper({ showEducationalContent = false }: DonorQuadrantMapperProps) {
+export default function DonorQuadrantMapper({ showEducationalContent: _showEducationalContent = false }: DonorQuadrantMapperProps) {
   const [selectedQuadrant, setSelectedQuadrant] = useState<QuadrantType>('partner');
   const [draggedDonor, setDraggedDonor] = useState<Donor | null>(null);
   const [isPartnerHovered, setIsPartnerHovered] = useState(false);

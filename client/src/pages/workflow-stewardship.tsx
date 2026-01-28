@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -41,7 +42,8 @@ type StewardshipWorkflowItem = {
 
 export default function Stewardship() {
   const { data: workflows, isLoading, error, isError } = useQuery<StewardshipWorkflowItem[], Error>({
-    queryKey: ["/api/workflow/stewardship"],
+    queryKey: ["workflow-utilities", "stewardship"],
+    queryFn: () => api.workflowUtilities.getStewardshipWorkflows(),
   });
 
   if (isLoading) {

@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Heart, Users, Home, Phone, Stethoscope, HandHelping } from "lucide-react";
+import { Heart, Users, Phone, Stethoscope, HandHelping } from "lucide-react";
 
 export default function NcrHospice() {
   const services = [

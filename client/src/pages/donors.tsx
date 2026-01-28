@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { useLocation } from "wouter";
 import { DonorCard } from "@/components/donor-card";
 import { EmptyState } from "@/components/empty-state";
@@ -39,7 +40,8 @@ export default function Donors() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const { data: donors, isLoading } = useQuery<Person[]>({
-    queryKey: ["/api/persons", searchQuery],
+    queryKey: ["persons", searchQuery],
+    queryFn: () => api.persons.getAll(searchQuery),
   });
 
   const handleAddDonor = () => {

@@ -1,13 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Mail, Phone, FileText, TrendingUp, DollarSign, Calendar, Award } from "lucide-react";
 import { formatCurrency, formatDateRelative, getInitials } from "@/lib/utils";
 import { ScoreIndicator } from "@/components/score-indicator";
-import { DataProvenanceBadge } from "@/components/data-provenance-badge";
 import type { Person } from "@shared/schema";
 
 export default function DonorCardShowcase() {

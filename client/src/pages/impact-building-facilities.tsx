@@ -10,7 +10,6 @@ import {
   MapPin,
   TrendingUp,
   Home,
-  Heart,
   Calendar,
   CheckCircle2,
   AlertCircle

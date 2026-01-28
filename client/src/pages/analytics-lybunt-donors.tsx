@@ -48,11 +48,6 @@ export default function LYBUNTDonors() {
     0
   );
 
-  const totalLifetime = lybuntDonors.reduce(
-    (sum, d) => sum + parseFloat(d.totalLifetimeGiving || "0"),
-    0
-  );
-
   const avgLastGift = lybuntDonors.length > 0 ? totalAtRisk / lybuntDonors.length : 0;
 
   const withEmail = lybuntDonors.filter((d) => d.primaryEmail).length;

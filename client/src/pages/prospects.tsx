@@ -17,8 +17,6 @@ import {
   Search,
   Building2,
   Mail,
-  Phone,
-  Calendar,
   TrendingUp,
   Users,
   Sparkles,

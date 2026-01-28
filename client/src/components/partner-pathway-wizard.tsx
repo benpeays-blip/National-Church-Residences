@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Separator } from "@/components/ui/separator";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { 
   Wand2, 
@@ -23,7 +22,6 @@ import {
   Clock,
   User,
   ChevronDown,
-  ChevronUp,
   ChevronRight,
   MessageSquare,
   FileText,
@@ -864,7 +862,7 @@ export default function PartnerPathwayWizard() {
     );
   };
 
-  const validateField = (field: keyof WeeklyConstraints, value: string): string => {
+  const validateField = (_field: keyof WeeklyConstraints, value: string): string => {
     if (value === "") {
       return "This field is required";
     }
@@ -992,7 +990,6 @@ export default function PartnerPathwayWizard() {
               const StepIcon = stepIcons[idx];
               const isActive = currentStep === step;
               const isCompleted = currentStep > step;
-              const isPending = currentStep < step;
               
               return (
                 <div key={step} className="flex items-center flex-1 last:flex-none">

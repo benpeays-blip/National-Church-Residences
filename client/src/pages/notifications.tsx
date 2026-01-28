@@ -5,10 +5,9 @@ import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { 
   Bell, 
-  Gift, 
-  Calendar, 
-  Users, 
-  MessageSquare, 
+  Gift,
+  Calendar,
+  MessageSquare,
   CheckCircle2, 
   AlertCircle,
   Info,
@@ -16,8 +15,6 @@ import {
   Trash2,
   Check,
   MoreHorizontal,
-  Settings,
-  Filter,
   ChevronRight,
   Sparkles
 } from "lucide-react";

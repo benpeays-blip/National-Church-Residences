@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Brain, Users, MapPin, Shield, Music, Sun, Sparkles } from "lucide-react";
 
 export default function NcrMemoryCare() {
   const communities = [

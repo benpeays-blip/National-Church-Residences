@@ -1,0 +1,358 @@
+/**
+ * Integration Tests for Opportunities Routes
+ *
+ * Tests the full request/response cycle for fundraising opportunity endpoints
+ */
+
+import { describe, it, expect, vi, beforeEach } from 'vitest';
+import request from 'supertest';
+import express from 'express';
+import { opportunitiesRouter } from '../../../server/routes/opportunities.routes';
+import * as opportunitiesRepo from '../../../server/services/storage/opportunities.repository';
+import { errorHandler, notFoundHandler } from '../../../server/middleware/errorHandler';
+
+// Mock the repository
+vi.mock('../../../server/services/storage/opportunities.repository');
+
+// Mock the logger
+vi.mock('../../../server/config/logging', () => ({
+  logger: {
+    debug: vi.fn(),
+    info: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+  },
+}));
+
+// Mock authentication middleware
+vi.mock('../../../server/middleware/auth', () => ({
+  isAuthenticated: (req: any, res: any, next: any) => next(),
+}));
+
+describe('Opportunities Routes Integration Tests', () => {
+  let app: express.Express;
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+
+    // Create a fresh Express app for each test
+    app = express();
+    app.use(express.json());
+    app.use('/api/opportunities', opportunitiesRouter);
+    app.use(notFoundHandler);
+    app.use(errorHandler);
+  });
+
+  describe('GET /api/opportunities', () => {
+    it('should return all opportunities without filter', async () => {
+      const mockOpportunities = [
+        {
+          id: '1',
+          name: 'Major Gift Opportunity',
+          personId: 'p1',
+          ownerId: 'u1',
+          stage: 'Cultivation',
+          askAmount: '50000',
+          probability: 60,
+          closeDate: new Date('2026-03-01'),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: '2',
+          name: 'Annual Fund Ask',
+          personId: 'p2',
+          ownerId: 'u2',
+          stage: 'Prospect',
+          askAmount: '10000',
+          probability: 30,
+          closeDate: new Date('2026-02-15'),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ];
+
+      vi.mocked(opportunitiesRepo.findOpportunities).mockResolvedValue(mockOpportunities as any);
+
+      const response = await request(app)
+        .get('/api/opportunities')
+        .expect(200);
+
+      expect(response.body).toHaveLength(2);
+      expect(response.body[0].name).toBe('Major Gift Opportunity');
+      expect(opportunitiesRepo.findOpportunities).toHaveBeenCalledWith(undefined);
+    });
+
+    it('should return filtered opportunities by ownerId', async () => {
+      const mockOpportunities = [
+        {
+          id: '1',
+          name: 'My Opportunity',
+          personId: 'p1',
+          ownerId: 'u1',
+          stage: 'Cultivation',
+          askAmount: '50000',
+          probability: 60,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ];
+
+      vi.mocked(opportunitiesRepo.findOpportunities).mockResolvedValue(mockOpportunities as any);
+
+      const response = await request(app)
+        .get('/api/opportunities?ownerId=u1')
+        .expect(200);
+
+      expect(response.body).toHaveLength(1);
+      expect(response.body[0].ownerId).toBe('u1');
+      expect(opportunitiesRepo.findOpportunities).toHaveBeenCalledWith('u1');
+    });
+  });
+
+  describe('GET /api/opportunities/:id', () => {
+    it('should return a single opportunity', async () => {
+      const mockOpportunity = {
+        id: '1',
+        name: 'Capital Campaign Opportunity',
+        personId: 'p1',
+        ownerId: 'u1',
+        stage: 'Ask',
+        askAmount: '100000',
+        probability: 75,
+        closeDate: new Date('2026-04-01'),
+        notes: 'Follow up after site visit',
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      vi.mocked(opportunitiesRepo.findOpportunityById).mockResolvedValue(mockOpportunity as any);
+
+      const response = await request(app)
+        .get('/api/opportunities/1')
+        .expect(200);
+
+      expect(response.body.id).toBe('1');
+      expect(response.body.name).toBe('Capital Campaign Opportunity');
+      expect(response.body.stage).toBe('solicitation');
+      expect(opportunitiesRepo.findOpportunityById).toHaveBeenCalledWith('1');
+    });
+
+    it('should return 404 when opportunity not found', async () => {
+      vi.mocked(opportunitiesRepo.findOpportunityById).mockResolvedValue(null);
+
+      const response = await request(app)
+        .get('/api/opportunities/nonexistent')
+        .expect(404);
+
+      expect(response.body).toHaveProperty('message');
+      expect(response.body.message).toContain('not found');
+    });
+  });
+
+  describe('POST /api/opportunities', () => {
+    it('should create a new opportunity', async () => {
+      const newOpportunityData = {
+        personId: 'p1',
+        ownerId: 'u1',
+        stage: 'Prospect',
+        askAmount: '25000',
+        probability: 40,
+        closeDate: '2026-05-01',
+      };
+
+      const createdOpportunity = {
+        ...newOpportunityData,
+        id: 'new-id',
+        closeDate: new Date('2026-05-01'),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      };
+
+      vi.mocked(opportunitiesRepo.createOpportunity).mockResolvedValue(createdOpportunity as any);
+
+      const response = await request(app)
+        .post('/api/opportunities')
+        .send(newOpportunityData)
+        .expect(201);
+
+      expect(response.body.id).toBe('new-id');
+      expect(response.body.stage).toBe('Prospect');
+      expect(opportunitiesRepo.createOpportunity).toHaveBeenCalled();
+    });
+
+    it('should return 400 when personId is missing', async () => {
+      const invalidData = {
+        ownerId: 'u1',
+        stage: 'Prospect',
+        askAmount: '25000',
+        // personId is missing
+      };
+
+      const response = await request(app)
+        .post('/api/opportunities')
+        .send(invalidData)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('message');
+    });
+
+    it('should return 400 when stage is invalid', async () => {
+      const invalidData = {
+        personId: 'p1',
+        ownerId: 'u1',
+        stage: 'invalid_stage',
+        askAmount: '25000',
+      };
+
+      const response = await request(app)
+        .post('/api/opportunities')
+        .send(invalidData)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('message');
+    });
+
+    it('should return 400 when probability is out of range', async () => {
+      const invalidData = {
+        title: 'Test Opportunity',
+        personId: 'p1',
+        ownerId: 'u1',
+        stage: 'Prospect',
+        askAmount: '25000',
+        probability: 150, // Invalid: > 100
+      };
+
+      const response = await request(app)
+        .post('/api/opportunities')
+        .send(invalidData)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('message');
+    });
+
+    it('should return 400 when amount is negative', async () => {
+      const invalidData = {
+        title: 'Test Opportunity',
+        personId: 'p1',
+        ownerId: 'u1',
+        stage: 'Prospect',
+        askAmount: '-1000', // Invalid: < 0
+      };
+
+      const response = await request(app)
+        .post('/api/opportunities')
+        .send(invalidData)
+        .expect(400);
+
+      expect(response.body).toHaveProperty('message');
+    });
+  });
+
+  describe('PATCH /api/opportunities/:id', () => {
+    it('should update an existing opportunity', async () => {
+      const updateData = {
+        stage: 'closed_won',
+        probability: 100,
+        notes: 'Gift received!',
+      };
+
+      const existingOpportunity = {
+        id: '1',
+        name: 'Major Gift Opportunity',
+        personId: 'p1',
+        ownerId: 'u1',
+        stage: 'Cultivation',
+        askAmount: '50000',
+        probability: 60,
+      };
+
+      const updatedOpportunity = {
+        id: '1',
+        name: 'Major Gift Opportunity',
+        personId: 'p1',
+        ownerId: 'u1',
+        stage: 'closed_won',
+        askAmount: '50000',
+        probability: 100,
+        notes: 'Gift received!',
+        updatedAt: new Date(),
+      };
+
+      vi.mocked(opportunitiesRepo.findOpportunityById).mockResolvedValue(existingOpportunity as any);
+      vi.mocked(opportunitiesRepo.updateOpportunity).mockResolvedValue(updatedOpportunity as any);
+
+      const response = await request(app)
+        .patch('/api/opportunities/1')
+        .send(updateData)
+        .expect(200);
+
+      expect(response.body.stage).toBe('closed_won');
+      expect(response.body.probability).toBe(100);
+      expect(response.body.notes).toBe('Gift received!');
+      expect(opportunitiesRepo.updateOpportunity).toHaveBeenCalledWith('1', expect.objectContaining(updateData));
+    });
+
+    it('should return 404 when updating non-existent opportunity', async () => {
+      vi.mocked(opportunitiesRepo.updateOpportunity).mockResolvedValue(undefined);
+
+      const response = await request(app)
+        .patch('/api/opportunities/nonexistent')
+        .send({ stage: 'closed_won' })
+        .expect(404);
+
+      expect(response.body).toHaveProperty('message');
+    });
+
+    it('should return 400 when updating with invalid stage', async () => {
+      const response = await request(app)
+        .patch('/api/opportunities/1')
+        .send({ stage: 'invalid_stage' })
+        .expect(400);
+
+      expect(response.body).toHaveProperty('message');
+    });
+
+    it('should return 400 when updating with invalid probability', async () => {
+      const response = await request(app)
+        .patch('/api/opportunities/1')
+        .send({ probability: -10 })
+        .expect(400);
+
+      expect(response.body).toHaveProperty('message');
+    });
+  });
+
+  describe('DELETE /api/opportunities/:id', () => {
+    it('should delete an opportunity', async () => {
+      const existingOpportunity = {
+        id: '1',
+        name: 'Opportunity to Delete',
+        personId: 'p1',
+        ownerId: 'u1',
+        stage: 'Prospect',
+        askAmount: '10000',
+      };
+
+      vi.mocked(opportunitiesRepo.findOpportunityById).mockResolvedValue(existingOpportunity as any);
+      vi.mocked(opportunitiesRepo.deleteOpportunity).mockResolvedValue(existingOpportunity as any);
+
+      const response = await request(app)
+        .delete('/api/opportunities/1')
+        .expect(200);
+
+      expect(response.body.id).toBe('1');
+      expect(opportunitiesRepo.deleteOpportunity).toHaveBeenCalledWith('1');
+    });
+
+    it('should return 404 when deleting non-existent opportunity', async () => {
+      vi.mocked(opportunitiesRepo.deleteOpportunity).mockResolvedValue(undefined);
+
+      const response = await request(app)
+        .delete('/api/opportunities/nonexistent')
+        .expect(404);
+
+      expect(response.body).toHaveProperty('message');
+    });
+  });
+});

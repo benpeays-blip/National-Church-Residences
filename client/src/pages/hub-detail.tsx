@@ -3,8 +3,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { AccentCard, NCR_BRAND_COLORS, type AccentColor, getAccentBgClass } from "@/components/ui/accent-card";
-import { 
+import { AccentCard, NCR_BRAND_COLORS, type AccentColor } from "@/components/ui/accent-card";
+import {
   ArrowLeft,
   HandHeart,
   Target,
@@ -18,17 +18,11 @@ import {
   Minus,
   CheckCircle2,
   AlertTriangle,
-  Clock,
-  BarChart3,
-  Activity,
   Gauge,
-  Zap,
   FileText,
-  DollarSign,
   Calendar,
   Bot,
   Layers,
-  Settings,
   Network,
   Sparkles,
   ChevronRight,

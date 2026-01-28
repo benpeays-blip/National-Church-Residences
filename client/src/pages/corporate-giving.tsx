@@ -25,7 +25,6 @@ import {
   CheckCircle,
   Circle,
   Phone,
-  Mail,
   FileText,
   Clock,
   Send,

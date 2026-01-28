@@ -1,20 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { 
-  DollarSign, 
-  TrendingUp, 
-  Users, 
+import {
+  DollarSign,
+  TrendingUp,
+  Users,
   Calendar,
   Heart,
   Repeat,
   FileText,
-  Filter,
-  Download,
-  Gift as GiftIcon,
-  Search
+  Home
 } from "lucide-react";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import type { Gift, Person } from "@shared/schema";
@@ -26,17 +24,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useMemo, useState } from "react";
-
-type GiftType = "all" | "major" | "recurring" | "planned" | "types";
 
 interface GiftsProps {
   activeTab?: string;
@@ -44,27 +32,18 @@ interface GiftsProps {
 
 type AmountFilter = "all" | "1000" | "5000" | "10000" | "25000" | "50000" | "100000";
 
-const amountFilterOptions: { value: AmountFilter; label: string }[] = [
-  { value: "all", label: "All Amounts" },
-  { value: "1000", label: "$1,000+" },
-  { value: "5000", label: "$5,000+" },
-  { value: "10000", label: "$10,000+ (Major)" },
-  { value: "25000", label: "$25,000+" },
-  { value: "50000", label: "$50,000+" },
-  { value: "100000", label: "$100,000+" },
-];
-
 export default function Gifts({ activeTab = "all" }: GiftsProps) {
-  const [showDateFilter, setShowDateFilter] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [amountFilter, setAmountFilter] = useState<AmountFilter>("all");
+  const [searchQuery] = useState("");
+  const [amountFilter] = useState<AmountFilter>("all");
   
   const { data: gifts, isLoading } = useQuery<Gift[]>({
-    queryKey: ["/api/gifts"],
+    queryKey: ["gifts"],
+    queryFn: () => api.gifts.getAll(),
   });
 
   const { data: persons } = useQuery<Person[]>({
-    queryKey: ["/api/persons"],
+    queryKey: ["persons"],
+    queryFn: () => api.persons.getAll(),
   });
 
   const personLookup = useMemo(() => {

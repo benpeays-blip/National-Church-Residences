@@ -8,7 +8,6 @@ import { ScoreIndicator } from "@/components/score-indicator";
 import { TaskItem } from "@/components/task-item";
 import { formatCurrency, formatDate } from "@/lib/utils";
 import {
-  User,
   Mail,
   Phone,
   Building2,

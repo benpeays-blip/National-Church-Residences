@@ -16,7 +16,6 @@ import {
   CheckCircle,
   Clock,
   ArrowRight,
-  MapPin,
   Users,
 } from "lucide-react";
 import {
@@ -26,14 +25,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 
 interface Sponsorship {
   id: string;

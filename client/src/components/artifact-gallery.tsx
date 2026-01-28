@@ -12,7 +12,6 @@ import { Search } from "lucide-react";
 import {
   stageArtifacts,
   roleArtifacts,
-  softwareArtifacts,
   getSoftwareByCategory,
   softwareCategories,
   type ArtifactDefinition,
@@ -63,8 +62,7 @@ export function ArtifactGallery({ onArtifactDragStart }: ArtifactGalleryProps) {
 
   const filteredStages = filterArtifacts(stageArtifacts);
   const filteredRoles = filterArtifacts(roleArtifacts);
-  const filteredSoftware = filterArtifacts(softwareArtifacts);
-  
+
   // Group software by category
   const softwareByCategory = getSoftwareByCategory();
   const filteredSoftwareByCategory: Record<string, ArtifactDefinition[]> = {};

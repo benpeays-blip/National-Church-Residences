@@ -7,9 +7,8 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { 
   Bot, 
-  Users, 
-  TrendingUp, 
-  Clock, 
+  Users,
+  TrendingUp,
   DollarSign,
   Zap,
   Target,
@@ -45,8 +44,7 @@ import {
   Network,
   BookOpen,
   LucideIcon,
-  Server,
-  ExternalLink
+  Server
 } from "lucide-react";
 
 export default function AgentValueMap() {
@@ -348,7 +346,7 @@ export default function AgentValueMap() {
             </CardHeader>
             <CardContent>
               <div className="space-y-2">
-                {dayInTheLife.map((item, index) => (
+                {dayInTheLife.map((item, _index) => (
                   <Link key={item.step} href={`/agent-value-map/workflow/${item.step}`}>
                     <div className="flex items-center gap-4 cursor-pointer p-3 rounded-lg transition-colors duration-200 hover:bg-muted/50 group">
                       <div className={`flex-shrink-0 w-10 h-10 rounded-full ${getAccentBgClass(item.accent)} flex items-center justify-center`}>

@@ -1,30 +1,24 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Link } from "wouter";
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
-import { 
-  TrendingUp, 
-  Brain, 
-  Target,
+import {
+  TrendingUp,
+  Brain,
   ArrowRight,
   Clock,
   Cpu,
   Sparkles,
-  ChevronRight,
   Zap,
   BarChart3,
-  Settings,
   Layers,
   GitBranch,
   Shield,
   Bot,
   Workflow,
   Activity,
-  CheckCircle2,
-  AlertCircle,
-  FileText
+  CheckCircle2
 } from "lucide-react";
 
 const accentColors = {
@@ -36,16 +30,7 @@ const accentColors = {
   orange: getAccentColor("orange"),
 };
 
-function getGreeting(): string {
-  const hour = new Date().getHours();
-  if (hour < 12) return "Good Morning";
-  if (hour < 17) return "Good Afternoon";
-  return "Good Evening";
-}
-
 export default function AgenticDashboard() {
-  const greeting = getGreeting();
-
   const kpiMetrics = [
     {
       label: "Active Agents",

@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -9,7 +10,6 @@ import {
   DollarSign, 
   TrendingUp, 
   Users, 
-  Calendar,
   ArrowRight,
   Target,
   Gift,
@@ -44,11 +44,13 @@ interface DashboardData {
 
 export default function DashboardHome() {
   const { data, isLoading } = useQuery<DashboardData>({
-    queryKey: ["/api/dashboard/home"],
+    queryKey: ["dashboard", "home"],
+    queryFn: () => api.dashboards.getHome(),
   });
 
   const { data: allCampaigns, isLoading: campaignsLoading } = useQuery<Campaign[]>({
-    queryKey: ["/api/campaigns"],
+    queryKey: ["campaigns"],
+    queryFn: () => api.campaigns.getAll(),
   });
 
   // Filter for active campaigns, prioritize $10 Million campaign, and take top 3

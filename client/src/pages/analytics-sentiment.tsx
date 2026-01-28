@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Smile, Meh, Frown, AlertCircle } from "lucide-react";
@@ -19,7 +20,8 @@ type SentimentAnalysis = {
 
 export default function SentimentAnalysisPage() {
   const { data: analyses, isLoading, error, isError } = useQuery<SentimentAnalysis[], Error>({
-    queryKey: ["/api/analytics/sentiment"],
+    queryKey: ["analytics", "sentiment"],
+    queryFn: () => api.analytics.getSentimentAnalysis(),
   });
 
   const getSentimentIcon = (score: number) => {

@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { useLocation, Link } from "wouter";
-import { Users, Layers, ExternalLink, ChevronDown, ChevronUp, ChevronRight, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, FolderTree, Settings, MessageSquare, User, Briefcase, Target } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { AccentCard, NCR_BRAND_COLORS, AccentColor, getAccentColor, getAccentBgClass } from "@/components/ui/accent-card";
+import { Users, Layers, ExternalLink, ChevronRight, Check, X, Building2, Lightbulb, Shield, Heart, Home, DollarSign, Scale, Server, Sparkles, AlertTriangle, Bot, Database, BarChart3, FileText, Zap, Workflow, BrainCircuit, Clock, UserCheck, Trash2, Layout, Smartphone, ArrowLeft, Target } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { AccentCard, AccentColor, getAccentColor, getAccentBgClass } from "@/components/ui/accent-card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -10,22 +9,6 @@ import TechStackMapper from "@/pages/tech-stack-mapper";
 import OtherWithTabs from "@/pages/other-with-tabs";
 
 import { techProducts, TechProduct } from "@/data/tech-products";
-
-const categoryAccentMap: Record<string, AccentColor> = {
-  "CRM": "teal",
-  "Marketing": "sky",
-  "Finance": "olive",
-  "Analytics": "lime",
-  "Engagement": "coral",
-  "Healthcare": "orange",
-  "Property": "sky",
-  "Platform": "teal",
-  "Integration": "olive",
-};
-
-function getCategoryAccent(category: string): AccentColor {
-  return categoryAccentMap[category] || "teal";
-}
 
 function ProductCard({ product }: { product: TechProduct }) {
   const [, navigate] = useLocation();
@@ -66,124 +49,6 @@ function ProductCard({ product }: { product: TechProduct }) {
         <p className="text-sm text-muted-foreground mt-3 line-clamp-4">{product.description}</p>
       </div>
     </Card>
-  );
-}
-
-function ProductDetailModal({ product, onClose }: { product: TechProduct | null; onClose: () => void }) {
-  if (!product) return null;
-  const accent = getCategoryAccent(product.category);
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50" onClick={onClose}>
-      <AccentCard 
-        accent={accent}
-        className="w-full max-w-4xl max-h-[90vh] overflow-auto p-0"
-        onClick={(e: React.MouseEvent) => e.stopPropagation()}
-      >
-        <div className="p-6 border-b flex items-start justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <div 
-              className="w-14 h-14 rounded-lg flex items-center justify-center shrink-0"
-              style={{ backgroundColor: `${product.brandColor}15` }}
-            >
-              <Database className="h-6 w-6" style={{ color: product.brandColor }} />
-            </div>
-            <div className="flex-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <h3 className="font-semibold text-xl" style={{ color: product.brandColor }}>{product.name}</h3>
-                <Badge 
-                  variant="outline" 
-                  className="text-xs"
-                  style={{ borderColor: getAccentColor(accent), color: getAccentColor(accent) }}
-                >
-                  {product.category}
-                </Badge>
-              </div>
-              <p className="text-sm text-muted-foreground mt-1">{product.tagline}</p>
-            </div>
-          </div>
-          <div className="flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={(e) => {
-                e.stopPropagation();
-                window.open(product.website, '_blank');
-              }}
-              data-testid={`button-visit-${product.id}`}
-            >
-              <ExternalLink className="h-4 w-4" />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onClose}
-              data-testid={`button-close-${product.id}`}
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
-        </div>
-
-        <div className="p-6 border-b">
-          <p className="text-sm text-muted-foreground">{product.description}</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-0">
-          <div className="p-6 border-b md:border-b-0 md:border-r">
-            <div className="flex items-center gap-2 mb-3">
-              <div 
-                className="w-6 h-6 rounded flex items-center justify-center"
-                style={{ backgroundColor: `${getAccentColor("lime")}20` }}
-              >
-                <Check className="h-3.5 w-3.5" style={{ color: getAccentColor("lime") }} />
-              </div>
-              <h4 className="font-medium text-sm">Strengths</h4>
-            </div>
-            <ul className="space-y-2">
-              {product.strengths.map((strength, idx) => (
-                <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                  <span className="mt-1 shrink-0" style={{ color: getAccentColor("lime") }}>+</span>
-                  <span>{strength}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="p-6 border-b md:border-b-0">
-            <div className="flex items-center gap-2 mb-3">
-              <div 
-                className="w-6 h-6 rounded flex items-center justify-center"
-                style={{ backgroundColor: `${getAccentColor("coral")}20` }}
-              >
-                <X className="h-3.5 w-3.5" style={{ color: getAccentColor("coral") }} />
-              </div>
-              <h4 className="font-medium text-sm">Weaknesses</h4>
-            </div>
-            <ul className="space-y-2">
-              {product.weaknesses.map((weakness, idx) => (
-                <li key={idx} className="text-sm text-muted-foreground flex items-start gap-2">
-                  <span className="mt-1 shrink-0" style={{ color: getAccentColor("coral") }}>&#8722;</span>
-                  <span>{weakness}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-        
-        <div className="p-6 border-t" style={{ backgroundColor: `${getAccentColor("teal")}10` }}>
-          <div className="flex items-center gap-2 mb-3">
-            <div 
-              className="w-6 h-6 rounded flex items-center justify-center"
-              style={{ backgroundColor: `${getAccentColor("teal")}20` }}
-            >
-              <Building2 className="h-3.5 w-3.5" style={{ color: getAccentColor("teal") }} />
-            </div>
-            <h4 className="font-medium text-sm" style={{ color: getAccentColor("teal") }}>NCR Context</h4>
-          </div>
-          <p className="text-sm text-muted-foreground">{product.ncrContext}</p>
-        </div>
-      </AccentCard>
-    </div>
   );
 }
 
@@ -2392,33 +2257,6 @@ const riskCategories: RiskCategory[] = [
     ]
   },
 ];
-
-function RiskCategoryCard({ category }: { category: RiskCategory }) {
-  const Icon = category.icon;
-
-  return (
-    <Link href={`/temporary/risk-compliance/${category.id}`}>
-      <AccentCard 
-        accent={category.accent}
-        className="hover-elevate cursor-pointer transition-all"
-        data-testid={`card-risk-${category.id}`}
-      >
-        <div className="p-4 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-white shadow-sm ${getAccentBgClass(category.accent)}`}>
-              <Icon className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-base">{category.title}</h3>
-              <p className="text-sm text-muted-foreground">{category.regulations.length} regulations</p>
-            </div>
-          </div>
-          <ChevronRight className="h-5 w-5 text-muted-foreground" />
-        </div>
-      </AccentCard>
-    </Link>
-  );
-}
 
 function RiskCategoryDetailPage({ categoryId }: { categoryId: string }) {
   const category = riskCategories.find(c => c.id === categoryId);

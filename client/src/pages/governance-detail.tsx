@@ -12,7 +12,6 @@ import {
   Scale,
   AlertTriangle,
   Eye,
-  CheckCircle2,
   Shield,
   FileText,
   Activity,

@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card } from "@/components/ui/card";
 import { MetricCard } from "@/components/metric-card";
 import { Database, CheckCircle, AlertTriangle } from "lucide-react";
@@ -26,7 +27,8 @@ interface DataHealthData {
 
 export default function DataHealth() {
   const { data, isLoading, isError } = useQuery<DataHealthData>({
-    queryKey: ["/api/data-health"],
+    queryKey: ["data-health"],
+    queryFn: () => api.dataHealth.getMetrics(),
   });
 
   if (isLoading) {

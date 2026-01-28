@@ -1,7 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Link } from "wouter";
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
 import { useQuery } from "@tanstack/react-query";
@@ -210,15 +209,7 @@ function MiniDonorQuadrant() {
   );
 }
 
-function getGreeting(): string {
-  const hour = new Date().getHours();
-  if (hour < 12) return "Good Morning";
-  if (hour < 17) return "Good Afternoon";
-  return "Good Evening";
-}
-
 export default function PhilanthropyDashboard() {
-  const greeting = getGreeting();
 
   const kpiMetrics = [
     {
@@ -275,13 +266,6 @@ export default function PhilanthropyDashboard() {
     { donor: "Anderson Foundation", action: "Proposal submitted", time: "Yesterday", type: "proposal" },
     { donor: "James Wilson", action: "Thank you call made", time: "Yesterday", type: "call" },
     { donor: "Community Trust", action: "Impact report shared", time: "2 days ago", type: "report" },
-  ];
-
-  const quadrantSnapshot = [
-    { quadrant: "Champions", count: 45, description: "High engagement, high capacity", color: accentColors.teal },
-    { quadrant: "Cultivate", count: 67, description: "High capacity, needs engagement", color: accentColors.sky },
-    { quadrant: "Steward", count: 89, description: "High engagement, lower capacity", color: accentColors.lime },
-    { quadrant: "Nurture", count: 46, description: "Opportunity for growth", color: accentColors.olive },
   ];
 
   const corporatePartners = [

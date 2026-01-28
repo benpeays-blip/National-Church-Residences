@@ -9,14 +9,9 @@ import {
   Database, 
   Users, 
   MapPin, 
-  AlertTriangle,
   CheckCircle2,
   ArrowRight,
-  RefreshCw,
-  BarChart3,
   Shield,
-  Layers,
-  Search,
   FileWarning,
   Sparkles
 } from "lucide-react";

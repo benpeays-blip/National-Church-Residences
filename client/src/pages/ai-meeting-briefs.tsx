@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -12,7 +13,8 @@ interface MeetingBriefData {
 
 export default function AIMeetingBriefs() {
   const { data: briefs, isLoading } = useQuery<MeetingBriefData[]>({
-    queryKey: ["/api/ai/meeting-briefs"],
+    queryKey: ["ai", "meeting-briefs"],
+    queryFn: () => api.ai.getMeetingBriefs(),
   });
 
   return (

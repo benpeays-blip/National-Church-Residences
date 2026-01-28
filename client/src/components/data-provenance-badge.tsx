@@ -7,11 +7,10 @@ import {
 } from "@/components/ui/tooltip";
 import { Database, Info } from "lucide-react";
 import { formatDateRelative } from "@/lib/utils";
-import { 
-  SiSalesforce, 
-  SiMailchimp, 
+import {
+  SiSalesforce,
+  SiMailchimp,
   SiLinkedin,
-  SiGoogle,
 } from "react-icons/si";
 
 interface DataProvenanceBadgeProps {

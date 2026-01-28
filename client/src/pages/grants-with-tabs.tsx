@@ -1,6 +1,6 @@
 import { useLocation } from "wouter";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { LayoutGrid, Search, Send, Award, Sparkles } from "lucide-react";
+import { LayoutGrid, Send, Award, Sparkles } from "lucide-react";
 import Grants from "@/pages/grants";
 import GrantResearchPage from "@/pages/grant-research";
 

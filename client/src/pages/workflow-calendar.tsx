@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, TrendingUp } from "lucide-react";
@@ -22,7 +23,8 @@ type CalendarEvent = {
 
 export default function SmartCalendar() {
   const { data: events, isLoading, error, isError } = useQuery<CalendarEvent[], Error>({
-    queryKey: ["/api/workflow/calendar"],
+    queryKey: ["workflow-utilities", "calendar"],
+    queryFn: () => api.workflowUtilities.getCalendarEvents(),
   });
 
   const getPriorityColor = (priority: number) => {

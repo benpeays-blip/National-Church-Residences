@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Mail, FileText, Send, Phone } from "lucide-react";
+import { Mail, FileText, Phone } from "lucide-react";
 import type { Person, OutreachTemplate } from "@shared/schema";
 
 interface OutreachTemplateData {
@@ -13,19 +14,6 @@ interface OutreachTemplateData {
 }
 
 type FilterType = "all" | "email" | "letter" | "call_script";
-
-const getTypeVariant = (type: string | null): "default" | "secondary" | "outline" => {
-  switch (type) {
-    case "email":
-      return "default";
-    case "letter":
-      return "secondary";
-    case "call_script":
-      return "outline";
-    default:
-      return "secondary";
-  }
-};
 
 const getTypeIcon = (type: string | null) => {
   switch (type) {
@@ -83,7 +71,8 @@ export default function OutreachGenerator() {
   const [filter, setFilter] = useState<FilterType>("all");
   
   const { data: templates, isLoading } = useQuery<OutreachTemplateData[]>({
-    queryKey: ["/api/content/outreach-templates"],
+    queryKey: ["content", "outreach-templates"],
+    queryFn: () => api.content.getOutreachTemplates(),
   });
 
   const filteredTemplates = templates?.filter((item) => {

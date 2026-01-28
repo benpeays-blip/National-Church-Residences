@@ -8,7 +8,6 @@ import { Progress } from "@/components/ui/progress";
 import { 
   User,
   Mail,
-  Phone,
   MapPin,
   Calendar,
   Briefcase,
@@ -94,7 +93,7 @@ export default function Profile() {
         <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6">
           <div className="relative">
             <Avatar className="w-24 h-24">
-              <AvatarImage src={user?.profileImageUrl} alt={fullName} />
+              <AvatarImage src={user?.profileImageUrl || undefined} alt={fullName} />
               <AvatarFallback className="text-2xl bg-primary/10 text-primary">
                 {initials}
               </AvatarFallback>

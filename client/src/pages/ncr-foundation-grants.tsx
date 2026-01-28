@@ -18,7 +18,6 @@ import {
   TrendingUp,
   Target,
   Eye,
-  ArrowRight,
   Bell,
   Lightbulb,
   ChevronRight,
@@ -27,7 +26,6 @@ import {
   BarChart3,
   Plus,
   ExternalLink,
-  AlertTriangle,
   Timer,
   Zap
 } from "lucide-react";
@@ -241,7 +239,6 @@ export default function NcrFoundationGrants() {
     return daysUntil <= 30;
   });
 
-  const upcomingReports = activeGrants.filter(g => g.reportDue);
 
   return (
     <div className="space-y-6 min-h-[calc(100vh-120px)]">

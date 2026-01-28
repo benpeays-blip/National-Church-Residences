@@ -4,10 +4,6 @@ import { Progress } from "@/components/ui/progress";
 import { 
   BarChart3, 
   TrendingUp, 
-  TrendingDown,
-  Users,
-  DollarSign,
-  Heart,
   Target,
   ArrowUp,
   ArrowDown,

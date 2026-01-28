@@ -5,7 +5,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { CommandPalette, openCommandPalette } from "@/components/command-palette";
-import { FundRazorLogo } from "@/components/FundRazorLogo";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import ncrLogo from "@assets/Screenshot_2025-12-14_at_1.40.02_PM_1765741231815.png";
 // Sidebar imports preserved for future use
 // import { AppSidebar } from "@/components/app-sidebar";
@@ -48,50 +48,29 @@ const navigationDomains = {
   },
 };
 
-// Direct navigation links (no dropdown)
-const directNavigationLinks = [
-  { name: "AI Tools", href: "/ai-tools" },
-];
-
 type DomainKey = keyof typeof navigationDomains;
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import DashboardHome from "@/pages/dashboard-home";
-import DashboardHomeWithTabs from "@/pages/dashboard-home-with-tabs";
 import PreviewHomepage from "@/pages/preview-homepage";
 import Dashboard from "@/pages/dashboard";
-import DashboardMGO from "@/pages/dashboard-mgo";
-import DashboardDevDirector from "@/pages/dashboard-dev-director";
-import DashboardCEO from "@/pages/dashboard-ceo";
-import Welcome from "@/pages/welcome";
-import NationalChurchResidences from "@/pages/national-church-residences";
 import Solutions from "@/pages/solutions";
 import Proposals from "@/pages/proposals";
-import TechStackMapper from "@/pages/tech-stack-mapper";
-import OrganizationMapper from "@/pages/organization-mapper";
-import OrganizationWorkflowCanvas from "@/pages/organization-workflow-canvas";
 import NavigationPreview from "@/pages/navigation-preview";
 import NavigationMockups from "@/pages/navigation-mockups";
 import NavigationHybridMockup from "@/pages/navigation-hybrid-mockup";
 import CardDesignPreview from "@/pages/card-design-preview";
 import CardDesignModern from "@/pages/card-design-modern";
-import Donors from "@/pages/donors";
 import DonorsWithTabs from "@/pages/donors-with-tabs";
-import Donor360 from "@/pages/donor-360";
 import DonorDetail from "@/pages/donor-detail";
 import DonorActionPlan from "@/pages/donor-action-plan";
 import CorporateActionPlan from "@/pages/corporate-action-plan";
 import DonorCardShowcase from "@/pages/donor-card-showcase";
 import UpcomingActionsPage from "@/pages/upcoming-actions";
 import ActionDetail from "@/pages/action-detail";
-import DonorQuadrant from "@/pages/donor-quadrant";
 import DonorQuadrantWithTabs from "@/pages/donor-quadrant-with-tabs";
-import Pipeline from "@/pages/pipeline";
 import PipelineWithTabs from "@/pages/pipeline-with-tabs";
-import Grants from "@/pages/grants";
 import GiftsWithTabs from "@/pages/gifts-with-tabs";
-import Events from "@/pages/events";
-import Campaigns from "@/pages/campaigns";
 import CampaignsWithTabs from "@/pages/campaigns-with-tabs";
 import CampaignDetail from "@/pages/campaign-detail";
 import DataHealth from "@/pages/data-health";
@@ -121,7 +100,6 @@ import AIPredictiveTiming from "@/pages/ai-predictive-timing";
 import AIWealthEvents from "@/pages/ai-wealth-events";
 import AIMeetingBriefs from "@/pages/ai-meeting-briefs";
 import AIVoiceNotes from "@/pages/ai-voice-notes";
-import AIWithTabs from "@/pages/ai-with-tabs";
 import MeetingNotes from "@/pages/meeting-notes";
 import CalendarPage from "@/pages/calendar";
 import PhilanthropyDashboard from "@/pages/philanthropy-dashboard";
@@ -136,7 +114,6 @@ import BoardNetworkMapper from "@/pages/board-network-mapper";
 import BoardNetworkDetail from "@/pages/board-network-detail";
 
 // Corporate Partnerships (top-level section)
-import CorporatePartnershipsPage from "@/pages/corporate-partnerships";
 import CorporatePartnershipDetail from "@/pages/corporate-partnership-detail";
 import SponsorshipDetail from "@/pages/sponsorship-detail";
 import CorporationsWithTabs from "@/pages/corporations-with-tabs";
@@ -147,14 +124,6 @@ import GrantProposals from "@/pages/content-grant-proposals";
 import ImpactReports from "@/pages/content-impact-reports";
 
 // Analytics
-import PeerBenchmarks from "@/pages/analytics-peer-benchmarks";
-import SentimentAnalysis from "@/pages/analytics-sentiment";
-import PortfolioOptimization from "@/pages/analytics-portfolio-optimization";
-import PipelineValueDetail from "@/pages/analytics-pipeline-value";
-import Forecast90Days from "@/pages/analytics-forecast-90-days";
-import YTDvsGoal from "@/pages/analytics-ytd-vs-goal";
-import LYBUNTDonors from "@/pages/analytics-lybunt-donors";
-import SYBUNTDonors from "@/pages/analytics-sybunt-donors";
 import AnalyticsWithTabs from "@/pages/analytics-with-tabs";
 
 // Workflow Automation
@@ -164,7 +133,6 @@ import TaskPriorities from "@/pages/workflow-task-priorities";
 import GiftRegistries from "@/pages/workflow-gift-registries";
 
 // Workflow Builder
-import Workflows from "@/pages/workflows";
 import WorkflowTemplates from "@/pages/workflows-templates";
 import WorkflowCanvas from "@/pages/workflow-canvas";
 
@@ -452,7 +420,7 @@ type TopTab = 'Philanthropy' | 'Fundraising' | 'Agentic Plan' | 'Assessment';
 
 function App() {
   const [location, navigate] = useLocation();
-  const [activeDropdown, setActiveDropdown] = useState<DomainKey | "AgenticStrategy" | "AgenticImpl" | "AssessmentTech" | "AssessmentOps" | "Assessment" | null>(null);
+  const [activeDropdown, setActiveDropdown] = useState<DomainKey | "AgenticStrategy" | "AgenticImpl" | "AssessmentTech" | "AssessmentOps" | "Assessment" | "AITools" | null>(null);
   const [hamburgerOpen, setHamburgerOpen] = useState(false);
   const [selectedTopTab, setSelectedTopTab] = useState<TopTab>('Philanthropy');
   
@@ -510,7 +478,7 @@ function App() {
     }
   };
 
-  const handleDropdownClick = (domain: DomainKey) => {
+  const handleDropdownClick = (domain: DomainKey | "AgenticStrategy" | "AgenticImpl" | "AssessmentTech" | "AssessmentOps" | "Assessment" | "AITools") => {
     if (activeDropdown === domain) {
       setActiveDropdown(null);
     } else {
@@ -558,9 +526,10 @@ function App() {
 
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <CommandPalette />
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <CommandPalette />
         {/* Sidebar temporarily hidden - functionality preserved for future use */}
         {/* <SidebarProvider style={style as React.CSSProperties}>
           <div className="flex h-screen w-full">
@@ -949,6 +918,7 @@ function App() {
         <Toaster />
       </TooltipProvider>
     </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 

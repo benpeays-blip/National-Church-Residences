@@ -22,7 +22,6 @@ import {
   ExternalLink,
   Sparkles,
   Target,
-  ArrowRight,
   Star,
   DollarSign,
   UserPlus,

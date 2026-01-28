@@ -9,7 +9,6 @@ import {
   Heart, 
   Mail,
   Bell,
-  Users,
   Trophy,
   Cake,
   Star,

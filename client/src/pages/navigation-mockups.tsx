@@ -14,12 +14,9 @@ import {
   Brain,
   Network,
   Sparkles,
-  BarChart3,
-  Settings,
   ChevronRight,
   Search,
   Menu,
-  X,
   Home,
   Check
 } from "lucide-react";

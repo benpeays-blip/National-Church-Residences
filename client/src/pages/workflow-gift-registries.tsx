@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
@@ -22,7 +23,8 @@ type GiftRegistry = {
 
 export default function GiftRegistries() {
   const { data: registries, isLoading, error, isError } = useQuery<GiftRegistry[], Error>({
-    queryKey: ["/api/workflow/gift-registries"],
+    queryKey: ["workflow-utilities", "gift-registries"],
+    queryFn: () => api.workflowUtilities.getGiftRegistries(),
   });
 
   const getOccasionIcon = (type: string) => {

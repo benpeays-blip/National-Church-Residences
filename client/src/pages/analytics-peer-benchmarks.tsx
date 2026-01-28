@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowUp, ArrowDown, Minus, TrendingUp } from "lucide-react";
 
@@ -17,7 +18,8 @@ type PeerBenchmark = {
 
 export default function PeerBenchmarks() {
   const { data: benchmarks, isLoading, error, isError } = useQuery<PeerBenchmark[], Error>({
-    queryKey: ["/api/analytics/peer-benchmarks"],
+    queryKey: ["analytics", "peer-benchmarks"],
+    queryFn: () => api.analytics.getPeerBenchmarks(),
   });
 
   const getTrendIcon = (trend: string) => {

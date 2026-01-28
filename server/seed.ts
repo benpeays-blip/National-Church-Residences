@@ -35,13 +35,6 @@ import {
 } from "@shared/schema";
 import { sql } from "drizzle-orm";
 
-// Helper to create deterministic UUIDs for seeding
-function createUUID(seed: string): string {
-  // In production, we'd use a proper UUID library
-  // For seeding, we'll use gen_random_uuid() from the database
-  return seed; // placeholder - will be replaced by database default
-}
-
 // Helper for random dates
 function randomDate(start: Date, end: Date): Date {
   return new Date(
@@ -1455,7 +1448,6 @@ async function seed() {
       const owner = mgoUsers[Math.floor(Math.random() * mgoUsers.length)];
 
       // Integration metadata: all opportunities from Raiser's Edge CRM
-      const createdDaysAgo = Math.floor(Math.random() * 90); // Created in last 90 days
       const syncedDaysAgo = Math.floor(Math.random() * 3); // Synced in last 3 days
       const syncedAt = new Date();
       syncedAt.setDate(syncedAt.getDate() - syncedDaysAgo);

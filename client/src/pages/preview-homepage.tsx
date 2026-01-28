@@ -1,20 +1,16 @@
-import { CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Progress } from "@/components/ui/progress";
 import { Link } from "wouter";
-import { AccentCard, getAccentColor } from "@/components/ui/accent-card";
-import { 
-  TrendingUp, 
+import { getAccentColor } from "@/components/ui/accent-card";
+import {
+  TrendingUp,
   TrendingDown,
-  Users, 
-  DollarSign, 
-  Target, 
+  Users,
+  DollarSign,
+  Target,
   BarChart3,
   Lightbulb,
   ArrowRight,
-  ArrowUpRight,
-  ArrowLeft,
   Clock,
   AlertTriangle,
   CheckCircle2,
@@ -31,7 +27,6 @@ import {
   Activity,
   Eye
 } from "lucide-react";
-import { useLocation } from "wouter";
 
 const accentColors = {
   teal: getAccentColor("teal"),

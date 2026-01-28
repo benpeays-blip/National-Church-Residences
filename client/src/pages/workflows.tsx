@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,7 +15,8 @@ export default function WorkflowsPage() {
   const [, navigate] = useLocation();
 
   const { data: workflows = [], isLoading } = useQuery<Workflow[]>({
-    queryKey: ["/api/workflows"],
+    queryKey: ["workflows"],
+    queryFn: () => api.workflows.getAll(),
   });
 
   const createWorkflow = useMutation({
@@ -134,7 +136,7 @@ export default function WorkflowsPage() {
               <CardContent>
                 <div className="flex items-center justify-between">
                   <div className="text-sm text-muted-foreground">
-                    Created {format(new Date(workflow.createdAt), "MMM d, yyyy")}
+                    {workflow.createdAt && <>Created {format(new Date(workflow.createdAt), "MMM d, yyyy")}</>}
                     {workflow.updatedAt && (
                       <> • Updated {format(new Date(workflow.updatedAt), "MMM d, yyyy")}</>
                     )}

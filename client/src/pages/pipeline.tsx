@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { OpportunityCard } from "@/components/opportunity-card";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,7 +14,8 @@ export default function Pipeline() {
     person?: { firstName: string; lastName: string };
     owner?: { firstName: string | null; lastName: string | null };
   })[]>({
-    queryKey: ["/api/opportunities"],
+    queryKey: ["opportunities"],
+    queryFn: () => api.opportunities.getAll(),
   });
 
   if (isLoading) {

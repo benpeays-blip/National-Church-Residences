@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { FileEdit, CheckCircle2, Clock, AlertCircle } from "lucide-react";
 import { format } from "date-fns";
 
 type GrantProposal = {
@@ -34,22 +34,9 @@ type GrantProposalItem = {
 
 export default function GrantProposals() {
   const { data: proposals, isLoading, error, isError } = useQuery<GrantProposalItem[], Error>({
-    queryKey: ["/api/content/grant-proposals"],
+    queryKey: ["content", "grant-proposals"],
+    queryFn: () => api.content.getGrantProposals(),
   });
-
-  const getStatusIcon = (status: string) => {
-    if (status === "submitted") return <CheckCircle2 className="w-4 h-4 text-green-600" />;
-    if (status === "in_review") return <Clock className="w-4 h-4 text-yellow-600" />;
-    if (status === "needs_revision") return <AlertCircle className="w-4 h-4 text-orange-600" />;
-    return <FileEdit className="w-4 h-4 text-blue-600" />;
-  };
-
-  const getStatusVariant = (status: string): "default" | "secondary" | "outline" | "destructive" => {
-    if (status === "submitted") return "default";
-    if (status === "in_review") return "secondary";
-    if (status === "needs_revision") return "destructive";
-    return "outline";
-  };
 
   const getStatusColor = (status: string): string => {
     if (status === "submitted") return "#22C55E";

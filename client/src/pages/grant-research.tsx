@@ -9,18 +9,11 @@ import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   Tooltip,
@@ -38,17 +31,14 @@ import {
   Target,
   TrendingUp,
   BookmarkPlus,
-  Bell,
   ExternalLink,
   ChevronRight,
   Users,
   Eye,
-  Clock,
   Lightbulb,
   Star,
   CheckCircle,
   AlertCircle,
-  Info,
   ArrowUpRight,
   Bookmark,
   RefreshCw,

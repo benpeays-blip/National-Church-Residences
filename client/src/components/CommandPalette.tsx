@@ -28,8 +28,6 @@ import {
   ClipboardList,
   Layers,
   LayoutGrid,
-  Search,
-  DollarSign,
   Award,
   Activity,
   UserCheck,
@@ -37,7 +35,6 @@ import {
   MessageSquare,
   Globe,
   Shield,
-  Bell,
 } from "lucide-react";
 
 interface CommandItem {

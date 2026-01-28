@@ -30,7 +30,6 @@ import {
   MessageSquare,
   Globe,
   Shield,
-  Bell,
   Search,
   Keyboard,
 } from "lucide-react";
@@ -527,7 +526,7 @@ export function CommandPalette() {
               <p className="text-xs text-muted-foreground mt-1">Try a different search term</p>
             </CommandPrimitive.Empty>
 
-            {groupOrder.map((group, groupIndex) => {
+            {groupOrder.map((group, _groupIndex) => {
               const items = groupedItems[group];
               if (!items || items.length === 0) return null;
               

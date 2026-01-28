@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Heart, Mail, Eye, Users } from "lucide-react";
@@ -33,7 +34,8 @@ type ImpactReportItem = {
 
 export default function ImpactReports() {
   const { data: reports, isLoading, error, isError } = useQuery<ImpactReportItem[], Error>({
-    queryKey: ["/api/content/impact-reports"],
+    queryKey: ["content", "impact-reports"],
+    queryFn: () => api.content.getImpactReports(),
   });
 
   if (isLoading) {

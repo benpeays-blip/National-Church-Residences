@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
@@ -36,7 +37,8 @@ interface CampaignsProps {
 
 export default function Campaigns({ filterStatus }: CampaignsProps = {}) {
   const { data: campaigns, isLoading } = useQuery<Campaign[]>({
-    queryKey: ["/api/campaigns"],
+    queryKey: ["campaigns"],
+    queryFn: () => api.campaigns.getAll(),
   });
 
   // Filter campaigns based on filterStatus prop

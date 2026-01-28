@@ -15,7 +15,7 @@ function Neighbors({ nodeId }: { nodeId: string }) {
     if (t === nodeId) neighbors.set(s, (neighbors.get(s) ?? 0) + l.weight);
   }
 
-  const byWeight = [...neighbors.entries()]
+  const byWeight = Array.from(neighbors.entries())
     .sort((a, b) => b[1] - a[1])
     .slice(0, 20);
 

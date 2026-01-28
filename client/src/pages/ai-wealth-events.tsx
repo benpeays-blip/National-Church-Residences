@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -13,7 +14,8 @@ interface WealthEventData {
 
 export default function AIWealthEvents() {
   const { data: events, isLoading } = useQuery<WealthEventData[]>({
-    queryKey: ["/api/ai/wealth-events"],
+    queryKey: ["ai", "wealth-events"],
+    queryFn: () => api.ai.getWealthEvents(),
   });
 
   const getEventTypeBadge = (type: string) => {

@@ -175,7 +175,7 @@ export default function PastEvents() {
       <div className="space-y-6">
         <h2 className="text-xl font-semibold">Event Highlights</h2>
         
-        {pastEvents.map((event, index) => (
+        {pastEvents.map((event, _index) => (
           <Card key={event.id} className="border hover-elevate overflow-hidden" data-testid={`event-card-${event.id}`}>
             <CardHeader className="bg-primary/5 border-b">
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">

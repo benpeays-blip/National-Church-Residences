@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { queryClient } from "@/lib/queryClient";
+import { api, ApiError } from "@/lib/api";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,7 +22,6 @@ import {
   AlertDialogTrigger 
 } from "@/components/ui/alert-dialog";
 import { useToast } from "@/hooks/use-toast";
-import { apiRequest, queryClient } from "@/lib/queryClient";
 import { 
   Mic, 
   MicOff, 
@@ -39,7 +40,6 @@ import {
   Loader2,
   CheckCircle2,
   Calendar,
-  Building2,
   Download,
   Trash2,
   Send
@@ -89,34 +89,35 @@ export default function MeetingNotes() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { data: notes, isLoading } = useQuery<MeetingNote[]>({
-    queryKey: ["/api/meeting-notes"],
+    queryKey: ["meeting-notes"],
+    queryFn: () => api.meetingNotes.getAll(),
   });
 
   const transcribeMutation = useMutation({
-    mutationFn: async (formData: FormData) => {
-      const response = await fetch("/api/meeting-notes/transcribe", {
-        method: "POST",
-        body: formData,
-      });
-      if (!response.ok) throw new Error("Transcription failed");
-      return response.json();
+    mutationFn: async (audioFile: File) => {
+      return api.meetingNotes.transcribe(audioFile);
     },
     onSuccess: (data) => {
       setResult(data);
       setIsProcessing(false);
       setProcessingProgress(100);
-      queryClient.invalidateQueries({ queryKey: ["/api/meeting-notes"] });
+      queryClient.invalidateQueries({ queryKey: ["meeting-notes"] });
       toast({
         title: "Transcription Complete",
         description: "Your meeting notes have been processed successfully.",
       });
     },
-    onError: () => {
+    onError: (error) => {
       setIsProcessing(false);
       setProcessingProgress(0);
+
+      const errorMessage = error instanceof ApiError
+        ? error.message
+        : "There was an error processing your audio. Please try again.";
+
       toast({
         title: "Transcription Failed",
-        description: "There was an error processing your audio. Please try again.",
+        description: errorMessage,
         variant: "destructive",
       });
     },
@@ -239,12 +240,12 @@ export default function MeetingNotes() {
       setProcessingProgress((prev) => Math.min(prev + 10, 90));
     }, 500);
 
-    const formData = new FormData();
-    formData.append("audio", audioToProcess);
-    formData.append("title", meetingTitle || "Untitled Meeting");
-    formData.append("donorName", donorName);
+    // Convert Blob to File if needed
+    const audioFile = audioToProcess instanceof File
+      ? audioToProcess
+      : new File([audioToProcess], meetingTitle || "recording.webm", { type: audioToProcess.type });
 
-    transcribeMutation.mutate(formData);
+    transcribeMutation.mutate(audioFile);
     clearInterval(progressInterval);
   };
 

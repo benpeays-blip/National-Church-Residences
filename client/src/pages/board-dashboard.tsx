@@ -3,16 +3,13 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { 
-  Users, 
-  DollarSign, 
-  TrendingUp, 
-  Target,
+  Users,
+  DollarSign,
   Calendar,
   Phone,
   Mail,
   CheckCircle2,
   Clock,
-  ArrowRight,
   BarChart3
 } from "lucide-react";
 import { AccentCard, getAccentColor } from "@/components/ui/accent-card";

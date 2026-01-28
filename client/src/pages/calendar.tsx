@@ -1,5 +1,6 @@
 import { useState, useMemo } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -8,14 +9,13 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger, DialogFooter, DialogDescription } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Link } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { getAccentColor } from "@/components/ui/accent-card";
 import { format, addDays, startOfWeek, endOfWeek, isToday, isSameDay, parseISO, startOfMonth, endOfMonth, eachDayOfInterval } from "date-fns";
 import type { CalendarEvent, Task, Person } from "@shared/schema";
-import { 
+import {
   Calendar as CalendarIcon,
   ChevronLeft,
   ChevronRight,
@@ -29,13 +29,9 @@ import {
   ArrowLeft,
   Sparkles,
   Target,
-  Filter,
   Grid3X3,
   List,
-  MoreHorizontal,
-  Trash2,
-  Edit,
-  Eye
+  Trash2
 } from "lucide-react";
 
 const accentColors = {
@@ -71,7 +67,7 @@ export default function CalendarPage() {
   const { toast } = useToast();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [viewMode, setViewMode] = useState<"week" | "month">("week");
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [, setSelectedDate] = useState<Date | null>(null);
   const [isAddEventOpen, setIsAddEventOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<CalendarEventWithPerson | null>(null);
   const [newEvent, setNewEvent] = useState({
@@ -84,16 +80,19 @@ export default function CalendarPage() {
     personId: "",
   });
 
-  const { data: calendarEvents = [], isLoading: eventsLoading } = useQuery<CalendarEventWithPerson[]>({
-    queryKey: ["/api/calendar-events"],
+  const { data: calendarEvents = [] } = useQuery<CalendarEventWithPerson[]>({
+    queryKey: ["calendar-events"],
+    queryFn: () => api.calendar.getAll(),
   });
 
   const { data: tasks = [] } = useQuery<Task[]>({
-    queryKey: ["/api/tasks"],
+    queryKey: ["tasks"],
+    queryFn: () => api.tasks.getAll(),
   });
 
   const { data: persons = [] } = useQuery<Person[]>({
-    queryKey: ["/api/persons"],
+    queryKey: ["persons"],
+    queryFn: () => api.persons.getAll(),
   });
 
   const createEventMutation = useMutation({

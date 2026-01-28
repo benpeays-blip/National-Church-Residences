@@ -1,41 +1,32 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "wouter";
-import { useQuery, useMutation } from "@tanstack/react-query";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Skeleton } from "@/components/ui/skeleton";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { 
-  MessageSquare, 
-  Sparkles, 
-  Send, 
-  Heart, 
-  Users, 
-  Home, 
+import {
+  MessageSquare,
+  Sparkles,
+  Send,
+  Heart,
+  Users,
   TrendingUp,
   Calendar,
   BookOpen,
   Quote,
   Target,
   Award,
-  Clock,
-  Filter,
   Search,
   Bookmark,
   BookmarkCheck,
-  Share2,
   Copy,
   CheckCircle2,
   Loader2,
   Bot,
   User,
-  Building2,
-  Star,
-  ArrowRight
+  Building2
 } from "lucide-react";
 import {
   Select,
@@ -474,7 +465,7 @@ export function ImpactFeedTab() {
     setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const programAreas = [...new Set(sampleStories.map(s => s.programArea))];
+  const programAreas = Array.from(new Set(sampleStories.map(s => s.programArea)));
 
   return (
     <div className="space-y-6">

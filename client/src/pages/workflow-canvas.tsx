@@ -1,16 +1,15 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { useRoute, useLocation } from "wouter";
 import { ReactFlow, MiniMap, Controls, Background, Node, Edge, Connection, addEdge, useNodesState, useEdgesState, Panel, Handle, Position } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
-import { Save, Play, ArrowLeft, Plus, MoreHorizontal, Info } from "lucide-react";
 import type { Workflow, WorkflowBlock, WorkflowConnection } from "@shared/schema";
 import { systemBlocks, humanBlocks, dataBlocks, actionBlocks, organizationBlocks, logicBlocks } from "@shared/workflows";
 import { useCallback, useEffect, useState } from "react";
@@ -81,13 +80,14 @@ export default function WorkflowCanvas() {
   const { toast } = useToast();
   const workflowId = params?.id;
 
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const [selectedBlockType, setSelectedBlockType] = useState<string | null>(null);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
+  const [_selectedBlockType, _setSelectedBlockType] = useState<string | null>(null);
 
   // Fetch workflow details
   const { data: workflowData, isLoading } = useQuery<{ workflow: Workflow; blocks: WorkflowBlock[]; connections: WorkflowConnection[] }>({
-    queryKey: [`/api/workflows/${workflowId}`],
+    queryKey: ["workflows", workflowId],
+    queryFn: () => api.workflows.getById(workflowId!),
     enabled: !!workflowId,
   });
   
@@ -95,7 +95,8 @@ export default function WorkflowCanvas() {
 
   // Fetch workflow blocks
   const { data: blocks = [] } = useQuery<WorkflowBlock[]>({
-    queryKey: [`/api/workflows/${workflowId}/blocks`],
+    queryKey: ["workflows", workflowId, "blocks"],
+    queryFn: () => api.workflows.getBlocks(workflowId!),
     enabled: !!workflowId,
   });
 

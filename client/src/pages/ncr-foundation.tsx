@@ -4,11 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { 
   Heart, 
-  Users, 
-  DollarSign, 
-  Building2, 
-  TrendingUp, 
-  Calendar,
+  Users,
+  DollarSign,
+  TrendingUp,
   Target,
   Gift,
   Star,

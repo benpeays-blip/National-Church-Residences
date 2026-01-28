@@ -18,6 +18,13 @@
     "paths": {
       "@/*": ["./client/src/*"],
       "@shared/*": ["./shared/*"]
-    }
+    },
+    // Additional strict checks for code quality
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true
+    // Note: exactOptionalPropertyTypes disabled due to incompatibility with external libraries (lucide-react, radix-ui)
+    // "exactOptionalPropertyTypes": true
   }
 }

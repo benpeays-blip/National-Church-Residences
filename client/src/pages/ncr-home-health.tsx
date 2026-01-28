@@ -1,5 +1,4 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Home, Users, Activity, Stethoscope, Pill, Heart } from "lucide-react";
 
 export default function NcrHomeHealth() {

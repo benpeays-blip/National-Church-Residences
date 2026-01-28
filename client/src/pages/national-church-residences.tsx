@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,8 +21,7 @@ import {
   Award,
   Calendar,
   PieChart,
-  ClipboardList,
-  FileText
+  ClipboardList
 } from "lucide-react";
 import { Link } from "wouter";
 import ncrLogo from "@assets/image_1762185084577.png";
@@ -31,7 +29,6 @@ import ncrLogo from "@assets/image_1762185084577.png";
 export default function NationalChurchResidences() {
   // NCR Brand Colors - Warm Orange/Coral
   const ncrOrange = "#E86C3C";
-  const ncrOrangeLight = "#F5A574";
   
   return (
     <div className="min-h-screen">

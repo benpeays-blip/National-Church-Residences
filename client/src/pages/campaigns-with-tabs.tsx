@@ -1,7 +1,7 @@
 import { useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { SectionTabs, SectionTab } from "@/components/section-tabs";
-import { LayoutGrid, Calendar, Clock, CheckCircle2, TrendingUp, Target, BarChart3, Award, AlertCircle, DollarSign, Users, Percent, ArrowUp, ArrowDown, Minus } from "lucide-react";
+import { LayoutGrid, Calendar, Clock, CheckCircle2, TrendingUp, Target, BarChart3, Award, DollarSign, Users, Percent, ArrowUp, ArrowDown, Minus } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";

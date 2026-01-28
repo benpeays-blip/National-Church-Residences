@@ -11,9 +11,7 @@ import {
   Heart, 
   Quote,
   Target,
-  CheckCircle2,
   Globe,
-  Sparkles,
   FileText
 } from "lucide-react";
 

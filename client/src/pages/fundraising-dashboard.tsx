@@ -12,12 +12,10 @@ import {
   Clock,
   Gift,
   Calendar,
-  Mail,
   Users,
   BarChart3,
   Sparkles,
   ChevronRight,
-  TrendingDown,
   Megaphone,
   CalendarDays,
   Heart,
@@ -34,15 +32,7 @@ const accentColors = {
   orange: getAccentColor("orange"),
 };
 
-function getGreeting(): string {
-  const hour = new Date().getHours();
-  if (hour < 12) return "Good Morning";
-  if (hour < 17) return "Good Afternoon";
-  return "Good Evening";
-}
-
 export default function FundraisingDashboard() {
-  const greeting = getGreeting();
 
   const kpiMetrics = [
     {

@@ -17,8 +17,7 @@ import {
   Building2,
   CheckCircle2,
   Sparkles,
-  Copy,
-  ExternalLink
+  Copy
 } from "lucide-react";
 import { Link } from "wouter";
 import { useToast } from "@/hooks/use-toast";

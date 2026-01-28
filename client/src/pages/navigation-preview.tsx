@@ -10,11 +10,6 @@ import {
   Palette,
   Command,
   ChevronRight,
-  Search,
-  Network,
-  BarChart3,
-  Brain,
-  Settings,
   Check
 } from "lucide-react";
 import {

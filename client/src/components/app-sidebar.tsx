@@ -16,25 +16,15 @@ import { useAuth } from "@/hooks/useAuth";
 import ncrLogo from "@assets/ncr-logo-horizontal.png";
 import { Link } from "wouter";
 import {
-  LayoutDashboard,
-  Users,
   Target,
-  TrendingUp,
-  Gift,
-  Calendar,
   Brain,
   Network,
   Sparkles,
   BarChart3,
-  Workflow,
   Database,
   Plug,
   Settings as SettingsIcon,
-  FileText,
-  ClipboardList,
-  Layers,
   LayoutGrid,
-  Home,
   ChevronDown,
   Building2,
 } from "lucide-react";

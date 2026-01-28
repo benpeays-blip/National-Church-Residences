@@ -1,5 +1,6 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -46,7 +47,8 @@ export default function Events({ filterType }: EventsProps = {}) {
   }, [location, filterType]);
 
   const { data: events, isLoading } = useQuery<FundraisingEvent[]>({
-    queryKey: ["/api/fundraising-events"],
+    queryKey: ["fundraising-events"],
+    queryFn: () => api.fundraisingEvents.getAll(),
   });
 
   // Handle filter change

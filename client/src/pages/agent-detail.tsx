@@ -1,8 +1,6 @@
 import { useParams, Link } from "wouter";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AccentCard, NCR_BRAND_COLORS, type AccentColor, getAccentBgClass } from "@/components/ui/accent-card";
 import { 
   ArrowLeft,
   Heart,
@@ -21,7 +19,6 @@ import {
   Zap,
   Bot,
   Settings,
-  Clock,
   BarChart3,
   AlertTriangle,
   LucideIcon,

@@ -15,8 +15,7 @@ import {
   Star,
   DollarSign,
   Calendar,
-  Building2,
-  X
+  Building2
 } from "lucide-react";
 import {
   Select,

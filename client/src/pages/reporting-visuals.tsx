@@ -8,8 +8,6 @@ import {
   Stethoscope,
   TrendingUp,
   Globe,
-  HandHelping,
-  Brain,
   Activity,
   Star,
   Clock
@@ -89,14 +87,6 @@ export default function ReportingVisuals() {
     { state: "GA", units: 1600 },
     { state: "NC", units: 1400 },
     { state: "Other", units: 3100 },
-  ];
-
-  const livingTypesComparison = [
-    { type: "Affordable Housing", units: 25000, communities: 340, avgOccupancy: 97 },
-    { type: "Independent Living", units: 545, communities: 4, avgOccupancy: 94 },
-    { type: "Assisted Living", units: 180, communities: 3, avgOccupancy: 92 },
-    { type: "Memory Care", units: 85, communities: 2, avgOccupancy: 88 },
-    { type: "CCRC", units: 420, communities: 2, avgOccupancy: 95 },
   ];
 
   const radarData = [

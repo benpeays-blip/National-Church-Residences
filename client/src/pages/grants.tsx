@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
@@ -37,7 +38,8 @@ export default function Grants({ initialStageFilter }: GrantsProps = {}) {
   };
 
   const { data: allGrants, isLoading } = useQuery<Grant[]>({
-    queryKey: ["/api/grants"],
+    queryKey: ["grants"],
+    queryFn: () => api.grants.getAll(),
   });
 
   const filteredGrants = allGrants?.filter((grant) => {

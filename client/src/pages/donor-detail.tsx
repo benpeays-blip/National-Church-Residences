@@ -3,15 +3,7 @@ import { useRoute, Link } from "wouter";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
-import { Separator } from "@/components/ui/separator";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import {
   Table,
   TableBody,
@@ -35,13 +27,6 @@ import {
   AlertCircle,
   Clock,
   User,
-  Search,
-  Database,
-  Brain,
-  FileText,
-  Users,
-  Sparkles,
-  ChevronRight,
 } from "lucide-react";
 import { formatCurrency } from "@/lib/utils";
 import { format } from "date-fns";
@@ -155,7 +140,6 @@ export default function DonorDetail() {
     );
   }
 
-  const displayName = donor.person.preferredName || donor.person.firstName;
   const fullName = `${donor.person.firstName} ${donor.person.lastName}`;
 
   const getScoreColor = (score: number | null) => {

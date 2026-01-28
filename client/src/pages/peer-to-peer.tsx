@@ -29,7 +29,6 @@ import {
   Heart,
   Calendar,
   ExternalLink,
-  Search,
   Plus,
   ArrowRight
 } from "lucide-react";
@@ -99,7 +98,6 @@ const recentDonations = [
 ];
 
 export default function PeerToPeer() {
-  const [searchQuery, setSearchQuery] = useState("");
   const [campaigns, setCampaigns] = useState(initialCampaigns);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [newCampaign, setNewCampaign] = useState({

@@ -2,7 +2,7 @@ import { useParams, Link } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { AccentCard, NCR_BRAND_COLORS, type AccentColor } from "@/components/ui/accent-card";
+import { AccentCard, type AccentColor } from "@/components/ui/accent-card";
 import { 
   ArrowLeft,
   ArrowRight,
@@ -14,8 +14,6 @@ import {
   LineChart,
   Bot,
   CheckCircle2,
-  AlertTriangle,
-  Clock,
   FileInput,
   FileOutput,
   Eye,
@@ -217,7 +215,7 @@ const workflowSteps: Record<string, WorkflowStepData> = {
     ],
     inputs: [
       { name: "Grant opportunities", source: "Research database" },
-      { name: "Outcome metrics", destination: "OneLake" },
+      { name: "Outcome metrics", source: "OneLake" },
       { name: "Funder contact history", source: "CRM" },
       { name: "Grant requirements", source: "Award records" }
     ],

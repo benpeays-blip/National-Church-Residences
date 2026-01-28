@@ -1,6 +1,5 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Stethoscope, Users, MapPin, Calendar, Clock, Activity } from "lucide-react";
 
 export default function NcrPrimaryCare() {
   const clinics = [

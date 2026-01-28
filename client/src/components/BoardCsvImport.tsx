@@ -43,11 +43,7 @@ export default function BoardCsvImport() {
             endYear: r.end_year,
           }));
 
-          await apiRequest("/api/board-network/import", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ memberships }),
-          });
+          await apiRequest("POST", "/api/board-network/import", { memberships });
 
           toast({
             title: "CSV Imported",

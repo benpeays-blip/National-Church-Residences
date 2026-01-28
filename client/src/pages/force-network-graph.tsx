@@ -309,7 +309,7 @@ export default function ForceNetworkGraph() {
       fgRef.current.d3Force('radial', null);
 
       // Custom force to fix organizations to polygon positions
-      fgRef.current.d3Force('polygonPositions', (alpha: number) => {
+      fgRef.current.d3Force('polygonPositions', (_alpha: number) => {
         graphData.nodes.forEach((node: any) => {
           if (node.type === 'org') {
             const targetPos = orgPolygonPositions[node.id];

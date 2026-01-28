@@ -6,7 +6,6 @@ import {
   Heart,
   FileText,
   Download,
-  Calendar,
   TrendingUp,
   Star
 } from "lucide-react";

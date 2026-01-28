@@ -9,16 +9,14 @@ import {
   Users, 
   DollarSign, 
   TrendingUp,
-  Calendar,
   Target,
   Gift,
-  Building2,
   Award,
   CheckCircle2,
   ArrowUpRight,
   Sparkles
 } from "lucide-react";
-import { AccentCard, NCR_BRAND_COLORS, type AccentColor } from "@/components/ui/accent-card";
+import { AccentCard, type AccentColor } from "@/components/ui/accent-card";
 
 interface MetricData {
   label: string;

@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef, useEffect, DragEvent } from "react";
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import {
   ReactFlow,
@@ -57,12 +58,14 @@ export default function OrganizationWorkflowCanvas() {
 
   // Fetch all canvases
   const { data: canvases = [], isLoading } = useQuery<OrganizationCanvas[]>({
-    queryKey: ["/api/organization-canvases"],
+    queryKey: ["organization-canvases"],
+    queryFn: () => api.organizationCanvases.getAll(),
   });
 
   // Fetch selected canvas
   const { data: selectedCanvas, isError: selectedCanvasError } = useQuery<OrganizationCanvas>({
-    queryKey: ["/api/organization-canvases", selectedCanvasId],
+    queryKey: ["organization-canvases", selectedCanvasId],
+    queryFn: () => api.organizationCanvases.getById(selectedCanvasId!),
     enabled: !!selectedCanvasId,
   });
 
@@ -462,7 +465,6 @@ function CanvasEditor({
         return;
       }
 
-      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
       const position = reactFlowInstance.screenToFlowPosition({
         x: event.clientX,
         y: event.clientY,

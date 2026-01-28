@@ -6,11 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Progress } from "@/components/ui/progress";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { 
-  Phone, Mail, Calendar, MapPin, Gift, Send, FileText, 
-  CheckCircle2, Clock, ArrowRight, Sparkles, Target, 
-  Users, TrendingUp, MessageSquare, Heart, Coffee, 
-  Building2, Award, ChevronLeft
+import {
+  Clock, ArrowRight, Sparkles, Target,
+  Award, ChevronLeft
 } from "lucide-react";
 import type { Person } from "@shared/schema";
 

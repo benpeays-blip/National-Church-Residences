@@ -12,7 +12,7 @@ export interface OrgNodeData {
 }
 
 export const OrgCanvasNode = memo(({ id, data }: NodeProps) => {
-  const nodeData = data as OrgNodeData;
+  const nodeData = data as unknown as OrgNodeData;
   const artifact = getArtifactById(nodeData.artifactId);
   
   if (!artifact) {

@@ -4,12 +4,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { 
-  Search, 
-  Network, 
-  Users, 
-  Building2, 
-  ArrowRight, 
+import {
+  Search,
+  Network,
+  Users,
   ExternalLink,
   Star,
   TrendingUp,
@@ -20,18 +18,11 @@ import {
   Link2,
   ChevronRight,
   Sparkles,
-  AlertCircle,
   CheckCircle2,
-  Clock,
-  Mail,
-  Phone,
-  Globe,
-  Target,
-  Shield
+  Target
 } from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Progress } from "@/components/ui/progress";
 
 interface ConnectionPath {
   id: string;

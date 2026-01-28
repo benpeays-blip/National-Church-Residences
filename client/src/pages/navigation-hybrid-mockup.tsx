@@ -11,8 +11,6 @@ import {
   Sparkles,
   Settings,
   FileText,
-  Calendar,
-  Gift,
   Database,
   Search,
   Bell,

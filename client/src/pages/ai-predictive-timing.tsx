@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -15,7 +16,8 @@ interface PredictiveTimingData {
 
 export default function AIPredictiveTiming() {
   const { data: predictions, isLoading } = useQuery<PredictiveTimingData[]>({
-    queryKey: ["/api/ai/predictive-timing"],
+    queryKey: ["ai", "predictive-timing"],
+    queryFn: () => api.ai.getPredictiveTiming(),
   });
 
   const getTimeframeLabel = (days: number | null) => {

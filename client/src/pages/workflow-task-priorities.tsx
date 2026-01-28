@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ListChecks, TrendingUp, Zap } from "lucide-react";
+import { ListChecks, Zap } from "lucide-react";
 
 type Task = {
   id: string;
@@ -33,7 +34,8 @@ type TaskPriorityItem = {
 
 export default function TaskPriorities() {
   const { data: scoredTasks, isLoading, error, isError } = useQuery<TaskPriorityItem[], Error>({
-    queryKey: ["/api/workflow/task-priorities"],
+    queryKey: ["workflow-utilities", "task-priorities"],
+    queryFn: () => api.workflowUtilities.getTaskPriorities(),
   });
 
   const getPriorityVariant = (score: number) => {

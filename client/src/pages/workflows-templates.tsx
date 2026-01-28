@@ -1,4 +1,5 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
+import { api } from "@/lib/api";
 import { useLocation } from "wouter";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -13,25 +14,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-// Template descriptions from the requirements document
-const templateDescriptions: Record<string, string> = {
-  "Major Gift Pipeline": "Manages prospects from identification → cultivation → ask → stewardship",
-  "New Donor Welcome Journey": "Automates first-time donor experience with email sequences and touchpoints",
-  "Lapsed Donor Reactivation": "Re-engages LYBUNT/SYBUNT donors with targeted outreach",
-  "Grant Application Pipeline": "Tracks LOIs, proposals, awards, and reporting through grant lifecycle",
-  "Event Fundraising Flow": "Runs gala or campaign events end-to-end from invitation to follow-up",
-  "Digital Campaign": "Drives recurring and one-time gifts online via email and social channels",
-  "Monthly Donor Program": "Subscription-style giving management with automated renewals",
-  "Corporate Matching Gifts": "Captures and records employer matches through integration",
-  "Data Hygiene Cycle": "Cleans donor data routinely with validation and deduplication",
-  "Prospect Research Cycle": "Identifies new high-capacity donors through wealth screening",
-  "Board Reporting": "Produces executive and board dashboards with KPIs and forecasts",
-  "Campaign Planning": "Combines goal setting with predictive analytics and action planning",
-  "Volunteer Recruitment": "Manages event volunteers and peer-to-peer fundraisers",
-  "Donor Survey Loop": "Collects and acts on donor sentiment through feedback systems",
-  "Stewardship Communications": "Keeps major donors informed post-gift with impact updates",
-};
 
 // Team-specific workflow variations
 const teamWorkflows = [
@@ -97,7 +79,8 @@ export default function WorkflowTemplatesPage() {
   const [, navigate] = useLocation();
 
   const { data: templates = [], isLoading } = useQuery<Workflow[]>({
-    queryKey: ["/api/workflows?isTemplate=true"],
+    queryKey: ["workflows", { isTemplate: true }],
+    queryFn: () => api.workflows.getAll(),
   });
 
   const cloneTemplate = useMutation({
@@ -106,8 +89,8 @@ export default function WorkflowTemplatesPage() {
       return res.json();
     },
     onSuccess: (clonedWorkflow: Workflow) => {
-      queryClient.invalidateQueries({ queryKey: ["/api/workflows"] });
-      queryClient.invalidateQueries({ queryKey: ["/api/workflows?isTemplate=true"] });
+      queryClient.invalidateQueries({ queryKey: ["workflows"] });
+      queryClient.invalidateQueries({ queryKey: ["workflows", { isTemplate: true }] });
       toast({
         title: "Template cloned successfully",
         description: "Opening workflow canvas...",
