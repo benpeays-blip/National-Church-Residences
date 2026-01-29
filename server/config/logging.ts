@@ -48,40 +48,14 @@ if (env.NODE_ENV === 'development') {
     })
   );
 } else {
-  // Production: JSON logs to console (for cloud logging services)
+  // Production: JSON logs to console (for cloud logging services like Railway, CloudWatch)
   transports.push(
     new winston.transports.Console({
       format: logFormat,
     })
   );
 
-  // Production: Also write to files if LOG_FILE is set
-  if (process.env.LOG_FILE) {
-    const path = require('path');
-    const fs = require('fs');
-
-    // Ensure logs directory exists
-    const logDir = path.dirname(process.env.LOG_FILE);
-    if (!fs.existsSync(logDir)) {
-      fs.mkdirSync(logDir, { recursive: true });
-    }
-
-    transports.push(
-      new winston.transports.File({
-        filename: process.env.LOG_FILE.replace('.log', '-error.log'),
-        level: 'error',
-        format: logFormat,
-        maxsize: 5242880, // 5MB
-        maxFiles: 5,
-      }),
-      new winston.transports.File({
-        filename: process.env.LOG_FILE,
-        format: logFormat,
-        maxsize: 5242880, // 5MB
-        maxFiles: 5,
-      })
-    );
-  }
+  // Note: File logging disabled in production - use cloud provider's log aggregation instead
 }
 
 // Create the logger instance
