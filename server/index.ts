@@ -68,6 +68,19 @@ app.use((req, res, next) => {
 
   const server = await registerRoutes(app);
 
+  // Run database migrations on startup (production only)
+  if (app.get("env") === "production") {
+    console.log('Running database migrations...');
+    const { execSync } = await import('child_process');
+    try {
+      execSync('npm run db:push', { stdio: 'inherit' });
+      console.log('✅ Database migrations completed');
+    } catch (err) {
+      console.error('⚠️  Database migration failed:', err);
+      // Don't crash the app - tables might already exist
+    }
+  }
+
   // Seed workflow templates on startup
   const { storage } = await import('./storage');
   await storage.seedWorkflowTemplates().catch(err => {
