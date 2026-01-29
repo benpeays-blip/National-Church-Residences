@@ -62,9 +62,14 @@ app.use((req, res, next) => {
 });
 
 (async () => {
-  // Register health check routes (before other routes for quick response)
-  const { healthRouter } = await import('./routes/health.routes');
-  app.use('/health', healthRouter);
+  try {
+    // Register health check routes (before other routes for quick response)
+    const { healthRouter } = await import('./routes/health.routes');
+    app.use('/health', healthRouter);
+  } catch (error) {
+    console.error('Failed to import health routes:', error);
+    throw error;
+  }
 
   const server = await registerRoutes(app);
 

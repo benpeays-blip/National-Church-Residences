@@ -64,8 +64,10 @@ export async function setupVite(app: Express, server: Server) {
 }
 
 export function serveStatic(app: Express) {
-  // In production build, public folder is at dist/public relative to project root
-  const distPath = path.join(process.cwd(), "dist", "public");
+  // In production build, public folder is at dist/public
+  // Use absolute path from /app on Railway or current directory locally
+  const baseDir = process.env.RAILWAY_ENVIRONMENT ? "/app" : process.cwd();
+  const distPath = path.join(baseDir, "dist", "public");
 
   if (!fs.existsSync(distPath)) {
     throw new Error(

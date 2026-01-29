@@ -75,6 +75,15 @@ export async function setupAuth(app: Express) {
   app.use(passport.initialize());
   app.use(passport.session());
 
+  // Only set up Replit OIDC auth if running on Replit
+  if (!process.env.REPL_ID) {
+    console.log('⚠️  Replit auth disabled (REPL_ID not set)');
+    // Set up basic passport serialization for non-Replit environments
+    passport.serializeUser((user: Express.User, cb) => cb(null, user));
+    passport.deserializeUser((user: Express.User, cb) => cb(null, user));
+    return;
+  }
+
   const config = await getOidcConfig();
 
   const verify: VerifyFunction = async (
